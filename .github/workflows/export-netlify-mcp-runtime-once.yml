@@ -1,0 +1,24 @@
+name: Export Netlify MCP runtime
+
+on:
+  push:
+    paths:
+      - '.github/workflows/export-netlify-mcp-runtime-once.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Netlify MCP runtime
+        run: |
+          mkdir mcp-run
+          npm install --prefix mcp-run @netlify/mcp@latest
+          tar -czf netlify-mcp-runtime.tar.gz mcp-run
+      - uses: actions/upload-artifact@v4
+        with:
+          name: netlify-mcp-runtime
+          path: netlify-mcp-runtime.tar.gz
+          if-no-files-found: error
