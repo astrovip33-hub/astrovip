@@ -1,0 +1,45 @@
+name: Keep only planet positions in ticker
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ticker-positions-only-one-time.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove ticker labels and keep only planet positions
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          changed = 0
+          for p in Path('.').rglob('index.html'):
+              s = p.read_text(encoding='utf-8')
+              ns = re.sub(r'<div class="planet-strip-label">.*?</div>', '', s, flags=re.S)
+              if ns != s:
+                  p.write_text(ns, encoding='utf-8')
+                  changed += 1
+
+          css = Path('assets/astro-seo.css')
+          s = css.read_text(encoding='utf-8')
+          marker = '/* AstroVip ticker: positions only */'
+          if marker not in s:
+              s += '\n' + marker + '\n.planet-strip-inner{display:block;min-height:44px}.planet-ticker{width:100%;flex:none}.planet-track{padding-left:18px;padding-right:18px}.planet-strip-label,.planet-updated,.planet-live-dot{display:none!important}\n'
+              css.write_text(s, encoding='utf-8')
+              changed += 1
+          print(f'Changed {changed} files')
+      - name: Commit ticker cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html '*/index.html' assets/astro-seo.css
+          git diff --cached --quiet && exit 0
+          git commit -m "Show only live planet positions in ticker"
+          git push
