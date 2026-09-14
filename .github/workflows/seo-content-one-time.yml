@@ -17,12 +17,13 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import re, json
+          import re
 
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
+          seo_html = Path('.github/seo/seo-section.html').read_text(encoding='utf-8')
+          schemas = Path('.github/seo/seo-schemas.html').read_text(encoding='utf-8')
 
-          # SEO title and metadata
           s = re.sub(r'<title>.*?</title>', '<title>Astrolog București & Online | Consultații Astrologice Premium | AstroVip</title>', s, count=1, flags=re.S)
           s = re.sub(r'<meta[^>]+name="description"[^>]*>', '<meta name="description" content="Astrolog în București și online. Consultații astrologice premium 1:1 pentru hartă natală, previziuni, sinastrie, carieră, numerologie, relocare, astrocartografie și Local Space."/>', s, count=1, flags=re.S)
           s = re.sub(r'<meta[^>]+property="og:title"[^>]*>', '<meta property="og:title" content="AstroVip | Astrolog București & Consultații Astrologice Online"/>', s, count=1, flags=re.S)
@@ -30,62 +31,10 @@ jobs:
           s = re.sub(r'<meta[^>]+name="twitter:title"[^>]*>', '<meta name="twitter:title" content="AstroVip | Astrolog București & Online"/>', s, count=1, flags=re.S)
           s = re.sub(r'<meta[^>]+name="twitter:description"[^>]*>', '<meta name="twitter:description" content="Consultații astrologice premium 1:1, online și în București: hartă natală, previziuni, relații, carieră și relocare."/>', s, count=1, flags=re.S)
 
-          # Add FAQ + Service schema once
-          if '"@type": "FAQPage"' not in s:
-              faq_schema = {
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": [
-                  {"@type":"Question","name":"Ce date sunt necesare pentru o consultație astrologică?","acceptedAnswer":{"@type":"Answer","text":"Pentru o analiză personalizată sunt utile data, ora cât mai exactă și localitatea nașterii, plus întrebările sau temele pe care vrei să le clarifici."}},
-                  {"@type":"Question","name":"Consultația astrologică se poate face online?","acceptedAnswer":{"@type":"Answer","text":"Da. AstroVip oferă consultații astrologice online, iar pentru clienții din București sunt disponibile și opțiuni stabilite prin programare."}},
-                  {"@type":"Question","name":"Ce înseamnă astrologie predictivă?","acceptedAnswer":{"@type":"Answer","text":"Astrologia predictivă corelează tehnici precum tranzitele, arcele solare și progresiile pentru a evidenția perioade, teme și ferestre de timing relevante."}},
-                  {"@type":"Question","name":"Ce este sinastria?","acceptedAnswer":{"@type":"Answer","text":"Sinastria compară două hărți natale pentru a analiza dinamica relațională, compatibilitatea, atracția, tensiunile și potențialul de evoluție al relației."}},
-                  {"@type":"Question","name":"Ce sunt astrocartografia și Local Space?","acceptedAnswer":{"@type":"Answer","text":"Astrocartografia și Local Space sunt tehnici de astrologie geografică folosite pentru a compara locații, direcții și activări planetare în raport cu harta natală."}},
-                  {"@type":"Question","name":"Astrologia poate lua decizii în locul meu?","acceptedAnswer":{"@type":"Answer","text":"Nu. O consultație astrologică este un instrument de orientare și reflecție. Nu înlocuiește consultul medical, juridic, psihologic sau financiar și nu decide în locul clientului."}}
-                ]
-              }
-              service_schema = {
-                "@context":"https://schema.org",
-                "@type":"Service",
-                "name":"Consultație astrologică premium 1:1",
-                "provider":{"@type":"ProfessionalService","name":"AstroVip","url":"https://astrovip.ro/"},
-                "areaServed":[{"@type":"City","name":"București"},{"@type":"Country","name":"România"}],
-                "serviceType":"Consultație astrologică online și în București",
-                "offers":{"@type":"Offer","price":"500","priceCurrency":"RON","url":"https://astrovip.ro/#tarife","availability":"https://schema.org/InStock"}
-              }
-              schemas = '<script type="application/ld+json">' + json.dumps(faq_schema, ensure_ascii=False) + '</script>\n' + '<script type="application/ld+json">' + json.dumps(service_schema, ensure_ascii=False) + '</script>\n'
-              s = s.replace('</head>', schemas + '</head>', 1)
+          if '"@type":"FAQPage"' not in s and '"@type": "FAQPage"' not in s:
+              s = s.replace('</head>', schemas + '\n</head>', 1)
 
-          # Add visible, original SEO content once
           if 'id="ghid-astrologie"' not in s:
-              seo_html = r'''
-<section id="ghid-astrologie"><div class="wrap">
-<div class="title reveal"><div class="kicker">Ghid AstroVip</div><h2>Astrolog București & consultații astrologice online</h2><p>O consultație astrologică utilă pornește de la harta ta natală și de la întrebări concrete. AstroVip combină experiența de 33+ ani cu tehnici predictive și de relație pentru a transforma simbolurile astrologice într-o analiză clară, personalizată și orientată spre decizie.</p></div>
-<div class="grid">
-<article class="card reveal"><div class="pad"><div class="mini">Hartă natală · orientare personală</div><h3>Ce este o consultație astrologică personalizată?</h3><p>Nu este un horoscop general. Analiza pornește de la data, ora și locul nașterii și urmărește teme precum relațiile, cariera, afacerile, familia, schimbările importante sau direcția personală. Harta natală oferă contextul de bază, iar tehnicile predictive arată când anumite teme devin mai active.</p><a class="btn2" href="#programari">Programează o consultație</a></div></article>
-<article class="card reveal"><div class="pad"><div class="mini">Tranzite · arce solare · progresii</div><h3>Astrologie predictivă și timing</h3><p>Pentru întrebări despre perioade favorabile, schimbări sau momente de prudență, sunt corelate mai multe tehnici: tranzite, arce solare, progresii și alte metode potrivite situației. Scopul nu este o promisiune rigidă despre viitor, ci identificarea ferestrelor de timp în care anumite teme au o probabilitate mai mare de manifestare.</p><a class="btn2" href="#metoda">Vezi metoda AstroVip</a></div></article>
-<article class="card reveal"><div class="pad"><div class="mini">Sinastrie · compatibilitate</div><h3>Astrologie pentru relații și cuplu</h3><p>Sinastria compară două hărți natale și poate evidenția punctele de atracție, compatibilitatea emoțională și mentală, diferențele de ritm, zonele de tensiune și potențialul de dezvoltare. Analiza este utilă pentru înțelegerea dinamicii unei relații, nu pentru a decide în locul celor implicați.</p><a class="btn2" href="#servicii">Vezi serviciile</a></div></article>
-</div>
-</div></section>
-<section class="method" id="astrologie-geografica"><div class="wrap">
-<div class="title reveal"><div class="kicker">Astrocartografie · Local Space · relocare</div><h2>Astrologie geografică pentru alegerea unei locații</h2><p>Uneori întrebarea nu este doar „când?”, ci și „unde?”. AstroVip analizează harta relocată, astrocartografia și Local Space pentru a compara orașe, țări și direcții relevante pentru relații, carieră, afaceri sau schimbări de viață.</p></div>
-<div class="split">
-<div class="reveal"><h3 class="section-heading">Ce poate urmări o analiză de relocare?</h3><div class="list"><div>Compararea mai multor orașe sau țări</div><div>Activarea axelor ASC, DSC, MC și IC</div><div>Linii de astrocartografie și direcții Local Space</div><div>Potrivirea dintre obiectivul personal și locul ales</div><div>Perioadele potrivite pentru mutare sau călătorie</div></div></div>
-<div class="reveal"><h3 class="section-heading">Consultație online sau în București</h3><p class="section-copy">Consultația premium de 60 de minute poate fi realizată online, iar pentru București se poate stabili formatul disponibil la programare. Pentru o analiză precisă sunt recomandate data nașterii, ora cât mai exactă, localitatea nașterii și întrebările pe care vrei să le clarifici.</p><p class="section-copy">Astrologia este folosită aici ca instrument de orientare și reflecție. Nu înlocuiește recomandările unui medic, psiholog, avocat, consultant financiar sau alt specialist autorizat.</p><a class="cta" href="#tarife">Consultație premium — 500 lei / 60 min</a></div>
-</div>
-</div></section>
-<section id="intrebari-frecvente"><div class="wrap">
-<div class="title reveal"><div class="kicker">Întrebări frecvente</div><h2>Ce trebuie să știi înainte de consultație</h2><p>Răspunsuri scurte la întrebările pe care oamenii le caută cel mai des înainte de o analiză astrologică personalizată.</p></div>
-<div class="grid">
-<article class="card reveal"><div class="pad"><h3>Ce date sunt necesare?</h3><p>Data, ora cât mai exactă și localitatea nașterii. Pentru sinastrie sunt necesare datele ambelor persoane. Pentru relocare este utilă și lista locațiilor pe care vrei să le comparăm.</p></div></article>
-<article class="card reveal"><div class="pad"><h3>Se poate face consultația online?</h3><p>Da. Consultațiile online permit aceeași analiză a hărții și a tehnicilor predictive. Pentru București, formatul întâlnirii se stabilește la programare.</p></div></article>
-<article class="card reveal"><div class="pad"><h3>Ce subiecte pot fi analizate?</h3><p>Relații, carieră, afaceri, schimbări profesionale, perioade de viață, sinastrie, numerologie, relocare, astrocartografie, Local Space și timing pentru decizii importante.</p></div></article>
-<article class="card reveal"><div class="pad"><h3>Ce este astrologia predictivă?</h3><p>Este analiza perioadelor prin corelarea mai multor tehnici, de exemplu tranzite, arce solare și progresii, raportate la harta natală.</p></div></article>
-<article class="card reveal"><div class="pad"><h3>Ce este sinastria?</h3><p>O comparație între două hărți natale care evidențiază dinamica relației, punctele de compatibilitate și zonele care cer mai multă atenție.</p></div></article>
-<article class="card reveal"><div class="pad"><h3>Poate astrologul decide pentru mine?</h3><p>Nu. Analiza oferă context, timing și perspective. Deciziile rămân ale tale, iar pentru probleme medicale, juridice, psihologice sau financiare este necesar specialistul potrivit.</p></div></article>
-</div>
-</div></section>
-'''
               marker = '<section id="articole">'
               if marker not in s:
                   raise SystemExit('Nu am găsit markerul pentru inserarea conținutului SEO')
