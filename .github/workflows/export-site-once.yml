@@ -1,0 +1,22 @@
+name: Export current site source
+
+on:
+  push:
+    paths:
+      - '.github/workflows/export-site-once.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package current production source
+        run: zip -r site-source.zip . -x '.git/*' '.github/workflows/*' 'site-source.zip'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astrovip-site-source
+          path: site-source.zip
+          if-no-files-found: error
