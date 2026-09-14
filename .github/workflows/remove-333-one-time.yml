@@ -1,0 +1,38 @@
+name: Remove 333 lei offer
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-333-one-time.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Keep only the 500 lei consultation
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('"priceRange": "333–500 RON"', '"priceRange": "500 RON"')
+          s = s.replace('.price-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:900px;margin:auto}', '.price-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;max-width:560px;margin:auto}')
+          old = '<div class="title reveal"><div class="kicker">Consultații AstroVip</div><h2>Alege profunzimea de care ai nevoie</h2><p>Două variante clare, ambele personalizate și orientate spre decizie.</p></div>\n<div class="price-grid">\n<article class="price-card reveal"><span class="badge">Promo</span><h3>Analiză completă</h3><div class="price">333 lei</div><p>Pentru o întrebare esențială analizată în profunzime.</p><ul><li>Analiză personalizată</li><li>Timing și perioade-cheie</li><li>Concluzii clare</li></ul><div class="pay-actions"><a class="cta" href="#programari">Solicită link de plată</a><a class="btn2" href="#programari">Programează</a></div></article>\n'
+          new = '<div class="title reveal"><div class="kicker">Consultații AstroVip</div><h2>Consultație Premium 1:1</h2><p>O singură variantă clară: analiză personalizată de 60 de minute, orientată spre decizie.</p></div>\n<div class="price-grid">\n'
+          s = s.replace(old, new)
+          s = s.replace('<option>Analiză completă — 333 lei</option>', '')
+          if '333' in s:
+              raise SystemExit('Au rămas referințe la 333 lei în index.html')
+          p.write_text(s, encoding='utf-8')
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Remove 333 lei offer and keep only 500 lei consultation"
+          git push
