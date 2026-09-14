@@ -25,3 +25,6 @@
 .planet-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}.planet-card{padding:18px;border:1px solid var(--av-line);border-radius:17px;background:linear-gradient(180deg,rgba(10,43,91,.90),rgba(5,23,51,.96))}.planet-card .big{font-size:28px;color:var(--av-green)}.planet-card strong{display:block;font-size:18px;margin:4px 0}.planet-card span{color:#c9d8ef}.planet-card .retro{color:#ffd479;font-weight:900}
 .guide-footer{border-top:1px solid var(--av-line);background:#031024;padding:32px 0;color:#9fb2cf;font-size:13px}.guide-footer a{color:#d8e8fb;text-decoration:none}.guide-footer strong{color:var(--av-green)}
 @media(max-width:900px){.guide-layout{grid-template-columns:1fr}.guide-aside{position:static}.planet-grid{grid-template-columns:1fr 1fr}.guide-menu{display:none}}@media(max-width:620px){.guide-hero{padding-top:60px}.planet-grid,.guide-related{grid-template-columns:1fr}.guide-hero h1{font-size:42px}.guide-content p{font-size:16px}}
+
+/* AstroVip ticker: positions only */
+.planet-strip-inner{display:block;min-height:44px}.planet-ticker{width:100%;flex:none}.planet-track{padding-left:18px;padding-right:18px}.planet-strip-label,.planet-updated,.planet-live-dot{display:none!important}
