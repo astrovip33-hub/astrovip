@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050505">
+<title>Local Space AstroVip | Busolă planetară și relocare</title>
+<meta name="description" content="Calculează Local Space AstroVip: azimuturile și altitudinile planetelor la naștere, busola planetară și varianta relocată pentru alt loc de referință.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://astrovip.ro/local-space/">
+<link rel="stylesheet" href="../assets/local-space.css">
+<script defer src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+<script defer src="../assets/local-space.js"></script>
+</head>
+<body>
+<header class="ls-top">
+  <div class="ls-wrap ls-nav">
+    <a class="ls-brand" href="/">ASTROVIP</a>
+    <nav aria-label="Instrumente"><a href="/harta-mea/">Harta mea</a><a href="/#relocare">Relocare</a><a href="/#contact">Consultație</a></nav>
+  </div>
+</header>
+<main>
+<section class="ls-hero">
+  <div class="ls-wrap">
+    <div class="ls-kicker">Astrologie geografică interactivă</div>
+    <h1>Local Space <span>AstroVip</span></h1>
+    <p>Busola planetară calculează direcția fiecărei planete la momentul nașterii. Poți folosi locul natal sau un alt loc de referință pentru o versiune relocată.</p>
+    <div class="ls-pills"><span>Azimut exact</span><span>Altitudine</span><span>Busolă 360°</span><span>Relocare</span></div>
+  </div>
+</section>
+<section class="ls-main">
+  <div class="ls-wrap ls-grid">
+    <form class="ls-panel ls-form" id="lsForm">
+      <div class="ls-panel-head"><div><b>01</b><h2>Date de calcul</h2></div><span>Natal</span></div>
+      <button class="ls-secondary" id="loadNatal" type="button">Încarcă datele din „Harta mea”</button>
+      <label>Nume <small>opțional</small><input id="lsName" placeholder="Nume"></label>
+      <div class="ls-row"><label>Data nașterii<input id="lsDate" type="date" required></label><label>Ora nașterii<input id="lsTime" type="time" step="60" required></label></div>
+      <label>Locul nașterii<input id="lsBirthPlace" placeholder="Ex: București, România" required></label>
+      <div class="ls-row"><label>Latitudine natală<input id="lsBirthLat" type="number" step="0.000001" min="-90" max="90" placeholder="44.4268" required></label><label>Longitudine natală<input id="lsBirthLon" type="number" step="0.000001" min="-180" max="180" placeholder="26.1025" required></label></div>
+      <label>Fus orar la naștere<select id="lsOffset" required>
+        <option value="+02:00" selected>UTC +02:00</option><option value="+03:00">UTC +03:00</option><option value="+01:00">UTC +01:00</option><option value="+00:00">UTC +00:00</option>
+        <option value="-01:00">UTC −01:00</option><option value="-02:00">UTC −02:00</option><option value="-03:00">UTC −03:00</option><option value="-04:00">UTC −04:00</option><option value="-05:00">UTC −05:00</option><option value="-06:00">UTC −06:00</option><option value="-07:00">UTC −07:00</option><option value="-08:00">UTC −08:00</option><option value="-09:00">UTC −09:00</option><option value="-10:00">UTC −10:00</option><option value="-11:00">UTC −11:00</option><option value="-12:00">UTC −12:00</option>
+        <option value="+04:00">UTC +04:00</option><option value="+05:00">UTC +05:00</option><option value="+05:30">UTC +05:30</option><option value="+06:00">UTC +06:00</option><option value="+07:00">UTC +07:00</option><option value="+08:00">UTC +08:00</option><option value="+09:00">UTC +09:00</option><option value="+10:00">UTC +10:00</option><option value="+11:00">UTC +11:00</option><option value="+12:00">UTC +12:00</option><option value="+13:00">UTC +13:00</option><option value="+14:00">UTC +14:00</option>
+      </select></label>
+      <label class="ls-check"><input id="useReference" type="checkbox"><span><strong>Local Space relocat</strong><small>Calculează aceleași planete pentru alt loc de referință.</small></span></label>
+      <div class="ls-reference" id="referenceFields" hidden>
+        <label>Loc de referință<input id="refPlace" placeholder="Ex: Phuket, Thailanda"></label>
+        <div class="ls-row"><label>Latitudine<input id="refLat" type="number" step="0.000001" min="-90" max="90" placeholder="7.8804"></label><label>Longitudine<input id="refLon" type="number" step="0.000001" min="-180" max="180" placeholder="98.3923"></label></div>
+      </div>
+      <button class="ls-primary" type="submit">CALCULEAZĂ LOCAL SPACE</button>
+      <button class="ls-secondary" id="demoLS" type="button">Vezi exemplu</button>
+      <p class="ls-note">Azimutul AstroVip este afișat în convenția de busolă: Nord 0°, Est 90°, Sud 180°, Vest 270°. Altitudinea este unghiul deasupra sau sub orizont.</p>
+    </form>
+
+    <div class="ls-panel ls-chart-panel">
+      <div class="ls-panel-head"><div><b>02</b><h2>Busola planetară</h2></div><span id="lsStatus">Așteaptă date</span></div>
+      <div class="ls-compass-shell"><svg id="lsCompass" viewBox="0 0 440 440" aria-label="Busolă Local Space"></svg><div class="ls-center"><strong>ASTROVIP</strong><small>LOCAL SPACE</small></div></div>
+      <div class="ls-legend"><span><i></i> direcție planetară</span><span>linia continuă trece prin azimut și anti-azimut</span></div>
+    </div>
+  </div>
+</section>
+<section class="ls-results" id="lsResults" hidden>
+  <div class="ls-wrap">
+    <div class="ls-title"><div class="ls-kicker">Rezultat Local Space</div><h2>Azimuturi planetare</h2><p id="lsMeta"></p></div>
+    <div class="ls-table-wrap"><table><thead><tr><th>Planetă</th><th>Azimut</th><th>Direcție</th><th>Altitudine</th><th>Poziție</th></tr></thead><tbody id="lsTable"></tbody></table></div>
+    <div class="ls-callout"><div><strong>Interpretare geografică AstroVip</strong><p>Local Space devine mult mai util când este comparat cu harta relocată, astrocartografia și obiectivul concret: relații, carieră, afaceri sau mutare.</p></div><a href="/#contact" class="ls-primary ls-link">Solicită analiza</a></div>
+  </div>
+</section>
+</main>
+<footer class="ls-footer"><div class="ls-wrap"><strong>ASTROVIP</strong><span>Local Space · Relocare · Astrocartografie</span></div></footer>
+</body>
+</html>
