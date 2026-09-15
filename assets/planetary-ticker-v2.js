@@ -11,7 +11,7 @@
   function applyPageTuning(){
     if(document.getElementById('astrovip-runtime-tuning'))return;
     const style=document.createElement('style');style.id='astrovip-runtime-tuning';
-    style.textContent=`.planet-track{animation-duration:43s!important}.planet-item{font-size:18px!important;gap:8px!important}.planet-glyph{font-size:23px!important}
+    style.textContent=`.planet-track{animation-duration:43s!important}.planet-item{font-size:18px!important;gap:8px!important}.planet-glyph{font-size:23px!important}.planet-strip-secondary{position:relative!important;top:auto!important;z-index:8!important;margin:0!important}
     .natal-home-cta{padding:28px 0 16px!important}.natal-home-card{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px 28px;border:1px solid rgba(56,245,138,.38);border-radius:24px;background:linear-gradient(135deg,rgba(56,245,138,.10),rgba(8,22,16,.78));box-shadow:0 18px 46px rgba(0,0,0,.24)}.natal-home-card h2{margin:4px 0 7px;color:#38f58a;font-size:clamp(27px,4vw,42px);line-height:1}.natal-home-card p{margin:0;color:var(--muted);max-width:720px}.natal-home-card .cta{flex:0 0 auto;white-space:nowrap}
     @media(max-width:820px){.planet-item{font-size:17px!important}.planet-glyph{font-size:22px!important}.planet-track{gap:19px!important}.natal-home-cta{padding:18px 0 8px!important}.natal-home-card{padding:18px;flex-direction:column;align-items:stretch;text-align:center;border-radius:20px}.natal-home-card .cta{width:100%}}`;
     document.head.appendChild(style);
@@ -27,6 +27,15 @@
     const services=document.getElementById('servicii');if(!services||document.getElementById('harta-mea-cta'))return;
     const section=document.createElement('section');section.id='harta-mea-cta';section.className='natal-home-cta';section.innerHTML=`<div class="wrap"><div class="natal-home-card"><div><div class="kicker">Instrumente gratuite AstroVip</div><h2>Harta natală & Local Space</h2><p>Calculează pozițiile planetelor, apoi transformă locul nașterii într-o busolă planetară cu azimuturi și variantă relocată.</p></div><a class="cta" href="/harta-mea/">Deschide Harta mea</a></div></div>`;services.parentNode.insertBefore(section,services);
   }
+  function integrateSecondTicker(){
+    const services=document.getElementById('servicii');
+    if(!services||document.getElementById('planet-strip-secondary'))return;
+    const strip=document.createElement('div');
+    strip.id='planet-strip-secondary';
+    strip.className='planet-strip planet-strip-secondary';
+    strip.innerHTML='<div class="planet-strip-inner"><div class="planet-ticker" data-planet-ticker>Se calculează pozițiile planetelor…</div></div>';
+    services.insertAdjacentElement('afterend',strip);
+  }
   function integrateForumLink(){
     const navLink=document.querySelector('.menu a[href="#comunitate"]');if(navLink){navLink.href='/forum/';navLink.textContent='Forum'}
     const section=document.getElementById('comunitate');if(!section||document.getElementById('forum-live-entry'))return;
@@ -35,6 +44,6 @@
     const entry=document.createElement('div');entry.id='forum-live-entry';entry.innerHTML='<div style="max-width:720px;margin:0 auto;text-align:center;padding:4px 0 10px"><a class="cta" href="/forum/">Intră în Forumul AstroVip</a><p style="margin:14px 0 0;color:var(--muted);font-size:14px">Discuții despre astrologie natală, previziuni, sinastrie, relocare, Local Space și numerologie.</p></div>';section.querySelector('.wrap')?.appendChild(entry);
   }
   function render(){if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;const{now,out}=calc();if(!out.length)return;document.querySelectorAll('[data-planet-ticker]').forEach(el=>{const seq=out.map(itemHtml).join('');el.innerHTML=`<div class="planet-track">${seq}${seq}</div>`});document.querySelectorAll('[data-planet-updated]').forEach(el=>{el.textContent=`actualizat ${now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'})}`});document.querySelectorAll('[data-planet-grid]').forEach(el=>{el.innerHTML=out.map(p=>`<article class="planet-card"><div class="big">${p.glyph}</div><strong>${p.label}</strong><span>${p.text}</span>${p.retro?'<div class="retro">Mișcare retrogradă ℞</div>':'<div>Mișcare directă</div>'}</article>`).join('')})}
-  function boot(){applyPageTuning();integrateAstroTools();integrateForumLink();let tries=0;const timer=setInterval(()=>{tries++;if(window.Astronomy&&typeof Astronomy.GeoVector==='function'&&typeof Astronomy.Ecliptic==='function'){clearInterval(timer);render();setInterval(render,60000)}else if(tries>80){clearInterval(timer);document.querySelectorAll('[data-planet-ticker]').forEach(el=>el.textContent='Pozițiile planetare live nu s-au putut încărca.')}},150)}
+  function boot(){applyPageTuning();integrateAstroTools();integrateSecondTicker();integrateForumLink();let tries=0;const timer=setInterval(()=>{tries++;if(window.Astronomy&&typeof Astronomy.GeoVector==='function'&&typeof Astronomy.Ecliptic==='function'){clearInterval(timer);render();setInterval(render,60000)}else if(tries>80){clearInterval(timer);document.querySelectorAll('[data-planet-ticker]').forEach(el=>el.textContent='Pozițiile planetare live nu s-au putut încărca.')}},150)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
