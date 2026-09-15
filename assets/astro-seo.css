@@ -1,6 +1,6 @@
 /* AstroVip shared styles for SEO guide pages + live planetary ticker */
 :root{--av-navy:#041126;--av-navy2:#082650;--av-blue:#0d5fb8;--av-electric:#39bfff;--av-green:#38f58a;--av-green2:#079c50;--av-pearl:#f8fbff;--av-muted:#c9d8ef;--av-line:rgba(56,245,138,.28);--av-shadow:0 24px 70px rgba(0,0,0,.28)}
-.planet-strip{position:sticky;top:78px;z-index:46;background:linear-gradient(180deg,rgba(2,13,28,.97),rgba(3,20,42,.96));border-top:2px solid rgba(56,245,138,.58);border-bottom:2px solid rgba(56,245,138,.58);box-shadow:0 8px 24px rgba(0,0,0,.18);overflow:hidden}
+.planet-strip{position:sticky;top:78px;z-index:46;background:linear-gradient(180deg,rgba(2,13,28,.97),rgba(3,20,42,.96));border-top:2px solid rgba(255,255,255,.95);border-bottom:2px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(0,0,0,.18);overflow:hidden}
 .planet-strip-inner{display:flex;align-items:center;gap:14px;min-height:44px}
 .planet-strip-label{flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:0 0 0 max(4%,calc((100vw - 1180px)/2));font-size:12px;font-weight:950;letter-spacing:.7px;text-transform:uppercase;color:#dcffe9;white-space:nowrap}
 .planet-live-dot{width:8px;height:8px;border-radius:50%;background:var(--av-green);box-shadow:0 0 14px rgba(56,245,138,.9)}
