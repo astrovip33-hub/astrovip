@@ -28,3 +28,9 @@
 
 /* AstroVip ticker: positions only */
 .planet-strip-inner{display:block;min-height:44px}.planet-ticker{width:100%;flex:none}.planet-track{padding-left:18px;padding-right:18px}.planet-strip-label,.planet-updated,.planet-live-dot{display:none!important}
+
+/* Mobile polish: larger/faster ticker + tighter hero crop */
+.planet-track{animation-duration:32s}
+.planet-item{font-size:21px}.planet-glyph{font-size:24px}
+@media(max-width:820px){.planet-track{gap:18px;animation-duration:32s}.planet-item{font-size:20px}.planet-glyph{font-size:24px}}
+@media(max-width:760px){.hero-mobile-portrait img{object-position:80% 58%;transform:scale(1.14)}}
