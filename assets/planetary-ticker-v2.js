@@ -25,6 +25,13 @@
     return {now,out};
   }
   const itemHtml=p=>`<span class="planet-item"><span class="planet-glyph">${p.glyph}</span><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′ ${p.symbol} ${p.sign}</span>${p.retro?'<span class="planet-retro" title="retrograd">℞</span>':''}</span>`;
+  function applyTickerTuning(){
+    if(document.getElementById('astrovip-ticker-tuning'))return;
+    const style=document.createElement('style');
+    style.id='astrovip-ticker-tuning';
+    style.textContent='.planet-track{animation-duration:52s!important}.planet-item{font-size:15px!important}.planet-glyph{font-size:20px!important}@media(max-width:820px){.planet-item{font-size:14px!important}.planet-glyph{font-size:19px!important}}';
+    document.head.appendChild(style);
+  }
   function render(){
     if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;
     const {now,out}=calc();if(!out.length)return;
@@ -33,6 +40,7 @@
     document.querySelectorAll('[data-planet-grid]').forEach(el=>{el.innerHTML=out.map(p=>`<article class="planet-card"><div class="big">${p.glyph}</div><strong>${p.label}</strong><span>${p.text}</span>${p.retro?'<div class="retro">Mișcare retrogradă ℞</div>':'<div>Mișcare directă</div>'}</article>`).join('')});
   }
   function boot(){
+    applyTickerTuning();
     let tries=0;const timer=setInterval(()=>{tries++;if(window.Astronomy&&typeof Astronomy.GeoVector==='function'&&typeof Astronomy.Ecliptic==='function'){clearInterval(timer);render();setInterval(render,60000)}else if(tries>80){clearInterval(timer);document.querySelectorAll('[data-planet-ticker]').forEach(el=>el.textContent='Pozițiile planetare live nu s-au putut încărca.')}},150);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
