@@ -1,0 +1,40 @@
+name: Align trust panels
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/align-trust-panels.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  align:
+    if: github.event.head_commit.message == 'Add one-time AstroVip alignment workflow'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Align trust panels on mobile
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = "@media(max-width:700px){.trust-refs{padding:18px 0 16px}.trust-icons-only{gap:8px}.trust-icon-only{height:clamp(108px,25vw,160px);padding:12px 10px;border-radius:7px}.trust-icon-only:first-child img{max-width:96%;max-height:92%}.trust-icon-only:last-child img{max-width:98%;max-height:80%}}"
+          new = "@media(max-width:700px){.trust-refs{padding:18px 0 16px}.trust-icons-only{gap:8px}.trust-icon-only{height:clamp(108px,25vw,160px);padding:12px 10px;border-radius:7px}.trust-icon-only:last-child{position:relative;top:14px}.trust-icon-only:first-child img{max-width:96%;max-height:92%}.trust-icon-only:last-child img{max-width:98%;max-height:80%}}"
+          if old not in s:
+              raise SystemExit('Target mobile trust CSS was not found; no file changed.')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+
+      - name: Commit change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Align trust panels on mobile"
+          git push
