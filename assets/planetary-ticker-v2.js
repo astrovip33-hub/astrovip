@@ -4,50 +4,6 @@
   const BODIES=[['Sun','Soare','☉'],['Moon','Lună','☽'],['Mercury','Mercur','☿'],['Venus','Venus','♀'],['Mars','Marte','♂'],['Jupiter','Jupiter','♃'],['Saturn','Saturn','♄'],['Uranus','Uranus','♅'],['Neptune','Neptun','♆'],['Pluto','Pluto','♇']];
   const norm=x=>((x%360)+360)%360;
   const dayDelta=(a,b)=>((b-a+540)%360)-180;
-
-  function directAssetUrl(value){
-    try{
-      const u=new URL(value,window.location.href);
-      if(u.pathname==='/.netlify/images'){
-        const asset=u.searchParams.get('url');
-        if(asset)return asset;
-      }
-    }catch(e){}
-    return value;
-  }
-
-  function fixLegacyNetlifyImages(){
-    document.querySelectorAll('img[src]').forEach(img=>{
-      const src=img.getAttribute('src')||'';
-      if(src.includes('/.netlify/images?')){
-        const fixed=directAssetUrl(src);
-        if(fixed&&fixed!==src)img.setAttribute('src',fixed);
-      }
-    });
-
-    document.querySelectorAll('source[srcset]').forEach(source=>{
-      const srcset=source.getAttribute('srcset')||'';
-      if(srcset.includes('/.netlify/images?')){
-        const fixed=srcset.split(',').map(part=>{
-          const bits=part.trim().split(/\s+/);
-          bits[0]=directAssetUrl(bits[0]);
-          return bits.join(' ');
-        }).join(', ');
-        source.setAttribute('srcset',fixed);
-      }
-    });
-
-    document.querySelectorAll('*').forEach(el=>{
-      const bg=getComputedStyle(el).backgroundImage;
-      if(!bg||!bg.includes('/.netlify/images?'))return;
-      const fixed=bg.replace(/url\((['"]?)(.*?)\1\)/g,(m,q,url)=>{
-        const direct=directAssetUrl(url);
-        return `url("${direct}")`;
-      });
-      if(fixed!==bg)el.style.backgroundImage=fixed;
-    });
-  }
-
   function geoLongitude(body,date){
     const eqj=Astronomy.GeoVector(body,date,true);
     return norm(Astronomy.Ecliptic(eqj).elon);
@@ -84,7 +40,6 @@
     document.querySelectorAll('[data-planet-grid]').forEach(el=>{el.innerHTML=out.map(p=>`<article class="planet-card"><div class="big">${p.glyph}</div><strong>${p.label}</strong><span>${p.text}</span>${p.retro?'<div class="retro">Mișcare retrogradă ℞</div>':'<div>Mișcare directă</div>'}</article>`).join('')});
   }
   function boot(){
-    fixLegacyNetlifyImages();
     applyTickerTuning();
     let tries=0;const timer=setInterval(()=>{tries++;if(window.Astronomy&&typeof Astronomy.GeoVector==='function'&&typeof Astronomy.Ecliptic==='function'){clearInterval(timer);render();setInterval(render,60000)}else if(tries>80){clearInterval(timer);document.querySelectorAll('[data-planet-ticker]').forEach(el=>el.textContent='Pozițiile planetare live nu s-au putut încărca.')}},150);
   }

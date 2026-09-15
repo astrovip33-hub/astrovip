@@ -1,13 +1,14 @@
 ASTROVIP — DEPLOYMENT STATUS
 
 Site: https://astrovip.ro
-Hosting: Netlify
+Hosting: Cloudflare
 Source: GitHub repository astrovip33-hub/astrovip
 
-Technical optimization enabled:
-- HTTPS / custom domain through Netlify
+Technical setup:
+- HTTPS and custom domain through Cloudflare
+- static assets served directly from /assets
 - security headers via _headers
 - robots.txt and sitemap.xml
-- Netlify/GitHub continuous deployment
+- automatic production deploy from the main branch
 
-Important: production deploys automatically when main is updated.
+Production is now Cloudflare-only.
