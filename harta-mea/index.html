@@ -16,7 +16,7 @@
 <header class="av-top">
   <div class="av-wrap av-nav">
     <a class="av-brand" href="/">ASTROVIP</a>
-    <span class="av-preview-badge">GRATUIT</span>
+    <nav class="av-mini-nav" aria-label="Instrumente AstroVip"><a href="/local-space/">Local Space</a><a href="/#contact">Consultație</a></nav>
   </div>
 </header>
 <main>
@@ -24,8 +24,8 @@
   <div class="av-wrap">
     <div class="av-kicker">Instrument astrologic interactiv</div>
     <h1>Harta mea <span>AstroVip</span></h1>
-    <p class="av-lead">Introdu data și ora nașterii și vezi imediat pozițiile planetelor în zodiacul tropical, într-o hartă vizuală premium.</p>
-    <div class="av-feature-pills"><span>10 corpuri</span><span>Grade exacte</span><span>Retrogradare</span><span>Aspecte majore</span></div>
+    <p class="av-lead">Introdu data, ora și locul nașterii. Datele geografice pregătesc profilul pentru Local Space, relocare și viitoarele calcule de axe.</p>
+    <div class="av-feature-pills"><span>10 corpuri</span><span>Locul nașterii</span><span>Grade exacte</span><span>Aspecte majore</span></div>
   </div>
 </section>
 <section class="av-tool-section">
@@ -37,19 +37,21 @@
         <label>Data nașterii<input id="natalDate" type="date" required></label>
         <label>Ora nașterii<input id="natalTime" type="time" step="60" required></label>
       </div>
+      <label>Locul nașterii<input id="birthPlace" autocomplete="address-level2" placeholder="Ex: București, România" required></label>
+      <div class="av-row av-coordinates">
+        <label>Latitudine <small>Nord + / Sud −</small><input id="birthLat" inputmode="decimal" type="number" min="-90" max="90" step="0.000001" placeholder="44.4268" required></label>
+        <label>Longitudine <small>Est + / Vest −</small><input id="birthLon" inputmode="decimal" type="number" min="-180" max="180" step="0.000001" placeholder="26.1025" required></label>
+      </div>
       <label>Fus orar la naștere
         <select id="natalOffset" required>
-          <option value="+02:00" selected>UTC +02:00</option>
-          <option value="+03:00">UTC +03:00</option>
-          <option value="+01:00">UTC +01:00</option>
-          <option value="+00:00">UTC +00:00</option>
+          <option value="+02:00" selected>UTC +02:00</option><option value="+03:00">UTC +03:00</option><option value="+01:00">UTC +01:00</option><option value="+00:00">UTC +00:00</option>
           <option value="-01:00">UTC −01:00</option><option value="-02:00">UTC −02:00</option><option value="-03:00">UTC −03:00</option><option value="-04:00">UTC −04:00</option><option value="-05:00">UTC −05:00</option><option value="-06:00">UTC −06:00</option><option value="-07:00">UTC −07:00</option><option value="-08:00">UTC −08:00</option><option value="-09:00">UTC −09:00</option><option value="-10:00">UTC −10:00</option><option value="-11:00">UTC −11:00</option><option value="-12:00">UTC −12:00</option>
           <option value="+04:00">UTC +04:00</option><option value="+05:00">UTC +05:00</option><option value="+05:30">UTC +05:30</option><option value="+06:00">UTC +06:00</option><option value="+07:00">UTC +07:00</option><option value="+08:00">UTC +08:00</option><option value="+09:00">UTC +09:00</option><option value="+10:00">UTC +10:00</option><option value="+11:00">UTC +11:00</option><option value="+12:00">UTC +12:00</option><option value="+13:00">UTC +13:00</option><option value="+14:00">UTC +14:00</option>
         </select>
       </label>
       <button class="av-primary" type="submit">CALCULEAZĂ HARTA</button>
-      <button class="av-demo" id="demoButton" type="button">Vezi un exemplu</button>
-      <p class="av-note">Versiunea actuală calculează pozițiile planetare și aspectele majore. Ascendentul și casele vor fi adăugate în etapa următoare.</p>
+      <button class="av-demo" id="demoButton" type="button">Vezi exemplul București</button>
+      <p class="av-note">Coordonatele sunt folosite pentru Local Space și sunt salvate numai în browserul tău. Pentru precizie, introdu coordonatele localității de naștere.</p>
     </form>
 
     <div class="av-panel av-wheel-panel">
@@ -71,8 +73,8 @@
       <div class="av-aspects" id="aspectGrid"></div>
     </div>
     <div class="av-upgrade">
-      <div><span class="av-step">URMEAZĂ</span><h3>Ascendent · Case · Sinastrie · Tranzite personale</h3><p>Aceste module vor fi integrate în aceeași interfață, etapizat.</p></div>
-      <a href="/#contact" class="av-primary av-link">Interpretare AstroVip 1:1</a>
+      <div><span class="av-step">LOCAL SPACE</span><h3>Transformă locul nașterii într-o busolă planetară</h3><p>Folosește aceleași date pentru azimuturile planetelor, direcțiile cardinale și varianta relocată pentru alt oraș.</p></div>
+      <a href="/local-space/" class="av-primary av-link">Deschide Local Space</a>
     </div>
   </div>
 </section>
