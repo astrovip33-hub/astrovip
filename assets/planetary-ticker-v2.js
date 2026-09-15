@@ -32,6 +32,20 @@
     style.textContent='.planet-track{animation-duration:43s!important}.planet-item{font-size:18px!important;gap:8px!important}.planet-glyph{font-size:23px!important}@media(max-width:820px){.planet-item{font-size:17px!important}.planet-glyph{font-size:22px!important}.planet-track{gap:19px!important}}';
     document.head.appendChild(style);
   }
+  function integrateForumLink(){
+    const navLink=document.querySelector('.menu a[href="#comunitate"]');
+    if(navLink){navLink.href='/forum/';navLink.textContent='Forum';}
+    const section=document.getElementById('comunitate');
+    if(!section||document.getElementById('forum-live-entry'))return;
+    const intro=section.querySelector('.title p');
+    if(intro)intro.textContent='Forum AstroVip are acum o pagină dedicată pentru categorii, subiecte, conturi și răspunsuri.';
+    const oldGrid=section.querySelector('.community-grid');
+    if(oldGrid)oldGrid.hidden=true;
+    const entry=document.createElement('div');
+    entry.id='forum-live-entry';
+    entry.innerHTML='<div style="max-width:720px;margin:0 auto;text-align:center;padding:4px 0 10px"><a class="cta" href="/forum/">Intră în Forumul AstroVip</a><p style="margin:14px 0 0;color:var(--muted);font-size:14px">Discuții despre astrologie natală, previziuni, sinastrie, relocare, Local Space și numerologie.</p></div>';
+    section.querySelector('.wrap')?.appendChild(entry);
+  }
   function render(){
     if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;
     const {now,out}=calc();if(!out.length)return;
@@ -41,6 +55,7 @@
   }
   function boot(){
     applyTickerTuning();
+    integrateForumLink();
     let tries=0;const timer=setInterval(()=>{tries++;if(window.Astronomy&&typeof Astronomy.GeoVector==='function'&&typeof Astronomy.Ecliptic==='function'){clearInterval(timer);render();setInterval(render,60000)}else if(tries>80){clearInterval(timer);document.querySelectorAll('[data-planet-ticker]').forEach(el=>el.textContent='Pozițiile planetare live nu s-au putut încărca.')}},150);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
