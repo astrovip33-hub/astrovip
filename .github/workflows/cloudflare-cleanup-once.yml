@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Remove Netlify dependencies and image optimizer URLs
+      - name: Remove legacy hosting dependencies and image optimizer URLs
         shell: bash
         run: |
           python - <<'PY'
@@ -57,7 +57,7 @@ jobs:
               '- security headers via _headers\n'
               '- robots.txt and sitemap.xml\n'
               '- automatic production deploy from the main branch\n\n'
-              'Netlify is no longer part of the production path.\n',
+              'Production is now Cloudflare-only.\n',
               encoding='utf-8'
           )
 
@@ -80,7 +80,7 @@ jobs:
                   leftovers.append(path.as_posix())
 
           if leftovers:
-              print('Remaining Netlify references:')
+              print('Remaining legacy-host references:')
               for item in leftovers:
                   print(item)
               raise SystemExit(1)
@@ -92,6 +92,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No cleanup changes needed."
           else
-            git commit -m "Remove Netlify dependencies; use Cloudflare direct assets [skip ci]"
+            git commit -m "Remove legacy hosting dependencies; use Cloudflare direct assets [skip ci]"
             git push
           fi
