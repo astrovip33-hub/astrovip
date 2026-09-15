@@ -1,0 +1,97 @@
+name: Cloudflare-only cleanup
+
+on:
+  push:
+    paths:
+      - '.github/workflows/cloudflare-cleanup-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove Netlify dependencies and image optimizer URLs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          image_url = re.compile(r'(?:https?://(?:www\.)?astrovip\.ro)?/\.netlify/images\?url=(/assets/[^&\'"\s)]+)(?:&(?:amp;)?[^\'"\s)]*)*')
+
+          for path in root.rglob('*'):
+              if not path.is_file() or '.git' in path.parts:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except (UnicodeDecodeError, OSError):
+                  continue
+              new = image_url.sub(r'\1', text)
+
+              if path.as_posix() == 'assets/planetary-ticker-v2.js':
+                  new = re.sub(
+                      r'\n\s*function directAssetUrl\(value\)\{.*?\n\s*function geoLongitude',
+                      '\n  function geoLongitude',
+                      new,
+                      flags=re.S,
+                  )
+                  new = new.replace('    fixLegacyNetlifyImages();\n', '')
+
+              if new != text:
+                  path.write_text(new, encoding='utf-8')
+
+          Path('README_IMPORTENT.txt').write_text(
+              'ASTROVIP — DEPLOYMENT STATUS\n\n'
+              'Site: https://astrovip.ro\n'
+              'Hosting: Cloudflare\n'
+              'Source: GitHub repository astrovip33-hub/astrovip\n\n'
+              'Technical setup:\n'
+              '- HTTPS and custom domain through Cloudflare\n'
+              '- static assets served directly from /assets\n'
+              '- security headers via _headers\n'
+              '- robots.txt and sitemap.xml\n'
+              '- automatic production deploy from the main branch\n\n'
+              'Netlify is no longer part of the production path.\n',
+              encoding='utf-8'
+          )
+
+          for obsolete in [
+              Path('.github/workflows/export-netlify-mcp-runtime-once.yml'),
+              Path('.github/workflows/cloudflare-cleanup-once.yml'),
+          ]:
+              if obsolete.exists():
+                  obsolete.unlink()
+
+          leftovers = []
+          for path in root.rglob('*'):
+              if not path.is_file() or '.git' in path.parts:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except (UnicodeDecodeError, OSError):
+                  continue
+              if 'netlify' in text.lower() or '.netlify' in text.lower():
+                  leftovers.append(path.as_posix())
+
+          if leftovers:
+              print('Remaining Netlify references:')
+              for item in leftovers:
+                  print(item)
+              raise SystemExit(1)
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No cleanup changes needed."
+          else
+            git commit -m "Remove Netlify dependencies; use Cloudflare direct assets [skip ci]"
+            git push
+          fi
