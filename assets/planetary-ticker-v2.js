@@ -29,7 +29,7 @@
     if(document.getElementById('astrovip-ticker-tuning'))return;
     const style=document.createElement('style');
     style.id='astrovip-ticker-tuning';
-    style.textContent='.planet-track{animation-duration:46s!important}.planet-item{font-size:17px!important;gap:8px!important}.planet-glyph{font-size:22px!important}@media(max-width:820px){.planet-item{font-size:16px!important}.planet-glyph{font-size:21px!important}.planet-track{gap:19px!important}}';
+    style.textContent='.planet-track{animation-duration:43s!important}.planet-item{font-size:18px!important;gap:8px!important}.planet-glyph{font-size:23px!important}@media(max-width:820px){.planet-item{font-size:17px!important}.planet-glyph{font-size:22px!important}.planet-track{gap:19px!important}}';
     document.head.appendChild(style);
   }
   function render(){
