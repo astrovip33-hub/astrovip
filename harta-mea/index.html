@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050505">
+<title>Harta mea AstroVip | Calculator hartă natală</title>
+<meta name="description" content="Calculează gratuit pozițiile planetelor din harta natală AstroVip: grade exacte, retrogradare și aspecte majore în zodiacul tropical.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://astrovip.ro/harta-mea/">
+<link rel="stylesheet" href="../assets/natal-calculator.css">
+<script defer src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+<script defer src="../assets/natal-calculator.js"></script>
+</head>
+<body>
+<header class="av-top">
+  <div class="av-wrap av-nav">
+    <a class="av-brand" href="/">ASTROVIP</a>
+    <span class="av-preview-badge">GRATUIT</span>
+  </div>
+</header>
+<main>
+<section class="av-hero">
+  <div class="av-wrap">
+    <div class="av-kicker">Instrument astrologic interactiv</div>
+    <h1>Harta mea <span>AstroVip</span></h1>
+    <p class="av-lead">Introdu data și ora nașterii și vezi imediat pozițiile planetelor în zodiacul tropical, într-o hartă vizuală premium.</p>
+    <div class="av-feature-pills"><span>10 corpuri</span><span>Grade exacte</span><span>Retrogradare</span><span>Aspecte majore</span></div>
+  </div>
+</section>
+<section class="av-tool-section">
+  <div class="av-wrap av-tool-grid">
+    <form class="av-panel av-form" id="natalForm">
+      <div class="av-panel-head"><div><span class="av-step">01</span><h2>Date natale</h2></div><span class="av-status">Tropical</span></div>
+      <label>Nume <small>opțional</small><input id="natalName" autocomplete="name" placeholder="Ex: Cristian"></label>
+      <div class="av-row">
+        <label>Data nașterii<input id="natalDate" type="date" required></label>
+        <label>Ora nașterii<input id="natalTime" type="time" step="60" required></label>
+      </div>
+      <label>Fus orar la naștere
+        <select id="natalOffset" required>
+          <option value="+02:00" selected>UTC +02:00</option>
+          <option value="+03:00">UTC +03:00</option>
+          <option value="+01:00">UTC +01:00</option>
+          <option value="+00:00">UTC +00:00</option>
+          <option value="-01:00">UTC −01:00</option><option value="-02:00">UTC −02:00</option><option value="-03:00">UTC −03:00</option><option value="-04:00">UTC −04:00</option><option value="-05:00">UTC −05:00</option><option value="-06:00">UTC −06:00</option><option value="-07:00">UTC −07:00</option><option value="-08:00">UTC −08:00</option><option value="-09:00">UTC −09:00</option><option value="-10:00">UTC −10:00</option><option value="-11:00">UTC −11:00</option><option value="-12:00">UTC −12:00</option>
+          <option value="+04:00">UTC +04:00</option><option value="+05:00">UTC +05:00</option><option value="+05:30">UTC +05:30</option><option value="+06:00">UTC +06:00</option><option value="+07:00">UTC +07:00</option><option value="+08:00">UTC +08:00</option><option value="+09:00">UTC +09:00</option><option value="+10:00">UTC +10:00</option><option value="+11:00">UTC +11:00</option><option value="+12:00">UTC +12:00</option><option value="+13:00">UTC +13:00</option><option value="+14:00">UTC +14:00</option>
+        </select>
+      </label>
+      <button class="av-primary" type="submit">CALCULEAZĂ HARTA</button>
+      <button class="av-demo" id="demoButton" type="button">Vezi un exemplu</button>
+      <p class="av-note">Versiunea actuală calculează pozițiile planetare și aspectele majore. Ascendentul și casele vor fi adăugate în etapa următoare.</p>
+    </form>
+
+    <div class="av-panel av-wheel-panel">
+      <div class="av-panel-head"><div><span class="av-step">02</span><h2>Harta vizuală</h2></div><span class="av-status" id="chartStatus">Așteaptă date</span></div>
+      <div class="av-wheel-shell" id="wheelShell">
+        <svg id="zodiacWheel" viewBox="0 0 420 420" aria-label="Hartă zodiacală"></svg>
+        <div class="av-wheel-center"><strong>ASTROVIP</strong><small id="wheelLabel">HARTA NATALĂ</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="av-results" id="resultsSection" hidden>
+  <div class="av-wrap">
+    <div class="av-section-title"><div class="av-kicker">Rezultatul tău</div><h2>Poziții planetare</h2><p id="resultMeta"></p></div>
+    <div class="av-planets" id="planetGrid"></div>
+    <div class="av-aspect-block">
+      <div class="av-section-title compact"><div class="av-kicker">Geometria hărții</div><h2>Aspecte majore</h2></div>
+      <div class="av-aspects" id="aspectGrid"></div>
+    </div>
+    <div class="av-upgrade">
+      <div><span class="av-step">URMEAZĂ</span><h3>Ascendent · Case · Sinastrie · Tranzite personale</h3><p>Aceste module vor fi integrate în aceeași interfață, etapizat.</p></div>
+      <a href="/#contact" class="av-primary av-link">Interpretare AstroVip 1:1</a>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="av-footer"><div class="av-wrap"><strong>ASTROVIP</strong><span>Astrologie & Numerologie Premium</span></div></footer>
+</body>
+</html>
