@@ -12,3 +12,4 @@ Technical setup:
 - automatic production deploy from the main branch
 
 Production is now Cloudflare-only.
+Migration cleanup verified on 2026-09-15.
