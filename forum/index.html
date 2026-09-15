@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a38">
+<title>Forum Astrologie | Comunitatea AstroVip</title>
+<meta name="description" content="Forum AstroVip pentru discuții despre astrologie natală, previziuni, sinastrie, relocare, Local Space și numerologie.">
+<link rel="canonical" href="https://astrovip.ro/forum/">
+<link rel="stylesheet" href="/forum/forum.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="/forum/config.js"></script>
+<script defer src="/forum/forum.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap nav">
+    <a class="brand" href="/">ASTROVIP</a>
+    <nav class="navlinks" aria-label="Navigare forum">
+      <a href="/">Site principal</a>
+      <a href="#categorii">Categorii</a>
+      <a href="#discutii">Discuții</a>
+    </nav>
+    <button class="btn ghost" id="authBtn" type="button">Autentificare</button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Comunitatea AstroVip</span>
+      <h1>Forum de astrologie</h1>
+      <p>Întrebări, experiențe și discuții aprofundate despre astrologie natală, timing, sinastrie, relocare și numerologie.</p>
+      <div class="hero-actions">
+        <button class="btn primary" id="newTopicTop" type="button">+ Subiect nou</button>
+        <a class="btn ghost" href="#discutii">Vezi discuțiile</a>
+      </div>
+    </div>
+    <aside class="status-card" aria-live="polite">
+      <span class="status-dot" id="statusDot"></span>
+      <div><strong id="statusTitle">Se verifică forumul…</strong><small id="statusText">Inițializare</small></div>
+    </aside>
+  </div>
+</section>
+
+<section class="wrap stats" aria-label="Statistici forum">
+  <div><strong id="statCategories">6</strong><span>Categorii</span></div>
+  <div><strong id="statTopics">0</strong><span>Subiecte</span></div>
+  <div><strong id="statReplies">0</strong><span>Răspunsuri</span></div>
+  <div><strong id="statMembers">—</strong><span>Membri</span></div>
+</section>
+
+<div class="wrap notice" id="demoNotice" hidden>
+  <strong>Mod demonstrativ</strong>
+  <span>Mesajele create acum sunt păstrate numai în acest browser. După conectarea bazei de date, forumul devine public pentru toți utilizatorii.</span>
+</div>
+
+<section class="wrap forum-layout" id="categorii">
+  <aside class="sidebar">
+    <div class="panel">
+      <div class="panel-head"><h2>Categorii</h2></div>
+      <div id="categoryList" class="category-list"></div>
+    </div>
+    <div class="panel rules">
+      <div class="panel-head"><h2>Reguli esențiale</h2></div>
+      <p>Respect reciproc, fără spam, fără date personale publicate fără acord și fără afirmații medicale sau juridice prezentate drept certitudini profesionale.</p>
+    </div>
+  </aside>
+
+  <section class="content" id="discutii">
+    <div class="panel">
+      <div class="panel-head toolbar">
+        <div><span class="kicker">Forum AstroVip</span><h2 id="topicHeading">Discuții recente</h2></div>
+        <button class="btn primary compact" id="newTopicBtn" type="button">+ Subiect nou</button>
+      </div>
+      <div class="filters">
+        <input id="searchInput" type="search" placeholder="Caută un subiect…" aria-label="Caută în forum">
+        <select id="sortSelect" aria-label="Sortează discuțiile"><option value="recent">Cele mai recente</option><option value="replies">Cele mai discutate</option></select>
+      </div>
+      <div id="topicList" class="topic-list"></div>
+    </div>
+  </section>
+</section>
+</main>
+
+<div class="modal" id="authModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="close" data-close="authModal" aria-label="Închide">×</button>
+    <span class="kicker">Cont AstroVip</span><h2 id="authTitle">Autentificare</h2>
+    <div class="tabs"><button class="tab active" data-auth-mode="login">Intră în cont</button><button class="tab" data-auth-mode="signup">Cont nou</button></div>
+    <form id="authForm">
+      <input id="displayName" type="text" placeholder="Nume afișat" autocomplete="nickname" hidden>
+      <input id="email" type="email" placeholder="Email" autocomplete="email" required>
+      <input id="password" type="password" placeholder="Parolă (minim 6 caractere)" autocomplete="current-password" minlength="6" required>
+      <button class="btn primary full" type="submit">Continuă</button>
+      <p class="form-msg" id="authMsg"></p>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="topicModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="topicModalTitle">
+    <button class="close" data-close="topicModal" aria-label="Închide">×</button>
+    <span class="kicker">Comunitatea AstroVip</span><h2 id="topicModalTitle">Subiect nou</h2>
+    <form id="topicForm">
+      <select id="topicCategory" required><option value="">Alege categoria</option></select>
+      <input id="topicTitle" type="text" maxlength="140" placeholder="Titlul subiectului" required>
+      <textarea id="topicBody" rows="7" maxlength="6000" placeholder="Scrie întrebarea sau ideea ta…" required></textarea>
+      <button class="btn primary full" type="submit">Publică subiectul</button>
+      <p class="form-msg" id="topicMsg"></p>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="threadModal" aria-hidden="true">
+  <div class="modal-card thread-card" role="dialog" aria-modal="true" aria-labelledby="threadTitle">
+    <button class="close" data-close="threadModal" aria-label="Închide">×</button>
+    <div id="threadContent"></div>
+    <form id="replyForm" class="reply-form">
+      <textarea id="replyBody" rows="4" maxlength="4000" placeholder="Scrie un răspuns…" required></textarea>
+      <button class="btn primary" type="submit">Răspunde</button>
+      <p class="form-msg" id="replyMsg"></p>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<footer><div class="wrap"><strong>ASTROVIP</strong> · Comunitate de astrologie · © 2026 <span>Astrologia oferă orientare simbolică și nu înlocuiește consultanța medicală, juridică sau financiară.</span></div></footer>
+</body>
+</html>
