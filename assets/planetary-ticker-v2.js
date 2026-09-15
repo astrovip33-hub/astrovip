@@ -11,15 +11,118 @@
   function applyPageTuning(){
     if(document.getElementById('astrovip-runtime-tuning'))return;
     const style=document.createElement('style');style.id='astrovip-runtime-tuning';
-    style.textContent=`.planet-track{animation-duration:43s!important}.planet-item{font-size:18px!important;gap:8px!important}.planet-glyph{font-size:23px!important}
-    .trust-refs{background:#172b54!important;padding-top:32px!important;padding-bottom:42px!important}
-    .trust-icons-only{display:grid!important;grid-template-columns:1fr!important;gap:24px!important;width:min(1120px,94%)!important;max-width:1120px!important;margin:0 auto!important}
-    .anpc-legal-card{min-height:150px;display:grid;grid-template-columns:330px 1fr;align-items:center;background:#fff;color:#10156d;border:4px solid rgba(55,65,150,.18);border-radius:36px;padding:0 28px;box-shadow:0 10px 34px rgba(0,0,0,.2);text-decoration:none!important;overflow:hidden;transition:.18s ease}
-    .anpc-legal-card.simple{grid-template-columns:1fr;min-height:154px;padding:18px 28px}.anpc-legal-card:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,0,0,.27)}
-    .anpc-logo{display:flex;align-items:center;justify-content:center;align-self:stretch;border-right:2px solid #d7d9e6;padding:18px 28px 18px 0}.anpc-logo img{display:block;width:100%;max-width:270px;max-height:108px;object-fit:contain}
-    .anpc-copy{text-align:center;padding:14px 10px}.anpc-copy strong{display:block;font-size:clamp(24px,3.15vw,46px);line-height:1.05;font-weight:950;letter-spacing:.2px;color:#131875;text-transform:uppercase}.anpc-detail{display:inline-flex;margin-top:15px;border-radius:999px;background:#1c197f;color:#fff!important;padding:8px 28px;font-size:18px;font-weight:950;box-shadow:inset 0 2px 0 rgba(255,255,255,.25)}
-    .anpc-ethics{text-align:center;margin:0 auto;color:#dbe6ff;font-size:13px}.anpc-ethics a{color:#fff;text-decoration:underline;font-weight:850}
-    @media(max-width:820px){.planet-item{font-size:17px!important}.planet-glyph{font-size:22px!important}.planet-track{gap:19px!important}.trust-icons-only{width:calc(100% - 24px)!important}.anpc-legal-card{grid-template-columns:1fr;min-height:0;padding:14px 16px 20px;border-radius:28px}.anpc-legal-card.simple{padding:20px 16px}.anpc-logo{border-right:0;border-bottom:1px solid #d7d9e6;padding:6px 0 14px;margin-bottom:8px}.anpc-logo img{max-width:240px;max-height:92px}.anpc-copy{padding:8px 3px 0}.anpc-copy strong{font-size:27px}.anpc-detail{font-size:16px;padding:7px 24px}}`;
+    style.textContent=`
+      .planet-track{animation-duration:30s!important}
+      .planet-item{font-size:21px!important;gap:8px!important}
+      .planet-glyph{font-size:25px!important}
+
+      body:not(.guide-page) #repere-incredere{
+        padding:18px 0 20px!important;
+        background:linear-gradient(180deg,#07152f 0%,#031026 100%)!important;
+      }
+      body:not(.guide-page) #repere-incredere:before,
+      body:not(.guide-page) #repere-incredere:after,
+      body:not(.guide-page) #repere-incredere .trust-minibox:before,
+      body:not(.guide-page) #repere-incredere .trust-minibox:after{
+        display:none!important;
+        content:none!important;
+      }
+      body:not(.guide-page) #repere-incredere .trust-minibox{
+        width:100%!important;
+        max-width:1180px!important;
+        margin:0 auto!important;
+      }
+      body:not(.guide-page) #repere-incredere .trust-icons-only{
+        display:flex!important;
+        grid-template-columns:none!important;
+        justify-content:center!important;
+        align-items:center!important;
+        gap:14px!important;
+        width:100%!important;
+        margin:0 auto!important;
+      }
+      body:not(.guide-page) #repere-incredere .trust-icon-only{
+        display:flex!important;
+        flex-direction:row!important;
+        align-items:center!important;
+        justify-content:center!important;
+        flex:0 1 300px!important;
+        width:300px!important;
+        max-width:calc((100% - 14px)/2)!important;
+        height:108px!important;
+        min-height:108px!important;
+        padding:12px 18px!important;
+        border:1px solid #e6e9ee!important;
+        border-radius:10px!important;
+        background:#fff!important;
+        box-shadow:0 10px 26px rgba(0,0,0,.18)!important;
+        overflow:hidden!important;
+        transform:none!important;
+      }
+      body:not(.guide-page) #repere-incredere .trust-icon-only:before,
+      body:not(.guide-page) #repere-incredere .trust-icon-only:after{
+        display:none!important;
+        content:none!important;
+      }
+      body:not(.guide-page) #repere-incredere .trust-icon-only img,
+      body:not(.guide-page) #repere-incredere .trust-icon-only:first-child img,
+      body:not(.guide-page) #repere-incredere .trust-icon-only:last-child img{
+        display:block!important;
+        order:initial!important;
+        width:auto!important;
+        height:auto!important;
+        max-width:96%!important;
+        max-height:82%!important;
+        margin:0 auto!important;
+        object-fit:contain!important;
+      }
+
+      @media(max-width:820px){
+        .planet-track{animation-duration:29s!important;gap:18px!important}
+        .planet-item{font-size:20px!important}
+        .planet-glyph{font-size:24px!important}
+
+        body:not(.guide-page){
+          width:100%!important;
+          min-width:0!important;
+          max-width:100%!important;
+          margin-left:0!important;
+          margin-right:0!important;
+          overflow-x:hidden!important;
+        }
+        body:not(.guide-page) .wrap{
+          width:calc(100% - 28px)!important;
+          max-width:1180px!important;
+          margin-left:auto!important;
+          margin-right:auto!important;
+        }
+        body:not(.guide-page) .grid,
+        body:not(.guide-page) .steps,
+        body:not(.guide-page) .split,
+        body:not(.guide-page) .contact-grid,
+        body:not(.guide-page) .community-grid,
+        body:not(.guide-page) .booking-wrap,
+        body:not(.guide-page) .price-grid,
+        body:not(.guide-page) .box{
+          min-width:0!important;
+          max-width:100%!important;
+        }
+        body:not(.guide-page) #repere-incredere{padding:12px 0 14px!important}
+        body:not(.guide-page) #repere-incredere .trust-icons-only{gap:9px!important}
+        body:not(.guide-page) #repere-incredere .trust-icon-only{
+          flex:0 1 142px!important;
+          width:142px!important;
+          max-width:calc((100% - 9px)/2)!important;
+          height:64px!important;
+          min-height:64px!important;
+          padding:7px 9px!important;
+          border-radius:7px!important;
+          box-shadow:0 7px 18px rgba(0,0,0,.20)!important;
+        }
+        body:not(.guide-page) #repere-incredere .trust-icon-only:first-child img{max-width:91%!important;max-height:88%!important}
+        body:not(.guide-page) #repere-incredere .trust-icon-only:last-child img{max-width:96%!important;max-height:76%!important}
+      }
+    `;
     document.head.appendChild(style);
   }
   function integrateForumLink(){
@@ -30,9 +133,8 @@
     const entry=document.createElement('div');entry.id='forum-live-entry';entry.innerHTML='<div style="max-width:720px;margin:0 auto;text-align:center;padding:4px 0 10px"><a class="cta" href="/forum/">Intră în Forumul AstroVip</a><p style="margin:14px 0 0;color:var(--muted);font-size:14px">Discuții despre astrologie natală, previziuni, sinastrie, relocare, Local Space și numerologie.</p></div>';section.querySelector('.wrap')?.appendChild(entry);
   }
   function integrateConsumerLinks(){
-    const host=document.querySelector('#repere-incredere .trust-icons-only')||document.querySelector('.trust-icons-only');if(!host||host.dataset.anpcUpdated==='1')return;
-    host.dataset.anpcUpdated='1';
-    host.innerHTML=`<a class="anpc-legal-card" href="https://anpc.ro/sal/" target="_blank" rel="noopener noreferrer" aria-label="ANPC - Soluționarea Alternativă a Litigiilor"><span class="anpc-logo"><img src="/assets/anpc.png" alt="ANPC - Protecția Consumatorilor"></span><span class="anpc-copy"><strong>Soluționarea alternativă<br>a litigiilor</strong><span class="anpc-detail">DETALII</span></span></a><a class="anpc-legal-card simple" href="https://reclamatiisal.anpc.ro/Depune-cerere-SAL" target="_blank" rel="noopener noreferrer" aria-label="Depune online o reclamație SAL"><span class="anpc-copy"><strong>Depune online<br>o reclamație SAL</strong><span class="anpc-detail">DETALII</span></span></a><div class="anpc-ethics">Referință profesională suplimentară: <a href="https://www.aar.org.ro/codul-etic/" target="_blank" rel="noopener noreferrer">Codul Etic al Astrologului</a></div>`;
+    const host=document.querySelector('#repere-incredere .trust-icons-only')||document.querySelector('.trust-icons-only');
+    if(host)host.dataset.anpcUpdated='1';
   }
   function render(){if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;const{now,out}=calc();if(!out.length)return;document.querySelectorAll('[data-planet-ticker]').forEach(el=>{const seq=out.map(itemHtml).join('');el.innerHTML=`<div class="planet-track">${seq}${seq}</div>`});document.querySelectorAll('[data-planet-updated]').forEach(el=>{el.textContent=`actualizat ${now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'})}`});document.querySelectorAll('[data-planet-grid]').forEach(el=>{el.innerHTML=out.map(p=>`<article class="planet-card"><div class="big">${p.glyph}</div><strong>${p.label}</strong><span>${p.text}</span>${p.retro?'<div class="retro">Mișcare retrogradă ℞</div>':'<div>Mișcare directă</div>'}</article>`).join('')})}
   function boot(){applyPageTuning();integrateForumLink();integrateConsumerLinks();let tries=0;const timer=setInterval(()=>{tries++;if(window.Astronomy&&typeof Astronomy.GeoVector==='function'&&typeof Astronomy.Ecliptic==='function'){clearInterval(timer);render();setInterval(render,60000)}else if(tries>80){clearInterval(timer);document.querySelectorAll('[data-planet-ticker]').forEach(el=>el.textContent='Pozițiile planetare live nu s-au putut încărca.')}},150)}
