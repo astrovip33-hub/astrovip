@@ -202,3 +202,59 @@ body:not(.guide-page) #servicii .grid .card img.service-art-portrait{
   body:not(.guide-page) #servicii .grid .card img{padding:8px!important}
   body:not(.guide-page) #servicii .grid .card img.service-art-portrait{padding:0!important}
 }
+
+
+/* Preview 2026-09-16 — repair embedded-text image framing. */
+/* Keep the complete Local Space artwork and all embedded copy visible. */
+body:not(.guide-page) #relocare .split > img{
+  width:100%!important;
+  height:auto!important;
+  max-height:none!important;
+  aspect-ratio:1/1!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:10px!important;
+  background:linear-gradient(180deg,rgba(7,18,34,.96),rgba(5,12,24,.98))!important;
+}
+
+/* Present the vertical AstroVip artwork as a complete poster, not a landscape crop. */
+body:not(.guide-page) .why .portrait-wrap{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:12px!important;
+  background:linear-gradient(180deg,rgba(7,18,34,.96),rgba(5,12,24,.98))!important;
+}
+body:not(.guide-page) .why .portrait-wrap img{
+  width:min(100%,420px)!important;
+  height:auto!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+
+/* Hide the narrow exported fragment at the right edge of the Techniques artwork. */
+body:not(.guide-page) #servicii img[alt="Consultație astrologică premium"]{
+  clip-path:inset(0 5.2% 0 0)!important;
+  transform:scaleX(1.055)!important;
+  transform-origin:left center!important;
+}
+
+@media(max-width:820px){
+  body:not(.guide-page) #relocare .split > img{
+    width:100vw!important;
+    height:auto!important;
+    max-height:none!important;
+    aspect-ratio:1/1!important;
+    padding:8px!important;
+  }
+  body:not(.guide-page) .why .portrait-wrap{
+    padding:10px!important;
+  }
+  body:not(.guide-page) .why .portrait-wrap img{
+    width:min(100%,360px)!important;
+    height:auto!important;
+    max-height:none!important;
+  }
+}
