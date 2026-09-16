@@ -1,105 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://astrovip.ro/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/astrolog-bucuresti/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/consultatie-astrologica/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/harta-natala/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/astrologie-predictiva/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/sinastrie/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/astrocartografie-local-space/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/numerologie/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/rectificare-ora-nasterii/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/pozitii-planete-live/</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/harta-mea/</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/local-space/</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/relocare-geografica/</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/astrocartografie/</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/sinastrie-calculator/</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/personalitati/</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://astrovip.ro/comunitate/</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
+<url><loc>https://astrovip.ro/</loc></url>
+<url><loc>https://astrovip.ro/astrocartografie-local-space/</loc></url>
+<url><loc>https://astrovip.ro/astrocartografie/</loc></url>
+<url><loc>https://astrovip.ro/astrolog-bucuresti/</loc></url>
+<url><loc>https://astrovip.ro/astrologie-predictiva/</loc></url>
+<url><loc>https://astrovip.ro/comunitate/</loc></url>
+<url><loc>https://astrovip.ro/consultatie-astrologica/</loc></url>
+<url><loc>https://astrovip.ro/forum/</loc></url>
+<url><loc>https://astrovip.ro/harta-mea/</loc></url>
+<url><loc>https://astrovip.ro/harta-natala/</loc></url>
+<url><loc>https://astrovip.ro/harta-personalitate/</loc></url>
+<url><loc>https://astrovip.ro/local-space/</loc></url>
+<url><loc>https://astrovip.ro/numerologie/</loc></url>
+<url><loc>https://astrovip.ro/personalitati/</loc></url>
+<url><loc>https://astrovip.ro/pozitii-planete-live/</loc></url>
+<url><loc>https://astrovip.ro/rectificare-ora-nasterii/</loc></url>
+<url><loc>https://astrovip.ro/relocare-geografica/</loc></url>
+<url><loc>https://astrovip.ro/sinastrie-calculator/</loc></url>
+<url><loc>https://astrovip.ro/sinastrie/</loc></url>
+<url><loc>https://astrovip.ro/toate-paginile/</loc></url>
 </urlset>

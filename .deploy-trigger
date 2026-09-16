@@ -1,6 +1,1 @@
-AstroVip deployment trigger
-2026-09-16 16:55 Europe/Bucharest
-Purpose: force a fresh Cloudflare Pages production deployment to bypass stale edge/browser cache.
-Domain: https://astrovip.ro/ and https://www.astrovip.ro/
-Cache policy is already no-cache, must-revalidate via _headers.
-Reason: refresh production after cache mismatch without TinyFish and without changing site content.
+Complete site restoration and resource refresh: 2026-09-16
