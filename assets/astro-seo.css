@@ -261,9 +261,9 @@ body:not(.guide-page) #servicii img[alt="Consultație astrologică premium"]{
 
 /* Preview 2026-09-16 — larger call banner and level trust frames. */
 body:not(.guide-page) header .nav-actions > .cta{
-  min-width:116px!important;
+  min-width:108px!important;
   min-height:50px!important;
-  padding:12px 20px!important;
+  padding:12px 12px!important;
   font-size:18px!important;
   line-height:1.1!important;
   letter-spacing:.1px!important;
