@@ -179,6 +179,7 @@ body:not(.guide-page) .foot{background-color:rgba(2,7,5,.96)!important;border-co
 /* Preview: preserve the complete artwork and embedded copy in service-card images. */
 body:not(.guide-page) #servicii .grid .card img{
   aspect-ratio:1/1!important;
+  height:auto!important;
   min-height:0!important;
   object-fit:contain!important;
   object-position:center!important;
