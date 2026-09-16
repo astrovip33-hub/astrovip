@@ -6,8 +6,16 @@
     s.async=false;
     document.head.appendChild(s);
   }
+  function loadWithCallback(src,cb){
+    const s=document.createElement('script');
+    s.src=src;
+    s.async=false;
+    s.onload=cb||null;
+    s.onerror=cb||null;
+    document.head.appendChild(s);
+  }
 
-  // Preview 2026-09-16 — compact desktop reading rhythm across shared guide pages.
+  // Compact desktop reading rhythm across shared guide pages.
   const style=document.createElement('style');
   style.textContent=`
     @media (min-width:981px){
@@ -37,4 +45,17 @@
 
   load('/assets/planetary-ticker-core.js?v=20260916');
   load('/assets/home-opportunities.js?v=20260916');
+
+  // AstroVip spectacular motion layer — homepage only. Falls back cleanly if CDN is unavailable.
+  if(location.pathname==='/' || location.pathname==='/index.html'){
+    const css=document.createElement('link');
+    css.rel='stylesheet';
+    css.href='/assets/astrovip-motion.css?v=20260916-2328';
+    document.head.appendChild(css);
+    loadWithCallback('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js',function(){
+      loadWithCallback('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js',function(){
+        load('/assets/astrovip-motion.js?v=20260916-2328');
+      });
+    });
+  }
 })();
