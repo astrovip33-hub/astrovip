@@ -50,11 +50,11 @@
   if(location.pathname==='/' || location.pathname==='/index.html'){
     const css=document.createElement('link');
     css.rel='stylesheet';
-    css.href='/assets/astrovip-motion.css?v=20260916-2328';
+    css.href='/assets/astrovip-motion.css?v=20260916-2339';
     document.head.appendChild(css);
     loadWithCallback('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js',function(){
       loadWithCallback('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js',function(){
-        load('/assets/astrovip-motion.js?v=20260916-2328');
+        load('/assets/astrovip-motion.js?v=20260916-2339');
       });
     });
   }
