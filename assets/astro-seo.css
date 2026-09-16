@@ -236,8 +236,8 @@ body:not(.guide-page) .why .portrait-wrap img{
 
 /* Hide the narrow exported fragment at the right edge of the Techniques artwork. */
 body:not(.guide-page) #servicii img[alt="Consultație astrologică premium"]{
-  clip-path:inset(0 2.8% 0 0)!important;
-  transform:scaleX(1.029)!important;
+  clip-path:inset(0 5.2% 0 0)!important;
+  transform:scaleX(1.055)!important;
   transform-origin:left center!important;
 }
 
