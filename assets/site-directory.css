@@ -3,3 +3,28 @@
 
 /* This section is inserted after the initial reveal observer has scanned the page. */
 #oportunitati-astrovip .reveal{opacity:1;transform:none;visibility:visible}
+
+/* Preview 2026-09-16 — remove the bottom “Toate paginile” directory. */
+.av-directory{display:none!important}
+
+/* Preview 2026-09-16 — denser desktop typography and layout with less dead space. */
+@media (min-width:981px){
+  body:not(.guide-page) section{padding-top:62px!important;padding-bottom:62px!important}
+  body:not(.guide-page) .title{margin-bottom:28px!important}
+  body:not(.guide-page) .title h2{max-width:28ch!important}
+  body:not(.guide-page) .title p{max-width:78ch!important;line-height:1.52!important}
+  body:not(.guide-page) .section-heading{max-width:30ch!important}
+  body:not(.guide-page) .section-copy{max-width:none!important;margin-bottom:18px!important;line-height:1.52!important}
+  body:not(.guide-page) .grid{gap:16px!important;align-items:start!important}
+  body:not(.guide-page) .card{height:auto!important}
+  body:not(.guide-page) .card .pad{height:auto!important;padding:20px!important}
+  body:not(.guide-page) .card p{max-width:none!important;margin-bottom:14px!important;line-height:1.5!important}
+  body:not(.guide-page) .card .btn2{margin-top:10px!important}
+  body:not(.guide-page) .steps{gap:12px!important;align-items:start!important}
+  body:not(.guide-page) .step{padding:20px!important}
+  body:not(.guide-page) .step p{line-height:1.5!important}
+  body:not(.guide-page) .split{gap:28px!important;align-items:start!important}
+  body:not(.guide-page) .list{gap:8px!important}
+  body:not(.guide-page) .list div{padding:11px 14px!important}
+  body:not(.guide-page) .contact-grid{gap:18px!important;align-items:start!important}
+}
