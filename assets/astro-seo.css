@@ -175,3 +175,16 @@ body:not(.guide-page) .foot{background-color:rgba(2,7,5,.96)!important;border-co
   body:not(.guide-page) .title h2{font-size:31px!important}
   body:not(.guide-page) .section-heading{font-size:30px!important}
 }
+
+/* Preview: preserve the complete artwork and embedded copy in service-card images. */
+body:not(.guide-page) #servicii .grid .card img{
+  aspect-ratio:1/1!important;
+  min-height:0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:10px!important;
+  background:linear-gradient(180deg,rgba(7,18,34,.96),rgba(5,12,24,.98))!important;
+}
+@media(max-width:820px){
+  body:not(.guide-page) #servicii .grid .card img{padding:8px!important}
+}
