@@ -462,3 +462,15 @@ body:not(.guide-page) .trust-icon-only:nth-child(2) img{
     max-height:76%!important;
   }
 }
+
+/* Preview 2026-09-16 — mobile hierarchy: commercial frame first. */
+@media(max-width:820px){
+  body:not(.guide-page) .trust-commerce-card{
+    order:-1;
+    grid-column:1 / -1;
+    margin:0 auto!important;
+  }
+  body:not(.guide-page) .trust-icon-only{
+    order:0;
+  }
+}
