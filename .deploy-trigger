@@ -1,4 +1,5 @@
 AstroVip deployment trigger
 2026-09-16 Europe/Bucharest
-Purpose: force production redeploy after approved publication of the PFA professional identity box in the homepage footer.
-Production content includes: Astrolog autorizat · Smaranda Cristian Cătălin PFA · CUI 50191527 · IBAN RO08BTRLRONCRT0CS6331801
+Purpose: force production redeploy after approved trust-logo fill publication.
+Production content includes: enlarged ANPC and Codul Etic logos inside the three aligned mobile trust cards; Cod CAEN 9699 remains centered between them.
+Reason: main was updated but the live Cloudflare deployment continued serving the previous visual version.
