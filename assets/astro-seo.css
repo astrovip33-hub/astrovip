@@ -186,6 +186,19 @@ body:not(.guide-page) #servicii .grid .card img{
   padding:10px!important;
   background:linear-gradient(180deg,rgba(7,18,34,.96),rgba(5,12,24,.98))!important;
 }
+/* Two source files are portrait exports with a narrow strip from the previous
+   artwork on the left. Keep their full copy legible and crop only that strip. */
+body:not(.guide-page) #servicii .grid .card img.service-art-portrait{
+  width:109.65%!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:auto!important;
+  margin-left:-9.65%!important;
+  padding:0!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+}
 @media(max-width:820px){
   body:not(.guide-page) #servicii .grid .card img{padding:8px!important}
+  body:not(.guide-page) #servicii .grid .card img.service-art-portrait{padding:0!important}
 }
