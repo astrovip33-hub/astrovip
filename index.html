@@ -450,3 +450,5 @@
     document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();const vals={n:document.getElementById('bookName').value.trim(),p:document.getElementById('bookPhone').value.trim(),s:document.getElementById('bookService').value,d:document.getElementById('bookDate').value,t:document.getElementById('bookTime').value,m:document.getElementById('bookMode').value,note:document.getElementById('bookNote').value.trim()};const text=`Bună ziua! Doresc o programare AstroVip. Nume: ${vals.n}. Telefon: ${vals.p}. Serviciu: ${vals.s}. Data preferată: ${vals.d}. Interval: ${vals.t}. Format: ${vals.m}.${vals.note?` Detalii: ${vals.note}`:''}`;window.open('https://wa.me/40722128220?text='+encodeURIComponent(text),'_blank','noopener')});
 
   </script>
+</body>
+</html>
