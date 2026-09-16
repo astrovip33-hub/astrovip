@@ -821,3 +821,5 @@ body:not(.guide-page) .trust-icon-only[aria-label^="Codul Etic"] img{
     height:auto!important;
     min-height:0!important;
     aspect-ratio:1 / 1!important;
+  }
+}
