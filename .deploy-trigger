@@ -1,5 +1,4 @@
 AstroVip deployment trigger
 2026-09-16 Europe/Bucharest
-Purpose: force production redeploy of current main after approved publication of the Relocare geografică, Sinastrie and Astrocartografie calculators.
-Production commit before trigger: 285dbb35c40be8818f0d564f9946a59467e46319
-Expected live routes: /relocare-geografica/ · /sinastrie-calculator/ · /astrocartografie/
+Purpose: force production redeploy after approved publication of the PFA professional identity box in the homepage footer.
+Production content includes: Astrolog autorizat · Smaranda Cristian Cătălin PFA · CUI 50191527 · IBAN RO08BTRLRONCRT0CS6331801
