@@ -63,3 +63,67 @@
   body:not(.guide-page) .trust-icon-only:first-child img{max-width:91%!important;max-height:88%!important}
   body:not(.guide-page) .trust-icon-only:last-child img{max-width:96%!important;max-height:76%!important}
 }
+
+/* Preview 2026-09-16 — optimal text framing, no production deploy */
+body:not(.guide-page) .hero-content,
+body:not(.guide-page) .title,
+body:not(.guide-page) .split > div,
+body:not(.guide-page) .box,
+body:not(.guide-page) .card .pad,
+body:not(.guide-page) .price-card,
+body:not(.guide-page) .step{min-width:0}
+body:not(.guide-page) .hero h1,
+body:not(.guide-page) .hero .lead,
+body:not(.guide-page) .title h2,
+body:not(.guide-page) .section-heading,
+body:not(.guide-page) .card h3,
+body:not(.guide-page) .price-card h3,
+body:not(.guide-page) .step h3,
+body:not(.guide-page) .box h2{text-wrap:balance;word-break:normal;overflow-wrap:normal;hyphens:none}
+body:not(.guide-page) .hero .sub,
+body:not(.guide-page) .title p,
+body:not(.guide-page) .section-copy,
+body:not(.guide-page) .card p,
+body:not(.guide-page) .price-card p,
+body:not(.guide-page) .step p,
+body:not(.guide-page) .box p,
+body:not(.guide-page) .forum-post p{text-wrap:pretty;word-break:normal;overflow-wrap:break-word}
+body:not(.guide-page) .hero h1{max-width:12.5ch}
+body:not(.guide-page) .hero .lead{max-width:27ch}
+body:not(.guide-page) .hero .sub{max-width:58ch}
+body:not(.guide-page) .title h2{max-width:20ch;margin-left:auto;margin-right:auto}
+body:not(.guide-page) .title p{max-width:68ch;margin-left:auto;margin-right:auto}
+body:not(.guide-page) .section-heading{max-width:19ch}
+body:not(.guide-page) .section-copy{max-width:64ch}
+body:not(.guide-page) .card .pad{display:flex;flex-direction:column;align-items:flex-start;height:100%}
+body:not(.guide-page) .card p{max-width:62ch}
+body:not(.guide-page) .card .btn2{margin-top:auto}
+body:not(.guide-page) .cta,
+body:not(.guide-page) .btn2{text-align:center;line-height:1.2;white-space:normal}
+body:not(.guide-page) .list div{line-height:1.42}
+body:not(.guide-page) .price-card li{line-height:1.42}
+body:not(.guide-page) .box a,
+body:not(.guide-page) .foot a{overflow-wrap:anywhere}
+@media(max-width:820px){
+  body:not(.guide-page) .hero-content{padding-left:2px;padding-right:2px}
+  body:not(.guide-page) .hero h1{max-width:13ch;font-size:clamp(36px,10vw,42px);line-height:1.02}
+  body:not(.guide-page) .hero .lead{max-width:30ch;font-size:clamp(21px,6vw,25px);line-height:1.16}
+  body:not(.guide-page) .hero .sub{max-width:100%;font-size:16px;line-height:1.55}
+  body:not(.guide-page) .title{max-width:680px}
+  body:not(.guide-page) .title h2{max-width:17ch;font-size:clamp(31px,8.5vw,36px);line-height:1.08}
+  body:not(.guide-page) .title p{max-width:36ch;font-size:16px;line-height:1.58}
+  body:not(.guide-page) .section-heading{max-width:17ch;font-size:clamp(30px,8vw,34px);line-height:1.1}
+  body:not(.guide-page) .section-copy{max-width:40ch;font-size:16px;line-height:1.62}
+  body:not(.guide-page) .card h3{max-width:22ch}
+  body:not(.guide-page) .card p{font-size:15px;line-height:1.58}
+  body:not(.guide-page) .step p,
+  body:not(.guide-page) .price-card p,
+  body:not(.guide-page) .box p{line-height:1.58}
+  body:not(.guide-page) .eyebrow{max-width:100%;text-align:left}
+}
+@media(max-width:390px){
+  body:not(.guide-page) .hero h1{font-size:clamp(34px,9.8vw,38px)}
+  body:not(.guide-page) .hero .lead{font-size:clamp(20px,5.8vw,22px)}
+  body:not(.guide-page) .title h2{font-size:clamp(29px,8.3vw,32px)}
+  body:not(.guide-page) .section-heading{font-size:clamp(29px,8vw,31px)}
+}
