@@ -528,8 +528,8 @@ body:not(.guide-page) .trust-icon-only:nth-child(2) img{
   body:not(.guide-page) .trust-commerce-points span{
     min-height:19px!important;
     padding:3px 3px!important;
-    font-size:8px!important;
-    line-height:1.05!important;
+    font-size:9px!important;
+    line-height:1.08!important;
     white-space:normal!important;
   }
   body:not(.guide-page) .trust-commerce-points span::before{
