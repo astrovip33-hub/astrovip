@@ -1,4 +1,5 @@
 AstroVip deployment trigger
-2026-09-15 Europe/Bucharest
-Purpose: force redeploy current main to all connected hosting projects after approved mobile trust-card alignment fix.
-Expected mobile trust cards: two equal cards, 142x64px, centered, 9px gap.
+2026-09-16 Europe/Bucharest
+Purpose: force production redeploy of current main after approved publication of the Relocare geografică, Sinastrie and Astrocartografie calculators.
+Production commit before trigger: 285dbb35c40be8818f0d564f9946a59467e46319
+Expected live routes: /relocare-geografica/ · /sinastrie-calculator/ · /astrocartografie/
