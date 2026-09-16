@@ -146,3 +146,43 @@ body:not(.guide-page) #contact .contact-grid > .box:first-child .btn2{
   body:not(.guide-page) #contact .contact-info a,
   body:not(.guide-page) #contact .contact-info span{min-height:40px;font-size:14px}
 }
+
+/* Preview 2026-09-16 — emerald green company/contact panel. */
+body:not(.guide-page) #contact .contact-grid > .box:first-child{
+  border-color:rgba(246,199,95,.96)!important;
+  background:
+    radial-gradient(circle at 14% 10%,rgba(116,255,171,.30),transparent 34%),
+    radial-gradient(circle at 90% 88%,rgba(246,199,95,.18),transparent 36%),
+    linear-gradient(145deg,#0f6a3d 0%,#075333 46%,#032f20 100%)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 0 46px rgba(0,22,12,.18),
+    0 22px 54px rgba(0,0,0,.42),
+    0 0 34px rgba(56,245,138,.18),
+    0 0 26px rgba(246,199,95,.10)!important;
+}
+body:not(.guide-page) #contact .contact-grid > .box:first-child::before{
+  border-color:rgba(255,223,139,.38)!important;
+}
+body:not(.guide-page) #contact .contact-grid > .box:first-child .kicker{
+  color:#ffe29a!important;
+  text-shadow:0 0 12px rgba(246,199,95,.22);
+}
+body:not(.guide-page) #contact .contact-grid > .box:first-child h2{
+  color:#ffffff!important;
+  text-shadow:0 2px 16px rgba(0,0,0,.24);
+}
+body:not(.guide-page) #contact .contact-grid > .box:first-child > p{
+  color:#e6f5eb!important;
+}
+body:not(.guide-page) #contact .contact-info a,
+body:not(.guide-page) #contact .contact-info span{
+  border-color:rgba(255,231,170,.34)!important;
+  background:linear-gradient(180deg,rgba(2,39,24,.42),rgba(1,24,15,.34))!important;
+  color:#ffffff!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+body:not(.guide-page) #contact .contact-info a:hover{
+  border-color:rgba(255,225,146,.76)!important;
+  background:rgba(255,223,139,.09)!important;
+}
