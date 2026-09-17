@@ -69,7 +69,7 @@
         el.innerHTML=`<div class="planet-track"><div class="planet-sequence" role="list">${seq}</div><div class="planet-sequence" aria-hidden="true">${seq}</div></div>`;
         track=el.querySelector('.planet-track');
         const width=track.firstElementChild.getBoundingClientRect().width;
-        if(width)track.style.setProperty('--ticker-duration',`${Math.max(60,width/35)}s`);
+        if(width)track.style.setProperty('--ticker-duration',`${Math.max(30,width/70)}s`);
         const strip=el.closest('.planet-strip');
         if(strip&&!strip.querySelector('.ticker-pause')){
           const button=document.createElement('button');button.type='button';button.className='ticker-pause';
