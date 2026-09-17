@@ -1,0 +1,77 @@
+name: Optimize forum once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/optimize-forum-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Optimize forum frontend
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          p=Path('forum/index.html')
+          html=p.read_text(encoding='utf-8')
+          html=html.replace('<link rel="stylesheet" href="/forum/forum.css">','<link rel="preconnect" href="https://hhzsecdtqacyroxiywpm.supabase.co" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/forum/forum.css?v=20260917-opt1">',1)
+          html=html.replace('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>','<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',1)
+          html=html.replace('<script defer src="/forum/config.js"></script>','<script defer src="/forum/config.js?v=20260917-opt1"></script>',1)
+          html=html.replace('<script defer src="/forum/forum.js"></script>','<script defer src="/forum/forum.js?v=20260917-opt1"></script>',1)
+          p.write_text(html,encoding='utf-8')
+
+          p=Path('forum/forum.js')
+          js=p.read_text(encoding='utf-8')
+          js=js.replace('<img src="${esc(p.avatar_url)}" alt="">','<img src="${esc(p.avatar_url)}" alt="" loading="lazy" decoding="async">')
+
+          pattern=re.compile(r'async function loadRemote\(\)\{\n.*?\n\}\nfunction renderAll',re.S)
+          replacement="""async function loadRemote(){
+  const[catRes,topicRes,replyRes,profileCountRes]=await Promise.all([
+    db.from('forum_categories').select('*').eq('is_active',true).order('position'),
+    db.from('forum_topics').select('*').order('is_pinned',{ascending:false}).order('updated_at',{ascending:false}),
+    db.from('forum_replies').select('topic_id'),
+    db.from('profiles').select('id',{count:'exact',head:true})
+  ]);
+  if(catRes.error||topicRes.error){els.statusDot.classList.remove('online');els.statusTitle.textContent='Conexiune indisponibilă';els.statusText.textContent='Reîncarcă pagina';categories=categoriesFallback;topics=[];renderAll();return}
+  categories=catRes.data||[];reactionRows=[];
+  const counts={};(replyRes.data||[]).forEach(r=>counts[r.topic_id]=(counts[r.topic_id]||0)+1);
+  topics=(topicRes.data||[]).map(t=>({...t,reply_count:counts[t.id]||0}));
+  profiles=new Map();if(currentProfile)profiles.set(String(currentProfile.id),currentProfile);
+  const authorIds=[...new Set(topics.map(t=>t.author_id).filter(Boolean))];
+  if(authorIds.length){const{data:authorProfiles}=await db.from('profiles').select('id,username,display_name,avatar_url,bio,role,website,created_at').in('id',authorIds);(authorProfiles||[]).forEach(p=>profiles.set(String(p.id),p))}
+  els.statMembers.textContent=profileCountRes.count??profiles.size;renderAll();renderMemberCard();
+}
+function renderAll"""
+          js,n=pattern.subn(replacement,js,count=1)
+          if n!=1: raise SystemExit('loadRemote block not found')
+
+          old="const{data:replies,error}=await db.from('forum_replies').select('*').eq('topic_id',id).order('created_at');if(error){toast(error.message);return}const rows=replies||[];"
+          new="""const{data:replies,error}=await db.from('forum_replies').select('*').eq('topic_id',id).order('created_at');if(error){toast(error.message);return}const rows=replies||[];
+  const missingAuthorIds=[...new Set(rows.map(r=>r.author_id).filter(uid=>uid&&!profiles.has(String(uid))))];
+  if(missingAuthorIds.length){const{data:replyProfiles}=await db.from('profiles').select('id,username,display_name,avatar_url,bio,role,website,created_at').in('id',missingAuthorIds);(replyProfiles||[]).forEach(p=>profiles.set(String(p.id),p))}
+  const reactionRequests=[db.from('forum_reactions').select('*').eq('topic_id',id)],replyIds=rows.map(r=>r.id).filter(Boolean);
+  if(replyIds.length)reactionRequests.push(db.from('forum_reactions').select('*').in('reply_id',replyIds));
+  const reactionResults=await Promise.all(reactionRequests);reactionRows=reactionResults.flatMap(r=>r.data||[]);"""
+          if old not in js: raise SystemExit('openThread query block not found')
+          js=js.replace(old,new,1)
+          p.write_text(js,encoding='utf-8')
+          PY
+      - name: Commit optimized forum
+        shell: bash
+        run: |
+          rm -f .github/workflows/optimize-forum-once.yml
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add -A
+          git commit -m "Optimize forum loading and network usage"
+          git push origin HEAD:main
