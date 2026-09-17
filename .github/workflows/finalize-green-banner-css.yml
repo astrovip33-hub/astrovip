@@ -1,0 +1,53 @@
+name: Finalize green white banner CSS
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-green-banner-css.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Align second banner CSS with green white design
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          css_path=Path('assets/homepage-bundle-base.css')
+          css=css_path.read_text(encoding='utf-8')
+          pattern=re.compile(r'body #planet-strip-secondary \.planet-item > strong,\nbody #planet-strip-secondary \.planet-item > span\{\n  background:linear-gradient\(180deg,#fffbd1 0%,#fff200 18%,#ffd000 34%,#ff9900 50%,#ff3b00 72%,#c90000 100%\);.*?body #planet-strip-secondary \.planet-item > strong\{letter-spacing:\.025em;\}',re.S)
+          replacement='''body #planet-strip-secondary .planet-item > strong,
+body #planet-strip-secondary .planet-item > span{
+  background:linear-gradient(180deg,#ffffff 0%,#f7fff9 14%,#d9ffe5 30%,#83ffad 48%,#2ee57a 68%,#079c50 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent!important;
+  font-weight:950;
+  text-shadow:none;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.95)) drop-shadow(0 0 5px rgba(210,255,225,.75)) drop-shadow(0 0 10px rgba(46,229,122,.45));
+}
+body #planet-strip-secondary .planet-item > strong{letter-spacing:.025em;}'''
+          css2,n=pattern.subn(replacement,css,count=1)
+          if n!=1:
+              raise SystemExit('Second banner legacy gradient not found')
+          css_path.write_text(css2,encoding='utf-8')
+          p=Path('index.html')
+          html=p.read_text(encoding='utf-8')
+          html=re.sub(r'/assets/homepage-bundle-base\.css\?v=[^"\']+', '/assets/homepage-bundle-base.css?v=20260917-audit-green-1', html, count=1)
+          p.write_text(html,encoding='utf-8')
+      - name: Commit result
+        run: |
+          rm -f .github/workflows/finalize-green-banner-css.yml
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add -A
+          git commit -m "Align second banner CSS with green white design"
+          git push origin HEAD:main
