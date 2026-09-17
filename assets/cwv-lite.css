@@ -1,0 +1,7 @@
+/* AstroVip Core Web Vitals pass — 2026-09-17 */
+@supports (content-visibility:auto){
+  #servicii,#oportunitati-astrovip,#metoda,#studiu-de-caz-scoala-1984,#relocare,#tarife,.why,#ghid-astrologie,#intrebari-frecvente,#ghiduri-seo,#articole,#comunitate,#programari,#contact{
+    content-visibility:auto;
+    contain-intrinsic-size:900px;
+  }
+}
