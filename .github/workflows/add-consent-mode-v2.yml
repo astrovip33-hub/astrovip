@@ -15,108 +15,31 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Install Google Consent Mode v2 sitewide
+      - name: Inject consent bootstrap in public pages
         shell: python
         run: |
           from pathlib import Path
-
-          css = r'''/* AstroVip Consent Mode v2 */
-.av-consent{position:fixed;z-index:2147483000;left:18px;right:18px;bottom:18px;max-width:920px;margin:auto;background:rgba(5,11,9,.97);color:#f7fff9;border:1px solid rgba(56,245,138,.38);border-radius:20px;box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 30px rgba(56,245,138,.10);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;backdrop-filter:blur(18px)}
-.av-consent[hidden]{display:none!important}.av-consent__inner{padding:22px}.av-consent__title{margin:0 0 8px;font-size:20px;font-weight:900;color:#fff}.av-consent__text{margin:0;color:#d6e5db;font-size:14px;line-height:1.6}.av-consent__text a{color:#7dffad;text-decoration:underline;text-underline-offset:2px}.av-consent__actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.av-consent button{min-height:44px;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.24);background:#101b16;color:#fff;font-weight:850;cursor:pointer}.av-consent button:hover{transform:translateY(-1px)}.av-consent .av-consent__accept{background:linear-gradient(180deg,#dfffea,#55f993 28%,#16c963 100%);color:#032715;border-color:#8dffb8}.av-consent .av-consent__reject{background:#fff;color:#07110c;border-color:#fff}.av-consent__prefs{display:grid;gap:10px;margin-top:16px;padding-top:15px;border-top:1px solid rgba(255,255,255,.12)}.av-consent__row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,.035)}.av-consent__row strong{display:block;font-size:14px}.av-consent__row small{display:block;color:#aebbb2;line-height:1.45;margin-top:2px}.av-consent__switch{flex:0 0 auto;width:46px;height:26px;accent-color:#20df73}.av-consent__manage{position:fixed;z-index:2147482999;left:12px;bottom:12px;border:1px solid rgba(56,245,138,.36);background:rgba(5,11,9,.92);color:#ecfff3;border-radius:999px;padding:8px 12px;font:800 12px/1.2 Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer}.av-consent__manage[hidden]{display:none!important}
-@media(max-width:640px){.av-consent{left:10px;right:10px;bottom:10px;border-radius:16px}.av-consent__inner{padding:17px}.av-consent__actions{display:grid;grid-template-columns:1fr}.av-consent button{width:100%}.av-consent__row{gap:10px}.av-consent__manage{left:8px;bottom:8px}}
-'''
-
-          js = r'''(function(){
-  'use strict';
-  const KEY='astrovip_consent_v2';
-  const VERSION=2;
-  const gtag=window.gtag||function(){window.dataLayer=window.dataLayer||[];window.dataLayer.push(arguments)};
-  window.gtag=gtag;
-
-  function updateConsent(analytics,ads){
-    gtag('consent','update',{
-      analytics_storage:analytics?'granted':'denied',
-      ad_storage:ads?'granted':'denied',
-      ad_user_data:ads?'granted':'denied',
-      ad_personalization:ads?'granted':'denied',
-      personalization_storage:ads?'granted':'denied',
-      functionality_storage:'granted',
-      security_storage:'granted'
-    });
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({event:'astrovip_consent_update',analytics_consent:analytics?'granted':'denied',ads_consent:ads?'granted':'denied'});
-  }
-
-  function loadChoice(){
-    try{const v=JSON.parse(localStorage.getItem(KEY)||'null');return v&&v.v===VERSION?v:null}catch(e){return null}
-  }
-  function saveChoice(analytics,ads){
-    const v={v:VERSION,analytics:!!analytics,ads:!!ads,ts:Date.now()};
-    try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}
-    updateConsent(v.analytics,v.ads);
-    return v;
-  }
-  function build(){
-    if(document.getElementById('av-consent'))return;
-    const wrap=document.createElement('div');
-    wrap.id='av-consent';wrap.className='av-consent';wrap.setAttribute('role','dialog');wrap.setAttribute('aria-modal','true');wrap.setAttribute('aria-labelledby','av-consent-title');
-    wrap.innerHTML='<div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div>';
-    document.body.appendChild(wrap);
-    const manage=document.createElement('button');manage.type='button';manage.className='av-consent__manage';manage.id='av-consent-manage';manage.textContent='Setări cookie';manage.hidden=true;document.body.appendChild(manage);
-
-    const prefs=wrap.querySelector('#av-consent-prefs'), analytics=wrap.querySelector('#av-consent-analytics'), ads=wrap.querySelector('#av-consent-ads');
-    function close(){wrap.hidden=true;manage.hidden=false}
-    function open(){const c=loadChoice();analytics.checked=!!(c&&c.analytics);ads.checked=!!(c&&c.ads);prefs.hidden=false;wrap.hidden=false;manage.hidden=true;wrap.querySelector('#av-consent-reject').focus()}
-    wrap.querySelector('#av-consent-accept').addEventListener('click',()=>{saveChoice(true,true);close()});
-    wrap.querySelector('#av-consent-reject').addEventListener('click',()=>{saveChoice(false,false);close()});
-    wrap.querySelector('#av-consent-custom').addEventListener('click',()=>{prefs.hidden=!prefs.hidden;if(!prefs.hidden)analytics.focus()});
-    wrap.querySelector('#av-consent-save').addEventListener('click',()=>{saveChoice(analytics.checked,ads.checked);close()});
-    manage.addEventListener('click',open);
-
-    const current=loadChoice();
-    if(current){updateConsent(current.analytics,current.ads);wrap.hidden=true;manage.hidden=false}else{wrap.hidden=false;manage.hidden=true}
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build,{once:true});else build();
-})();
-'''
-
-          Path('assets/consent-v2.css').write_text(css,encoding='utf-8')
-          Path('assets/consent-v2.js').write_text(js,encoding='utf-8')
-
-          policy = '''<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Politica de cookie-uri | AstroVip</title><meta name="description" content="Politica AstroVip privind cookie-urile, stocarea locală și Google Consent Mode v2."><link rel="canonical" href="https://astrovip.ro/politica-cookie/"><link rel="stylesheet" href="/assets/homepage-bundle-base.css?v=20260917-banners-2"><link rel="stylesheet" href="/assets/consent-v2.css?v=2"></head><body><main style="max-width:900px;margin:0 auto;padding:60px 22px 100px"><a href="/" style="color:#7dffad;font-weight:800">← Înapoi la AstroVip</a><h1 style="margin-top:28px">Politica de cookie-uri</h1><p>AstroVip folosește tehnologii strict necesare pentru securitate și funcționarea site-ului. Tehnologiile opționale sunt activate numai după alegerea vizitatorului.</p><h2>Google Consent Mode v2</h2><p>Site-ul transmite către serviciile Google, atunci când acestea sunt prezente, starea consimțământului pentru <strong>analytics_storage</strong>, <strong>ad_storage</strong>, <strong>ad_user_data</strong> și <strong>ad_personalization</strong>. Înainte de alegerea vizitatorului, aceste categorii sunt setate la <strong>denied</strong>.</p><h2>Categorii</h2><p><strong>Necesare:</strong> funcționare și securitate. <strong>Analiză:</strong> măsurarea traficului și performanței. <strong>Publicitate și personalizare:</strong> funcții Google Ads și personalizare, dacă vor fi activate.</p><h2>Schimbarea opțiunii</h2><p>Poți modifica oricând alegerea din butonul „Setări cookie” afișat pe site.</p><p style="color:#aebbb2;margin-top:36px">Ultima actualizare: 17 septembrie 2026.</p></main><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',personalization_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});gtag('set','ads_data_redaction',true);</script><script defer src="/assets/consent-v2.js?v=2"></script></body></html>'''
-          Path('politica-cookie').mkdir(exist_ok=True)
-          Path('politica-cookie/index.html').write_text(policy,encoding='utf-8')
-
-          bootstrap = '''<script id="astrovip-consent-default">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',personalization_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});gtag('set','ads_data_redaction',true);</script>\n<link rel="stylesheet" href="/assets/consent-v2.css?v=2">\n<script defer src="/assets/consent-v2.js?v=2"></script>\n'''
+          snippet = '<script id="astrovip-consent-default">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("consent","default",{analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",personalization_storage:"denied",functionality_storage:"granted",security_storage:"granted",wait_for_update:500});gtag("set","ads_data_redaction",true);</script><link rel="stylesheet" href="/assets/consent-v2.css?v=2"><script defer src="/assets/consent-v2.js?v=2"></script>'
           for p in Path('.').rglob('index.html'):
-              if p.as_posix()=='politica-cookie/index.html':
+              if p.as_posix() == 'politica-cookie/index.html':
                   continue
-              text=p.read_text(encoding='utf-8')
-              if 'id="astrovip-consent-default"' in text:
+              text = p.read_text(encoding='utf-8')
+              if 'astrovip-consent-default' in text:
                   continue
               if '<head>' in text:
-                  text=text.replace('<head>','<head>\n'+bootstrap,1)
-              elif '<head ' in text:
-                  pos=text.find('>')+1
-                  text=text[:pos]+'\n'+bootstrap+text[pos:]
-              else:
-                  continue
-              p.write_text(text,encoding='utf-8')
-
-          sm=Path('sitemap.xml')
+                  text = text.replace('<head>', '<head>' + snippet, 1)
+                  p.write_text(text, encoding='utf-8')
+          sm = Path('sitemap.xml')
           if sm.exists():
-              s=sm.read_text(encoding='utf-8')
-              entry='<url><loc>https://astrovip.ro/politica-cookie/</loc></url>\n'
+              s = sm.read_text(encoding='utf-8')
+              entry = '<url><loc>https://astrovip.ro/politica-cookie/</loc></url>\n'
               if 'https://astrovip.ro/politica-cookie/' not in s:
-                  s=s.replace('</urlset>',entry+'</urlset>')
-                  sm.write_text(s,encoding='utf-8')
-
-      - name: Commit Consent Mode v2
+                  sm.write_text(s.replace('</urlset>', entry + '</urlset>'), encoding='utf-8')
+      - name: Commit consent integration
         run: |
           rm -f .github/workflows/add-consent-mode-v2.yml
           git config user.name "astrovip33-hub"
           git config user.email "astrovip33@gmail.com"
           git add -A
-          git commit -m "Install Google Consent Mode v2 sitewide"
+          git commit -m "Enable Consent Mode v2 across public pages"
           git push origin HEAD:main
