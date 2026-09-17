@@ -41,28 +41,32 @@
       body.guide-page .guide-footer{padding:24px 0!important}
     }
 
-    /* Mobile ticker: two complete entries per screen, moved in exact steps so text is never cut at the edges. */
+    /* Mobile: continuous planetary ribbon, compact type, softened edges and extra breathing room below. */
     @media (max-width:820px){
       body .planet-strip{overflow:hidden!important}
       body .planet-strip-inner{display:block!important;width:100%!important;min-height:46px!important}
-      body .planet-ticker{width:100%!important;max-width:100%!important;overflow:hidden!important;mask-image:none!important;-webkit-mask-image:none!important}
-      body .planet-track{display:flex!important;width:max-content!important;gap:0!important;padding:0!important;animation:avTicker 40s steps(10,end) infinite!important;will-change:transform}
-      body .planet-item{box-sizing:border-box!important;flex:0 0 50vw!important;width:50vw!important;min-width:50vw!important;max-width:50vw!important;justify-content:center!important;gap:4px!important;padding:10px 4px!important;overflow:hidden!important;font-size:12.5px!important;line-height:1.1!important;text-align:center!important}
-      body .planet-glyph{flex:0 0 auto!important;font-size:17px!important}
+      body .planet-ticker{width:100%!important;max-width:100%!important;overflow:hidden!important;mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%)!important;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%)!important}
+      body .planet-track{display:flex!important;width:max-content!important;gap:14px!important;padding:0 18px!important;animation:avTicker 34s linear infinite!important;will-change:transform}
+      body .planet-item{box-sizing:border-box!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;max-width:none!important;justify-content:center!important;gap:5px!important;padding:10px 7px!important;overflow:visible!important;font-size:clamp(13px,3.45vw,16px)!important;line-height:1.1!important;text-align:center!important;white-space:nowrap!important}
+      body .planet-glyph{flex:0 0 auto!important;font-size:19px!important}
       body .planet-item strong,body .planet-item>span{flex:0 0 auto!important;white-space:nowrap!important}
-      body:not(.guide-page) .planet-strip+main{padding-top:6px!important}
+      body:not(.guide-page) .planet-strip+main{padding-top:20px!important}
+      body:not(.guide-page) .hero-mobile-portrait img{object-position:80% 24%!important;transform:scale(1.10)!important}
     }
     @media (max-width:390px){
-      body .planet-item{font-size:11.5px!important;gap:3px!important;padding-left:2px!important;padding-right:2px!important}
-      body .planet-glyph{font-size:16px!important}
+      body .planet-track{gap:10px!important;padding-left:14px!important;padding-right:14px!important;animation-duration:32s!important}
+      body .planet-item{font-size:12px!important;gap:4px!important;padding-left:4px!important;padding-right:4px!important}
+      body .planet-glyph{font-size:17px!important}
+      body:not(.guide-page) .planet-strip+main{padding-top:18px!important}
     }
     @media (max-width:820px) and (prefers-reduced-motion:reduce){
       body .planet-track{animation:none!important;transform:none!important}
+      body .planet-ticker{overflow-x:auto!important;mask-image:none!important;-webkit-mask-image:none!important}
     }
   `;
   document.head.appendChild(style);
 
-  load('/assets/planetary-ticker-core.js?v=20260917-mobilefix');
+  load('/assets/planetary-ticker-core.js?v=20260917-flowfix');
   load('/assets/home-opportunities.js?v=20260916');
 
   // AstroVip spectacular motion layer — homepage only. Falls back cleanly if CDN is unavailable.
