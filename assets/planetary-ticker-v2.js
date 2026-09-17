@@ -56,6 +56,9 @@
       body .planet-item{font-size:11.5px!important;gap:3px!important;padding-left:2px!important;padding-right:2px!important}
       body .planet-glyph{font-size:16px!important}
     }
+    @media (max-width:820px) and (prefers-reduced-motion:reduce){
+      body .planet-track{animation:none!important;transform:none!important}
+    }
   `;
   document.head.appendChild(style);
 
