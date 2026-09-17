@@ -1245,3 +1245,18 @@ body .planet-strip-secondary{position:relative;top:auto;z-index:8;margin:0}
 @media(hover:hover){body .planet-strip:hover .planet-track{animation-play-state:paused}}
 @media(max-width:820px){body .planet-strip-inner{min-height:52px}body .planet-strip .planet-item{font-size:19px;gap:7px}body .planet-strip .planet-glyph{font-size:25px}.planet-sign{font-size:22px}.planet-sequence{gap:22px;padding:12px 22px 12px 0}}
 @media(prefers-reduced-motion:reduce){body .planet-strip .planet-track{animation:none;transform:none;will-change:auto}body .planet-ticker{overflow-x:auto;mask-image:none;-webkit-mask-image:none}.planet-sequence[aria-hidden="true"],.ticker-pause{display:none}}
+
+/* AstroVip second banner glossy red-gold */
+body #planet-strip-secondary .planet-item > strong,
+body #planet-strip-secondary .planet-item > span{
+  background:linear-gradient(180deg,#fffbd1 0%,#fff200 18%,#ffd000 34%,#ff9900 50%,#ff3b00 72%,#c90000 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent!important;
+  font-weight:950;
+  text-shadow:none;
+  filter:drop-shadow(0 1px 0 rgba(255,255,200,.78)) drop-shadow(0 0 4px rgba(255,205,0,.60)) drop-shadow(0 0 8px rgba(255,48,0,.32));
+}
+body #planet-strip-secondary .planet-item > strong{letter-spacing:.025em;}
+
