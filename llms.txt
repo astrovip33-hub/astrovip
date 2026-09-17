@@ -4,29 +4,29 @@
 
 ## Pagini principale
 
-- https://astrovip.ro/ — pagina principală și prezentarea serviciilor
-- https://astrovip.ro/consultatie-astrologica/ — consultație astrologică
-- https://astrovip.ro/astrolog-bucuresti/ — astrolog București și consultații online
-- https://astrovip.ro/harta-natala/ — hartă natală
-- https://astrovip.ro/astrologie-predictiva/ — astrologie predictivă
-- https://astrovip.ro/sinastrie/ — sinastrie și compatibilitate
-- https://astrovip.ro/numerologie/ — numerologie
-- https://astrovip.ro/rectificare-ora-nasterii/ — rectificarea orei de naștere
-- https://astrovip.ro/astrocartografie/ — astrocartografie
-- https://astrovip.ro/local-space/ — Local Space
-- https://astrovip.ro/relocare-geografica/ — relocare geografică
+- [Pagina principală și prezentarea serviciilor](https://astrovip.ro/)
+- [Consultație astrologică](https://astrovip.ro/consultatie-astrologica/)
+- [Astrolog București și consultații online](https://astrovip.ro/astrolog-bucuresti/)
+- [Hartă natală](https://astrovip.ro/harta-natala/)
+- [Astrologie predictivă](https://astrovip.ro/astrologie-predictiva/)
+- [Sinastrie și compatibilitate](https://astrovip.ro/sinastrie/)
+- [Numerologie](https://astrovip.ro/numerologie/)
+- [Rectificarea orei de naștere](https://astrovip.ro/rectificare-ora-nasterii/)
+- [Astrocartografie](https://astrovip.ro/astrocartografie/)
+- [Local Space](https://astrovip.ro/local-space/)
+- [Relocare geografică](https://astrovip.ro/relocare-geografica/)
 
 ## Instrumente
 
-- https://astrovip.ro/harta-mea/ — calculator și hartă personală
-- https://astrovip.ro/sinastrie-calculator/ — calculator de sinastrie
-- https://astrovip.ro/pozitii-planete-live/ — poziții planetare live
+- [Calculator și hartă personală](https://astrovip.ro/harta-mea/)
+- [Calculator de sinastrie](https://astrovip.ro/sinastrie-calculator/)
+- [Poziții planetare live](https://astrovip.ro/pozitii-planete-live/)
 
 ## Navigare și comunitate
 
-- https://astrovip.ro/toate-paginile/ — directorul paginilor
-- https://astrovip.ro/forum/ — forum
-- https://astrovip.ro/comunitate/ — comunitate
+- [Directorul paginilor](https://astrovip.ro/toate-paginile/)
+- [Forum](https://astrovip.ro/forum/)
+- [Comunitate](https://astrovip.ro/comunitate/)
 
 ## Informații pentru citare
 

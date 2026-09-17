@@ -61,7 +61,7 @@
     .why{padding-top:92px}.why .split{grid-template-columns:.9fr 1.1fr}.portrait-wrap{position:relative}.portrait-wrap:before{content:"";position:absolute;inset:-18px;border-radius:34px;background:radial-gradient(circle at 50% 25%,rgba(57,191,255,.18),transparent 60%);filter:blur(10px);z-index:-1}
 
     .contact{position:relative;background-image:linear-gradient(90deg,rgba(4,17,38,.96),rgba(4,17,38,.78)),url('/assets/1000041453.jpg');background-position:center;background-size:cover;border-top:1px solid var(--line)}
-    .contact-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:24px}.box{background:rgba(5,23,51,.84);border:1px solid var(--line);border-radius:24px;padding:28px;backdrop-filter:blur(10px)}.box h2{color:var(--gold);font-size:38px;line-height:1.05;margin:0 0 15px}.box p{color:var(--muted)}.contact-info{display:grid;gap:9px;margin:22px 0}.contact-info a{font-weight:850;color:#fff}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.contact input,.contact textarea,.contact select{width:100%;padding:14px 15px;margin:6px 0;border-radius:12px;border:1px solid rgba(56,245,138,.28);background:#071a38;color:white;outline:none}.contact input:focus,.contact textarea:focus,.contact select:focus{border-color:var(--electric);box-shadow:0 0 0 3px rgba(57,191,255,.10)}.contact button{cursor:pointer;width:100%;margin-top:8px}
+    .contact-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:24px}.box{background:rgba(5,23,51,.84);border:1px solid var(--line);border-radius:24px;padding:28px;backdrop-filter:blur(10px)}.box h2{color:var(--gold);font-size:38px;line-height:1.05;margin:0 0 15px}.box p{color:var(--muted)}.contact-info{display:grid;gap:9px;margin:22px 0}.contact-info a{font-weight:850;color:#fff}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.contact input,#bookingForm input,.contact textarea,#bookingForm textarea,.contact select,#bookingForm select{width:100%;padding:14px 15px;margin:6px 0;border-radius:12px;border:1px solid rgba(56,245,138,.28);background:#071a38;color:white;outline:none}.contact input:focus,#bookingForm input:focus,.contact textarea:focus,#bookingForm textarea:focus,.contact select:focus,#bookingForm select:focus{border-color:var(--electric);box-shadow:0 0 0 3px rgba(57,191,255,.10)}.contact button{cursor:pointer;width:100%;margin-top:8px}
     .foot{text-align:center;padding:30px 0;background:#031024;border-top:1px solid var(--line);color:#9fb2cf;font-size:13px}.foot strong{color:var(--gold)}
     .whatsapp{position:fixed;right:18px;bottom:18px;z-index:60;background:#22c55e;color:white;padding:13px 17px;border-radius:999px;font-weight:950;box-shadow:0 12px 32px rgba(34,197,94,.32);transition:.2s ease}.whatsapp:hover{transform:translateY(-2px)}
     .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}.reveal.in{opacity:1;transform:none}
@@ -99,7 +99,7 @@
       .split,.why .split,.contact-grid{grid-template-columns:1fr;gap:24px}.split img{max-width:100%;border-radius:20px}.why .portrait-wrap{order:-1}.portrait-wrap{border-radius:20px;overflow:hidden}.portrait-wrap img{width:100%;max-height:420px;object-fit:cover;object-position:center 20%}
       .section-heading{font-size:34px;line-height:1.08}.section-copy{font-size:16px;line-height:1.6}.list{gap:9px}.list div{padding:12px 13px;font-size:14.5px}
       .price-grid{grid-template-columns:1fr;gap:16px}.price-card{padding:22px;border-radius:20px}.price-card h3{font-size:25px}.price{font-size:42px}.price-card .cta,.price-card .btn2{width:100%}
-      .box{padding:20px;border-radius:20px}.box h2{font-size:31px}.box p{font-size:15px}.form-row{grid-template-columns:1fr}.contact input,.contact textarea,.contact select{font-size:16px;padding:13px 14px}
+      .box{padding:20px;border-radius:20px}.box h2{font-size:31px}.box p{font-size:15px}.form-row{grid-template-columns:1fr}.contact input,#bookingForm input,.contact textarea,#bookingForm textarea,.contact select,#bookingForm select{font-size:16px;padding:13px 14px}
       .whatsapp{right:10px;bottom:calc(10px + env(safe-area-inset-bottom));padding:11px 13px;font-size:12px}.foot{padding:26px 0 calc(26px + env(safe-area-inset-bottom));font-size:12px}.foot p{margin:5px 0}
     }
     @media(max-width:390px){
@@ -165,8 +165,8 @@
     }
     .btn2{background:linear-gradient(180deg,#1c1c1c,#060606);border:1px solid rgba(56,245,138,.68);color:#e6ffef}
     .btn2:hover{background:linear-gradient(180deg,#0c2a1b,#04150d)}
-    .contact input,.contact textarea,.contact select{background:#080808;border-color:rgba(56,245,138,.34);color:#fff}
-    .contact input:focus,.contact textarea:focus,.contact select:focus{border-color:#38f58a;box-shadow:0 0 0 3px rgba(56,245,138,.10)}
+    .contact input,#bookingForm input,.contact textarea,#bookingForm textarea,.contact select,#bookingForm select{background:#080808;border-color:rgba(56,245,138,.34);color:#fff}
+    .contact input:focus,#bookingForm input:focus,.contact textarea:focus,#bookingForm textarea:focus,.contact select:focus,#bookingForm select:focus{border-color:#38f58a;box-shadow:0 0 0 3px rgba(56,245,138,.10)}
     .foot{background:#000;color:#c9ded1;border-top-color:rgba(56,245,138,.28)}
     .whatsapp{background:linear-gradient(180deg,#68ffa6,#20df73 52%,#079c50);border:1px solid rgba(177,255,209,.76);color:#032715;box-shadow:inset 0 1px 0 rgba(255,255,255,.72),0 12px 32px rgba(56,245,138,.28)}
     .portrait-wrap img,.split img{border-color:rgba(56,245,138,.62);box-shadow:0 22px 60px rgba(0,0,0,.62),0 0 24px rgba(56,245,138,.08)}
@@ -217,3 +217,6 @@
     .visitor-counter small{width:100%;font-size:12px;color:#a9bdb1}
     .visitor-counter.offline small{color:#d7c59b}
     @media(max-width:480px){.visitor-counter{padding:14px 12px;gap:9px}.visitor-counter-label{font-size:12px}}
+
+/* Comfortable booking controls on touch screens. */
+#bookingForm input,#bookingForm select{min-height:48px}
