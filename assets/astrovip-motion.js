@@ -13,19 +13,8 @@
     extra.textContent=`
       .av-hero-img{width:100%;height:100%;object-fit:cover;display:block;border-radius:33px;background:#000;animation:avHeroBreath 9s ease-in-out infinite alternate}
       @keyframes avHeroBreath{from{transform:scale(1.01)}to{transform:scale(1.075)}}
-      .av-showcase-section{position:relative;padding:92px 0;border-top:1px solid rgba(217,184,92,.15);border-bottom:1px solid rgba(217,184,92,.12);background:radial-gradient(circle at 76% 28%,rgba(217,184,92,.09),transparent 28%),linear-gradient(180deg,#080808,#010101);overflow:hidden}
-      .av-showcase-grid{display:grid;grid-template-columns:1fr minmax(280px,390px);gap:clamp(34px,7vw,90px);align-items:center}
-      .av-showcase-copy .av-kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:950;color:#f3dfa0}
-      .av-showcase-copy h2{font-size:clamp(42px,5.8vw,72px);line-height:.95;letter-spacing:-.045em;margin:10px 0 18px;background:linear-gradient(180deg,#fff9cf,#d9b85c 58%,#8a651b);-webkit-background-clip:text;background-clip:text;color:transparent}
-      .av-showcase-copy p{max-width:650px;color:#c9d6ce;font-size:18px;line-height:1.7;margin:0 0 24px}
-      .av-showcase-chips{display:flex;gap:9px;flex-wrap:wrap}.av-showcase-chip{padding:8px 12px;border:1px solid rgba(217,184,92,.22);border-radius:999px;background:rgba(217,184,92,.045);font-size:12px;font-weight:850;color:#ede3c0}
-      .av-showcase-card{position:relative;aspect-ratio:9/16;border-radius:32px;padding:1px;background:linear-gradient(150deg,rgba(255,241,170,.9),rgba(217,184,92,.10) 35%,rgba(56,245,138,.22));box-shadow:0 34px 90px rgba(0,0,0,.65),0 0 56px rgba(217,184,92,.10);overflow:hidden}
-      .av-showcase-card img{width:100%;height:100%;object-fit:cover;display:block;border-radius:31px;animation:avShowcaseFloat 11s ease-in-out infinite alternate}
-      .av-showcase-card:after{content:"";position:absolute;inset:0;border-radius:31px;background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 26% 70%,rgba(217,184,92,.12));pointer-events:none}
-      .av-showcase-orbit{position:absolute;inset:-34px;border-radius:50%;border:1px solid rgba(217,184,92,.12);animation:avZspin 48s linear infinite;pointer-events:none}.av-showcase-orbit:before{content:"";position:absolute;inset:24px;border:1px dashed rgba(56,245,138,.09);border-radius:50%}
-      @keyframes avShowcaseFloat{from{transform:scale(1.02) translateY(0)}to{transform:scale(1.08) translateY(-7px)}}
-      @media(max-width:760px){.av-showcase-section{padding:64px 0}.av-showcase-grid{grid-template-columns:1fr;gap:30px}.av-showcase-copy{text-align:center}.av-showcase-copy p{font-size:16px}.av-showcase-chips{justify-content:center}.av-showcase-card{width:min(350px,86vw);justify-self:center}.hero-mobile-portrait img{display:block!important;animation:avHeroBreath 9s ease-in-out infinite alternate}}
-      @media(prefers-reduced-motion:reduce){.av-hero-img,.av-showcase-card img,.av-showcase-orbit{animation:none!important}}
+      @media(max-width:760px){.hero-mobile-portrait img{display:block!important;animation:avHeroBreath 9s ease-in-out infinite alternate}}
+      @media(prefers-reduced-motion:reduce){.av-hero-img{animation:none!important}}
     `;
     document.head.appendChild(extra);
 
@@ -49,14 +38,6 @@
       visual.innerHTML=`<div class="av-zodiac">${zodiac}</div><div class="av-orb-dot"></div><div class="av-hero-video-shell"><img class="av-hero-img" src="/assets/1000043152.png" alt=""><div class="av-video-label">AstroVip · timing premium</div></div>`;
       hero.appendChild(visual);
       const h1=$('h1',hero); if(h1 && !$('.av-char',h1)){const txt=h1.textContent.trim();h1.textContent='';[...txt].forEach(ch=>{const sp=document.createElement('span');sp.className='av-char';sp.textContent=ch===' '?'\u00a0':ch;h1.appendChild(sp)})}
-    }
-
-    // Spectacular showcase inserted after trust strip, while the complete homepage remains intact.
-    const trust=$('.trust');
-    if(trust && !$('#experienta-motion')){
-      const s=document.createElement('section'); s.id='experienta-motion'; s.className='av-showcase-section';
-      s.innerHTML=`<div class="wrap av-showcase-grid"><div class="av-showcase-copy av-reveal"><div class="av-kicker">Experiență cinematică</div><h2>AstroVip intră în mișcare.</h2><p>Mișcarea ghidează atenția fără să încarce pagina: orbită zodiacală, profunzime, reflexe, lumină reactivă și tranziții sincronizate cu scroll-ul.</p><div class="av-showcase-chips"><span class="av-showcase-chip">GSAP</span><span class="av-showcase-chip">ScrollTrigger</span><span class="av-showcase-chip">Canvas cosmic</span><span class="av-showcase-chip">Mobile aware</span></div></div><div class="av-showcase-card av-reveal"><div class="av-showcase-orbit"></div><img src="/assets/1000041453.jpg" alt="Atmosferă AstroVip" loading="lazy" decoding="async"></div></div>`;
-      trust.insertAdjacentElement('afterend',s);
     }
 
     // Reactive card light, no tilt (keeps the site's straight-line visual rule)
