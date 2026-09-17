@@ -10,7 +10,7 @@
         const key='sb_publishable_Q_uY9n72m2bRQswqfF9esg_TFrK9qJ8';
         const response=await fetch('https://hhzsecdtqacyroxiywpm.supabase.co/rest/v1/rpc/register_site_visit',{
           method:'POST',
-          headers:{apikey:key,Authorization:'Bearer '+key,'Content-Type':'application/json'},
+          headers:{apikey:key,'Content-Type':'application/json'},
           body:'{}',
           cache:'no-store'
         });
@@ -19,8 +19,7 @@
         if(!Number.isFinite(value))throw new Error('invalid counter');
         visitorCountEl.textContent=new Intl.NumberFormat('ro-RO').format(value);
       }catch(error){
-        visitorCountEl.textContent='—';
-        visitorCountEl.closest('.visitor-counter')?.classList.add('offline');
+        visitorCountEl.closest('.visitor-counter')?.setAttribute('hidden','');
       }
     })();
     hamb.addEventListener('click',()=>{const open=menu.classList.toggle('open');hamb.setAttribute('aria-expanded',open);hamb.textContent=open?'✕':'☰';hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul')});

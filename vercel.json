@@ -18,28 +18,10 @@
         {
           "key": "X-Frame-Options",
           "value": "SAMEORIGIN"
-        }
-      ]
-    },
-    {
-      "source": "/",
-      "headers": [
-        {
-          "key": "Clear-Site-Data",
-          "value": "\"cache\""
         },
         {
-          "key": "Cache-Control",
-          "value": "no-store, max-age=0"
-        }
-      ]
-    },
-    {
-      "source": "/assets/planetary-ticker-core.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store, max-age=0, must-revalidate"
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000"
         }
       ]
     },
@@ -78,6 +60,18 @@
           "value": "public, max-age=3600, stale-while-revalidate=86400"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/comunitate",
+      "destination": "/forum/",
+      "permanent": true
+    },
+    {
+      "source": "/comunitate/",
+      "destination": "/forum/",
+      "permanent": true
     }
   ]
 }
