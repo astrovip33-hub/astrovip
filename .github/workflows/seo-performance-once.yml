@@ -1,0 +1,84 @@
+name: One-time SEO and performance optimization
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/seo-performance-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Optimize homepage metadata and critical resources
+        shell: python
+        run: |
+          from pathlib import Path
+
+          index_path = Path('index.html')
+          html = index_path.read_text(encoding='utf-8')
+
+          replacements = {
+              '<title>Astrolog București &amp; Online | Consultații Astrologice Premium | AstroVip</title>':
+              '<title>Astrolog București Online | Consultații Premium | AstroVip</title>',
+
+              '<meta content="Astrolog în București și online. Consultații astrologice premium 1:1 pentru hartă natală, previziuni, sinastrie, carieră, numerologie, relocare, astrocartografie și Local Space." name="description"/>':
+              '<meta content="Astrolog în București și online. Consultații 1:1 pentru hartă natală, previziuni, sinastrie, carieră, numerologie, relocare și Local Space." name="description"/>',
+
+              '<meta content="AstroVip | Astrolog București &amp; Consultații Astrologice Online" property="og:title"/>':
+              '<meta content="AstroVip | Astrolog București &amp; Consultații Online" property="og:title"/>',
+
+              '<meta content="https://astrovip.ro/assets/1000049884.webp" property="og:image"/>':
+              '<meta content="https://astrovip.ro/assets/1000049884.webp" property="og:image"/><meta content="720" property="og:image:width"/><meta content="960" property="og:image:height"/><meta content="image/webp" property="og:image:type"/><meta content="AstroVip — consultații astrologice premium" property="og:image:alt"/>',
+
+              '<link href="/assets/homepage.css?v=20260917-mobile-2" rel="stylesheet"/>':
+              '<link href="/assets/homepage-bundle.css?v=20260917-perf-1" rel="stylesheet"/>',
+
+              '<link href="/assets/astro-seo.css?v=ae6301e274b7" rel="stylesheet"/><script defer="" src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script>\n<link href="/assets/site-directory.css?v=20260916-navigation" rel="stylesheet"/>':
+              '<script defer="" fetchpriority="low" src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script>',
+
+              '<link href="/assets/home-opportunities.css?v=20260917-mobile-2" rel="stylesheet"/><link href="/assets/motion-lite.css?v=20260917-mobile-2" rel="stylesheet"/><link href="/assets/site-optimization.css?v=20260917-mobile-2" rel="stylesheet"/><link href="/assets/planetary-ticker.css?v=20260917-mobile-2" rel="stylesheet"/><script defer="True" src="/assets/motion-lite.js?v=20260917-mobile-2"></script><script defer="True" src="/assets/planetary-ticker-core.js?v=20260917-mobile-2"></script>':
+              '<script defer="True" src="/assets/motion-lite.js?v=20260917-mobile-2"></script><script defer="True" fetchpriority="low" src="/assets/planetary-ticker-core.js?v=20260917-mobile-2"></script>',
+
+              '<meta content="20260917-mobile-2" name="astrovip-release"/>':
+              '<meta content="20260917-perf-1" name="astrovip-release"/>'
+          }
+
+          for old, new in replacements.items():
+              if old not in html:
+                  raise SystemExit(f'Expected homepage fragment not found: {old[:100]}')
+              html = html.replace(old, new, 1)
+
+          index_path.write_text(html, encoding='utf-8')
+
+          css_files = [
+              'assets/homepage.css',
+              'assets/astro-seo.css',
+              'assets/site-directory.css',
+              'assets/home-opportunities.css',
+              'assets/motion-lite.css',
+              'assets/site-optimization.css',
+              'assets/planetary-ticker.css',
+          ]
+          bundle = ['/* AstroVip homepage bundle — generated 2026-09-17 */']
+          for filename in css_files:
+              p = Path(filename)
+              bundle.append(f'\n/* --- {filename} --- */\n')
+              bundle.append(p.read_text(encoding='utf-8'))
+          Path('assets/homepage-bundle.css').write_text('\n'.join(bundle), encoding='utf-8')
+
+      - name: Commit optimized homepage
+        run: |
+          git config user.name "AstroVip Optimizer"
+          git config user.email "actions@users.noreply.github.com"
+          rm .github/workflows/seo-performance-once.yml
+          git add -A
+          git commit -m "Optimize homepage SEO metadata and render path"
+          git push origin main
