@@ -1,0 +1,40 @@
+name: Integrate lottery case study on homepage
+
+on:
+  push:
+    paths:
+      - '.homepage-lotto-trigger'
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch homepage
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          if 'id="studiu-de-caz-loto-2020"' not in s:
+              marker = '''</article>\n</div>\n</section>\n<section id="relocare">'''
+              block = '''</article>\n</div>\n</section>\n<section id="studiu-de-caz-loto-2020" aria-labelledby="studiu-loto-titlu" style="--case-gold:#edc67e;--case-text:#eee9df;--case-muted:#c3bcae;scroll-margin-top:96px;background:radial-gradient(ellipse at 85% 15%,rgba(180,122,40,.12),transparent 52%),#070808">\n<div class="wrap">\n<article class="av-case-card" style="overflow:hidden;border:1px solid rgba(237,198,126,.32);border-radius:24px;background:linear-gradient(135deg,#17140f,#0b0d0e 65%);box-shadow:0 20px 60px rgba(0,0,0,.25)">\n<div class="av-case-intro" style="display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:clamp(24px,3vw,44px);align-items:center;padding:clamp(20px,3vw,38px)">\n<figure class="av-case-visual" style="min-width:0;margin:0"><a href="/studii-de-caz/castig-loto-roma-2020/" aria-label="Deschide studiul de caz complet despre câștigul la Loto"><img src="/assets/studiu-caz-castig-loto-roma-2020.svg" width="1200" height="675" loading="lazy" decoding="async" alt="Ilustrație premium AstroVip pentru studiul de caz Câștig la Loto, Roma 2020, cu bile aurii de loterie și cerc astrologic." style="display:block;width:100%;height:auto;border-radius:14px;border:1px solid rgba(237,198,126,.23);background:#090806"/></a><figcaption style="margin-top:10px;color:#c3bcae;font-size:.8125rem;line-height:1.5">Studiu retrospectiv de timing astrologic pentru un eveniment real.</figcaption></figure>\n<div class="av-case-copy"><p class="av-case-eyebrow">Din viață, în hartă · Studiu de caz 02</p><h2 id="studiu-loto-titlu">Câștig la Loto — Roma, 14 februarie 2020</h2><p class="av-case-meta"><time datetime="2020-02-14T08:00">14 februarie 2020 · ora 08:00</time> · Roma, Italia</p><p class="av-case-lead">Un câștig personal la loterie este verificat retrospectiv prin regulile AstroVip: contact planetar valid și confirmare simultană prin axe/cuspide, în aceeași fereastră temporală.</p><p class="av-case-signal"><strong>Semnalul central</strong><br/>Soare tranzitant opoziție Saturn natal (~0°15′) + Uranus tranzitant 135° Neptun natal (~0°09′).</p><div class="buttons" style="margin-top:22px"><a class="cta" href="/studii-de-caz/castig-loto-roma-2020/">VEZI ANALIZA COMPLETĂ →</a></div></div>\n</div>\n</article>\n</div>\n</section>\n<section id="relocare">'''
+              if marker not in s:
+                  raise SystemExit('Insertion marker not found')
+              s = s.replace(marker, block, 1)
+          s = s.replace('<a class="cta" href="#contact">Vezi analiza tematică</a>', '<a class="cta" href="/studii-de-caz/castig-loto-roma-2020/">VEZI STUDIUL DE CAZ</a>', 1)
+          s = s.replace('/assets/cwv-runtime.js?v=20260917-cwv-2', '/assets/cwv-runtime.js?v=20260918-loto-home-1')
+          s = s.replace('20260917-studiu-scoala-2', '20260918-loto-home-1')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit homepage integration
+        run: |
+          git config user.name "AstroVip Automation"
+          git config user.email "astrovip33@gmail.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Integrează studiul Câștig la Loto în prima pagină"
+          git push
