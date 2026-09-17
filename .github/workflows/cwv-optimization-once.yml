@@ -1,0 +1,160 @@
+name: Core Web Vitals optimization once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/cwv-optimization-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply CWV optimizations
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          index = root / 'index.html'
+          html = index.read_text(encoding='utf-8')
+
+          # 1) Move the heavy astronomy engine + ticker out of the initial critical path.
+          html = re.sub(
+              r'<script[^>]*src="/assets/vendor/astronomy-engine-2\.1\.19\.min\.js"[^>]*></script>\s*',
+              '',
+              html,
+              count=1,
+              flags=re.I,
+          )
+          html = re.sub(
+              r'<script[^>]*src="/assets/planetary-ticker-core\.js\?v=[^"]+"[^>]*></script>\s*',
+              '',
+              html,
+              count=1,
+              flags=re.I,
+          )
+          if '/assets/ticker-loader.js?v=20260917-cwv-1' not in html:
+              marker = '</head>'
+              html = html.replace(
+                  marker,
+                  '<script defer src="/assets/ticker-loader.js?v=20260917-cwv-1"></script>\n' + marker,
+                  1,
+              )
+
+          # 2) Remove the hidden duplicate directory DOM; navigation still links to /toate-paginile/.
+          html = re.sub(
+              r'\s*<aside aria-label="Toate paginile AstroVip" class="av-directory">.*?</aside>\s*',
+              '\n',
+              html,
+              count=1,
+              flags=re.S,
+          )
+
+          # Bust only the files changed by this pass.
+          html = html.replace('/assets/homepage.js?v=20260917-audit-1', '/assets/homepage.js?v=20260917-cwv-1')
+          html = html.replace('/assets/homepage-bundle-base.css?v=20260917-audit-green-1', '/assets/homepage-bundle-base.css?v=20260917-cwv-1')
+          index.write_text(html, encoding='utf-8')
+
+          # 3) Idle-load the astronomy calculation after the page becomes interactive.
+          loader = root / 'assets' / 'ticker-loader.js'
+          loader.write_text("""(()=>{'use strict';
+const loadScript=(src)=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.defer=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)});
+const boot=async()=>{try{await loadScript('/assets/vendor/astronomy-engine-2.1.19.min.js');await loadScript('/assets/planetary-ticker-core.js?v=20260917-cwv-1')}catch(e){const el=document.querySelector('[data-planet-ticker]');if(el)el.textContent='Pozițiile planetelor sunt disponibile în pagina Live.'}};
+const schedule=()=>{if('requestIdleCallback' in window)requestIdleCallback(boot,{timeout:1800});else setTimeout(boot,700)};
+if(document.readyState==='complete')schedule();else window.addEventListener('load',schedule,{once:true});
+})();
+""", encoding='utf-8')
+
+          # 4) Delay the visitor counter request so it cannot compete with LCP assets.
+          js_path = root / 'assets' / 'homepage.js'
+          js = js_path.read_text(encoding='utf-8')
+          old = """    const visitorCountEl=document.getElementById('visitorCount');
+    (async()=>{
+      if(!visitorCountEl)return;
+      try{
+        const key='sb_publishable_Q_uY9n72m2bRQswqfF9esg_TFrK9qJ8';
+        const response=await fetch('https://hhzsecdtqacyroxiywpm.supabase.co/rest/v1/rpc/register_site_visit',{
+          method:'POST',
+          headers:{apikey:key,'Content-Type':'application/json'},
+          body:'{}',
+          cache:'no-store'
+        });
+        if(!response.ok)throw new Error('counter unavailable');
+        const value=Number(await response.json());
+        if(!Number.isFinite(value))throw new Error('invalid counter');
+        visitorCountEl.textContent=new Intl.NumberFormat('ro-RO').format(value);
+      }catch(error){
+        visitorCountEl.closest('.visitor-counter')?.setAttribute('hidden','');
+      }
+    })();
+"""
+          new = """    const visitorCountEl=document.getElementById('visitorCount');
+    const loadVisitorCounter=async()=>{
+      if(!visitorCountEl)return;
+      try{
+        const key='sb_publishable_Q_uY9n72m2bRQswqfF9esg_TFrK9qJ8';
+        const response=await fetch('https://hhzsecdtqacyroxiywpm.supabase.co/rest/v1/rpc/register_site_visit',{
+          method:'POST',headers:{apikey:key,'Content-Type':'application/json'},body:'{}',cache:'no-store'
+        });
+        if(!response.ok)throw new Error('counter unavailable');
+        const value=Number(await response.json());
+        if(!Number.isFinite(value))throw new Error('invalid counter');
+        visitorCountEl.textContent=new Intl.NumberFormat('ro-RO').format(value);
+      }catch(error){visitorCountEl.closest('.visitor-counter')?.setAttribute('hidden','')}
+    };
+    if('requestIdleCallback' in window)requestIdleCallback(loadVisitorCounter,{timeout:3000});
+    else window.addEventListener('load',()=>setTimeout(loadVisitorCounter,900),{once:true});
+"""
+          if old not in js:
+              raise SystemExit('Visitor counter block not found; aborting to avoid unsafe JS edit')
+          js_path.write_text(js.replace(old,new,1), encoding='utf-8')
+
+          # 5) Skip layout/paint work for long below-the-fold sections until they approach the viewport.
+          css_path = root / 'assets' / 'homepage-bundle-base.css'
+          css = css_path.read_text(encoding='utf-8')
+          marker = '/* CWV 2026-09-17: below-the-fold rendering */'
+          if marker not in css:
+              css += """
+
+/* CWV 2026-09-17: below-the-fold rendering */
+@supports (content-visibility:auto){
+  #servicii,
+  #oportunitati-astrovip,
+  #metoda,
+  #studiu-de-caz-scoala-1984,
+  #relocare,
+  #tarife,
+  .why,
+  #ghid-astrologie,
+  #intrebari-frecvente,
+  #ghiduri-seo,
+  #articole,
+  #comunitate,
+  #programari,
+  #contact{
+    content-visibility:auto;
+    contain-intrinsic-size:900px;
+  }
+}
+"""
+          css_path.write_text(css, encoding='utf-8')
+          PY
+
+      - name: Commit optimized site
+        shell: bash
+        run: |
+          rm -f .github/workflows/cwv-optimization-once.yml
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add -A
+          git commit -m "Optimize homepage Core Web Vitals"
+          git push origin HEAD:main
