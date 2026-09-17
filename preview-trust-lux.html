@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AstroVip — preview repere premium</title>
+<style>
+:root{--gold:#d9b85c;--gold2:#fff1aa;--green:#38f58a;--pearl:#f8fbff}
+*{box-sizing:border-box}
+body{margin:0;background:#020303;color:var(--pearl);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+main{min-height:100vh;padding:28px 0 48px;background:radial-gradient(circle at 50% -10%,rgba(25,116,77,.23),transparent 38%),radial-gradient(circle at 86% 20%,rgba(217,184,92,.08),transparent 28%),linear-gradient(180deg,#050806,#020303)}
+.wrap{width:min(1120px,calc(100% - 24px));margin:auto}
+.profession{position:relative;isolation:isolate;padding:24px 24px 22px;margin-bottom:12px;border:1px solid rgba(217,184,92,.56);border-radius:20px;background:radial-gradient(circle at 12% 0%,rgba(61,150,255,.18),transparent 38%),linear-gradient(135deg,rgba(9,27,54,.98),rgba(3,15,18,.98) 72%,rgba(12,48,34,.96));box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 18px 46px rgba(0,0,0,.34),0 0 28px rgba(217,184,92,.08)}
+.profession:before{content:"";position:absolute;inset:6px;z-index:-1;border:1px solid rgba(255,233,157,.20);border-radius:14px}
+.profession:after{content:"✦";position:absolute;top:13px;right:15px;color:#f4d477;font-size:14px;text-shadow:0 0 18px rgba(244,212,119,.42)}
+.kicker{margin:0 0 7px;color:#e6c764;font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.profession strong{display:block;max-width:28ch;font-size:clamp(21px,5.9vw,29px);line-height:1.08;letter-spacing:-.035em;text-wrap:balance}
+.grid{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"commerce commerce" "anpc aar";gap:10px}
+.logo,.commerce{position:relative;min-width:0;overflow:hidden;border-radius:18px}
+.logo{min-height:118px;padding:13px 9px 11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;border:1px solid rgba(217,184,92,.34);background:linear-gradient(145deg,rgba(19,22,21,.98),rgba(5,10,8,.98));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 34px rgba(0,0,0,.30)}
+.logo:before,.commerce:before{content:"";position:absolute;inset:6px;pointer-events:none;border-radius:12px}
+.logo:before{border:1px solid rgba(255,255,255,.045)}
+.logo img{position:relative;z-index:2;display:block;width:auto;height:auto;max-width:88%;max-height:58px;padding:6px 8px;object-fit:contain;border-radius:9px;background:#fff;box-shadow:0 7px 20px rgba(0,0,0,.24);transform:scale(1.07)}
+.logo.aar img{max-width:94%;max-height:55px;transform:scale(1.13)}
+.logo small{position:relative;z-index:2;color:#d8c27a;font-size:7.5px;font-weight:850;line-height:1.15;letter-spacing:.08em;text-align:center;text-transform:uppercase}
+.anpc{grid-area:anpc}.aar{grid-area:aar}
+.commerce{grid-area:commerce;min-height:124px;padding:16px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;border:1px solid rgba(56,245,138,.46);background:radial-gradient(circle at 50% 0%,rgba(56,245,138,.16),transparent 46%),linear-gradient(155deg,#07170f 0%,#04100d 45%,#071932 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 16px 38px rgba(0,0,0,.34),0 0 26px rgba(56,245,138,.08)}
+.commerce:before{border:1px solid rgba(56,245,138,.12)}
+.commerce .eyebrow{position:relative;z-index:2;color:#dbe8ff;font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.commerce strong{position:relative;z-index:2;color:#45f58d;font-size:28px;line-height:1.04;letter-spacing:-.025em;text-shadow:0 0 22px rgba(56,245,138,.18)}
+.points{position:relative;z-index:2;display:flex;justify-content:center;flex-wrap:wrap;gap:6px}
+.points span{display:inline-flex;align-items:center;min-height:29px;padding:5px 9px;border:1px solid rgba(217,184,92,.20);border-radius:999px;background:rgba(255,255,255,.035);font-size:11px;font-weight:850;white-space:nowrap}
+.points span:before{content:"✓";margin-right:5px;color:#45f58d;font-weight:950}
+@media(min-width:821px){.grid{grid-template-columns:minmax(0,1fr) minmax(260px,.88fr) minmax(0,1fr);grid-template-areas:"anpc commerce aar";gap:14px}.logo,.commerce{min-height:166px}.logo img{max-height:78px}.profession{padding:28px 30px 26px;margin-bottom:18px}.kicker{font-size:12px}.profession strong{font-size:clamp(28px,3.5vw,45px)}}
+@media(max-width:390px){.wrap{width:calc(100% - 18px)}.profession{padding:20px 18px 18px}.profession strong{font-size:20px}.grid{gap:8px}.commerce{min-height:118px}.commerce strong{font-size:26px}.points span{font-size:10.5px;padding:5px 8px}.logo{min-height:108px;padding:11px 7px 10px}.logo img{max-height:50px;padding:5px 7px}.logo small{font-size:7px}}
+</style>
+</head>
+<body>
+<main>
+<div class="wrap">
+<section class="profession" aria-label="Recunoaștere profesională">
+<div class="kicker">Recunoaștere profesională</div>
+<strong>Ocupația de astrolog este recunoscută oficial în România</strong>
+</section>
+<section class="grid" aria-label="Repere de încredere">
+<div class="commerce">
+<span class="eyebrow">Transparență comercială</span>
+<strong>Cod CAEN 9699</strong>
+<div class="points"><span>Plată cu cardul</span><span>Se emite factură</span></div>
+</div>
+<a class="logo anpc" href="https://anpc.ro/" target="_blank" rel="noopener noreferrer">
+<img src="/assets/anpc.webp?v=9807fead6d13" alt="ANPC">
+<small>Protecția consumatorului</small>
+</a>
+<a class="logo aar" href="https://www.aar.org.ro/codul-etic/" target="_blank" rel="noopener noreferrer">
+<img src="/assets/codul-etic-astrologului.webp?v=0aecc15e4054" alt="Codul Etic al Astrologului">
+<small>Cod etic profesional</small>
+</a>
+</section>
+</div>
+</main>
+</body>
+</html>
