@@ -1,0 +1,60 @@
+name: Banner green white correction
+
+on:
+  push:
+    paths:
+      - '.github/workflows/banner-green-white-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply green white styling
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          css_path = Path('assets/homepage-bundle-base.css')
+          css = css_path.read_text(encoding='utf-8')
+          css = re.sub(
+              r'/\* AstroVip second banner glossy red-gold \*/.*?body #planet-strip-secondary \.planet-item > strong\{letter-spacing:\.025em;\}\n?',
+              '''/* AstroVip second banner glossy green-white */
+body #planet-strip-secondary .planet-item > strong,
+body #planet-strip-secondary .planet-item > span{
+  background:linear-gradient(180deg,#ffffff 0%,#f7fff9 14%,#d9ffe5 30%,#83ffad 48%,#2ee57a 68%,#079c50 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent!important;
+  font-weight:950;
+  text-shadow:none;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.95)) drop-shadow(0 0 5px rgba(210,255,225,.75)) drop-shadow(0 0 10px rgba(46,229,122,.45));
+}
+body #planet-strip-secondary .planet-item > strong{letter-spacing:.025em;}
+''',
+              css,
+              count=1,
+              flags=re.S,
+          )
+          css_path.write_text(css, encoding='utf-8')
+
+          html_path = Path('index.html')
+          html = html_path.read_text(encoding='utf-8')
+          html = re.sub(r'homepage-bundle-base\.css\?v=[^"\']+', 'homepage-bundle-base.css?v=20260917-greenwhite-2', html, count=1)
+          html_path.write_text(html, encoding='utf-8')
+          PY
+      - name: Commit result
+        run: |
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          rm -f .github/workflows/banner-green-white-fix.yml
+          git add -A
+          git commit -m "Correct second banner to glossy green white"
+          git push origin HEAD:main
