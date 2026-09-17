@@ -1,0 +1,39 @@
+# AstroVip
+
+> AstroVip este un site în limba română despre astrologie și numerologie, cu consultații 1:1 online și în București, instrumente gratuite și materiale educaționale.
+
+## Pagini principale
+
+- https://astrovip.ro/ — pagina principală și prezentarea serviciilor
+- https://astrovip.ro/consultatie-astrologica/ — consultație astrologică
+- https://astrovip.ro/astrolog-bucuresti/ — astrolog București și consultații online
+- https://astrovip.ro/harta-natala/ — hartă natală
+- https://astrovip.ro/astrologie-predictiva/ — astrologie predictivă
+- https://astrovip.ro/sinastrie/ — sinastrie și compatibilitate
+- https://astrovip.ro/numerologie/ — numerologie
+- https://astrovip.ro/rectificare-ora-nasterii/ — rectificarea orei de naștere
+- https://astrovip.ro/astrocartografie/ — astrocartografie
+- https://astrovip.ro/local-space/ — Local Space
+- https://astrovip.ro/relocare-geografica/ — relocare geografică
+
+## Instrumente
+
+- https://astrovip.ro/harta-mea/ — calculator și hartă personală
+- https://astrovip.ro/sinastrie-calculator/ — calculator de sinastrie
+- https://astrovip.ro/pozitii-planete-live/ — poziții planetare live
+
+## Navigare și comunitate
+
+- https://astrovip.ro/toate-paginile/ — directorul paginilor
+- https://astrovip.ro/forum/ — forum
+- https://astrovip.ro/comunitate/ — comunitate
+
+## Informații pentru citare
+
+Nume: AstroVip
+Limbă principală: română
+Arie de servicii: București și online
+Site canonic: https://astrovip.ro/
+Sitemap: https://astrovip.ro/sitemap.xml
+
+Conținutul astrologic este oferit ca instrument de orientare și reflecție și nu înlocuiește consultul medical, juridic, psihologic sau financiar.
