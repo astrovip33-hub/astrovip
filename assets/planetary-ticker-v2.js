@@ -54,7 +54,7 @@
     document.head.appendChild(css);
     loadWithCallback('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js',function(){
       loadWithCallback('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js',function(){
-        load('/assets/astrovip-motion.js?v=20260916-2339');
+        load('/assets/astrovip-motion.js?v=20260917-0649');
       });
     });
   }
