@@ -10,11 +10,15 @@
 body{margin:0;background:#020303;color:var(--pearl);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 main{min-height:100vh;padding:28px 0 48px;background:radial-gradient(circle at 18% -6%,rgba(50,136,255,.19),transparent 34%),radial-gradient(circle at 82% 4%,rgba(66,255,154,.18),transparent 34%),radial-gradient(circle at 50% 48%,rgba(242,204,103,.06),transparent 44%),linear-gradient(180deg,#06100d 0%,#020403 68%,#010202 100%)}
 .wrap{width:min(1120px,calc(100% - 24px));margin:auto}
-.profession{position:relative;isolation:isolate;padding:24px 24px 22px;margin-bottom:12px;border:1px solid rgba(242,204,103,.66);border-radius:20px;background:radial-gradient(circle at 12% 0%,rgba(77,199,255,.22),transparent 38%),radial-gradient(circle at 90% 100%,rgba(66,255,154,.13),transparent 34%),linear-gradient(135deg,rgba(8,25,52,.98),rgba(3,14,17,.99) 70%,rgba(7,43,30,.97));box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 18px 46px rgba(0,0,0,.38),0 0 32px rgba(242,204,103,.10)}
-.profession:before{content:"";position:absolute;inset:6px;z-index:-1;border:1px solid rgba(255,242,168,.26);border-radius:14px;box-shadow:inset 0 0 24px rgba(77,199,255,.04)}
-.profession:after{content:"✦";position:absolute;top:13px;right:15px;color:#ffe07d;font-size:15px;text-shadow:0 0 18px rgba(255,224,125,.52)}
-.kicker{margin:0 0 7px;color:#ffe07d;font-size:9px;font-weight:950;letter-spacing:.15em;text-transform:uppercase}
-.profession strong{display:block;max-width:28ch;font-size:clamp(21px,5.9vw,29px);line-height:1.08;letter-spacing:-.035em;text-wrap:balance;text-shadow:0 2px 20px rgba(77,199,255,.10)}
+.profession{position:relative;isolation:isolate;min-height:158px;padding:8px;margin-bottom:12px;border:1px solid rgba(242,204,103,.72);border-radius:21px;background:radial-gradient(circle at 8% 0%,rgba(77,199,255,.26),transparent 36%),radial-gradient(circle at 92% 100%,rgba(66,255,154,.17),transparent 34%),linear-gradient(135deg,rgba(8,25,52,.99),rgba(3,14,17,.99) 68%,rgba(7,43,30,.98));box-shadow:inset 0 1px 0 rgba(255,255,255,.20),0 20px 48px rgba(0,0,0,.40),0 0 34px rgba(242,204,103,.12)}
+.profession:before{content:"";position:absolute;inset:5px;z-index:-2;border:1px solid rgba(255,242,168,.30);border-radius:16px;box-shadow:inset 0 0 28px rgba(77,199,255,.05)}
+.profession:after{content:"✦";position:absolute;top:13px;right:15px;color:#ffe07d;font-size:15px;text-shadow:0 0 18px rgba(255,224,125,.55)}
+.profession-copy{position:relative;width:100%;min-height:140px;padding:18px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px solid rgba(255,255,255,.075);border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+.kicker{margin:0 0 10px;color:#ffe07d;font-size:9px;font-weight:950;line-height:1.1;letter-spacing:.17em;text-transform:uppercase;text-shadow:0 0 18px rgba(242,204,103,.18)}
+.profession strong{display:flex;width:100%;max-width:100%;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-wrap:balance}
+.profession .pro-title{display:block;width:100%;color:#ffffff;font-size:clamp(24px,6.7vw,32px);font-weight:950;line-height:1;letter-spacing:-.035em;text-shadow:0 2px 22px rgba(77,199,255,.16)}
+.profession .pro-sub{display:block;width:100%;color:#bfeaff;font-size:clamp(15px,4.4vw,20px);font-weight:850;line-height:1.12;letter-spacing:-.015em;text-shadow:0 0 18px rgba(77,199,255,.14)}
+.profession .pro-sub b{color:#55f4a3;font-weight:950}
 .grid{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"commerce commerce" "anpc aar";gap:10px}
 .logo,.commerce{position:relative;min-width:0;overflow:hidden;border-radius:18px}
 .logo{height:142px;padding:10px 8px 10px;display:grid;grid-template-rows:1fr auto;align-items:center;justify-items:center;gap:7px;border:1px solid rgba(242,204,103,.52);background:radial-gradient(circle at 50% -10%,rgba(242,204,103,.13),transparent 44%),linear-gradient(145deg,rgba(20,25,22,.99),rgba(4,9,7,.99));box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 15px 36px rgba(0,0,0,.38),0 0 22px rgba(242,204,103,.07)}
@@ -39,16 +43,18 @@ main{min-height:100vh;padding:28px 0 48px;background:radial-gradient(circle at 1
 .points{position:relative;z-index:2;display:flex;justify-content:center;flex-wrap:wrap;gap:7px}
 .points span{display:inline-flex;align-items:center;min-height:30px;padding:5px 10px;border:1px solid rgba(242,204,103,.28);border-radius:999px;background:rgba(255,255,255,.045);font-size:11px;font-weight:900;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
 .points span:before{content:"✓";margin-right:5px;color:#4dffa0;font-weight:950}
-@media(min-width:821px){.grid{grid-template-columns:minmax(0,1fr) minmax(260px,.88fr) minmax(0,1fr);grid-template-areas:"anpc commerce aar";gap:14px}.logo,.commerce{height:182px;min-height:182px}.logo .logo-plaque{height:112px}.logo .logo-plaque img{max-height:80px}.aar .logo-plaque img{max-height:66px}.aar .respectam{font-size:11px;margin-bottom:7px}.logo small{font-size:9px}.profession{padding:28px 30px 26px;margin-bottom:18px}.kicker{font-size:12px}.profession strong{font-size:clamp(28px,3.5vw,45px)}}
-@media(max-width:390px){.wrap{width:calc(100% - 18px)}.profession{padding:20px 18px 18px}.profession strong{font-size:20px}.grid{gap:8px}.commerce{min-height:120px}.commerce strong{font-size:27px}.points span{font-size:10.5px;padding:5px 8px}.logo{height:136px;padding:9px 6px}.logo .logo-plaque{width:96%;height:83px;padding:7px}.logo .logo-plaque img{max-height:58px}.aar .logo-plaque img{max-height:47px}.aar .respectam{font-size:8px;margin-bottom:4px}.logo small{font-size:7.4px}}
+@media(min-width:821px){.grid{grid-template-columns:minmax(0,1fr) minmax(260px,.88fr) minmax(0,1fr);grid-template-areas:"anpc commerce aar";gap:14px}.logo,.commerce{height:182px;min-height:182px}.logo .logo-plaque{height:112px}.logo .logo-plaque img{max-height:80px}.aar .logo-plaque img{max-height:66px}.aar .respectam{font-size:11px;margin-bottom:7px}.logo small{font-size:9px}.profession{min-height:196px;padding:9px;margin-bottom:18px}.profession-copy{min-height:176px;padding:24px 34px}.kicker{font-size:12px;margin-bottom:12px}.profession .pro-title{font-size:clamp(35px,3.6vw,50px)}.profession .pro-sub{font-size:clamp(20px,2vw,28px)}}
+@media(max-width:390px){.wrap{width:calc(100% - 18px)}.profession{min-height:150px;padding:7px}.profession-copy{min-height:136px;padding:16px 11px}.kicker{font-size:8px;margin-bottom:9px}.profession .pro-title{font-size:23px}.profession .pro-sub{font-size:14.5px}.grid{gap:8px}.commerce{min-height:120px}.commerce strong{font-size:27px}.points span{font-size:10.5px;padding:5px 8px}.logo{height:136px;padding:9px 6px}.logo .logo-plaque{width:96%;height:83px;padding:7px}.logo .logo-plaque img{max-height:58px}.aar .logo-plaque img{max-height:47px}.aar .respectam{font-size:8px;margin-bottom:4px}.logo small{font-size:7.4px}}
 </style>
 </head>
 <body>
 <main>
 <div class="wrap">
 <section class="profession" aria-label="Recunoaștere profesională">
+<div class="profession-copy">
 <div class="kicker">Recunoaștere profesională</div>
-<strong>Ocupația de astrolog este recunoscută oficial în România</strong>
+<strong><span class="pro-title">Ocupația de astrolog</span><span class="pro-sub">este <b>recunoscută oficial</b> în România</span></strong>
+</div>
 </section>
 <section class="grid" aria-label="Repere de încredere">
 <div class="commerce">
