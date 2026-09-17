@@ -18,54 +18,12 @@ jobs:
       - name: Optimize forum frontend
         shell: bash
         run: |
-          python3 <<'PY'
-          from pathlib import Path
-          import re
-
-          p=Path('forum/index.html')
-          html=p.read_text(encoding='utf-8')
-          html=html.replace('<link rel="stylesheet" href="/forum/forum.css">','<link rel="preconnect" href="https://hhzsecdtqacyroxiywpm.supabase.co" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/forum/forum.css?v=20260917-opt1">',1)
-          html=html.replace('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>','<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',1)
-          html=html.replace('<script defer src="/forum/config.js"></script>','<script defer src="/forum/config.js?v=20260917-opt1"></script>',1)
-          html=html.replace('<script defer src="/forum/forum.js"></script>','<script defer src="/forum/forum.js?v=20260917-opt1"></script>',1)
-          p.write_text(html,encoding='utf-8')
-
-          p=Path('forum/forum.js')
-          js=p.read_text(encoding='utf-8')
-          js=js.replace('<img src="${esc(p.avatar_url)}" alt="">','<img src="${esc(p.avatar_url)}" alt="" loading="lazy" decoding="async">')
-
-          pattern=re.compile(r'async function loadRemote\(\)\{\n.*?\n\}\nfunction renderAll',re.S)
-          replacement="""async function loadRemote(){
-  const[catRes,topicRes,replyRes,profileCountRes]=await Promise.all([
-    db.from('forum_categories').select('*').eq('is_active',true).order('position'),
-    db.from('forum_topics').select('*').order('is_pinned',{ascending:false}).order('updated_at',{ascending:false}),
-    db.from('forum_replies').select('topic_id'),
-    db.from('profiles').select('id',{count:'exact',head:true})
-  ]);
-  if(catRes.error||topicRes.error){els.statusDot.classList.remove('online');els.statusTitle.textContent='Conexiune indisponibilă';els.statusText.textContent='Reîncarcă pagina';categories=categoriesFallback;topics=[];renderAll();return}
-  categories=catRes.data||[];reactionRows=[];
-  const counts={};(replyRes.data||[]).forEach(r=>counts[r.topic_id]=(counts[r.topic_id]||0)+1);
-  topics=(topicRes.data||[]).map(t=>({...t,reply_count:counts[t.id]||0}));
-  profiles=new Map();if(currentProfile)profiles.set(String(currentProfile.id),currentProfile);
-  const authorIds=[...new Set(topics.map(t=>t.author_id).filter(Boolean))];
-  if(authorIds.length){const{data:authorProfiles}=await db.from('profiles').select('id,username,display_name,avatar_url,bio,role,website,created_at').in('id',authorIds);(authorProfiles||[]).forEach(p=>profiles.set(String(p.id),p))}
-  els.statMembers.textContent=profileCountRes.count??profiles.size;renderAll();renderMemberCard();
-}
-function renderAll"""
-          js,n=pattern.subn(replacement,js,count=1)
-          if n!=1: raise SystemExit('loadRemote block not found')
-
-          old="const{data:replies,error}=await db.from('forum_replies').select('*').eq('topic_id',id).order('created_at');if(error){toast(error.message);return}const rows=replies||[];"
-          new="""const{data:replies,error}=await db.from('forum_replies').select('*').eq('topic_id',id).order('created_at');if(error){toast(error.message);return}const rows=replies||[];
-  const missingAuthorIds=[...new Set(rows.map(r=>r.author_id).filter(uid=>uid&&!profiles.has(String(uid))))];
-  if(missingAuthorIds.length){const{data:replyProfiles}=await db.from('profiles').select('id,username,display_name,avatar_url,bio,role,website,created_at').in('id',missingAuthorIds);(replyProfiles||[]).forEach(p=>profiles.set(String(p.id),p))}
-  const reactionRequests=[db.from('forum_reactions').select('*').eq('topic_id',id)],replyIds=rows.map(r=>r.id).filter(Boolean);
-  if(replyIds.length)reactionRequests.push(db.from('forum_reactions').select('*').in('reply_id',replyIds));
-  const reactionResults=await Promise.all(reactionRequests);reactionRows=reactionResults.flatMap(r=>r.data||[]);"""
-          if old not in js: raise SystemExit('openThread query block not found')
-          js=js.replace(old,new,1)
-          p.write_text(js,encoding='utf-8')
-          PY
+          echo 'ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmltcG9ydCByZQoKcD1QYXRoKCdmb3J1bS9pbmRleC5odG1sJykKaHRtbD1wLnJlYWRfdGV4dChlbmNvZGluZz0ndXRmLTgnKQpodG1sPWh0bWwucmVwbGFjZSgnPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSIvZm9ydW0vZm9ydW0uY3NzIj4nLCc8bGluayByZWw9InByZWNvbm5lY3QiIGhyZWY9Imh0dHBzOi8vaGh6c2VjZHRxYWN5cm94aXl3cG0uc3VwYWJhc2UuY28iIGNyb3Nzb3JpZ2luPjxsaW5rIHJlbD0icHJlY29ubmVjdCIgaHJlZj0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0IiBjcm9zc29yaWdpbj48bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Ii9mb3J1bS9mb3J1bS5jc3M/dj0yMDI2MDkxNy1vcHQxIj4nLDEpCmh0bWw9aHRtbC5yZXBsYWNlKCc8c2NyaXB0IHNyYz0iaHR0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vQHN1cGFiYXNlL3N1cGFiYXNlLWpzQDIiPjwvc2NyaXB0PicsJzxzY3JpcHQgZGVmZXIgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL0BzdXBhYmFzZS9zdXBhYmFzZS1qc0AyIj48L3NjcmlwdD4nLDEpCmh0bWw9aHRtbC5yZXBsYWNlKCc8c2NyaXB0IGRlZmVyIHNyYz0iL2ZvcnVtL2NvbmZpZy5qcyI+PC9zY3JpcHQ+JywnPHNjcmlwdCBkZWZlciBzcmM9Ii9mb3J1bS9jb25maWcuanM/dj0yMDI2MDkxNy1vcHQxIj48L3NjcmlwdD4nLDEpCmh0bWw9aHRtbC5yZXBsYWNlKCc8c2NyaXB0IGRlZmVyIHNyYz0iL2ZvcnVtL2ZvcnVtLmpzIj48L3NjcmlwdD4nLCc8c2NyaXB0IGRlZmVyIHNyYz0iL2ZvcnVtL2ZvcnVtLmpzP3Y9MjAyNjA5MTctb3B0MSI+PC9zY3JpcHQ+JywxKQpwLndyaXRlX3RleHQoaHRtbCxlbmNvZGluZz0ndXRmLTgnKQoKcD1QYXRoKCdmb3J1bS9mb3J1bS5qcycpCmpzPXAucmVhZF90ZXh0KGVuY29kaW5nPSd1dGYtOCcpCmpzPWpzLnJlcGxhY2UoJzxpbWcgc3JjPSIke2VzYyhwLmF2YXRhcl91cmwpfSIgYWx0PSIiPicsJzxpbWcgc3JjPSIke2VzYyhwLmF2YXRhcl91cmwpfSIgYWx0PSIiIGxvYWRpbmc9ImxhenkiIGRlY29kaW5nPSJhc3luYyI+JykKCnBhdHRlcm49cmUuY29tcGlsZShyJ2FzeW5jIGZ1bmN0aW9uIGxvYWRSZW1vdGVcKFwpXHtcb i4qP1xuXH1cbmZ1bmN0aW9uIHJlbmRlckFsbCcs cmUuUyk=' | tr -d ' ' >/tmp/patch.b64
+          cat >/tmp/patch.py.b64 <<'EOF'
+ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmltcG9ydCByZQoKcD1QYXRoKCdmb3J1bS9pbmRleC5odG1sJykKaHRtbD1wLnJlYWRfdGV4dChlbmNvZGluZz0ndXRmLTgnKQpodG1sPWh0bWwucmVwbGFjZSgnPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSIvZm9ydW0vZm9ydW0uY3NzIj4nLCc8bGluayByZWw9InByZWNvbm5lY3QiIGhyZWY9Imh0dHBzOi8vaGh6c2VjZHRxYWN5cm94aXl3cG0uc3VwYWJhc2UuY28iIGNyb3Nzb3JpZ2luPjxsaW5rIHJlbD0icHJlY29ubmVjdCIgaHJlZj0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0IiBjcm9zc29yaWdpbj48bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Ii9mb3J1bS9mb3J1bS5jc3M/dj0yMDI2MDkxNy1vcHQxIj4nLDEpCmh0bWw9aHRtbC5yZXBsYWNlKCc8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9Ac3VwYWJhc2Uvc3VwYWJhc2UtanNAMiI+PC9zY3JpcHQ+JywnPHNjcmlwdCBkZWZlciBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vQHN1cGFiYXNlL3N1cGFiYXNlLWpzQDIiPjwvc2NyaXB0PicsMSkKaHRtbD1odG1sLnJlcGxhY2UoJzxzY3JpcHQgZGVmZXIgc3JjPSIvZm9ydW0vY29uZmlnLmpzIj48L3NjcmlwdD4nLCc8c2NyaXB0IGRlZmVyIHNyYz0iL2ZvcnVtL2NvbmZpZy5qcz92PTIwMjYwOTE3LW9wdDEiPjwvc2NyaXB0PicsMSkKaHRtbD1odG1sLnJlcGxhY2UoJzxzY3JpcHQgZGVmZXIgc3JjPSIvZm9ydW0vZm9ydW0uanMiPjwvc2NyaXB0PicsJzxzY3JpcHQgZGVmZXIgc3JjPSIvZm9ydW0vZm9ydW0uanM/dj0yMDI2MDkxNy1vcHQxIj48L3NjcmlwdD4nLDEpCnAud3JpdGVfdGV4dChodG1sLGVuY29kaW5nPSd1dGYtOCcpCgpwPVBhdGgoJ2ZvcnVtL2ZvcnVtLmpzJykKanM9cC5yZWFkX3RleHQoZW5jb2Rpbmc9J3V0Zi04JykKanM9anMucmVwbGFjZSgnPGltZyBzcmM9IiR7ZXNjKHAuYXZhdGFyX3VybCl9IiBhbHQ9IiI+JywnPGltZyBzcmM9IiR7ZXNjKHAuYXZhdGFyX3VybCl9IiBhbHQ9IiIgbG9hZGluZz0ibGF6eSIgZGVjb2Rpbmc9ImFzeW5jIj4nKQoKcGF0dGVybj1yZS5jb21waWxlKHInYXN5bmMgZnVuY3Rpb24gbG9hZFJlbW90ZVwoXClce1xuLio/XG5cfVxuZnVuY3Rpb24gcmVuZGVyQWxsJyxyZS5TKQpyZXBsYWNlbWVudD0iIiJhc3luYyBmdW5jdGlvbiBsb2FkUmVtb3RlKCl7CiAgY29uc3RbY2F0UmVzLHRvcGljUmVzLHJlcGx5UmVzLHByb2ZpbGVDb3VudFJlc109YXdhaXQgUHJvbWlzZS5hbGwoWwogICAgZGIuZnJvbSgnZm9ydW1fY2F0ZWdvcmllcycpLnNlbGVjdCgnKicpLmVxKCdpc19hY3RpdmUnLHRydWUpLm9yZGVyKCdwb3NpdGlvbicpLAogICAgZGIuZnJvbSgnZm9ydW1fdG9waWNzJykuc2VsZWN0KCcqJykub3JkZXIoJ2lzX3Bpbm5lZCcse2FzY2VuZGluZzpmYWxzZX0pLm9yZGVyKCd1cGRhdGVkX2F0Jyx7YXNjZW5kaW5nOmZhbHNlfSksCiAgICBkYi5mcm9tKCdmb3J1bV9yZXBsaWVzJykuc2VsZWN0KCd0b3BpY19pZCcpLAogICAgZGIuZnJvbSgncHJvZmlsZXMnKS5zZWxlY3QoJ2lkJyx7Y291bnQ6J2V4YWN0JyxoZWFkOnRydWV9KQogIF0pOwogIGlmKGNhdFJlcy5lcnJvcnx8dG9waWNSZXMuZXJyb3Ipe2Vscy5zdGF0dXNEb3QuY2xhc3NMaXN0LnJlbW92ZSgnb25saW5lJyk7ZWxzLnN0YXR1c1RpdGxlLnRleHRDb250ZW50PSdDb25leGl1bmUgaW5kaXNwb25pYmlsxIMnO2Vscy5zdGF0dXNUZXh0LnRleHRDb250ZW50PSdSZcOubmNhcmPEgyBwYWdpbmEnO2NhdGVnb3JpZXM9Y2F0ZWdvcmllc0ZhbGxiYWNrO3RvcGljcz1bXTtyZW5kZXJBbGwoKTtyZXR1cm59CiAgY2F0ZWdvcmllcz1jYXRSZXMuZGF0YXx8W107cmVhY3Rpb25Sb3dzPVtdOwogIGNvbnN0IGNvdW50cz17fTsocmVwbHlSZXMuZGF0YXx8W10pLmZvckVhY2gocj0+Y291bnRzW3IudG9waWNfaWRdPShjb3VudHNbci50b3BpY19pZF18fDApKzEpOwogIHRvcGljcz0odG9waWNSZXMuZGF0YXx8W10pLm1hcCh0PT4oey4uLnQscmVwbHlfY291bnQ6Y291bnRzW3QuaWRdfHwwfSkpOwogIHByb2ZpbGVzPW5ldyBNYXAoKTtpZihjdXJyZW50UHJvZmlsZSlwcm9maWxlcy5zZXQoU3RyaW5nKGN1cnJlbnRQcm9maWxlLmlkKSxjdXJyZW50UHJvZmlsZSk7CiAgY29uc3QgYXV0aG9ySWRzPVsuLi5uZXcgU2V0KHRvcGljcy5tYXAodD0+dC5hdXRob3JfaWQpLmZpbHRlcihCb29sZWFuKSldOwogIGlmKGF1dGhvcklkcy5sZW5ndGgpe2NvbnN0e2RhdGE6YXV0aG9yUHJvZmlsZXN9PWF3YWl0IGRiLmZyb20oJ3Byb2ZpbGVzJykuc2VsZWN0KCdpZCx1c2VybmFtZSxkaXNwbGF5X25hbWUsYXZhdGFyX3VybCxiaW8scm9sZSx3ZWJzaXRlLGNyZWF0ZWRfYXQnKS5pbignaWQnLGF1dGhvcklkcyk7KGF1dGhvclByb2ZpbGVzfHxbXSkuZm9yRWFjaChwPT5wcm9maWxlcy5zZXQoU3RyaW5nKHAuaWQpLHApKX0KICBlbHMuc3RhdE1lbWJlcnMudGV4dENvbnRlbnQ9cHJvZmlsZUNvdW50UmVzLmNvdW50Pz9wcm9maWxlcy5zaXplO3JlbmRlckFsbCgpO3JlbmRlck1lbWJlckNhcmQoKTsKfQpmdW5jdGlvbiByZW5kZXJBbGwiIiIKanMsbj1wYXR0ZXJuLnN1Ym4ocmVwbGFjZW1lbnQsanMsY291bnQ9MSkKaWYgbiE9MToKICAgIHJhaXNlIFN5c3RlbUV4aXQoJ2xvYWRSZW1vdGUgYmxvY2sgbm90IGZvdW5kJykKCm9sZD0iY29uc3R7ZGF0YTpyZXBsaWVzLGVycm9yfT1hd2FpdCBkYi5mcm9tKCdmb3J1bV9yZXBsaWVzJykuc2VsZWN0KCcqJykuZXEoJ3RvcGljX2lkJyxpZCkub3JkZXIoJ2NyZWF0ZWRfYXQnKTtpZihlcnJvcil7dG9hc3QoZXJyb3IubWVzc2FnZSk7cmV0dXJufWNvbnN0IHJvd3M9cmVwbGllc3x8W107IgpuZXc9IiIiY29uc3R7ZGF0YTpyZXBsaWVzLGVycm9yfT1hd2FpdCBkYi5mcm9tKCdmb3J1bV9yZXBsaWVzJykuc2VsZWN0KCcqJykuZXEoJ3RvcGljX2lkJyxpZCkub3JkZXIoJ2NyZWF0ZWRfYXQnKTtpZihlcnJvcil7dG9hc3QoZXJyb3IubWVzc2FnZSk7cmV0dXJufWNvbnN0IHJvd3M9cmVwbGllc3x8W107CiAgY29uc3QgbWlzc2luZ0F1dGhvcklkcz1bLi4ubmV3IFNldChyb3dzLm1hcChyPT5yLmF1dGhvcl9pZCkuZmlsdGVyKHVpZD0+dWlkJiYhcHJvZmlsZXMuaGFzKFN0cmluZyh1aWQpKSkpXTsKICBpZihtaXNzaW5nQXV0aG9ySWRzLmxlbmd0aCl7Y29uc3R7ZGF0YTpyZXBseVByb2ZpbGVzfT1hd2FpdCBkYi5mcm9tKCdwcm9maWxlcycpLnNlbGVjdCgnaWQsdXNlcm5hbWUsZGlzcGxheV9uYW1lLGF2YXRhcl91cmwsYmlvLHJvbGUsd2Vic2l0ZSxjcmVhdGVkX2F0JykuaW4oJ2lkJyxtaXNzaW5nQXV0aG9ySWRzKTsocmVwbHlQcm9maWxlc3x8W10pLmZvckVhY2gocD0+cHJvZmlsZXMuc2V0KFN0cmluZyhwLmlkKSxwKSl9CiAgY29uc3QgcmVhY3Rpb25SZXF1ZXN0cz1bZGIuZnJvbSgnZm9ydW1fcmVhY3Rpb25zJykuc2VsZWN0KCcqJykuZXEoJ3RvcGljX2lkJyxpZCldLHJlcGx5SWRzPXJvd3MubWFwKHI9PnIuaWQpLmZpbHRlcihCb29sZWFuKTsKICBpZihyZXBseUlkcy5sZW5ndGgpcmVhY3Rpb25SZXF1ZXN0cy5wdXNoKGRiLmZyb20oJ2ZvcnVtX3JlYWN0aW9ucycpLnNlbGVjdCgnKicpLmluKCdyZXBseV9pZCcscmVwbHlJZHMpKTsKICBjb25zdCByZWFjdGlvblJlc3VsdHM9YXdhaXQgUHJvbWlzZS5hbGwocmVhY3Rpb25SZXF1ZXN0cyk7cmVhY3Rpb25Sb3dzPXJlYWN0aW9uUmVzdWx0cy5mbGF0TWFwKHI9PnIuZGF0YXx8W10pOyIiIgppZiBvbGQgbm90IGluIGpzOgogICAgcmFpc2UgU3lzdGVtRXhpdCgnb3BlblRocmVhZCBxdWVyeSBibG9jayBub3QgZm91bmQnKQpqcz1qcy5yZXBsYWNlKG9sZCxuZXcsMSkKcC53cml0ZV90ZXh0KGpzLGVuY29kaW5nPSd1dGYtOCcpCg==
+EOF
+          base64 -d /tmp/patch.py.b64 >/tmp/patch.py
+          python3 /tmp/patch.py
       - name: Commit optimized forum
         shell: bash
         run: |
