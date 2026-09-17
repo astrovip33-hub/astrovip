@@ -17,22 +17,28 @@ main{min-height:100vh;padding:28px 0 48px;background:radial-gradient(circle at 5
 .profession strong{display:block;max-width:28ch;font-size:clamp(21px,5.9vw,29px);line-height:1.08;letter-spacing:-.035em;text-wrap:balance}
 .grid{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"commerce commerce" "anpc aar";gap:10px}
 .logo,.commerce{position:relative;min-width:0;overflow:hidden;border-radius:18px}
-.logo{min-height:118px;padding:13px 9px 11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;border:1px solid rgba(217,184,92,.34);background:linear-gradient(145deg,rgba(19,22,21,.98),rgba(5,10,8,.98));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 34px rgba(0,0,0,.30)}
-.logo:before,.commerce:before{content:"";position:absolute;inset:6px;pointer-events:none;border-radius:12px}
-.logo:before{border:1px solid rgba(255,255,255,.045)}
-.logo img{position:relative;z-index:2;display:block;width:auto;height:auto;max-width:88%;max-height:58px;padding:6px 8px;object-fit:contain;border-radius:9px;background:#fff;box-shadow:0 7px 20px rgba(0,0,0,.24);transform:scale(1.07)}
-.logo.aar img{max-width:94%;max-height:55px;transform:scale(1.13)}
-.logo small{position:relative;z-index:2;color:#d8c27a;font-size:7.5px;font-weight:850;line-height:1.15;letter-spacing:.08em;text-align:center;text-transform:uppercase}
+.logo{min-height:138px;padding:12px 8px 11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border:1px solid rgba(217,184,92,.46);background:radial-gradient(circle at 50% -12%,rgba(217,184,92,.09),transparent 42%),linear-gradient(145deg,rgba(20,23,21,.99),rgba(4,8,7,.99));box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 15px 36px rgba(0,0,0,.34),0 0 20px rgba(217,184,92,.06)}
+.logo:before,.commerce:before{content:"";position:absolute;pointer-events:none}
+.logo:before{inset:4px;border:1px solid rgba(255,231,150,.20);border-radius:14px;box-shadow:inset 0 0 18px rgba(217,184,92,.025)}
+.logo:after{content:"";position:absolute;left:15%;right:15%;top:5px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,241,170,.62),transparent);opacity:.62}
+.logo img{position:relative;z-index:2;display:block;width:auto;height:auto;object-fit:contain}
+.logo .logo-plaque{position:relative;z-index:2;width:92%;min-height:72px;padding:8px 9px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(180deg,#fffef9 0%,#f9fafb 58%,#eef0f2 100%);border:1px solid rgba(255,238,175,.78);box-shadow:inset 0 1px 0 #fff,0 8px 22px rgba(0,0,0,.28),0 0 18px rgba(217,184,92,.09)}
+.logo .logo-plaque img{max-width:96%;max-height:58px}
+.logo small{position:relative;z-index:2;color:#dac67e;font-size:7.7px;font-weight:850;line-height:1.15;letter-spacing:.09em;text-align:center;text-transform:uppercase}
+.logo.aar{gap:5px}
+.logo.aar .respectam{position:relative;z-index:2;margin-top:1px;color:#f2d77f;font-size:9px;font-weight:950;line-height:1;text-transform:uppercase;letter-spacing:.16em;text-shadow:0 0 16px rgba(217,184,92,.24)}
+.logo.aar .logo-plaque{width:96%;min-height:76px;padding:8px 7px;border-color:rgba(241,210,121,.92);box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(160,124,36,.12),0 9px 23px rgba(0,0,0,.30),0 0 22px rgba(217,184,92,.12)}
+.logo.aar .logo-plaque img{max-width:100%;max-height:58px}
 .anpc{grid-area:anpc}.aar{grid-area:aar}
 .commerce{grid-area:commerce;min-height:124px;padding:16px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;border:1px solid rgba(56,245,138,.46);background:radial-gradient(circle at 50% 0%,rgba(56,245,138,.16),transparent 46%),linear-gradient(155deg,#07170f 0%,#04100d 45%,#071932 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 16px 38px rgba(0,0,0,.34),0 0 26px rgba(56,245,138,.08)}
-.commerce:before{border:1px solid rgba(56,245,138,.12)}
+.commerce:before{inset:6px;border:1px solid rgba(56,245,138,.12);border-radius:12px}
 .commerce .eyebrow{position:relative;z-index:2;color:#dbe8ff;font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
 .commerce strong{position:relative;z-index:2;color:#45f58d;font-size:28px;line-height:1.04;letter-spacing:-.025em;text-shadow:0 0 22px rgba(56,245,138,.18)}
 .points{position:relative;z-index:2;display:flex;justify-content:center;flex-wrap:wrap;gap:6px}
 .points span{display:inline-flex;align-items:center;min-height:29px;padding:5px 9px;border:1px solid rgba(217,184,92,.20);border-radius:999px;background:rgba(255,255,255,.035);font-size:11px;font-weight:850;white-space:nowrap}
 .points span:before{content:"✓";margin-right:5px;color:#45f58d;font-weight:950}
-@media(min-width:821px){.grid{grid-template-columns:minmax(0,1fr) minmax(260px,.88fr) minmax(0,1fr);grid-template-areas:"anpc commerce aar";gap:14px}.logo,.commerce{min-height:166px}.logo img{max-height:78px}.profession{padding:28px 30px 26px;margin-bottom:18px}.kicker{font-size:12px}.profession strong{font-size:clamp(28px,3.5vw,45px)}}
-@media(max-width:390px){.wrap{width:calc(100% - 18px)}.profession{padding:20px 18px 18px}.profession strong{font-size:20px}.grid{gap:8px}.commerce{min-height:118px}.commerce strong{font-size:26px}.points span{font-size:10.5px;padding:5px 8px}.logo{min-height:108px;padding:11px 7px 10px}.logo img{max-height:50px;padding:5px 7px}.logo small{font-size:7px}}
+@media(min-width:821px){.grid{grid-template-columns:minmax(0,1fr) minmax(260px,.88fr) minmax(0,1fr);grid-template-areas:"anpc commerce aar";gap:14px}.logo,.commerce{min-height:176px}.logo .logo-plaque{min-height:92px}.logo .logo-plaque img{max-height:72px}.logo.aar .logo-plaque{min-height:96px}.logo.aar .logo-plaque img{max-height:72px}.logo.aar .respectam{font-size:11px}.profession{padding:28px 30px 26px;margin-bottom:18px}.kicker{font-size:12px}.profession strong{font-size:clamp(28px,3.5vw,45px)}}
+@media(max-width:390px){.wrap{width:calc(100% - 18px)}.profession{padding:20px 18px 18px}.profession strong{font-size:20px}.grid{gap:8px}.commerce{min-height:118px}.commerce strong{font-size:26px}.points span{font-size:10.5px;padding:5px 8px}.logo{min-height:130px;padding:10px 6px}.logo .logo-plaque{width:93%;min-height:66px;padding:6px 7px}.logo .logo-plaque img{max-height:52px}.logo.aar .logo-plaque{width:97%;min-height:69px}.logo.aar .logo-plaque img{max-height:52px}.logo.aar .respectam{font-size:8px}.logo small{font-size:7px}}
 </style>
 </head>
 <body>
@@ -49,11 +55,12 @@ main{min-height:100vh;padding:28px 0 48px;background:radial-gradient(circle at 5
 <div class="points"><span>Plată cu cardul</span><span>Se emite factură</span></div>
 </div>
 <a class="logo anpc" href="https://anpc.ro/" target="_blank" rel="noopener noreferrer">
-<img src="/assets/anpc.webp?v=9807fead6d13" alt="ANPC">
+<div class="logo-plaque"><img src="/assets/anpc.webp?v=9807fead6d13" alt="ANPC"></div>
 <small>Protecția consumatorului</small>
 </a>
 <a class="logo aar" href="https://www.aar.org.ro/codul-etic/" target="_blank" rel="noopener noreferrer">
-<img src="/assets/codul-etic-astrologului.webp?v=0aecc15e4054" alt="Codul Etic al Astrologului">
+<div class="respectam">Respectăm</div>
+<div class="logo-plaque"><img src="/assets/codul-etic-astrologului.webp?v=0aecc15e4054" alt="Codul Etic al Astrologului"></div>
 <small>Cod etic profesional</small>
 </a>
 </section>
