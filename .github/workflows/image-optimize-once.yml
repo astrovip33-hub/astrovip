@@ -1,0 +1,94 @@
+name: One-time image optimization
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/image-optimize-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install image optimizer
+        run: python -m pip install --quiet Pillow
+
+      - name: Convert heavy homepage images to WebP and update references
+        shell: python
+        run: |
+          from pathlib import Path
+          from PIL import Image
+
+          lossy = [
+              '1000043150.png',
+              '1000043155.png',
+              '1000043143.png',
+              '1000043145.png',
+              '1000041411.png',
+              '1000041605.png',
+          ]
+          lossless = [
+              'anpc.png',
+              'codul-etic-astrologului.png',
+          ]
+
+          assets = Path('assets')
+          converted = {}
+
+          for name in lossy:
+              src = assets / name
+              if not src.exists():
+                  raise SystemExit(f'Missing expected image: {src}')
+              dst = src.with_suffix('.webp')
+              with Image.open(src) as im:
+                  if im.mode not in ('RGB', 'RGBA'):
+                      im = im.convert('RGBA' if 'transparency' in im.info else 'RGB')
+                  im.save(dst, 'WEBP', quality=84, method=6)
+              converted[name] = dst.name
+
+          for name in lossless:
+              src = assets / name
+              if not src.exists():
+                  raise SystemExit(f'Missing expected image: {src}')
+              dst = src.with_suffix('.webp')
+              with Image.open(src) as im:
+                  if im.mode not in ('RGB', 'RGBA'):
+                      im = im.convert('RGBA' if 'transparency' in im.info else 'RGB')
+                  im.save(dst, 'WEBP', lossless=True, method=6)
+              converted[name] = dst.name
+
+          text_exts = {'.html', '.css', '.js', '.xml', '.txt', '.json', '.md'}
+          for path in Path('.').rglob('*'):
+              if not path.is_file() or '.git' in path.parts or path.suffix.lower() not in text_exts:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              new_text = text
+              for old, new in converted.items():
+                  new_text = new_text.replace(f'/assets/{old}', f'/assets/{new}')
+                  new_text = new_text.replace(f'assets/{old}', f'assets/{new}')
+              if new_text != text:
+                  path.write_text(new_text, encoding='utf-8')
+
+          for old, new in converted.items():
+              old_size = (assets / old).stat().st_size
+              new_size = (assets / new).stat().st_size
+              print(f'{old}: {old_size} -> {new_size} bytes')
+
+      - name: Commit optimized images
+        run: |
+          git config user.name "AstroVip Optimizer"
+          git config user.email "actions@users.noreply.github.com"
+          rm .github/workflows/image-optimize-once.yml
+          git add -A
+          git commit -m "Optimize homepage images with WebP"
+          git push origin main
