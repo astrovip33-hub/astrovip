@@ -1,0 +1,69 @@
+name: Style second banner green white
+
+on:
+  push:
+    paths:
+      - '.github/workflows/style-second-banner-green-white-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  style-banner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Replace second banner gradient with green white
+        shell: python
+        run: |
+          from pathlib import Path
+
+          css_path = Path('assets/homepage-bundle-base.css')
+          css = css_path.read_text(encoding='utf-8')
+          old = '''/* AstroVip second banner glossy red-gold */
+body #planet-strip-secondary .planet-item > strong,
+body #planet-strip-secondary .planet-item > span{
+  background:linear-gradient(180deg,#fffbd1 0%,#fff200 18%,#ffd000 34%,#ff9900 50%,#ff3b00 72%,#c90000 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent!important;
+  font-weight:950;
+  text-shadow:none;
+  filter:drop-shadow(0 1px 0 rgba(255,255,200,.78)) drop-shadow(0 0 4px rgba(255,205,0,.60)) drop-shadow(0 0 8px rgba(255,48,0,.32));
+}
+body #planet-strip-secondary .planet-item > strong{letter-spacing:.025em;}'''
+          new = '''/* AstroVip second banner glossy green-white */
+body #planet-strip-secondary .planet-item > strong,
+body #planet-strip-secondary .planet-item > span{
+  background:linear-gradient(180deg,#ffffff 0%,#effff5 16%,#caffdc 32%,#72ff9e 50%,#25df69 70%,#0a9f4b 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent!important;
+  font-weight:950;
+  text-shadow:none;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.92)) drop-shadow(0 0 4px rgba(176,255,205,.72)) drop-shadow(0 0 9px rgba(37,223,105,.40));
+}
+body #planet-strip-secondary .planet-item > strong{letter-spacing:.025em;}'''
+          if old not in css:
+              raise SystemExit('Current second banner red-gold block not found')
+          css = css.replace(old, new, 1)
+          css_path.write_text(css, encoding='utf-8')
+
+          html_path = Path('index.html')
+          html = html_path.read_text(encoding='utf-8')
+          html = html.replace('homepage-bundle-base.css?v=20260917-banners-2', 'homepage-bundle-base.css?v=20260917-banners-3', 1)
+          html_path.write_text(html, encoding='utf-8')
+
+      - name: Commit and publish
+        run: |
+          rm -f .github/workflows/style-second-banner-green-white-once.yml
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add -A
+          git commit -m "Switch second banner to glossy green white"
+          git push origin HEAD:main
