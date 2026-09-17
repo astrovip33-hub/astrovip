@@ -1,0 +1,10 @@
+[hidden]{display:none!important}
+:root{--navy:#070706;--navy2:#10100e;--blue:#99742e;--electric:#ffe5a0;--green:#e4bf66;--green2:#99742e;--pearl:#fffdf6;--muted:#bdb8aa;--line:rgba(228,191,102,.23);--panel:rgba(16,16,14,.9);--shadow:0 22px 65px rgba(0,0,0,.46)}
+body{background:radial-gradient(circle at 12% 5%,rgba(228,191,102,.1),transparent 28%),radial-gradient(circle at 86% 20%,rgba(228,191,102,.05),transparent 24%),linear-gradient(180deg,#0b0b09 0%,#070706 100%)}
+.topbar{background:rgba(7,7,6,.92)}
+.status-card,.panel,.notice{background:linear-gradient(180deg,rgba(25,24,19,.92),rgba(10,10,9,.97))}
+.stats div{background:#11100d}
+.primary{color:#231a09;background:linear-gradient(180deg,#ffe8a6,#d6aa4f 55%,#99742e);border-color:rgba(255,229,160,.65);box-shadow:0 10px 28px rgba(173,126,39,.2)}
+.ghost{background:rgba(255,255,255,.025)}
+.modal-card{background:linear-gradient(180deg,#1c1911,#0c0c0a)}
+input,select,textarea{background:#090908;border-color:rgba(228,191,102,.22)}
