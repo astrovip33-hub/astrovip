@@ -1,0 +1,88 @@
+name: Minify homepage CSS and clean unused assets
+
+on:
+  push:
+    paths:
+      - '.github/workflows/minify-home-clean-assets-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Minify homepage CSS
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astrovip-css
+          cd /tmp/astrovip-css
+          npm init -y >/dev/null 2>&1
+          npm install --silent clean-css-cli@5.6.3
+          cd "$GITHUB_WORKSPACE"
+          before=$(wc -c < assets/homepage-bundle-base.css)
+          /tmp/astrovip-css/node_modules/.bin/cleancss -o /tmp/homepage-bundle-base.min.css assets/homepage-bundle-base.css
+          after=$(wc -c < /tmp/homepage-bundle-base.min.css)
+          echo "homepage CSS: $before -> $after bytes"
+          test "$after" -gt 25000
+          test "$after" -lt "$before"
+          grep -q '.planet-strip-secondary' /tmp/homepage-bundle-base.min.css
+          grep -q '.hero' /tmp/homepage-bundle-base.min.css
+          mv /tmp/homepage-bundle-base.min.css assets/homepage-bundle-base.css
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=re.sub(r'/assets/homepage-bundle-base\.css\?v=[^"\']+', '/assets/homepage-bundle-base.css?v=20260917-min1', s, count=1)
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Remove only unreferenced PNG assets
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text_ext={'.html','.css','.js','.json','.xml','.txt','.md','.yml','.yaml','.py','.jsonc'}
+          docs=[]
+          for p in Path('.').rglob('*'):
+              if not p.is_file() or '.git' in p.parts or p.suffix.lower() not in text_ext:
+                  continue
+              try:
+                  docs.append((p,p.read_text(encoding='utf-8',errors='ignore')))
+              except Exception:
+                  pass
+          removed=[]
+          for png in sorted(Path('assets').glob('*.png')):
+              rel=png.as_posix()
+              name=png.name
+              refs=[]
+              for source,text in docs:
+                  if source == png:
+                      continue
+                  if rel in text or ('/'+rel) in text or name in text:
+                      refs.append(str(source))
+              if refs:
+                  print('KEEP',rel,'referenced by',', '.join(refs[:4]))
+              else:
+                  size=png.stat().st_size
+                  png.unlink()
+                  removed.append((rel,size))
+                  print('REMOVE',rel,size)
+          print('removed PNG bytes:',sum(x[1] for x in removed))
+          PY
+
+      - name: Commit optimized site
+        shell: bash
+        run: |
+          rm -f .github/workflows/minify-home-clean-assets-once.yml
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add -A
+          git commit -m "Minify homepage CSS and remove unused PNG assets"
+          git push origin HEAD:main
