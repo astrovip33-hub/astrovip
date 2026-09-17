@@ -1,0 +1,7 @@
+/* Preserve the black, emerald and gold finish. */
+:root{--av-gold:#d9b85c;--av-gold2:#fff1aa;--av-green:#38f58a;--av-ink:#020202}
+body.av-motion-live .hero h1{background:linear-gradient(180deg,#fff9cf,#e2c76f 46%,#aa852f);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+body.av-motion-live .hero .eyebrow{border-color:rgba(217,184,92,.36);background:rgba(217,184,92,.06);color:#fff0bd}
+body.av-motion-live .cta{background:linear-gradient(180deg,#fff4bf,#dfc56d 45%,#94701e);color:#171108;border-color:#fff0a8;box-shadow:0 10px 28px rgba(217,184,92,.16),inset 0 1px rgba(255,255,255,.82)}
+body.av-motion-live .card{--av-mx:50%;--av-my:50%}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){body.av-motion-live .card:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--av-mx) var(--av-my),rgba(255,241,170,.09),transparent 55%);opacity:0;transition:opacity .2s}body.av-motion-live .card:hover:after{opacity:1}}

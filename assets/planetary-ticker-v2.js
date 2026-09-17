@@ -1,21 +1,5 @@
 (function(){
   'use strict';
-  function load(src){
-    const s=document.createElement('script');
-    s.src=src;
-    s.async=false;
-    document.head.appendChild(s);
-  }
-  function loadWithCallback(src,cb){
-    const s=document.createElement('script');
-    s.src=src;
-    s.async=false;
-    s.onload=cb||null;
-    s.onerror=cb||null;
-    document.head.appendChild(s);
-  }
-
-  // Compact desktop reading rhythm across shared guide pages.
   const style=document.createElement('style');
   style.textContent=`
     @media (min-width:981px){
@@ -41,44 +25,8 @@
       body.guide-page .guide-footer{padding:24px 0!important}
     }
 
-    /* Mobile: continuous planetary ribbon, compact type, softened edges and extra breathing room below. */
-    @media (max-width:820px){
-      body .planet-strip{overflow:hidden!important}
-      body .planet-strip-inner{display:block!important;width:100%!important;min-height:46px!important}
-      body .planet-ticker{width:100%!important;max-width:100%!important;overflow:hidden!important;mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%)!important;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%)!important}
-      body .planet-track{display:flex!important;width:max-content!important;gap:14px!important;padding:0 18px!important;animation:avTicker 34s linear infinite!important;will-change:transform}
-      body .planet-item{box-sizing:border-box!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;max-width:none!important;justify-content:center!important;gap:5px!important;padding:10px 7px!important;overflow:visible!important;font-size:clamp(13px,3.45vw,16px)!important;line-height:1.1!important;text-align:center!important;white-space:nowrap!important}
-      body .planet-glyph{flex:0 0 auto!important;font-size:19px!important}
-      body .planet-item strong,body .planet-item>span{flex:0 0 auto!important;white-space:nowrap!important}
-      body:not(.guide-page) .planet-strip+main{padding-top:20px!important}
-      body:not(.guide-page) .hero-mobile-portrait img{object-position:80% 24%!important;transform:scale(1.10)!important}
-    }
-    @media (max-width:390px){
-      body .planet-track{gap:10px!important;padding-left:14px!important;padding-right:14px!important;animation-duration:32s!important}
-      body .planet-item{font-size:12px!important;gap:4px!important;padding-left:4px!important;padding-right:4px!important}
-      body .planet-glyph{font-size:17px!important}
-      body:not(.guide-page) .planet-strip+main{padding-top:18px!important}
-    }
-    @media (max-width:820px) and (prefers-reduced-motion:reduce){
-      body .planet-track{animation:none!important;transform:none!important}
-      body .planet-ticker{overflow-x:auto!important;mask-image:none!important;-webkit-mask-image:none!important}
-    }
-  `;
+`;
   document.head.appendChild(style);
-
-  load('/assets/planetary-ticker-core.js?v=20260917-flowfix');
-  load('/assets/home-opportunities.js?v=20260916');
-
-  // AstroVip spectacular motion layer — homepage only. Falls back cleanly if CDN is unavailable.
-  if(location.pathname==='/' || location.pathname==='/index.html'){
-    const css=document.createElement('link');
-    css.rel='stylesheet';
-    css.href='/assets/astrovip-motion.css?v=20260916-2339';
-    document.head.appendChild(css);
-    loadWithCallback('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js',function(){
-      loadWithCallback('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js',function(){
-        load('/assets/astrovip-motion.js?v=20260917-0649');
-      });
-    });
-  }
+  const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/planetary-ticker.css?v=20260917-mobile-2';document.head.appendChild(css);
+  const script=document.createElement('script');script.src='/assets/planetary-ticker-core.js?v=20260917-mobile-2';script.async=false;document.head.appendChild(script);
 })();
