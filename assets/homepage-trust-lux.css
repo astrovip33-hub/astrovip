@@ -1,0 +1,269 @@
+/* AstroVip trust section — Premium Lux live override, 2026-09-17 */
+body:not(.guide-page) .trust-refs{
+  padding:28px 0 30px!important;
+  border-top:1px solid rgba(217,184,92,.16)!important;
+  border-bottom:1px solid rgba(56,245,138,.10)!important;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(25,116,77,.23),transparent 38%),
+    radial-gradient(circle at 86% 20%,rgba(217,184,92,.08),transparent 28%),
+    linear-gradient(180deg,#050806,#020303)!important;
+}
+body:not(.guide-page) .trust-minibox{
+  width:min(1120px,calc(100% - 24px))!important;
+  max-width:1120px!important;
+  margin:0 auto!important;
+}
+body:not(.guide-page) .trust-profession-banner{
+  position:relative!important;
+  isolation:isolate!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  min-height:0!important;
+  margin:0 0 12px!important;
+  padding:24px 24px 22px!important;
+  border:1px solid rgba(217,184,92,.56)!important;
+  border-radius:20px!important;
+  background:
+    radial-gradient(circle at 12% 0%,rgba(61,150,255,.18),transparent 38%),
+    linear-gradient(135deg,rgba(9,27,54,.98),rgba(3,15,18,.98) 72%,rgba(12,48,34,.96))!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    0 18px 46px rgba(0,0,0,.34),
+    0 0 28px rgba(217,184,92,.08)!important;
+  overflow:hidden!important;
+}
+body:not(.guide-page) .trust-profession-banner::before{
+  content:""!important;
+  position:absolute!important;
+  inset:6px!important;
+  z-index:-1!important;
+  pointer-events:none!important;
+  border:1px solid rgba(255,233,157,.20)!important;
+  border-radius:14px!important;
+}
+body:not(.guide-page) .trust-profession-banner::after{
+  content:"✦"!important;
+  position:absolute!important;
+  top:13px!important;
+  right:15px!important;
+  color:#f4d477!important;
+  font-size:14px!important;
+  text-shadow:0 0 18px rgba(244,212,119,.42)!important;
+}
+body:not(.guide-page) .trust-profession-kicker{
+  margin:0 0 7px!important;
+  color:#e6c764!important;
+  font-size:9px!important;
+  line-height:1.2!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+}
+body:not(.guide-page) .trust-profession-banner strong{
+  display:block!important;
+  max-width:28ch!important;
+  color:#f8fbff!important;
+  font-size:clamp(21px,5.9vw,29px)!important;
+  line-height:1.08!important;
+  letter-spacing:-.035em!important;
+  text-wrap:balance!important;
+  text-shadow:none!important;
+}
+body:not(.guide-page) .trust-icons-only{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  grid-template-areas:"commerce commerce" "anpc aar"!important;
+  gap:10px!important;
+  width:100%!important;
+  align-items:stretch!important;
+}
+body:not(.guide-page) .trust-icon-only,
+body:not(.guide-page) .trust-icon-only:first-child,
+body:not(.guide-page) .trust-icon-only:last-child{
+  position:relative!important;
+  top:auto!important;
+  min-width:0!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:118px!important;
+  padding:13px 9px 11px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  overflow:hidden!important;
+  border:1px solid rgba(217,184,92,.34)!important;
+  border-radius:18px!important;
+  background:linear-gradient(145deg,rgba(19,22,21,.98),rgba(5,10,8,.98))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 34px rgba(0,0,0,.30)!important;
+  transform:none!important;
+}
+body:not(.guide-page) .trust-icon-only:first-child{grid-area:anpc!important}
+body:not(.guide-page) .trust-icon-only:last-child{grid-area:aar!important}
+body:not(.guide-page) .trust-icon-only::before{
+  content:""!important;
+  position:absolute!important;
+  inset:6px!important;
+  pointer-events:none!important;
+  border:1px solid rgba(255,255,255,.045)!important;
+  border-radius:12px!important;
+}
+body:not(.guide-page) .trust-icon-only::after{
+  position:relative!important;
+  z-index:2!important;
+  display:block!important;
+  color:#d8c27a!important;
+  font-size:7.5px!important;
+  font-weight:850!important;
+  line-height:1.15!important;
+  letter-spacing:.08em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+}
+body:not(.guide-page) .trust-icon-only:first-child::after{content:"Protecția consumatorului"!important}
+body:not(.guide-page) .trust-icon-only:last-child::after{content:"Cod etic profesional"!important}
+body:not(.guide-page) .trust-icon-only img,
+body:not(.guide-page) .trust-icon-only:first-child img,
+body:not(.guide-page) .trust-icon-only:last-child img{
+  position:relative!important;
+  z-index:2!important;
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:88%!important;
+  max-height:58px!important;
+  padding:6px 8px!important;
+  margin:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  box-shadow:0 7px 20px rgba(0,0,0,.24)!important;
+  transform:scale(1.07)!important;
+}
+body:not(.guide-page) .trust-icon-only:last-child img{
+  max-width:94%!important;
+  max-height:58px!important;
+  transform:scale(1.13)!important;
+}
+body:not(.guide-page) .trust-commerce-card{
+  grid-area:commerce!important;
+  position:relative!important;
+  top:auto!important;
+  min-width:0!important;
+  width:100%!important;
+  min-height:124px!important;
+  height:auto!important;
+  padding:16px 14px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  text-align:center!important;
+  overflow:hidden!important;
+  border:1px solid rgba(56,245,138,.46)!important;
+  border-radius:18px!important;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(56,245,138,.16),transparent 46%),
+    linear-gradient(155deg,#07170f 0%,#04100d 45%,#071932 100%)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 16px 38px rgba(0,0,0,.34),
+    0 0 26px rgba(56,245,138,.08)!important;
+}
+body:not(.guide-page) .trust-commerce-card::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:6px!important;
+  pointer-events:none!important;
+  border:1px solid rgba(56,245,138,.12)!important;
+  border-radius:12px!important;
+}
+body:not(.guide-page) .trust-commerce-card::after{display:none!important}
+body:not(.guide-page) .trust-commerce-kicker{
+  position:relative!important;
+  z-index:2!important;
+  color:#dbe8ff!important;
+  font-size:9px!important;
+  line-height:1.2!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+  white-space:normal!important;
+}
+body:not(.guide-page) .trust-commerce-card strong{
+  position:relative!important;
+  z-index:2!important;
+  color:#45f58d!important;
+  font-size:28px!important;
+  line-height:1.04!important;
+  letter-spacing:-.025em!important;
+  text-shadow:0 0 22px rgba(56,245,138,.18)!important;
+}
+body:not(.guide-page) .trust-commerce-points{
+  position:relative!important;
+  z-index:2!important;
+  display:flex!important;
+  justify-content:center!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+  margin:0!important;
+}
+body:not(.guide-page) .trust-commerce-points span{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:29px!important;
+  padding:5px 9px!important;
+  border:1px solid rgba(217,184,92,.20)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.035)!important;
+  color:#f8fbff!important;
+  font-size:11px!important;
+  line-height:1.15!important;
+  font-weight:850!important;
+  white-space:nowrap!important;
+}
+body:not(.guide-page) .trust-commerce-points span::before{
+  content:"✓"!important;
+  margin-right:5px!important;
+  color:#45f58d!important;
+  font-weight:950!important;
+}
+@media(min-width:821px){
+  body:not(.guide-page) .trust-icons-only{
+    grid-template-columns:minmax(0,1fr) minmax(260px,.88fr) minmax(0,1fr)!important;
+    grid-template-areas:"anpc commerce aar"!important;
+    gap:14px!important;
+  }
+  body:not(.guide-page) .trust-icon-only,
+  body:not(.guide-page) .trust-icon-only:first-child,
+  body:not(.guide-page) .trust-icon-only:last-child,
+  body:not(.guide-page) .trust-commerce-card{min-height:166px!important}
+  body:not(.guide-page) .trust-icon-only img,
+  body:not(.guide-page) .trust-icon-only:first-child img,
+  body:not(.guide-page) .trust-icon-only:last-child img{max-height:78px!important}
+  body:not(.guide-page) .trust-profession-banner{padding:28px 30px 26px!important;margin-bottom:18px!important}
+  body:not(.guide-page) .trust-profession-kicker{font-size:12px!important}
+  body:not(.guide-page) .trust-profession-banner strong{font-size:clamp(28px,3.5vw,45px)!important}
+}
+@media(max-width:390px){
+  body:not(.guide-page) .trust-minibox{width:calc(100% - 18px)!important}
+  body:not(.guide-page) .trust-profession-banner{padding:20px 18px 18px!important}
+  body:not(.guide-page) .trust-profession-banner strong{font-size:20px!important}
+  body:not(.guide-page) .trust-icons-only{gap:8px!important}
+  body:not(.guide-page) .trust-commerce-card{min-height:118px!important}
+  body:not(.guide-page) .trust-commerce-card strong{font-size:26px!important}
+  body:not(.guide-page) .trust-commerce-points span{font-size:10.5px!important;padding:5px 8px!important}
+  body:not(.guide-page) .trust-icon-only,
+  body:not(.guide-page) .trust-icon-only:first-child,
+  body:not(.guide-page) .trust-icon-only:last-child{min-height:108px!important;padding:11px 7px 10px!important}
+  body:not(.guide-page) .trust-icon-only img,
+  body:not(.guide-page) .trust-icon-only:first-child img,
+  body:not(.guide-page) .trust-icon-only:last-child img{max-height:50px!important;padding:5px 7px!important}
+  body:not(.guide-page) .trust-icon-only::after{font-size:7px!important}
+}
