@@ -22,3 +22,9 @@
 
 /llms.txt
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/assets/astrovip-hero-current.mp4
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/1000049884-lcp.webp
+  Cache-Control: public, max-age=31536000, immutable
