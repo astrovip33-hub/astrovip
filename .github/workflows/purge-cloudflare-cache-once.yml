@@ -1,5 +1,5 @@
 name: Purge AstroVip Cloudflare cache once
-# audit-purge: 2026-09-18-cwv3
+# audit-purge: 2026-09-18-cwv3-css
 
 on:
   push:
