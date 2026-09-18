@@ -8,3 +8,6 @@ README_IMPORTENT.txt
 build-tantric-cluster.js
 qa-tantric.js
 qa-live-tantric.js
+build-knowledge-package.js
+qa-knowledge.js
+qa-live.js
