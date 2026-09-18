@@ -1,4 +1,5 @@
 name: Generate AstroVip Atlas 1000
+# trigger: 2026-09-18-atlas1000
 
 on:
   push:
