@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="t d">
+<title id="t">Începerea unui nou job — AstroVip</title>
+<desc id="d">Ilustrație premium în negru, auriu, albastru safir și verde smarald: un profesionist pășește către un skyline luminos, înconjurat de simboluri astrologice pentru Soare, MC, Venus, Mercur, Jupiter și Uranus.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#030712"/><stop offset=".42" stop-color="#071a3c"/><stop offset=".72" stop-color="#062a2a"/><stop offset="1" stop-color="#020305"/></linearGradient>
+  <radialGradient id="sun"><stop stop-color="#fffbe0"/><stop offset=".18" stop-color="#ffe27a"/><stop offset=".48" stop-color="#ffb51b"/><stop offset="1" stop-color="#ff7a00" stop-opacity="0"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7c4a00"/><stop offset=".22" stop-color="#f2c15d"/><stop offset=".48" stop-color="#fff1a8"/><stop offset=".7" stop-color="#d49a22"/><stop offset="1" stop-color="#6b3c00"/></linearGradient>
+  <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#25c7ff"/><stop offset=".55" stop-color="#3d67ff"/><stop offset="1" stop-color="#9e44ff"/></linearGradient>
+  <linearGradient id="emerald" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4cffbf"/><stop offset=".6" stop-color="#00ad72"/><stop offset="1" stop-color="#046341"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="24"/></filter>
+  <pattern id="stars" width="120" height="120" patternUnits="userSpaceOnUse"><circle cx="10" cy="20" r="1.5" fill="#fff"/><circle cx="67" cy="42" r="1" fill="#e8c66c"/><circle cx="106" cy="80" r="1.4" fill="#63cfff"/><circle cx="39" cy="105" r=".8" fill="#fff"/></pattern>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<rect width="1600" height="900" fill="url(#stars)" opacity=".55"/>
+<ellipse cx="1190" cy="250" rx="360" ry="260" fill="#1649a4" opacity=".12" filter="url(#soft)"/>
+<ellipse cx="1050" cy="640" rx="520" ry="220" fill="#00c98d" opacity=".12" filter="url(#soft)"/>
+<circle cx="800" cy="120" r="130" fill="url(#sun)" filter="url(#glow)"/>
+<circle cx="800" cy="120" r="44" fill="#ffe79c" stroke="#fff4c2" stroke-width="4"/>
+<g fill="none" stroke="url(#gold)" opacity=".9">
+  <circle cx="800" cy="470" r="390" stroke-width="5"/>
+  <circle cx="800" cy="470" r="325" stroke-width="2"/>
+  <path d="M410 470H1190M800 80V860" stroke-width="2"/>
+  <path d="M470 250Q800 80 1130 250M470 690Q800 860 1130 690" stroke-width="2" opacity=".55"/>
+</g>
+<g font-family="Georgia,serif" text-anchor="middle" fill="#ffe79c" filter="url(#glow)">
+  <text x="800" y="205" font-size="58" font-weight="700">MC</text>
+  <text x="215" y="390" font-size="86">♀</text>
+  <text x="325" y="470" font-size="84">☿</text>
+  <text x="1270" y="350" font-size="92">♃</text>
+  <text x="1425" y="370" font-size="88">♅</text>
+  <text x="1150" y="335" font-size="70">☉</text>
+</g>
+<g stroke-linecap="round" fill="none">
+  <path d="M230 405C410 250 540 280 680 355" stroke="url(#blue)" stroke-width="7" filter="url(#glow)"/>
+  <path d="M335 488C480 350 570 370 690 420" stroke="url(#emerald)" stroke-width="6" filter="url(#glow)"/>
+  <path d="M1165 355C1225 300 1320 300 1410 350" stroke="url(#gold)" stroke-width="7" filter="url(#glow)"/>
+</g>
+<g opacity=".9">
+  <path d="M650 900L760 430L800 330L842 430L965 900Z" fill="#ffcf58" opacity=".18"/>
+  <path d="M790 900V270" stroke="#fff1a2" stroke-width="4" filter="url(#glow)"/>
+</g>
+<g id="city" fill="#0a1020" stroke="#c9952b" stroke-width="2">
+  <path d="M900 760V500h70v260z"/><path d="M980 760V420h78v340z"/><path d="M1070 760V560h62v200z"/><path d="M1140 760V470h90v290z"/><path d="M1240 760V590h70v170z"/><path d="M1320 760V515h82v245z"/>
+</g>
+<g fill="#ffd866" opacity=".7">
+  <rect x="920" y="535" width="8" height="120"/><rect x="945" y="535" width="8" height="120"/>
+  <rect x="1004" y="455" width="9" height="190"/><rect x="1035" y="455" width="9" height="190"/>
+  <rect x="1165" y="500" width="10" height="160"/><rect x="1200" y="500" width="10" height="160"/>
+</g>
+<path d="M0 830Q360 770 650 830T1600 800V900H0Z" fill="#02040a"/>
+<path d="M620 900C690 770 720 660 735 575C750 500 765 420 800 345C825 430 850 535 875 610C905 700 940 795 1010 900Z" fill="#0b0c10" stroke="url(#gold)" stroke-width="4"/>
+<path d="M700 900Q800 760 900 900" fill="none" stroke="#f7ce69" stroke-width="4" opacity=".85"/>
+<g transform="translate(520 380)">
+  <circle cx="120" cy="78" r="46" fill="#bd8a65"/>
+  <path d="M76 69Q92 10 130 22Q171 32 168 80Q132 55 76 69Z" fill="#1a1110"/>
+  <path d="M58 150Q122 105 186 150L218 365H25Z" fill="#070a12" stroke="#333b55" stroke-width="3"/>
+  <path d="M104 134L122 171L143 134L159 340H85Z" fill="#111827"/>
+  <path d="M113 138L122 165L131 138" fill="#f2f2f2"/>
+  <path d="M182 210Q225 240 240 310" fill="none" stroke="#bd8a65" stroke-width="22" stroke-linecap="round"/>
+  <path d="M60 210Q24 248 30 310" fill="none" stroke="#bd8a65" stroke-width="22" stroke-linecap="round"/>
+  <rect x="211" y="285" width="62" height="80" rx="6" fill="#090b10" stroke="#c7952d" stroke-width="3"/>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" fill="#fff">
+  <text x="70" y="90" font-size="26" font-weight="700" letter-spacing="5" fill="#f2c96d">ASTROVIP · STUDIU DE CAZ</text>
+  <text x="70" y="135" font-size="42" font-weight="800">ÎNCEPUT PROFESIONAL</text>
+  <text x="70" y="173" font-size="22" fill="#9bdcff">01 · 03 · 2000</text>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" text-anchor="end">
+  <text x="1530" y="100" font-size="24" fill="#f8df8c">SOARE = MC</text>
+  <text x="1530" y="135" font-size="20" fill="#8cefd1">ASC = VENUS · MERCUR</text>
+  <text x="1530" y="168" font-size="20" fill="#8db7ff">JUPITER = SOARE/URANUS</text>
+</g>
+</svg>
