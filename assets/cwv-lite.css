@@ -1,7 +1,7 @@
-/* AstroVip Core Web Vitals pass — 2026-09-17 */
+/* AstroVip Core Web Vitals pass — 2026-09-18 */
 @supports (content-visibility:auto){
-  #servicii,#oportunitati-astrovip,#metoda,#studiu-de-caz-scoala-1984,#relocare,#tarife,.why,#ghid-astrologie,#intrebari-frecvente,#ghiduri-seo,#articole,#comunitate,#programari,#contact{
+  #servicii,#oportunitati-astrovip,#metoda,#studiu-de-caz-scoala-1984,#studiu-de-caz-loto-2020,#studiu-de-caz-dragoste-2001,#studiu-de-caz-relocare-2003,#studiu-de-caz-job-2000,#studiu-de-caz-chirurgie-1998,#relocare,#tarife,.why,#ghid-astrologie,#astrologie-geografica,#intrebari-frecvente,#ghiduri-seo,#articole,#comunitate,#programari,#contact,#repere-incredere{
     content-visibility:auto;
-    contain-intrinsic-size:900px;
+    contain-intrinsic-size:auto 900px;
   }
 }
