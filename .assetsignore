@@ -5,3 +5,6 @@ wrangler.jsonc
 README_IMPORTANT.txt
 README_IMPORTENT.txt
 .wrangler
+build-tantric-cluster.js
+qa-tantric.js
+qa-live-tantric.js
