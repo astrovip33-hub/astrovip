@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">Intervenție chirurgicală — Pitești 1998 | AstroVip</title>
+<desc id="desc">Ilustrație premium 4 la 3 pentru un studiu de caz astrologic: sală de operație stilizată, context militar la Pitești și simboluri pentru Pluto, Saturn, Neptun, Marte, Soare, Lună și Ascendent.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#02050b"/><stop offset=".48" stop-color="#071a29"/><stop offset="1" stop-color="#040405"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#fff7cf"/><stop offset=".22" stop-color="#ffd86a"/><stop offset=".52" stop-color="#e98920"/><stop offset="1" stop-color="#e98920" stop-opacity="0"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6a3d00"/><stop offset=".25" stop-color="#e4b451"/><stop offset=".5" stop-color="#fff0a5"/><stop offset=".75" stop-color="#d59622"/><stop offset="1" stop-color="#593200"/></linearGradient>
+  <linearGradient id="medical" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#34d9ff"/><stop offset=".55" stop-color="#1477d4"/><stop offset="1" stop-color="#173768"/></linearGradient>
+  <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff7b42"/><stop offset=".6" stop-color="#c83e32"/><stop offset="1" stop-color="#7b1721"/></linearGradient>
+  <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+  <filter id="shine"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <pattern id="stars" width="90" height="90" patternUnits="userSpaceOnUse"><circle cx="12" cy="18" r="1" fill="#fff"/><circle cx="61" cy="38" r=".8" fill="#d8b55e"/><circle cx="78" cy="72" r="1.1" fill="#61bfff"/></pattern>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<rect width="1200" height="900" fill="url(#stars)" opacity=".32"/>
+<ellipse cx="760" cy="380" rx="350" ry="270" fill="#0d65a5" opacity=".13" filter="url(#soft)"/>
+<ellipse cx="515" cy="600" rx="330" ry="170" fill="#a62626" opacity=".10" filter="url(#soft)"/>
+
+<!-- Military context -->
+<g opacity=".92">
+  <rect x="0" y="0" width="250" height="900" fill="#050608"/>
+  <rect x="36" y="88" width="178" height="110" rx="8" fill="#11151b" stroke="#b98d40" stroke-width="2"/>
+  <text x="125" y="132" text-anchor="middle" fill="#f0d899" font-family="Arial" font-size="26" font-weight="800">PITEȘTI</text>
+  <text x="125" y="164" text-anchor="middle" fill="#c8c8c8" font-family="Arial" font-size="16" letter-spacing="3">STAGIU MILITAR</text>
+  <path d="M33 252H220M40 252V510M213 252V510" stroke="#62523a" stroke-width="5"/>
+  <g fill="#1a2028" stroke="#8d7346" stroke-width="2">
+    <path d="M52 515l16-145h50l17 145z"/><path d="M132 515l14-125h44l14 125z"/>
+  </g>
+  <g fill="#d6b76b"><rect x="78" y="360" width="14" height="64"/><rect x="158" y="382" width="13" height="58"/></g>
+  <text x="125" y="580" text-anchor="middle" fill="#bfa773" font-family="Arial" font-size="15" letter-spacing="2">6 AUGUST 1998</text>
+</g>
+
+<!-- Zodiac architecture -->
+<g fill="none" stroke="url(#gold)">
+  <circle cx="720" cy="390" r="300" stroke-width="4"/>
+  <circle cx="720" cy="390" r="248" stroke-width="1.6" opacity=".7"/>
+  <path d="M420 390H1020M720 90V690" stroke-width="1.4" opacity=".45"/>
+  <path d="M505 175L935 605M935 175L505 605" stroke-width="1.2" opacity=".35"/>
+</g>
+<circle cx="720" cy="390" r="76" fill="url(#glow)" opacity=".8"/>
+<circle cx="720" cy="390" r="38" fill="#cb4834" stroke="#ffd36b" stroke-width="3"/>
+
+<!-- Planet nodes -->
+<g font-family="Georgia,serif" text-anchor="middle" filter="url(#shine)">
+  <circle cx="535" cy="225" r="48" fill="url(#red)" stroke="#efc267" stroke-width="3"/><text x="535" y="242" font-size="55" fill="#fff1bf">♇</text>
+  <circle cx="905" cy="225" r="48" fill="#a07638" stroke="#efc267" stroke-width="3"/><text x="905" y="244" font-size="58" fill="#fff1bf">♄</text>
+  <circle cx="515" cy="500" r="48" fill="url(#medical)" stroke="#7fceff" stroke-width="3"/><text x="515" y="518" font-size="54" fill="#e8fbff">♆</text>
+  <circle cx="925" cy="500" r="48" fill="#8f6d38" stroke="#efc267" stroke-width="3"/><text x="925" y="520" font-size="56" fill="#fff1bf">♄</text>
+  <circle cx="720" cy="390" r="52" fill="#8f2528" stroke="#ffd064" stroke-width="4"/><text x="720" y="411" font-size="60" fill="#fff0b5">♂</text>
+</g>
+<g stroke="#f0c15b" stroke-width="4" fill="none" opacity=".88">
+  <path d="M570 255L687 360"/><path d="M870 255L753 360"/><path d="M555 485L675 420"/><path d="M885 485L765 420"/>
+</g>
+
+<!-- Medical operating room -->
+<g transform="translate(320 600)">
+  <rect x="0" y="0" width="760" height="215" rx="22" fill="#08121a" stroke="#244a5e" stroke-width="3"/>
+  <ellipse cx="390" cy="94" rx="200" ry="47" fill="#dcecf2"/>
+  <path d="M205 96Q390 22 575 96L545 140H235Z" fill="#b8d6df"/>
+  <circle cx="390" cy="55" r="30" fill="#d8b08f"/>
+  <path d="M361 48Q374 18 403 27Q425 34 420 61Q387 44 361 48Z" fill="#2c1c18"/>
+  <path d="M250 145H535" stroke="#5bd1f2" stroke-width="10" opacity=".7"/>
+  <g fill="#0c3846" stroke="#5a9dad" stroke-width="2">
+    <path d="M40 180Q70 80 125 58Q180 90 195 180Z"/><path d="M585 180Q615 75 675 58Q720 92 735 180Z"/>
+  </g>
+  <g fill="#c8ecf1"><circle cx="110" cy="70" r="28"/><circle cx="660" cy="70" r="28"/></g>
+  <g fill="#0f4960"><path d="M83 65Q110 40 137 65L133 88H87Z"/><path d="M633 65Q660 40 687 65L683 88H637Z"/></g>
+  <rect x="545" y="35" width="160" height="115" rx="8" fill="#061117" stroke="#2f829a" stroke-width="3"/>
+  <polyline points="560,92 580,92 590,70 602,115 615,82 632,92 650,92 662,58 674,106 690,88" fill="none" stroke="#4dff9a" stroke-width="4"/>
+</g>
+
+<!-- Operating light -->
+<g>
+  <ellipse cx="1050" cy="80" rx="120" ry="45" fill="#262b32" stroke="#9f8b5f" stroke-width="3"/>
+  <g fill="#fff5d0" filter="url(#shine)"><circle cx="980" cy="80" r="18"/><circle cx="1025" cy="68" r="18"/><circle cx="1070" cy="68" r="18"/><circle cx="1112" cy="83" r="18"/><circle cx="1048" cy="96" r="18"/></g>
+  <path d="M1050 0V37" stroke="#4a4e55" stroke-width="9"/>
+</g>
+
+<!-- Labels -->
+<g font-family="Arial,Helvetica,sans-serif">
+  <text x="300" y="70" fill="#f1d18a" font-size="23" font-weight="800" letter-spacing="4">ASTROVIP · STUDIU DE CAZ 06</text>
+  <text x="300" y="115" fill="#ffffff" font-size="38" font-weight="900">INTERVENȚIE CHIRURGICALĂ</text>
+  <text x="300" y="151" fill="#73d6ff" font-size="20">Pitești · 06.08.1998 · stagiu militar</text>
+
+  <text x="535" y="298" text-anchor="middle" fill="#f6df9b" font-size="17" font-weight="800">PLUTO = SOARE</text>
+  <text x="535" y="321" text-anchor="middle" fill="#bbb" font-size="13">Arc Solar</text>
+  <text x="905" y="298" text-anchor="middle" fill="#f6df9b" font-size="17" font-weight="800">SATURN = LUNĂ</text>
+  <text x="905" y="321" text-anchor="middle" fill="#bbb" font-size="13">Arc Solar</text>
+  <text x="515" y="570" text-anchor="middle" fill="#8de5ff" font-size="17" font-weight="800">NEPTUN = LUNĂ</text>
+  <text x="515" y="592" text-anchor="middle" fill="#bbb" font-size="13">Tranzit</text>
+  <text x="925" y="570" text-anchor="middle" fill="#f6df9b" font-size="17" font-weight="800">SATURN = LUNĂ</text>
+  <text x="925" y="592" text-anchor="middle" fill="#bbb" font-size="13">Tranzit</text>
+  <text x="720" y="465" text-anchor="middle" fill="#fff0ba" font-size="19" font-weight="900">MARTE = ASCENDENT</text>
+  <text x="720" y="490" text-anchor="middle" fill="#ffad7c" font-size="14" font-weight="700">TRIGGER SIMBOLIC</text>
+</g>
+
+<!-- Bottom ribbon -->
+<rect x="0" y="838" width="1200" height="62" fill="#020203" opacity=".94"/>
+<text x="600" y="878" text-anchor="middle" fill="#f0cf7a" font-family="Georgia,serif" font-size="24" letter-spacing="2">ARCE SOLARE · TRANZITE · ANALIZĂ RETROSPECTIVĂ</text>
+</svg>
