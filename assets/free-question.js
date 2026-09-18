@@ -266,9 +266,8 @@
       method:'POST',
       headers:{
         'apikey':SUPABASE_KEY,
-        'Authorization':'Bearer '+SUPABASE_KEY,
         'Content-Type':'application/json',
-        'Prefer':'return=representation'
+        'Prefer':'return=minimal'
       },
       body:JSON.stringify(leadPayload())
     });
@@ -276,8 +275,7 @@
       const t=await res.text().catch(()=> '');
       throw new Error('Lead save failed '+res.status+' '+t);
     }
-    const data=await res.json().catch(()=>[]);
-    state.savedLeadId=(data&&data[0]&&data[0].id)||'saved';
+    state.savedLeadId='saved';
     event('astro_free_question_lead_saved');
     return {ok:true,id:state.savedLeadId};
   }
