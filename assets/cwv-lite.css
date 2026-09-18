@@ -5,3 +5,9 @@
     contain-intrinsic-size:auto 900px;
   }
 }
+
+/* Mobile paint-cost reduction: preserve appearance, reduce scroll repaint work. */
+@media(max-width:820px){
+  .top,.av-consent{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  body:before{position:absolute!important}
+}
