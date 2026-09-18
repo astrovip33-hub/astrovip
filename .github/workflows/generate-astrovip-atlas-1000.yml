@@ -1,0 +1,55 @@
+name: Generate AstroVip Atlas 1000
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/generate_astrovip_batch_500_round2.py"
+      - "scripts/optimize_astrovip_atlas_1000.py"
+      - ".github/workflows/generate-astrovip-atlas-1000.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: astrovip-atlas-1000
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Generate second 500-page batch
+        run: python3 scripts/generate_astrovip_batch_500_round2.py
+
+      - name: Optimize all 1000 Atlas pages
+        run: python3 scripts/optimize_astrovip_atlas_1000.py
+
+      - name: Validate Atlas architecture
+        run: |
+          test "$(find atlas -name index.html | wc -l)" -eq 1000
+          test -f academia-astrologie/atlas-1000/index.html
+          test "$(find academia-astrologie/atlas-1000 -mindepth 2 -name index.html | wc -l)" -eq 11
+          grep -q "Atlas AstroVip 1000" academia-astrologie/atlas-1000/index.html
+          grep -q "BreadcrumbList" atlas/planete-in-semne/soare-in-berbec/index.html
+          grep -q "data-atlas-cluster-nav" atlas/planete-in-case/luna-in-casa-4/index.html
+          grep -q "meta name=\"author\"" atlas/aspecte-natale/soare-conjunctie-luna/index.html
+
+      - name: Commit generated and optimized pages
+        run: |
+          git config user.name "astrovip-auto"
+          git config user.email "actions@users.noreply.github.com"
+          git add atlas academia-astrologie/atlas-1000 academia-astrologie/index.html toate-paginile/index.html sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No generated changes."
+            exit 0
+          fi
+          git commit -m "Generate and optimize AstroVip Atlas 1000 [skip ci]"
+          git push origin HEAD:main
