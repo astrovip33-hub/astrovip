@@ -48,6 +48,19 @@ MINOR={
 "quintil":("quintil","72°","organizare creativă și utilizare specializată"),
 "sesquicuadratura":("sesquicuadratură","135°","tensiune repetitivă care cere recalibrare"),
 "inconjunctie":("inconjuncție","150°","adaptare între funcții care nu se coordonează natural")}
+ALLOWED_PREDICTIVE_ANGLES={"0°","45°","90°","135°","165°","180°"}
+_invalid_predictive_aspects=[]
+for _group_name,_group in (("MAJOR",MAJOR),("MINOR",MINOR)):
+    for _aspect_key,_aspect_data in _group.items():
+        if _aspect_data[1] not in ALLOWED_PREDICTIVE_ANGLES:
+            _invalid_predictive_aspects.append(f"{_group_name}:{_aspect_key}={_aspect_data[1]}")
+if _invalid_predictive_aspects:
+    raise RuntimeError(
+        "Generator blocat: politica AstroVip pentru Arce Solare și Tranzite permite doar "
+        "0°, 45°, 90°, 135°, 165° și 180°. Configurații nepermise: "
+        + ", ".join(_invalid_predictive_aspects)
+    )
+
 TECHS={
 "arce-solare":("Arce Solare","Arcul Solar deplasează simbolic punctele hărții cu aceeași distanță și este folosit pentru a urmări contacte exacte cu repere natale.","/arce-solare/"),
 "progresii-secundare":("Progresii secundare","Progresiile secundare comprimă simbolic timpul și sunt folosite pentru a urmări dezvoltarea graduală a funcțiilor natale.","/progresii-secundare/"),
