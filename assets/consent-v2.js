@@ -28,6 +28,14 @@
       functionality_storage:'granted',
       security_storage:'granted'
     });
+    if(analytics && !window.__astrovipAnalyticsPageviewSent){
+      window.__astrovipAnalyticsPageviewSent=true;
+      gtag('event','page_view',{
+        page_title:document.title,
+        page_location:location.href,
+        page_path:location.pathname
+      });
+    }
     window.dataLayer=window.dataLayer||[];
     window.dataLayer.push({event:'astrovip_consent_update',analytics_consent:analytics?'granted':'denied',ads_consent:ads?'granted':'denied'});
   }
