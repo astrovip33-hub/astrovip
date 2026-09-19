@@ -53,7 +53,7 @@
       ]
     },
     {
-      "source": "/(robots.txt|sitemap.xml|llms.txt)",
+      "source": "/(robots.txt|sitemap.xml|sitemap-studii-de-caz.xml|llms.txt)",
       "headers": [
         {
           "key": "Cache-Control",
