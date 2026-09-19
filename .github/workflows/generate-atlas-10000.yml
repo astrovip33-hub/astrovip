@@ -24,6 +24,23 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Repair escaped newline in generator
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("scripts/generate_astrovip_to_10000.py")
+          lines=p.read_text(encoding="utf-8").splitlines()
+          for i,line in enumerate(lines):
+              if line.startswith('insert="".join(f"<url><loc>'):
+                  lines[i]='insert="".join(f"<url><loc>{u}</loc><lastmod>{DATE}</lastmod></url>\\n" for u in new_urls)'
+                  if i+1 < len(lines) and lines[i+1].strip().startswith('" for u in new_urls'):
+                      del lines[i+1]
+                  break
+          p.write_text("\n".join(lines)+"\n",encoding="utf-8")
+          PY
+          python -m py_compile scripts/generate_astrovip_to_10000.py
+
       - name: Generate Atlas 10000
         run: python scripts/generate_astrovip_to_10000.py
 
@@ -42,7 +59,7 @@ jobs:
         run: |
           git config user.name "AstroVip Automation"
           git config user.email "actions@users.noreply.github.com"
-          git add atlas academia-astrologie toate-paginile sitemap.xml atlas-10000-generation-report.json
+          git add scripts/generate_astrovip_to_10000.py atlas academia-astrologie toate-paginile sitemap.xml atlas-10000-generation-report.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
@@ -50,4 +67,4 @@ jobs:
             git push origin main
           fi
 
-# trigger: atlas-10000
+# trigger: atlas-10000-v2
