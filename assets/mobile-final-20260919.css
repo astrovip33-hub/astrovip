@@ -622,7 +622,8 @@
 
   body:not(.guide-page) .trust-commerce-kicker{
     display:block!important;
-    margin:0 0 7px!important;
+    margin:5px 0 2px!important;
+    transform:translateY(3px)!important;
     color:#d4af37!important;
     font-size:11px!important;
     line-height:1.2!important;
