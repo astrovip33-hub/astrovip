@@ -4,6 +4,39 @@
     const toastEl=document.getElementById('toast');
     const toast=(message)=>{toastEl.textContent=message;toastEl.classList.add('show');clearTimeout(window.__astrovipToastTimer);window.__astrovipToastTimer=setTimeout(()=>toastEl.classList.remove('show'),2600)};
     const visitorCountEl=document.getElementById('visitorCountIdle');
+    function trackAstroVipEvent(name,params={}){
+      if(typeof window.gtag!=='function')return;
+      try{window.gtag('event',name,params)}catch(error){}
+    }
+    document.addEventListener('click',event=>{
+      const link=event.target.closest&&event.target.closest('a[href]');
+      if(!link)return;
+      const rawHref=link.getAttribute('href')||'';
+      const absoluteHref=link.href||rawHref;
+      const label=(link.textContent||link.getAttribute('aria-label')||'').trim().slice(0,100);
+      if(/wa\.me\/40722128220/i.test(absoluteHref)){
+        trackAstroVipEvent('whatsapp_click',{link_text:label,link_url:absoluteHref,page_path:location.pathname});
+      }
+      if(/^tel:/i.test(rawHref)){
+        trackAstroVipEvent('phone_click',{link_text:label,page_path:location.pathname});
+      }
+      if(/#programari/i.test(rawHref)){
+        trackAstroVipEvent('booking_start',{link_text:label,page_path:location.pathname});
+      }
+      if(/buy\.stripe\.com/i.test(absoluteHref)){
+        event.preventDefault();
+        let navigated=false;
+        const go=()=>{if(navigated)return;navigated=true;window.location.href=absoluteHref};
+        trackAstroVipEvent('begin_checkout',{
+          currency:'RON',value:500,
+          items:[{item_id:'consultatie-premium-60',item_name:'Consultație premium 60 min',price:500,quantity:1}],
+          page_path:location.pathname,
+          event_callback:go,
+          event_timeout:650
+        });
+        setTimeout(go,700);
+      }
+    },true);
     (async()=>{
       if(!visitorCountEl)return;
       try{
@@ -36,7 +69,7 @@
     menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.textContent='☰';hamb.setAttribute('aria-label','Deschide meniul')}));
     const revealEls=document.querySelectorAll('.reveal');
     if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});revealEls.forEach(el=>io.observe(el));}else{revealEls.forEach(el=>el.classList.add('in'));}
-    document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('name').value.trim(),p=document.getElementById('phone').value.trim(),s=document.getElementById('service').value,m=document.getElementById('message').value.trim();const text=`Bună ziua! Sunt ${n}. Telefon: ${p}. Doresc: ${s}.${m?` Mesaj: ${m}`:''}`;window.open('https://wa.me/40722128220?text='+encodeURIComponent(text),'_blank','noopener')});
+    document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('name').value.trim(),p=document.getElementById('phone').value.trim(),s=document.getElementById('service').value,m=document.getElementById('message').value.trim();trackAstroVipEvent('generate_lead',{method:'contact_whatsapp',service:s,page_path:location.pathname});const text=`Bună ziua! Sunt ${n}. Telefon: ${p}. Doresc: ${s}.${m?` Mesaj: ${m}`:''}`;window.open('https://wa.me/40722128220?text='+encodeURIComponent(text),'_blank','noopener')});
 
 
     const articles={
@@ -88,6 +121,8 @@
         if(response.status===409){await refreshSlots();toast('Intervalul tocmai a fost rezervat. Alege altă oră.');return}
         if(!response.ok)throw new Error('booking failed');
         const text=`Bună ziua! Am rezervat online un interval AstroVip. Nume: ${vals.name}. Telefon: ${vals.phone}. Serviciu: ${vals.service}. Data: ${vals.booking_date}. Ora: ${slotLabels[vals.booking_time]||vals.booking_time}. Format: ${vals.mode}.${vals.note?` Detalii: ${vals.note}`:''}`;
+        trackAstroVipEvent('generate_lead',{method:'booking_form',service:vals.service,booking_mode:vals.mode,page_path:location.pathname});
+        trackAstroVipEvent('booking_complete',{service:vals.service,booking_mode:vals.mode,page_path:location.pathname});
         toast('Programarea a fost înregistrată.');
         bookingForm.reset();timeSelect.disabled=true;timeSelect.innerHTML='<option value="">Alege mai întâi data</option>';availability.textContent='Programarea a fost înregistrată. Se deschide WhatsApp…';
         setTimeout(()=>{window.location.href='https://wa.me/40722128220?text='+encodeURIComponent(text)},450);
