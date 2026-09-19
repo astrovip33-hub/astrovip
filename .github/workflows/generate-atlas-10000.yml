@@ -1,0 +1,51 @@
+name: Generate AstroVip Atlas 10000
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/generate-atlas-10000.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate Atlas 10000
+        run: python scripts/generate_astrovip_to_10000.py
+
+      - name: Verify generated counts
+        shell: bash
+        run: |
+          ATLAS_COUNT=$(find atlas -mindepth 3 -maxdepth 3 -name index.html | wc -l)
+          SITEMAP_COUNT=$(grep -o '<loc>' sitemap.xml | wc -l)
+          echo "ATLAS_COUNT=$ATLAS_COUNT"
+          echo "SITEMAP_COUNT=$SITEMAP_COUNT"
+          test "$ATLAS_COUNT" -eq 10000
+          test "$SITEMAP_COUNT" -ge 10376
+
+      - name: Commit generated pages
+        shell: bash
+        run: |
+          git config user.name "AstroVip Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add atlas academia-astrologie toate-paginile sitemap.xml atlas-10000-generation-report.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Generate AstroVip Atlas 10000"
+            git push origin main
+          fi
