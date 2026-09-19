@@ -31,3 +31,6 @@
 
 /assets/1000049884-lcp.webp
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/hero-final-static.webp
+  Cache-Control: public, max-age=31536000, immutable
