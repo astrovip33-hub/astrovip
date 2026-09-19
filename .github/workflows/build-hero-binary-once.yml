@@ -55,18 +55,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ -f assets/hero-responsive-vivid/desktop-01.b64 ] &&
-             [ -f assets/hero-responsive-vivid/desktop-02.b64 ] &&
-             [ -f assets/hero-responsive-vivid/desktop-03.b64 ] &&
-             [ -f assets/hero-responsive-vivid/mobile-01.b64 ] &&
-             [ -f assets/hero-responsive-vivid/mobile-02.b64 ]; then
+          if [ -f assets/hero-responsive-vivid/desktop-08.b64 ] &&
+             [ -f assets/hero-responsive-vivid/mobile-05.b64 ]; then
             cat assets/hero-responsive-vivid/desktop-*.b64 | tr -d '\r\n\t ' | base64 --decode > assets/hero-vivid-desktop.webp
             cat assets/hero-responsive-vivid/mobile-*.b64 | tr -d '\r\n\t ' | base64 --decode > assets/hero-vivid-mobile.webp
             python3 - <<'PY'
           from PIL import Image
           for p, expected in [
               ("assets/hero-vivid-desktop.webp",(1000,563)),
-              ("assets/hero-vivid-mobile.webp",(640,960)),
+              ("assets/hero-vivid-mobile.webp",(600,538)),
           ]:
               with Image.open(p) as im:
                   if im.size != expected or im.format != "WEBP":
