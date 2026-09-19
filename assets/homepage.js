@@ -3,7 +3,7 @@
     const hamb=document.getElementById('hamb'), menu=document.getElementById('menu');
     const toastEl=document.getElementById('toast');
     const toast=(message)=>{toastEl.textContent=message;toastEl.classList.add('show');clearTimeout(window.__astrovipToastTimer);window.__astrovipToastTimer=setTimeout(()=>toastEl.classList.remove('show'),2600)};
-    const visitorCountEl=document.getElementById('visitorCount');
+    const visitorCountEl=document.getElementById('visitorCountIdle');
     (async()=>{
       if(!visitorCountEl)return;
       try{
