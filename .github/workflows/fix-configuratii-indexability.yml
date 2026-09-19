@@ -1,0 +1,43 @@
+name: Fix configuratii indexability
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/fix_configuratii_indexability.py"
+      - ".github/workflows/fix-configuratii-indexability.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply cleanup
+        run: python scripts/fix_configuratii_indexability.py
+      - name: Verify
+        shell: bash
+        run: |
+          test "$(grep -o '<loc>' sitemap.xml | wc -l)" -eq 10371
+          ! grep -q 'configuratii-aspecte/t-square/' sitemap.xml
+          ! grep -q 'configuratii-aspecte/cruce-mare/' sitemap.xml
+          ! grep -q 'configuratii-aspecte/kite/' sitemap.xml
+          ! grep -q 'configuratii-aspecte/thors-hammer/' sitemap.xml
+          ! grep -q 'configuratii-aspecte/minor-grand-trine/' sitemap.xml
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "AstroVip Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add sitemap.xml academia-astrologie/atlas-1500/configuratii-aspecte/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Fix sitemap indexability URLs"
+            git push origin main
+          fi
