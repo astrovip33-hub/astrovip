@@ -221,8 +221,7 @@ locs=set(re.findall(r"<loc>([^<]+)</loc>",xml))
 new_urls=[f"{BASE}/{slug}/" for slug,_,_,_,_ in pages]
 new_urls += [master_url]+[f"{BASE}/academia-astrologie/atlas-10000/{c}/" for c in hubs]
 dups=[u for u in new_urls if u in locs]; assert not dups,f"Sitemap collision: {dups[:5]}"
-insert="".join(f"<url><loc>{u}</loc><lastmod>{DATE}</lastmod></url>
-" for u in new_urls)
+insert="".join(f"<url><loc>{u}</loc><lastmod>{DATE}</lastmod></url>\n" for u in new_urls)
 xml=xml.replace("</urlset>",insert+"</urlset>"); sm.write_text(xml,encoding="utf-8")
 atlas_count=len(list((ROOT/"atlas").glob("*/*/index.html")))
 sitemap_count=len(re.findall(r"<loc>",xml))
