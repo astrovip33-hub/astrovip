@@ -1,0 +1,78 @@
+name: Deploy AstroVip to Cloudflare Worker
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "cloudflare-production"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TOKEN_1: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TOKEN_2: ${{ secrets.CF_API_TOKEN }}
+      TOKEN_3: ${{ secrets.CLOUDFLARE_TOKEN }}
+      ACCOUNT_1: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      ACCOUNT_2: ${{ secrets.CF_ACCOUNT_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve Cloudflare credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TOKEN="${TOKEN_1:-}"
+          if [ -z "$TOKEN" ]; then TOKEN="${TOKEN_2:-}"; fi
+          if [ -z "$TOKEN" ]; then TOKEN="${TOKEN_3:-}"; fi
+
+          if [ -z "$TOKEN" ]; then
+            echo "CF_SKIP=true" >> "$GITHUB_ENV"
+            echo "::notice::Cloudflare deploy skipped because no API token secret is configured yet."
+            exit 0
+          fi
+
+          echo "::add-mask::$TOKEN"
+          echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+          ACCOUNT_ID="${ACCOUNT_1:-}"
+          if [ -z "$ACCOUNT_ID" ]; then ACCOUNT_ID="${ACCOUNT_2:-}"; fi
+
+          if [ -z "$ACCOUNT_ID" ]; then
+            RESPONSE=$(curl -fsS \
+              -H "Authorization: Bearer $TOKEN" \
+              -H "Content-Type: application/json" \
+              "https://api.cloudflare.com/client/v4/accounts")
+            ACCOUNT_ID=$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+          fi
+
+          if [ -z "$ACCOUNT_ID" ]; then
+            echo "::error::Cloudflare token exists, but account ID could not be resolved. Add CLOUDFLARE_ACCOUNT_ID as a GitHub Actions secret."
+            exit 2
+          fi
+
+          echo "::add-mask::$ACCOUNT_ID"
+          echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
+          echo "CF_SKIP=false" >> "$GITHUB_ENV"
+
+      - name: Deploy AstroVip static assets and Worker routes
+        if: env.CF_SKIP != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy
+
+      - name: Verify deployment
+        if: env.CF_SKIP != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSI --retry 6 --retry-delay 5 https://astrovip.ro/ | head -n 20
