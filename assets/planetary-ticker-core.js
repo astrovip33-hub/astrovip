@@ -90,13 +90,6 @@
         track=el.querySelector('.planet-track');
         const width=track.firstElementChild.getBoundingClientRect().width;
         if(width)track.style.setProperty('--ticker-duration',`${Math.max(30,width/70)}s`);
-        const strip=el.closest('.planet-strip');
-        if(strip&&!strip.querySelector('.ticker-pause')){
-          const button=document.createElement('button');button.type='button';button.className='ticker-pause';
-          button.textContent='Ⅱ';button.setAttribute('aria-label','Oprește derularea planetelor');button.setAttribute('aria-pressed','false');
-          button.addEventListener('click',()=>{const paused=strip.classList.toggle('is-paused');button.setAttribute('aria-pressed',String(paused));button.setAttribute('aria-label',paused?'Reia derularea planetelor':'Oprește derularea planetelor');button.textContent=paused?'▷':'Ⅱ'});
-          el.parentNode.appendChild(button);
-        }
       }else{
         track.querySelectorAll('.planet-sequence').forEach(group=>{group.innerHTML=seq});
       }
