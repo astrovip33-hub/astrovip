@@ -1,9 +1,6 @@
 name: Deploy AstroVip to Cloudflare once
 
 on:
-  push:
-    paths:
-      - '.github/workflows/deploy-cloudflare-once.yml'
   workflow_dispatch:
 
 permissions:
