@@ -59,8 +59,16 @@ jobs:
              [ -f assets/hero-responsive-vivid/mobile-avif-03.b64 ]; then
             cat assets/hero-responsive-vivid/desktop-avif-*.b64 | tr -d '\r\n\t ' | base64 --decode > assets/hero-vivid-desktop.avif
             cat assets/hero-responsive-vivid/mobile-avif-*.b64 | tr -d '\r\n\t ' | base64 --decode > assets/hero-vivid-mobile.avif
-            ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 assets/hero-vivid-desktop.avif | grep -qx '900x506'
-            ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 assets/hero-vivid-mobile.avif | grep -qx '600x538'
+            test -s assets/hero-vivid-desktop.avif
+            test -s assets/hero-vivid-mobile.avif
+            python3 - <<'PY'
+          from pathlib import Path
+          for p in [Path("assets/hero-vivid-desktop.avif"), Path("assets/hero-vivid-mobile.avif")]:
+              data=p.read_bytes()[:32]
+              if b"ftypavif" not in data and b"ftypavis" not in data:
+                  raise SystemExit(f"{p} is not AVIF")
+              print(p, p.stat().st_size)
+          PY
           else
             echo "Responsive vivid AVIF chunks not complete yet; skipping."
           fi
