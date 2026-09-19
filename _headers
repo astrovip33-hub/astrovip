@@ -34,3 +34,9 @@
 
 /assets/hero-final-static.webp
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/hero-vivid-desktop.avif
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/hero-vivid-mobile.avif
+  Cache-Control: public, max-age=31536000, immutable
