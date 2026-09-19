@@ -41,8 +41,52 @@
     document.querySelectorAll('.article-open').forEach(b=>b.addEventListener('click',()=>{articleTrigger=b;const a=articles[b.dataset.article];content.innerHTML=`<h2>${a.title}</h2><p>${a.body}</p><p><strong>AstroVip:</strong> analiza completă este personalizată pe datele tale.</p>`;modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');document.getElementById('articleClose').focus()}));
     const closeArticle=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');articleTrigger?.focus()};document.getElementById('articleClose').addEventListener('click',closeArticle);modal.addEventListener('click',e=>{if(e.target===modal)closeArticle()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeArticle()});
 
-    const d=document.getElementById('bookDate'),now=new Date(),pad=n=>String(n).padStart(2,'0');d.min=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-    document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();const vals={n:document.getElementById('bookName').value.trim(),p:document.getElementById('bookPhone').value.trim(),s:document.getElementById('bookService').value,d:document.getElementById('bookDate').value,t:document.getElementById('bookTime').value,m:document.getElementById('bookMode').value,note:document.getElementById('bookNote').value.trim()};const text=`Bună ziua! Doresc o programare AstroVip. Nume: ${vals.n}. Telefon: ${vals.p}. Serviciu: ${vals.s}. Data preferată: ${vals.d}. Interval: ${vals.t}. Format: ${vals.m}.${vals.note?` Detalii: ${vals.note}`:''}`;window.open('https://wa.me/40722128220?text='+encodeURIComponent(text),'_blank','noopener')});
+    const bookingApi='https://hhzsecdtqacyroxiywpm.supabase.co/rest/v1/booking_requests';
+    const bookingKey='sb_publishable_Q_uY9n72m2bRQswqfF9esg_TFrK9qJ8';
+    const d=document.getElementById('bookDate'),timeSelect=document.getElementById('bookTime'),availability=document.getElementById('bookingAvailability'),bookingForm=document.getElementById('bookingForm'),bookingSubmit=document.getElementById('bookingSubmit');
+    const now=new Date(),pad=n=>String(n).padStart(2,'0');
+    const localToday=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+    d.min=localToday;const maxDate=new Date(now);maxDate.setDate(maxDate.getDate()+60);d.max=`${maxDate.getFullYear()}-${pad(maxDate.getMonth()+1)}-${pad(maxDate.getDate())}`;
+    const slotLabels={'10:00':'10:00–11:00','12:00':'12:00–13:00','14:00':'14:00–15:00','16:00':'16:00–17:00','18:00':'18:00–19:00'};
+    const allSlots=Object.keys(slotLabels);
+    async function refreshSlots(){
+      const date=d.value;timeSelect.disabled=true;timeSelect.innerHTML='<option value="">Se verifică disponibilitatea…</option>';availability.textContent='Se verifică intervalele disponibile…';
+      if(!date){timeSelect.innerHTML='<option value="">Alege mai întâi data</option>';availability.textContent='Selectează data pentru a vedea orele disponibile.';return}
+      try{
+        const response=await fetch(`${bookingApi}?select=booking_time&booking_date=eq.${encodeURIComponent(date)}`,{headers:{apikey:bookingKey},cache:'no-store'});
+        if(!response.ok)throw new Error('availability unavailable');
+        const rows=await response.json();
+        const taken=new Set(rows.map(r=>String(r.booking_time||'').slice(0,5)));
+        const isToday=date===localToday;
+        const currentMinutes=now.getHours()*60+now.getMinutes();
+        const open=allSlots.filter(slot=>{const parts=slot.split(':').map(Number),h=parts[0],m=parts[1];return !taken.has(slot)&&(!isToday||(h*60+m)>currentMinutes+60)});
+        timeSelect.innerHTML='<option value="">Alege ora</option>'+open.map(slot=>`<option value="${slot}">${slotLabels[slot]}</option>`).join('');
+        timeSelect.disabled=open.length===0;
+        availability.textContent=open.length?`${open.length} intervale disponibile pentru data selectată.`:'Nu mai sunt intervale disponibile în această zi.';
+      }catch(error){
+        timeSelect.innerHTML='<option value="">Disponibilitatea nu poate fi încărcată</option>';availability.textContent='Încearcă din nou sau folosește WhatsApp.';toast('Calendarul nu a putut fi încărcat.');
+      }
+    }
+    d.addEventListener('change',refreshSlots);
+    bookingForm.addEventListener('submit',async e=>{
+      e.preventDefault();
+      if(!bookingForm.reportValidity())return;
+      const vals={name:document.getElementById('bookName').value.trim(),phone:document.getElementById('bookPhone').value.trim(),service:document.getElementById('bookService').value,booking_date:d.value,booking_time:timeSelect.value,mode:document.getElementById('bookMode').value,note:document.getElementById('bookNote').value.trim()||null};
+      bookingSubmit.disabled=true;bookingSubmit.textContent='Se rezervă…';
+      try{
+        const response=await fetch(bookingApi,{method:'POST',headers:{apikey:bookingKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(vals)});
+        if(response.status===409){await refreshSlots();toast('Intervalul tocmai a fost rezervat. Alege altă oră.');return}
+        if(!response.ok)throw new Error('booking failed');
+        const text=`Bună ziua! Am rezervat online un interval AstroVip. Nume: ${vals.name}. Telefon: ${vals.phone}. Serviciu: ${vals.service}. Data: ${vals.booking_date}. Ora: ${slotLabels[vals.booking_time]||vals.booking_time}. Format: ${vals.mode}.${vals.note?` Detalii: ${vals.note}`:''}`;
+        toast('Programarea a fost înregistrată.');
+        bookingForm.reset();timeSelect.disabled=true;timeSelect.innerHTML='<option value="">Alege mai întâi data</option>';availability.textContent='Programarea a fost înregistrată. Se deschide WhatsApp…';
+        setTimeout(()=>{window.location.href='https://wa.me/40722128220?text='+encodeURIComponent(text)},450);
+      }catch(error){
+        toast('Programarea nu a putut fi salvată. Încearcă din nou.');
+      }finally{
+        bookingSubmit.disabled=false;bookingSubmit.textContent='Rezervă intervalul';
+      }
+    });
 
   
     document.addEventListener('keydown',event=>{
