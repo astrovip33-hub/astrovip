@@ -17,8 +17,13 @@
     if (!r.ok) throw new Error("Hero part failed: " + u);
     return r.text();
   }))).then(chunks => {
-    img.src = "data:image/webp;base64," + chunks.join("").replace(/\s+/g,"");
-    img.removeAttribute("srcset");
-    img.dataset.premiumMobileHero = "loaded";
+    const src = "data:image/webp;base64," + chunks.join("").replace(/\s+/g,"");
+    const preload = new Image();
+    preload.onload = () => {
+      img.src = src;
+      img.removeAttribute("srcset");
+      img.dataset.premiumMobileHero = "loaded";
+    };
+    preload.src = src;
   }).catch(()=>{});
 })();
