@@ -55,23 +55,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ -f assets/hero-responsive-vivid/desktop-08.b64 ] &&
-             [ -f assets/hero-responsive-vivid/mobile-05.b64 ]; then
-            cat assets/hero-responsive-vivid/desktop-*.b64 | tr -d '\r\n\t ' | base64 --decode > assets/hero-vivid-desktop.webp
-            cat assets/hero-responsive-vivid/mobile-*.b64 | tr -d '\r\n\t ' | base64 --decode > assets/hero-vivid-mobile.webp
-            python3 - <<'PY'
-          from PIL import Image
-          for p, expected in [
-              ("assets/hero-vivid-desktop.webp",(1000,563)),
-              ("assets/hero-vivid-mobile.webp",(600,538)),
-          ]:
-              with Image.open(p) as im:
-                  if im.size != expected or im.format != "WEBP":
-                      raise SystemExit(f"Invalid hero asset {p}: {im.format} {im.size}")
-                  print(p, im.size)
-          PY
+          if [ -f assets/hero-responsive-vivid/desktop-avif-04.b64 ] &&
+             [ -f assets/hero-responsive-vivid/mobile-avif-03.b64 ]; then
+            cat assets/hero-responsive-vivid/desktop-avif-*.b64 | tr -d '\r\n\t ' | base64 --decode > assets/hero-vivid-desktop.avif
+            cat assets/hero-responsive-vivid/mobile-avif-*.b64 | tr -d '\r\n\t ' | base64 --decode > assets/hero-vivid-mobile.avif
+            ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 assets/hero-vivid-desktop.avif | grep -qx '900x506'
+            ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 assets/hero-vivid-mobile.avif | grep -qx '600x538'
           else
-            echo "Responsive vivid hero chunks not complete yet; skipping."
+            echo "Responsive vivid AVIF chunks not complete yet; skipping."
           fi
 
       - name: Commit generated binary assets
@@ -81,8 +72,8 @@ jobs:
           git config user.name "AstroVip Build"
           git config user.email "actions@users.noreply.github.com"
           git add assets/astrovip-hero-current.mp4 assets/1000049884-lcp.webp
-          [ -f assets/hero-vivid-desktop.webp ] && git add assets/hero-vivid-desktop.webp
-          [ -f assets/hero-vivid-mobile.webp ] && git add assets/hero-vivid-mobile.webp
+          [ -f assets/hero-vivid-desktop.avif ] && git add assets/hero-vivid-desktop.avif
+          [ -f assets/hero-vivid-mobile.avif ] && git add assets/hero-vivid-mobile.avif
           if git diff --cached --quiet; then
             echo "Generated assets already current."
           else
