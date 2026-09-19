@@ -365,3 +365,81 @@ body:not(.guide-page) .menu a:hover{
     align-items:center;
   }
 }
+
+
+/* Mobile Hero readability — 2026-09-19 */
+.hero-mobile-copy{display:none}
+@media(max-width:820px){
+  body:not(.guide-page) .hero-final-banner .hero-mobile-copy{
+    display:block!important;
+    position:relative;
+    z-index:3;
+    width:100%;
+    padding:16px 16px 18px;
+    text-align:center;
+    background:
+      radial-gradient(circle at 50% 0%,rgba(57,255,20,.16),transparent 54%),
+      linear-gradient(180deg,rgba(2,20,6,.98),rgba(1,10,3,.99));
+    border-top:1px solid rgba(184,255,157,.34);
+    border-bottom:1px solid rgba(57,255,20,.24);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 -12px 30px rgba(0,0,0,.20);
+  }
+  body:not(.guide-page) .hero-final-banner .hero-mobile-kicker{
+    margin:0 0 7px;
+    color:#b8ff9d!important;
+    font-size:14px!important;
+    line-height:1.25!important;
+    font-weight:950;
+    letter-spacing:.095em;
+    text-transform:uppercase;
+    text-shadow:0 0 12px rgba(57,255,20,.24);
+  }
+  body:not(.guide-page) .hero-final-banner .hero-mobile-title{
+    margin:0;
+    color:#fff!important;
+    font-size:clamp(25px,7vw,32px)!important;
+    line-height:1.06!important;
+    font-weight:850;
+    letter-spacing:-.02em;
+    text-shadow:0 2px 10px rgba(0,0,0,.72),0 0 18px rgba(57,255,20,.10);
+  }
+  body:not(.guide-page) .hero-final-banner .hero-mobile-title strong{
+    color:#d8f500!important;
+    font-weight:950;
+    text-shadow:0 1px 0 rgba(255,255,255,.24),0 0 18px rgba(216,245,0,.28);
+  }
+  body:not(.guide-page) .hero-final-banner .hero-mobile-sub{
+    margin:10px auto 13px;
+    max-width:520px;
+    color:#f3fff5!important;
+    font-size:15px!important;
+    line-height:1.4!important;
+    font-weight:800;
+    letter-spacing:.01em;
+  }
+  body:not(.guide-page) .hero-final-banner .hero-mobile-cta{
+    min-height:48px!important;
+    min-width:44px!important;
+    display:inline-flex!important;
+    align-items:center;
+    justify-content:center;
+    padding:11px 22px;
+    border-radius:999px;
+    color:#041006!important;
+    background:linear-gradient(90deg,#d8f500,#7dffb2)!important;
+    border:1px solid rgba(239,255,114,.78);
+    box-shadow:0 8px 24px rgba(57,255,20,.20),inset 0 1px 0 rgba(255,255,255,.68);
+    font-size:15px!important;
+    line-height:1.2!important;
+    font-weight:950;
+    text-decoration:none;
+  }
+  body:not(.guide-page) .hero-final-banner .hero-visual img{
+    filter:contrast(1.05) brightness(1.03) saturate(1.05);
+  }
+}
+@media(max-width:420px){
+  body:not(.guide-page) .hero-final-banner .hero-mobile-copy{padding:14px 13px 16px}
+  body:not(.guide-page) .hero-final-banner .hero-mobile-title{font-size:25px!important}
+  body:not(.guide-page) .hero-final-banner .hero-mobile-sub{font-size:14px!important}
+}
