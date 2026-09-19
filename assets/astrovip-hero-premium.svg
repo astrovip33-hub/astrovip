@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+<title id="title">AstroVip Astrologie Premium</title>
+<desc id="desc">Hero premium AstroVip, negru smarald si auriu, cu roata zodiacala si mesajul Cand cunosti momentul, viitorul iti apartine.</desc>
+<defs>
+  <radialGradient id="bg" cx="52%" cy="38%" r="74%"><stop offset="0" stop-color="#0d4a31"/><stop offset=".36" stop-color="#062318"/><stop offset=".72" stop-color="#020906"/><stop offset="1" stop-color="#000"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff4b0"/><stop offset=".25" stop-color="#f1d478"/><stop offset=".58" stop-color="#c99c39"/><stop offset=".82" stop-color="#f4d978"/><stop offset="1" stop-color="#8e6417"/></linearGradient>
+  <linearGradient id="green" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#b8ff61"/><stop offset=".5" stop-color="#42f58d"/><stop offset="1" stop-color="#d8f500"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="20"/></filter>
+</defs>
+<rect width="900" height="1200" fill="url(#bg)"/>
+<circle cx="750" cy="170" r="170" fill="#53ff9b" opacity=".08" filter="url(#soft)"/>
+<circle cx="160" cy="620" r="240" fill="#d8f500" opacity=".045" filter="url(#soft)"/>
+<g fill="#eaffef" opacity=".78">
+  <circle cx="86" cy="104" r="2"/><circle cx="154" cy="176" r="1.5"/><circle cx="228" cy="92" r="1.8"/><circle cx="356" cy="148" r="1.3"/><circle cx="694" cy="102" r="1.6"/><circle cx="816" cy="262" r="2"/>
+  <circle cx="64" cy="390" r="1.4"/><circle cx="132" cy="514" r="1.7"/><circle cx="780" cy="468" r="1.3"/><circle cx="840" cy="604" r="1.8"/><circle cx="734" cy="748" r="1.4"/><circle cx="122" cy="816" r="1.6"/>
+</g>
+<g transform="translate(450 420)" fill="none" stroke="url(#gold)" filter="url(#glow)">
+  <circle r="260" stroke-width="3"/>
+  <circle r="224" stroke-width="1.5" opacity=".9"/>
+  <circle r="154" stroke-width="1.3" opacity=".75"/>
+  <circle r="72" stroke-width="2"/>
+  <g stroke-width="1" opacity=".72">
+    <path d="M0-260V-154M130-225L77-133M225-130L133-77M260 0H154M225 130L133 77M130 225L77 133M0 260V154M-130 225L-77 133M-225 130L-133 77M-260 0H-154M-225-130L-133-77M-130-225L-77-133"/>
+  </g>
+</g>
+<g transform="translate(450 420)" fill="url(#gold)" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="43" font-weight="700">
+  <text x="0" y="-181">♈</text><text x="94" y="-155">♉</text><text x="165" y="-88">♊</text><text x="190" y="14">♋</text>
+  <text x="165" y="110">♌</text><text x="96" y="176">♍</text><text x="0" y="201">♎</text><text x="-96" y="176">♏</text>
+  <text x="-165" y="110">♐</text><text x="-190" y="14">♑</text><text x="-165" y="-88">♒</text><text x="-94" y="-155">♓</text>
+</g>
+<g transform="translate(450 420)" filter="url(#glow)">
+  <circle r="36" fill="#fff8c8"/>
+  <path d="M0-86L14-14L86 0L14 14L0 86L-14 14L-86 0L-14-14Z" fill="url(#gold)"/>
+  <circle r="13" fill="#fff"/>
+</g>
+<g text-anchor="middle">
+  <text x="450" y="790" fill="url(#gold)" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="700" letter-spacing="3">ASTROVIP</text>
+  <text x="450" y="838" fill="#f6df96" font-family="Arial, sans-serif" font-size="23" font-weight="700" letter-spacing="10">ASTROLOGIE PREMIUM</text>
+  <line x1="175" y1="872" x2="725" y2="872" stroke="#cfa94b" stroke-width="1" opacity=".65"/>
+  <text x="450" y="928" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="31" font-weight="700">CÂND CUNOȘTI MOMENTUL,</text>
+  <text x="450" y="979" fill="url(#green)" font-family="Georgia, 'Times New Roman', serif" font-size="43" font-weight="700" filter="url(#glow)">VIITORUL ÎȚI APARȚINE!</text>
+  <text x="450" y="1032" fill="#e8f5ec" font-family="Arial, sans-serif" font-size="20" letter-spacing="1">Previziuni clare · Decizii mai bune · Timing precis</text>
+</g>
+<g transform="translate(92 1082)" font-family="Arial, sans-serif" font-size="17" font-weight="700" text-anchor="middle">
+  <g><rect width="160" height="54" rx="27" fill="#07140d" stroke="#d8f500" opacity=".95"/><text x="80" y="34" fill="#f4e3a3">HĂRȚI NATALE</text></g>
+  <g transform="translate(184 0)"><rect width="160" height="54" rx="27" fill="#07140d" stroke="#d8f500"/><text x="80" y="34" fill="#f4e3a3">PREVIZIUNI</text></g>
+  <g transform="translate(368 0)"><rect width="160" height="54" rx="27" fill="#07140d" stroke="#d8f500"/><text x="80" y="34" fill="#f4e3a3">RELOCARE</text></g>
+  <g transform="translate(552 0)"><rect width="160" height="54" rx="27" fill="#07140d" stroke="#d8f500"/><text x="80" y="34" fill="#f4e3a3">NUMEROLOGIE</text></g>
+</g>
+<rect x="18" y="18" width="864" height="1164" rx="32" fill="none" stroke="url(#gold)" stroke-width="2" opacity=".7"/>
+</svg>
