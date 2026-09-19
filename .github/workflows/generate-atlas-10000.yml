@@ -49,3 +49,5 @@ jobs:
             git commit -m "Generate AstroVip Atlas 10000"
             git push origin main
           fi
+
+# trigger: atlas-10000
