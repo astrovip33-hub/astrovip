@@ -6,6 +6,8 @@
   --av-neon-deep:#0d4a17;
   --av-neon-ink:#031006;
 }
+
+/* Global glossy green canvas */
 body:not(.guide-page){
   background:
     radial-gradient(circle at 82% 3%,rgba(57,255,20,.34),transparent 27%),
@@ -15,12 +17,19 @@ body:not(.guide-page){
   background-attachment:fixed !important;
 }
 body:not(.guide-page):before{
-  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.62;
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.62;
   background:
     linear-gradient(118deg,rgba(255,255,255,.08),transparent 14%,rgba(57,255,20,.11) 29%,transparent 45%,rgba(255,255,255,.055) 63%,transparent 78%),
     radial-gradient(circle at 72% 18%,rgba(184,255,157,.18),transparent 22%);
   mix-blend-mode:screen;
 }
+
+/* Navigation */
 body:not(.guide-page) .top{
   background:linear-gradient(180deg,rgba(3,24,7,.94),rgba(2,14,5,.90)) !important;
   border-bottom-color:rgba(57,255,20,.38) !important;
@@ -30,6 +39,8 @@ body:not(.guide-page) .menu.open{
   background:linear-gradient(180deg,rgba(5,35,10,.98),rgba(2,15,5,.99)) !important;
   border-color:rgba(57,255,20,.34) !important;
 }
+
+/* Hero */
 body:not(.guide-page) .hero{
   background:
     radial-gradient(circle at 76% 44%,rgba(57,255,20,.31),transparent 25%),
@@ -44,13 +55,21 @@ body:not(.guide-page) .hero-video-visual{
 }
 body:not(.guide-page) .astrovip-hero-video{
   border-color:rgba(184,255,157,.58) !important;
-  box-shadow:0 26px 76px rgba(0,0,0,.56),0 0 42px rgba(57,255,20,.22),inset 0 1px 0 rgba(255,255,255,.12) !important;
+  box-shadow:
+    0 26px 76px rgba(0,0,0,.56),
+    0 0 42px rgba(57,255,20,.22),
+    inset 0 1px 0 rgba(255,255,255,.12) !important;
 }
 body:not(.guide-page) .hero .eyebrow{
   background:linear-gradient(180deg,rgba(57,255,20,.15),rgba(2,20,6,.52)) !important;
-  border-color:rgba(184,255,157,.40) !important;color:#ecffe7 !important;
+  border-color:rgba(184,255,157,.40) !important;
+  color:#ecffe7 !important;
 }
-body:not(.guide-page) section:not(.hero):not(.trust-refs){position:relative}
+
+/* Primary sections keep contrast while reflecting neon green */
+body:not(.guide-page) section:not(.hero):not(.trust-refs){
+  position:relative;
+}
 body:not(.guide-page) .card,
 body:not(.guide-page) .box,
 body:not(.guide-page) .price-card,
@@ -59,28 +78,51 @@ body:not(.guide-page) .freeq-home-card,
 body:not(.guide-page) .natal-home-card,
 body:not(.guide-page) .avkh-card,
 body:not(.guide-page) .seo-hub-card{
-  background:linear-gradient(145deg,rgba(11,43,17,.92) 0%,rgba(4,22,8,.96) 52%,rgba(2,12,5,.98) 100%) !important;
+  background:
+    linear-gradient(145deg,rgba(11,43,17,.92) 0%,rgba(4,22,8,.96) 52%,rgba(2,12,5,.98) 100%) !important;
   border-color:rgba(57,255,20,.28) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 20px 58px rgba(0,0,0,.34),0 0 24px rgba(57,255,20,.055) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 20px 58px rgba(0,0,0,.34),
+    0 0 24px rgba(57,255,20,.055) !important;
 }
 body:not(.guide-page) .card:hover,
 body:not(.guide-page) .avkh-card:hover,
 body:not(.guide-page) .seo-hub-card:hover{
   border-color:rgba(184,255,157,.62) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 24px 68px rgba(0,0,0,.40),0 0 34px rgba(57,255,20,.13) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 24px 68px rgba(0,0,0,.40),
+    0 0 34px rgba(57,255,20,.13) !important;
 }
+
+/* Section washes */
 body:not(.guide-page) .method,
 body:not(.guide-page) .pricing,
 body:not(.guide-page) #oportunitati-astrovip,
 body:not(.guide-page) .av-knowledge-hubs,
 body:not(.guide-page) #articole,
 body:not(.guide-page) #comunitate{
-  background:radial-gradient(circle at 50% 0%,rgba(57,255,20,.10),transparent 34%),linear-gradient(180deg,rgba(6,30,10,.78),rgba(2,15,5,.88)) !important;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(57,255,20,.10),transparent 34%),
+    linear-gradient(180deg,rgba(6,30,10,.78),rgba(2,15,5,.88)) !important;
   border-color:rgba(57,255,20,.22) !important;
 }
-body:not(.guide-page) .trust-grid{background:rgba(57,255,20,.28) !important;border-color:rgba(57,255,20,.34) !important}
-body:not(.guide-page) .trust-item{background:linear-gradient(180deg,rgba(12,53,20,.97),rgba(3,20,7,.98)) !important}
-body:not(.guide-page) .trust-item strong{color:var(--av-neon-soft) !important;text-shadow:0 0 16px rgba(57,255,20,.30)}
+
+/* Trust strip */
+body:not(.guide-page) .trust-grid{
+  background:rgba(57,255,20,.28) !important;
+  border-color:rgba(57,255,20,.34) !important;
+}
+body:not(.guide-page) .trust-item{
+  background:linear-gradient(180deg,rgba(12,53,20,.97),rgba(3,20,7,.98)) !important;
+}
+body:not(.guide-page) .trust-item strong{
+  color:var(--av-neon-soft) !important;
+  text-shadow:0 0 16px rgba(57,255,20,.30);
+}
+
+/* Glossy controls */
 body:not(.guide-page) .btn2{
   background:linear-gradient(180deg,rgba(19,59,26,.94),rgba(3,21,7,.98)) !important;
   border-color:rgba(184,255,157,.48) !important;
@@ -90,15 +132,22 @@ body:not(.guide-page) .btn2:hover{
   box-shadow:0 0 26px rgba(57,255,20,.14);
 }
 body:not(.guide-page) .cta{
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.90),inset 0 -2px 3px rgba(0,86,45,.40),0 12px 34px rgba(57,255,20,.25),0 0 26px rgba(57,255,20,.16) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.90),
+    inset 0 -2px 3px rgba(0,86,45,.40),
+    0 12px 34px rgba(57,255,20,.25),
+    0 0 26px rgba(57,255,20,.16) !important;
 }
+
+/* Forms */
 body:not(.guide-page) .contact input,
 body:not(.guide-page) #bookingForm input,
 body:not(.guide-page) .contact select,
 body:not(.guide-page) #bookingForm select,
 body:not(.guide-page) .contact textarea,
 body:not(.guide-page) #bookingForm textarea{
-  background:rgba(3,24,7,.92) !important;border-color:rgba(57,255,20,.30) !important;
+  background:rgba(3,24,7,.92) !important;
+  border-color:rgba(57,255,20,.30) !important;
 }
 body:not(.guide-page) .contact input:focus,
 body:not(.guide-page) #bookingForm input:focus,
@@ -106,32 +155,118 @@ body:not(.guide-page) .contact select:focus,
 body:not(.guide-page) #bookingForm select:focus,
 body:not(.guide-page) .contact textarea:focus,
 body:not(.guide-page) #bookingForm textarea:focus{
-  border-color:var(--av-neon-soft) !important;box-shadow:0 0 0 3px rgba(57,255,20,.12) !important;
+  border-color:var(--av-neon-soft) !important;
+  box-shadow:0 0 0 3px rgba(57,255,20,.12) !important;
 }
+
+/* Contact and footer */
 body:not(.guide-page) .contact{
-  background-image:linear-gradient(90deg,rgba(2,18,5,.96),rgba(5,45,12,.78)),url('/assets/1000041453.jpg') !important;
+  background-image:
+    linear-gradient(90deg,rgba(2,18,5,.96),rgba(5,45,12,.78)),
+    url('/assets/1000041453.jpg') !important;
   border-top-color:rgba(57,255,20,.30) !important;
 }
 body:not(.guide-page) .foot{
-  background:linear-gradient(180deg,#031006,#010602) !important;border-top-color:rgba(57,255,20,.28) !important;
+  background:linear-gradient(180deg,#031006,#010602) !important;
+  border-top-color:rgba(57,255,20,.28) !important;
 }
+
+/* Tickers and utility surfaces */
 body:not(.guide-page) .planet-strip{
-  background:linear-gradient(90deg,#031006,#0a3210,#031006) !important;border-color:rgba(57,255,20,.28) !important;
+  background:linear-gradient(90deg,#031006,#0a3210,#031006) !important;
+  border-color:rgba(57,255,20,.28) !important;
 }
-body:not(.guide-page) .ticker-pause{background:#061b0a !important;border-left-color:rgba(57,255,20,.28) !important}
+body:not(.guide-page) .ticker-pause{
+  background:#061b0a !important;
+  border-left-color:rgba(57,255,20,.28) !important;
+}
+
+/* Desktop gloss highlight */
 @media (min-width:821px){
   body:not(.guide-page) main:before{
-    content:"";position:fixed;left:0;right:0;top:78px;height:34vh;pointer-events:none;z-index:-1;
-    background:linear-gradient(115deg,transparent 8%,rgba(255,255,255,.055) 28%,transparent 45%);opacity:.65;
+    content:"";
+    position:fixed;
+    left:0;right:0;top:78px;height:34vh;
+    pointer-events:none;
+    z-index:-1;
+    background:linear-gradient(115deg,transparent 8%,rgba(255,255,255,.055) 28%,transparent 45%);
+    opacity:.65;
   }
 }
+
+/* Mobile keeps the same color language without excessive brightness */
 @media(max-width:820px){
   body:not(.guide-page){
-    background:radial-gradient(circle at 50% 0%,rgba(57,255,20,.24),transparent 24%),linear-gradient(180deg,#051a09 0%,#0a3511 34%,#061d0a 68%,#020804 100%) !important;
+    background:
+      radial-gradient(circle at 50% 0%,rgba(57,255,20,.24),transparent 24%),
+      linear-gradient(180deg,#051a09 0%,#0a3511 34%,#061d0a 68%,#020804 100%) !important;
     background-attachment:scroll !important;
   }
   body:not(.guide-page) .hero,
   body:not(.guide-page) .hero-video-visual{
-    background:radial-gradient(circle at 50% 20%,rgba(57,255,20,.22),transparent 28%),linear-gradient(180deg,#06270c,#0a3d13 46%,#031006 100%) !important;
+    background:
+      radial-gradient(circle at 50% 20%,rgba(57,255,20,.22),transparent 28%),
+      linear-gradient(180deg,#06270c,#0a3d13 46%,#031006 100%) !important;
   }
+}
+
+/* Text readability pass — neon green homepage */
+body:not(.guide-page){
+  --muted:#e3f3e7 !important;
+  --pearl:#fbfffc !important;
+}
+body:not(.guide-page) p,
+body:not(.guide-page) .sub,
+body:not(.guide-page) .section-copy,
+body:not(.guide-page) .title p,
+body:not(.guide-page) .avx-title p,
+body:not(.guide-page) .avx-copy p,
+body:not(.guide-page) .avkh-card p,
+body:not(.guide-page) .seo-hub-card p,
+body:not(.guide-page) .freeq-home-card p,
+body:not(.guide-page) .natal-home-card p,
+body:not(.guide-page) .forum-entry p,
+body:not(.guide-page) .price-card p,
+body:not(.guide-page) .card p,
+body:not(.guide-page) .box p{
+  color:#edf8f0 !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.36);
+}
+body:not(.guide-page) .hero .sub{
+  color:#f5fff6 !important;
+}
+body:not(.guide-page) .card h3,
+body:not(.guide-page) .box h2,
+body:not(.guide-page) .section-heading,
+body:not(.guide-page) .price-card h3,
+body:not(.guide-page) .avkh-card h3,
+body:not(.guide-page) .seo-hub-card h3{
+  color:#ffffff !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.55),0 0 14px rgba(57,255,20,.10) !important;
+}
+body:not(.guide-page) .title h2,
+body:not(.guide-page) #oportunitati-astrovip .avx-title h2{
+  color:#f7fff8 !important;
+  text-shadow:0 2px 8px rgba(0,0,0,.55),0 0 18px rgba(57,255,20,.10) !important;
+}
+body:not(.guide-page) .kicker,
+body:not(.guide-page) .card .mini,
+body:not(.guide-page) .avkh-mini,
+body:not(.guide-page) #oportunitati-astrovip .avx-kicker,
+body:not(.guide-page) #oportunitati-astrovip .avx-mini{
+  color:#b8ff9d !important;
+  text-shadow:0 0 10px rgba(57,255,20,.18);
+}
+body:not(.guide-page) .list div,
+body:not(.guide-page) .hero-tags span,
+body:not(.guide-page) .trust-item span,
+body:not(.guide-page) .field-label,
+body:not(.guide-page) .form-field label{
+  color:#f1fbf3 !important;
+}
+body:not(.guide-page) .menu a{
+  color:#f7fff8 !important;
+}
+body:not(.guide-page) .menu a:hover{
+  color:#b8ff9d !important;
 }
