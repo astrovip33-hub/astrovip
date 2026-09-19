@@ -5,6 +5,19 @@
   const gtag=window.gtag||function(){window.dataLayer=window.dataLayer||[];window.dataLayer.push(arguments)};
   window.gtag=gtag;
 
+  const GOOGLE_TAG_ID='G-Y59ZJ7L3WR';
+  function loadGoogleTag(){
+    if(document.querySelector('script[src*="googletagmanager.com/gtag/js?id='+GOOGLE_TAG_ID+'"]'))return;
+    const s=document.createElement('script');
+    s.async=true;
+    s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(GOOGLE_TAG_ID);
+    s.setAttribute('data-astrovip-google-tag','1');
+    document.head.appendChild(s);
+    gtag('js',new Date());
+    gtag('config',GOOGLE_TAG_ID);
+  }
+  loadGoogleTag();
+
   function updateConsent(analytics,ads){
     gtag('consent','update',{
       analytics_storage:analytics?'granted':'denied',
