@@ -443,3 +443,26 @@ body:not(.guide-page) .menu a:hover{
   body:not(.guide-page) .hero-final-banner .hero-mobile-title{font-size:25px!important}
   body:not(.guide-page) .hero-final-banner .hero-mobile-sub{font-size:14px!important}
 }
+
+
+/* Homepage performance/accessibility pass — 2026-09-19 */
+@media(max-width:820px){
+  body:not(.guide-page)::before{
+    display:none!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body:not(.guide-page) *,
+  body:not(.guide-page) *::before,
+  body:not(.guide-page) *::after{
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+  }
+  body:not(.guide-page) .planet-track{
+    animation:none!important;
+    transform:none!important;
+  }
+}
