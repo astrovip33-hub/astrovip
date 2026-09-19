@@ -11,3 +11,7 @@ qa-live-tantric.js
 build-knowledge-package.js
 qa-knowledge.js
 qa-live.js
+assets/hero-responsive-vivid
+.deploy-trigger
+vercel.json
+atlas-10000-generation-report.json
