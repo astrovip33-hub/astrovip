@@ -51,4 +51,17 @@
     });
     document.addEventListener('click',event=>{if(menu.classList.contains('open')&&!menu.contains(event.target)&&!hamb.contains(event.target)){menu.classList.remove('open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});
 
+    /* Mobile hero preview: keep floating actions off the artwork, reveal after hero. */
+    const heroForFloatingUi=document.querySelector('.hero');
+    if(heroForFloatingUi){
+      const syncHeroFloatingUi=()=>{
+        if(window.innerWidth>820){document.body.classList.remove('av-hero-inview');return;}
+        const r=heroForFloatingUi.getBoundingClientRect();
+        document.body.classList.toggle('av-hero-inview',r.bottom>90&&r.top<window.innerHeight);
+      };
+      syncHeroFloatingUi();
+      window.addEventListener('scroll',syncHeroFloatingUi,{passive:true});
+      window.addEventListener('resize',syncHeroFloatingUi,{passive:true});
+    }
+
 })();
