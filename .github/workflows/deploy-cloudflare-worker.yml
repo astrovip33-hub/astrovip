@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate Cloudflare token
+      - name: Normalize and validate Cloudflare token
         shell: bash
         run: |
           set -euo pipefail
@@ -33,25 +33,41 @@ jobs:
             exit 2
           fi
 
-          # Reject accidental paste of curl/Bearer/multiline commands.
-          case "$CLOUDFLARE_API_TOKEN" in
-            *$'\n'*|*$'\r'*|*"Bearer "*|*"curl "*)
-              echo "::error::CLOUDFLARE_API_TOKEN must contain only the raw token value."
-              exit 3
-              ;;
-          esac
+          TOKEN=$(printf '%s' "$CLOUDFLARE_API_TOKEN" | tr -d '\r\n')
+          TOKEN=$(printf '%s' "$TOKEN" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')
+          TOKEN="${TOKEN#Bearer }"
+          TOKEN="${TOKEN#bearer }"
+          TOKEN="${TOKEN#\"}"
+          TOKEN="${TOKEN%\"}"
+          TOKEN="${TOKEN//\\_/_}"
 
-          RESPONSE=$(curl -fsS             -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"             -H "Content-Type: application/json"             "https://api.cloudflare.com/client/v4/user/tokens/verify")
+          if printf '%s' "$TOKEN" | grep -q '[[:space:]]'; then
+            echo "::error::Cloudflare token still contains internal whitespace; paste only the raw token."
+            exit 3
+          fi
 
-          SUCCESS=$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(str(d.get("success",False)).lower())')
-          STATUS=$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or {}; print(r.get("status",""))')
+          echo "::add-mask::$TOKEN"
+          echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
 
-          if [ "$SUCCESS" != "true" ] || [ "$STATUS" != "active" ]; then
-            echo "::error::Cloudflare API token is not valid/active."
+          HTTP=$(curl -sS -o /tmp/cf-verify.json -w '%{http_code}' \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/user/tokens/verify")
+
+          if [ "$HTTP" != "200" ]; then
+            echo "::error::Cloudflare rejected the token (HTTP $HTTP). The saved token is invalid, revoked, truncated, or not the newly generated raw token."
             exit 4
           fi
 
-          echo "Cloudflare API token verified."
+          SUCCESS=$(python3 -c 'import json; d=json.load(open("/tmp/cf-verify.json")); print(str(d.get("success",False)).lower())')
+          STATUS=$(python3 -c 'import json; d=json.load(open("/tmp/cf-verify.json")); r=d.get("result") or {}; print(r.get("status",""))')
+
+          if [ "$SUCCESS" != "true" ] || [ "$STATUS" != "active" ]; then
+            echo "::error::Cloudflare API token is not active."
+            exit 5
+          fi
+
+          echo "Cloudflare API token verified and active."
 
       - name: Resolve Cloudflare account ID
         shell: bash
