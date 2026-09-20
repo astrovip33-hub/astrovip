@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 552" role="img" aria-label="AstroVip premium astrology background">
+<defs>
+  <radialGradient id="bg" cx="74%" cy="42%" r="78%"><stop offset="0" stop-color="#0b5a35"/><stop offset=".32" stop-color="#073522"/><stop offset=".66" stop-color="#03110b"/><stop offset="1" stop-color="#000"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff4b0"/><stop offset=".28" stop-color="#f1d478"/><stop offset=".6" stop-color="#c99c39"/><stop offset=".82" stop-color="#f7df82"/><stop offset="1" stop-color="#8d651b"/></linearGradient>
+  <linearGradient id="lime" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#efff72"/><stop offset=".55" stop-color="#d8f500"/><stop offset="1" stop-color="#58ff91"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="28"/></filter>
+</defs>
+<rect width="1020" height="552" fill="url(#bg)"/>
+<ellipse cx="770" cy="150" rx="230" ry="150" fill="#42ff88" opacity=".10" filter="url(#soft)"/>
+<ellipse cx="500" cy="520" rx="430" ry="105" fill="#d8f500" opacity=".055" filter="url(#soft)"/>
+<g fill="#effff3" opacity=".72"><circle cx="73" cy="74" r="1.5"/><circle cx="150" cy="116" r="1.1"/><circle cx="240" cy="52" r="1.2"/><circle cx="328" cy="135" r="1.4"/><circle cx="447" cy="86" r="1.1"/><circle cx="937" cy="94" r="1.5"/><circle cx="913" cy="225" r="1.2"/><circle cx="81" cy="420" r="1.2"/><circle cx="396" cy="463" r="1.3"/><circle cx="965" cy="444" r="1.1"/></g>
+<g transform="translate(770 270)" fill="none" stroke="url(#gold)" filter="url(#glow)">
+  <circle r="205" stroke-width="2.5"/><circle r="174" stroke-width="1.2" opacity=".78"/><circle r="116" stroke-width="1.2" opacity=".65"/><circle r="54" stroke-width="1.6"/>
+  <g stroke-width=".9" opacity=".65"><path d="M0-205V-116M102-178L58-101M178-102L101-58M205 0H116M178 102L101 58M102 178L58 101M0 205V116M-102 178L-58 101M-178 102L-101 58M-205 0H-116M-178-102L-101-58M-102-178L-58-101"/></g>
+</g>
+<g transform="translate(770 270)" fill="url(#gold)" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700">
+  <text x="0" y="-138">♈</text><text x="70" y="-116">♉</text><text x="121" y="-64">♊</text><text x="140" y="10">♋</text><text x="121" y="82">♌</text><text x="70" y="132">♍</text><text x="0" y="150">♎</text><text x="-70" y="132">♏</text><text x="-121" y="82">♐</text><text x="-140" y="10">♑</text><text x="-121" y="-64">♒</text><text x="-70" y="-116">♓</text>
+</g>
+<g transform="translate(770 270)" filter="url(#glow)"><circle r="24" fill="#fff9c9"/><path d="M0-63L10-10L63 0L10 10L0 63L-10 10L-63 0L-10-10Z" fill="url(#lime)"/><circle r="8" fill="#fff"/></g>
+<path d="M0 500 C190 460 300 530 470 492 C635 455 785 486 1020 445" fill="none" stroke="url(#gold)" stroke-width="1.1" opacity=".28"/>
+<rect x="10" y="10" width="1000" height="532" rx="24" fill="none" stroke="url(#gold)" stroke-width="1.3" opacity=".48"/>
+</svg>
