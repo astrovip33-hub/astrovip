@@ -160,20 +160,6 @@
   #studiu-de-caz-scoala-1984 .av-case-data { grid-template-columns: 1fr; padding: 16px; }
 }
 
-/* AstroVip second banner glossy green-white override */
-body #planet-strip-secondary .planet-item > strong,
-body #planet-strip-secondary .planet-item > span{
-  background:linear-gradient(180deg,#ffffff 0%,#f2fff7 16%,#caffdc 32%,#7dffa6 50%,#2be36e 70%,#0a9f4b 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-  color:transparent!important;
-  font-weight:950;
-  text-shadow:none;
-  filter:drop-shadow(0 1px 0 rgba(255,255,255,.95)) drop-shadow(0 0 4px rgba(197,255,216,.78)) drop-shadow(0 0 9px rgba(43,227,110,.42));
-}
-body #planet-strip-secondary .planet-item > strong{letter-spacing:.025em;}
-
 /* AstroVip compact school teaser */
 #studiu-de-caz-scoala-1984.av-lotto-compact{
   --lotto-gold:#edc67e;
