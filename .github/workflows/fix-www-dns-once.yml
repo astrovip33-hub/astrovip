@@ -113,13 +113,7 @@ jobs:
             -H "Content-Type: application/json" \
             "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records?name=www.astrovip.ro")
 
-          python3 - <<'PY' > /tmp/records.tsv
-import json
-d=json.loads('''$DNS''')
-for r in d.get("result") or []:
-    if r.get("type") in {"A","AAAA","CNAME"}:
-        print(r.get("id",""), str(r.get("proxied",False)).lower(), r.get("type",""), r.get("content",""), sep="\t")
-PY
+          printf '%s' "$DNS" | python3 -c 'import json,sys; d=json.load(sys.stdin); [print(r.get("id",""), str(r.get("proxied",False)).lower(), r.get("type",""), r.get("content",""), sep="\t") for r in (d.get("result") or []) if r.get("type") in {"A","AAAA","CNAME"}]' > /tmp/records.tsv
 
           if [ ! -s /tmp/records.tsv ]; then
             echo "No proxy-capable www record found; creating proxied CNAME."
