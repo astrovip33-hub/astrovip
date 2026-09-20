@@ -6,17 +6,22 @@
   window.gtag=gtag;
 
   const GOOGLE_TAG_ID='G-Y59ZJ7L3WR';
+
   function loadGoogleTag(){
-    if(document.querySelector('script[src*="googletagmanager.com/gtag/js?id='+GOOGLE_TAG_ID+'"]'))return;
+    if(window.__astrovipGoogleTagLoaded)return;
+    if(document.querySelector('script[src*="googletagmanager.com/gtag/js?id='+GOOGLE_TAG_ID+'"]')){
+      window.__astrovipGoogleTagLoaded=true;
+      return;
+    }
+    window.__astrovipGoogleTagLoaded=true;
     const s=document.createElement('script');
     s.async=true;
     s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(GOOGLE_TAG_ID);
     s.setAttribute('data-astrovip-google-tag','1');
     document.head.appendChild(s);
     gtag('js',new Date());
-    gtag('config',GOOGLE_TAG_ID);
+    gtag('config',GOOGLE_TAG_ID,{send_page_view:false});
   }
-  loadGoogleTag();
 
   function updateConsent(analytics,ads){
     gtag('consent','update',{
@@ -28,6 +33,9 @@
       functionality_storage:'granted',
       security_storage:'granted'
     });
+
+    if(analytics||ads)loadGoogleTag();
+
     if(analytics && !window.__astrovipAnalyticsPageviewSent){
       window.__astrovipAnalyticsPageviewSent=true;
       gtag('event','page_view',{
@@ -36,19 +44,30 @@
         page_path:location.pathname
       });
     }
+
     window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({event:'astrovip_consent_update',analytics_consent:analytics?'granted':'denied',ads_consent:ads?'granted':'denied'});
+    window.dataLayer.push({
+      event:'astrovip_consent_update',
+      analytics_consent:analytics?'granted':'denied',
+      ads_consent:ads?'granted':'denied'
+    });
   }
 
   function loadChoice(){
     try{const v=JSON.parse(localStorage.getItem(KEY)||'null');return v&&v.v===VERSION?v:null}catch(e){return null}
   }
+
   function saveChoice(analytics,ads){
     const v={v:VERSION,analytics:!!analytics,ads:!!ads,ts:Date.now()};
     try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}
+    const hadGoogleTag=!!window.__astrovipGoogleTagLoaded;
     updateConsent(v.analytics,v.ads);
+    if(hadGoogleTag && !v.analytics && !v.ads){
+      location.reload();
+    }
     return v;
   }
+
   function build(){
     if(document.getElementById('av-consent'))return;
     const wrap=document.createElement('div');
@@ -69,5 +88,6 @@
     const current=loadChoice();
     if(current){updateConsent(current.analytics,current.ads);wrap.hidden=true;manage.hidden=false}else{wrap.hidden=false;manage.hidden=true}
   }
+
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build,{once:true});else build();
 })();
