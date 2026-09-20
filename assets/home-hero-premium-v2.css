@@ -554,3 +554,23 @@ body:not(.guide-page) .av-lang-switch a[href="/"]::before{
   }
 }
 
+/* Mobile map full visibility fix — 2026-09-20 */
+@media(max-width:430px){
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    padding-top:0!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual picture{
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual img{
+    height:clamp(306px,85vw,350px)!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+  }
+}
