@@ -4,4 +4,5 @@ Allow: /
 Sitemap: https://astrovip.ro/sitemap.xml
 Sitemap: https://astrovip.ro/sitemap-studii-de-caz.xml
 Sitemap: https://astrovip.ro/sitemap-blog.xml
+Sitemap: https://astrovip.ro/sitemap-languages.xml
 # deploy-sync: 2026-09-19
