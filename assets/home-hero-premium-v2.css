@@ -454,3 +454,15 @@ body:not(.guide-page) .top .av-brand-logo{
     border:1px solid rgba(57,255,20,.16)!important;
   }
 }
+
+
+/* Romanian selector final override: no RO text, no small flag — 2026-09-20 */
+body:not(.guide-page) .av-lang-switch a[href="/"]{
+  font-size:0!important;
+  color:transparent!important;
+  text-shadow:none!important;
+}
+body:not(.guide-page) .av-lang-switch a[href="/"]::before{
+  content:none!important;
+  display:none!important;
+}
