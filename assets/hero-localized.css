@@ -83,3 +83,8 @@
   .hero-localized-subtitle{font-size:24px}
   .hero-localized-quote{font-size:19px}
 }
+
+.hero-localized-benefits{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.hero-localized-benefits span{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;border:1px solid rgba(217,184,92,.24);background:rgba(3,5,4,.62);color:#dfe8df;font-size:12px;font-weight:800}
+.hero-localized-benefits strong{color:#fff1aa;font-weight:950}
+@media(max-width:820px){.hero-localized-benefits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.hero-localized-benefits span{justify-content:center;text-align:center;font-size:11px;padding:6px 7px}}
