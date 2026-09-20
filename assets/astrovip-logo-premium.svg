@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-labelledby="title desc">
+<title id="title">AstroVip — Astrologie Premium</title>
+<desc id="desc">Logo premium auriu cu emblemă astrologică și accent verde smarald.</desc>
+<defs>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff8c9"/>
+    <stop offset=".18" stop-color="#ffe47a"/>
+    <stop offset=".42" stop-color="#d9a72e"/>
+    <stop offset=".62" stop-color="#fff0a4"/>
+    <stop offset=".82" stop-color="#a36f12"/>
+    <stop offset="1" stop-color="#f5d76e"/>
+  </linearGradient>
+  <linearGradient id="goldDark" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#8b5c10"/>
+    <stop offset=".45" stop-color="#f5d76e"/>
+    <stop offset="1" stop-color="#6c4508"/>
+  </linearGradient>
+  <radialGradient id="emerald">
+    <stop offset="0" stop-color="#d8ffb6"/>
+    <stop offset=".22" stop-color="#62ff57"/>
+    <stop offset=".58" stop-color="#17a82f"/>
+    <stop offset="1" stop-color="#063d19"/>
+  </radialGradient>
+  <radialGradient id="glass">
+    <stop offset="0" stop-color="#143e20" stop-opacity=".25"/>
+    <stop offset=".65" stop-color="#06120a" stop-opacity=".8"/>
+    <stop offset="1" stop-color="#020504"/>
+  </radialGradient>
+  <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="3.4" result="b"/>
+    <feFlood flood-color="#ffd64d" flood-opacity=".45"/>
+    <feComposite in2="b" operator="in"/>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="greenGlow" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="4.2" result="g"/>
+    <feFlood flood-color="#39ff14" flood-opacity=".75"/>
+    <feComposite in2="g" operator="in"/>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<g transform="translate(18 9)">
+  <circle cx="100" cy="101" r="88" fill="url(#glass)" stroke="url(#gold)" stroke-width="4"/>
+  <circle cx="100" cy="101" r="76" fill="none" stroke="#c99528" stroke-width="1.5" stroke-dasharray="2.5 6"/>
+  <circle cx="100" cy="101" r="66" fill="none" stroke="#45ff3b" stroke-opacity=".55" stroke-width="2"/>
+  <path d="M100 24 L112 82 L168 101 L112 120 L100 178 L88 120 L32 101 L88 82 Z"
+        fill="url(#gold)" stroke="#fff1ad" stroke-width="1.2" filter="url(#goldGlow)"/>
+  <path d="M100 48 L106 88 L145 101 L106 114 L100 154 L94 114 L55 101 L94 88 Z"
+        fill="#fff4be" fill-opacity=".55"/>
+  <path d="M54 51 A64 64 0 0 0 54 151 A72 72 0 0 1 54 51Z" fill="url(#gold)" opacity=".92"/>
+  <path d="M146 51 A64 64 0 0 1 146 151 A72 72 0 0 0 146 51Z" fill="url(#gold)" opacity=".92"/>
+  <circle cx="100" cy="101" r="18" fill="url(#emerald)" stroke="#ffe988" stroke-width="2.6" filter="url(#greenGlow)"/>
+  <circle cx="100" cy="101" r="7" fill="#d7ffb9" opacity=".9"/>
+  <g fill="url(#gold)" stroke="#fff2ad" stroke-width=".8">
+    <circle cx="100" cy="12" r="5"/><circle cx="100" cy="190" r="5"/>
+    <circle cx="11" cy="101" r="5"/><circle cx="189" cy="101" r="5"/>
+    <circle cx="37" cy="38" r="4"/><circle cx="163" cy="38" r="4"/>
+    <circle cx="37" cy="164" r="4"/><circle cx="163" cy="164" r="4"/>
+  </g>
+</g>
+
+<g transform="translate(225 44)" filter="url(#goldGlow)">
+  <text x="0" y="88" font-family="Georgia, 'Times New Roman', serif" font-size="98" font-weight="700"
+        letter-spacing="1.5" fill="url(#gold)" stroke="#6f470d" stroke-width="1.5">ASTROVIP</text>
+  <line x1="8" y1="111" x2="640" y2="111" stroke="url(#goldDark)" stroke-width="2"/>
+  <circle cx="324" cy="111" r="5.5" fill="url(#emerald)" stroke="#ffe37c" stroke-width="1.4" filter="url(#greenGlow)"/>
+  <text x="316" y="155" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="22" font-weight="700" letter-spacing="9" fill="url(#gold)">ASTROLOGIE PREMIUM</text>
+</g>
+
+<g transform="translate(655 91)" filter="url(#greenGlow)">
+  <path d="M0 -18 L4 -4 L18 0 L4 4 L0 18 L-4 4 L-18 0 L-4 -4 Z" fill="#76ff4e"/>
+  <circle r="3" fill="#f4ffcf"/>
+</g>
+</svg>
