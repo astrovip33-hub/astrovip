@@ -34,13 +34,11 @@
 }
 .av-lang-switch a:nth-child(1)::before{content:"🇷🇴";font-size:12px}
 .av-lang-switch a:nth-child(2){
-  background:
-    linear-gradient(90deg,#3c3b6e 0 38%,transparent 38%),
-    repeating-linear-gradient(180deg,#b22234 0 7.69%,#fff 7.69% 15.38%);
+  background:linear-gradient(180deg,rgba(20,20,20,.98),rgba(4,4,4,.99));
   color:#fff;
-  text-shadow:0 1px 1px rgba(0,0,0,.85)
+  text-shadow:none
 }
-.av-lang-switch a:nth-child(2)::before{content:"🇺🇸";font-size:12px}
+.av-lang-switch a:nth-child(2)::before{content:none!important}
 .av-lang-switch a:nth-child(3){
   color:#351200;
   background:linear-gradient(180deg,#aa151b 0 25%,#f1bf00 25% 75%,#aa151b 75% 100%);
