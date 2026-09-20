@@ -91,6 +91,119 @@ jobs:
           echo "::add-mask::$ACCOUNT_ID"
           echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
 
+      - name: Enforce canonical www to apex redirect
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          CF_API="https://api.cloudflare.com/client/v4"
+          AUTH_HEADER="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+
+          ZONE_RESPONSE=$(curl -fsS \
+            -H "$AUTH_HEADER" \
+            -H "Content-Type: application/json" \
+            "$CF_API/zones?name=astrovip.ro")
+
+          ZONE_ID=$(printf '%s' "$ZONE_RESPONSE" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+
+          if [ -z "$ZONE_ID" ]; then
+            echo "::error::Could not resolve Cloudflare zone ID for astrovip.ro."
+            exit 6
+          fi
+
+          cat > /tmp/astrovip-www-rule.json <<'JSON'
+          {
+            "ref": "astrovip_www_to_apex_301",
+            "expression": "http.host eq \"www.astrovip.ro\"",
+            "description": "AstroVip canonical www to apex 301",
+            "action": "redirect",
+            "action_parameters": {
+              "from_value": {
+                "target_url": {
+                  "expression": "concat(\"https://astrovip.ro\", http.request.uri.path)"
+                },
+                "status_code": 301,
+                "preserve_query_string": true
+              }
+            }
+          }
+          JSON
+
+          ENTRY_HTTP=$(curl -sS -o /tmp/astrovip-redirect-entry.json -w '%{http_code}' \
+            -H "$AUTH_HEADER" \
+            -H "Content-Type: application/json" \
+            "$CF_API/zones/$ZONE_ID/rulesets/phases/http_request_dynamic_redirect/entrypoint")
+
+          if [ "$ENTRY_HTTP" = "200" ]; then
+            RULESET_ID=$(python3 -c 'import json; d=json.load(open("/tmp/astrovip-redirect-entry.json")); print((d.get("result") or {}).get("id",""))')
+            HAS_RULE=$(python3 -c 'import json; d=json.load(open("/tmp/astrovip-redirect-entry.json")); rules=(d.get("result") or {}).get("rules") or []; print("yes" if any(r.get("ref")=="astrovip_www_to_apex_301" for r in rules) else "no")')
+
+            if [ -z "$RULESET_ID" ]; then
+              echo "::error::Dynamic redirect entrypoint exists but has no ruleset ID."
+              cat /tmp/astrovip-redirect-entry.json
+              exit 7
+            fi
+
+            if [ "$HAS_RULE" = "no" ]; then
+              curl -fsS \
+                -X POST \
+                -H "$AUTH_HEADER" \
+                -H "Content-Type: application/json" \
+                --data-binary @/tmp/astrovip-www-rule.json \
+                "$CF_API/zones/$ZONE_ID/rulesets/$RULESET_ID/rules" \
+                > /tmp/astrovip-redirect-create.json
+            else
+              echo "Canonical redirect rule already exists."
+            fi
+          elif [ "$ENTRY_HTTP" = "404" ]; then
+            python3 - <<'PY'
+          import json
+          rule=json.load(open("/tmp/astrovip-www-rule.json"))
+          payload={
+              "name":"AstroVip canonical redirects",
+              "kind":"zone",
+              "phase":"http_request_dynamic_redirect",
+              "rules":[rule],
+          }
+          json.dump(payload, open("/tmp/astrovip-redirect-ruleset.json","w"))
+          PY
+
+            curl -fsS \
+              -X POST \
+              -H "$AUTH_HEADER" \
+              -H "Content-Type: application/json" \
+              --data-binary @/tmp/astrovip-redirect-ruleset.json \
+              "$CF_API/zones/$ZONE_ID/rulesets" \
+              > /tmp/astrovip-redirect-create.json
+          else
+            echo "::error::Could not read Cloudflare dynamic redirect entrypoint (HTTP $ENTRY_HTTP)."
+            cat /tmp/astrovip-redirect-entry.json
+            exit 8
+          fi
+
+          sleep 2
+
+          CHECK_HEADERS=$(mktemp)
+          CHECK_STATUS=$(curl -sS -o /dev/null -D "$CHECK_HEADERS" -w '%{http_code}' --max-redirs 0 \
+            "https://www.astrovip.ro/numerologie/?astrovip_redirect_check=1")
+          CHECK_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$CHECK_HEADERS")
+
+          echo "Redirect check status: $CHECK_STATUS"
+          echo "Redirect check location: $CHECK_LOCATION"
+
+          if [ "$CHECK_STATUS" != "301" ]; then
+            echo "::error::www.astrovip.ro is not returning HTTP 301."
+            exit 9
+          fi
+
+          case "$CHECK_LOCATION" in
+            "https://astrovip.ro/numerologie/?astrovip_redirect_check=1") ;;
+            *)
+              echo "::error::Redirect target does not preserve the path and query string."
+              exit 10
+              ;;
+          esac
+
       - name: Deploy AstroVip directly to Cloudflare
         shell: bash
         run: |
