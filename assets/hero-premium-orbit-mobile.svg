@@ -6,21 +6,19 @@
 <radialGradient id="sat" cx="35%" cy="30%" r="72%"><stop stop-color="#fff2a3"/><stop offset=".25" stop-color="#d7a53e"/><stop offset=".55" stop-color="#6e4617"/><stop offset="1" stop-color="#120b04"/></radialGradient>
 <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff8c7"/><stop offset=".18" stop-color="#ffd96d"/><stop offset=".43" stop-color="#a06d13"/><stop offset=".66" stop-color="#ffe996"/><stop offset="1" stop-color="#6d4508"/></linearGradient>
 <radialGradient id="core"><stop stop-color="#fff"/><stop offset=".16" stop-color="#fff7aa"/><stop offset=".43" stop-color="#ffd956"/><stop offset=".66" stop-color="#7dff3f"/><stop offset="1" stop-color="#31ff90" stop-opacity="0"/></radialGradient>
-<filter id="glow"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-<filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#000" flood-opacity=".78"/></filter>
 </defs>
 <rect width="390" height="520" fill="url(#bg)"/>
 <ellipse cx="200" cy="246" rx="194" ry="190" fill="url(#neb)"/>
 <g opacity=".9" fill="#fff6cb"><circle cx="22" cy="44" r="1"/><circle cx="70" cy="24" r=".7"/><circle cx="104" cy="84" r=".8"/><circle cx="157" cy="28" r=".8"/><circle cx="345" cy="51" r=".9"/><circle cx="366" cy="160" r=".7"/><circle cx="26" cy="185" r=".7"/><circle cx="338" cy="335" r=".8"/><circle cx="61" cy="351" r=".8"/><circle cx="319" cy="420" r=".8"/></g>
 <g stroke="#d8b14a" opacity=".65"><path d="M0 116H390"/><path d="M0 356H390"/></g>
-<g filter="url(#shadow)">
+<g>
 <circle cx="-8" cy="265" r="108" fill="url(#earth)" stroke="#7bd6ff" stroke-width="1.2"/>
 <path d="M-47 201c40-28 78-24 108 8-21 8-28 20-37 38-18-7-38-15-71-15zM-22 292c28-7 48 4 63 25-20 9-38 16-68 11z" fill="#8d7a35" opacity=".75"/>
 <circle cx="335" cy="88" r="54" fill="url(#sat)"/>
 <ellipse cx="335" cy="98" rx="88" ry="13" fill="none" stroke="url(#gold)" stroke-width="2.2" transform="rotate(-10 335 98)"/>
 <circle cx="362" cy="357" r="34" fill="url(#sat)" opacity=".92"/>
 </g>
-<g transform="translate(197 245)" filter="url(#shadow)">
+<g transform="translate(197 245)">
 <circle r="146" fill="#030503" stroke="#1e1202" stroke-width="10"/>
 <circle r="139" fill="none" stroke="url(#gold)" stroke-width="7"/>
 <circle r="129" fill="none" stroke="#ffe48b" stroke-width="1.7" opacity=".95"/>
@@ -29,7 +27,7 @@
 <circle r="76" fill="#030504" stroke="#9b7425" stroke-width="4"/>
 <circle r="71" fill="none" stroke="#f5d76d" stroke-width="1.2"/>
 <g stroke="#d7b24a" stroke-width=".8" opacity=".75"><path d="M0-106V-76M53-92L38-66M92-53L66-38M106 0H76M92 53L66 38M53 92L38 66M0 106V76M-53 92L-38 66M-92 53L-66 38M-106 0H-76M-92-53L-66-38M-53-92L-38-66"/></g>
-<g font-family="Georgia,serif" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="middle" filter="url(#glow)">
+<g font-family="Georgia,serif" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="middle">
 <g transform="translate(0 -92)"><circle r="15" fill="#ef3140"/><text fill="#fff">♈</text></g>
 <g transform="translate(46 -80)"><circle r="15" fill="#f06b2e"/><text fill="#fff">♉</text></g>
 <g transform="translate(80 -46)"><circle r="15" fill="#ff9d1b"/><text fill="#fff">♊</text></g>
@@ -43,9 +41,9 @@
 <g transform="translate(-80 -46)"><circle r="15" fill="#9639d4"/><text fill="#fff">♒</text></g>
 <g transform="translate(-46 -80)"><circle r="15" fill="#e52aa7"/><text fill="#fff">♓</text></g>
 </g>
-<circle r="28" fill="url(#core)" filter="url(#glow)"/>
-<g stroke="url(#gold)" fill="none" stroke-width="1.5" filter="url(#glow)"><path d="M0-54L9-9L54 0L9 9L0 54L-9 9L-54 0L-9-9Z"/><circle r="8" fill="#fff6b0"/></g>
+<circle r="28" fill="url(#core)"/>
+<g stroke="url(#gold)" fill="none" stroke-width="1.5"><path d="M0-54L9-9L54 0L9 9L0 54L-9 9L-54 0L-9-9Z"/><circle r="8" fill="#fff6b0"/></g>
 </g>
-<g fill="#f3d370" opacity=".95" filter="url(#glow)"><path d="M196 45l3 11 11 3-11 3-3 11-3-11-11-3 11-3z"/><path d="M54 391l2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/><path d="M350 292l2 8 8 2-8 2-2 8-2-8-8-2 8-2z"/></g>
+<g fill="#f3d370" opacity=".95"><path d="M196 45l3 11 11 3-11 3-3 11-3-11-11-3 11-3z"/><path d="M54 391l2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/><path d="M350 292l2 8 8 2-8 2-2 8-2-8-8-2 8-2z"/></g>
 <rect x="5" y="5" width="380" height="510" rx="18" fill="none" stroke="url(#gold)" stroke-width="1" opacity=".28"/>
 </svg>

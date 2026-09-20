@@ -3,7 +3,6 @@
     const hamb=document.getElementById('hamb'), menu=document.getElementById('menu');
     const toastEl=document.getElementById('toast');
     const toast=(message)=>{toastEl.textContent=message;toastEl.classList.add('show');clearTimeout(window.__astrovipToastTimer);window.__astrovipToastTimer=setTimeout(()=>toastEl.classList.remove('show'),2600)};
-    const visitorCountEl=document.getElementById('visitorCountIdle');
     function trackAstroVipEvent(name,params={}){
       if(typeof window.gtag!=='function')return;
       try{window.gtag('event',name,params)}catch(error){}
@@ -37,24 +36,6 @@
         setTimeout(go,700);
       }
     },true);
-    (async()=>{
-      if(!visitorCountEl)return;
-      try{
-        const key='sb_publishable_Q_uY9n72m2bRQswqfF9esg_TFrK9qJ8';
-        const response=await fetch('https://hhzsecdtqacyroxiywpm.supabase.co/rest/v1/rpc/register_site_visit',{
-          method:'POST',
-          headers:{apikey:key,'Content-Type':'application/json'},
-          body:'{}',
-          cache:'no-store'
-        });
-        if(!response.ok)throw new Error('counter unavailable');
-        const value=Number(await response.json());
-        if(!Number.isFinite(value))throw new Error('invalid counter');
-        visitorCountEl.textContent=new Intl.NumberFormat('ro-RO').format(value);
-      }catch(error){
-        visitorCountEl.closest('.visitor-counter')?.setAttribute('hidden','');
-      }
-    })();
     const menuGroups=[...menu.querySelectorAll('.av-menu-group')];
     const closeMenuGroups=()=>menuGroups.forEach(group=>{group.classList.remove('is-open');group.querySelector('.av-menu-trigger')?.setAttribute('aria-expanded','false')});
     hamb.addEventListener('click',()=>{const open=menu.classList.toggle('open');hamb.setAttribute('aria-expanded',open);hamb.textContent=open?'✕':'☰';hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');if(!open)closeMenuGroups()});
