@@ -474,3 +474,82 @@ body:not(.guide-page) .av-lang-switch a[href="/"]::before{
   body:not(.guide-page) .av-hero-v2-visual img,
   body:not(.guide-page) .top .av-brand-logo{filter:none!important;will-change:auto!important}
 }
+
+
+/* FINAL mobile complete cards — 2026-09-20 */
+@media(max-width:430px){
+  body:not(.guide-page) .av-hero-v2{
+    padding-bottom:12px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual img{
+    height:220px!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+  }
+  body:not(.guide-page) .av-hero-v2-sidecopy{
+    bottom:13px!important;
+    font-size:8.6px!important;
+    line-height:1.24!important;
+  }
+  body:not(.guide-page) .av-hero-v2-copy{
+    width:calc(100% - 14px)!important;
+    padding-top:10px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-title{
+    font-size:34px!important;
+    line-height:.9!important;
+  }
+  body:not(.guide-page) .av-hero-v2-title span{
+    margin-top:4px!important;
+    font-size:.53em!important;
+    letter-spacing:.21em!important;
+  }
+  body:not(.guide-page) .av-hero-v2-subtitle{
+    margin-top:8px!important;
+    font-size:10.7px!important;
+    line-height:1.2!important;
+    letter-spacing:.06em!important;
+  }
+  body:not(.guide-page) .av-hero-v2-cards{
+    width:calc(100% - 14px)!important;
+    margin-top:11px!important;
+    gap:6px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card{
+    min-height:116px!important;
+    padding:10px 5px 9px!important;
+    border-radius:16px!important;
+    overflow:visible!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card::before{
+    inset:4px!important;
+    border-radius:12px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-icon{
+    width:34px!important;
+    height:34px!important;
+    margin:0 auto 5px!important;
+    font-size:18px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card h3{
+    margin:0 0 4px!important;
+    font-size:13px!important;
+    line-height:1!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card p{
+    margin:0!important;
+    font-size:9.2px!important;
+    line-height:1.22!important;
+  }
+  body:not(.guide-page) .av-hero-v2-bottom{
+    margin-top:10px!important;
+    padding-top:9px!important;
+    font-size:8px!important;
+    line-height:1.2!important;
+  }
+}
