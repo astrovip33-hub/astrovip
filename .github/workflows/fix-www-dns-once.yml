@@ -1,0 +1,140 @@
+name: Fix AstroVip www DNS and redirect once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/fix-www-dns-once.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fix-www:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+      CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Normalize Cloudflare token
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::Missing CLOUDFLARE_API_TOKEN."
+            exit 2
+          fi
+          TOKEN=$(printf '%s' "$CLOUDFLARE_API_TOKEN" | tr -d '\r\n')
+          TOKEN=$(printf '%s' "$TOKEN" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')
+          TOKEN="${TOKEN#Bearer }"
+          TOKEN="${TOKEN#bearer }"
+          TOKEN="${TOKEN#\"}"
+          TOKEN="${TOKEN%\"}"
+          echo "::add-mask::$TOKEN"
+          echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Ensure www.astrovip.ro is proxied in Cloudflare DNS
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ZONE_ID="${CLOUDFLARE_ZONE_ID:-}"
+          if [ -z "$ZONE_ID" ]; then ZONE_ID="${CF_ZONE_ID:-}"; fi
+
+          if [ -z "$ZONE_ID" ]; then
+            ZONES=$(curl -fsS \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              "https://api.cloudflare.com/client/v4/zones?name=astrovip.ro&status=active")
+            ZONE_ID=$(printf '%s' "$ZONES" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+          fi
+
+          if [ -z "$ZONE_ID" ]; then
+            echo "::error::Could not resolve Cloudflare zone ID for astrovip.ro."
+            exit 3
+          fi
+
+          echo "::add-mask::$ZONE_ID"
+
+          DNS=$(curl -fsS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?name=www.astrovip.ro")
+
+          COUNT=$(printf '%s' "$DNS" | python3 -c 'import json,sys; print(len(json.load(sys.stdin).get("result") or []))')
+
+          if [ "$COUNT" -eq 0 ]; then
+            echo "www record is missing; creating proxied CNAME to astrovip.ro."
+            RESP=$(curl -fsS -X POST \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              --data '{"type":"CNAME","name":"www","content":"astrovip.ro","ttl":1,"proxied":true}' \
+              "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records")
+          elif [ "$COUNT" -eq 1 ]; then
+            RECORD_ID=$(printf '%s' "$DNS" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("result") or [{}])[0].get("id",""))')
+            TYPE=$(printf '%s' "$DNS" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("result") or [{}])[0].get("type",""))')
+            CONTENT=$(printf '%s' "$DNS" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("result") or [{}])[0].get("content",""))')
+            PROXIED=$(printf '%s' "$DNS" | python3 -c 'import json,sys; print(str((json.load(sys.stdin).get("result") or [{}])[0].get("proxied",False)).lower())')
+            echo "Existing www record: type=$TYPE content=$CONTENT proxied=$PROXIED"
+
+            if [ "$PROXIED" = "true" ]; then
+              echo "www is already proxied."
+              RESP='{"success":true}'
+            else
+              RESP=$(curl -fsS -X PATCH \
+                -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+                -H "Content-Type: application/json" \
+                --data '{"proxied":true}' \
+                "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID")
+            fi
+          else
+            echo "::error::Multiple DNS records exist for www.astrovip.ro; refusing to guess which one to modify."
+            exit 4
+          fi
+
+          SUCCESS=$(printf '%s' "$RESP" | python3 -c 'import json,sys; print(str(json.load(sys.stdin).get("success",False)).lower())')
+          if [ "$SUCCESS" != "true" ]; then
+            echo "::error::Cloudflare DNS update did not report success."
+            printf '%s\n' "$RESP"
+            exit 5
+          fi
+
+      - name: Deploy canonical www redirect Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
+
+      - name: Verify www canonical redirect
+        shell: bash
+        run: |
+          set -euo pipefail
+          sleep 8
+
+          for SCHEME in https http
+          do
+            HDR=$(mktemp)
+            STATUS=$(curl -sS -o /dev/null -D "$HDR" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "$SCHEME://www.astrovip.ro/numerologie/?www_fix=1")
+            LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$HDR")
+            echo "$SCHEME www status: $STATUS"
+            echo "$SCHEME www location: $LOCATION"
+
+            if [ "$STATUS" != "301" ]; then
+              echo "::error::$SCHEME://www.astrovip.ro did not return 301."
+              exit 10
+            fi
+
+            if [ "$LOCATION" != "https://astrovip.ro/numerologie/?www_fix=1" ]; then
+              echo "::error::$SCHEME://www.astrovip.ro redirected to unexpected location: $LOCATION"
+              exit 11
+            fi
+          done
+
+          echo "www.astrovip.ro canonical redirect is working for HTTP and HTTPS."
