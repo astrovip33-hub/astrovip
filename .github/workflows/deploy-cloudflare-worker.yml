@@ -91,6 +91,131 @@ jobs:
           echo "::add-mask::$ACCOUNT_ID"
           echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
 
+      - name: Ensure www DNS is proxied through Cloudflare
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          CF_API="https://api.cloudflare.com/client/v4"
+          AUTH_HEADER="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+
+          ZONE_RESPONSE=$(curl -fsS \
+            -H "$AUTH_HEADER" \
+            -H "Content-Type: application/json" \
+            "$CF_API/zones?name=astrovip.ro")
+          ZONE_ID=$(printf '%s' "$ZONE_RESPONSE" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+
+          if [ -z "$ZONE_ID" ]; then
+            echo "::error::Could not resolve zone ID for astrovip.ro."
+            exit 11
+          fi
+
+          DNS_HTTP=$(curl -sS -o /tmp/astrovip-www-dns.json -w '%{http_code}' \
+            -H "$AUTH_HEADER" \
+            -H "Content-Type: application/json" \
+            "$CF_API/zones/$ZONE_ID/dns_records?name=www.astrovip.ro&per_page=100")
+
+          if [ "$DNS_HTTP" != "200" ]; then
+            echo "::error::Could not read www DNS records (HTTP $DNS_HTTP)."
+            cat /tmp/astrovip-www-dns.json
+            exit 12
+          fi
+
+          python3 - <<'PY' > /tmp/astrovip-www-records.tsv
+          import json
+          d=json.load(open("/tmp/astrovip-www-dns.json"))
+          for r in d.get("result") or []:
+              if r.get("name")=="www.astrovip.ro" and r.get("type") in {"A","AAAA","CNAME"}:
+                  print("\t".join([
+                      r.get("id",""),
+                      r.get("type",""),
+                      r.get("name",""),
+                      r.get("content",""),
+                      str(r.get("ttl",1)),
+                      "true" if r.get("proxied") else "false",
+                  ]))
+          PY
+
+          if [ ! -s /tmp/astrovip-www-records.tsv ]; then
+            echo "::error::No A, AAAA, or CNAME DNS record exists for www.astrovip.ro."
+            exit 13
+          fi
+
+          while IFS=        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy
+
+      - name: Deploy canonical www redirect Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
+
+      - name: Verify live AstroVip
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Checking canonical apex"
+          APEX_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/")
+          test "$APEX_STATUS" = "200"
+
+          echo "Checking www canonical redirect"
+          HDR=$(mktemp)
+          WWW_STATUS=$(curl -sS -o /dev/null -D "$HDR" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 \
+            "https://www.astrovip.ro/numerologie/?astrovip_redirect_check=1")
+          WWW_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$HDR")
+
+          echo "www status: $WWW_STATUS"
+          echo "www location: $WWW_LOCATION"
+
+          test "$WWW_STATUS" = "301"
+          test "$WWW_LOCATION" = "https://astrovip.ro/numerologie/?astrovip_redirect_check=1"
+
+          for URL in \
+            "https://astrovip.ro/assets/hero-vivid-desktop-v3.avif?v=20260919-fix3" \
+            "https://astrovip.ro/assets/hero-vivid-mobile-v3.avif?v=20260919-fix3"
+          do
+            echo "Checking $URL"
+            STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "$URL")
+            test "$STATUS" = "200"
+          done
+\t' read -r RECORD_ID RECORD_TYPE RECORD_NAME RECORD_CONTENT RECORD_TTL RECORD_PROXIED
+          do
+            echo "www DNS: type=$RECORD_TYPE content=$RECORD_CONTENT proxied=$RECORD_PROXIED"
+
+            if [ "$RECORD_PROXIED" != "true" ]; then
+              python3 - "$RECORD_TYPE" "$RECORD_NAME" "$RECORD_CONTENT" "$RECORD_TTL" <<'PY' > /tmp/astrovip-www-dns-update.json
+          import json,sys
+          record_type,name,content,ttl=sys.argv[1:5]
+          payload={
+              "type":record_type,
+              "name":name,
+              "content":content,
+              "ttl":int(ttl),
+              "proxied":True,
+          }
+          json.dump(payload, sys.stdout)
+          PY
+
+              UPDATE_HTTP=$(curl -sS -o /tmp/astrovip-www-dns-update-response.json -w '%{http_code}' \
+                -X PUT \
+                -H "$AUTH_HEADER" \
+                -H "Content-Type: application/json" \
+                --data-binary @/tmp/astrovip-www-dns-update.json \
+                "$CF_API/zones/$ZONE_ID/dns_records/$RECORD_ID")
+
+              if [ "$UPDATE_HTTP" != "200" ]; then
+                echo "::error::Could not proxy www DNS record $RECORD_ID (HTTP $UPDATE_HTTP)."
+                cat /tmp/astrovip-www-dns-update-response.json
+                exit 14
+              fi
+
+              echo "Enabled Cloudflare proxy for $RECORD_TYPE www.astrovip.ro."
+            fi
+          done < /tmp/astrovip-www-records.tsv
+
       - name: Deploy AstroVip directly to Cloudflare
         shell: bash
         run: |
