@@ -91,17 +91,17 @@ jobs:
           echo "::add-mask::$ACCOUNT_ID"
           echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
 
-      - name: Deploy canonical www redirect Worker
-        shell: bash
-        run: |
-          set -euo pipefail
-          npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
-
       - name: Deploy AstroVip directly to Cloudflare
         shell: bash
         run: |
           set -euo pipefail
           npx --yes wrangler@latest deploy
+
+      - name: Deploy canonical www redirect Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
 
       - name: Verify live AstroVip
         shell: bash
