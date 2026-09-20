@@ -1,37 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 508" role="img" aria-label="AstroVip premium cosmic zodiac background mobile">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 520" role="img" aria-label="AstroVip — roată zodiacală cosmică premium">
 <defs>
- <radialGradient id="bg" cx="50%" cy="30%" r="80%"><stop offset="0" stop-color="#174c35"/><stop offset=".3" stop-color="#08251a"/><stop offset=".63" stop-color="#040907"/><stop offset="1" stop-color="#010202"/></radialGradient>
- <radialGradient id="neb"><stop stop-color="#75ff9b" stop-opacity=".30"/><stop offset=".48" stop-color="#35f276" stop-opacity=".10"/><stop offset="1" stop-color="#0cff72" stop-opacity="0"/></radialGradient>
- <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff7c5"/><stop offset=".18" stop-color="#f2d36f"/><stop offset=".43" stop-color="#aa741a"/><stop offset=".63" stop-color="#ffe89a"/><stop offset="1" stop-color="#6d4308"/></linearGradient>
- <linearGradient id="gold2" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#4f2d04"/><stop offset=".18" stop-color="#e8bd52"/><stop offset=".4" stop-color="#795015"/><stop offset=".72" stop-color="#f7dc7e"/><stop offset="1" stop-color="#241303"/></linearGradient>
- <radialGradient id="planet" cx="34%" cy="27%" r="70%"><stop stop-color="#fff6bd"/><stop offset=".15" stop-color="#d8a642"/><stop offset=".4" stop-color="#4e3214"/><stop offset=".72" stop-color="#11100d"/><stop offset="1" stop-color="#020202"/></radialGradient>
- <radialGradient id="core"><stop stop-color="#fff"/><stop offset=".15" stop-color="#fff6af"/><stop offset=".42" stop-color="#dfc446"/><stop offset=".72" stop-color="#92ff37"/><stop offset="1" stop-color="#76ff2c" stop-opacity="0"/></radialGradient>
- <filter id="g"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
- <filter id="s"><feDropShadow dx="0" dy="9" stdDeviation="10" flood-color="#000" flood-opacity=".78"/></filter>
+<radialGradient id="bg" cx="50%" cy="42%" r="78%"><stop offset="0" stop-color="#0d6a43"/><stop offset=".28" stop-color="#073823"/><stop offset=".58" stop-color="#03140d"/><stop offset="1" stop-color="#010302"/></radialGradient>
+<radialGradient id="neb" cx="55%" cy="50%" r="58%"><stop offset="0" stop-color="#32ff8d" stop-opacity=".32"/><stop offset=".42" stop-color="#00bb6c" stop-opacity=".11"/><stop offset="1" stop-color="#00a95d" stop-opacity="0"/></radialGradient>
+<radialGradient id="earth" cx="35%" cy="30%" r="72%"><stop offset="0" stop-color="#9deaff"/><stop offset=".28" stop-color="#177ea5"/><stop offset=".52" stop-color="#07578a"/><stop offset=".72" stop-color="#0a2845"/><stop offset="1" stop-color="#020608"/></radialGradient>
+<radialGradient id="sat" cx="35%" cy="30%" r="72%"><stop stop-color="#fff2a3"/><stop offset=".25" stop-color="#d7a53e"/><stop offset=".55" stop-color="#6e4617"/><stop offset="1" stop-color="#120b04"/></radialGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff8c7"/><stop offset=".18" stop-color="#ffd96d"/><stop offset=".43" stop-color="#a06d13"/><stop offset=".66" stop-color="#ffe996"/><stop offset="1" stop-color="#6d4508"/></linearGradient>
+<radialGradient id="core"><stop stop-color="#fff"/><stop offset=".16" stop-color="#fff7aa"/><stop offset=".43" stop-color="#ffd956"/><stop offset=".66" stop-color="#7dff3f"/><stop offset="1" stop-color="#31ff90" stop-opacity="0"/></radialGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#000" flood-opacity=".78"/></filter>
 </defs>
-<rect width="390" height="508" fill="url(#bg)"/>
-<ellipse cx="195" cy="205" rx="168" ry="124" fill="url(#neb)"/>
-<circle cx="316" cy="52" r="61" fill="url(#planet)" opacity=".82" filter="url(#s)"/>
-<ellipse cx="316" cy="71" rx="91" ry="14" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity=".65" transform="rotate(-10 316 71)"/>
-<g fill="#fff7d1" opacity=".75"><circle cx="39" cy="63" r=".8"/><circle cx="74" cy="116" r="1"/><circle cx="126" cy="38" r=".7"/><circle cx="204" cy="73" r=".85"/><circle cx="354" cy="118" r=".9"/></g>
-<g transform="translate(195 214)" filter="url(#s)">
- <ellipse cx="0" cy="130" rx="150" ry="25" fill="#000" opacity=".72"/>
- <circle r="135" fill="#050605" stroke="#1c1102" stroke-width="13"/>
- <circle r="130" fill="none" stroke="url(#gold2)" stroke-width="11"/>
- <circle r="118" fill="#070807" stroke="url(#gold)" stroke-width="2.4"/>
- <circle r="103" fill="#090b09" stroke="#6e4a10" stroke-width="7"/>
- <circle r="98" fill="none" stroke="url(#gold)" stroke-width="1.4"/>
- <circle r="73" fill="#020403" stroke="#8b6722" stroke-width="5"/>
- <circle r="68" fill="none" stroke="#e0bd5c" stroke-width="1.2"/>
- <circle r="43" fill="#050705" stroke="url(#gold)" stroke-width="1.3"/>
- <circle r="22" fill="url(#core)" filter="url(#g)"/>
- <g stroke="#d9b14b" stroke-width=".9" opacity=".84"><path d="M0-118V-73M59-102L37-63M102-59L63-37M118 0H73M102 59L63 37M59 102L37 63M0 118V73M-59 102L-37 63M-102 59L-63 37M-118 0H-73M-102-59L-63-37M-59-102L-37-63"/></g>
- <g fill="url(#gold)" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="20.5" font-weight="700" filter="url(#g)">
-  <text x="0" y="-82">♈</text><text x="42" y="-70">♉</text><text x="71" y="-39">♊</text><text x="82" y="7">♋</text><text x="71" y="49">♌</text><text x="42" y="79">♍</text><text x="0" y="89">♎</text><text x="-42" y="79">♏</text><text x="-71" y="49">♐</text><text x="-82" y="7">♑</text><text x="-71" y="-39">♒</text><text x="-42" y="-70">♓</text>
- </g>
- <g stroke="url(#gold)" stroke-width="1.5" fill="none" filter="url(#g)"><path d="M0-49L8-8L49 0L8 8L0 49L-8 8L-49 0L-8-8Z"/><circle r="8" fill="#fff8c4"/></g>
+<rect width="390" height="520" fill="url(#bg)"/>
+<ellipse cx="200" cy="246" rx="194" ry="190" fill="url(#neb)"/>
+<g opacity=".9" fill="#fff6cb"><circle cx="22" cy="44" r="1"/><circle cx="70" cy="24" r=".7"/><circle cx="104" cy="84" r=".8"/><circle cx="157" cy="28" r=".8"/><circle cx="345" cy="51" r=".9"/><circle cx="366" cy="160" r=".7"/><circle cx="26" cy="185" r=".7"/><circle cx="338" cy="335" r=".8"/><circle cx="61" cy="351" r=".8"/><circle cx="319" cy="420" r=".8"/></g>
+<g stroke="#d8b14a" opacity=".65"><path d="M0 116H390"/><path d="M0 356H390"/></g>
+<g filter="url(#shadow)">
+<circle cx="-8" cy="265" r="108" fill="url(#earth)" stroke="#7bd6ff" stroke-width="1.2"/>
+<path d="M-47 201c40-28 78-24 108 8-21 8-28 20-37 38-18-7-38-15-71-15zM-22 292c28-7 48 4 63 25-20 9-38 16-68 11z" fill="#8d7a35" opacity=".75"/>
+<circle cx="335" cy="88" r="54" fill="url(#sat)"/>
+<ellipse cx="335" cy="98" rx="88" ry="13" fill="none" stroke="url(#gold)" stroke-width="2.2" transform="rotate(-10 335 98)"/>
+<circle cx="362" cy="357" r="34" fill="url(#sat)" opacity=".92"/>
 </g>
-<path d="M0 352 C95 337 182 358 262 345 C320 336 357 342 390 335 L390 508 L0 508 Z" fill="#020303"/>
-<g stroke="#735116" stroke-width=".7" opacity=".45"><path d="M0 402 C102 385 183 408 272 393 C326 384 360 389 390 384"/><path d="M78 352L35 508M148 349L126 508M218 346L226 508M287 341L330 508"/></g>
-<rect x="7" y="7" width="376" height="494" rx="22" fill="none" stroke="url(#gold)" stroke-width="1" opacity=".45"/>
+<g transform="translate(197 245)" filter="url(#shadow)">
+<circle r="146" fill="#030503" stroke="#1e1202" stroke-width="10"/>
+<circle r="139" fill="none" stroke="url(#gold)" stroke-width="7"/>
+<circle r="129" fill="none" stroke="#ffe48b" stroke-width="1.7" opacity=".95"/>
+<circle r="111" fill="#040705" stroke="#79500f" stroke-width="5"/>
+<circle r="106" fill="none" stroke="url(#gold)" stroke-width="1.4"/>
+<circle r="76" fill="#030504" stroke="#9b7425" stroke-width="4"/>
+<circle r="71" fill="none" stroke="#f5d76d" stroke-width="1.2"/>
+<g stroke="#d7b24a" stroke-width=".8" opacity=".75"><path d="M0-106V-76M53-92L38-66M92-53L66-38M106 0H76M92 53L66 38M53 92L38 66M0 106V76M-53 92L-38 66M-92 53L-66 38M-106 0H-76M-92-53L-66-38M-53-92L-38-66"/></g>
+<g font-family="Georgia,serif" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="middle" filter="url(#glow)">
+<g transform="translate(0 -92)"><circle r="15" fill="#ef3140"/><text fill="#fff">♈</text></g>
+<g transform="translate(46 -80)"><circle r="15" fill="#f06b2e"/><text fill="#fff">♉</text></g>
+<g transform="translate(80 -46)"><circle r="15" fill="#ff9d1b"/><text fill="#fff">♊</text></g>
+<g transform="translate(92 0)"><circle r="15" fill="#ffd41f"/><text fill="#fff">♋</text></g>
+<g transform="translate(80 46)"><circle r="15" fill="#ffd11d"/><text fill="#fff">♌</text></g>
+<g transform="translate(46 80)"><circle r="15" fill="#8bd636"/><text fill="#fff">♍</text></g>
+<g transform="translate(0 92)"><circle r="15" fill="#39d354"/><text fill="#fff">♎</text></g>
+<g transform="translate(-46 80)"><circle r="15" fill="#28bdb1"/><text fill="#fff">♏</text></g>
+<g transform="translate(-80 46)"><circle r="15" fill="#2a7eea"/><text fill="#fff">♐</text></g>
+<g transform="translate(-92 0)"><circle r="15" fill="#5a3ad1"/><text fill="#fff">♑</text></g>
+<g transform="translate(-80 -46)"><circle r="15" fill="#9639d4"/><text fill="#fff">♒</text></g>
+<g transform="translate(-46 -80)"><circle r="15" fill="#e52aa7"/><text fill="#fff">♓</text></g>
+</g>
+<circle r="28" fill="url(#core)" filter="url(#glow)"/>
+<g stroke="url(#gold)" fill="none" stroke-width="1.5" filter="url(#glow)"><path d="M0-54L9-9L54 0L9 9L0 54L-9 9L-54 0L-9-9Z"/><circle r="8" fill="#fff6b0"/></g>
+</g>
+<g fill="#f3d370" opacity=".95" filter="url(#glow)"><path d="M196 45l3 11 11 3-11 3-3 11-3-11-11-3 11-3z"/><path d="M54 391l2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/><path d="M350 292l2 8 8 2-8 2-2 8-2-8-8-2 8-2z"/></g>
+<rect x="5" y="5" width="380" height="510" rx="18" fill="none" stroke="url(#gold)" stroke-width="1" opacity=".28"/>
 </svg>
