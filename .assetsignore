@@ -15,3 +15,4 @@ assets/hero-responsive-vivid
 .deploy-trigger
 vercel.json
 atlas-10000-generation-report.json
+redirect-worker.js
