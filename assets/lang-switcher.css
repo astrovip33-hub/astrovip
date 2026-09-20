@@ -85,3 +85,22 @@
   .av-lang-switch a{min-height:28px;font-size:10px;letter-spacing:.02em}
   .av-lang-switch a::before{font-size:10px!important}
 }
+
+
+/* USA full-pill flag — approved 2026-09-20 */
+.av-lang-switch a:nth-child(2){
+  background:#fff url("/assets/flag-us.svg?v=20260920-usa-full") center/cover no-repeat!important;
+  color:transparent!important;
+  font-size:0!important;
+  text-shadow:none!important;
+}
+.av-lang-switch a:nth-child(2)::before{content:none!important}
+.av-lang-switch a:nth-child(2)::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  border-radius:inherit!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.02) 48%,rgba(0,0,0,.10))!important;
+  pointer-events:none!important;
+}
