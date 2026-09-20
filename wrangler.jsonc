@@ -1,7 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "astrovip",
-  "main": "redirect-worker.js",
   "compatibility_date": "2026-09-15",
   "workers_dev": true,
   "routes": [
@@ -10,8 +9,6 @@
   ],
   "assets": {
     "directory": ".",
-    "binding": "ASSETS",
-    "run_worker_first": true,
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none"
   }
