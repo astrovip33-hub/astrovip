@@ -97,124 +97,56 @@ jobs:
           set -euo pipefail
 
           CF_API="https://api.cloudflare.com/client/v4"
-          AUTH_HEADER="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+          AUTH="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 
-          ZONE_RESPONSE=$(curl -fsS \
-            -H "$AUTH_HEADER" \
-            -H "Content-Type: application/json" \
-            "$CF_API/zones?name=astrovip.ro")
-          ZONE_ID=$(printf '%s' "$ZONE_RESPONSE" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+          ZONE_HTTP=$(curl -sS -o /tmp/cf-zone.json -w '%{http_code}'             -H "$AUTH"             -H "Content-Type: application/json"             "$CF_API/zones?name=astrovip.ro")
 
-          if [ -z "$ZONE_ID" ]; then
-            echo "::error::Could not resolve zone ID for astrovip.ro."
+          if [ "$ZONE_HTTP" != "200" ]; then
+            echo "::error::Cloudflare zone lookup failed (HTTP $ZONE_HTTP)."
+            cat /tmp/cf-zone.json
             exit 11
           fi
 
-          DNS_HTTP=$(curl -sS -o /tmp/astrovip-www-dns.json -w '%{http_code}' \
-            -H "$AUTH_HEADER" \
-            -H "Content-Type: application/json" \
-            "$CF_API/zones/$ZONE_ID/dns_records?name=www.astrovip.ro&per_page=100")
-
-          if [ "$DNS_HTTP" != "200" ]; then
-            echo "::error::Could not read www DNS records (HTTP $DNS_HTTP)."
-            cat /tmp/astrovip-www-dns.json
+          ZONE_ID=$(python3 -c 'import json; d=json.load(open("/tmp/cf-zone.json")); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+          if [ -z "$ZONE_ID" ]; then
+            echo "::error::Could not resolve the astrovip.ro zone ID."
             exit 12
           fi
 
-          python3 - <<'PY' > /tmp/astrovip-www-records.tsv
-          import json
-          d=json.load(open("/tmp/astrovip-www-dns.json"))
-          for r in d.get("result") or []:
-              if r.get("name")=="www.astrovip.ro" and r.get("type") in {"A","AAAA","CNAME"}:
-                  print("\t".join([
-                      r.get("id",""),
-                      r.get("type",""),
-                      r.get("name",""),
-                      r.get("content",""),
-                      str(r.get("ttl",1)),
-                      "true" if r.get("proxied") else "false",
-                  ]))
-          PY
+          DNS_HTTP=$(curl -sS -o /tmp/cf-www-dns.json -w '%{http_code}'             -H "$AUTH"             -H "Content-Type: application/json"             "$CF_API/zones/$ZONE_ID/dns_records?name=www.astrovip.ro&per_page=100")
 
-          if [ ! -s /tmp/astrovip-www-records.tsv ]; then
-            echo "::error::No A, AAAA, or CNAME DNS record exists for www.astrovip.ro."
+          if [ "$DNS_HTTP" != "200" ]; then
+            echo "::error::Cloudflare DNS lookup for www.astrovip.ro failed (HTTP $DNS_HTTP)."
+            cat /tmp/cf-www-dns.json
             exit 13
           fi
 
-          while IFS=        shell: bash
-        run: |
-          set -euo pipefail
-          npx --yes wrangler@latest deploy
+          RECORD=$(python3 -c 'import json; d=json.load(open("/tmp/cf-www-dns.json")); rs=[r for r in (d.get("result") or []) if r.get("name")=="www.astrovip.ro" and r.get("type") in ("A","AAAA","CNAME")]; r=rs[0] if rs else {}; print("|".join([r.get("id",""),r.get("type",""),r.get("name",""),r.get("content",""),str(r.get("ttl",1)),"true" if r.get("proxied") else "false"]))')
+          IFS='|' read -r RECORD_ID RECORD_TYPE RECORD_NAME RECORD_CONTENT RECORD_TTL RECORD_PROXIED <<< "$RECORD"
 
-      - name: Deploy canonical www redirect Worker
-        shell: bash
-        run: |
-          set -euo pipefail
-          npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
+          if [ -z "$RECORD_ID" ]; then
+            echo "::error::No A, AAAA or CNAME record was found for www.astrovip.ro."
+            exit 14
+          fi
 
-      - name: Verify live AstroVip
-        shell: bash
-        run: |
-          set -euo pipefail
+          echo "www DNS type=$RECORD_TYPE content=$RECORD_CONTENT proxied=$RECORD_PROXIED"
 
-          echo "Checking canonical apex"
-          APEX_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/")
-          test "$APEX_STATUS" = "200"
+          if [ "$RECORD_PROXIED" != "true" ]; then
+            python3 -c 'import json,sys; print(json.dumps({"type":sys.argv[1],"name":sys.argv[2],"content":sys.argv[3],"ttl":int(sys.argv[4]),"proxied":True}))'               "$RECORD_TYPE" "$RECORD_NAME" "$RECORD_CONTENT" "$RECORD_TTL" > /tmp/cf-www-update.json
 
-          echo "Checking www canonical redirect"
-          HDR=$(mktemp)
-          WWW_STATUS=$(curl -sS -o /dev/null -D "$HDR" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 \
-            "https://www.astrovip.ro/numerologie/?astrovip_redirect_check=1")
-          WWW_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$HDR")
+            UPDATE_HTTP=$(curl -sS -o /tmp/cf-www-update-response.json -w '%{http_code}'               -X PUT               -H "$AUTH"               -H "Content-Type: application/json"               --data-binary @/tmp/cf-www-update.json               "$CF_API/zones/$ZONE_ID/dns_records/$RECORD_ID")
 
-          echo "www status: $WWW_STATUS"
-          echo "www location: $WWW_LOCATION"
-
-          test "$WWW_STATUS" = "301"
-          test "$WWW_LOCATION" = "https://astrovip.ro/numerologie/?astrovip_redirect_check=1"
-
-          for URL in \
-            "https://astrovip.ro/assets/hero-vivid-desktop-v3.avif?v=20260919-fix3" \
-            "https://astrovip.ro/assets/hero-vivid-mobile-v3.avif?v=20260919-fix3"
-          do
-            echo "Checking $URL"
-            STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "$URL")
-            test "$STATUS" = "200"
-          done
-\t' read -r RECORD_ID RECORD_TYPE RECORD_NAME RECORD_CONTENT RECORD_TTL RECORD_PROXIED
-          do
-            echo "www DNS: type=$RECORD_TYPE content=$RECORD_CONTENT proxied=$RECORD_PROXIED"
-
-            if [ "$RECORD_PROXIED" != "true" ]; then
-              python3 - "$RECORD_TYPE" "$RECORD_NAME" "$RECORD_CONTENT" "$RECORD_TTL" <<'PY' > /tmp/astrovip-www-dns-update.json
-          import json,sys
-          record_type,name,content,ttl=sys.argv[1:5]
-          payload={
-              "type":record_type,
-              "name":name,
-              "content":content,
-              "ttl":int(ttl),
-              "proxied":True,
-          }
-          json.dump(payload, sys.stdout)
-          PY
-
-              UPDATE_HTTP=$(curl -sS -o /tmp/astrovip-www-dns-update-response.json -w '%{http_code}' \
-                -X PUT \
-                -H "$AUTH_HEADER" \
-                -H "Content-Type: application/json" \
-                --data-binary @/tmp/astrovip-www-dns-update.json \
-                "$CF_API/zones/$ZONE_ID/dns_records/$RECORD_ID")
-
-              if [ "$UPDATE_HTTP" != "200" ]; then
-                echo "::error::Could not proxy www DNS record $RECORD_ID (HTTP $UPDATE_HTTP)."
-                cat /tmp/astrovip-www-dns-update-response.json
-                exit 14
-              fi
-
-              echo "Enabled Cloudflare proxy for $RECORD_TYPE www.astrovip.ro."
+            if [ "$UPDATE_HTTP" != "200" ]; then
+              echo "::error::Could not enable Cloudflare proxy for www.astrovip.ro (HTTP $UPDATE_HTTP)."
+              cat /tmp/cf-www-update-response.json
+              exit 15
             fi
-          done < /tmp/astrovip-www-records.tsv
+
+            echo "Cloudflare proxy enabled for www.astrovip.ro."
+            sleep 3
+          else
+            echo "www.astrovip.ro is already proxied through Cloudflare."
+          fi
 
       - name: Deploy AstroVip directly to Cloudflare
         shell: bash
@@ -235,25 +167,34 @@ jobs:
 
           echo "Checking canonical apex"
           APEX_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/")
-          test "$APEX_STATUS" = "200"
+          if [ "$APEX_STATUS" != "200" ]; then
+            echo "::error::astrovip.ro returned HTTP $APEX_STATUS instead of 200."
+            exit 20
+          fi
 
           echo "Checking www canonical redirect"
           HDR=$(mktemp)
-          WWW_STATUS=$(curl -sS -o /dev/null -D "$HDR" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 \
-            "https://www.astrovip.ro/numerologie/?astrovip_redirect_check=1")
+          WWW_STATUS=$(curl -sS -o /dev/null -D "$HDR" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4             "https://www.astrovip.ro/numerologie/?astrovip_redirect_check=1")
           WWW_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$HDR")
 
           echo "www status: $WWW_STATUS"
           echo "www location: $WWW_LOCATION"
 
-          test "$WWW_STATUS" = "301"
-          test "$WWW_LOCATION" = "https://astrovip.ro/numerologie/?astrovip_redirect_check=1"
+          if [ "$WWW_STATUS" != "301" ]; then
+            echo "::error::www.astrovip.ro returned HTTP $WWW_STATUS instead of 301."
+            exit 21
+          fi
 
-          for URL in \
-            "https://astrovip.ro/assets/hero-vivid-desktop-v3.avif?v=20260919-fix3" \
-            "https://astrovip.ro/assets/hero-vivid-mobile-v3.avif?v=20260919-fix3"
+          if [ "$WWW_LOCATION" != "https://astrovip.ro/numerologie/?astrovip_redirect_check=1" ]; then
+            echo "::error::Redirect target is incorrect or did not preserve path/query."
+            exit 22
+          fi
+
+          for URL in             "https://astrovip.ro/assets/hero-vivid-desktop-v3.avif?v=20260919-fix3"             "https://astrovip.ro/assets/hero-vivid-mobile-v3.avif?v=20260919-fix3"
           do
-            echo "Checking $URL"
             STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "$URL")
-            test "$STATUS" = "200"
+            if [ "$STATUS" != "200" ]; then
+              echo "::error::$URL returned HTTP $STATUS."
+              exit 23
+            fi
           done
