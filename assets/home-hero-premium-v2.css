@@ -215,3 +215,51 @@ body:not(.guide-page) .av-hero-v2-bottom{
   body:not(.guide-page) .av-hero-v2-card p{font-size:10px}
   body:not(.guide-page) .av-hero-v2-bottom{font-size:9px;letter-spacing:.085em}
 }
+
+/* Approved Variant 1 — 2026-09-20 */
+body:not(.guide-page) .av-hero-v2-actions{display:none!important}
+body:not(.guide-page) .av-hero-v2-card{
+  background:radial-gradient(circle at 50% 0%,rgba(245,211,112,.12),transparent 44%),linear-gradient(180deg,#0b0d0a 0%,#020302 100%)!important;
+  border-color:rgba(239,203,89,.72)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 22px rgba(214,176,54,.06),0 14px 30px rgba(0,0,0,.32)!important
+}
+body:not(.guide-page) .av-hero-v2-title{
+  background:linear-gradient(180deg,#fff9d8 0%,#f0d278 38%,#c38b22 72%,#fff0a4 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  text-shadow:0 5px 24px rgba(0,0,0,.8),0 0 18px rgba(231,194,76,.15)!important
+}
+body:not(.guide-page) .av-hero-v2-bottom{color:#efd66f!important}
+body:not(.guide-page) .av-lang-switch a::before{font-size:1.15em;line-height:1;margin-right:4px}
+body:not(.guide-page) .av-lang-switch a[href="/"]::before{content:"🇷🇴"}
+body:not(.guide-page) .av-lang-switch a[href="/en/"]::before{content:"🇬🇧"}
+body:not(.guide-page) .av-lang-switch a[href="/es/"]::before{content:"🇪🇸"}
+body:not(.guide-page) .av-lang-switch a[href="/zh/"]::before{content:"🇨🇳"}
+
+@media(max-width:820px){
+  body:not(.guide-page) .av-hero-v2-visual img{
+    height:250px!important;object-fit:cover!important;object-position:center center!important;
+    filter:saturate(1.13) contrast(1.06) brightness(1.01)!important
+  }
+  body:not(.guide-page) .av-hero-v2-sidecopy{
+    display:block!important;bottom:17px!important;left:13px!important;max-width:100px!important;
+    color:#f2d570!important;font-size:9px!important;line-height:1.32!important;letter-spacing:.035em!important
+  }
+  body:not(.guide-page) .av-hero-v2-sidecopy.right{left:auto!important;right:13px!important;max-width:88px!important}
+  body:not(.guide-page) .av-hero-v2-copy{padding-top:15px!important}
+  body:not(.guide-page) .av-hero-v2-title{font-size:clamp(36px,10.8vw,45px)!important;line-height:.9!important}
+  body:not(.guide-page) .av-hero-v2-title span{font-size:.55em!important;letter-spacing:.24em!important;margin-top:8px!important}
+  body:not(.guide-page) .av-hero-v2-subtitle{font-family:Georgia,"Times New Roman",serif!important;font-size:13px!important;letter-spacing:.075em!important;margin-top:13px!important}
+  body:not(.guide-page) .av-hero-v2-cards{margin-top:17px!important;gap:7px!important}
+  body:not(.guide-page) .av-hero-v2-card{min-height:137px!important;padding:15px 7px 13px!important}
+  body:not(.guide-page) .av-hero-v2-icon{width:42px!important;height:42px!important;font-size:22px!important;color:#ffe58a!important;border-color:rgba(239,203,89,.42)!important}
+  body:not(.guide-page) .av-hero-v2-card h3{color:#f2d374!important;font-size:15px!important}
+  body:not(.guide-page) .av-hero-v2-card p{font-size:10.5px!important;color:#f6f2e7!important}
+  body:not(.guide-page) .av-hero-v2-bottom{margin-top:16px!important;padding-top:13px!important;font-size:9.5px!important;letter-spacing:.14em!important}
+}
+@media(max-width:390px){
+  body:not(.guide-page) .av-hero-v2-visual img{height:248px!important}
+  body:not(.guide-page) .av-hero-v2-sidecopy{display:block!important}
+  body:not(.guide-page) .av-hero-v2-title{font-size:38px!important}
+  body:not(.guide-page) .av-hero-v2-subtitle{font-size:11.5px!important}
+  body:not(.guide-page) .av-lang-switch a{font-family:Georgia,"Times New Roman",serif!important;font-weight:800!important}
+}
