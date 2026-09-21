@@ -120,3 +120,32 @@
     line-height:1.16!important;
   }
 }
+
+
+/* Narrower centered Hero cards — 2026-09-21 */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    width:min(92vw,350px)!important;
+    max-width:350px!important;
+    gap:4px!important;
+    margin:10px auto 0!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+    min-height:90px!important;
+    padding:7px 3px 8px!important;
+  }
+}
+@media (max-width:390px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    width:min(90vw,335px)!important;
+    max-width:335px!important;
+    gap:3px!important;
+  }
+}
+@media (max-width:360px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    width:min(89vw,315px)!important;
+    max-width:315px!important;
+    gap:3px!important;
+  }
+}
