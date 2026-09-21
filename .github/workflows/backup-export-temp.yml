@@ -1,0 +1,34 @@
+name: AstroVip Temporary Backup Export
+
+on:
+  push:
+    branches:
+      - backup-20260921-2110
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact live source commit
+        uses: actions/checkout@v4
+        with:
+          ref: 3fc09adbb86f0f42a1194ba7c38ded30f1388928
+          path: site
+
+      - name: Add backup metadata
+        shell: bash
+        run: |
+          printf '%s\n' '3fc09adbb86f0f42a1194ba7c38ded30f1388928' > site/BACKUP_COMMIT.txt
+          printf '%s\n' '2026-09-21T21:10:00+03:00' > site/BACKUP_CREATED_AT.txt
+          printf '%s\n' 'Source: astrovip33-hub/astrovip main' > site/BACKUP_SOURCE.txt
+
+      - name: Upload exact site snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: astrovip-backup-2026-09-21-2110
+          path: site/
+          include-hidden-files: true
+          compression-level: 6
+          if-no-files-found: error
