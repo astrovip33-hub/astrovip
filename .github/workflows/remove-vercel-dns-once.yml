@@ -39,15 +39,13 @@ jobs:
 
           RECORDS=$(curl -fsS             -H "Authorization: Bearer $TOKEN"             -H "Content-Type: application/json"             "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?per_page=500")
 
-          python3 - <<'PY' > /tmp/vercel-records.tsv
-          import json, os
-          d=json.loads(os.environ["RECORDS"])
-          for r in d.get("result", []):
-              name=(r.get("name") or "").lower()
-              content=(r.get("content") or "").lower()
-              if "vercel" in name or "vercel" in content:
-                  print("\t".join([r.get("id",""),r.get("type",""),r.get("name",""),r.get("content","")]))
-          PY
+          printf '%s' "$RECORDS" | python3 -c 'import json,sys
+d=json.load(sys.stdin)
+for r in d.get("result", []):
+    name=(r.get("name") or "").lower()
+    content=(r.get("content") or "").lower()
+    if "vercel" in name or "vercel" in content:
+        print("\t".join([r.get("id",""),r.get("type",""),r.get("name",""),r.get("content","")]))' > /tmp/vercel-records.tsv
 
           if [ ! -s /tmp/vercel-records.tsv ]; then
             echo "VERCEL_DNS_FOUND=0"
@@ -68,5 +66,3 @@ jobs:
           done < /tmp/vercel-records.tsv
 
           echo "VERCEL_DNS_REMOVED=$COUNT"
-        env:
-          RECORDS: ${{ steps.none.outputs.records || '' }}
