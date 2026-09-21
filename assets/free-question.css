@@ -31,93 +31,56 @@
 @media(max-width:560px){.freeq-hero{padding-top:48px}.freeq-chat{padding:16px;min-height:470px}.freeq-msg{max-width:94%}.freeq-send-grid{grid-template-columns:1fr}.freeq-home{padding:50px 0}.freeq-home-card{padding:23px;border-radius:20px}.freeq-float{right:12px;bottom:72px;font-size:.84rem;padding:10px 13px}.freeq-top-inner{min-height:62px}.freeq-side{padding:20px}}
 
 
-/* AstroVip — MINI CONSULTAȚIE GRATUITĂ premium card, 2026-09-21 */
+/* AstroVip — MINI CONSULTAȚIE GRATUITĂ refined premium card, 2026-09-21 */
+@keyframes avFreeqNeonPulse{
+  0%,100%{
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.16),
+      0 0 8px rgba(57,255,20,.28),
+      0 0 16px rgba(57,255,20,.16);
+  }
+  50%{
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.20),
+      0 0 11px rgba(57,255,20,.45),
+      0 0 22px rgba(57,255,20,.24);
+  }
+}
 body:not(.guide-page) .freeq-home .kicker{
   display:inline-flex!important;
   align-items:center!important;
   justify-content:center!important;
-  width:fit-content!important;
+  width:auto!important;
   max-width:100%!important;
   margin:0 0 10px!important;
-  padding:10px 16px!important;
-  border:1px solid rgba(244,217,140,.72)!important;
-  border-radius:14px!important;
+  padding:7px 12px!important;
+  border:1px solid rgba(125,255,99,.68)!important;
+  border-radius:11px!important;
   background:
-    linear-gradient(180deg,rgba(255,247,201,.10),rgba(216,173,85,.02) 42%),
-    linear-gradient(145deg,#17130b 0%,#080704 58%,#030303 100%)!important;
-  color:#f7dfa0!important;
-  font-size:12px!important;
-  line-height:1.15!important;
-  font-weight:950!important;
-  letter-spacing:.12em!important;
+    linear-gradient(180deg,rgba(218,255,208,.14),rgba(57,255,20,.04) 48%),
+    linear-gradient(145deg,#167d11 0%,#0c5f09 56%,#063d05 100%)!important;
+  color:#fff3bd!important;
+  -webkit-text-fill-color:#fff3bd!important;
+  font-size:11.5px!important;
+  line-height:1.1!important;
+  font-weight:900!important;
+  letter-spacing:.075em!important;
   text-transform:uppercase!important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.16),
-    0 10px 28px rgba(0,0,0,.38),
-    0 0 16px rgba(216,173,85,.12)!important;
-  text-shadow:0 0 10px rgba(244,217,140,.16)!important;
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.65),
+    0 0 6px rgba(255,230,150,.20)!important;
+  animation:avFreeqNeonPulse 1.7s ease-in-out infinite!important;
+  filter:none!important;
 }
 @media(max-width:560px){
   body:not(.guide-page) .freeq-home .kicker{
-    padding:9px 12px!important;
-    border-radius:12px!important;
-    font-size:10px!important;
-    letter-spacing:.085em!important;
+    padding:6px 10px!important;
+    border-radius:10px!important;
+    font-size:10.5px!important;
+    line-height:1.1!important;
+    letter-spacing:.055em!important;
   }
-}
-
-
-/* AstroVip — neon pulse for MINI CONSULTAȚIE GRATUITĂ, 2026-09-21 */
-@keyframes avFreeqNeonPulse{
-  0%,100%{
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.22),
-      0 0 10px rgba(57,255,20,.58),
-      0 0 22px rgba(57,255,20,.34);
-    filter:brightness(1);
-  }
-  50%{
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.30),
-      0 0 18px rgba(57,255,20,.95),
-      0 0 38px rgba(57,255,20,.62);
-    filter:brightness(1.12);
-  }
-}
-body:not(.guide-page) .freeq-home .kicker{
-  background:
-    linear-gradient(180deg,rgba(225,255,216,.20),rgba(57,255,20,.08) 42%),
-    linear-gradient(145deg,#39ff14 0%,#18c800 55%,#087600 100%)!important;
-  border-color:#7dff63!important;
-  color:#041404!important;
-  text-shadow:0 1px 0 rgba(255,255,255,.42)!important;
-  animation:avFreeqNeonPulse 1.35s ease-in-out infinite!important;
 }
 @media (prefers-reduced-motion:reduce){
   body:not(.guide-page) .freeq-home .kicker{animation:none!important}
-}
-
-
-/* AstroVip — larger glossy neon-yellow text for free consultation card, 2026-09-21 */
-body:not(.guide-page) .freeq-home .kicker{
-  font-size:15px!important;
-  line-height:1.05!important;
-  font-weight:1000!important;
-  letter-spacing:.095em!important;
-  color:#fff600!important;
-  -webkit-text-fill-color:#fff600!important;
-  text-shadow:
-    0 1px 0 rgba(255,255,255,.95),
-    0 2px 0 rgba(160,120,0,.75),
-    0 0 6px rgba(255,246,0,.95),
-    0 0 14px rgba(255,230,0,.88),
-    0 0 24px rgba(255,210,0,.58)!important;
-  filter:saturate(1.18) brightness(1.08)!important;
-}
-@media(max-width:560px){
-  body:not(.guide-page) .freeq-home .kicker{
-    font-size:13px!important;
-    line-height:1.08!important;
-    letter-spacing:.075em!important;
-  }
 }
