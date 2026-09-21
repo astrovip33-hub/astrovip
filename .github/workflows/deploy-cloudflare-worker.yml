@@ -129,7 +129,7 @@ jobs:
             echo "::warning::www redirect Worker is deployed, but www traffic is not reaching it. Cloudflare DNS for www must be Proxied (orange cloud)."
           fi
 
-          for URL in "https://astrovip.ro/assets/hero-vivid-desktop-v3.avif?v=20260919-fix3" "https://astrovip.ro/assets/hero-vivid-mobile-v3.avif?v=20260919-fix3"
+          for URL in "https://astrovip.ro/assets/hero-premium-orbit-desktop.svg?v=20260920-speed2" "https://astrovip.ro/assets/hero-premium-orbit-mobile.svg?v=20260920-wheel-full2"
           do
             STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "$URL")
             if [ "$STATUS" != "200" ]; then
