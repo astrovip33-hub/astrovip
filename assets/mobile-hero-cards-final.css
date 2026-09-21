@@ -1,0 +1,122 @@
+/* AstroVip — final mobile Hero cards fit
+   Goal: all three cards remain fully visible in one row on mobile. */
+
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    align-items:stretch!important;
+    width:calc(100% - 14px)!important;
+    max-width:420px!important;
+    margin:10px auto 0!important;
+    padding:0!important;
+    gap:4px!important;
+    box-sizing:border-box!important;
+    overflow:visible!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:94px!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:8px 4px 9px!important;
+    box-sizing:border-box!important;
+    border-radius:13px!important;
+    overflow:hidden!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card::before{
+    inset:3px!important;
+    border-radius:10px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-icon{
+    display:none!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+    width:100%!important;
+    max-width:100%!important;
+    margin:0 0 4px!important;
+    padding:0!important;
+    font-size:11px!important;
+    line-height:1.05!important;
+    letter-spacing:0!important;
+    text-align:center!important;
+    white-space:normal!important;
+    overflow:visible!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:0 1px!important;
+    font-size:8.2px!important;
+    line-height:1.2!important;
+    letter-spacing:0!important;
+    text-align:center!important;
+    white-space:normal!important;
+    overflow:visible!important;
+    overflow-wrap:break-word!important;
+    word-break:normal!important;
+    hyphens:auto!important;
+  }
+}
+
+@media (max-width:390px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    width:calc(100% - 10px)!important;
+    gap:3px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+    min-height:90px!important;
+    padding:7px 3px 8px!important;
+    border-radius:12px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+    font-size:10.2px!important;
+    margin-bottom:3px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+    font-size:7.6px!important;
+    line-height:1.18!important;
+  }
+}
+
+@media (max-width:340px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    width:calc(100% - 8px)!important;
+    gap:2px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+    min-height:88px!important;
+    padding:6px 2px 7px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+    font-size:9.5px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+    font-size:7px!important;
+    line-height:1.16!important;
+  }
+}
