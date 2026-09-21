@@ -23,14 +23,18 @@ const panel=document.createElement("section");panel.className="avchat-panel";pan
 document.body.append(launcher,panel);
 const desktopChatMq=window.matchMedia("(min-width:981px)");
 function placeLauncher(){
-  if(desktopChatMq.matches){
-    const host=document.querySelector(".av-langbar .wrap");
-    if(host){
-      if(launcher.parentNode!==host||host.lastElementChild!==launcher)host.appendChild(launcher);
-      return;
-    }
-  }
   if(launcher.parentNode!==document.body)document.body.appendChild(launcher);
+}
+function alignLauncher(){
+  if(!desktopChatMq.matches){
+    launcher.style.removeProperty("top");
+    launcher.style.removeProperty("right");
+    return;
+  }
+  const header=document.querySelector(".top");
+  const bottom=header?header.getBoundingClientRect().bottom:110;
+  launcher.style.top=Math.round(bottom+12)+"px";
+  launcher.style.right="18px";
 }
 function alignPanel(){
   if(!desktopChatMq.matches){
@@ -40,7 +44,7 @@ function alignPanel(){
   }
   const r=launcher.getBoundingClientRect();
   panel.style.right=Math.max(12,window.innerWidth-r.right)+"px";
-  panel.style.top=Math.round(r.bottom+8)+"px";
+  panel.style.top=Math.round(r.bottom+10)+"px";
 }
 const $=s=>panel.querySelector(s),body=$(".avchat-body"),messages=$(".avchat-messages"),empty=$(".avchat-empty"),input=$(".avchat-input"),send=$(".avchat-send"),status=$(".avchat-status"),langSel=$(".avchat-lang");
 langSel.value=state.lang;
@@ -50,15 +54,17 @@ function showMsg(m){if(messages.querySelector('[data-id="'+m.id+'"]'))return;con
 async function ensureThread(){if(state.thread)return state.thread;setStatus(currentCopy().connecting);const r=await post({action:"create_thread",session_token:state.session,preferred_lang:state.lang,page_url:location.href});state.thread=r.thread.id;persist();setStatus(currentCopy().online);return state.thread}
 async function poll(){if(!state.thread||state.busy)return;try{const r=await post({action:"poll_visitor",thread_id:state.thread,session_token:state.session,after_id:state.loaded?state.lastId:0});(r.messages||[]).forEach(showMsg);state.loaded=true;setStatus(currentCopy().online);body.scrollTop=body.scrollHeight}catch(e){setStatus(currentCopy().error,true)}}
 async function sendMsg(){const text=input.value.trim();if(!text||state.busy)return;state.busy=true;send.disabled=true;try{await ensureThread();const r=await post({action:"send_visitor",thread_id:state.thread,session_token:state.session,text,source_lang:state.lang});input.value="";showMsg(r.message);setStatus(currentCopy().online);body.scrollTop=body.scrollHeight}catch(e){setStatus(currentCopy().error,true)}finally{state.busy=false;send.disabled=false;input.focus()}}
-launcher.onclick=async()=>{panel.classList.toggle("is-open");if(panel.classList.contains("is-open")){paintCopy();alignPanel();try{await ensureThread();await poll()}catch(e){setStatus(currentCopy().error,true)}setTimeout(()=>input.focus(),80)}};
+launcher.onclick=async()=>{panel.classList.toggle("is-open");if(panel.classList.contains("is-open")){paintCopy();alignLauncher();alignPanel();try{await ensureThread();await poll()}catch(e){setStatus(currentCopy().error,true)}setTimeout(()=>input.focus(),80)}};
 $(".avchat-close").onclick=()=>panel.classList.remove("is-open");
 send.onclick=sendMsg;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg()}});
 langSel.onchange=async()=>{state.lang=langSel.value;persist();paintCopy();if(state.thread){try{const oldThread=state.thread;state.thread="";state.lastId=0;state.loaded=false;messages.innerHTML="";empty.style.display="block";await ensureThread();if(oldThread!==state.thread){}await poll()}catch(e){setStatus(currentCopy().error,true)}}};
 paintCopy();
 placeLauncher();
-const onChatViewportChange=()=>{placeLauncher();paintCopy();alignPanel()};
+alignLauncher();
+const onChatViewportChange=()=>{placeLauncher();alignLauncher();paintCopy();alignPanel()};
 desktopChatMq.addEventListener?.("change",onChatViewportChange);
-window.addEventListener("resize",()=>{if(panel.classList.contains("is-open"))alignPanel()},{passive:true});
+window.addEventListener("resize",()=>{alignLauncher();if(panel.classList.contains("is-open"))alignPanel()},{passive:true});
+window.addEventListener("scroll",()=>{if(desktopChatMq.matches){alignLauncher();if(panel.classList.contains("is-open"))alignPanel()}},{passive:true});
 setInterval(()=>{if(state.thread)poll()},panel.classList.contains("is-open")?4000:12000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&state.thread)poll()});
 })();
