@@ -150,8 +150,8 @@ jobs:
           echo "Legacy professional cards: $LEGACY_COUNT"
           echo "Release header: $RELEASE_HEADER"
 
-          if [ "$IDENTITY_COUNT" != "1" ]; then
-            echo "::error::Live homepage does not contain exactly one professional identity card."
+          if [ "$IDENTITY_COUNT" != "0" ]; then
+            echo "::error::Professional identity card is still present on the live homepage."
             exit 24
           fi
 
