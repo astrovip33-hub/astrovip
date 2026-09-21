@@ -23,28 +23,32 @@ const panel=document.createElement("section");panel.className="avchat-panel";pan
 document.body.append(launcher,panel);
 const desktopChatMq=window.matchMedia("(min-width:981px)");
 function placeLauncher(){
-  if(launcher.parentNode!==document.body)document.body.appendChild(launcher);
+  const desktopHost=document.querySelector(".av-langbar .wrap");
+  const useHeaderSlot=desktopChatMq.matches&&desktopHost;
+  launcher.classList.toggle("avchat-header-slot",!!useHeaderSlot);
+  if(useHeaderSlot){
+    if(launcher.parentNode!==desktopHost)desktopHost.appendChild(launcher);
+  }else if(launcher.parentNode!==document.body){
+    document.body.appendChild(launcher);
+  }
 }
 function alignLauncher(){
-  if(!desktopChatMq.matches){
-    launcher.style.removeProperty("top");
-    launcher.style.removeProperty("right");
-    return;
-  }
-  const header=document.querySelector(".top");
-  const bottom=header?header.getBoundingClientRect().bottom:110;
-  launcher.style.top=Math.round(bottom+12)+"px";
-  launcher.style.right="18px";
+  launcher.style.removeProperty("top");
+  launcher.style.removeProperty("right");
+  launcher.style.removeProperty("bottom");
+  launcher.style.removeProperty("left");
 }
 function alignPanel(){
   if(!desktopChatMq.matches){
     panel.style.removeProperty("right");
     panel.style.removeProperty("top");
+    panel.style.removeProperty("bottom");
     return;
   }
   const r=launcher.getBoundingClientRect();
   panel.style.right=Math.max(12,window.innerWidth-r.right)+"px";
-  panel.style.top=Math.round(r.bottom+10)+"px";
+  panel.style.top=Math.round(r.bottom+8)+"px";
+  panel.style.removeProperty("bottom");
 }
 const $=s=>panel.querySelector(s),body=$(".avchat-body"),messages=$(".avchat-messages"),empty=$(".avchat-empty"),input=$(".avchat-input"),send=$(".avchat-send"),status=$(".avchat-status"),langSel=$(".avchat-lang");
 langSel.value=state.lang;
