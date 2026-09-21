@@ -120,3 +120,72 @@
     font-size:8px!important;
   }
 }
+
+
+/* AstroVip chat — larger green continuous pulse, 2026-09-21 */
+@keyframes avChatGreenPulse{
+  0%,100%{transform:scale(1);opacity:.88}
+  50%{transform:scale(1.10);opacity:.18}
+}
+@media (max-width:820px){
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot{
+    position:relative!important;
+    min-width:184px!important;
+    max-width:220px!important;
+    min-height:42px!important;
+    height:42px!important;
+    padding:7px 18px!important;
+    gap:8px!important;
+    border:2px solid #39ff14!important;
+    background:
+      linear-gradient(180deg,rgba(214,255,199,.20),rgba(57,255,20,.04) 42%),
+      linear-gradient(180deg,#123d18 0%,#08741f 48%,#034411 100%)!important;
+    box-shadow:
+      0 8px 22px rgba(0,0,0,.42),
+      0 0 12px rgba(57,255,20,.55),
+      0 0 26px rgba(57,255,20,.26),
+      inset 0 1px 0 rgba(255,255,255,.26)!important;
+    color:#f7fff4!important;
+    isolation:isolate!important;
+  }
+
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot::after{
+    content:""!important;
+    position:absolute!important;
+    inset:-5px!important;
+    z-index:-1!important;
+    border:2px solid rgba(57,255,20,.78)!important;
+    border-radius:999px!important;
+    box-shadow:0 0 18px rgba(57,255,20,.58)!important;
+    pointer-events:none!important;
+    animation:avChatGreenPulse 1.45s ease-in-out infinite!important;
+  }
+
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot .avchat-launcher-dot{
+    width:10px!important;
+    height:10px!important;
+    background:#8cff72!important;
+    box-shadow:0 0 10px rgba(57,255,20,1),0 0 18px rgba(57,255,20,.68)!important;
+  }
+
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    font-size:14px!important;
+    line-height:1!important;
+    font-weight:950!important;
+    letter-spacing:.025em!important;
+    color:#ffffff!important;
+    text-shadow:0 1px 0 rgba(0,0,0,.55),0 0 8px rgba(220,255,210,.34)!important;
+  }
+}
+
+@media (max-width:380px){
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot{
+    min-width:174px!important;
+    min-height:40px!important;
+    height:40px!important;
+    padding:6px 15px!important;
+  }
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    font-size:13px!important;
+  }
+}
