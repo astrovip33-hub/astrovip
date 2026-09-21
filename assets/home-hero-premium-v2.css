@@ -828,3 +828,37 @@ body:not(.guide-page) .av-hero-v2-card{
 body:not(.guide-page) .av-hero-v2-card::before{
   border-color:rgba(57,255,20,.175)!important;
 }
+
+
+/* FINAL HERO TITLE CENTERING — 2026-09-21 */
+body:not(.guide-page) .av-hero-v2-copy{
+  width:min(1120px,92%)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+body:not(.guide-page) .av-hero-v2-title,
+body:not(.guide-page) .av-hero-v2-title span,
+body:not(.guide-page) .av-hero-v2-subtitle{
+  width:100%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  text-align:center!important;
+}
+@media(max-width:820px){
+  body:not(.guide-page) .av-hero-v2-copy{
+    width:calc(100% - 20px)!important;
+  }
+  body:not(.guide-page) .av-hero-v2-title,
+  body:not(.guide-page) .av-hero-v2-title span,
+  body:not(.guide-page) .av-hero-v2-subtitle{
+    transform:none!important;
+    left:auto!important;
+    right:auto!important;
+    text-align:center!important;
+  }
+}
