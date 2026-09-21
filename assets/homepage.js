@@ -124,13 +124,10 @@
 })();
 
 
-/* AstroVip professional-card de-duplication 2026-09-21 */
+/* AstroVip professional-card de-duplication 2026-09-21 — global */
 (function(){
   function dedupeProfessionalCards(){
-    var shell=document.querySelector('.av-credentials-shell');
-    if(!shell) return;
-    var cards=Array.from(shell.children).filter(function(el){
-      if(!el.matches || !el.matches('.av-credentials-card')) return false;
+    var cards=Array.from(document.querySelectorAll('.av-credentials-card')).filter(function(el){
       var txt=(el.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
       var img=el.querySelector('img');
       var alt=img ? (img.getAttribute('alt')||'').toLowerCase() : '';
@@ -142,7 +139,8 @@
         alt.indexOf('ro08btrlroncrt0cs6331801')!==-1;
     });
     if(cards.length>1){
-      cards.slice(1).forEach(function(el){ el.remove(); });
+      var keep=cards.find(function(el){ return el.classList.contains('av-identity-image-card'); }) || cards[0];
+      cards.forEach(function(el){ if(el!==keep) el.remove(); });
     }
   }
   if(document.readyState==='loading'){
@@ -151,4 +149,5 @@
     dedupeProfessionalCards();
   }
   window.addEventListener('pageshow',dedupeProfessionalCards);
+  new MutationObserver(dedupeProfessionalCards).observe(document.documentElement,{childList:true,subtree:true});
 })();
