@@ -29,3 +29,39 @@
 .freeq-status{font-size:.85rem;color:#bfb5a7}.freeq-small{font-size:.82rem;color:#a9a196}.freeq-footer{text-align:center;padding:28px 0 46px;color:#a9a196}.freeq-footer a{color:#e3c879}
 @media(max-width:900px){.freeq-layout{grid-template-columns:1fr}.freeq-side{position:static}.freeq-home-card{grid-template-columns:1fr}.freeq-home-cta{justify-content:flex-start}.freeq-nav{display:none}}
 @media(max-width:560px){.freeq-hero{padding-top:48px}.freeq-chat{padding:16px;min-height:470px}.freeq-msg{max-width:94%}.freeq-send-grid{grid-template-columns:1fr}.freeq-home{padding:50px 0}.freeq-home-card{padding:23px;border-radius:20px}.freeq-float{right:12px;bottom:72px;font-size:.84rem;padding:10px 13px}.freeq-top-inner{min-height:62px}.freeq-side{padding:20px}}
+
+
+/* AstroVip — MINI CONSULTAȚIE GRATUITĂ premium card, 2026-09-21 */
+body:not(.guide-page) .freeq-home .kicker{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:fit-content!important;
+  max-width:100%!important;
+  margin:0 0 10px!important;
+  padding:10px 16px!important;
+  border:1px solid rgba(244,217,140,.72)!important;
+  border-radius:14px!important;
+  background:
+    linear-gradient(180deg,rgba(255,247,201,.10),rgba(216,173,85,.02) 42%),
+    linear-gradient(145deg,#17130b 0%,#080704 58%,#030303 100%)!important;
+  color:#f7dfa0!important;
+  font-size:12px!important;
+  line-height:1.15!important;
+  font-weight:950!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    0 10px 28px rgba(0,0,0,.38),
+    0 0 16px rgba(216,173,85,.12)!important;
+  text-shadow:0 0 10px rgba(244,217,140,.16)!important;
+}
+@media(max-width:560px){
+  body:not(.guide-page) .freeq-home .kicker{
+    padding:9px 12px!important;
+    border-radius:12px!important;
+    font-size:10px!important;
+    letter-spacing:.085em!important;
+  }
+}
