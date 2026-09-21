@@ -925,3 +925,34 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premiu
     padding-left:.20em!important;
   }
 }
+
+
+/* EXACT HERO TITLE CENTER — 2026-09-21 */
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{
+  text-align:center!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  position:static!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  text-align:center!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-main,
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
+  display:block!important;
+  width:auto!important;
+  max-width:100%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  transform:none!important;
+  text-align:center!important;
+}
