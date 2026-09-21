@@ -883,6 +883,232 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premiu
   padding-right:0!important;
 }
 </style>
+<style id="astrovip-case-showcase-preview">
+/* AstroVip Home — 6 case studies premium showcase */
+body:not(.guide-page) .av-case-showcase{
+  position:relative;
+  padding:42px 0;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(57,255,20,.055),transparent 34%),
+    radial-gradient(circle at 16% 35%,rgba(224,185,77,.06),transparent 24%),
+    #050605;
+}
+body:not(.guide-page) .av-case-showcase .wrap{width:min(1220px,94%);margin:0 auto}
+body:not(.guide-page) .av-case-showcase-frame{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:30px;
+  border:2px solid rgba(57,255,20,.82);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 50% -12%,rgba(57,255,20,.085),transparent 32%),
+    radial-gradient(circle at 100% 0%,rgba(255,224,117,.075),transparent 26%),
+    linear-gradient(145deg,#0b0e0b 0%,#050605 48%,#020302 100%);
+  box-shadow:
+    0 0 8px rgba(57,255,20,.58),
+    0 0 22px rgba(57,255,20,.28),
+    0 0 54px rgba(57,255,20,.10),
+    inset 0 1px 0 rgba(226,255,217,.13),
+    inset 0 0 0 1px rgba(57,255,20,.08),
+    0 28px 70px rgba(0,0,0,.48);
+}
+body:not(.guide-page) .av-case-showcase-frame::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:8px;
+  border:1px solid rgba(132,255,103,.25);
+  border-radius:22px;
+  pointer-events:none;
+}
+body:not(.guide-page) .av-case-showcase-frame::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:7%;
+  right:7%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,rgba(223,255,214,.7),#39ff14,rgba(223,255,214,.7),transparent);
+  box-shadow:0 0 12px rgba(57,255,20,.74),0 0 25px rgba(57,255,20,.35);
+  pointer-events:none;
+}
+body:not(.guide-page) .av-case-showcase-head{
+  max-width:900px;
+  margin:0 auto 26px;
+  text-align:center;
+}
+body:not(.guide-page) .av-case-showcase-kicker{
+  margin:0 0 8px;
+  color:#71ff54;
+  font-size:12px;
+  line-height:1.2;
+  font-weight:950;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  text-shadow:0 0 8px rgba(57,255,20,.45);
+}
+body:not(.guide-page) .av-case-showcase-head h2{
+  margin:0;
+  color:#fff3c6;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(30px,3.2vw,46px);
+  line-height:1.04;
+  font-weight:900;
+  text-shadow:0 2px 16px rgba(0,0,0,.72),0 0 15px rgba(224,185,77,.11);
+}
+body:not(.guide-page) .av-case-showcase-head>p:last-child{
+  max-width:760px;
+  margin:12px auto 0;
+  color:#ddd9cf;
+  font-size:15px;
+  line-height:1.6;
+}
+body:not(.guide-page) .av-case-showcase-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+body:not(.guide-page) .av-case-showcase-card{
+  --case-gold:#edc67e;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  overflow:hidden;
+  border:1px solid rgba(237,198,126,.38);
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(237,198,126,.085),transparent 35%),
+    linear-gradient(155deg,#15130f 0%,#090b0a 58%,#050605 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.055),
+    0 12px 30px rgba(0,0,0,.34);
+}
+body:not(.guide-page) .av-case-showcase-card::before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:5px;
+  border:1px solid rgba(57,255,20,.10);
+  border-radius:15px;
+  pointer-events:none;
+}
+body:not(.guide-page) .av-case-showcase-card-featured{
+  border-color:rgba(57,255,20,.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    0 0 14px rgba(57,255,20,.09),
+    0 12px 30px rgba(0,0,0,.36);
+}
+body:not(.guide-page) .av-case-showcase-visual{
+  position:relative;
+  margin:0;
+  overflow:hidden;
+  aspect-ratio:16/9;
+  background:#060706;
+  border-bottom:1px solid rgba(237,198,126,.25);
+}
+body:not(.guide-page) .av-case-showcase-visual a,
+body:not(.guide-page) .av-case-showcase-visual img{
+  display:block;
+  width:100%;
+  height:100%;
+}
+body:not(.guide-page) .av-case-showcase-visual img{
+  object-fit:cover;
+  object-position:center;
+  filter:saturate(1.04) contrast(1.025);
+  transition:transform .35s ease,filter .35s ease;
+}
+body:not(.guide-page) .av-case-showcase-card:hover .av-case-showcase-visual img{
+  transform:scale(1.025);
+  filter:saturate(1.08) contrast(1.04);
+}
+body:not(.guide-page) .av-case-showcase-copy{
+  position:relative;
+  z-index:3;
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  padding:18px 18px 19px;
+}
+body:not(.guide-page) .av-case-showcase-eyebrow{
+  margin:0 0 7px;
+  color:#78ff59;
+  font-size:10px;
+  line-height:1.25;
+  font-weight:950;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+body:not(.guide-page) .av-case-showcase-copy h3{
+  margin:0 0 9px;
+  color:#fff1c9;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(18px,1.55vw,23px);
+  line-height:1.12;
+  font-weight:900;
+}
+body:not(.guide-page) .av-case-showcase-meta{
+  margin:0 0 10px;
+  color:var(--case-gold);
+  font-size:12px;
+  line-height:1.4;
+  font-weight:800;
+}
+body:not(.guide-page) .av-case-showcase-lead{
+  flex:1;
+  margin:0 0 16px;
+  color:#e7e2d8;
+  font-size:13px;
+  line-height:1.5;
+}
+body:not(.guide-page) .av-case-showcase-cta{
+  align-self:flex-start;
+  min-height:40px;
+  padding:9px 13px;
+  font-size:10px;
+  letter-spacing:.04em;
+  border:1px solid rgba(57,255,20,.58);
+  background:linear-gradient(180deg,#ebffdd 0%,#8dff6f 42%,#39ff14 100%);
+  color:#071006!important;
+  box-shadow:0 0 10px rgba(57,255,20,.20),inset 0 1px 0 rgba(255,255,255,.72);
+}
+@media(max-width:1050px){
+  body:not(.guide-page) .av-case-showcase-frame{padding:24px}
+  body:not(.guide-page) .av-case-showcase-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+}
+@media(max-width:680px){
+  body:not(.guide-page) .av-case-showcase{padding:24px 0}
+  body:not(.guide-page) .av-case-showcase .wrap{width:calc(100% - 18px)}
+  body:not(.guide-page) .av-case-showcase-frame{
+    padding:18px 12px 14px;
+    border-radius:21px;
+    box-shadow:
+      0 0 6px rgba(57,255,20,.48),
+      0 0 15px rgba(57,255,20,.22),
+      inset 0 1px 0 rgba(226,255,217,.11),
+      inset 0 0 0 1px rgba(57,255,20,.07),
+      0 18px 42px rgba(0,0,0,.42);
+  }
+  body:not(.guide-page) .av-case-showcase-frame::before{inset:5px;border-radius:15px}
+  body:not(.guide-page) .av-case-showcase-head{margin-bottom:17px;padding:0 5px}
+  body:not(.guide-page) .av-case-showcase-head h2{font-size:27px}
+  body:not(.guide-page) .av-case-showcase-head>p:last-child{font-size:13px;line-height:1.5}
+  body:not(.guide-page) .av-case-showcase-grid{grid-template-columns:1fr;gap:11px}
+  body:not(.guide-page) .av-case-showcase-card{border-radius:16px}
+  body:not(.guide-page) .av-case-showcase-card::before{inset:4px;border-radius:12px}
+  body:not(.guide-page) .av-case-showcase-copy{padding:15px 14px 15px}
+  body:not(.guide-page) .av-case-showcase-copy h3{font-size:20px}
+  body:not(.guide-page) .av-case-showcase-lead{font-size:12.5px;margin-bottom:13px}
+  body:not(.guide-page) .av-case-showcase-cta{min-height:38px;padding:8px 12px;font-size:9.6px}
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(.guide-page) .av-case-showcase-card:hover .av-case-showcase-visual img{transform:none}
+  body:not(.guide-page) .av-case-showcase-visual img{transition:none}
+}
+</style>
 </head>
 <body class="av-motion-live"><div id="av-consent" class="av-consent" role="dialog" aria-modal="true" aria-labelledby="av-consent-title"><div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div></div><a class="skip-link" href="#top">Sari la conținut</a>
 <header class="top">
@@ -1080,55 +1306,49 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premiu
 <div class="step reveal"><b>4</b><h3>Direcția</h3><p>Primești concluzii explicate clar, orientate spre o decizie mai bine pregătită.</p></div>
 </div>
 </div></section>
-<section id="studiu-de-caz-scoala-1984" aria-labelledby="studiu-scoala-titlu" class="av-lotto-compact">
+<section id="studii-de-caz-home" class="av-case-showcase" aria-labelledby="av-case-showcase-title">
 <div class="wrap">
-<article class="av-lotto-compact-card">
-<div class="av-lotto-compact-grid">
-<figure class="av-lotto-compact-visual"><a href="/studii-de-caz/inceput-clasa-i-1984/" aria-label="Deschide studiul de caz complet despre începerea clasei I"><img src="/assets/studiu-caz-inceperea-scolii-1984-1680.webp" srcset="/assets/studiu-caz-inceperea-scolii-1984-840.webp 840w, /assets/studiu-caz-inceperea-scolii-1984-1680.webp 1672w" sizes="(max-width:820px) calc(100vw - 50px), 680px" width="1672" height="941" loading="lazy" decoding="async" alt="Ilustrație AstroVip pentru studiul de caz despre începerea clasei I în 1984."/></a></figure>
-<div class="av-lotto-compact-copy"><p class="av-lotto-compact-eyebrow">Studiu de caz 01</p><h2 id="studiu-scoala-titlu">Începerea clasei I — București 1984</h2><p class="av-lotto-compact-meta"><time datetime="1984-09-17">17 septembrie 1984</time> · București</p><p class="av-lotto-compact-lead">Un eveniment biografic real analizat retrospectiv prin Arce Solare și timing-ul astrologic AstroVip.</p><a class="cta" href="/studii-de-caz/inceput-clasa-i-1984/">VEZI STUDIUL COMPLET →</a></div>
-</div>
-</article>
+  <div class="av-case-showcase-frame">
+    <header class="av-case-showcase-head">
+      <p class="av-case-showcase-kicker">STUDII DE CAZ ASTROVIP</p>
+      <h2 id="av-case-showcase-title">6 evenimente reale · 6 analize de timing</h2>
+      <p>Studii documentate retrospectiv prin Arce Solare, tranzite și repere astrologice aplicate pe evenimente concrete.</p>
+    </header>
+
+    <div class="av-case-showcase-grid">
+      <article id="studiu-de-caz-scoala-1984" class="av-case-showcase-card" aria-labelledby="studiu-scoala-titlu">
+        <figure class="av-case-showcase-visual"><a href="/studii-de-caz/inceput-clasa-i-1984/" aria-label="Deschide studiul de caz complet despre începerea clasei I"><img src="/assets/studiu-caz-inceperea-scolii-1984-1680.webp" srcset="/assets/studiu-caz-inceperea-scolii-1984-840.webp 840w, /assets/studiu-caz-inceperea-scolii-1984-1680.webp 1672w" sizes="(max-width:680px) calc(100vw - 56px), (max-width:1100px) 44vw, 340px" width="1672" height="941" loading="lazy" decoding="async" alt="Ilustrație AstroVip pentru studiul de caz despre începerea clasei I în 1984."/></a></figure>
+        <div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">Studiu de caz 01</p><h3 id="studiu-scoala-titlu">Începerea clasei I — București 1984</h3><p class="av-case-showcase-meta"><time datetime="1984-09-17">17 septembrie 1984</time> · București</p><p class="av-case-showcase-lead">Un eveniment biografic real analizat retrospectiv prin Arce Solare și timing-ul astrologic AstroVip.</p><a class="cta av-case-showcase-cta" href="/studii-de-caz/inceput-clasa-i-1984/">VEZI STUDIUL COMPLET →</a></div>
+      </article>
+
+      <article id="studiu-de-caz-loto-2020" class="av-case-showcase-card av-case-showcase-card-featured" aria-labelledby="studiu-loto-titlu">
+        <figure class="av-case-showcase-visual"><a href="/studii-de-caz/castig-loto-roma-2020/" aria-label="Deschide studiul de caz complet despre câștigul la Loto"><img src="/assets/studiu-caz-castig-loto-roma-2020.svg" width="1200" height="675" loading="lazy" decoding="async" alt="Ilustrație premium AstroVip pentru studiul de caz Câștig la Loto, Roma 2020, cu bile aurii de loterie și cerc astrologic."/></a></figure>
+        <div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">Studiu de caz 02 · Tipar Loto</p><h3 id="studiu-loto-titlu">Câștig la Loto — Roma 2020</h3><p class="av-case-showcase-meta"><time datetime="2020-02-14T08:00">14 februarie 2020</time> · Roma, Italia</p><p class="av-case-showcase-lead">Un eveniment real analizat retrospectiv prin timing-ul astrologic AstroVip.</p><a class="cta av-case-showcase-cta" href="/studii-de-caz/castig-loto-roma-2020/">VEZI STUDIUL COMPLET →</a></div>
+      </article>
+
+      <article id="studiu-de-caz-dragoste-2001" class="av-case-showcase-card" aria-labelledby="studiu-dragoste-titlu">
+        <figure class="av-case-showcase-visual"><a href="/studii-de-caz/intalnire-dragoste-arce-solare-2001/" aria-label="Deschide studiul de caz complet despre întâlnirea în dragoste"><img src="/images/studii-de-caz/intalnire-dragoste-2001-astrovip.jpg" width="1536" height="1536" loading="lazy" decoding="async" alt="Ilustrație AstroVip pentru studiul de caz despre întâlnirea în dragoste din 30 ianuarie 2001."/></a></figure>
+        <div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">Studiu de caz 03</p><h3 id="studiu-dragoste-titlu">Întâlnire în dragoste — București 2001</h3><p class="av-case-showcase-meta"><time datetime="2001-01-30">30 ianuarie 2001</time> · București</p><p class="av-case-showcase-lead">O întâlnire personală analizată prin patru arce solare care leagă Venus, Mercur și Ascendentul: atracție, comunicare și apropiere.</p><a class="cta av-case-showcase-cta" href="/studii-de-caz/intalnire-dragoste-arce-solare-2001/">VEZI STUDIUL COMPLET →</a></div>
+      </article>
+
+      <article id="studiu-de-caz-relocare-2003" class="av-case-showcase-card" aria-labelledby="studiu-relocare-title">
+        <figure class="av-case-showcase-visual"><a href="/studii-de-caz/relocare-geografica-spania-2003/" aria-label="Deschide studiul de caz complet despre relocarea geografică în Spania"><img src="/images/studii-de-caz/relocare-geografica-spania-2003-astrovip.webp" alt="Ilustrație premium AstroVip pentru studiul de caz despre relocarea geografică în Spania din 11 ianuarie 2003." width="720" height="540" loading="lazy" decoding="async"></a></figure>
+        <div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">Studiu de caz 04</p><h3 id="studiu-relocare-title">Relocare geografică — Spania 2003</h3><p class="av-case-showcase-meta"><time datetime="2003-01-11">11 ianuarie 2003</time> · Spania</p><p class="av-case-showcase-lead">Uranus la Ascendent marchează schimbarea de cadru, susținut de Soare–Pluto, Lună–Noduri și tranzitul Saturn–Soare.</p><a class="cta av-case-showcase-cta" href="/studii-de-caz/relocare-geografica-spania-2003/">VEZI STUDIUL COMPLET →</a></div>
+      </article>
+
+      <article id="studiu-de-caz-job-2000" class="av-case-showcase-card" aria-labelledby="studiu-job-title">
+        <figure class="av-case-showcase-visual"><a href="/studii-de-caz/incepere-job-1-martie-2000/" aria-label="Deschide studiul de caz complet despre începerea unui nou job"><img src="/images/studii-de-caz/incepere-job-1-martie-2000-astrovip.svg" width="1600" height="900" loading="lazy" decoding="async" alt="Ilustrație premium AstroVip pentru începerea unui nou job la 1 martie 2000, cu simboluri pentru Soare, MC, Venus, Mercur, Jupiter și Uranus."></a></figure>
+        <div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">Studiu de caz 05</p><h3 id="studiu-job-title">Începerea unui nou job — București 2000</h3><p class="av-case-showcase-meta"><time datetime="2000-03-01">1 martie 2000</time> · București</p><p class="av-case-showcase-lead">Soare–MC în Arc Solar, Ascendent–Venus/Mercur și Jupiter–Soare/Uranus, confirmate de Jupiter–Lună, Marte–MC și Pluto–Ascendent.</p><a class="cta av-case-showcase-cta" href="/studii-de-caz/incepere-job-1-martie-2000/">VEZI STUDIUL COMPLET →</a></div>
+      </article>
+
+      <article id="studiu-de-caz-chirurgie-1998" class="av-case-showcase-card" aria-labelledby="studiu-chirurgie-title">
+        <figure class="av-case-showcase-visual"><a href="/studii-de-caz/interventie-chirurgicala-pitesti-1998/" aria-label="Deschide studiul retrospectiv despre evenimentul medical din Pitești"><img src="/images/studii-de-caz/interventie-chirurgicala-pitesti-1998-astrovip.svg" width="1200" height="900" loading="lazy" decoding="async" alt="Ilustrație AstroVip 4 la 3 pentru studiul retrospectiv din Pitești, 6 august 1998."></a></figure>
+        <div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">Studiu de caz 06</p><h3 id="studiu-chirurgie-title">Intervenție chirurgicală — Pitești 1998</h3><p class="av-case-showcase-meta"><time datetime="1998-08-06">6 august 1998</time> · stagiu militar</p><p class="av-case-showcase-lead">Studiu astrologic retrospectiv: Pluto–Soare și Saturn–Lună în Arce Solare, alături de Neptun–Lună, Saturn–Lună și Marte–Ascendent ca reper de timing.</p><a class="cta av-case-showcase-cta" href="/studii-de-caz/interventie-chirurgicala-pitesti-1998/">VEZI STUDIUL COMPLET →</a></div>
+      </article>
+    </div>
+  </div>
 </div>
 </section>
-<section id="studiu-de-caz-loto-2020" aria-labelledby="studiu-loto-titlu" class="av-lotto-compact">
-<div class="wrap">
-<article class="av-lotto-compact-card">
-<div class="av-lotto-compact-grid">
-<figure class="av-lotto-compact-visual"><a href="/studii-de-caz/castig-loto-roma-2020/" aria-label="Deschide studiul de caz complet despre câștigul la Loto"><img src="/assets/studiu-caz-castig-loto-roma-2020.svg" width="1200" height="675" loading="lazy" decoding="async" alt="Ilustrație premium AstroVip pentru studiul de caz Câștig la Loto, Roma 2020, cu bile aurii de loterie și cerc astrologic."/></a></figure>
-<div class="av-lotto-compact-copy"><p class="av-lotto-compact-eyebrow">Studiu de caz 02</p><h2 id="studiu-loto-titlu">Câștig la Loto — Roma 2020</h2><p class="av-lotto-compact-meta"><time datetime="2020-02-14T08:00">14 februarie 2020</time> · Roma, Italia</p><p class="av-lotto-compact-lead">Un eveniment real analizat retrospectiv prin timing-ul astrologic AstroVip.</p><a class="cta" href="/studii-de-caz/castig-loto-roma-2020/">VEZI STUDIUL COMPLET →</a></div>
-</div>
-</article>
-</div>
-</section>
-<section id="studiu-de-caz-dragoste-2001" aria-labelledby="studiu-dragoste-titlu" class="av-lotto-compact">
-<div class="wrap">
-<article class="av-lotto-compact-card">
-<div class="av-lotto-compact-grid">
-<figure class="av-lotto-compact-visual"><a href="/studii-de-caz/intalnire-dragoste-arce-solare-2001/" aria-label="Deschide studiul de caz complet despre întâlnirea în dragoste"><img src="/images/studii-de-caz/intalnire-dragoste-2001-astrovip.jpg" width="1536" height="1536" loading="lazy" decoding="async" alt="Ilustrație AstroVip pentru studiul de caz despre întâlnirea în dragoste din 30 ianuarie 2001."/></a></figure>
-<div class="av-lotto-compact-copy"><p class="av-lotto-compact-eyebrow">Studiu de caz 03</p><h2 id="studiu-dragoste-titlu">Întâlnire în dragoste — București 2001</h2><p class="av-lotto-compact-meta"><time datetime="2001-01-30">30 ianuarie 2001</time> · București</p><p class="av-lotto-compact-lead">O întâlnire personală analizată prin patru arce solare care leagă Venus, Mercur și Ascendentul: atracție, comunicare și apropiere.</p><a class="cta" href="/studii-de-caz/intalnire-dragoste-arce-solare-2001/">VEZI STUDIUL COMPLET →</a></div>
-</div>
-</article>
-</div>
-</section>
-<section id="studiu-de-caz-relocare-2003" class="av-lotto-compact" aria-labelledby="studiu-relocare-title">
-<div class="wrap"><article class="av-lotto-compact-card"><div class="av-lotto-compact-grid">
-<figure class="av-lotto-compact-visual"><a href="/studii-de-caz/relocare-geografica-spania-2003/" aria-label="Deschide studiul de caz complet despre relocarea geografică în Spania"><img src="/images/studii-de-caz/relocare-geografica-spania-2003-astrovip.webp" alt="Ilustrație premium AstroVip pentru studiul de caz despre relocarea geografică în Spania din 11 ianuarie 2003." width="720" height="540" loading="lazy" decoding="async"></a></figure>
-<div class="av-lotto-compact-copy"><p class="av-lotto-compact-eyebrow">Studiu de caz 04</p>
-<h2 id="studiu-relocare-title">Relocare geografică — Spania 2003</h2>
-<p class="av-lotto-compact-meta"><time datetime="2003-01-11">11 ianuarie 2003</time> · Spania</p>
-<p class="av-lotto-compact-lead">Uranus la Ascendent marchează schimbarea de cadru, susținut de Soare–Pluto, Lună–Noduri și tranzitul Saturn–Soare.</p>
-<a class="cta" href="/studii-de-caz/relocare-geografica-spania-2003/">VEZI STUDIUL COMPLET →</a>
-</div></div></article></div></section>
-<section id="studiu-de-caz-job-2000" class="av-lotto-compact" aria-labelledby="studiu-job-title">
-<div class="wrap"><article class="av-lotto-compact-card"><div class="av-lotto-compact-grid">
-<figure class="av-lotto-compact-visual"><a href="/studii-de-caz/incepere-job-1-martie-2000/" aria-label="Deschide studiul de caz complet despre începerea unui nou job"><img src="/images/studii-de-caz/incepere-job-1-martie-2000-astrovip.svg" width="1600" height="900" loading="lazy" decoding="async" alt="Ilustrație premium AstroVip pentru începerea unui nou job la 1 martie 2000, cu simboluri pentru Soare, MC, Venus, Mercur, Jupiter și Uranus."></a></figure>
-<div class="av-lotto-compact-copy"><p class="av-lotto-compact-eyebrow">Studiu de caz 05</p><h2 id="studiu-job-title">Începerea unui nou job — București 2000</h2><p class="av-lotto-compact-meta"><time datetime="2000-03-01">1 martie 2000</time> · București</p><p class="av-lotto-compact-lead">Soare–MC în Arc Solar, Ascendent–Venus/Mercur și Jupiter–Soare/Uranus, confirmate de Jupiter–Lună, Marte–MC și Pluto–Ascendent.</p><a class="cta" href="/studii-de-caz/incepere-job-1-martie-2000/">VEZI STUDIUL COMPLET →</a></div>
-</div></article></div></section>
-<section id="studiu-de-caz-chirurgie-1998" class="av-lotto-compact" aria-labelledby="studiu-chirurgie-title">
-<div class="wrap"><article class="av-lotto-compact-card"><div class="av-lotto-compact-grid">
-<figure class="av-lotto-compact-visual"><a href="/studii-de-caz/interventie-chirurgicala-pitesti-1998/" aria-label="Deschide studiul retrospectiv despre evenimentul medical din Pitești"><img src="/images/studii-de-caz/interventie-chirurgicala-pitesti-1998-astrovip.svg" width="1200" height="900" loading="lazy" decoding="async" alt="Ilustrație AstroVip 4 la 3 pentru studiul retrospectiv din Pitești, 6 august 1998."></a></figure>
-<div class="av-lotto-compact-copy"><p class="av-lotto-compact-eyebrow">Studiu de caz 06</p><h2 id="studiu-chirurgie-title">Intervenție chirurgicală — Pitești 1998</h2><p class="av-lotto-compact-meta"><time datetime="1998-08-06">6 august 1998</time> · stagiu militar</p><p class="av-lotto-compact-lead">Studiu astrologic retrospectiv: Pluto–Soare și Saturn–Lună în Arce Solare, alături de Neptun–Lună, Saturn–Lună și Marte–Ascendent ca reper de timing.</p><a class="cta" href="/studii-de-caz/interventie-chirurgicala-pitesti-1998/">VEZI STUDIUL COMPLET →</a></div>
-</div></article></div></section>
 <section id="relocare"><div class="wrap split">
 <img alt="Relocare geografică AstroVip" class="reveal" decoding="async" height="418" loading="lazy" src="/assets/1000041605.webp?v=e10373c43519" width="418"/>
 <div class="reveal"><div class="kicker">Astrocartografie · Local Space · hartă relocată</div><h2 class="section-heading">Relocare Geografică Premium</h2><p class="section-copy">Locul poate schimba modul în care aceeași hartă se exprimă. Analizăm orașe, direcții și linii geografice pentru a compara oportunitățile relevante.</p><div class="list"><div>Identificarea zonelor favorabile</div><div>Hartă relocată și astrocartografie</div><div>Local Space și direcții planetare</div><div>Comparație între mai multe locații</div></div></div>
