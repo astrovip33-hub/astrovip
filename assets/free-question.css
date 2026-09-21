@@ -96,3 +96,28 @@ body:not(.guide-page) .freeq-home .kicker{
 @media (prefers-reduced-motion:reduce){
   body:not(.guide-page) .freeq-home .kicker{animation:none!important}
 }
+
+
+/* AstroVip — larger glossy neon-yellow text for free consultation card, 2026-09-21 */
+body:not(.guide-page) .freeq-home .kicker{
+  font-size:15px!important;
+  line-height:1.05!important;
+  font-weight:1000!important;
+  letter-spacing:.095em!important;
+  color:#fff600!important;
+  -webkit-text-fill-color:#fff600!important;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.95),
+    0 2px 0 rgba(160,120,0,.75),
+    0 0 6px rgba(255,246,0,.95),
+    0 0 14px rgba(255,230,0,.88),
+    0 0 24px rgba(255,210,0,.58)!important;
+  filter:saturate(1.18) brightness(1.08)!important;
+}
+@media(max-width:560px){
+  body:not(.guide-page) .freeq-home .kicker{
+    font-size:13px!important;
+    line-height:1.08!important;
+    letter-spacing:.075em!important;
+  }
+}
