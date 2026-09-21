@@ -1,4 +1,15 @@
 /* AstroVip homepage premium hero v2 — real responsive implementation */
+body:not(.guide-page) .hero.av-hero-v2{
+  display:block!important;
+  align-items:initial!important;
+  min-height:0!important;
+  width:100%!important;
+}
+body:not(.guide-page) .hero.av-hero-v2::before,
+body:not(.guide-page) .hero.av-hero-v2::after{
+  display:none!important;
+}
+
 body:not(.guide-page) .brand.av-brand-premium{
   display:inline-flex!important;
   align-items:center!important;
