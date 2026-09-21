@@ -140,7 +140,7 @@ jobs:
           echo "Checking footer de-duplication on live homepage"
           LIVE_HTML=$(mktemp)
           LIVE_HDR=$(mktemp)
-          curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 8 --retry-delay 4 "https://astrovip.ro/?release=20260921-footer-dedupe-final"
+          curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 8 --retry-delay 4 "https://astrovip.ro/?release=20260921-speed-index-5"
 
           IDENTITY_COUNT=$( { grep -o 'av-identity-image-card' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
           LEGACY_COUNT=$( { grep -E -o 'av-credentials-kicker">Date profesionale|<h2>Cristian Cătălin Smaranda</h2>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
@@ -160,7 +160,7 @@ jobs:
             exit 25
           fi
 
-          if [ "$RELEASE_HEADER" != "20260921-footer-dedupe-final" ]; then
+          if [ "$RELEASE_HEADER" != "20260921-speed-index-5" ]; then
             echo "::error::Live homepage is not serving the new cache-reset release."
             exit 26
           fi
