@@ -815,3 +815,16 @@ body:not(.guide-page) .av-hero-v2-title span{
     0 4px 22px rgba(0,0,0,.56),
     0 0 20px rgba(212,175,55,.08)!important;
 }
+
+
+/* Hero card neon frame — all non-mobile/desktop widths, 2026-09-21 */
+body:not(.guide-page) .av-hero-v2-card{
+  border:1px solid rgba(57,255,20,.50)!important;
+  box-shadow:
+    0 0 8px rgba(57,255,20,.375),
+    0 0 16px rgba(57,255,20,.16),
+    inset 0 0 0 1px rgba(57,255,20,.09)!important;
+}
+body:not(.guide-page) .av-hero-v2-card::before{
+  border-color:rgba(57,255,20,.175)!important;
+}
