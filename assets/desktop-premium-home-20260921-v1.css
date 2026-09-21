@@ -321,3 +321,24 @@
     grid-template-columns:1fr 1fr!important;
   }
 }
+
+
+/* Hero cards — desktop neon border matched to mobile, 2026-09-21 */
+@media (min-width:981px){
+  body:not(.guide-page) .av-hero-v2-card{
+    border-color:rgba(57,255,20,.50)!important;
+    box-shadow:
+      0 0 8px rgba(57,255,20,.375),
+      0 0 16px rgba(57,255,20,.16),
+      inset 0 0 0 1px rgba(57,255,20,.09)!important;
+  }
+
+  body:not(.guide-page) .av-hero-v2-card::before{
+    border-color:rgba(57,255,20,.175)!important;
+  }
+
+  body:not(.guide-page) .av-hero-v2-icon{
+    border-color:rgba(57,255,20,.275)!important;
+    text-shadow:0 0 10px rgba(57,255,20,.275)!important;
+  }
+}
