@@ -603,3 +603,40 @@ body:not(.guide-page) .nav-book:hover{transform:translateY(-1px)}
     border-radius:13px!important;
   }
 }
+
+
+/* Complete AstroVip logo artwork — 2026-09-21 */
+body:not(.guide-page) .av-brand-premium{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  flex:0 0 auto!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body:not(.guide-page) .av-brand-logo{
+  display:block!important;
+  width:auto!important;
+  height:78px!important;
+  max-width:112px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:10px!important;
+}
+@media(max-width:820px){
+  body:not(.guide-page) .av-brand-logo{
+    height:62px!important;
+    max-width:83px!important;
+    border-radius:8px!important;
+  }
+  body:not(.guide-page) .top:has(.menu.open) .brand{
+    padding:0!important;
+    min-height:0!important;
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    text-shadow:none!important;
+  }
+}
