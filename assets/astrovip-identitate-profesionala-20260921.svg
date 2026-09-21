@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="t d">
+<title id="t">Astrolog autorizat — Smaranda Cristian Cătălin PFA</title>
+<desc id="d">Date profesionale AstroVip: CUI 50191527 și IBAN RO08BTRLRONCRT0CS6331801.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#020706"/><stop offset=".48" stop-color="#020403"/><stop offset="1" stop-color="#000"/>
+  </linearGradient>
+  <radialGradient id="emerald" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#19ffbf" stop-opacity=".62"/><stop offset=".35" stop-color="#00a978" stop-opacity=".32"/><stop offset="1" stop-color="#001b14" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff7be"/><stop offset=".18" stop-color="#ffd86a"/><stop offset=".45" stop-color="#a96b00"/><stop offset=".67" stop-color="#fff0a0"/><stop offset="1" stop-color="#c98308"/>
+  </linearGradient>
+  <linearGradient id="goldText" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fffbe0"/><stop offset=".22" stop-color="#ffd85d"/><stop offset=".58" stop-color="#f3a51f"/><stop offset=".82" stop-color="#9d5a00"/><stop offset="1" stop-color="#ffe986"/>
+  </linearGradient>
+  <linearGradient id="mint" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#dffff5"/><stop offset=".38" stop-color="#63ffe3"/><stop offset=".7" stop-color="#1ce0aa"/><stop offset="1" stop-color="#f4fffb"/>
+  </linearGradient>
+  <radialGradient id="planetL" cx="35%" cy="30%" r="70%">
+    <stop offset="0" stop-color="#8dffe6"/><stop offset=".22" stop-color="#12c58d"/><stop offset=".58" stop-color="#00634f"/><stop offset="1" stop-color="#001c18"/>
+  </radialGradient>
+  <radialGradient id="planetR" cx="32%" cy="32%" r="72%">
+    <stop offset="0" stop-color="#ffe899"/><stop offset=".18" stop-color="#a66e1a"/><stop offset=".5" stop-color="#3e2b12"/><stop offset="1" stop-color="#050503"/>
+  </radialGradient>
+  <filter id="glowG" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="glowS" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="7" stdDeviation="5" flood-color="#000" flood-opacity=".95"/>
+    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f2b331" flood-opacity=".38"/>
+  </filter>
+  <clipPath id="clip"><rect x="28" y="28" width="1544" height="844" rx="44"/></clipPath>
+</defs>
+
+<rect width="1600" height="900" fill="url(#bg)"/>
+<g clip-path="url(#clip)">
+  <ellipse cx="80" cy="82" rx="420" ry="330" fill="url(#emerald)" opacity=".52"/>
+  <ellipse cx="1515" cy="825" rx="420" ry="300" fill="url(#emerald)" opacity=".45"/>
+  <ellipse cx="210" cy="825" rx="390" ry="260" fill="url(#emerald)" opacity=".26"/>
+  <ellipse cx="1230" cy="135" rx="410" ry="245" fill="url(#emerald)" opacity=".15"/>
+  <circle cx="145" cy="115" r="155" fill="url(#planetL)" opacity=".88"/>
+  <circle cx="145" cy="115" r="156" fill="none" stroke="#2fffc2" stroke-opacity=".48" stroke-width="3"/>
+  <circle cx="1455" cy="166" r="122" fill="url(#planetR)" opacity=".92"/>
+  <circle cx="1455" cy="166" r="123" fill="none" stroke="#ffd966" stroke-opacity=".6" stroke-width="2"/>
+
+  <g opacity=".72" fill="#fff7c4">
+    <circle cx="302" cy="112" r="2.4"/><circle cx="358" cy="87" r="1.7"/><circle cx="440" cy="132" r="2"/>
+    <circle cx="1208" cy="96" r="1.9"/><circle cx="1296" cy="136" r="2.4"/><circle cx="1368" cy="92" r="1.7"/>
+    <circle cx="232" cy="648" r="2.2"/><circle cx="338" cy="705" r="1.9"/><circle cx="1282" cy="674" r="2.3"/><circle cx="1388" cy="728" r="1.8"/>
+    <circle cx="111" cy="522" r="1.7"/><circle cx="1488" cy="535" r="2.2"/>
+  </g>
+
+  <g stroke="#d9b85c" stroke-opacity=".38" fill="none">
+    <path d="M156 450 A644 560 0 0 1 1444 450" stroke-width="2"/>
+    <path d="M205 450 A595 510 0 0 1 1395 450" stroke-width="1.2"/>
+  </g>
+</g>
+
+<rect x="30" y="30" width="1540" height="840" rx="42" fill="none" stroke="url(#gold)" stroke-width="5" filter="url(#glowS)"/>
+<rect x="48" y="48" width="1504" height="804" rx="32" fill="none" stroke="#fff8d1" stroke-opacity=".8" stroke-width="1.6"/>
+<rect x="60" y="60" width="1480" height="780" rx="26" fill="none" stroke="#c9901b" stroke-opacity=".38" stroke-width="1"/>
+
+<g fill="#34ffb8" filter="url(#glowG)">
+  <circle cx="800" cy="30" r="5"/><circle cx="800" cy="870" r="5"/>
+  <circle cx="30" cy="450" r="4"/><circle cx="1570" cy="450" r="4"/>
+</g>
+
+<g stroke="#d9b85c" stroke-width="2" fill="none" opacity=".62">
+  <line x1="340" y1="146" x2="650" y2="146"/><line x1="950" y1="146" x2="1260" y2="146"/>
+  <circle cx="800" cy="144" r="86" stroke-dasharray="3 10"/>
+  <circle cx="800" cy="144" r="64" stroke-opacity=".36"/>
+</g>
+
+<g transform="translate(800 144)" fill="url(#gold)" filter="url(#glowS)">
+  <path d="M0-72 L12-15 L72 0 L12 15 L0 72 L-12 15 L-72 0 L-12-15 Z"/>
+  <path d="M0-47 L8-9 L47 0 L8 9 L0 47 L-8 9 L-47 0 L-8-9 Z" fill="#fff6c7"/>
+</g>
+
+<g fill="url(#gold)" filter="url(#glowS)">
+  <path d="M650 144a28 28 0 1 0 0-1c-12 10-29 8-38-5 7 17 22 26 38 6z"/>
+  <path d="M950 144a28 28 0 1 1 0-1c12 10 29 8 38-5-7 17-22 26-38 6z"/>
+</g>
+
+<g stroke="#d9b85c" stroke-opacity=".6" stroke-width="1.6" fill="none">
+  <circle cx="104" cy="450" r="44" stroke-dasharray="3 7"/>
+  <circle cx="1496" cy="450" r="44" stroke-dasharray="3 7"/>
+</g>
+<g fill="url(#gold)" filter="url(#glowS)">
+  <path d="M111 418a33 33 0 1 0 0 64c-17-7-27-22-27-32s10-25 27-32z"/>
+  <path d="M1489 418a33 33 0 1 1 0 64c17-7 27-22 27-32s-10-25-27-32z"/>
+</g>
+
+<g text-anchor="middle" font-family="Georgia, 'Times New Roman', serif">
+  <text x="800" y="304" font-size="104" font-weight="700" fill="url(#goldText)" stroke="#7c4b00" stroke-width="1.4" filter="url(#shadow)">Astrolog autorizat</text>
+
+  <line x1="320" y1="350" x2="1280" y2="350" stroke="#d6a43c" stroke-opacity=".74" stroke-width="2"/>
+  <g transform="translate(800 350)" fill="url(#gold)" filter="url(#glowS)"><path d="M0-18 L5-5 L18 0 L5 5 L0 18 L-5 5 L-18 0 L-5-5 Z"/></g>
+
+  <text x="800" y="454" font-size="74" font-weight="700" fill="#fffdf7" stroke="#d0a64d" stroke-opacity=".42" stroke-width="1.1" filter="url(#shadow)">Smaranda Cristian Cătălin PFA</text>
+
+  <line x1="338" y1="500" x2="1262" y2="500" stroke="#d6a43c" stroke-opacity=".58" stroke-width="1.8"/>
+  <g transform="translate(800 500)" fill="url(#gold)" filter="url(#glowS)"><path d="M0-17 L5-5 L17 0 L5 5 L0 17 L-5 5 L-17 0 L-5-5 Z"/></g>
+
+  <text x="696" y="602" font-size="72" font-weight="700" fill="url(#mint)" filter="url(#glowS)">CUI</text>
+  <text x="884" y="602" font-size="72" font-weight="700" fill="#fffdf7" filter="url(#shadow)">50191527</text>
+
+  <line x1="350" y1="647" x2="1250" y2="647" stroke="#d6a43c" stroke-opacity=".58" stroke-width="1.8"/>
+  <g transform="translate(800 647)" fill="url(#gold)" filter="url(#glowS)"><path d="M0-17 L5-5 L17 0 L5 5 L0 17 L-5 5 L-17 0 L-5-5 Z"/></g>
+
+  <text x="245" y="754" font-size="63" font-weight="700" fill="url(#mint)" text-anchor="start" filter="url(#glowS)">IBAN</text>
+  <text x="470" y="754" font-size="63" font-weight="700" fill="#fffdf7" text-anchor="start" textLength="910" lengthAdjust="spacingAndGlyphs" filter="url(#shadow)">RO08BTRLRONCRT0CS6331801</text>
+</g>
+
+<g fill="url(#gold)" filter="url(#glowS)">
+  <path d="M76 82 l5 15 15 5-15 5-5 15-5-15-15-5 15-5z"/>
+  <path d="M1524 82 l5 15 15 5-15 5-5 15-5-15-15-5 15-5z"/>
+  <path d="M76 818 l5 15 15 5-15 5-5 15-5-15-15-5 15-5z"/>
+  <path d="M1524 818 l5 15 15 5-15 5-5 15-5-15-15-5 15-5z"/>
+</g>
+</svg>
