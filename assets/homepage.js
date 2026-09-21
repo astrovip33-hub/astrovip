@@ -122,3 +122,33 @@
     document.addEventListener('click',event=>{if(menu.classList.contains('open')&&!menu.contains(event.target)&&!hamb.contains(event.target)){menu.classList.remove('open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});
 
 })();
+
+
+/* AstroVip professional-card de-duplication 2026-09-21 */
+(function(){
+  function dedupeProfessionalCards(){
+    var shell=document.querySelector('.av-credentials-shell');
+    if(!shell) return;
+    var cards=Array.from(shell.children).filter(function(el){
+      if(!el.matches || !el.matches('.av-credentials-card')) return false;
+      var txt=(el.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+      var img=el.querySelector('img');
+      var alt=img ? (img.getAttribute('alt')||'').toLowerCase() : '';
+      return el.classList.contains('av-identity-image-card') ||
+        txt.indexOf('date profesionale')!==-1 ||
+        txt.indexOf('50191527')!==-1 ||
+        txt.indexOf('ro08btrlroncrt0cs6331801')!==-1 ||
+        alt.indexOf('50191527')!==-1 ||
+        alt.indexOf('ro08btrlroncrt0cs6331801')!==-1;
+    });
+    if(cards.length>1){
+      cards.slice(1).forEach(function(el){ el.remove(); });
+    }
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',dedupeProfessionalCards,{once:true});
+  }else{
+    dedupeProfessionalCards();
+  }
+  window.addEventListener('pageshow',dedupeProfessionalCards);
+})();
