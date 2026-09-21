@@ -108,6 +108,34 @@ jobs:
         run: |
           set -euo pipefail
 
+          echo "Checking footer de-duplication on live homepage"
+          LIVE_HTML=$(mktemp)
+          LIVE_HDR=$(mktemp)
+          curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 8 --retry-delay 4 "https://astrovip.ro/?release=20260921-footer-dedupe-final"
+
+          IDENTITY_COUNT=$(grep -o 'av-identity-image-card' "$LIVE_HTML" | wc -l | tr -d ' ')
+          LEGACY_COUNT=$(grep -o 'Date profesionale' "$LIVE_HTML" | wc -l | tr -d ' ')
+          RELEASE_HEADER=$(awk 'BEGIN{IGNORECASE=1} /^x-astrovip-release:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$LIVE_HDR")
+
+          echo "Identity cards: $IDENTITY_COUNT"
+          echo "Legacy professional cards: $LEGACY_COUNT"
+          echo "Release header: $RELEASE_HEADER"
+
+          if [ "$IDENTITY_COUNT" != "1" ]; then
+            echo "::error::Live homepage does not contain exactly one professional identity card."
+            exit 24
+          fi
+
+          if [ "$LEGACY_COUNT" != "0" ]; then
+            echo "::error::Legacy professional footer card is still present in live HTML."
+            exit 25
+          fi
+
+          if [ "$RELEASE_HEADER" != "20260921-footer-dedupe-final" ]; then
+            echo "::error::Live homepage is not serving the new cache-reset release."
+            exit 26
+          fi
+
           echo "Checking canonical apex"
           APEX_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/")
           if [ "$APEX_STATUS" != "200" ]; then
