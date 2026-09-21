@@ -22,19 +22,25 @@ const launcher=document.createElement("button");launcher.className="avchat-launc
 const panel=document.createElement("section");panel.className="avchat-panel";panel.setAttribute("aria-label","AstroVip multilingual chat");panel.innerHTML='<header class="avchat-head"><div class="avchat-brand"><strong></strong><span></span></div><div class="avchat-head-actions"><select class="avchat-lang" aria-label="Chat language"><option value="auto">Auto</option><option value="en">EN</option><option value="es">ES</option><option value="it">IT</option><option value="zh-CN">中文</option></select><button class="avchat-close" type="button" aria-label="Close">×</button></div></header><div class="avchat-body"><div class="avchat-empty"><strong></strong><span></span><div class="avchat-encryption">● AstroVip secure chat</div><div class="avchat-privacy">Mesajele sunt procesate pentru funcționarea conversației și traducere. <a href="/politica-confidentialitate/" target="_blank" rel="noopener">Confidențialitate</a></div></div><div class="avchat-messages"></div></div><footer class="avchat-composer"><div class="avchat-row"><textarea class="avchat-input" rows="1" maxlength="1500"></textarea><button class="avchat-send" type="button" aria-label="Send">➤</button></div><div class="avchat-status"></div></footer>';
 document.body.append(launcher,panel);
 const desktopChatMq=window.matchMedia("(min-width:981px)");
-const wideDesktopChatMq=window.matchMedia("(min-width:1200px)");
 function placeLauncher(){
   if(desktopChatMq.matches){
-    const host=wideDesktopChatMq.matches
-      ? document.querySelector(".nav-actions")
-      : document.querySelector(".av-langbar .wrap");
+    const host=document.querySelector(".av-langbar .wrap");
     if(host){
-      const first=host.firstElementChild;
-      if(first!==launcher)host.insertBefore(launcher,first);
+      if(launcher.parentNode!==host||host.lastElementChild!==launcher)host.appendChild(launcher);
       return;
     }
   }
   if(launcher.parentNode!==document.body)document.body.appendChild(launcher);
+}
+function alignPanel(){
+  if(!desktopChatMq.matches){
+    panel.style.removeProperty("right");
+    panel.style.removeProperty("top");
+    return;
+  }
+  const r=launcher.getBoundingClientRect();
+  panel.style.right=Math.max(12,window.innerWidth-r.right)+"px";
+  panel.style.top=Math.round(r.bottom+8)+"px";
 }
 const $=s=>panel.querySelector(s),body=$(".avchat-body"),messages=$(".avchat-messages"),empty=$(".avchat-empty"),input=$(".avchat-input"),send=$(".avchat-send"),status=$(".avchat-status"),langSel=$(".avchat-lang");
 langSel.value=state.lang;
@@ -44,15 +50,15 @@ function showMsg(m){if(messages.querySelector('[data-id="'+m.id+'"]'))return;con
 async function ensureThread(){if(state.thread)return state.thread;setStatus(currentCopy().connecting);const r=await post({action:"create_thread",session_token:state.session,preferred_lang:state.lang,page_url:location.href});state.thread=r.thread.id;persist();setStatus(currentCopy().online);return state.thread}
 async function poll(){if(!state.thread||state.busy)return;try{const r=await post({action:"poll_visitor",thread_id:state.thread,session_token:state.session,after_id:state.loaded?state.lastId:0});(r.messages||[]).forEach(showMsg);state.loaded=true;setStatus(currentCopy().online);body.scrollTop=body.scrollHeight}catch(e){setStatus(currentCopy().error,true)}}
 async function sendMsg(){const text=input.value.trim();if(!text||state.busy)return;state.busy=true;send.disabled=true;try{await ensureThread();const r=await post({action:"send_visitor",thread_id:state.thread,session_token:state.session,text,source_lang:state.lang});input.value="";showMsg(r.message);setStatus(currentCopy().online);body.scrollTop=body.scrollHeight}catch(e){setStatus(currentCopy().error,true)}finally{state.busy=false;send.disabled=false;input.focus()}}
-launcher.onclick=async()=>{panel.classList.toggle("is-open");if(panel.classList.contains("is-open")){paintCopy();try{await ensureThread();await poll()}catch(e){setStatus(currentCopy().error,true)}setTimeout(()=>input.focus(),80)}};
+launcher.onclick=async()=>{panel.classList.toggle("is-open");if(panel.classList.contains("is-open")){paintCopy();alignPanel();try{await ensureThread();await poll()}catch(e){setStatus(currentCopy().error,true)}setTimeout(()=>input.focus(),80)}};
 $(".avchat-close").onclick=()=>panel.classList.remove("is-open");
 send.onclick=sendMsg;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg()}});
 langSel.onchange=async()=>{state.lang=langSel.value;persist();paintCopy();if(state.thread){try{const oldThread=state.thread;state.thread="";state.lastId=0;state.loaded=false;messages.innerHTML="";empty.style.display="block";await ensureThread();if(oldThread!==state.thread){}await poll()}catch(e){setStatus(currentCopy().error,true)}}};
 paintCopy();
 placeLauncher();
-const onChatViewportChange=()=>{placeLauncher();paintCopy()};
+const onChatViewportChange=()=>{placeLauncher();paintCopy();alignPanel()};
 desktopChatMq.addEventListener?.("change",onChatViewportChange);
-wideDesktopChatMq.addEventListener?.("change",onChatViewportChange);
+window.addEventListener("resize",()=>{if(panel.classList.contains("is-open"))alignPanel()},{passive:true});
 setInterval(()=>{if(state.thread)poll()},panel.classList.contains("is-open")?4000:12000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&state.thread)poll()});
 })();
