@@ -721,3 +721,21 @@ body:not(.guide-page) .av-brand-logo{
   opacity:0!important;
   visibility:hidden!important;
 }
+
+
+/* FINAL logo visibility fix — 2026-09-21 */
+body:not(.guide-page) .top .brand.av-brand-premium{
+  background-image:none!important;
+}
+body:not(.guide-page) .top .brand.av-brand-premium .av-brand-logo,
+body:not(.guide-page) .av-brand-premium .av-brand-logo{
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
