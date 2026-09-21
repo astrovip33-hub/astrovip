@@ -97,6 +97,35 @@ jobs:
           set -euo pipefail
           npx --yes wrangler@latest deploy
 
+      - name: Purge AstroVip Cloudflare cache
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ZONES=$(curl -sS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones?name=astrovip.ro&status=active")
+
+          ZONE_ID=$(printf '%s' "$ZONES" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+
+          if [ -z "$ZONE_ID" ]; then
+            echo "::warning::Could not resolve Cloudflare zone ID; skipping cache purge."
+          else
+            RESPONSE=$(curl -sS -X POST \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              --data '{"purge_everything":true}' \
+              "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/purge_cache")
+
+            SUCCESS=$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; print(str(json.load(sys.stdin).get("success",False)).lower())')
+            if [ "$SUCCESS" = "true" ]; then
+              echo "Cloudflare cache purge completed."
+            else
+              echo "::warning::Cloudflare purge did not report success; deployment remains active."
+            fi
+          fi
+
       - name: Deploy canonical www redirect Worker
         shell: bash
         run: |
@@ -114,7 +143,7 @@ jobs:
           curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 8 --retry-delay 4 "https://astrovip.ro/?release=20260921-footer-dedupe-final"
 
           IDENTITY_COUNT=$(grep -o 'av-identity-image-card' "$LIVE_HTML" | wc -l | tr -d ' ')
-          LEGACY_COUNT=$(grep -o 'Date profesionale' "$LIVE_HTML" | wc -l | tr -d ' ')
+          LEGACY_COUNT=$(grep -E -o 'av-credentials-kicker">Date profesionale|<h2>Cristian Cătălin Smaranda</h2>' "$LIVE_HTML" | wc -l | tr -d ' ')
           RELEASE_HEADER=$(awk 'BEGIN{IGNORECASE=1} /^x-astrovip-release:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$LIVE_HDR")
 
           echo "Identity cards: $IDENTITY_COUNT"
