@@ -862,3 +862,66 @@ body:not(.guide-page) .av-hero-v2-subtitle{
     text-align:center!important;
   }
 }
+
+
+/* OPTICAL HERO TITLE CENTER LOCK — 2026-09-21 */
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:max-content!important;
+  max-width:100%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  text-align:center!important;
+  position:relative!important;
+  left:50%!important;
+  right:auto!important;
+  transform:translateX(-50%)!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-main,
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
+  display:block!important;
+  width:max-content!important;
+  max-width:100%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  text-align:center!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-main{
+  margin-top:0!important;
+  font-size:1em!important;
+  letter-spacing:.01em!important;
+  padding-left:.01em!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
+  margin-top:4px!important;
+  font-size:.52em!important;
+  line-height:1!important;
+  letter-spacing:.18em!important;
+  padding-left:.18em!important;
+}
+@media(min-width:431px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
+    margin-top:7px!important;
+    font-size:.56em!important;
+    letter-spacing:.19em!important;
+    padding-left:.19em!important;
+  }
+}
+@media(min-width:821px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
+    margin-top:6px!important;
+    font-size:.62em!important;
+    letter-spacing:.20em!important;
+    padding-left:.20em!important;
+  }
+}
