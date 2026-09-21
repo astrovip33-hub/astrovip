@@ -62,10 +62,9 @@
 
 <!-- Wordmark -->
 <g transform="translate(218 40)">
-  <text x="0" y="91" font-family="Georgia, 'Times New Roman', serif" font-size="94" font-weight="700" letter-spacing="1.2"
-        fill="url(#silver)" stroke="#6adfff" stroke-width=".8" filter="url(#cyanGlow)">ASTRO</text>
-  <text x="394" y="91" font-family="Georgia, 'Times New Roman', serif" font-size="94" font-weight="700" letter-spacing=".7"
-        fill="url(#gold)" stroke="#7f4d00" stroke-width="1" filter="url(#goldGlow)">VIP</text>
+  <text x="0" y="91" font-family="Georgia, 'Times New Roman', serif" font-size="94" font-weight="700" letter-spacing="1.2">
+    <tspan fill="url(#silver)" stroke="#6adfff" stroke-width=".8" filter="url(#cyanGlow)">ASTRO</tspan><tspan fill="url(#gold)" stroke="#7f4d00" stroke-width="1" filter="url(#goldGlow)" letter-spacing=".7">VIP</tspan>
+  </text>
 
   <line x1="5" y1="116" x2="640" y2="116" stroke="url(#cyan)" stroke-width="1.7" opacity=".85"/>
   <circle cx="323" cy="116" r="3.6" fill="#ffd85d" filter="url(#goldGlow)"/>
