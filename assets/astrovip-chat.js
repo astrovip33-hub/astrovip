@@ -23,11 +23,11 @@ const panel=document.createElement("section");panel.className="avchat-panel";pan
 document.body.append(launcher,panel);
 const desktopChatMq=window.matchMedia("(min-width:981px)");
 function placeLauncher(){
-  const desktopHost=document.querySelector(".av-langbar .wrap");
-  const useHeaderSlot=desktopChatMq.matches&&desktopHost;
-  launcher.classList.toggle("avchat-header-slot",!!useHeaderSlot);
+  const headerHost=document.querySelector(".av-langbar .wrap");
+  const useHeaderSlot=!!headerHost;
+  launcher.classList.toggle("avchat-header-slot",useHeaderSlot);
   if(useHeaderSlot){
-    if(launcher.parentNode!==desktopHost)desktopHost.appendChild(launcher);
+    if(launcher.parentNode!==headerHost)headerHost.appendChild(launcher);
   }else if(launcher.parentNode!==document.body){
     document.body.appendChild(launcher);
   }
