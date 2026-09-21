@@ -116,3 +116,41 @@
   content:none!important;
   display:none!important;
 }
+
+
+/* Italian full-pill flag — 2026-09-21 */
+.av-lang-switch a[href="/it/"]{
+  background:linear-gradient(90deg,#009246 0 33.333%,#ffffff 33.333% 66.666%,#ce2b37 66.666% 100%)!important;
+  color:transparent!important;
+  font-size:0!important;
+  text-shadow:none!important;
+}
+.av-lang-switch a[href="/it/"]::before{
+  content:none!important;
+  display:none!important;
+}
+.av-lang-switch a[href="/it/"]::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  border-radius:inherit!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.02) 48%,rgba(0,0,0,.10))!important;
+  pointer-events:none!important;
+}
+.av-lang-switch a[href="/zh/"]{
+  color:#fff2a8!important;
+  background:
+    radial-gradient(circle at 21% 35%,#ffde00 0 7%,transparent 7.5%),
+    radial-gradient(circle at 31% 22%,#ffde00 0 2.6%,transparent 3%),
+    radial-gradient(circle at 34% 36%,#ffde00 0 2.6%,transparent 3%),
+    radial-gradient(circle at 30% 50%,#ffde00 0 2.6%,transparent 3%),
+    linear-gradient(180deg,#ef1f2f,#b40013)!important;
+}
+.av-lang-switch a[href="/zh/"]::before{content:"🇨🇳"!important;font-size:12px!important}
+@media(max-width:820px){
+  .av-lang-switch{width:min(100%,390px);grid-template-columns:repeat(5,minmax(0,1fr))!important}
+}
+@media(max-width:360px){
+  .av-lang-switch{width:min(100%,340px)!important}
+}
