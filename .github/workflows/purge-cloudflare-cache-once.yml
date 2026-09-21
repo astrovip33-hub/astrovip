@@ -1,5 +1,5 @@
 name: Purge AstroVip Cloudflare cache once
-# audit-purge: 2026-09-20-variant1-approved-live
+# audit-purge: 2026-09-21-remove-duplicate-live
 
 on:
   push:
