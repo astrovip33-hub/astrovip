@@ -480,22 +480,28 @@
 }
 
 
-/* Hero-to-next-section gap fix — 2026-09-21 */
+/* Hero-to-next-section premium separation — 2026-09-21 */
+body:not(.guide-page) .hero.av-hero-v2{
+  margin-bottom:0!important;
+}
 body:not(.guide-page) .hero.av-hero-v2 + .freeq-home{
+  position:relative!important;
+  z-index:1!important;
   margin-top:0!important;
-  padding-top:18px!important;
+  padding-top:24px!important;
+  border-top:1px solid rgba(224,185,77,.22)!important;
+  background:
+    radial-gradient(ellipse at 50% 0,rgba(224,185,77,.07),transparent 34%),
+    linear-gradient(180deg,#060606 0%,#070707 100%)!important;
 }
 @media (max-width:820px){
   body:not(.guide-page) .hero.av-hero-v2 + .freeq-home{
-    margin-top:0!important;
-    padding-top:8px!important;
+    padding-top:16px!important;
+    border-top-color:rgba(224,185,77,.18)!important;
   }
 }
 @media (max-width:430px){
-  body:not(.guide-page) .hero.av-hero-v2{
-    margin-bottom:0!important;
-  }
   body:not(.guide-page) .hero.av-hero-v2 + .freeq-home{
-    padding-top:6px!important;
+    padding-top:14px!important;
   }
 }
