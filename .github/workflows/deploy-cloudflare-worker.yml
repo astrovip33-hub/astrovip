@@ -91,6 +91,27 @@ jobs:
           echo "::add-mask::$ACCOUNT_ID"
           echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
 
+      - name: Audit Vercel DNS records
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZONES=$(curl -fsS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones?name=astrovip.ro&status=active")
+          ZONE_ID=$(printf '%s' "$ZONES" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+          RECORDS=$(curl -fsS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?per_page=500")
+          printf '%s' "$RECORDS" | python3 -c 'import json,sys
+d=json.load(sys.stdin)
+for r in d.get("result", []):
+    name=r.get("name","")
+    content=r.get("content","")
+    if name in ("astrovip.ro","www.astrovip.ro") or "vercel" in name.lower() or "vercel" in content.lower():
+        print(f"DNS_AUDIT type={r.get('type')} name={name} content={content} proxied={r.get('proxied')} id={r.get('id')}")'
+
       - name: Deploy AstroVip directly to Cloudflare
         shell: bash
         run: |
