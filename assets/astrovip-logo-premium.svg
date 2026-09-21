@@ -1,41 +1,76 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-labelledby="title desc">
 <title id="title">AstroVip — Astrologie Premium</title>
-<desc id="desc">Logo AstroVip optimizat pentru web, cu emblemă verde neon și wordmark auriu pe fundal transparent.</desc>
+<desc id="desc">Logo AstroVip premium cu emblemă zodiacală cyan electric, stea aurie și wordmark argintiu-auriu pe fundal transparent.</desc>
 <defs>
-  <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#fff8cf"/>
-    <stop offset=".22" stop-color="#ffe46f"/>
-    <stop offset=".5" stop-color="#d8a92f"/>
-    <stop offset=".74" stop-color="#fff0a2"/>
-    <stop offset="1" stop-color="#9b6915"/>
+  <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffffff"/>
+    <stop offset=".22" stop-color="#dff8ff"/>
+    <stop offset=".48" stop-color="#9edcff"/>
+    <stop offset=".72" stop-color="#f7ffff"/>
+    <stop offset="1" stop-color="#78b8e8"/>
   </linearGradient>
-  <linearGradient id="n" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#baff9f"/>
-    <stop offset=".34" stop-color="#39ff14"/>
-    <stop offset=".72" stop-color="#10c843"/>
-    <stop offset="1" stop-color="#0a6b2d"/>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff7c8"/>
+    <stop offset=".18" stop-color="#ffe16a"/>
+    <stop offset=".48" stop-color="#f4a900"/>
+    <stop offset=".72" stop-color="#ffd75c"/>
+    <stop offset="1" stop-color="#a96000"/>
   </linearGradient>
-  <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-    <feGaussianBlur stdDeviation="3" result="b"/>
-    <feFlood flood-color="#39ff14" flood-opacity=".58"/>
+  <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#9effff"/>
+    <stop offset=".34" stop-color="#18e9ff"/>
+    <stop offset=".68" stop-color="#008dff"/>
+    <stop offset="1" stop-color="#5a5cff"/>
+  </linearGradient>
+  <radialGradient id="core" cx="50%" cy="50%" r="58%">
+    <stop offset="0" stop-color="#08172d"/>
+    <stop offset=".62" stop-color="#030811"/>
+    <stop offset="1" stop-color="#000"/>
+  </radialGradient>
+  <filter id="cyanGlow" x="-70%" y="-70%" width="240%" height="240%">
+    <feGaussianBlur stdDeviation="4" result="b"/>
+    <feFlood flood-color="#16dcff" flood-opacity=".72"/>
+    <feComposite in2="b" operator="in"/>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="goldGlow" x="-70%" y="-70%" width="240%" height="240%">
+    <feGaussianBlur stdDeviation="3.1" result="b"/>
+    <feFlood flood-color="#ffc72f" flood-opacity=".62"/>
     <feComposite in2="b" operator="in"/>
     <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
 </defs>
 
-<g transform="translate(18 10)">
-  <path d="M92 6 L111 80 L184 101 L111 122 L92 196 L73 122 L0 101 L73 80 Z"
-        fill="url(#n)" stroke="#d8ffbf" stroke-width="2.6" filter="url(#glow)"/>
-  <path d="M92 24 L105 86 L165 101 L105 116 L92 178 L79 116 L19 101 L79 86 Z"
-        fill="#6cff55" opacity=".52"/>
-  <circle cx="92" cy="101" r="26" fill="#020604" stroke="#8dff72" stroke-width="3"/>
+<!-- Emblem -->
+<g transform="translate(16 12)">
+  <circle cx="94" cy="98" r="82" fill="url(#core)" stroke="url(#cyan)" stroke-width="4" filter="url(#cyanGlow)"/>
+  <circle cx="94" cy="98" r="68" fill="none" stroke="#68f4ff" stroke-width="1.4" opacity=".58"/>
+  <circle cx="94" cy="98" r="55" fill="none" stroke="#e6bd42" stroke-width="1.35" opacity=".82"/>
+  <g fill="#c9f8ff" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="700" text-anchor="middle">
+    <text x="94" y="29">♈</text><text x="132" y="42">♊</text><text x="158" y="75">♌</text>
+    <text x="158" y="122">♎</text><text x="132" y="157">♐</text><text x="94" y="171">♒</text>
+    <text x="56" y="157">♓</text><text x="30" y="122">♑</text><text x="30" y="75">♏</text><text x="56" y="42">♉</text>
+  </g>
+  <path d="M94 38 L105 83 L149 98 L105 113 L94 158 L83 113 L39 98 L83 83 Z"
+        fill="url(#gold)" stroke="#fff0a0" stroke-width="1.6" filter="url(#goldGlow)"/>
+  <path d="M94 57 L101 90 L133 98 L101 106 L94 139 L87 106 L55 98 L87 90 Z"
+        fill="#fff8d2" opacity=".78"/>
+  <circle cx="94" cy="98" r="8.5" fill="#fff4a9" filter="url(#goldGlow)"/>
+  <ellipse cx="94" cy="98" rx="88" ry="28" fill="none" stroke="url(#cyan)" stroke-width="2.1" transform="rotate(-12 94 98)" opacity=".95"/>
+  <circle cx="176" cy="82" r="4.5" fill="#ffd85d" filter="url(#goldGlow)"/>
 </g>
 
-<g transform="translate(225 38)">
-  <text x="0" y="92" font-family="Georgia, 'Times New Roman', serif" font-size="96" font-weight="700"
-        letter-spacing="1.2" fill="url(#g)" stroke="#7a5312" stroke-width="1.2">ASTROVIP</text>
-  <line x1="8" y1="117" x2="640" y2="117" stroke="#c99d36" stroke-width="1.4" opacity=".8"/>
-  <text x="316" y="159" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
-        font-size="21" font-weight="700" letter-spacing="8.5" fill="#f4df91">ASTROLOGIE PREMIUM</text>
+<!-- Wordmark -->
+<g transform="translate(218 40)">
+  <text x="0" y="91" font-family="Georgia, 'Times New Roman', serif" font-size="94" font-weight="700" letter-spacing="1.2"
+        fill="url(#silver)" stroke="#6adfff" stroke-width=".8" filter="url(#cyanGlow)">ASTRO</text>
+  <text x="394" y="91" font-family="Georgia, 'Times New Roman', serif" font-size="94" font-weight="700" letter-spacing=".7"
+        fill="url(#gold)" stroke="#7f4d00" stroke-width="1" filter="url(#goldGlow)">VIP</text>
+
+  <line x1="5" y1="116" x2="640" y2="116" stroke="url(#cyan)" stroke-width="1.7" opacity=".85"/>
+  <circle cx="323" cy="116" r="3.6" fill="#ffd85d" filter="url(#goldGlow)"/>
+
+  <text x="322" y="158" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="20" font-weight="700" letter-spacing="8.2" fill="#ffe28a">ASTROLOGIE PREMIUM</text>
 </g>
 </svg>
