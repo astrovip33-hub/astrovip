@@ -794,3 +794,14 @@ body:not(.guide-page) .av-lang-switch a[href="/"]::before{
     text-shadow:0 0 10px rgba(57,255,20,.275)!important;
   }
 }
+
+
+/* Premium title neon outline — 2026-09-21 */
+body:not(.guide-page) .av-hero-v2-title,
+body:not(.guide-page) .av-hero-v2-title span{
+  -webkit-text-stroke:1.2px #39FF14!important;
+  text-shadow:
+    0 0 3px rgba(57,255,20,.55),
+    0 0 8px rgba(57,255,20,.35),
+    0 2px 10px rgba(0,0,0,.65)!important;
+}
