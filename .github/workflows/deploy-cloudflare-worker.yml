@@ -91,21 +91,6 @@ jobs:
           echo "::add-mask::$ACCOUNT_ID"
           echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
 
-      - name: Audit Vercel DNS records
-        shell: bash
-        run: |
-          set -euo pipefail
-          ZONES=$(curl -fsS \
-            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-            -H "Content-Type: application/json" \
-            "https://api.cloudflare.com/client/v4/zones?name=astrovip.ro&status=active")
-          ZONE_ID=$(printf '%s' "$ZONES" | jq -r '.result[0].id // empty')
-          RECORDS=$(curl -fsS \
-            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-            -H "Content-Type: application/json" \
-            "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?per_page=500")
-          printf '%s' "$RECORDS" | jq -r '.result[] | select((.name=="astrovip.ro") or (.name=="www.astrovip.ro") or ((.name|ascii_downcase|contains("vercel"))) or ((.content|ascii_downcase|contains("vercel")))) | "DNS_AUDIT type=\(.type) name=\(.name) content=\(.content) proxied=\(.proxied) id=\(.id)"'
-
       - name: Deploy AstroVip directly to Cloudflare
         shell: bash
         run: |
