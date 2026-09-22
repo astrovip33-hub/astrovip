@@ -1,4 +1,4 @@
-name: AstroVip Cloudflare Preview Mobile Audit
+name: AstroVip Final Local Performance Audit
 
 on:
   push:
@@ -13,22 +13,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run Lighthouse on Cloudflare version preview
+      - name: Start local server
+        shell: bash
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 >/tmp/http.log 2>&1 &
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8080/ >/dev/null && exit 0; sleep 1; done
+          exit 1
+      - name: Run Lighthouse mobile and desktop
         shell: bash
         run: |
           CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
           export CHROME_PATH
-          URL="https://18a75d39-astrovip.astrovip33.workers.dev/"
-          npx --yes lighthouse@latest "$URL" --output=json --output-path=/tmp/mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-      - name: Print mobile metrics
+          npx --yes lighthouse@latest http://127.0.0.1:8080/ --output=json --output-path=/tmp/mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          npx --yes lighthouse@latest http://127.0.0.1:8080/ --preset=desktop --output=json --output-path=/tmp/desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+      - name: Print final metrics
         shell: bash
         run: |
           node <<'NODE'
-          const j=require('/tmp/mobile.json'),a=j.audits;
-          console.log('SCORE='+Math.round(j.categories.performance.score*100));
-          for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight']) console.log(id+'='+(a[id]?.displayValue||a[id]?.numericValue||''));
-          for(const id of ['unused-javascript','unused-css-rules','render-blocking-insight','third-parties-insight']){
-            const x=a[id]; if(!x) continue; console.log('AUDIT '+id+' '+(x.displayValue||''));
-            if(x.details?.items) console.log(JSON.stringify(x.details.items.slice(0,12)));
+          const fs=require('fs');
+          for(const mode of ['mobile','desktop']){
+            const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8')),a=j.audits;
+            console.log('=== '+mode.toUpperCase()+' ===');
+            console.log('SCORE='+Math.round(j.categories.performance.score*100));
+            for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight']) console.log(id+'='+(a[id]?.displayValue||a[id]?.numericValue||''));
+            for(const id of ['lcp-breakdown-insight','lcp-discovery-insight','render-blocking-insight','unused-css-rules','unused-javascript']){
+              const x=a[id]; if(!x) continue; console.log('AUDIT '+id+' '+(x.displayValue||''));
+              if(x.details?.items) console.log(JSON.stringify(x.details.items.slice(0,12)));
+            }
           }
           NODE
