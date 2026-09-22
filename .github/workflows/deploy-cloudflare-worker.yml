@@ -165,6 +165,36 @@ jobs:
             exit 26
           fi
 
+          echo "Checking Local Space case-study collection"
+          LOCAL_SPACE_URLS=(
+            "https://astrovip.ro/local-space/studii-de-caz/"
+            "https://astrovip.ro/local-space/studii-de-caz/soare-calarasi-108/"
+            "https://astrovip.ro/local-space/studii-de-caz/luna-sulina-73/"
+            "https://astrovip.ro/local-space/studii-de-caz/mercur-medgidia-97/"
+            "https://astrovip.ro/local-space/studii-de-caz/venus-constanta-98/"
+            "https://astrovip.ro/local-space/studii-de-caz/marte-ploiesti-349/"
+            "https://astrovip.ro/local-space/studii-de-caz/jupiter-iasi-17/"
+            "https://astrovip.ro/local-space/studii-de-caz/saturn-targoviste-315/"
+            "https://astrovip.ro/local-space/studii-de-caz/uranus-vratsa-237/"
+            "https://astrovip.ro/local-space/studii-de-caz/neptun-plovdiv-206/"
+            "https://astrovip.ro/local-space/studii-de-caz/pluto-slatina-272/"
+          )
+          for URL in "${LOCAL_SPACE_URLS[@]}"
+          do
+            STATUS=$(curl -sS -o /tmp/local-space-check.html -w '%{http_code}' --retry 8 --retry-delay 4 "$URL")
+            if [ "$STATUS" != "200" ]; then
+              echo "::error::$URL returned HTTP $STATUS instead of 200."
+              exit 27
+            fi
+          done
+          HUB_HTML=$(curl -sS --retry 8 --retry-delay 4 "https://astrovip.ro/local-space/studii-de-caz/")
+          HUB_COUNT=$(printf '%s' "$HUB_HTML" | grep -o 'class="case"' | wc -l | tr -d ' ')
+          if [ "$HUB_COUNT" != "10" ]; then
+            echo "::error::Local Space hub exposes $HUB_COUNT case cards instead of 10."
+            exit 28
+          fi
+          echo "Local Space hub and all 10 case-study pages verified."
+
           echo "Checking canonical apex"
           APEX_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/")
           if [ "$APEX_STATUS" != "200" ]; then
