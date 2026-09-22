@@ -19,7 +19,7 @@ jobs:
       - name: Capture layout shifts
         shell: bash
         run: |
-          cat > /tmp/probe.cjs <<'NODE'
+          cat > probe.cjs <<'NODE'
           const puppeteer=require('puppeteer-core');
           (async()=>{
             const executablePath=process.env.CHROME_PATH || '/usr/bin/google-chrome';
@@ -75,4 +75,4 @@ jobs:
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           export CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
-          node /tmp/probe.cjs
+          node probe.cjs
