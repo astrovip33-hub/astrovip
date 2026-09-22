@@ -1,0 +1,91 @@
+name: AstroVip Cloudflare Performance Preview
+
+on:
+  push:
+    branches:
+      - "perf/cwv-targeted-20260922-v2"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "astrovip-cwv-preview"
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare isolated Worker config
+        shell: bash
+        run: |
+          cat > wrangler.performance-preview.jsonc <<'EOF'
+          {
+            "name": "astrovip-perf-preview",
+            "compatibility_date": "2026-09-15",
+            "workers_dev": true,
+            "assets": {
+              "directory": ".",
+              "html_handling": "auto-trailing-slash",
+              "not_found_handling": "none"
+            }
+          }
+          EOF
+
+      - name: Normalize Cloudflare token
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOKEN=$(printf '%s' "$CLOUDFLARE_API_TOKEN" | tr -d '\r\n')
+          TOKEN=$(printf '%s' "$TOKEN" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')
+          TOKEN="${TOKEN#Bearer }"
+          TOKEN="${TOKEN#bearer }"
+          TOKEN="${TOKEN#\"}"
+          TOKEN="${TOKEN%\"}"
+          echo "::add-mask::$TOKEN"
+          echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Deploy isolated Cloudflare preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy --config wrangler.performance-preview.jsonc
+
+      - name: Audit preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-perf-preview.astrovip33.workers.dev/"
+          for i in $(seq 1 20); do
+            CODE=$(curl -sS -o /dev/null -w '%{http_code}' "$URL" || true)
+            echo "Preview HTTP $CODE"
+            [ "$CODE" = "200" ] && break
+            sleep 3
+          done
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          export CHROME_PATH
+          npx --yes lighthouse@latest "$URL" --output=json --output-path=/tmp/mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          npx --yes lighthouse@latest "$URL" --preset=desktop --output=json --output-path=/tmp/desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          node <<'NODE'
+          const fs=require('fs');
+          for(const mode of ['mobile','desktop']){
+            const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8'));
+            const a=j.audits;
+            console.log('ASTROVIP_PREVIEW_'+mode.toUpperCase()+'_SCORE='+Math.round(j.categories.performance.score*100));
+            console.log('ASTROVIP_PREVIEW_'+mode.toUpperCase()+'_FCP='+a['first-contentful-paint'].displayValue);
+            console.log('ASTROVIP_PREVIEW_'+mode.toUpperCase()+'_LCP='+a['largest-contentful-paint'].displayValue);
+            console.log('ASTROVIP_PREVIEW_'+mode.toUpperCase()+'_TBT='+a['total-blocking-time'].displayValue);
+            console.log('ASTROVIP_PREVIEW_'+mode.toUpperCase()+'_CLS='+a['cumulative-layout-shift'].displayValue);
+            console.log('ASTROVIP_PREVIEW_'+mode.toUpperCase()+'_SI='+a['speed-index'].displayValue);
+            console.log('ASTROVIP_PREVIEW_'+mode.toUpperCase()+'_BYTES='+(a['total-byte-weight']?.displayValue||''));
+            for (const [id,x] of Object.entries(a)) {
+              if (!/(layout|shift|cls|largest-contentful|lcp)/i.test(id+' '+(x.title||''))) continue;
+              if(x.details?.items?.length) console.log('DETAIL '+mode+' '+id+' '+JSON.stringify(x.details.items.slice(0,12)));
+            }
+          }
+          NODE
