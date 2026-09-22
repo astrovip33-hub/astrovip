@@ -181,9 +181,15 @@ jobs:
           echo "Checking footer de-duplication on live homepage"
           LIVE_HTML=$(mktemp)
           LIVE_HDR=$(mktemp)
-          EXPECTED_RELEASE=$(awk 'BEGIN{IGNORECASE=1} /X-AstroVip-Release:/ {print $2; exit}' _headers)
+          EXPECTED_RELEASE=$(python3 - <<'PY'
+          import re
+          html=open("index.html",encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
+          print(m.group(1) if m else "")
+          PY
+          )
           if [ -z "$EXPECTED_RELEASE" ]; then
-            echo "::error::Could not resolve X-AstroVip-Release from _headers."
+            echo "::error::Could not resolve astrovip-release from index.html."
             exit 26
           fi
           echo "Expected release: $EXPECTED_RELEASE"
@@ -192,10 +198,18 @@ jobs:
           IDENTITY_COUNT=$( { grep -o 'av-identity-image-card' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
           LEGACY_COUNT=$( { grep -E -o 'av-credentials-kicker">Date profesionale|<h2>Cristian Cătălin Smaranda</h2>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
           RELEASE_HEADER=$(awk 'BEGIN{IGNORECASE=1} /^x-astrovip-release:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$LIVE_HDR")
+          LIVE_RELEASE=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
+          print(m.group(1) if m else "")
+          PY
+          )
 
           echo "Identity cards: $IDENTITY_COUNT"
           echo "Legacy professional cards: $LEGACY_COUNT"
-          echo "Release header: $RELEASE_HEADER"
+          echo "Release header (informational): $RELEASE_HEADER"
+          echo "Live HTML release: $LIVE_RELEASE"
 
           if [ "$IDENTITY_COUNT" != "1" ]; then
             echo "::error::Live homepage does not contain exactly one premium professional identity card."
@@ -207,8 +221,8 @@ jobs:
             exit 25
           fi
 
-          if [ "$RELEASE_HEADER" != "$EXPECTED_RELEASE" ]; then
-            echo "::error::Live homepage release '$RELEASE_HEADER' does not match expected '$EXPECTED_RELEASE'."
+          if [ "$LIVE_RELEASE" != "$EXPECTED_RELEASE" ]; then
+            echo "::error::Live homepage HTML release '$LIVE_RELEASE' does not match expected '$EXPECTED_RELEASE'."
             exit 26
           fi
 
