@@ -80,7 +80,7 @@
       manage.id='av-consent-manage';
       manage.textContent='Setări cookie';
       manage.hidden=true;
-      const footer=document.querySelector('footer .wrap')||document.querySelector('footer')||document.body;
+      const footer=document.querySelector('.av-footer-premium-single')||document.querySelector('footer .wrap')||document.querySelector('footer')||document.body;
       footer.appendChild(manage);
     }
 
