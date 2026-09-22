@@ -1,0 +1,412 @@
+/* AstroVip — desktop premium v2 — 2026-09-22
+   Desktop only. Mobile <=820px is intentionally untouched. */
+@media (min-width:821px){
+  html{scroll-padding-top:122px}
+  body:not(.guide-page){
+    overflow-x:hidden!important;
+    background:
+      radial-gradient(circle at 50% -8%,rgba(218,184,91,.055),transparent 28%),
+      linear-gradient(180deg,#020302 0%,#040404 46%,#060606 100%)!important;
+  }
+  body:not(.guide-page)::before{display:none!important}
+  body:not(.guide-page) main#top{overflow:clip!important;background:transparent!important}
+  body:not(.guide-page) .wrap{
+    width:min(1280px,calc(100% - 64px))!important;
+    margin-inline:auto!important;
+  }
+
+  /* Header */
+  body:not(.guide-page) .top{
+    background:linear-gradient(180deg,rgba(9,9,8,.985),rgba(2,2,2,.985))!important;
+    border-bottom:1px solid rgba(225,188,78,.34)!important;
+    box-shadow:0 12px 30px rgba(0,0,0,.46),inset 0 -1px 0 rgba(255,240,172,.05)!important;
+    backdrop-filter:blur(14px)!important;
+  }
+  body:not(.guide-page) .nav{
+    width:min(1500px,calc(100% - 48px))!important;
+    min-height:78px!important;
+    margin:auto!important;
+    padding:7px 0!important;
+    gap:14px!important;
+  }
+  body:not(.guide-page) .top .brand.av-brand-premium{
+    width:212px!important;height:54px!important;max-width:212px!important;flex:0 0 212px!important;
+  }
+  body:not(.guide-page) .top .av-brand-logo{
+    width:100%!important;height:100%!important;object-fit:contain!important;object-position:left center!important;
+    filter:brightness(1.06) contrast(1.045) saturate(1.04)!important;
+  }
+  body:not(.guide-page) .menu{
+    flex:1 1 auto!important;justify-content:center!important;gap:3px!important;min-width:0!important;
+  }
+  body:not(.guide-page) .menu>a,
+  body:not(.guide-page) .av-menu-trigger{
+    min-height:42px!important;padding:9px 9px!important;border-radius:10px!important;
+    font-size:13px!important;line-height:1.15!important;font-weight:900!important;white-space:nowrap!important;
+  }
+  body:not(.guide-page) .menu>a:hover,
+  body:not(.guide-page) .av-menu-trigger:hover,
+  body:not(.guide-page) .av-menu-group:focus-within>.av-menu-trigger{
+    background:rgba(224,185,77,.075)!important;border-color:rgba(224,185,77,.24)!important;color:#fff1b5!important;
+  }
+  body:not(.guide-page) .nav-book{
+    min-height:43px!important;padding:9px 15px!important;font-size:12.5px!important;white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hamb{display:none!important}
+  body:not(.guide-page) .av-langbar{
+    background:#030303!important;border-top:0!important;border-bottom:1px solid rgba(224,185,77,.18)!important;
+  }
+  body:not(.guide-page) .av-langbar .wrap{
+    width:min(1500px,calc(100% - 48px))!important;min-height:42px!important;padding:4px 0!important;
+    display:flex!important;justify-content:flex-end!important;align-items:center!important;
+  }
+  body:not(.guide-page) .av-lang-switch{width:auto!important;gap:7px!important}
+  body:not(.guide-page) .av-lang-switch a{
+    min-width:46px!important;min-height:30px!important;padding:4px 10px!important;border-radius:9px!important;
+  }
+
+  /* Hero */
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    display:block!important;margin:0!important;padding:0 0 42px!important;min-height:0!important;
+    background:
+      radial-gradient(circle at 50% 0%,rgba(36,128,66,.12),transparent 31%),
+      linear-gradient(180deg,#020302 0%,#040504 58%,#070707 100%)!important;
+    border:0!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual{
+    width:min(1420px,calc(100% - 48px))!important;max-width:1420px!important;margin:0 auto!important;
+    overflow:hidden!important;border:1px solid rgba(224,185,77,.24)!important;border-top:0!important;
+    border-radius:0 0 24px 24px!important;background:#020302!important;
+    box-shadow:0 24px 64px rgba(0,0,0,.44)!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual picture,
+  body:not(.guide-page) .av-hero-v2-visual img{display:block!important;width:100%!important}
+  body:not(.guide-page) .av-hero-v2-visual img{
+    height:auto!important;aspect-ratio:1672/941!important;object-fit:cover!important;object-position:center!important;
+    filter:saturate(1.05) contrast(1.025) brightness(.985)!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual::before{
+    background:
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,transparent 64%,rgba(0,0,0,.30) 100%),
+      radial-gradient(circle at 50% 47%,transparent 0 54%,rgba(0,0,0,.07) 76%,rgba(0,0,0,.30) 100%)!important;
+  }
+  body:not(.guide-page) .av-hero-v2-sidecopy{display:none!important}
+  body:not(.guide-page) .av-hero-v2-copy{
+    width:min(1040px,calc(100% - 64px))!important;margin:auto!important;padding:28px 0 0!important;text-align:center!important;
+  }
+  body:not(.guide-page) .av-hero-v2-title{
+    margin:0!important;font-size:clamp(54px,5vw,76px)!important;line-height:.94!important;letter-spacing:.012em!important;
+  }
+  body:not(.guide-page) .av-hero-v2-title span{margin-top:6px!important;font-size:.58em!important;letter-spacing:.19em!important}
+  body:not(.guide-page) .av-hero-v2-subtitle{
+    margin-top:14px!important;font-size:clamp(15px,1.25vw,19px)!important;letter-spacing:.14em!important;
+  }
+  body:not(.guide-page) .av-hero-v2-actions{
+    display:flex!important;justify-content:center!important;gap:12px!important;margin-top:19px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-actions a{
+    min-height:46px!important;padding:10px 22px!important;font-size:13px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-cards{
+    width:min(980px,calc(100% - 96px))!important;max-width:980px!important;margin:22px auto 0!important;
+    display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card{
+    min-height:126px!important;padding:15px 18px 14px!important;border:2px solid rgba(57,255,20,.82)!important;
+    border-radius:17px!important;background:
+      radial-gradient(circle at 50% 0%,rgba(57,255,20,.09),transparent 48%),
+      linear-gradient(180deg,#0e130e 0%,#040504 100%)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 0 9px rgba(57,255,20,.20),0 13px 30px rgba(0,0,0,.34)!important;
+  }
+  body:not(.guide-page) .av-hero-v2-icon{
+    width:38px!important;height:38px!important;margin:0 auto 6px!important;font-size:20px!important;color:#39ff14!important;
+    border-color:rgba(57,255,20,.48)!important;text-shadow:none!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card h3{
+    margin:0 0 5px!important;font-size:17px!important;line-height:1.05!important;color:#f1cf73!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card p{
+    max-width:94%!important;margin:0 auto!important;font-size:11.4px!important;line-height:1.26!important;
+    font-weight:850!important;letter-spacing:.025em!important;color:#fffdf8!important;
+  }
+  body:not(.guide-page) .av-hero-v2-bottom{
+    width:min(980px,calc(100% - 96px))!important;max-width:980px!important;margin:11px auto 0!important;
+    padding:12px 14px!important;border-top:1px solid rgba(224,185,77,.32)!important;border-bottom:1px solid rgba(224,185,77,.32)!important;
+    background:linear-gradient(180deg,#080808,#030303)!important;color:#fff!important;font-size:13px!important;
+    line-height:1.2!important;letter-spacing:.11em!important;font-weight:950!important;
+  }
+
+  /* Section rhythm */
+  body:not(.guide-page) main#top>section:not(.hero):not(.av-credentials):not(.trust-refs){
+    padding-top:54px!important;padding-bottom:54px!important;
+  }
+  body:not(.guide-page) #intrebare-gratuita{padding-bottom:22px!important}
+  body:not(.guide-page) #harta-mea-cta{padding-top:0!important;padding-bottom:46px!important}
+  body:not(.guide-page) .title,
+  body:not(.guide-page) .avkh-title,
+  body:not(.guide-page) #oportunitati-astrovip .avx-title{
+    max-width:920px!important;margin:0 auto 28px!important;text-align:center!important;
+  }
+  body:not(.guide-page) .title h2,
+  body:not(.guide-page) .avkh-title h2,
+  body:not(.guide-page) #oportunitati-astrovip .avx-title h2{
+    margin:7px 0 11px!important;font-size:clamp(36px,3.1vw,50px)!important;line-height:1.04!important;letter-spacing:-.02em!important;
+  }
+  body:not(.guide-page) .title p,
+  body:not(.guide-page) .avkh-title p,
+  body:not(.guide-page) #oportunitati-astrovip .avx-title p,
+  body:not(.guide-page) .section-copy{
+    max-width:800px!important;margin-left:auto!important;margin-right:auto!important;font-size:16.5px!important;line-height:1.62!important;
+  }
+
+  /* Shared premium cards */
+  body:not(.guide-page) .card,
+  body:not(.guide-page) .step,
+  body:not(.guide-page) .avkh-card,
+  body:not(.guide-page) .seo-hub-card,
+  body:not(.guide-page) .box,
+  body:not(.guide-page) .price-card,
+  body:not(.guide-page) .av-case-showcase-card{
+    border-radius:20px!important;
+    border-color:rgba(224,185,77,.30)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 15px 38px rgba(0,0,0,.26)!important;
+  }
+
+  /* Top CTAs */
+  body:not(.guide-page) .freeq-home-card,
+  body:not(.guide-page) .natal-home-card{
+    max-width:1180px!important;margin:auto!important;padding:27px 30px!important;border-radius:22px!important;
+    background:linear-gradient(180deg,#10110e 0%,#050505 100%)!important;
+    border:1px solid rgba(224,185,77,.42)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 42px rgba(0,0,0,.30)!important;
+  }
+  body:not(.guide-page) .freeq-home-card{
+    display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:30px!important;
+  }
+  body:not(.guide-page) .natal-home-card{
+    display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:30px!important;
+  }
+  body:not(.guide-page) .freeq-home-card h2,
+  body:not(.guide-page) .natal-home-card h2{font-size:clamp(30px,2.5vw,40px)!important;line-height:1.07!important}
+  body:not(.guide-page) .freeq-home-cta a,
+  body:not(.guide-page) .natal-home-card .cta{min-width:210px!important}
+
+  /* Knowledge */
+  body:not(.guide-page) .avkh-grid{
+    display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important;align-items:stretch!important;
+  }
+  body:not(.guide-page) .avkh-card{
+    height:100%!important;min-width:0!important;padding:25px!important;display:flex!important;flex-direction:column!important;
+  }
+  body:not(.guide-page) .avkh-card h3{font-size:28px!important}
+  body:not(.guide-page) .avkh-card p{font-size:15px!important;line-height:1.55!important}
+  body:not(.guide-page) .avkh-primary{margin-top:auto!important}
+
+  /* Services */
+  body:not(.guide-page) #servicii .grid{
+    display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important;align-items:stretch!important;
+  }
+  body:not(.guide-page) #servicii .card{
+    height:100%!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;min-width:0!important;
+  }
+  body:not(.guide-page) #servicii .card>img,
+  body:not(.guide-page) #servicii .card>.service-art-portrait{
+    width:100%!important;height:235px!important;min-height:235px!important;max-height:235px!important;
+    object-fit:cover!important;object-position:center!important;aspect-ratio:auto!important;
+  }
+  body:not(.guide-page) #servicii .card .pad{
+    padding:20px!important;display:flex!important;flex-direction:column!important;flex:1 1 auto!important;
+  }
+  body:not(.guide-page) #servicii .card h3{font-size:22px!important}
+  body:not(.guide-page) #servicii .card p{font-size:15px!important;line-height:1.55!important}
+  body:not(.guide-page) #servicii .card .btn2{margin-top:auto!important;width:100%!important;justify-content:center!important}
+
+  /* Opportunity cards */
+  body:not(.guide-page) #oportunitati-astrovip .avx-card{
+    max-width:1160px!important;margin:18px auto!important;padding:18px!important;
+    display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.04fr)!important;gap:26px!important;align-items:center!important;
+    border-radius:22px!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-visual{
+    width:100%!important;min-height:300px!important;max-height:330px!important;border-radius:18px!important;overflow:hidden!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-copy{padding:20px 18px!important}
+  body:not(.guide-page) #oportunitati-astrovip .avx-copy h3{font-size:30px!important;line-height:1.08!important}
+  body:not(.guide-page) #oportunitati-astrovip .avx-copy p{font-size:15px!important;line-height:1.55!important}
+
+  /* Method */
+  body:not(.guide-page) #metoda .steps{
+    display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important;align-items:stretch!important;
+  }
+  body:not(.guide-page) #metoda .step{height:100%!important;padding:22px!important}
+  body:not(.guide-page) #metoda .step h3{font-size:20px!important}
+  body:not(.guide-page) #metoda .step p{font-size:14.5px!important;line-height:1.55!important}
+
+  /* Case studies */
+  body:not(.guide-page) .av-case-showcase-frame{padding:24px!important;border-radius:24px!important}
+  body:not(.guide-page) .av-case-showcase-grid{
+    display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;align-items:stretch!important;
+  }
+  body:not(.guide-page) .av-case-showcase-card{
+    height:100%!important;display:flex!important;flex-direction:column!important;min-width:0!important;overflow:hidden!important;
+  }
+  body:not(.guide-page) .av-case-showcase-visual{aspect-ratio:16/9!important;overflow:hidden!important;margin:0!important}
+  body:not(.guide-page) .av-case-showcase-visual img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+  body:not(.guide-page) .av-case-showcase-copy{
+    padding:18px!important;display:flex!important;flex-direction:column!important;flex:1 1 auto!important;
+  }
+  body:not(.guide-page) .av-case-showcase-copy h3{font-size:21px!important;line-height:1.18!important}
+  body:not(.guide-page) .av-case-showcase-lead{font-size:14.5px!important;line-height:1.55!important}
+  body:not(.guide-page) .av-case-showcase-cta{margin-top:auto!important;width:100%!important;justify-content:center!important}
+
+  /* Two-column editorial blocks */
+  body:not(.guide-page) #relocare>.wrap.split,
+  body:not(.guide-page) .why>.wrap.split,
+  body:not(.guide-page) #astrologie-geografica .split{
+    display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:34px!important;align-items:center!important;
+  }
+  body:not(.guide-page) #relocare img,
+  body:not(.guide-page) .why .portrait-wrap,
+  body:not(.guide-page) .why .portrait-wrap img{
+    width:100%!important;height:410px!important;min-height:410px!important;max-height:410px!important;
+    object-fit:cover!important;object-position:center!important;
+  }
+  body:not(.guide-page) .why .portrait-wrap{overflow:hidden!important;border-radius:22px!important}
+  body:not(.guide-page) .section-heading{font-size:clamp(32px,2.8vw,44px)!important;line-height:1.06!important}
+
+  /* Pricing */
+  body:not(.guide-page) #tarife .price-grid{max-width:760px!important;margin:auto!important}
+  body:not(.guide-page) #tarife .price-card{padding:30px!important}
+  body:not(.guide-page) #tarife .price{font-size:clamp(42px,4vw,58px)!important}
+
+  /* Editorial grids */
+  body:not(.guide-page) #ghid-astrologie .grid,
+  body:not(.guide-page) #intrebari-frecvente .grid,
+  body:not(.guide-page) #blog-recent .article-grid,
+  body:not(.guide-page) #articole .article-grid{
+    display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;align-items:stretch!important;
+  }
+  body:not(.guide-page) #ghid-astrologie .card,
+  body:not(.guide-page) #intrebari-frecvente .card,
+  body:not(.guide-page) #blog-recent .article-card,
+  body:not(.guide-page) #articole .article-card{
+    height:100%!important;display:flex!important;flex-direction:column!important;min-width:0!important;
+  }
+  body:not(.guide-page) #ghid-astrologie .card .pad,
+  body:not(.guide-page) #intrebari-frecvente .card .pad,
+  body:not(.guide-page) #blog-recent .article-card .pad,
+  body:not(.guide-page) #articole .article-card .pad{
+    display:flex!important;flex-direction:column!important;flex:1 1 auto!important;padding:20px!important;
+  }
+  body:not(.guide-page) #ghid-astrologie .card .btn2,
+  body:not(.guide-page) #blog-recent .article-card .btn2,
+  body:not(.guide-page) #articole .article-card .btn2{margin-top:auto!important}
+
+  /* SEO hub */
+  body:not(.guide-page) #ghiduri-seo .seo-hub-grid{
+    display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:13px!important;
+  }
+  body:not(.guide-page) #ghiduri-seo .seo-hub-card{height:100%!important;margin:0!important;padding:19px!important}
+
+  /* Forms */
+  body:not(.guide-page) #programari .booking-wrap{max-width:1040px!important;margin:auto!important}
+  body:not(.guide-page) #programari .box{padding:28px!important}
+  body:not(.guide-page) #contact .contact-grid{
+    display:grid!important;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;gap:18px!important;align-items:stretch!important;
+  }
+  body:not(.guide-page) #contact .box{height:100%!important;padding:28px!important}
+
+  /* Credentials and trust */
+  body:not(.guide-page) .av-credentials{padding:42px 0 34px!important}
+  body:not(.guide-page) .av-credentials-shell{
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important;align-items:stretch!important;
+  }
+  body:not(.guide-page) .av-credentials-card{height:100%!important}
+  body:not(.guide-page) .av-identity-figure img{width:100%!important;height:auto!important;aspect-ratio:16/9!important;object-fit:cover!important}
+  body:not(.guide-page) #repere-incredere{padding:28px 0 30px!important}
+  body:not(.guide-page) .trust-icons-only{gap:18px!important}
+  body:not(.guide-page) .av-footer-premium-single.av-footer-premium-v2{max-width:1180px!important;margin:auto!important}
+
+  /* Chat stays clear of content */
+  body:not(.guide-page) .avchat-launcher{right:22px!important;bottom:24px!important}
+  body:not(.guide-page) .avchat-panel{right:22px!important;bottom:86px!important}
+
+  /* Desktop consent */
+  body:not(.guide-page) .av-consent{
+    left:22px!important;right:auto!important;bottom:18px!important;width:min(760px,calc(100vw - 44px))!important;max-width:760px!important;margin:0!important;
+  }
+}
+
+/* Tablet / compact desktop */
+@media (min-width:821px) and (max-width:1100px){
+  body:not(.guide-page) .wrap{width:calc(100% - 36px)!important}
+  body:not(.guide-page) .av-hero-v2-visual{width:calc(100% - 28px)!important}
+  body:not(.guide-page) .av-hero-v2-copy,
+  body:not(.guide-page) .av-hero-v2-cards,
+  body:not(.guide-page) .av-hero-v2-bottom{width:calc(100% - 44px)!important}
+  body:not(.guide-page) .avkh-grid,
+  body:not(.guide-page) #servicii .grid,
+  body:not(.guide-page) .av-case-showcase-grid,
+  body:not(.guide-page) #ghid-astrologie .grid,
+  body:not(.guide-page) #intrebari-frecvente .grid,
+  body:not(.guide-page) #blog-recent .article-grid,
+  body:not(.guide-page) #articole .article-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body:not(.guide-page) #ghiduri-seo .seo-hub-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  body:not(.guide-page) #metoda .steps{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  body:not(.guide-page) #oportunitati-astrovip .avx-card{grid-template-columns:1fr!important}
+  body:not(.guide-page) #oportunitati-astrovip .avx-visual{min-height:280px!important}
+  body:not(.guide-page) #relocare>.wrap.split,
+  body:not(.guide-page) .why>.wrap.split,
+  body:not(.guide-page) #astrologie-geografica .split{grid-template-columns:1fr!important}
+  body:not(.guide-page) #relocare img,
+  body:not(.guide-page) .why .portrait-wrap,
+  body:not(.guide-page) .why .portrait-wrap img{height:360px!important;min-height:360px!important;max-height:360px!important}
+}
+
+/* Navigation breakpoint */
+@media (min-width:821px) and (max-width:980px){
+  body:not(.guide-page) .top{overflow:visible!important}
+  body:not(.guide-page) .nav{position:relative!important;width:calc(100% - 24px)!important;min-height:68px!important}
+  body:not(.guide-page) .top .brand.av-brand-premium{
+    width:190px!important;height:50px!important;max-width:190px!important;flex:0 0 190px!important;
+  }
+  body:not(.guide-page) .nav-book{display:none!important}
+  body:not(.guide-page) header.top .nav .nav-actions button#hamb.hamb{
+    display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;
+    padding:0!important;border:2px solid #f4f1e8!important;border-radius:7px!important;
+    background:linear-gradient(180deg,#151515,#050505)!important;color:#39ff14!important;font-size:26px!important;font-weight:950!important;
+  }
+  body:not(.guide-page) .menu{
+    display:none!important;position:absolute!important;z-index:140!important;top:calc(100% + 8px)!important;left:0!important;right:0!important;
+    width:100%!important;max-height:calc(100dvh - 104px)!important;margin:0!important;padding:12px!important;
+    flex-direction:column!important;align-items:stretch!important;gap:6px!important;overflow:auto!important;
+    border:1px solid rgba(224,185,77,.46)!important;border-radius:18px!important;
+    background:linear-gradient(180deg,rgba(16,16,16,.995),rgba(3,3,3,.995))!important;
+    box-shadow:0 24px 60px rgba(0,0,0,.68)!important;
+  }
+  body:not(.guide-page) .menu.open{display:flex!important}
+  body:not(.guide-page) .menu>a,
+  body:not(.guide-page) .av-menu-trigger{
+    width:100%!important;min-height:46px!important;justify-content:space-between!important;padding:10px 13px!important;
+    font-size:14px!important;text-align:left!important;white-space:normal!important;
+  }
+  body:not(.guide-page) .av-menu-group{display:block!important;width:100%!important}
+  body:not(.guide-page) .av-submenu,
+  body:not(.guide-page) .av-astro-group>.av-astro-mega{
+    position:static!important;inset:auto!important;width:100%!important;max-width:100%!important;max-height:52vh!important;margin:4px 0 8px!important;transform:none!important;
+  }
+}
+
+/* Medium desktop header */
+@media (min-width:981px) and (max-width:1240px){
+  body:not(.guide-page) .nav{width:calc(100% - 28px)!important;gap:6px!important}
+  body:not(.guide-page) .top .brand.av-brand-premium{
+    width:178px!important;height:50px!important;max-width:178px!important;flex:0 0 178px!important;
+  }
+  body:not(.guide-page) .menu>a,
+  body:not(.guide-page) .av-menu-trigger{padding:8px 5px!important;font-size:11.9px!important}
+  body:not(.guide-page) .nav-book{padding:8px 10px!important;font-size:11.4px!important}
+}
