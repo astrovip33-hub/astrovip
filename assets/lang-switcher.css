@@ -311,28 +311,17 @@
 }
 
 
-/* PRC national flag — official 3:2 geometry; 2026-09-22 */
+/* China selector — full-button official PRC flag; 2026-09-22 */
 .av-lang-switch a[href="/zh/"]{
-  background:#050505!important;
+  background:#ee1c25 url("/assets/flag-cn.svg?v=20260922-cn-fullbutton2") center/cover no-repeat!important;
   color:transparent!important;
   font-size:0!important;
   text-shadow:none!important;
+  overflow:hidden!important;
 }
-.av-lang-switch a[href="/zh/"]::before{
-  content:""!important;
-  display:block!important;
-  width:30px!important;
-  height:20px!important;
-  flex:0 0 30px!important;
-  background:url("/assets/flag-cn.svg?v=20260922-cn-official1") center/30px 20px no-repeat!important;
-  font-size:0!important;
-  line-height:0!important;
-}
-@media(max-width:380px){
-  .av-lang-switch a[href="/zh/"]::before{
-    width:27px!important;
-    height:18px!important;
-    flex-basis:27px!important;
-    background-size:27px 18px!important;
-  }
+.av-lang-switch a[href="/zh/"]::before,
+.av-lang-switch a[href="/zh/"]::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
 }
