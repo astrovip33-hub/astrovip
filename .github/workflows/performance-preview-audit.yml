@@ -1,0 +1,42 @@
+name: AstroVip Final Performance Audit
+
+on:
+  push:
+    branches:
+      - "perf/cwv-final-20260922-v2"
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Lighthouse mobile and desktop
+        shell: bash
+        run: |
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          export CHROME_PATH
+          URL="https://a33a0e0d-astrovip.astrovip33.workers.dev/"
+          npx --yes lighthouse@latest "$URL" --output=json --output-path=/tmp/mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          npx --yes lighthouse@latest "$URL" --preset=desktop --output=json --output-path=/tmp/desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+      - name: Print metrics
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          for(const mode of ['mobile','desktop']){
+            const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8')),a=j.audits;
+            console.log('=== '+mode.toUpperCase()+' ===');
+            console.log('SCORE='+Math.round(j.categories.performance.score*100));
+            for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight','bootup-time','mainthread-work-breakdown']){
+              if(a[id]) console.log(id+'='+(a[id].displayValue||a[id].numericValue||''));
+            }
+            for(const id of ['bootup-time','mainthread-work-breakdown','long-tasks','diagnostics','unused-javascript','unused-css-rules','render-blocking-insight']){
+              const x=a[id]; if(!x) continue;
+              console.log('AUDIT '+id+' '+(x.displayValue||''));
+              if(x.details?.items) console.log(JSON.stringify(x.details.items.slice(0,25)));
+            }
+          }
+          NODE
