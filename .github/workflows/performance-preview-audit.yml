@@ -13,16 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Wait for Cloudflare branch preview
+      - name: Wait for exact Cloudflare release
         shell: bash
         run: |
           URL="https://perf-cwv-final-20260922-v2-astrovip.astrovip33.workers.dev/"
-          for i in $(seq 1 30); do
-            code=$(curl -L -sS -o /dev/null -w '%{http_code}' "$URL" || true)
-            echo "Preview HTTP: $code"
-            [ "$code" = "200" ] && exit 0
+          EXPECTED=$(grep -o 'content="[^"]*" name="astrovip-release"' index.html | head -1 | sed -E 's/content="([^"]*)".*/\1/')
+          echo "Expected release: $EXPECTED"
+          for i in $(seq 1 36); do
+            body=$(curl -L -sS "$URL" || true)
+            if printf '%s' "$body" | grep -q "content=\"$EXPECTED\" name=\"astrovip-release\""; then
+              echo "Exact preview release is live."
+              exit 0
+            fi
+            echo "Waiting for Cloudflare preview propagation..."
             sleep 5
           done
+          echo "Expected release was not observed."
           exit 1
       - name: Run Lighthouse mobile and desktop
         shell: bash
