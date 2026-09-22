@@ -1,0 +1,75 @@
+name: Lighthouse audit once
+
+on:
+  push:
+    branches: ["lighthouse-audit-20260922"]
+    paths:
+      - ".github/workflows/lighthouse-audit-once.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show browser
+        run: |
+          google-chrome --version || chromium-browser --version || true
+          node --version
+          npm --version
+
+      - name: Mobile Lighthouse
+        run: |
+          npx --yes lighthouse@12.8.2 https://astrovip.ro/             --quiet             --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"             --output=json             --output-path=mobile.json             --only-categories=performance
+
+      - name: Desktop Lighthouse
+        run: |
+          npx --yes lighthouse@12.8.2 https://astrovip.ro/             --quiet             --preset=desktop             --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"             --output=json             --output-path=desktop.json             --only-categories=performance
+
+      - name: Summarize performance
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          def show(path,label):
+              d=json.load(open(path))
+              a=d["audits"]
+              score=round(d["categories"]["performance"]["score"]*100)
+              keys=[
+                  ("first-contentful-paint","FCP"),
+                  ("largest-contentful-paint","LCP"),
+                  ("speed-index","Speed Index"),
+                  ("total-blocking-time","TBT"),
+                  ("cumulative-layout-shift","CLS"),
+                  ("interactive","TTI"),
+              ]
+              print(f"=== {label} ===")
+              print("Performance:",score)
+              for k,n in keys:
+                  x=a.get(k,{})
+                  print(f"{n}: {x.get('displayValue','n/a')} | score={x.get('score')}")
+              opp=[]
+              for k,x in a.items():
+                  det=x.get("details") or {}
+                  sav=det.get("overallSavingsMs")
+                  if isinstance(sav,(int,float)) and sav>0:
+                      opp.append((sav,k,x.get("title",""),x.get("displayValue","")))
+              for sav,k,title,val in sorted(opp,reverse=True)[:12]:
+                  print(f"OPPORTUNITY {round(sav)}ms | {k} | {title} | {val}")
+              diag=[]
+              for k in ["render-blocking-resources","unused-css-rules","unused-javascript","modern-image-formats","uses-optimized-images","uses-responsive-images","offscreen-images","uses-long-cache-ttl","total-byte-weight","mainthread-work-breakdown","bootup-time","dom-size","third-party-summary","network-requests","network-rtt","network-server-latency"]:
+                  x=a.get(k)
+                  if x:
+                      print(f"AUDIT {k}: score={x.get('score')} value={x.get('displayValue','')}")
+          show("mobile.json","MOBILE")
+          show("desktop.json","DESKTOP")
+          PY
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-astrovip-20260922
+          path: |
+            mobile.json
+            desktop.json
