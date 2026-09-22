@@ -701,3 +701,40 @@ body:not(.guide-page) .nav-book:hover{transform:translateY(-1px)}
     filter:drop-shadow(0 0 6px rgba(255,0,0,.72))!important;
   }
 }
+
+
+/* ABSOLUTE FINAL hamburger frame — white neon both states — 2026-09-22 */
+@media(max-width:820px){
+  html body:not(.guide-page) header.top .nav .nav-actions button#hamb.hamb{
+    border:2px solid #ffffff!important;
+    box-shadow:
+      0 0 7px rgba(255,255,255,1),
+      0 0 16px rgba(255,255,255,.94),
+      0 0 30px rgba(235,250,255,.68),
+      inset 0 0 0 1px rgba(255,255,255,.42)!important;
+  }
+
+  html body:not(.guide-page) header.top .nav .nav-actions button#hamb.hamb[aria-expanded="false"]{
+    color:#39FF14!important;
+  }
+
+  html body:not(.guide-page) header.top:has(#menu.menu.open) .nav .nav-actions button#hamb.hamb[aria-expanded="true"]{
+    border:2px solid #ffffff!important;
+    color:#ff1a1a!important;
+    background:linear-gradient(180deg,#151515,#050505)!important;
+    font-weight:1000!important;
+    text-shadow:
+      0 0 2px #ffffff,
+      0 0 6px rgba(255,95,95,1),
+      0 0 12px rgba(255,25,25,1),
+      0 0 24px rgba(255,0,0,.92),
+      0 0 38px rgba(255,0,0,.64)!important;
+    -webkit-text-stroke:.5px rgba(255,225,225,.98)!important;
+    box-shadow:
+      0 0 7px rgba(255,255,255,1),
+      0 0 16px rgba(255,255,255,.94),
+      0 0 30px rgba(235,250,255,.68),
+      inset 0 0 0 1px rgba(255,255,255,.42)!important;
+    filter:drop-shadow(0 0 7px rgba(255,0,0,.78))!important;
+  }
+}
