@@ -193,18 +193,28 @@ jobs:
             exit 26
           fi
           echo "Expected release: $EXPECTED_RELEASE"
-          curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 8 --retry-delay 4 "https://astrovip.ro/?release=$EXPECTED_RELEASE"
-
-          IDENTITY_COUNT=$( { grep -o 'av-identity-image-card' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
-          LEGACY_COUNT=$( { grep -E -o 'av-credentials-kicker">Date profesionale|<h2>Cristian Cătălin Smaranda</h2>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
-          RELEASE_HEADER=$(awk 'BEGIN{IGNORECASE=1} /^x-astrovip-release:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$LIVE_HDR")
-          LIVE_RELEASE=$(python3 - "$LIVE_HTML" <<'PY'
+          LIVE_RELEASE=""
+          for ATTEMPT in $(seq 1 12); do
+            : > "$LIVE_HDR"
+            : > "$LIVE_HTML"
+            curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 3 --retry-delay 2 "https://astrovip.ro/?release=$EXPECTED_RELEASE&attempt=$ATTEMPT"
+            LIVE_RELEASE=$(python3 - "$LIVE_HTML" <<'PY'
           import re,sys
           html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
           m=re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
           print(m.group(1) if m else "")
           PY
-          )
+            )
+            echo "Propagation check $ATTEMPT/12: live release=$LIVE_RELEASE"
+            if [ "$LIVE_RELEASE" = "$EXPECTED_RELEASE" ]; then
+              break
+            fi
+            sleep 5
+          done
+
+          IDENTITY_COUNT=$( { grep -o 'av-identity-image-card' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
+          LEGACY_COUNT=$( { grep -E -o 'av-credentials-kicker">Date profesionale|<h2>Cristian Cătălin Smaranda</h2>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
+          RELEASE_HEADER=$(awk 'BEGIN{IGNORECASE=1} /^x-astrovip-release:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$LIVE_HDR")
 
           echo "Identity cards: $IDENTITY_COUNT"
           echo "Legacy professional cards: $LEGACY_COUNT"
