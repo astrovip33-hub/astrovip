@@ -887,3 +887,154 @@ body:not(.guide-page) .av-astro-all{
     line-height:1!important;
   }
 }
+
+
+/* ASTROLOGY COMPACT MEGA MENU — 2026-09-23 */
+body:not(.guide-page) .av-astro-group>.av-astro-mega{
+  width:min(1180px,calc(100vw - 24px))!important;
+  max-height:min(76vh,680px)!important;
+  padding:12px!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:10px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  align-items:start!important;
+}
+body:not(.guide-page) .av-astro-mega-head{
+  grid-column:1/-1!important;
+  padding:7px 10px 10px!important;
+  border-bottom:1px solid rgba(217,184,92,.24)!important;
+}
+body:not(.guide-page) .av-astro-mega-head strong{
+  display:block!important;
+  color:#f6d978!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  letter-spacing:.14em!important;
+}
+body:not(.guide-page) .av-astro-section{
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+}
+body:not(.guide-page) .av-astro-section>summary{
+  list-style:none!important;
+  cursor:default!important;
+  padding:7px 9px 6px!important;
+  color:#d9b85c!important;
+  font-size:10.5px!important;
+  font-weight:950!important;
+  letter-spacing:.11em!important;
+  line-height:1.2!important;
+}
+body:not(.guide-page) .av-astro-section>summary::-webkit-details-marker{display:none!important}
+body:not(.guide-page) .av-astro-links{
+  display:grid!important;
+  gap:4px!important;
+}
+body:not(.guide-page) .av-astro-links>a,
+body:not(.guide-page) .av-astro-mega>a.av-astro-all{
+  min-height:34px!important;
+  display:flex!important;
+  align-items:center!important;
+  padding:7px 9px!important;
+  border-radius:9px!important;
+  font-size:12px!important;
+  font-weight:820!important;
+  line-height:1.16!important;
+}
+body:not(.guide-page) .av-astro-all{
+  grid-column:1/-1!important;
+  justify-content:center!important;
+  min-height:38px!important;
+  margin-top:2px!important;
+  border-color:rgba(217,184,92,.34)!important;
+  background:rgba(217,184,92,.10)!important;
+  color:#f6d978!important;
+  font-weight:950!important;
+  letter-spacing:.03em!important;
+}
+@media(min-width:981px){
+  body:not(.guide-page) .av-astro-section:not([open])>.av-astro-links{
+    display:grid!important;
+  }
+  body:not(.guide-page) .av-astro-section>summary{
+    pointer-events:none!important;
+  }
+}
+@media(max-width:980px){
+  body:not(.guide-page) .av-astro-group>.av-astro-mega{
+    width:100%!important;
+    max-width:100%!important;
+    max-height:60dvh!important;
+    grid-template-columns:1fr!important;
+    padding:7px!important;
+    gap:6px!important;
+  }
+  body:not(.guide-page) .av-astro-mega-head{
+    padding:8px 8px 9px!important;
+  }
+  body:not(.guide-page) .av-astro-section{
+    border:1px solid rgba(0,90,0,.18)!important;
+    border-radius:12px!important;
+    background:#d8ffcb!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .av-astro-section>summary{
+    position:relative!important;
+    cursor:pointer!important;
+    padding:11px 40px 11px 12px!important;
+    color:#064d10!important;
+    font-size:12px!important;
+    font-weight:950!important;
+    letter-spacing:.07em!important;
+    background:#c7ffb6!important;
+  }
+  body:not(.guide-page) .av-astro-section>summary::after{
+    content:"+"!important;
+    position:absolute!important;
+    right:12px!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:24px!important;
+    height:24px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border-radius:7px!important;
+    background:#efffea!important;
+    color:#075d13!important;
+    font-size:19px!important;
+    font-weight:950!important;
+  }
+  body:not(.guide-page) .av-astro-section[open]>summary::after{
+    content:"−"!important;
+  }
+  body:not(.guide-page) .av-astro-links{
+    display:none!important;
+    gap:5px!important;
+    padding:6px!important;
+    background:#dcffd2!important;
+  }
+  body:not(.guide-page) .av-astro-section[open]>.av-astro-links{
+    display:grid!important;
+  }
+  body:not(.guide-page) .av-astro-links>a{
+    min-height:42px!important;
+    padding:9px 11px!important;
+    border-radius:9px!important;
+    background:#f2ffed!important;
+    color:#031000!important;
+    font-size:13px!important;
+    font-weight:850!important;
+  }
+  body:not(.guide-page) .av-astro-all{
+    min-height:44px!important;
+    margin-top:1px!important;
+    background:#baffaa!important;
+    color:#063f0c!important;
+    border-color:rgba(0,82,0,.24)!important;
+  }
+}
