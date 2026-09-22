@@ -1038,3 +1038,45 @@ body:not(.guide-page) .av-astro-all{
     border-color:rgba(0,82,0,.24)!important;
   }
 }
+
+
+/* TABLET NAV ACCESSIBILITY FIX — 2026-09-23 */
+@media (min-width:821px) and (max-width:980px){
+  body:not(.guide-page) .nav-book{
+    display:none!important;
+  }
+  body:not(.guide-page) .hamb{
+    display:inline-flex!important;
+    width:42px!important;
+    height:42px!important;
+    min-width:42px!important;
+    min-height:42px!important;
+    padding:0!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border:1px solid rgba(244,241,232,.82)!important;
+    border-radius:8px!important;
+    background:linear-gradient(180deg,#111,#050505)!important;
+    color:#39FF14!important;
+    font-size:23px!important;
+    font-weight:950!important;
+    line-height:1!important;
+    cursor:pointer!important;
+  }
+  body:not(.guide-page) .hamb[aria-expanded="true"]{
+    color:#FF2800!important;
+  }
+  body:not(.guide-page) .menu,
+  body:not(.guide-page) .menu.open{
+    left:8px!important;
+    right:8px!important;
+    top:calc(100% + 8px)!important;
+    width:calc(100vw - 16px)!important;
+    max-width:calc(100vw - 16px)!important;
+    max-height:calc(100dvh - 96px)!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    z-index:120!important;
+  }
+}
