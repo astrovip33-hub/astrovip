@@ -1,0 +1,145 @@
+/* AstroVip — site-wide responsive/performance layer 2026-09-22
+   Injected at deploy time on every HTML page. */
+*,
+*::before,
+*::after{box-sizing:border-box}
+html{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body.av-site-optimized{max-width:100%;overflow-x:clip}
+body.av-site-optimized img,
+body.av-site-optimized svg,
+body.av-site-optimized video,
+body.av-site-optimized canvas{max-width:100%}
+body.av-site-optimized img{height:auto}
+body.av-site-optimized button,
+body.av-site-optimized input,
+body.av-site-optimized select,
+body.av-site-optimized textarea{font:inherit}
+body.av-site-optimized :where(a,button,input,select,textarea,summary):focus-visible{
+  outline:2px solid #f3d779;outline-offset:3px
+}
+body.av-site-optimized :where(p,li,td,th,a,strong,span){overflow-wrap:anywhere}
+body.av-site-optimized table{max-width:100%}
+
+@supports (content-visibility:auto){
+  body.av-route-guide .guide-content>section:nth-of-type(n+3),
+  body.av-route-kb .kb-article>section:nth-of-type(n+2),
+  body.av-route-kb .kb-tile,
+  body.av-route-local-space .ls-results,
+  body.av-route-case-study .body>section,
+  body.av-route-local-case .section{
+    content-visibility:auto;
+    contain-intrinsic-size:auto 520px;
+  }
+  body.av-route-kb .kb-tile{contain-intrinsic-size:auto 92px}
+}
+
+/* SEO / guide pages */
+body.av-route-guide .guide-wrap{width:min(1180px,calc(100% - 40px))}
+body.av-route-guide .guide-header{box-shadow:0 10px 34px rgba(0,0,0,.22)}
+body.av-route-guide .guide-main{padding-top:28px}
+body.av-route-guide .guide-layout{grid-template-columns:minmax(0,1fr) minmax(260px,310px);gap:34px}
+body.av-route-guide .guide-content{min-width:0}
+body.av-route-guide .guide-content section{scroll-margin-top:150px}
+body.av-route-guide .guide-side-card{box-shadow:0 16px 38px rgba(0,0,0,.20)}
+body.av-route-guide .guide-related a{min-width:0}
+body.av-route-guide .guide-footer{line-height:1.65}
+
+/* Knowledge / Academy / Atlas */
+body.av-route-kb .kb-wrap{width:min(1240px,calc(100% - 40px))}
+body.av-route-kb .kb-layout{grid-template-columns:minmax(0,1fr) minmax(260px,310px);gap:30px}
+body.av-route-kb .kb-article{min-width:0}
+body.av-route-kb .kb-tile{min-width:0;will-change:auto}
+body.av-route-kb .kb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body.av-route-kb .kb-head{box-shadow:0 10px 30px rgba(0,0,0,.22)}
+body.av-route-kb .kb-hero{padding-top:62px;padding-bottom:46px}
+body.av-route-kb .kb-article section{scroll-margin-top:110px}
+
+/* Local Space calculator */
+body.av-route-local-space .ls-wrap{width:min(1180px,calc(100% - 36px))}
+body.av-route-local-space .ls-grid{gap:20px}
+body.av-route-local-space .ls-panel{min-width:0}
+body.av-route-local-space .ls-table-wrap{max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+body.av-route-local-space input,
+body.av-route-local-space select,
+body.av-route-local-space button{max-width:100%}
+
+/* Editorial case studies */
+body.av-route-case-study .sitebar,
+body.av-route-case-study .hero,
+body.av-route-case-study .body{width:100%}
+body.av-route-case-study .hero{grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr)}
+body.av-route-case-study .hero>*{min-width:0}
+body.av-route-case-study .hero img{width:100%;height:auto}
+body.av-route-case-study .table-wrap{max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+body.av-route-case-study table{min-width:620px}
+body.av-route-case-study .signal{min-width:0}
+
+/* Local Space case studies */
+body.av-route-local-case .wrap{width:min(1160px,calc(100% - 36px));margin-inline:auto}
+body.av-route-local-case .visual{overflow:hidden}
+body.av-route-local-case .visual svg{display:block;width:100%;height:auto}
+body.av-route-local-case .metric>*,
+body.av-route-local-case .grid>*{min-width:0}
+
+@media (min-width:1180px){
+  body.av-route-kb .kb-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media (max-width:900px){
+  body.av-route-guide .guide-wrap,
+  body.av-route-kb .kb-wrap,
+  body.av-route-local-space .ls-wrap,
+  body.av-route-local-case .wrap{width:min(100% - 28px,1180px)}
+  body.av-route-guide .guide-layout,
+  body.av-route-kb .kb-layout{grid-template-columns:1fr!important}
+  body.av-route-guide .guide-aside,
+  body.av-route-kb .kb-card{position:static!important}
+  body.av-route-guide .guide-menu,
+  body.av-route-kb .kb-nav nav{
+    display:flex!important;max-width:66vw;overflow-x:auto;overscroll-behavior-inline:contain;
+    scrollbar-width:none;white-space:nowrap
+  }
+  body.av-route-guide .guide-menu::-webkit-scrollbar,
+  body.av-route-kb .kb-nav nav::-webkit-scrollbar{display:none}
+  body.av-route-case-study .hero{grid-template-columns:1fr}
+}
+
+@media (max-width:620px){
+  body.av-route-guide .guide-wrap,
+  body.av-route-kb .kb-wrap,
+  body.av-route-local-space .ls-wrap,
+  body.av-route-local-case .wrap{width:calc(100% - 24px)}
+  body.av-route-guide .guide-nav,
+  body.av-route-kb .kb-nav{gap:10px}
+  body.av-route-guide .guide-brand,
+  body.av-route-kb .kb-brand{flex:0 0 auto}
+  body.av-route-guide .guide-menu,
+  body.av-route-kb .kb-nav nav{max-width:58vw;gap:12px}
+  body.av-route-guide .guide-hero,
+  body.av-route-kb .kb-hero{padding-top:44px;padding-bottom:34px}
+  body.av-route-guide .guide-hero h1{font-size:clamp(34px,10vw,46px);line-height:1.04}
+  body.av-route-kb .kb-hero h1{font-size:clamp(32px,9vw,44px);line-height:1.05}
+  body.av-route-guide .guide-related,
+  body.av-route-guide .planet-grid,
+  body.av-route-kb .kb-grid,
+  body.av-route-kb .kb-glossary{grid-template-columns:1fr!important}
+  body.av-route-local-space .ls-row{grid-template-columns:1fr!important}
+  body.av-route-local-space .ls-panel{padding:18px}
+  body.av-route-case-study .sitebar,
+  body.av-route-case-study .hero,
+  body.av-route-case-study .body{padding-left:18px!important;padding-right:18px!important}
+  body.av-route-case-study table{min-width:560px}
+  body.av-route-local-case .metric,
+  body.av-route-local-case .grid{grid-template-columns:1fr!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  body.av-site-optimized *,
+  body.av-site-optimized *::before,
+  body.av-site-optimized *::after{
+    scroll-behavior:auto!important;
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important
+  }
+}

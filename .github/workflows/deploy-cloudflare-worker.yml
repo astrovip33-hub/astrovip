@@ -64,6 +64,9 @@ jobs:
           print(f"Sitemap coverage OK: {len(sitemap_urls)} sitemap URLs; no indexable index.html pages missing.")
           PY
 
+      - name: Apply site-wide optimization layer
+        run: python3 tools/apply-sitewide-optimization.py
+
       - name: Normalize and validate Cloudflare token
         shell: bash
         run: |
@@ -201,8 +204,10 @@ jobs:
             exit 25
           fi
 
-          if [ "$RELEASE_HEADER" != "20260921-speed-index-5" ]; then
-            echo "::error::Live homepage is not serving the new cache-reset release."
+          EXPECTED_RELEASE=$(awk 'BEGIN{IGNORECASE=1} /^  X-AstroVip-Release:/ {print $2; exit}' _headers)
+          echo "Expected release header: $EXPECTED_RELEASE"
+          if [ -n "$EXPECTED_RELEASE" ] && [ "$RELEASE_HEADER" != "$EXPECTED_RELEASE" ]; then
+            echo "::error::Live homepage release header does not match _headers."
             exit 26
           fi
 

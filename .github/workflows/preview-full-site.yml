@@ -1,0 +1,54 @@
+name: Preview full-site optimization
+
+on:
+  push:
+    branches: ["preview/full-site-optimization-20260922"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "astrovip-full-site-preview"
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply site-wide optimization layer
+        run: python3 tools/apply-sitewide-optimization.py
+
+      - name: Validate global fixes
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -R --include='*.html' -n '/assets/planetary-ticker-v2.js' . | head -1 | grep -q .; then
+            echo "::error::Broken planetary-ticker-v2.js reference remains."
+            exit 41
+          fi
+          if grep -R --include='*.html' -n 'astrovip33@gmail.com' . | head -1 | grep -q .; then
+            echo "::error::Legacy Gmail address remains in deployed HTML."
+            exit 42
+          fi
+          test -f assets/site-wide-optimization.css
+
+      - name: Normalize Cloudflare token
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOKEN=$(printf '%s' "$CLOUDFLARE_API_TOKEN" | tr -d '\r\n')
+          TOKEN=$(printf '%s' "$TOKEN" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')
+          TOKEN="${TOKEN#Bearer }"
+          TOKEN="${TOKEN#bearer }"
+          echo "::add-mask::$TOKEN"
+          echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Deploy preview Worker
+        run: npx --yes wrangler@latest deploy --config wrangler.preview.jsonc
