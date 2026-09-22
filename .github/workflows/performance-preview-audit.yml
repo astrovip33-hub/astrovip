@@ -1,4 +1,4 @@
-name: AstroVip Performance Preview Audit
+name: AstroVip CLS Diagnostic
 
 on:
   push:
@@ -13,44 +13,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Run Lighthouse preview and live
+      - name: Run desktop Lighthouse on live
         shell: bash
         run: |
           CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
           export CHROME_PATH
-          PREVIEW="https://6ab2d0e1667d7b000907639b--astrovip33.netlify.app/"
-          LIVE="https://astrovip.ro/"
-          npx --yes lighthouse@latest "$PREVIEW" --output=json --output-path=/tmp/preview-mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-          npx --yes lighthouse@latest "$PREVIEW" --preset=desktop --output=json --output-path=/tmp/preview-desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-          npx --yes lighthouse@latest "$LIVE" --output=json --output-path=/tmp/live-mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-          npx --yes lighthouse@latest "$LIVE" --preset=desktop --output=json --output-path=/tmp/live-desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-
-      - name: Print scores and diagnostics
+          npx --yes lighthouse@latest https://astrovip.ro/ --preset=desktop --output=json --output-path=/tmp/live-desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+      - name: Print CLS diagnostics
         shell: bash
         run: |
           node <<'NODE'
-          const fs=require('fs');
-          const files={
-            PREVIEW_MOBILE:'/tmp/preview-mobile.json',
-            PREVIEW_DESKTOP:'/tmp/preview-desktop.json',
-            LIVE_MOBILE:'/tmp/live-mobile.json',
-            LIVE_DESKTOP:'/tmp/live-desktop.json'
-          };
-          for (const [label,file] of Object.entries(files)) {
-            const j=JSON.parse(fs.readFileSync(file,'utf8'));
-            const a=j.audits;
-            console.log('=== '+label+' ===');
-            console.log('SCORE='+Math.round(j.categories.performance.score*100));
-            for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight','dom-size']){
-              if(a[id]) console.log(id+'='+(a[id].displayValue||a[id].numericValue||''));
-            }
-            for(const id of ['bootup-time','mainthread-work-breakdown','unused-javascript','unused-css-rules','render-blocking-insight','third-parties-insight']){
-              const x=a[id];
-              if(!x) continue;
-              console.log('AUDIT '+id+' score='+x.score+' value='+(x.displayValue||''));
-              const items=x.details&&x.details.items;
-              if(Array.isArray(items)) console.log(JSON.stringify(items.slice(0,10)));
-            }
+          const j=require('/tmp/live-desktop.json');
+          const a=j.audits;
+          console.log('SCORE='+Math.round(j.categories.performance.score*100));
+          console.log('CLS='+(a['cumulative-layout-shift']?.displayValue||a['cumulative-layout-shift']?.numericValue));
+          for (const [id,x] of Object.entries(a)) {
+            if (!/(layout|shift|cls)/i.test(id+' '+(x.title||''))) continue;
+            console.log('AUDIT '+id+' title='+(x.title||'')+' score='+x.score+' display='+(x.displayValue||''));
+            if (x.details?.items) console.log(JSON.stringify(x.details.items.slice(0,20)));
           }
           NODE
