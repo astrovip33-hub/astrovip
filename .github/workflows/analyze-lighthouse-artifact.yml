@@ -1,0 +1,78 @@
+name: Analyze Lighthouse artifact
+
+on:
+  push:
+    branches: ["lighthouse-audit-20260922"]
+    paths:
+      - ".github/workflows/analyze-lighthouse-artifact.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download stable Lighthouse reports
+        uses: actions/download-artifact@v4
+        with:
+          name: lighthouse-astrovip-20260922
+          path: reports
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 35736584922
+
+      - name: Print bottleneck details
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, pathlib
+
+          def compact(v):
+              if isinstance(v, dict):
+                  if 'snippet' in v: return v.get('snippet')
+                  if 'selector' in v: return v.get('selector')
+                  return {k:compact(x) for k,x in list(v.items())[:8]}
+              if isinstance(v, list): return [compact(x) for x in v[:5]]
+              return v
+
+          def show(path,label):
+              d=json.load(open(path))
+              a=d['audits']
+              print('\n===',label,'===')
+              for aid in ['diagnostics','mainthread-work-breakdown','bootup-time','long-tasks','uses-responsive-images','modern-image-formats','uses-long-cache-ttl','render-blocking-resources','network-requests']:
+                  x=a.get(aid)
+                  if not x: continue
+                  print('\nAUDIT',aid,'score=',x.get('score'),'value=',x.get('displayValue',''))
+                  det=x.get('details') or {}
+                  items=det.get('items') or []
+                  if aid=='network-requests':
+                      items=sorted(items,key=lambda z:z.get('transferSize',0),reverse=True)[:15]
+                  else:
+                      items=items[:15]
+                  for it in items:
+                      keep={}
+                      for k in ['url','total','duration','scriptEvaluation','scriptParseCompile','totalBytes','wastedBytes','wastedMs','cacheLifetimeMs','transferSize','resourceSize','startTime','group','groupLabel','numRequests','numScripts','numStylesheets','numTasks','numTasksOver10ms','numTasksOver25ms','numTasksOver50ms','numTasksOver100ms','numTasksOver500ms','rtt','throughput','mainDocumentTransferSize','maxRtt','maxServerLatency','node','source']:
+                          if k in it: keep[k]=compact(it[k])
+                      print(keep if keep else compact(it))
+
+              print('\nLAYOUT/CLS AUDITS')
+              for aid,x in a.items():
+                  if ('layout' not in aid and 'shift' not in aid and 'cls' not in aid):
+                      continue
+                  if x.get('score') in (1,None) and not x.get('displayValue'):
+                      continue
+                  print('CLS_AUDIT',aid,'score=',x.get('score'),'value=',x.get('displayValue',''),'title=',x.get('title',''))
+                  det=x.get('details') or {}
+                  for it in (det.get('items') or [])[:12]:
+                      print(compact(it))
+
+              for aid in ['largest-contentful-paint-element','lcp-discovery-insight','lcp-breakdown-insight']:
+                  x=a.get(aid)
+                  if x:
+                      print('\nLCP',aid,'score=',x.get('score'),'value=',x.get('displayValue',''))
+                      print(compact((x.get('details') or {}).get('items') or []))
+
+          show('reports/mobile.json','MOBILE')
+          show('reports/desktop.json','DESKTOP')
+          PY
