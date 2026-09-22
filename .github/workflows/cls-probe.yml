@@ -1,0 +1,78 @@
+name: AstroVip CLS Probe
+
+on:
+  push:
+    branches:
+      - "perf/cwv-targeted-20260922-v2"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser driver
+        shell: bash
+        run: npm install --no-save --ignore-scripts puppeteer-core@24
+      - name: Capture layout shifts
+        shell: bash
+        run: |
+          cat > /tmp/probe.cjs <<'NODE'
+          const puppeteer=require('puppeteer-core');
+          (async()=>{
+            const executablePath=process.env.CHROME_PATH || '/usr/bin/google-chrome';
+            const browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+            const page=await browser.newPage();
+            await page.setViewport({width:1365,height:940,deviceScaleFactor:1});
+            await page.evaluateOnNewDocument(()=>{
+              window.__avShifts=[];
+              window.__avGeom=[];
+              const sel=n=>{
+                if(!n||!n.tagName)return '';
+                let s=n.tagName.toLowerCase();
+                if(n.id)s+='#'+n.id;
+                if(n.classList?.length)s+='.'+[...n.classList].slice(0,4).join('.');
+                return s;
+              };
+              new PerformanceObserver(list=>{
+                for(const e of list.getEntries()){
+                  if(e.hadRecentInput)continue;
+                  window.__avShifts.push({
+                    t:Math.round(e.startTime),
+                    value:e.value,
+                    sources:(e.sources||[]).map(s=>({
+                      node:sel(s.node),
+                      text:(s.node?.textContent||'').trim().slice(0,80),
+                      prev:s.previousRect?{x:s.previousRect.x,y:s.previousRect.y,w:s.previousRect.width,h:s.previousRect.height}:null,
+                      curr:s.currentRect?{x:s.currentRect.x,y:s.currentRect.y,w:s.currentRect.width,h:s.currentRect.height}:null
+                    }))
+                  });
+                }
+              }).observe({type:'layout-shift',buffered:true});
+              const t0=performance.now();
+              const sample=()=>{
+                const top=document.querySelector('.top');
+                const lang=document.querySelector('.av-langbar');
+                const main=document.querySelector('main#top');
+                const hero=document.querySelector('.av-hero-v2');
+                const visual=document.querySelector('.av-hero-v2-visual');
+                const chat=document.querySelector('.avchat-launcher');
+                const row={t:Math.round(performance.now()),topH:top?.getBoundingClientRect().height||0,langH:lang?.getBoundingClientRect().height||0,mainY:main?.getBoundingClientRect().y||0,heroH:hero?.getBoundingClientRect().height||0,visualH:visual?.getBoundingClientRect().height||0,chatH:chat?.getBoundingClientRect().height||0};
+                const last=window.__avGeom[window.__avGeom.length-1];
+                if(!last||Object.keys(row).some(k=>k!=='t'&&Math.abs((row[k]||0)-(last[k]||0))>.5)) window.__avGeom.push(row);
+                if(performance.now()-t0<6000)requestAnimationFrame(sample);
+              };
+              requestAnimationFrame(sample);
+            });
+            await page.goto('https://astrovip-perf-preview.astrovip33.workers.dev/',{waitUntil:'domcontentloaded',timeout:60000});
+            await new Promise(r=>setTimeout(r,6500));
+            const data=await page.evaluate(()=>({shifts:window.__avShifts,geom:window.__avGeom,ready:document.readyState}));
+            console.log('SHIFT_DATA='+JSON.stringify(data.shifts));
+            console.log('GEOM_DATA='+JSON.stringify(data.geom));
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          node /tmp/probe.cjs
