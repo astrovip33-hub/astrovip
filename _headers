@@ -1,10 +1,10 @@
 /
   Cache-Control: public, max-age=0, must-revalidate
-  X-AstroVip-Release: 20260922-menu-final3
+  X-AstroVip-Release: 20260922-desktop-mirror-mobile1
 
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
-  X-AstroVip-Release: 20260922-menu-final3
+  X-AstroVip-Release: 20260922-desktop-mirror-mobile1
 
 /*
   X-Content-Type-Options: nosniff
