@@ -738,3 +738,15 @@ body:not(.guide-page) .nav-book:hover{transform:translateY(-1px)}
     filter:drop-shadow(0 0 7px rgba(255,0,0,.78))!important;
   }
 }
+
+
+/* Ferrari red solid X — 2026-09-22 */
+@media(max-width:820px){
+  html body:not(.guide-page) header.top:has(#menu.menu.open) .nav .nav-actions button#hamb.hamb[aria-expanded="true"]{
+    color:#FF2800!important;
+    text-shadow:none!important;
+    -webkit-text-stroke:0!important;
+    filter:none!important;
+    font-weight:1000!important;
+  }
+}
