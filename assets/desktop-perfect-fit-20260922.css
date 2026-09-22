@@ -1,0 +1,627 @@
+/* AstroVip — final desktop fit & spacing pass — 2026-09-22
+   Desktop/tablet only. Mobile <=820px and language switcher remain untouched. */
+@media (min-width:821px){
+  html{scroll-padding-top:118px!important}
+  body:not(.guide-page){overflow-x:hidden!important}
+  body:not(.guide-page) *,
+  body:not(.guide-page) *::before,
+  body:not(.guide-page) *::after{box-sizing:border-box}
+
+  body:not(.guide-page) main#top{
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+
+  body:not(.guide-page) main#top>section{
+    position:relative!important;
+    width:100%!important;
+    margin:0!important;
+    min-height:0!important;
+  }
+
+  body:not(.guide-page) main#top>section:not(.hero){
+    padding-top:38px!important;
+    padding-bottom:38px!important;
+    scroll-margin-top:118px!important;
+  }
+
+  body:not(.guide-page) main#top>section+section{
+    border-top:1px solid rgba(217,184,92,.10);
+  }
+
+  body:not(.guide-page) main#top>section>.wrap,
+  body:not(.guide-page) main#top>section .wrap{
+    max-width:1180px!important;
+  }
+
+  body:not(.guide-page) img,
+  body:not(.guide-page) video,
+  body:not(.guide-page) iframe,
+  body:not(.guide-page) svg{
+    max-width:100%;
+  }
+  body:not(.guide-page) img{display:block}
+
+  /* Compact headings: remove large dead bands above/below text. */
+  body:not(.guide-page) .title,
+  body:not(.guide-page) .avkh-title,
+  body:not(.guide-page) #oportunitati-astrovip .avx-title{
+    max-width:880px!important;
+    margin:0 auto 20px!important;
+    padding:0!important;
+  }
+  body:not(.guide-page) .title .kicker,
+  body:not(.guide-page) .avkh-title .kicker,
+  body:not(.guide-page) .avx-kicker{
+    margin:0 0 6px!important;
+  }
+  body:not(.guide-page) .title h2,
+  body:not(.guide-page) .avkh-title h2,
+  body:not(.guide-page) #oportunitati-astrovip .avx-title h2{
+    margin:0 0 9px!important;
+    font-size:clamp(31px,3vw,43px)!important;
+    line-height:1.06!important;
+    text-wrap:balance;
+  }
+  body:not(.guide-page) .title p,
+  body:not(.guide-page) .avkh-title p,
+  body:not(.guide-page) #oportunitati-astrovip .avx-title p{
+    margin:0 auto!important;
+    max-width:780px!important;
+    font-size:16px!important;
+    line-height:1.5!important;
+  }
+
+  /* Hero: keep every element joined into one coherent composition. */
+  body:not(.guide-page) section.hero.av-hero-v2{
+    padding-bottom:18px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual{
+    margin-bottom:0!important;
+  }
+  body:not(.guide-page) .av-hero-v2-copy{
+    padding-top:16px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-title{
+    margin:0!important;
+  }
+  body:not(.guide-page) .av-hero-v2-subtitle{
+    margin:8px 0 0!important;
+  }
+  body:not(.guide-page) .av-hero-v2-cards{
+    margin-top:12px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-bottom{
+    margin-top:7px!important;
+  }
+
+  /* CTA bands directly below Hero. */
+  body:not(.guide-page) #intrebare-gratuita,
+  body:not(.guide-page) #harta-mea-cta{
+    padding-top:20px!important;
+    padding-bottom:20px!important;
+  }
+  body:not(.guide-page) #intrebare-gratuita+#harta-mea-cta{
+    padding-top:0!important;
+  }
+  body:not(.guide-page) .freeq-home-card,
+  body:not(.guide-page) .natal-home-card{
+    margin:0 auto!important;
+    padding:18px 20px!important;
+    gap:12px!important;
+  }
+  body:not(.guide-page) .freeq-home-card>*,
+  body:not(.guide-page) .natal-home-card>*{
+    margin-top:0;
+    margin-bottom:0;
+  }
+  body:not(.guide-page) .freeq-home-card h2,
+  body:not(.guide-page) .natal-home-card h2{
+    margin:2px 0 7px!important;
+  }
+  body:not(.guide-page) .freeq-home-topics{
+    margin:8px 0 0!important;
+  }
+
+  /* Premium libraries: equal-height, dense cards. */
+  body:not(.guide-page) #biblioteci-premium{
+    padding-top:34px!important;
+    padding-bottom:34px!important;
+  }
+  body:not(.guide-page) .avkh-grid{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:12px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) .avkh-card{
+    min-width:0!important;
+    min-height:0!important;
+    height:100%!important;
+    padding:18px!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  body:not(.guide-page) .avkh-symbol{margin-bottom:8px!important}
+  body:not(.guide-page) .avkh-mini{margin-top:0!important}
+  body:not(.guide-page) .avkh-card h3{margin:5px 0 8px!important}
+  body:not(.guide-page) .avkh-card p{margin:0 0 12px!important}
+  body:not(.guide-page) .avkh-links{margin:0 0 12px!important}
+  body:not(.guide-page) .avkh-primary{margin-top:auto!important}
+  body:not(.guide-page) .avkh-footer{margin-top:16px!important}
+
+  /* Services: consistent image, copy and button baseline. */
+  body:not(.guide-page) #servicii .grid{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:12px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) #servicii .card{
+    min-width:0!important;
+    height:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  body:not(.guide-page) #servicii .card>img,
+  body:not(.guide-page) #servicii .card>.service-art-portrait{
+    width:100%!important;
+    height:215px!important;
+    min-height:215px!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    margin:0!important;
+  }
+  body:not(.guide-page) #servicii .card .pad{
+    flex:1 1 auto!important;
+    display:flex!important;
+    flex-direction:column!important;
+    padding:16px!important;
+  }
+  body:not(.guide-page) #servicii .card .mini{margin:0 0 6px!important}
+  body:not(.guide-page) #servicii .card h3{margin:0 0 7px!important}
+  body:not(.guide-page) #servicii .card p{margin:0 0 12px!important}
+  body:not(.guide-page) #servicii .card .btn2{
+    margin-top:auto!important;
+    width:100%!important;
+    justify-content:center!important;
+  }
+
+  /* Thematic opportunities: balanced desktop composition, no giant image-only bands. */
+  body:not(.guide-page) #oportunitati-astrovip .avx-card{
+    display:grid!important;
+    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)!important;
+    align-items:stretch!important;
+    max-width:1120px!important;
+    margin:12px auto!important;
+    padding:0!important;
+    gap:0!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-card:nth-of-type(even) .avx-visual{
+    order:2!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-card:nth-of-type(even) .avx-copy{
+    order:1!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-visual{
+    min-height:300px!important;
+    height:100%!important;
+    margin:0!important;
+    border:0!important;
+    border-radius:0!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-visual img{
+    width:100%!important;
+    height:100%!important;
+    min-height:300px!important;
+    max-height:none!important;
+    object-fit:cover!important;
+    object-position:center!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-copy{
+    min-width:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    padding:22px!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-copy>*{
+    max-width:100%;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-copy h3{margin:5px 0 9px!important}
+  body:not(.guide-page) #oportunitati-astrovip .avx-points{margin:10px 0 14px!important}
+  body:not(.guide-page) #oportunitati-astrovip .avx-copy .cta{
+    margin-top:auto!important;
+    align-self:flex-start!important;
+  }
+
+  /* Method: compact equal cards. */
+  body:not(.guide-page) #metoda .steps{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  body:not(.guide-page) #metoda .step{
+    min-width:0!important;
+    height:100%!important;
+    padding:16px!important;
+  }
+  body:not(.guide-page) #metoda .step b{margin-bottom:9px!important}
+  body:not(.guide-page) #metoda .step h3{margin:0 0 5px!important}
+
+  /* Six case studies: 3 x 2, same visual/copy height, no loose rows. */
+  body:not(.guide-page) #studii-de-caz-home{
+    padding-top:36px!important;
+    padding-bottom:36px!important;
+  }
+  body:not(.guide-page) .av-case-showcase-frame{
+    margin:0!important;
+    padding:18px!important;
+  }
+  body:not(.guide-page) .av-case-showcase-head{
+    margin:0 0 16px!important;
+  }
+  body:not(.guide-page) .av-case-showcase-grid{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:12px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) .av-case-showcase-card{
+    min-width:0!important;
+    height:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .av-case-showcase-visual{
+    width:100%!important;
+    aspect-ratio:16/9!important;
+    min-height:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .av-case-showcase-visual img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+  }
+  body:not(.guide-page) .av-case-showcase-copy{
+    flex:1 1 auto!important;
+    display:flex!important;
+    flex-direction:column!important;
+    padding:16px!important;
+  }
+  body:not(.guide-page) .av-case-showcase-copy h3{margin:5px 0 7px!important}
+  body:not(.guide-page) .av-case-showcase-meta{margin:0 0 8px!important}
+  body:not(.guide-page) .av-case-showcase-lead{margin:0 0 12px!important}
+  body:not(.guide-page) .av-case-showcase-cta{
+    width:100%!important;
+    margin-top:auto!important;
+    justify-content:center!important;
+  }
+
+  /* Relocation and Why AstroVip: fill both columns to one visual height. */
+  body:not(.guide-page) #relocare>.wrap.split,
+  body:not(.guide-page) .why>.wrap.split{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:18px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) #relocare>.wrap.split>*,
+  body:not(.guide-page) .why>.wrap.split>*{
+    min-width:0!important;
+  }
+  body:not(.guide-page) #relocare>.wrap.split>div,
+  body:not(.guide-page) .why>.wrap.split>div{
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+  }
+  body:not(.guide-page) #relocare .section-heading,
+  body:not(.guide-page) .why .section-heading{
+    margin:5px 0 9px!important;
+  }
+  body:not(.guide-page) #relocare .section-copy,
+  body:not(.guide-page) .why .section-copy{
+    margin:0 0 12px!important;
+  }
+  body:not(.guide-page) #relocare .list,
+  body:not(.guide-page) .why .list{gap:7px!important}
+  body:not(.guide-page) #relocare .list div,
+  body:not(.guide-page) .why .list div{
+    padding:10px 12px!important;
+  }
+  body:not(.guide-page) #relocare img,
+  body:not(.guide-page) .why .portrait-wrap,
+  body:not(.guide-page) .why .portrait-wrap img{
+    height:100%!important;
+    min-height:330px!important;
+  }
+  body:not(.guide-page) #relocare img,
+  body:not(.guide-page) .why .portrait-wrap img{
+    width:100%!important;
+    object-fit:cover!important;
+    object-position:center!important;
+  }
+  body:not(.guide-page) .why{padding-top:38px!important}
+  body:not(.guide-page) .portrait-wrap::before{inset:-8px!important}
+
+  /* Pricing: strong centred block without excessive surrounding blank area. */
+  body:not(.guide-page) #tarife .price-grid{
+    max-width:700px!important;
+    margin:0 auto!important;
+    gap:0!important;
+  }
+  body:not(.guide-page) #tarife .price-card{
+    margin:0!important;
+    padding:22px!important;
+  }
+  body:not(.guide-page) #tarife .price-card h3{margin:11px 0 4px!important}
+  body:not(.guide-page) #tarife .price{margin:9px 0!important}
+  body:not(.guide-page) #tarife .price-card p{margin:7px 0 0!important}
+  body:not(.guide-page) #tarife .price-card ul{margin:13px 0 16px!important}
+
+  /* Editorial/FAQ/article grids: rows fill evenly. */
+  body:not(.guide-page) #ghid-astrologie .grid,
+  body:not(.guide-page) #intrebari-frecvente .grid,
+  body:not(.guide-page) #blog-recent .article-grid,
+  body:not(.guide-page) #articole .article-grid{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:12px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) #ghid-astrologie .card,
+  body:not(.guide-page) #intrebari-frecvente .card,
+  body:not(.guide-page) #blog-recent .article-card,
+  body:not(.guide-page) #articole .article-card{
+    height:100%!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  body:not(.guide-page) #ghid-astrologie .card .pad,
+  body:not(.guide-page) #intrebari-frecvente .card .pad,
+  body:not(.guide-page) #blog-recent .article-card .pad,
+  body:not(.guide-page) #articole .article-card .pad{
+    flex:1 1 auto!important;
+    display:flex!important;
+    flex-direction:column!important;
+    padding:16px!important;
+  }
+  body:not(.guide-page) #ghid-astrologie .card h3,
+  body:not(.guide-page) #intrebari-frecvente .card h3,
+  body:not(.guide-page) #blog-recent .article-card h3,
+  body:not(.guide-page) #articole .article-card h3{
+    margin:5px 0 8px!important;
+  }
+  body:not(.guide-page) #ghid-astrologie .card p,
+  body:not(.guide-page) #intrebari-frecvente .card p,
+  body:not(.guide-page) #blog-recent .article-card p,
+  body:not(.guide-page) #articole .article-card p{
+    margin:0 0 12px!important;
+  }
+  body:not(.guide-page) #ghid-astrologie .card .btn2,
+  body:not(.guide-page) #blog-recent .article-card .btn2,
+  body:not(.guide-page) #articole .article-card .btn2{
+    width:100%!important;
+    margin-top:auto!important;
+    justify-content:center!important;
+  }
+  body:not(.guide-page) #blog-recent .wrap>div[style*="text-align:center"]{
+    margin-top:14px!important;
+  }
+
+  /* Geographic astrology section: no large gap between two text columns. */
+  body:not(.guide-page) #astrologie-geografica .split{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:16px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) #astrologie-geografica .split>div{
+    min-width:0!important;
+    padding:18px!important;
+    border:1px solid rgba(217,184,92,.24)!important;
+    border-radius:18px!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01))!important;
+  }
+  body:not(.guide-page) #astrologie-geografica .section-heading{margin:0 0 10px!important}
+  body:not(.guide-page) #astrologie-geografica .section-copy{margin:0 0 12px!important}
+
+  /* SEO hub auto-fills the row instead of leaving wide unused slots. */
+  body:not(.guide-page) #ghiduri-seo .seo-hub-grid{
+    display:grid!important;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr))!important;
+    gap:10px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) #ghiduri-seo .seo-hub-card{
+    min-width:0!important;
+    height:100%!important;
+    margin:0!important;
+    padding:14px!important;
+  }
+
+  /* Community / booking: compact and centred. */
+  body:not(.guide-page) #comunitate .forum-entry{
+    max-width:760px!important;
+    margin:14px auto 0!important;
+  }
+  body:not(.guide-page) #programari .booking-wrap{
+    max-width:960px!important;
+    margin:0 auto!important;
+  }
+  body:not(.guide-page) #programari .box{
+    padding:20px!important;
+  }
+  body:not(.guide-page) #programari .form-row{
+    gap:10px!important;
+  }
+
+  /* Contact: both cards match in height and internal rhythm. */
+  body:not(.guide-page) #contact{
+    padding-top:38px!important;
+    padding-bottom:38px!important;
+  }
+  body:not(.guide-page) #contact .contact-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:12px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) #contact .box{
+    height:100%!important;
+    min-width:0!important;
+    padding:20px!important;
+  }
+  body:not(.guide-page) #contact .box h2{margin:0 0 10px!important}
+  body:not(.guide-page) #contact .box p{margin:0 0 10px!important}
+  body:not(.guide-page) #contact .contact-info{margin:14px 0!important}
+
+  /* Professional identity + certificate: side-by-side on wide desktop. */
+  body:not(.guide-page) .av-credentials{
+    padding-top:30px!important;
+    padding-bottom:30px!important;
+  }
+  body:not(.guide-page) .av-credentials>.wrap{
+    max-width:1120px!important;
+  }
+  body:not(.guide-page) .av-credentials-shell{
+    display:grid!important;
+    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)!important;
+    gap:12px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) .av-credentials-card{
+    min-width:0!important;
+    height:100%!important;
+  }
+  body:not(.guide-page) .av-credentials-card.av-identity-image-card,
+  body:not(.guide-page) .av-identity-figure{
+    height:100%!important;
+  }
+  body:not(.guide-page) .av-identity-figure img{
+    width:100%!important;
+    height:100%!important;
+    min-height:390px!important;
+    aspect-ratio:auto!important;
+    object-fit:cover!important;
+    object-position:center!important;
+  }
+  body:not(.guide-page) .av-certificate-card{
+    padding:16px!important;
+  }
+  body:not(.guide-page) .av-credentials-head{
+    padding:18px 18px 6px!important;
+  }
+  body:not(.guide-page) .av-certificate-frame{
+    max-width:100%!important;
+    padding:8px!important;
+  }
+
+  /* Trust / legal cards: one clean desktop row. */
+  body:not(.guide-page) #repere-incredere{
+    padding-top:26px!important;
+    padding-bottom:28px!important;
+  }
+  body:not(.guide-page) #repere-incredere .trust-minibox{
+    max-width:1120px!important;
+    margin:0 auto!important;
+  }
+  body:not(.guide-page) .trust-profession-banner{
+    min-height:0!important;
+    margin:0 0 10px!important;
+    padding:18px!important;
+  }
+  body:not(.guide-page) .trust-icons-only{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    grid-template-areas:"anpc commerce aar"!important;
+    gap:10px!important;
+    align-items:stretch!important;
+  }
+  body:not(.guide-page) .trust-icons-only>.trust-icon-only:first-child{grid-area:anpc!important}
+  body:not(.guide-page) .trust-icons-only>.trust-commerce-card{grid-area:commerce!important}
+  body:not(.guide-page) .trust-icons-only>.trust-icon-only:last-child{grid-area:aar!important}
+  body:not(.guide-page) .trust-icons-only>.trust-icon-only,
+  body:not(.guide-page) .trust-icons-only>.trust-commerce-card{
+    width:100%!important;
+    min-width:0!important;
+    min-height:156px!important;
+    height:156px!important;
+    margin:0!important;
+  }
+  body:not(.guide-page) .trust-icon-only img{
+    max-height:100px!important;
+  }
+
+  /* Remove accidental bottom margins that create visible dark gaps. */
+  body:not(.guide-page) main#top p:last-child,
+  body:not(.guide-page) main#top ul:last-child,
+  body:not(.guide-page) main#top .list:last-child,
+  body:not(.guide-page) main#top .buttons:last-child{
+    margin-bottom:0!important;
+  }
+}
+
+@media (min-width:821px) and (max-width:1100px){
+  body:not(.guide-page) main#top>section:not(.hero){
+    padding-top:32px!important;
+    padding-bottom:32px!important;
+  }
+  body:not(.guide-page) .avkh-grid,
+  body:not(.guide-page) #servicii .grid,
+  body:not(.guide-page) #ghid-astrologie .grid,
+  body:not(.guide-page) #intrebari-frecvente .grid,
+  body:not(.guide-page) #blog-recent .article-grid,
+  body:not(.guide-page) #articole .article-grid,
+  body:not(.guide-page) .av-case-showcase-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-card{
+    grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;
+  }
+  body:not(.guide-page) #metoda .steps{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body:not(.guide-page) .av-credentials-shell{
+    grid-template-columns:1fr!important;
+  }
+  body:not(.guide-page) .av-identity-figure img{
+    height:auto!important;
+    min-height:0!important;
+    aspect-ratio:16/9!important;
+    object-fit:cover!important;
+  }
+}
+
+@media (min-width:821px) and (max-width:980px){
+  body:not(.guide-page) #oportunitati-astrovip .avx-card,
+  body:not(.guide-page) #relocare>.wrap.split,
+  body:not(.guide-page) .why>.wrap.split,
+  body:not(.guide-page) #astrologie-geografica .split,
+  body:not(.guide-page) #contact .contact-grid{
+    grid-template-columns:1fr!important;
+  }
+  body:not(.guide-page) #oportunitati-astrovip .avx-card:nth-of-type(even) .avx-visual,
+  body:not(.guide-page) #oportunitati-astrovip .avx-card:nth-of-type(even) .avx-copy{
+    order:initial!important;
+  }
+  body:not(.guide-page) #relocare img,
+  body:not(.guide-page) .why .portrait-wrap,
+  body:not(.guide-page) .why .portrait-wrap img{
+    min-height:0!important;
+    height:auto!important;
+  }
+  body:not(.guide-page) .trust-icons-only{
+    grid-template-columns:1fr 1fr!important;
+    grid-template-areas:"anpc anpc" "commerce aar"!important;
+  }
+}
