@@ -44,10 +44,10 @@ jobs:
             for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight','bootup-time','mainthread-work-breakdown']){
               if(a[id]) console.log(id+'='+(a[id].displayValue||a[id].numericValue||''));
             }
-            for(const id of ['unused-javascript','unused-css-rules','render-blocking-insight']){
+            for(const id of ['bootup-time','mainthread-work-breakdown','long-tasks','diagnostics','unused-javascript','unused-css-rules','render-blocking-insight']){
               const x=a[id]; if(!x) continue;
               console.log('AUDIT '+id+' '+(x.displayValue||''));
-              if(x.details?.items) console.log(JSON.stringify(x.details.items.slice(0,12)));
+              if(x.details?.items) console.log(JSON.stringify(x.details.items.slice(0,25)));
             }
           }
           NODE
