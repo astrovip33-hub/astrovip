@@ -14,25 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Wait for preview alias
-        shell: bash
-        run: |
-          for i in $(seq 1 12); do
-            code=$(curl -L -sS -o /dev/null -w '%{http_code}' https://deploy-preview-35--astrovip33.netlify.app/ || true)
-            echo "Preview HTTP: $code"
-            [ "$code" = "200" ] && exit 0
-            sleep 5
-          done
-          exit 1
-
       - name: Run Lighthouse mobile and desktop
         shell: bash
         run: |
           CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
           export CHROME_PATH
           echo "Chrome: $CHROME_PATH"
-          npx --yes lighthouse@latest https://deploy-preview-35--astrovip33.netlify.app/             --output=json --output-path=/tmp/lh-mobile.json             --only-categories=performance             --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-          npx --yes lighthouse@latest https://deploy-preview-35--astrovip33.netlify.app/             --preset=desktop             --output=json --output-path=/tmp/lh-desktop.json             --only-categories=performance             --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          npx --yes lighthouse@latest https://6ab2cfc808be260008ad726d--astrovip33.netlify.app/             --output=json --output-path=/tmp/lh-mobile.json             --only-categories=performance             --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          npx --yes lighthouse@latest https://6ab2cfc808be260008ad726d--astrovip33.netlify.app/             --preset=desktop             --output=json --output-path=/tmp/lh-desktop.json             --only-categories=performance             --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
 
       - name: Print scores and Core Web Vitals
         shell: bash
