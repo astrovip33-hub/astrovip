@@ -1,4 +1,4 @@
-name: AstroVip Desktop CLS Audit
+name: AstroVip Mobile Performance Audit
 
 on:
   push:
@@ -19,18 +19,30 @@ jobs:
           python3 -m http.server 8080 --bind 127.0.0.1 >/tmp/http.log 2>&1 &
           for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8080/ >/dev/null && exit 0; sleep 1; done
           exit 1
-      - name: Run desktop Lighthouse
+      - name: Run Lighthouse mobile and desktop
         shell: bash
         run: |
           CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
           export CHROME_PATH
+          npx --yes lighthouse@latest http://127.0.0.1:8080/ --output=json --output-path=/tmp/mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
           npx --yes lighthouse@latest http://127.0.0.1:8080/ --preset=desktop --output=json --output-path=/tmp/desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-      - name: Print metrics
+      - name: Print diagnostics
         shell: bash
         run: |
           node <<'NODE'
-          const j=require('/tmp/desktop.json'),a=j.audits;
-          console.log('SCORE='+Math.round(j.categories.performance.score*100));
-          for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight']) console.log(id+'='+(a[id]?.displayValue||a[id]?.numericValue||''));
-          if(a['layout-shifts']?.details?.items) console.log('SHIFTS='+JSON.stringify(a['layout-shifts'].details.items.slice(0,10)));
+          const fs=require('fs');
+          for (const mode of ['mobile','desktop']) {
+            const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8')),a=j.audits;
+            console.log('=== '+mode.toUpperCase()+' ===');
+            console.log('SCORE='+Math.round(j.categories.performance.score*100));
+            for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight','bootup-time','mainthread-work-breakdown']){
+              if(a[id]) console.log(id+'='+(a[id].displayValue||a[id].numericValue||''));
+            }
+            for(const id of ['bootup-time','mainthread-work-breakdown','long-tasks','diagnostics','unused-javascript','unused-css-rules']){
+              const x=a[id]; if(!x) continue;
+              console.log('AUDIT '+id);
+              const items=x.details&&x.details.items;
+              if(Array.isArray(items)) console.log(JSON.stringify(items.slice(0,25)));
+            }
+          }
           NODE
