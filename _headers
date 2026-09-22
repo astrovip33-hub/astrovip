@@ -47,3 +47,6 @@
 
 /assets/hero-vivid-mobile.avif
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/astrovip-hero-lux-clean-20260922.webp
+  Cache-Control: public, max-age=31536000, immutable
