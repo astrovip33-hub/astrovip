@@ -1,0 +1,83 @@
+name: Optimize mobile hero once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/optimize-hero-once.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "astrovip-hero-optimizer"
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install WebP encoder
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y webp
+
+      - name: Encode current mobile hero
+        shell: bash
+        run: |
+          set -euo pipefail
+          INPUT="assets/astrovip-hero-lux-clean-20260922.png"
+          OUTPUT="assets/astrovip-hero-lux-clean-20260922.webp"
+          test -f "$INPUT"
+          cwebp -quiet -mt -m 6 -q 88 -alpha_q 100 -metadata none "$INPUT" -o "$OUTPUT"
+          echo "PNG bytes:  $(stat -c%s "$INPUT")"
+          echo "WebP bytes: $(stat -c%s "$OUTPUT")"
+
+      - name: Use optimized WebP only on mobile
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+
+          old_preload = '<link rel="preload" as="image" href="/assets/astrovip-hero-lux-clean-20260922.png?v=20260922-clean1" type="image/png" media="(max-width:820px)" fetchpriority="high"/>'
+          new_preload = '<link rel="preload" as="image" href="/assets/astrovip-hero-lux-clean-20260922.webp?v=20260922-speed1" type="image/webp" media="(max-width:820px)" fetchpriority="high"/>'
+          old_source = '<source media="(max-width:820px)" srcset="/assets/astrovip-hero-lux-clean-20260922.png?v=20260922-clean1" type="image/png"/>'
+          new_source = '<source media="(max-width:820px)" srcset="/assets/astrovip-hero-lux-clean-20260922.webp?v=20260922-speed1" type="image/webp"/>'
+
+          if old_preload not in s:
+              raise SystemExit("Expected mobile PNG preload not found")
+          if old_source not in s:
+              raise SystemExit("Expected mobile PNG picture source not found")
+
+          s = s.replace(old_preload, new_preload, 1)
+          s = s.replace(old_source, new_source, 1)
+          p.write_text(s, encoding="utf-8")
+
+          h = Path("_headers")
+          hs = h.read_text(encoding="utf-8")
+          rule = "\n/assets/astrovip-hero-lux-clean-20260922.webp\n  Cache-Control: public, max-age=31536000, immutable\n"
+          if "/assets/astrovip-hero-lux-clean-20260922.webp" not in hs:
+              h.write_text(hs.rstrip() + "\n" + rule, encoding="utf-8")
+          PY
+
+      - name: Commit optimized hero
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add assets/astrovip-hero-lux-clean-20260922.webp index.html _headers
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Optimize mobile hero image for LCP"
+          git push origin HEAD:main
