@@ -181,7 +181,13 @@ jobs:
           echo "Checking footer de-duplication on live homepage"
           LIVE_HTML=$(mktemp)
           LIVE_HDR=$(mktemp)
-          curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 8 --retry-delay 4 "https://astrovip.ro/?release=20260921-speed-index-5"
+          EXPECTED_RELEASE=$(awk 'BEGIN{IGNORECASE=1} /X-AstroVip-Release:/ {print $2; exit}' _headers)
+          if [ -z "$EXPECTED_RELEASE" ]; then
+            echo "::error::Could not resolve X-AstroVip-Release from _headers."
+            exit 26
+          fi
+          echo "Expected release: $EXPECTED_RELEASE"
+          curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 8 --retry-delay 4 "https://astrovip.ro/?release=$EXPECTED_RELEASE"
 
           IDENTITY_COUNT=$( { grep -o 'av-identity-image-card' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
           LEGACY_COUNT=$( { grep -E -o 'av-credentials-kicker">Date profesionale|<h2>Cristian Cătălin Smaranda</h2>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
@@ -201,8 +207,8 @@ jobs:
             exit 25
           fi
 
-          if [ "$RELEASE_HEADER" != "20260921-speed-index-5" ]; then
-            echo "::error::Live homepage is not serving the new cache-reset release."
+          if [ "$RELEASE_HEADER" != "$EXPECTED_RELEASE" ]; then
+            echo "::error::Live homepage release '$RELEASE_HEADER' does not match expected '$EXPECTED_RELEASE'."
             exit 26
           fi
 
