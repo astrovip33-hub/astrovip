@@ -52,3 +52,27 @@ jobs:
 
       - name: Deploy preview Worker
         run: npx --yes wrangler@latest deploy --config wrangler.preview.jsonc
+
+      - name: Smoke-test preview pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://astrovip-preview-full-site-20260922.astrovip33.workers.dev"
+          URLS=(
+            "$BASE/"
+            "$BASE/harta-natala/"
+            "$BASE/local-space/"
+            "$BASE/biblioteca-astrologie/"
+            "$BASE/academia-astrologie/atlas-10000/tranzite-puncte-natale/"
+            "$BASE/studii-de-caz/incepere-job-1-martie-2000/"
+          )
+          for URL in "${URLS[@]}"; do
+            STATUS=$(curl -sS -L -o /tmp/astrovip-preview.html -w '%{http_code}' --retry 5 --retry-delay 2 "$URL")
+            echo "$URL -> $STATUS"
+            test "$STATUS" = "200"
+            grep -q '/assets/site-wide-optimization.css?v=20260922-1' /tmp/astrovip-preview.html
+          done
+
+          ! curl -sS -L "$BASE/harta-natala/" | grep -q 'planetary-ticker-v2.js'
+          ! curl -sS -L "$BASE/harta-natala/" | grep -q 'astrovip33@gmail.com'
+          curl -sS -L "$BASE/harta-natala/" | grep -q 'planetary-ticker.js?v=20260922-fix1'
