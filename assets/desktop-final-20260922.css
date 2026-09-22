@@ -90,8 +90,7 @@
     padding:4px 10px!important;
   }
 
-  /* Use the same Hero system as mobile, scaled correctly for desktop. */
-  body:not(.guide-page) section.av-hero-lux{display:none!important}
+  /* Active Hero system, scaled correctly for desktop. */
   body:not(.guide-page) section.hero.hero-split.av-hero-v2.av-hero-mobile-restore{
     display:block!important;
     margin:0!important;
@@ -188,7 +187,7 @@
   }
 
   /* Consistent desktop rhythm below the fold */
-  body:not(.guide-page) main#top>section:not(.hero):not(.av-hero-lux){
+  body:not(.guide-page) main#top>section:not(.hero){
     scroll-margin-top:122px;
   }
   body:not(.guide-page) .title,
