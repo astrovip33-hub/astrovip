@@ -18,7 +18,7 @@ jobs:
         run: |
           CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
           export CHROME_PATH
-          URL="https://94460a7a-astrovip.astrovip33.workers.dev/"
+          URL="https://a33a0e0d-astrovip.astrovip33.workers.dev/"
           npx --yes lighthouse@latest "$URL" --output=json --output-path=/tmp/mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
           npx --yes lighthouse@latest "$URL" --preset=desktop --output=json --output-path=/tmp/desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
       - name: Print metrics
