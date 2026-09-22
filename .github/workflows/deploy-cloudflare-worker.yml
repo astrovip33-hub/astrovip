@@ -23,6 +23,47 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate sitemap coverage
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import xml.etree.ElementTree as ET
+
+          base = "https://astrovip.ro/"
+          sitemap_urls = set()
+
+          for path in Path(".").glob("sitemap*.xml"):
+              if path.name == "sitemap-index.xml":
+                  continue
+              try:
+                  root = ET.parse(path).getroot()
+              except Exception as exc:
+                  raise SystemExit(f"Invalid sitemap XML {path}: {exc}")
+              for el in root.iter():
+                  if el.tag.endswith("loc") and el.text and el.text.startswith(base):
+                      sitemap_urls.add(el.text.strip())
+
+          missing = []
+          for path in Path(".").rglob("index.html"):
+              text = path.read_text(encoding="utf-8", errors="ignore")
+              if "noindex" in text.lower():
+                  continue
+              rel = path.as_posix()
+              url = base if rel == "index.html" else base + rel[:-10]
+              if url not in sitemap_urls:
+                  missing.append(url)
+
+          if missing:
+              print("Indexable pages missing from sitemap:")
+              for url in missing:
+                  print(url)
+              raise SystemExit(31)
+
+          print(f"Sitemap coverage OK: {len(sitemap_urls)} sitemap URLs; no indexable index.html pages missing.")
+          PY
+
       - name: Normalize and validate Cloudflare token
         shell: bash
         run: |
