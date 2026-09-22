@@ -1,4 +1,4 @@
-name: AstroVip Performance Preview Audit
+name: AstroVip Local Performance Audit
 
 on:
   push:
@@ -14,43 +14,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run Lighthouse preview and live
+      - name: Start local static server
+        shell: bash
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 >/tmp/astrovip-http.log 2>&1 &
+          echo $! >/tmp/astrovip-http.pid
+          for i in $(seq 1 20); do
+            curl -fsS http://127.0.0.1:8080/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/astrovip-http.log
+          exit 1
+
+      - name: Run Lighthouse mobile and desktop locally
         shell: bash
         run: |
           CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
           export CHROME_PATH
-          PREVIEW="https://perf-cwv-mobile-desktop-20260922-v1-astrovip.astrovip33.workers.dev/"
-          LIVE="https://astrovip.ro/"
-          npx --yes lighthouse@latest "$PREVIEW" --output=json --output-path=/tmp/preview-mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-          npx --yes lighthouse@latest "$PREVIEW" --preset=desktop --output=json --output-path=/tmp/preview-desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-          npx --yes lighthouse@latest "$LIVE" --output=json --output-path=/tmp/live-mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-          npx --yes lighthouse@latest "$LIVE" --preset=desktop --output=json --output-path=/tmp/live-desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          npx --yes lighthouse@latest http://127.0.0.1:8080/ --output=json --output-path=/tmp/mobile.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          npx --yes lighthouse@latest http://127.0.0.1:8080/ --preset=desktop --output=json --output-path=/tmp/desktop.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
 
-      - name: Print scores and diagnostics
+      - name: Print performance metrics
         shell: bash
         run: |
           node <<'NODE'
           const fs=require('fs');
-          const files={
-            PREVIEW_MOBILE:'/tmp/preview-mobile.json',
-            PREVIEW_DESKTOP:'/tmp/preview-desktop.json',
-            LIVE_MOBILE:'/tmp/live-mobile.json',
-            LIVE_DESKTOP:'/tmp/live-desktop.json'
-          };
-          for (const [label,file] of Object.entries(files)) {
-            const j=JSON.parse(fs.readFileSync(file,'utf8'));
+          for (const mode of ['mobile','desktop']) {
+            const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8'));
             const a=j.audits;
-            console.log('=== '+label+' ===');
+            console.log('=== '+mode.toUpperCase()+' ===');
             console.log('SCORE='+Math.round(j.categories.performance.score*100));
-            for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight','dom-size']){
-              if(a[id]) console.log(id+'='+(a[id].displayValue||a[id].numericValue||''));
+            for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight']){
+              console.log(id+'='+(a[id]?.displayValue||a[id]?.numericValue||''));
             }
-            for(const [id,x] of Object.entries(a)){
-              if(!/layout|shift|render-blocking|unused-css|lcp/i.test(id)) continue;
-              if(!x) continue;
-              console.log('AUDIT '+id+' score='+x.score+' value='+(x.displayValue||''));
-              const items=x.details&&x.details.items;
-              if(Array.isArray(items)) console.log(JSON.stringify(items.slice(0,20)));
-            }
+            const shifts=a['layout-shifts'];
+            if(shifts?.details?.items) console.log('SHIFTS='+JSON.stringify(shifts.details.items.slice(0,10)));
           }
           NODE
