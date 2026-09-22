@@ -3,7 +3,7 @@ name: AstroVip Cloudflare Preview Mobile Audit
 on:
   push:
     branches:
-      - "perf/cwv-mobile-desktop-20260922-v1"
+      - "perf/cwv-final-20260922-v2"
 
 permissions:
   contents: read
