@@ -28,15 +28,26 @@ jobs:
         run: |
           node <<'NODE'
           const fs=require('fs');
-          for (const mode of ['mobile','desktop']) {
-            const j=JSON.parse(fs.readFileSync('/tmp/lh-'+mode+'.json','utf8'));
+          const files={
+            PREVIEW_MOBILE:'/tmp/lh-mobile.json',
+            PREVIEW_DESKTOP:'/tmp/lh-desktop.json',
+            LIVE_MOBILE:'/tmp/lh-live-mobile.json',
+            LIVE_DESKTOP:'/tmp/lh-live-desktop.json'
+          };
+          for (const [label,file] of Object.entries(files)) {
+            const j=JSON.parse(fs.readFileSync(file,'utf8'));
             const a=j.audits;
             const score=Math.round(j.categories.performance.score*100);
-            console.log('ASTROVIP_'+mode.toUpperCase()+'_SCORE='+score);
-            console.log('ASTROVIP_'+mode.toUpperCase()+'_FCP='+a['first-contentful-paint'].displayValue);
-            console.log('ASTROVIP_'+mode.toUpperCase()+'_LCP='+a['largest-contentful-paint'].displayValue);
-            console.log('ASTROVIP_'+mode.toUpperCase()+'_TBT='+a['total-blocking-time'].displayValue);
-            console.log('ASTROVIP_'+mode.toUpperCase()+'_CLS='+a['cumulative-layout-shift'].displayValue);
-            console.log('ASTROVIP_'+mode.toUpperCase()+'_SI='+a['speed-index'].displayValue);
+            console.log('ASTROVIP_'+label+'_SCORE='+score);
+            for(const id of ['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','total-byte-weight','dom-size']){
+              if(a[id]) console.log('ASTROVIP_'+label+'_'+id.toUpperCase().replaceAll('-','_')+'='+(a[id].displayValue||a[id].numericValue||''));
+            }
+            for(const id of ['bootup-time','mainthread-work-breakdown','unused-javascript','unused-css-rules','render-blocking-insight','third-parties-insight']){
+              const x=a[id];
+              if(!x) continue;
+              console.log('ASTROVIP_'+label+'_AUDIT_'+id+' score='+x.score+' value='+(x.displayValue||''));
+              const items=x.details&&x.details.items;
+              if(Array.isArray(items)) console.log(JSON.stringify(items.slice(0,8)));
+            }
           }
           NODE
