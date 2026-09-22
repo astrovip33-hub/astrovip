@@ -50,3 +50,9 @@
 
 /assets/astrovip-hero-lux-clean-20260922.webp
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/astrovip-hero-lux-clean-20260922-640.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/astrovip-hero-lux-clean-20260922-960.webp
+  Cache-Control: public, max-age=31536000, immutable
