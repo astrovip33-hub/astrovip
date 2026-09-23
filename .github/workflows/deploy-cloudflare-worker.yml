@@ -272,6 +272,22 @@ jobs:
             exit 26
           fi
 
+          HERO_CARD_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<div class="av-hero-v2-cards"[^>]*>(.*?)</div>\s*<div class="av-hero-v2-bottom"', html, re.S|re.I)
+          block=m.group(1) if m else ""
+          print(len(re.findall(r'<article class="av-hero-v2-card"', block, re.I)))
+          PY
+          )
+          HERO_RELOCATION_COUNT=$( { grep -o '<h3>RELOCARE</h3>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
+          echo "Hero cards live: $HERO_CARD_COUNT"
+          echo "Relocare cards live: $HERO_RELOCATION_COUNT"
+          if [ "$HERO_CARD_COUNT" != "4" ] || [ "$HERO_RELOCATION_COUNT" != "1" ]; then
+            echo "::error::Live homepage does not expose exactly four Hero cards including RELOCARE."
+            exit 32
+          fi
+
           echo "Checking Local Space case-study collection"
           LOCAL_SPACE_URLS=(
             "https://astrovip.ro/local-space/studii-de-caz/"
