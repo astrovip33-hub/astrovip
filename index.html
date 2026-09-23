@@ -128,6 +128,86 @@
 <link rel="stylesheet" href="/assets/desktop-visual-polish-20260922.css?v=20260922-polish1" media="(min-width:821px)">
 <link rel="stylesheet" href="/assets/desktop-premium-v2-20260922.css?v=20260922-v2" media="(min-width:821px)">
 <style id="astrovip-chat-single-launcher-final">html body:not(.guide-page) .avchat-launcher.avchat-header-slot::after{content:none!important;display:none!important;animation:none!important;border:0!important;box-shadow:none!important;}</style>
+
+<style id="preview-hero-four-cards-perfect">
+@media(min-width:821px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    align-items:stretch!important;
+    width:min(1040px,calc(100% - 80px))!important;
+    max-width:1040px!important;
+    margin:14px auto 0!important;
+    gap:12px!important;
+    padding:0!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+    box-sizing:border-box!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    height:126px!important;
+    min-height:126px!important;
+    max-height:126px!important;
+    margin:0!important;
+    padding:15px 14px!important;
+    border:2px solid rgba(57,255,20,.72)!important;
+    border-radius:14px!important;
+    background:linear-gradient(180deg,rgba(13,31,15,.985) 0%,rgba(2,7,3,.995) 100%)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 24px rgba(0,0,0,.34)!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card::before{
+    content:""!important;
+    position:absolute!important;
+    inset:4px!important;
+    border:1px solid rgba(198,255,186,.10)!important;
+    border-radius:10px!important;
+    pointer-events:none!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    min-height:18px!important;
+    margin:0 0 8px!important;
+    padding:0!important;
+    color:#f0d36f!important;
+    font-size:13px!important;
+    line-height:1!important;
+    font-weight:950!important;
+    letter-spacing:.07em!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    min-height:38px!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    color:#fffdf8!important;
+    font-size:10.6px!important;
+    line-height:1.24!important;
+    font-weight:850!important;
+    letter-spacing:.025em!important;
+    text-align:center!important;
+    text-wrap:balance!important;
+    text-shadow:0 1px 0 rgba(0,0,0,.72)!important;
+  }
+}
+@media(max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(4){
+    display:none!important;
+  }
+}
+</style>
 </head>
 <body class="av-motion-live"><div id="av-consent" class="av-consent" role="dialog" aria-modal="true" aria-labelledby="av-consent-title"><div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div></div><a class="skip-link" href="#top">Sari la conținut</a>
 <header class="top">
@@ -289,6 +369,11 @@
       <div class="av-hero-v2-icon" aria-hidden="true">◈</div>
       <h3>AFACERI</h3>
       <p>DECIZII INSPIRATE PENTRU SUCCES</p>
+    </article>
+    <article class="av-hero-v2-card">
+      <div class="av-hero-v2-icon" aria-hidden="true">⌖</div>
+      <h3>RELOCARE</h3>
+      <p>LOCUL POTRIVIT PENTRU ETAPA POTRIVITĂ</p>
     </article>
   </div>
 
