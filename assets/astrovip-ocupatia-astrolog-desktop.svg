@@ -61,8 +61,8 @@
   <g transform="translate(500 690)" fill="url(#gold)" filter="url(#glow)">
     <path d="M0-20 L6-6 L20 0 L6 6 L0 20 L-6 6 L-20 0 L-6-6 Z"/>
   </g>
-  <text x="500" y="747" font-size="29" font-weight="800" letter-spacing="5" fill="#fff0b1">MAI MULT DECÂT O PROFESIE,</text>
-  <text x="500" y="787" font-size="29" font-weight="800" letter-spacing="6" fill="#fff0b1">O MISIUNE</text>
+  <text x="500" y="747" font-size="35" font-weight="850" letter-spacing="4" fill="#39ff14">MAI MULT DECÂT O PROFESIE,</text>
+  <text x="500" y="787" font-size="35" font-weight="850" letter-spacing="5" fill="#39ff14">O MISIUNE</text>
 </g>
 
 <g transform="translate(120 826)" stroke="#e4bb4d" fill="none" stroke-width="4">
@@ -81,9 +81,9 @@
   <line x1="27" y1="61" x2="36" y2="52"/><line x1="68" y1="20" x2="77" y2="11"/></g>
 </g>
 
-<g fill="#fff0b2" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="22" letter-spacing="1.5" text-anchor="middle">
-  <text x="192" y="920">CUNOAȘTERE</text><text x="192" y="948">ASTRALĂ</text>
-  <text x="500" y="920">GHIDARE</text><text x="500" y="948">PENTRU VIAȚĂ</text>
-  <text x="828" y="920">ARMONIE</text><text x="828" y="948">ÎN LUMEA REALĂ</text>
+<g fill="#39ff14" font-family="Arial,Helvetica,sans-serif" font-weight="850" font-size="26" letter-spacing="1.2" text-anchor="middle">
+  <text x="192" y="908">CUNOAȘTERE</text><text x="192" y="940">ASTRALĂ</text>
+  <text x="500" y="908">GHIDARE</text><text x="500" y="940">PENTRU VIAȚĂ</text>
+  <text x="828" y="908">ARMONIE</text><text x="828" y="940">ÎN LUMEA REALĂ</text>
 </g>
 </svg>
