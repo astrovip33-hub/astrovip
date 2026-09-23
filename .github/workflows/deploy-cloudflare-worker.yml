@@ -373,6 +373,25 @@ jobs:
             exit 54
           fi
           echo "Structural header fix verified: exactly one Chat AstroVip; desktop nav + mobile language bar placement."
+          if ! grep -q '/assets/desktop-chat-under-logo-20260923.css' "$LIVE_HTML"; then
+            echo "::error::Homepage does not load the desktop chat-under-logo stylesheet."
+            exit 55
+          fi
+          CHAT_UNDER_LOGO_STATUS=$(curl -sS -o /tmp/desktop-chat-under-logo.css -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/desktop-chat-under-logo-20260923.css?v=$EXPECTED_RELEASE")
+          if [ "$CHAT_UNDER_LOGO_STATUS" != "200" ]; then
+            echo "::error::Desktop chat-under-logo stylesheet returned HTTP $CHAT_UNDER_LOGO_STATUS."
+            exit 56
+          fi
+          if ! grep -q 'header.top .nav-actions' /tmp/desktop-chat-under-logo.css || ! grep -q 'grid-column:1!important' /tmp/desktop-chat-under-logo.css || ! grep -q 'header.top .menu' /tmp/desktop-chat-under-logo.css || ! grep -q 'grid-column:6!important' /tmp/desktop-chat-under-logo.css; then
+            echo "::error::Desktop chat-under-logo geometry is incomplete."
+            exit 57
+          fi
+          if ! grep -q 'media="(min-width:981px)"' "$LIVE_HTML"; then
+            echo "::error::Desktop chat-under-logo fix is not scoped to desktop."
+            exit 58
+          fi
+          echo "Desktop chat-under-logo verified; mobile remains excluded."
+
 
 
 
