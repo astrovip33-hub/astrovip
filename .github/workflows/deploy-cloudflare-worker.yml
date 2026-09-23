@@ -43,6 +43,7 @@ jobs:
               "desktop-languages-inline-20260923.css",
               "desktop-header-structural-fix-20260923.css",
               "desktop-chat-under-logo-20260923.css",
+              "lang-ar-ru-chat.css",
           )
 
           asset = Path("assets/header-layout-unified-20260923.css")
@@ -57,6 +58,8 @@ jobs:
               text = page.read_text(encoding="utf-8", errors="ignore")
               if required not in text:
                   errors.append(f"{page}: unified header stylesheet is not linked")
+              if "av-lang-chat-flank" in text:
+                  errors.append(f"{page}: legacy av-lang-chat-flank markup is still present")
               for old in retired:
                   if old in text:
                       errors.append(f"{page}: retired conflicting stylesheet still linked: {old}")
@@ -299,8 +302,13 @@ jobs:
 
           echo "Identity cards: $IDENTITY_COUNT"
           echo "Legacy professional cards: $LEGACY_COUNT"
-          echo "Release header (informational): $RELEASE_HEADER"
+          echo "Release header: $RELEASE_HEADER"
           echo "Live HTML release: $LIVE_RELEASE"
+
+          if [ "$RELEASE_HEADER" != "$EXPECTED_RELEASE" ]; then
+            echo "::error::Live X-AstroVip-Release header '$RELEASE_HEADER' does not match expected '$EXPECTED_RELEASE'."
+            exit 47
+          fi
 
           if [ "$IDENTITY_COUNT" != "1" ]; then
             echo "::error::Live homepage does not contain exactly one premium professional identity card."
