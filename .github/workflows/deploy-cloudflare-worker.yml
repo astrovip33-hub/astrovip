@@ -310,6 +310,21 @@ jobs:
             exit 36
           fi
           echo "Medical astrology page and internal links verified."
+          if ! grep -q '/assets/desktop-languages-inline-20260923.css' "$LIVE_HTML"; then
+            echo "::error::Homepage does not load desktop inline languages stylesheet."
+            exit 38
+          fi
+          LANG_CSS_STATUS=$(curl -sS -o /tmp/desktop-languages-inline.css -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/desktop-languages-inline-20260923.css?v=$EXPECTED_RELEASE")
+          if [ "$LANG_CSS_STATUS" != "200" ]; then
+            echo "::error::Desktop inline languages stylesheet returned HTTP $LANG_CSS_STATUS."
+            exit 39
+          fi
+          if ! grep -q 'display:contents!important' /tmp/desktop-languages-inline.css || ! grep -q 'order:4!important' /tmp/desktop-languages-inline.css; then
+            echo "::error::Desktop inline languages stylesheet does not contain the expected single-row rules."
+            exit 40
+          fi
+          echo "Desktop inline languages stylesheet verified."
+
           if ! grep -q 'class="av-medical-home reveal"' "$LIVE_HTML" || ! grep -q 'DESCHIDE PAGINA' "$LIVE_HTML"; then
             echo "::error::Homepage does not expose the visible ASTROLOGIE MEDICALĂ card."
             exit 37
