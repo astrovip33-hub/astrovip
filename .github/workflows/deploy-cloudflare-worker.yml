@@ -167,11 +167,6 @@ jobs:
             fi
           fi
 
-      - name: Deploy canonical www redirect Worker
-        shell: bash
-        run: |
-          set -euo pipefail
-          npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
 
       - name: Verify live AstroVip
         shell: bash
@@ -273,19 +268,31 @@ jobs:
             exit 20
           fi
 
-          echo "Checking www canonical redirect"
-          HDR=$(mktemp)
-          WWW_STATUS=$(curl -sS -o /dev/null -D "$HDR" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "https://www.astrovip.ro/numerologie/?astrovip_redirect_check=1")
-          WWW_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$HDR")
+          echo "Checking direct www delivery"
+          WWW_HTML=$(mktemp)
+          WWW_STATUS=$(curl -sS -o "$WWW_HTML" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "https://www.astrovip.ro/?release=$EXPECTED_RELEASE")
+          WWW_RELEASE=$(python3 - "$WWW_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
+          print(m.group(1) if m else "")
+          PY
+          )
 
           echo "www status: $WWW_STATUS"
-          echo "www location: $WWW_LOCATION"
+          echo "www release: $WWW_RELEASE"
 
-          if [ "$WWW_STATUS" = "301" ] && [ "$WWW_LOCATION" = "https://astrovip.ro/numerologie/?astrovip_redirect_check=1" ]; then
-            echo "Canonical www redirect verified."
-          else
-            echo "::warning::www redirect Worker is deployed, but www traffic is not reaching it. Cloudflare DNS for www must be Proxied (orange cloud)."
+          if [ "$WWW_STATUS" != "200" ]; then
+            echo "::error::www.astrovip.ro returned HTTP $WWW_STATUS instead of 200."
+            exit 29
           fi
+
+          if [ "$WWW_RELEASE" != "$EXPECTED_RELEASE" ]; then
+            echo "::error::www homepage release '$WWW_RELEASE' does not match expected '$EXPECTED_RELEASE'."
+            exit 30
+          fi
+
+          echo "Direct www delivery verified; canonical HTML continues to point to https://astrovip.ro/."
 
           for URL in "https://astrovip.ro/assets/hero-premium-orbit-desktop.svg?v=20260920-speed2" "https://astrovip.ro/assets/hero-premium-orbit-mobile.svg?v=20260920-wheel-full2"
           do
