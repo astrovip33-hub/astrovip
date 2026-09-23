@@ -17,7 +17,7 @@ jobs:
       - run: npm install -g lighthouse@12
       - name: Run detailed mobile Lighthouse
         run: |
-          lighthouse https://astrovip.ro/ --chrome-flags="--headless --no-sandbox" --only-categories=performance --output=json --output-path=mobile.json
+          lighthouse https://deploy-preview-63--astrovip33.netlify.app/ --chrome-flags="--headless --no-sandbox" --only-categories=performance --output=json --output-path=mobile.json
       - name: Print detailed diagnostics
         run: |
           node <<'NODE'
