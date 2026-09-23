@@ -403,3 +403,95 @@ html[dir="rtl"] .intl-actions{
   }
   body:not(.guide-page) header.top .nav-actions{padding-left:4px!important}
 }
+
+/* Chat pinned after menu — responsive desktop lock — 2026-09-23 */
+@media (min-width:981px){
+  body:not(.guide-page) header.top{
+    position:sticky!important;
+    grid-template-columns:minmax(132px,190px) auto minmax(8px,1fr) auto!important;
+    padding-right:max(136px,calc((100vw - 1540px)/2 + 128px))!important;
+    overflow:visible!important;
+  }
+
+  body:not(.guide-page) header.top .menu{
+    grid-column:4!important;
+    justify-self:end!important;
+    min-width:0!important;
+    max-width:100%!important;
+    margin:0!important;
+  }
+
+  body:not(.guide-page) header.top .nav-actions{
+    position:absolute!important;
+    right:max(8px,calc((100vw - 1540px)/2))!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    z-index:80!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    width:122px!important;
+    min-width:122px!important;
+    max-width:122px!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    display:inline-flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    position:static!important;
+    transform:none!important;
+    width:122px!important;
+    min-width:122px!important;
+    max-width:122px!important;
+    height:36px!important;
+    min-height:36px!important;
+    margin:0!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1180px){
+  body:not(.guide-page) header.top{
+    grid-template-columns:128px auto minmax(2px,1fr) auto!important;
+    padding-right:102px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions{
+    right:5px!important;
+    width:92px!important;
+    min-width:92px!important;
+    max-width:92px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    width:92px!important;
+    min-width:92px!important;
+    max-width:92px!important;
+    padding:0 5px!important;
+  }
+  body:not(.guide-page) header.top .menu>a,
+  body:not(.guide-page) header.top .av-menu-trigger{
+    padding-left:1px!important;
+    padding-right:1px!important;
+    font-size:8.6px!important;
+  }
+}
+
+@media (min-width:1181px) and (max-width:1380px){
+  body:not(.guide-page) header.top{
+    grid-template-columns:150px auto minmax(4px,1fr) auto!important;
+    padding-right:116px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions{
+    right:7px!important;
+    width:104px!important;
+    min-width:104px!important;
+    max-width:104px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    width:104px!important;
+    min-width:104px!important;
+    max-width:104px!important;
+    padding:0 7px!important;
+  }
+}
