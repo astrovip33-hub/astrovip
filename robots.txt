@@ -2,6 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://astrovip.ro/sitemap-index.xml
-Sitemap: https://astrovip.ro/sitemap-core.xml
-# Existing sitemap files remain referenced through sitemap-index.xml.
-# crawl-structure: 2026-09-22
+# SEO sitemap authority updated 2026-09-24
