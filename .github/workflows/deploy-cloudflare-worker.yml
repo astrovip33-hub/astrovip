@@ -23,6 +23,51 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate unified header CSS
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          pages = [
+              Path("index.html"),
+              Path("en/index.html"),
+              Path("es/index.html"),
+              Path("it/index.html"),
+              Path("zh/index.html"),
+              Path("ar/index.html"),
+              Path("ru/index.html"),
+          ]
+          required = "/assets/header-layout-unified-20260923.css"
+          retired = (
+              "desktop-languages-inline-20260923.css",
+              "desktop-header-structural-fix-20260923.css",
+              "desktop-chat-under-logo-20260923.css",
+          )
+
+          asset = Path("assets/header-layout-unified-20260923.css")
+          if not asset.exists():
+              raise SystemExit("Missing unified header stylesheet.")
+
+          errors = []
+          for page in pages:
+              if not page.exists():
+                  errors.append(f"Missing page: {page}")
+                  continue
+              text = page.read_text(encoding="utf-8", errors="ignore")
+              if required not in text:
+                  errors.append(f"{page}: unified header stylesheet is not linked")
+              for old in retired:
+                  if old in text:
+                      errors.append(f"{page}: retired conflicting stylesheet still linked: {old}")
+
+          if errors:
+              print("\n".join(errors))
+              raise SystemExit(32)
+
+          print("Unified header CSS validation OK.")
+          PY
+
       - name: Validate sitemap coverage
         shell: bash
         run: |
