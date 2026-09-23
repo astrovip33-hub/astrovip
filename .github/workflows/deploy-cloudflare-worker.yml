@@ -333,6 +333,25 @@ jobs:
             exit 42
           fi
           echo "Desktop Chat AstroVip nav placement verified."
+          if ! grep -q '/assets/desktop-header-css-only-fix-20260923.css' "$LIVE_HTML"; then
+            echo "::error::Homepage does not load the desktop CSS-only header fix."
+            exit 48
+          fi
+          DESKTOP_FIX_STATUS=$(curl -sS -o /tmp/desktop-header-css-only.css -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/desktop-header-css-only-fix-20260923.css?v=$EXPECTED_RELEASE")
+          if [ "$DESKTOP_FIX_STATUS" != "200" ]; then
+            echo "::error::Desktop CSS-only header fix returned HTTP $DESKTOP_FIX_STATUS."
+            exit 49
+          fi
+          if ! grep -q '@media (min-width:981px)' /tmp/desktop-header-css-only.css || ! grep -q 'grid-column:5!important' /tmp/desktop-header-css-only.css || ! grep -q 'grid-column:6!important' /tmp/desktop-header-css-only.css; then
+            echo "::error::Desktop CSS-only header geometry is incomplete."
+            exit 50
+          fi
+          if ! grep -q 'media="(min-width:981px)"' "$LIVE_HTML"; then
+            echo "::error::Desktop CSS-only fix is not scoped to desktop."
+            exit 51
+          fi
+          echo "Desktop CSS-only header verified; mobile scope remains excluded."
+
 
 
           if ! grep -q 'class="av-medical-home reveal"' "$LIVE_HTML" || ! grep -q 'DESCHIDE PAGINA' "$LIVE_HTML"; then
