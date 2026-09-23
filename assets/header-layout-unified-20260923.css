@@ -79,15 +79,15 @@
     inset:auto!important;
     transform:none!important;
     margin:0!important;
-    width:36px!important;
-    min-width:36px!important;
-    max-width:36px!important;
+    width:34px!important;
+    min-width:34px!important;
+    max-width:34px!important;
     height:28px!important;
     min-height:28px!important;
     max-height:28px!important;
     padding:2px 3px!important;
     border-radius:999px!important;
-    flex:0 0 36px!important;
+    flex:0 0 34px!important;
   }
 
   body:not(.guide-page) header.top .av-lang-side-name{
@@ -193,10 +193,10 @@
 
   body:not(.guide-page) header.top .av-lang-chat-flank .av-lang-ar,
   body:not(.guide-page) header.top .av-lang-chat-flank .av-lang-ru{
-    width:29px!important;
-    min-width:29px!important;
-    max-width:29px!important;
-    flex-basis:29px!important;
+    width:27px!important;
+    min-width:27px!important;
+    max-width:27px!important;
+    flex-basis:27px!important;
   }
 
   body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
@@ -241,10 +241,10 @@
 
   body:not(.guide-page) header.top .av-lang-chat-flank .av-lang-ar,
   body:not(.guide-page) header.top .av-lang-chat-flank .av-lang-ru{
-    width:32px!important;
-    min-width:32px!important;
-    max-width:32px!important;
-    flex-basis:32px!important;
+    width:30px!important;
+    min-width:30px!important;
+    max-width:30px!important;
+    flex-basis:30px!important;
   }
 
   body:not(.guide-page) header.top .menu>a,
