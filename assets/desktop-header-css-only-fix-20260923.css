@@ -1,6 +1,6 @@
 /* AstroVip desktop-only header geometry fix — 2026-09-23
    No HTML/JS relocation. Mobile/tablet remain untouched. */
-@media (min-width:1181px){
+@media (min-width:981px){
   body:not(.guide-page) header.top{
     display:grid!important;
     grid-template-columns:auto auto auto minmax(28px,1fr) auto auto!important;
@@ -112,7 +112,7 @@
   }
 }
 
-@media (min-width:1181px) and (max-width:1320px){
+@media (min-width:981px) and (max-width:1320px){
   body:not(.guide-page) header.top{
     grid-template-columns:auto auto auto minmax(14px,1fr) auto auto!important;
     column-gap:5px!important;
