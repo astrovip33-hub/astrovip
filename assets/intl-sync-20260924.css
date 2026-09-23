@@ -1,0 +1,54 @@
+/* AstroVip international sync — 2026-09-24 */
+.intl-sync-focus{padding:26px 0 6px}
+.intl-sync-focus .intl-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.intl-sync-focus .intl-card{text-align:center}
+.intl-sync-focus .intl-card h3{font-size:18px;letter-spacing:.04em;text-transform:uppercase}
+.intl-sync-research{padding-top:40px}
+.intl-sync-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.intl-sync-link{display:block;padding:20px;border:1px solid rgba(212,175,55,.34);border-radius:18px;background:linear-gradient(145deg,#151515,#050505);text-align:center}
+.intl-sync-link strong{display:block;color:#efff72;font-size:18px;margin-bottom:5px}
+.intl-sync-link span{display:block;color:#cfd8d2;line-height:1.45}
+.intl-sync-trust{padding:38px 0}
+.intl-sync-trust-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.intl-sync-trust-card{padding:18px;border:1px solid rgba(57,255,20,.34);border-radius:18px;background:linear-gradient(180deg,#0f160f,#050705);text-align:center}
+.intl-sync-trust-card strong{display:block;color:#fff;font-size:17px}
+.intl-sync-trust-card span{display:block;color:#9cff87;margin-top:4px;font-size:13px;font-weight:800}
+.intl-sync-price{padding:22px 0 56px}
+.intl-sync-price-card{max-width:720px;margin:auto;padding:28px;border:1px solid rgba(216,245,0,.48);border-radius:24px;background:linear-gradient(180deg,#111708,#050605);text-align:center;box-shadow:0 18px 44px rgba(0,0,0,.34)}
+.intl-sync-price-card h2{margin:0 0 8px;color:#fff1aa;font-size:clamp(28px,4vw,42px)}
+.intl-sync-price-value{font-size:clamp(34px,6vw,54px);font-weight:950;color:#efff72}
+.intl-sync-price-value small{font-size:16px;color:#d4ddd7}
+.intl-sync-price-card p{color:#d3ddd6;max-width:600px;margin:10px auto 0}
+.intl-sync-badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:16px}
+.intl-sync-badges span{border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 10px;color:#eef6ef;font-size:12px;font-weight:800}
+.intl-sync-price-card .intl-actions{margin-top:20px}
+
+/* Seven-language rail: one line, equal dimensions, full flags. */
+body:not(.guide-page) .av-lang-switch{
+  display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;
+  gap:3px!important;width:auto!important;max-width:none!important;min-width:0!important;padding:2px!important
+}
+body:not(.guide-page) .av-lang-switch>a{
+  flex:0 0 34px!important;width:34px!important;min-width:34px!important;max-width:34px!important;
+  height:28px!important;min-height:28px!important;max-height:28px!important;padding:0!important;
+  border-radius:9px!important;overflow:hidden!important;font-size:0!important;color:transparent!important;text-shadow:none!important
+}
+body:not(.guide-page) .av-lang-switch>a[href="/"]{background:linear-gradient(90deg,#002b7f 0 33.333%,#fcd116 33.333% 66.666%,#ce1126 66.666% 100%)!important}
+body:not(.guide-page) .av-lang-switch>a[href="/en/"]{background:#fff url("/assets/flag-us.svg?v=20260920-usa-full") center/cover no-repeat!important}
+body:not(.guide-page) .av-lang-switch>a[href="/es/"]{background:linear-gradient(180deg,#aa151b 0 25%,#f1bf00 25% 75%,#aa151b 75% 100%)!important}
+body:not(.guide-page) .av-lang-switch>a[href="/it/"]{background:linear-gradient(90deg,#009246 0 33.333%,#fff 33.333% 66.666%,#ce2b37 66.666% 100%)!important}
+body:not(.guide-page) .av-lang-switch>a[href="/zh/"]{background:#ee1c25 url("/assets/flag-cn.svg?v=20260922-cn-fullbutton2") center/cover no-repeat!important}
+body:not(.guide-page) .av-lang-switch>a[href="/ar/"]{background:#006c35 url("/assets/flag-sa.svg?v=20260923-fullcard1") center/cover no-repeat!important}
+body:not(.guide-page) .av-lang-switch>a[href="/ru/"]{background:#fff url("/assets/flag-ru.svg?v=20260923-fullcard1") center/cover no-repeat!important}
+body:not(.guide-page) .av-lang-switch>a::before,
+body:not(.guide-page) .av-lang-switch>a::after{content:none!important;display:none!important}
+@media(max-width:980px){
+  body:not(.guide-page) .av-langbar .wrap{display:grid!important;grid-template-columns:1fr!important;justify-items:center!important;padding:5px 7px 7px!important}
+  body:not(.guide-page) .av-lang-switch{width:min(100%,360px)!important;max-width:360px!important;gap:3px!important}
+  body:not(.guide-page) .av-lang-switch>a{flex:1 1 0!important;width:auto!important;min-width:0!important;max-width:none!important;height:28px!important;min-height:28px!important}
+  .intl-sync-focus .intl-grid,.intl-sync-trust-grid,.intl-sync-links{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .intl-sync-focus .intl-grid,.intl-sync-trust-grid,.intl-sync-links{grid-template-columns:1fr}
+  .intl-sync-price-card{padding:22px 18px}
+}
