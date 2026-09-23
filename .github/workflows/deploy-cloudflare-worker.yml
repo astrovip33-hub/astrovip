@@ -365,6 +365,17 @@ jobs:
             exit 45
           fi
           echo "Single-line desktop header verified: Logo -> 7 languages -> Chat -> Menu; old desktop language bar hidden."
+          CHAT_JS_STATUS=$(curl -sS -o /tmp/astrovip-chat-live.js -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/astrovip-chat.js?v=$EXPECTED_RELEASE")
+          if [ "$CHAT_JS_STATUS" != "200" ] || ! grep -q 'const desktopNav=document.querySelector(".top .nav")' /tmp/astrovip-chat-live.js; then
+            echo "::error::Live chat script does not preserve the desktop launcher in the header."
+            exit 46
+          fi
+          if ! grep -q 'FINAL requested desktop geometry' /tmp/desktop-header-single-line.css || ! grep -q 'grid-template-columns:auto minmax(0,1fr) auto' /tmp/desktop-header-single-line.css; then
+            echo "::error::Live desktop header CSS does not contain the requested left-languages/right-chat-menu geometry."
+            exit 47
+          fi
+          echo "Desktop header geometry verified: languages under logo; Chat AstroVip and menu at opposite end."
+
 
 
 
