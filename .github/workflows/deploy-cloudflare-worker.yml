@@ -310,6 +310,12 @@ jobs:
             exit 36
           fi
           echo "Medical astrology page and internal links verified."
+          if ! grep -q 'class="av-medical-home reveal"' "$LIVE_HTML" || ! grep -q 'DESCHIDE PAGINA' "$LIVE_HTML"; then
+            echo "::error::Homepage does not expose the visible ASTROLOGIE MEDICALĂ card."
+            exit 37
+          fi
+          echo "Visible medical astrology homepage card verified."
+
 
           echo "Checking Local Space case-study collection"
           LOCAL_SPACE_URLS=(
