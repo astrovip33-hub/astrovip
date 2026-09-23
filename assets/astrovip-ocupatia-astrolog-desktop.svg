@@ -19,8 +19,6 @@
 </defs>
 <rect width="1000" height="1000" rx="38" fill="url(#bg)"/>
 <circle cx="500" cy="260" r="310" fill="url(#halo)" opacity=".42" filter="url(#soft)"/>
-<rect x="13" y="13" width="974" height="974" rx="34" fill="none" stroke="url(#gold)" stroke-width="4"/>
-<rect x="25" y="25" width="950" height="950" rx="28" fill="none" stroke="#fff0a0" stroke-opacity=".22" stroke-width="1.5"/>
 
 <g fill="#f7d86d" opacity=".90">
   <circle cx="78" cy="96" r="2.2"/><circle cx="145" cy="146" r="1.5"/><circle cx="224" cy="93" r="1.8"/>
