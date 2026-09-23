@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" role="img" aria-label="Steagul Arabiei Saudite">
+  <rect width="300" height="200" fill="#006C35"/>
+  <text x="150" y="88" text-anchor="middle" fill="#fff" font-family="Arial, Tahoma, sans-serif" font-size="27" font-weight="700" direction="rtl">لا إله إلا الله محمد رسول الله</text>
+  <path d="M72 132h156c-12 10-28 15-44 15H105c-13 0-24-5-33-15z" fill="#fff"/>
+  <rect x="87" y="127" width="141" height="6" rx="3" fill="#fff"/>
+</svg>
