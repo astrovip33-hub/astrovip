@@ -333,6 +333,39 @@ jobs:
             exit 42
           fi
           echo "Desktop Chat AstroVip nav placement verified."
+          HEADER_ORDER_OK=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          brand=html.find('class="brand av-brand-premium"')
+          langs=html.find('class="av-lang-switch av-desktop-lang-inline"', brand)
+          chat=html.find('avchat-desktop-singleline', langs)
+          menu_match=re.search(r'<nav[^>]*class="menu"[^>]*id="menu"|<nav[^>]*id="menu"[^>]*class="menu"', html[chat:] if chat>=0 else "")
+          menu=(chat + menu_match.start()) if menu_match and chat>=0 else -1
+          print("yes" if -1 not in (brand,langs,chat,menu) and brand < langs < chat < menu else "no")
+          PY
+          )
+          SINGLELINE_CSS_STATUS=$(curl -sS -o /tmp/desktop-header-single-line.css -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/desktop-header-single-line-20260923.css?v=$EXPECTED_RELEASE")
+          if [ "$HEADER_ORDER_OK" != "yes" ] || [ "$SINGLELINE_CSS_STATUS" != "200" ]; then
+            echo "::error::Desktop header is not live in Logo -> Languages -> Chat -> Menu order."
+            exit 43
+          fi
+          if ! grep -q 'body:not(.guide-page) .av-langbar' /tmp/desktop-header-single-line.css || ! grep -q 'display:none!important' /tmp/desktop-header-single-line.css; then
+            echo "::error::Old separate desktop language bar is not hidden."
+            exit 44
+          fi
+          LANG_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<nav class="av-lang-switch av-desktop-lang-inline"[^>]*>(.*?)</nav>',html,re.S)
+          print(len(re.findall(r'<a\b',m.group(1))) if m else 0)
+          PY
+          )
+          if [ "$LANG_COUNT" != "7" ]; then
+            echo "::error::Desktop inline language cluster exposes $LANG_COUNT languages instead of 7."
+            exit 45
+          fi
+          echo "Single-line desktop header verified: Logo -> 7 languages -> Chat -> Menu; old desktop language bar hidden."
+
 
 
           if ! grep -q 'class="av-medical-home reveal"' "$LIVE_HTML" || ! grep -q 'DESCHIDE PAGINA' "$LIVE_HTML"; then
