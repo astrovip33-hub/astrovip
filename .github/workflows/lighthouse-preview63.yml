@@ -2,8 +2,6 @@ name: Lighthouse preview 63
 on:
   pull_request:
     branches: [main]
-    paths:
-      - '.github/workflows/lighthouse-preview63.yml'
 permissions:
   contents: read
 jobs:
@@ -25,5 +23,5 @@ jobs:
           console.log('score',Math.round(j.categories.performance.score*100));
           for(const id of ['first-contentful-paint','largest-contentful-paint','speed-index','total-blocking-time','cumulative-layout-shift','interactive']) console.log(id,a[id]?.displayValue||a[id]?.numericValue);
           const x=a['lcp-breakdown-insight']; if(x) console.log('lcp-breakdown',JSON.stringify(x.details));
-          for(const id of ['uses-rel-preconnect','unused-css-rules','render-blocking-resources']) if(a[id]) console.log(id,JSON.stringify({displayValue:a[id].displayValue,details:a[id].details}));
+          for(const id of ['uses-rel-preconnect','unused-css-rules','render-blocking-resources','layout-shift-elements','cls-culprits-insight']) if(a[id]) console.log(id,JSON.stringify({displayValue:a[id].displayValue,details:a[id].details}));
           NODE
