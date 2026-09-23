@@ -26,7 +26,7 @@ jobs:
           const a=j.audits;
           console.log('score',Math.round(j.categories.performance.score*100));
           for (const id of ['first-contentful-paint','largest-contentful-paint','speed-index','total-blocking-time','cumulative-layout-shift','interactive']) console.log(id,a[id]?.displayValue||a[id]?.numericValue);
-          for (const id of ['uses-rel-preconnect','unused-css-rules','uses-responsive-images','modern-image-formats','render-blocking-resources','legacy-javascript','lcp-breakdown-insight','lcp-discovery-insight','network-requests']) {
+          for (const id of ['uses-rel-preconnect','unused-css-rules','uses-responsive-images','modern-image-formats','render-blocking-resources','legacy-javascript','lcp-breakdown-insight','lcp-discovery-insight','layout-shifts','cls-culprits-insight','long-tasks','mainthread-work-breakdown','network-requests']) {
             const x=a[id]; if(!x) continue;
             console.log('AUDIT',id,JSON.stringify({title:x.title,displayValue:x.displayValue,details:x.details},null,2).slice(0,30000));
           }
