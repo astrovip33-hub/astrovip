@@ -278,6 +278,7 @@ jobs:
           fi
           echo "Expected release: $EXPECTED_RELEASE"
           LIVE_RELEASE=""
+          RELEASE_HEADER=""
           for ATTEMPT in $(seq 1 12); do
             : > "$LIVE_HDR"
             : > "$LIVE_HTML"
@@ -289,8 +290,9 @@ jobs:
           print(m.group(1) if m else "")
           PY
             )
-            echo "Propagation check $ATTEMPT/12: live release=$LIVE_RELEASE"
-            if [ "$LIVE_RELEASE" = "$EXPECTED_RELEASE" ]; then
+            RELEASE_HEADER=$(awk 'BEGIN{IGNORECASE=1} /^x-astrovip-release:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$LIVE_HDR")
+            echo "Propagation check $ATTEMPT/12: html=$LIVE_RELEASE header=$RELEASE_HEADER"
+            if [ "$LIVE_RELEASE" = "$EXPECTED_RELEASE" ] && [ "$RELEASE_HEADER" = "$EXPECTED_RELEASE" ]; then
               break
             fi
             sleep 5
@@ -298,7 +300,6 @@ jobs:
 
           IDENTITY_COUNT=$( { grep -o 'av-identity-image-card' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
           LEGACY_COUNT=$( { grep -E -o 'av-credentials-kicker">Date profesionale|<h2>Cristian Cătălin Smaranda</h2>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
-          RELEASE_HEADER=$(awk 'BEGIN{IGNORECASE=1} /^x-astrovip-release:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$LIVE_HDR")
 
           echo "Identity cards: $IDENTITY_COUNT"
           echo "Legacy professional cards: $LEGACY_COUNT"
