@@ -23,11 +23,21 @@ const panel=document.createElement("section");panel.className="avchat-panel";pan
 if(!existingLauncher)document.body.append(launcher);document.body.append(panel);
 const desktopChatMq=window.matchMedia("(min-width:981px)");
 function placeLauncher(){
-  const headerHost=document.querySelector(".av-langbar .wrap");
-  const useHeaderSlot=!!headerHost;
-  launcher.classList.toggle("avchat-header-slot",useHeaderSlot);
-  if(useHeaderSlot){
-    if(launcher.parentNode!==headerHost)headerHost.appendChild(launcher);
+  const mobileHost=document.querySelector(".av-langbar .wrap");
+  const desktopHost=document.querySelector(".top .nav-actions");
+  if(desktopChatMq.matches&&desktopHost){
+    launcher.classList.add("avchat-header-slot","avchat-nav-slot");
+    const book=desktopHost.querySelector(".nav-book");
+    if(launcher.parentNode!==desktopHost||launcher.nextElementSibling!==book){
+      if(book)desktopHost.insertBefore(launcher,book);
+      else desktopHost.prepend(launcher);
+    }
+    return;
+  }
+  launcher.classList.remove("avchat-nav-slot");
+  launcher.classList.toggle("avchat-header-slot",!!mobileHost);
+  if(mobileHost){
+    if(launcher.parentNode!==mobileHost)mobileHost.appendChild(launcher);
   }else if(launcher.parentNode!==document.body){
     document.body.appendChild(launcher);
   }
