@@ -8,3 +8,13 @@ body:not(.guide-page) .top{background:linear-gradient(180deg,rgba(10,10,10,.985)
     display:none!important;
   }
 }
+
+/* Russia and Saudi Arabia flags for the language selector, all viewport sizes. */
+html body header.top .av-lang-switch a[href="/ru/"],
+html body header.top .av-lang-switch a[href="/ar/"]{color:transparent!important;font-size:0!important;text-shadow:none!important;}
+html body header.top .av-lang-switch a[href="/ru/"]{background:#fff url("/assets/flag-ru.svg") center/100% 100% no-repeat!important;}
+html body header.top .av-lang-switch a[href="/ar/"]{background:#005430 url("/assets/flag-sa.svg") center/contain no-repeat!important;}
+html body header.top .av-lang-switch a[href="/ru/"]::before,
+html body header.top .av-lang-switch a[href="/ru/"]::after,
+html body header.top .av-lang-switch a[href="/ar/"]::before,
+html body header.top .av-lang-switch a[href="/ar/"]::after{content:none!important;display:none!important;}
