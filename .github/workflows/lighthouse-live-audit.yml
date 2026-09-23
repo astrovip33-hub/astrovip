@@ -15,24 +15,19 @@ jobs:
         with:
           node-version: '22'
       - run: npm install -g lighthouse@12
-      - name: Run mobile and desktop Lighthouse
+      - name: Run detailed mobile Lighthouse
         run: |
           lighthouse https://astrovip.ro/ --chrome-flags="--headless --no-sandbox" --only-categories=performance --output=json --output-path=mobile.json
-          lighthouse https://astrovip.ro/ --preset=desktop --chrome-flags="--headless --no-sandbox" --only-categories=performance --output=json --output-path=desktop.json
-      - name: Print performance diagnostics
+      - name: Print detailed diagnostics
         run: |
           node <<'NODE'
           const fs=require('fs');
-          for (const name of ['mobile','desktop']) {
-            const j=JSON.parse(fs.readFileSync(name+'.json','utf8'));
-            const a=j.audits;
-            const metric=id=>a[id]?.displayValue || a[id]?.numericValue;
-            console.log(`AUDIT ${name.toUpperCase()}`);
-            console.log('score',Math.round(j.categories.performance.score*100));
-            for (const id of ['first-contentful-paint','largest-contentful-paint','speed-index','total-blocking-time','cumulative-layout-shift','interactive']) console.log(id,metric(id));
-            console.log('LCP element',a['largest-contentful-paint-element']?.details?.items?.[0]?.node?.snippet || 'n/a');
-            const opp=Object.values(a).filter(x=>x?.details?.overallSavingsMs>0 || x?.details?.overallSavingsBytes>0).map(x=>({id:x.id,title:x.title,ms:Math.round(x.details.overallSavingsMs||0),bytes:Math.round(x.details.overallSavingsBytes||0)})).sort((x,y)=>(y.ms-x.ms)||(y.bytes-x.bytes));
-            console.log('opportunities',JSON.stringify(opp.slice(0,20)));
-            console.log('diagnostics',JSON.stringify({requests:a['network-requests']?.details?.items?.length,totalBytes:a['total-byte-weight']?.numericValue,mainThread:a['mainthread-work-breakdown']?.numericValue,bootup:a['bootup-time']?.numericValue,domSize:a['dom-size']?.numericValue}));
+          const j=JSON.parse(fs.readFileSync('mobile.json','utf8'));
+          const a=j.audits;
+          console.log('score',Math.round(j.categories.performance.score*100));
+          for (const id of ['first-contentful-paint','largest-contentful-paint','speed-index','total-blocking-time','cumulative-layout-shift','interactive']) console.log(id,a[id]?.displayValue||a[id]?.numericValue);
+          for (const id of ['uses-rel-preconnect','unused-css-rules','uses-responsive-images','modern-image-formats','render-blocking-resources','legacy-javascript','lcp-breakdown-insight','lcp-discovery-insight','network-requests']) {
+            const x=a[id]; if(!x) continue;
+            console.log('AUDIT',id,JSON.stringify({title:x.title,displayValue:x.displayValue,details:x.details},null,2).slice(0,30000));
           }
           NODE
