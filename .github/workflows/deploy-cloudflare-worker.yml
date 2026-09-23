@@ -351,6 +351,29 @@ jobs:
             exit 51
           fi
           echo "Desktop CSS-only header verified; mobile scope remains excluded."
+          HEADER_CHAT_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          section=m.group(1) if m else ""
+          print(len(re.findall(r'<button class="avchat-launcher',section)))
+          PY
+          )
+          if [ "$HEADER_CHAT_COUNT" != "1" ]; then
+            echo "::error::Header exposes $HEADER_CHAT_COUNT Chat AstroVip buttons instead of exactly 1."
+            exit 52
+          fi
+          CHAT_JS_STATUS=$(curl -sS -o /tmp/astrovip-chat-structural.js -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/astrovip-chat.js?v=$EXPECTED_RELEASE")
+          if [ "$CHAT_JS_STATUS" != "200" ] || ! grep -q 'desktopHost=document.querySelector(".top .nav-actions")' /tmp/astrovip-chat-structural.js || ! grep -q 'mobileHost=document.querySelector(".av-langbar .wrap")' /tmp/astrovip-chat-structural.js; then
+            echo "::error::Live chat script does not implement desktop-nav/mobile-language-bar placement."
+            exit 53
+          fi
+          if ! grep -q 'header.top .nav-actions .avchat-launcher.avchat-header-slot' /tmp/desktop-header-css-only.css; then
+            echo "::error::Desktop header CSS does not explicitly keep the single chat launcher visible beside the menu."
+            exit 54
+          fi
+          echo "Structural header fix verified: exactly one Chat AstroVip; desktop nav + mobile language bar placement."
+
 
 
 
