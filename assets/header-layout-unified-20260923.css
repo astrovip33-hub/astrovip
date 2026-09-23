@@ -353,3 +353,53 @@ html[dir="rtl"] .intl-actions{
     max-width:30px!important;
   }
 }
+
+/* Desktop order: logo → languages → menu → chat — 2026-09-23 */
+@media (min-width:981px){
+  body:not(.guide-page) header.top{
+    grid-template-columns:minmax(132px,190px) auto minmax(8px,1fr) auto auto!important;
+    column-gap:5px!important;
+  }
+  body:not(.guide-page) header.top .brand.av-brand-premium{grid-column:1!important}
+  body:not(.guide-page) header.top .av-lang-switch{grid-column:2!important}
+  body:not(.guide-page) header.top .menu{
+    grid-column:4!important;
+    justify-self:end!important;
+    margin:0!important;
+  }
+  body:not(.guide-page) header.top .nav-actions{
+    grid-column:5!important;
+    justify-self:end!important;
+    margin:0!important;
+    padding-left:6px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    min-width:108px!important;
+    max-width:122px!important;
+    height:36px!important;
+    min-height:36px!important;
+    padding:0 9px!important;
+  }
+}
+@media (min-width:981px) and (max-width:1180px){
+  body:not(.guide-page) header.top{
+    grid-template-columns:128px auto minmax(2px,1fr) auto auto!important;
+    column-gap:2px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions{padding-left:2px!important}
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    min-width:82px!important;
+    max-width:92px!important;
+    padding:0 5px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher-label{
+    font-size:9.5px!important;
+  }
+}
+@media (min-width:1181px) and (max-width:1380px){
+  body:not(.guide-page) header.top{
+    grid-template-columns:150px auto minmax(4px,1fr) auto auto!important;
+    column-gap:3px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions{padding-left:4px!important}
+}
