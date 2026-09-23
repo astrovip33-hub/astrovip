@@ -1,0 +1,38 @@
+name: Lighthouse live audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/lighthouse-live-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install -g lighthouse@12
+      - name: Run mobile and desktop Lighthouse
+        run: |
+          lighthouse https://astrovip.ro/ --chrome-flags="--headless --no-sandbox" --only-categories=performance --output=json --output-path=mobile.json
+          lighthouse https://astrovip.ro/ --preset=desktop --chrome-flags="--headless --no-sandbox" --only-categories=performance --output=json --output-path=desktop.json
+      - name: Print performance diagnostics
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          for (const name of ['mobile','desktop']) {
+            const j=JSON.parse(fs.readFileSync(name+'.json','utf8'));
+            const a=j.audits;
+            const metric=id=>a[id]?.displayValue || a[id]?.numericValue;
+            console.log(`AUDIT ${name.toUpperCase()}`);
+            console.log('score',Math.round(j.categories.performance.score*100));
+            for (const id of ['first-contentful-paint','largest-contentful-paint','speed-index','total-blocking-time','cumulative-layout-shift','interactive']) console.log(id,metric(id));
+            console.log('LCP element',a['largest-contentful-paint-element']?.details?.items?.[0]?.node?.snippet || 'n/a');
+            const opp=Object.values(a).filter(x=>x?.details?.overallSavingsMs>0 || x?.details?.overallSavingsBytes>0).map(x=>({id:x.id,title:x.title,ms:Math.round(x.details.overallSavingsMs||0),bytes:Math.round(x.details.overallSavingsBytes||0)})).sort((x,y)=>(y.ms-x.ms)||(y.bytes-x.bytes));
+            console.log('opportunities',JSON.stringify(opp.slice(0,20)));
+            console.log('diagnostics',JSON.stringify({requests:a['network-requests']?.details?.items?.length,totalBytes:a['total-byte-weight']?.numericValue,mainThread:a['mainthread-work-breakdown']?.numericValue,bootup:a['bootup-time']?.numericValue,domSize:a['dom-size']?.numericValue}));
+          }
+          NODE
