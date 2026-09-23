@@ -1,0 +1,239 @@
+/* AstroVip — Astrologie Medicală premium page — 2026-09-23 */
+:root{
+  --med-bg:#030403;
+  --med-bg2:#090b08;
+  --med-panel:#0c100c;
+  --med-panel2:#15130d;
+  --med-gold:#e7c86a;
+  --med-gold2:#fff0a6;
+  --med-emerald:#39ff94;
+  --med-emerald2:#0fae63;
+  --med-pearl:#fffdf5;
+  --med-muted:#cfc9bb;
+  --med-line:rgba(231,200,106,.24);
+  --med-greenline:rgba(57,255,148,.22);
+  --med-shadow:0 28px 80px rgba(0,0,0,.54);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body.med-page{
+  margin:0;
+  color:var(--med-pearl);
+  background:
+    radial-gradient(circle at 15% 8%,rgba(57,255,148,.08),transparent 26%),
+    radial-gradient(circle at 86% 14%,rgba(231,200,106,.10),transparent 24%),
+    linear-gradient(180deg,#020302 0%,#060806 38%,#020302 100%);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  line-height:1.68;
+  overflow-x:hidden;
+}
+.med-wrap{width:min(1180px,92%);margin:0 auto}
+.med-header{
+  position:sticky;top:0;z-index:70;
+  background:rgba(3,4,3,.94);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--med-line);
+  box-shadow:0 10px 30px rgba(0,0,0,.30)
+}
+.med-nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.med-brand{
+  color:var(--med-gold2);text-decoration:none;font-size:25px;font-weight:950;letter-spacing:.08em;
+  text-shadow:0 0 18px rgba(231,200,106,.15)
+}
+.med-menu{display:flex;gap:18px;align-items:center}
+.med-menu a{color:#f4efe2;text-decoration:none;font-size:13px;font-weight:850}
+.med-menu a:hover{color:var(--med-gold2)}
+.med-hero{
+  position:relative;overflow:hidden;
+  padding:76px 0 62px;
+  border-bottom:1px solid var(--med-line);
+}
+.med-hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent 0 49.92%,rgba(231,200,106,.08) 50%,transparent 50.08%),
+    radial-gradient(circle at 72% 48%,rgba(57,255,148,.08),transparent 28%);
+}
+.med-hero-grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);
+  gap:48px;align-items:center
+}
+.med-kicker{
+  display:inline-flex;align-items:center;gap:9px;
+  color:var(--med-gold);font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase
+}
+.med-kicker::before{content:"";width:28px;height:1px;background:linear-gradient(90deg,transparent,var(--med-gold))}
+.med-hero h1{
+  margin:12px 0 18px;max-width:900px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(48px,6.5vw,82px);line-height:.96;letter-spacing:-.025em;
+  background:linear-gradient(180deg,#fffbe7 0%,#efd77c 43%,#b88a28 76%,#f8e89a 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.med-hero h1 span{display:block;font-size:.44em;letter-spacing:.22em;margin-top:11px;color:var(--med-emerald);-webkit-text-fill-color:var(--med-emerald)}
+.med-lead{max-width:760px;margin:0;color:#ddd6c7;font-size:clamp(18px,2vw,22px);line-height:1.62}
+.med-badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+.med-badge{
+  display:inline-flex;align-items:center;min-height:35px;padding:6px 11px;border-radius:999px;
+  border:1px solid rgba(231,200,106,.32);background:rgba(255,255,255,.025);
+  color:#f4e7b6;font-size:11px;font-weight:900;letter-spacing:.035em
+}
+.med-hero-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:26px}
+.med-btn{
+  display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 18px;border-radius:999px;
+  text-decoration:none;font-size:13px;font-weight:950
+}
+.med-btn.primary{color:#151006;background:linear-gradient(180deg,#fff7ca,#e8cb68 52%,#b58122);border:1px solid #fff0a6;box-shadow:0 12px 30px rgba(231,200,106,.14)}
+.med-btn.secondary{color:#effff6;border:1px solid rgba(57,255,148,.42);background:linear-gradient(180deg,#0b2918,#041109)}
+.med-wheel-shell{
+  position:relative;width:min(420px,92vw);aspect-ratio:1;margin:0 auto;
+  border-radius:50%;padding:17px;
+  background:
+    radial-gradient(circle,#11160f 0 32%,#080a07 32.4% 51%,#171208 51.4% 65%,#050605 65.4% 100%);
+  border:1px solid rgba(231,200,106,.52);
+  box-shadow:0 28px 70px rgba(0,0,0,.52),0 0 36px rgba(231,200,106,.08),inset 0 0 36px rgba(57,255,148,.04)
+}
+.med-wheel-shell::before,.med-wheel-shell::after{
+  content:"";position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(231,200,106,.20)
+}
+.med-wheel-shell::after{inset:29%;border-color:rgba(57,255,148,.22)}
+.med-wheel-center{
+  position:absolute;inset:36%;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  border:1px solid rgba(57,255,148,.30);
+  background:radial-gradient(circle,rgba(57,255,148,.10),rgba(0,0,0,.10));
+  color:var(--med-gold2);font:900 12px/1.35 Georgia,"Times New Roman",serif;letter-spacing:.08em;
+  z-index:2
+}
+.med-sign{
+  position:absolute;left:50%;top:50%;width:42px;height:42px;margin:-21px;
+  display:flex;align-items:center;justify-content:center;border-radius:50%;
+  border:1px solid rgba(231,200,106,.28);background:#090b08;color:var(--med-gold2);
+  font-size:23px;box-shadow:0 0 16px rgba(0,0,0,.36);z-index:3
+}
+.med-sign:nth-child(2){transform:rotate(0deg) translateY(-172px) rotate(0deg)}
+.med-sign:nth-child(3){transform:rotate(30deg) translateY(-172px) rotate(-30deg)}
+.med-sign:nth-child(4){transform:rotate(60deg) translateY(-172px) rotate(-60deg)}
+.med-sign:nth-child(5){transform:rotate(90deg) translateY(-172px) rotate(-90deg)}
+.med-sign:nth-child(6){transform:rotate(120deg) translateY(-172px) rotate(-120deg)}
+.med-sign:nth-child(7){transform:rotate(150deg) translateY(-172px) rotate(-150deg)}
+.med-sign:nth-child(8){transform:rotate(180deg) translateY(-172px) rotate(-180deg)}
+.med-sign:nth-child(9){transform:rotate(210deg) translateY(-172px) rotate(-210deg)}
+.med-sign:nth-child(10){transform:rotate(240deg) translateY(-172px) rotate(-240deg)}
+.med-sign:nth-child(11){transform:rotate(270deg) translateY(-172px) rotate(-270deg)}
+.med-sign:nth-child(12){transform:rotate(300deg) translateY(-172px) rotate(-300deg)}
+.med-sign:nth-child(13){transform:rotate(330deg) translateY(-172px) rotate(-330deg)}
+
+.med-disclaimer{
+  border-top:1px solid rgba(57,255,148,.18);border-bottom:1px solid rgba(57,255,148,.18);
+  background:linear-gradient(90deg,rgba(57,255,148,.05),rgba(231,200,106,.035),rgba(57,255,148,.05))
+}
+.med-disclaimer .med-wrap{display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:center;padding:18px 0}
+.med-disclaimer-icon{
+  width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(57,255,148,.38);color:var(--med-emerald);font-size:20px;font-weight:950
+}
+.med-disclaimer strong{color:#fff6c8}
+.med-disclaimer p{margin:0;color:#d3d7cf;font-size:14px;line-height:1.5}
+
+.med-main{padding:36px 0 78px}
+.med-breadcrumbs{display:flex;flex-wrap:wrap;gap:7px;color:#9f9a8d;font-size:12px;margin-bottom:28px}
+.med-breadcrumbs a{color:#d8c77f;text-decoration:none}
+.med-section{padding:34px 0;border-bottom:1px solid rgba(231,200,106,.12)}
+.med-section:last-child{border-bottom:0}
+.med-section h2{
+  margin:0 0 15px;font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(31px,4vw,46px);line-height:1.06;color:var(--med-gold2)
+}
+.med-section h3{margin:18px 0 7px;color:#fff5c3;font-size:20px}
+.med-section p{margin:0 0 15px;color:var(--med-muted);font-size:16.5px}
+.med-note{
+  margin:20px 0;padding:18px 20px;border-radius:16px;
+  border:1px solid rgba(57,255,148,.24);border-left:4px solid var(--med-emerald);
+  background:linear-gradient(180deg,rgba(9,34,21,.66),rgba(4,16,9,.72));color:#e9fff2
+}
+.med-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:22px}
+.med-card{
+  position:relative;overflow:hidden;padding:20px;border-radius:18px;
+  border:1px solid var(--med-line);
+  background:
+    radial-gradient(circle at 50% 0%,rgba(231,200,106,.08),transparent 46%),
+    linear-gradient(180deg,#11120e,#070807);
+  box-shadow:0 16px 38px rgba(0,0,0,.22)
+}
+.med-card::before{content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.035);border-radius:13px;pointer-events:none}
+.med-card .glyph{font-size:28px;color:var(--med-gold2);margin-bottom:8px}
+.med-card h3{margin:0 0 8px;color:#f3d979;font-size:18px}
+.med-card p{margin:0;color:#c8c3b7;font-size:14px;line-height:1.52}
+.med-sign-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+.med-sign-card{
+  padding:16px 14px;border-radius:15px;border:1px solid rgba(231,200,106,.20);
+  background:linear-gradient(180deg,rgba(19,18,13,.92),rgba(7,8,7,.96));text-align:center
+}
+.med-sign-card .sg{font-size:26px;color:var(--med-gold2)}
+.med-sign-card strong{display:block;margin:5px 0 3px;color:#fff4c7}
+.med-sign-card span{display:block;color:#aaa79d;font-size:12px;line-height:1.35}
+.med-two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.med-panel{
+  padding:22px;border-radius:19px;border:1px solid var(--med-line);
+  background:linear-gradient(145deg,rgba(20,17,10,.92),rgba(7,8,7,.96))
+}
+.med-panel.good{border-color:rgba(57,255,148,.24)}
+.med-panel.bad{border-color:rgba(255,180,110,.22)}
+.med-panel h3{margin-top:0}
+.med-checklist{list-style:none;padding:0;margin:12px 0 0}
+.med-checklist li{position:relative;padding-left:25px;margin:9px 0;color:#cec9bd}
+.med-checklist li::before{position:absolute;left:0;top:0;font-weight:950}
+.med-panel.good .med-checklist li::before{content:"✓";color:var(--med-emerald)}
+.med-panel.bad .med-checklist li::before{content:"×";color:#ffb36f}
+.med-faq{display:grid;gap:11px;margin-top:18px}
+.med-faq details{
+  padding:14px 16px;border-radius:14px;border:1px solid rgba(231,200,106,.18);
+  background:rgba(255,255,255,.02)
+}
+.med-faq summary{cursor:pointer;color:#fff4c8;font-weight:900}
+.med-faq p{margin:10px 0 0;font-size:14px}
+.med-source-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.med-source{
+  padding:16px;border-radius:14px;border:1px solid rgba(231,200,106,.18);
+  background:rgba(255,255,255,.025)
+}
+.med-source a{color:#f6df87;text-decoration:none;font-weight:900}
+.med-source p{margin:5px 0 0;font-size:13px;color:#aaa79d}
+.med-footer{
+  padding:30px 0;border-top:1px solid var(--med-line);background:#020302;color:#aaa79d;font-size:13px
+}
+.med-footer strong{color:var(--med-gold2)}
+.med-footer a{color:#d9c87d;text-decoration:none}
+
+@media(max-width:900px){
+  .med-hero-grid{grid-template-columns:1fr;gap:34px}
+  .med-wheel-shell{width:min(380px,88vw)}
+  .med-sign:nth-child(n){--r:154px}
+  .med-grid{grid-template-columns:1fr 1fr}
+  .med-sign-grid{grid-template-columns:repeat(3,1fr)}
+  .med-menu{display:none}
+}
+@media(max-width:620px){
+  .med-hero{padding:54px 0 42px}
+  .med-hero h1{font-size:44px}
+  .med-wheel-shell{width:min(330px,88vw)}
+  .med-sign{width:36px;height:36px;margin:-18px;font-size:20px}
+  .med-sign:nth-child(2){transform:rotate(0deg) translateY(-135px) rotate(0deg)}
+  .med-sign:nth-child(3){transform:rotate(30deg) translateY(-135px) rotate(-30deg)}
+  .med-sign:nth-child(4){transform:rotate(60deg) translateY(-135px) rotate(-60deg)}
+  .med-sign:nth-child(5){transform:rotate(90deg) translateY(-135px) rotate(-90deg)}
+  .med-sign:nth-child(6){transform:rotate(120deg) translateY(-135px) rotate(-120deg)}
+  .med-sign:nth-child(7){transform:rotate(150deg) translateY(-135px) rotate(-150deg)}
+  .med-sign:nth-child(8){transform:rotate(180deg) translateY(-135px) rotate(-180deg)}
+  .med-sign:nth-child(9){transform:rotate(210deg) translateY(-135px) rotate(-210deg)}
+  .med-sign:nth-child(10){transform:rotate(240deg) translateY(-135px) rotate(-240deg)}
+  .med-sign:nth-child(11){transform:rotate(270deg) translateY(-135px) rotate(-270deg)}
+  .med-sign:nth-child(12){transform:rotate(300deg) translateY(-135px) rotate(-300deg)}
+  .med-sign:nth-child(13){transform:rotate(330deg) translateY(-135px) rotate(-330deg)}
+  .med-grid,.med-sign-grid,.med-two,.med-source-list{grid-template-columns:1fr}
+  .med-disclaimer .med-wrap{grid-template-columns:1fr;padding:16px 0}
+  .med-disclaimer-icon{width:36px;height:36px}
+  .med-section p{font-size:15.5px}
+}
