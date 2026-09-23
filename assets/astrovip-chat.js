@@ -18,7 +18,7 @@ function persist(){localStorage.setItem(STORE,JSON.stringify({session:state.sess
 function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 function currentCopy(){return COPY[uiLang(state.lang)]||COPY.ro}
 function post(payload){return fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).then(async r=>{const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||("HTTP "+r.status));return j})}
-const existingLauncher=document.querySelector(".avchat-launcher");const launcher=existingLauncher||document.createElement("button");launcher.className="avchat-launcher";launcher.type="button";if(!launcher.querySelector(".avchat-launcher-dot"))launcher.innerHTML='<span class="avchat-launcher-dot"></span><span class="avchat-launcher-label"></span>';
+const existingLaunchers=[...document.querySelectorAll(".avchat-launcher")];const existingLauncher=existingLaunchers.shift()||null;existingLaunchers.forEach(el=>el.remove());const launcher=existingLauncher||document.createElement("button");launcher.className="avchat-launcher";launcher.type="button";if(!launcher.querySelector(".avchat-launcher-dot"))launcher.innerHTML='<span class="avchat-launcher-dot"></span><span class="avchat-launcher-label"></span>';
 const panel=document.createElement("section");panel.className="avchat-panel";panel.setAttribute("role","dialog");panel.setAttribute("aria-modal","false");panel.setAttribute("aria-label","AstroVip multilingual chat");launcher.setAttribute("aria-expanded","false");panel.innerHTML='<header class="avchat-head"><div class="avchat-brand"><strong></strong><span></span></div><div class="avchat-head-actions"><select class="avchat-lang" aria-label="Chat language"><option value="auto">Auto</option><option value="en">EN</option><option value="es">ES</option><option value="it">IT</option><option value="zh-CN">中文</option></select><button class="avchat-close" type="button" aria-label="Close">×</button></div></header><div class="avchat-body"><div class="avchat-empty"><strong></strong><span></span><div class="avchat-encryption">● AstroVip secure chat</div><div class="avchat-privacy">Mesajele sunt procesate pentru funcționarea conversației și traducere. <a href="/politica-confidentialitate/" target="_blank" rel="noopener">Confidențialitate</a></div></div><div class="avchat-messages"></div></div><footer class="avchat-composer"><div class="avchat-row"><textarea class="avchat-input" rows="1" maxlength="1500"></textarea><button class="avchat-send" type="button" aria-label="Send">➤</button></div><div class="avchat-status"></div></footer>';
 if(!existingLauncher)document.body.append(launcher);document.body.append(panel);
 const desktopChatMq=window.matchMedia("(min-width:981px)");
@@ -67,6 +67,10 @@ langSel.onchange=async()=>{state.lang=langSel.value;persist();paintCopy();if(sta
 paintCopy();
 placeLauncher();
 alignLauncher();
+const dedupeLaunchers=()=>{document.querySelectorAll(".avchat-launcher").forEach(el=>{if(el!==launcher)el.remove()})};
+dedupeLaunchers();
+const launcherObserver=new MutationObserver(dedupeLaunchers);
+launcherObserver.observe(document.body,{childList:true,subtree:true});
 const onChatViewportChange=()=>{placeLauncher();alignLauncher();paintCopy();alignPanel()};
 desktopChatMq.addEventListener?.("change",onChatViewportChange);
 window.addEventListener("resize",()=>{alignLauncher();if(panel.classList.contains("is-open"))alignPanel()},{passive:true});
