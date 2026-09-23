@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" role="img" aria-labelledby="t d">
+<title id="t">OCUPAȚIA ASTROLOG — AstroVip</title>
+<desc id="d">Card premium negru și auriu despre ocupația de astrolog.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#080704"/><stop offset=".46" stop-color="#030303"/><stop offset="1" stop-color="#000"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff8c8"/><stop offset=".18" stop-color="#f8d765"/><stop offset=".46" stop-color="#a86b10"/><stop offset=".68" stop-color="#ffe88c"/><stop offset="1" stop-color="#c68a1c"/>
+  </linearGradient>
+  <linearGradient id="ivory" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fffce6"/><stop offset=".52" stop-color="#fff1b9"/><stop offset="1" stop-color="#e7c86a"/>
+  </linearGradient>
+  <radialGradient id="halo"><stop offset="0" stop-color="#f6c952" stop-opacity=".30"/><stop offset="1" stop-color="#f6c952" stop-opacity="0"/></radialGradient>
+  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1000" height="1000" rx="38" fill="url(#bg)"/>
+<circle cx="500" cy="260" r="310" fill="url(#halo)" opacity=".42" filter="url(#soft)"/>
+<rect x="13" y="13" width="974" height="974" rx="34" fill="none" stroke="url(#gold)" stroke-width="4"/>
+<rect x="25" y="25" width="950" height="950" rx="28" fill="none" stroke="#fff0a0" stroke-opacity=".22" stroke-width="1.5"/>
+
+<g fill="#f7d86d" opacity=".90">
+  <circle cx="78" cy="96" r="2.2"/><circle cx="145" cy="146" r="1.5"/><circle cx="224" cy="93" r="1.8"/>
+  <circle cx="768" cy="90" r="1.7"/><circle cx="874" cy="136" r="2.1"/><circle cx="930" cy="224" r="1.5"/>
+  <circle cx="107" cy="307" r="1.8"/><circle cx="913" cy="322" r="1.8"/><circle cx="170" cy="404" r="1.4"/>
+  <circle cx="826" cy="409" r="1.7"/><circle cx="91" cy="510" r="1.5"/><circle cx="920" cy="520" r="1.6"/>
+</g>
+
+<g transform="translate(500 258)">
+  <circle r="196" fill="none" stroke="#d7a93f" stroke-width="3"/>
+  <circle r="142" fill="none" stroke="#d7a93f" stroke-opacity=".74" stroke-width="2"/>
+  <circle r="82" fill="none" stroke="#d7a93f" stroke-opacity=".42" stroke-width="1.4"/>
+  <g fill="none" stroke="#d7a93f" stroke-opacity=".48" stroke-width="1.4">
+    <ellipse rx="330" ry="148" transform="rotate(-8)"/>
+    <ellipse rx="330" ry="148" transform="rotate(8)"/>
+  </g>
+  <g fill="url(#gold)" filter="url(#glow)">
+    <path d="M0-108 L16-18 L108 0 L16 18 L0 108 L-16 18 L-108 0 L-16-18 Z"/>
+    <path d="M0-62 L9-11 L62 0 L9 11 L0 62 L-9 11 L-62 0 L-9-11 Z" fill="#fff6c5"/>
+  </g>
+  <g fill="#f5d56d" font-family="Georgia,'Times New Roman',serif" font-size="38" font-weight="700" text-anchor="middle">
+    <text x="0" y="-157">♈</text><text x="82" y="-135">♉</text><text x="143" y="-78">♊</text><text x="166" y="12">♋</text>
+    <text x="143" y="91">♌</text><text x="80" y="150">♍</text><text x="0" y="173">♎</text><text x="-82" y="150">♏</text>
+    <text x="-143" y="91">♐</text><text x="-166" y="12">♑</text><text x="-143" y="-78">♒</text><text x="-82" y="-135">♓</text>
+  </g>
+  <g fill="none" stroke="#e2b74d" stroke-width="2.2" opacity=".72">
+    <circle cx="-305" cy="24" r="49"/><circle cx="305" cy="24" r="49"/>
+  </g>
+  <path d="M-286 -13a49 49 0 1 0 0 74c-25-9-40-28-40-37s15-28 40-37z" fill="#2b2110" stroke="#d8ad43" stroke-width="1.5"/>
+  <path d="M286 -13a49 49 0 1 1 0 74c25-9 40-28 40-37s-15-28-40-37z" fill="#2b2110" stroke="#d8ad43" stroke-width="1.5"/>
+</g>
+
+<g text-anchor="middle" font-family="Arial,Helvetica,sans-serif">
+  <text x="500" y="555" font-size="88" font-weight="900" letter-spacing="1.5" fill="url(#ivory)">OCUPAȚIA</text>
+  <text x="500" y="650" font-size="95" font-weight="900" letter-spacing="2" fill="url(#ivory)">ASTROLOG</text>
+  <line x1="132" y1="690" x2="430" y2="690" stroke="#d8ae44" stroke-width="2"/>
+  <line x1="570" y1="690" x2="868" y2="690" stroke="#d8ae44" stroke-width="2"/>
+  <g transform="translate(500 690)" fill="url(#gold)" filter="url(#glow)">
+    <path d="M0-20 L6-6 L20 0 L6 6 L0 20 L-6 6 L-20 0 L-6-6 Z"/>
+  </g>
+  <text x="500" y="747" font-size="29" font-weight="800" letter-spacing="5" fill="#fff0b1">MAI MULT DECÂT O PROFESIE,</text>
+  <text x="500" y="787" font-size="29" font-weight="800" letter-spacing="6" fill="#fff0b1">O MISIUNE</text>
+</g>
+
+<g transform="translate(120 826)" stroke="#e4bb4d" fill="none" stroke-width="4">
+  <path d="M0 10 Q36-6 72 10 V60 Q36 45 0 60 Z"/><path d="M72 10 Q108-6 144 10 V60 Q108 45 72 60 Z"/>
+  <line x1="72" y1="10" x2="72" y2="60"/>
+</g>
+<g transform="translate(428 826)" stroke="#e4bb4d" fill="none" stroke-width="4">
+  <ellipse cx="72" cy="34" rx="50" ry="20" transform="rotate(-15 72 34)"/>
+  <circle cx="72" cy="34" r="18"/><path d="M17 50 Q72 86 127 18"/>
+</g>
+<g transform="translate(776 824)" stroke="#e4bb4d" fill="none" stroke-width="4">
+  <circle cx="52" cy="36" r="21"/>
+  <g><line x1="52" y1="0" x2="52" y2="13"/><line x1="52" y1="59" x2="52" y2="72"/>
+  <line x1="16" y1="36" x2="29" y2="36"/><line x1="75" y1="36" x2="88" y2="36"/>
+  <line x1="27" y1="11" x2="36" y2="20"/><line x1="68" y1="52" x2="77" y2="61"/>
+  <line x1="27" y1="61" x2="36" y2="52"/><line x1="68" y1="20" x2="77" y2="11"/></g>
+</g>
+
+<g fill="#fff0b2" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="22" letter-spacing="1.5" text-anchor="middle">
+  <text x="192" y="920">CUNOAȘTERE</text><text x="192" y="948">ASTRALĂ</text>
+  <text x="500" y="920">GHIDARE</text><text x="500" y="948">PENTRU VIAȚĂ</text>
+  <text x="828" y="920">ARMONIE</text><text x="828" y="948">ÎN LUMEA REALĂ</text>
+</g>
+</svg>
