@@ -1,0 +1,248 @@
+/* AstroVip desktop single-line header — preview 2026-09-23 */
+@media(min-width:821px){
+  body:not(.guide-page) .av-langbar{
+    display:none!important;
+  }
+
+  body:not(.guide-page) .top .nav{
+    direction:ltr!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    width:min(1500px,calc(100% - 28px))!important;
+    min-height:72px!important;
+    padding:6px 0!important;
+    gap:8px!important;
+  }
+
+  body:not(.guide-page) .top .brand.av-brand-premium{
+    order:1!important;
+    width:180px!important;
+    max-width:180px!important;
+    flex:0 0 180px!important;
+    height:50px!important;
+    margin:0!important;
+  }
+
+  body:not(.guide-page) .av-desktop-lang-inline{
+    order:2!important;
+    direction:ltr!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    flex-wrap:nowrap!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    gap:4px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  body:not(.guide-page) .av-desktop-lang-inline>a{
+    flex:0 0 38px!important;
+    width:38px!important;
+    min-width:38px!important;
+    max-width:38px!important;
+    height:30px!important;
+    min-height:30px!important;
+    max-height:30px!important;
+    padding:2px!important;
+    margin:0!important;
+    border-radius:9px!important;
+    box-sizing:border-box!important;
+    font-size:9px!important;
+    letter-spacing:0!important;
+  }
+
+  body:not(.guide-page) .av-desktop-lang-inline>a[href="/ar/"]{
+    color:#fff!important;
+    background:linear-gradient(180deg,#0b8f50 0%,#05733f 48%,#024d2c 100%)!important;
+    text-shadow:0 1px 1px rgba(0,0,0,.75)!important;
+  }
+
+  body:not(.guide-page) .av-desktop-lang-inline>a[href="/ru/"]{
+    color:#fff!important;
+    background:linear-gradient(180deg,#fff 0 33.333%,#1c57b7 33.333% 66.666%,#d52b1e 66.666% 100%)!important;
+    text-shadow:0 1px 2px rgba(0,0,0,.95)!important;
+  }
+
+  body:not(.guide-page) .avchat-desktop-singleline{
+    order:3!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    flex:0 0 138px!important;
+    width:138px!important;
+    min-width:138px!important;
+    max-width:138px!important;
+    height:40px!important;
+    min-height:40px!important;
+    padding:0 12px!important;
+    margin:0 4px 0 2px!important;
+    gap:7px!important;
+    border:3px solid #39ff14!important;
+    border-radius:999px!important;
+    background:linear-gradient(180deg,#0d6929 0%,#084b1c 100%)!important;
+    box-shadow:0 7px 18px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.16)!important;
+    color:#fff!important;
+  }
+
+  body:not(.guide-page) .avchat-desktop-singleline .avchat-launcher-label{
+    font-size:12px!important;
+    line-height:1!important;
+    font-weight:950!important;
+    white-space:nowrap!important;
+  }
+
+  body:not(.guide-page) .avchat-desktop-singleline .avchat-launcher-dot{
+    width:8px!important;
+    height:8px!important;
+    flex:0 0 8px!important;
+  }
+
+  body:not(.guide-page) .top .menu{
+    order:4!important;
+    direction:ltr!important;
+    flex:1 1 auto!important;
+    min-width:0!important;
+    margin:0!important;
+    justify-content:flex-end!important;
+    gap:0!important;
+  }
+
+  body:not(.guide-page) .top .nav-actions{
+    order:5!important;
+    flex:0 0 auto!important;
+    margin:0!important;
+  }
+}
+
+@media(min-width:1181px) and (max-width:1320px){
+  body:not(.guide-page) .top .brand.av-brand-premium{
+    width:160px!important;
+    max-width:160px!important;
+    flex-basis:160px!important;
+  }
+  body:not(.guide-page) .av-desktop-lang-inline>a{
+    flex-basis:34px!important;
+    width:34px!important;
+    min-width:34px!important;
+    max-width:34px!important;
+  }
+  body:not(.guide-page) .avchat-desktop-singleline{
+    flex-basis:126px!important;
+    width:126px!important;
+    min-width:126px!important;
+    max-width:126px!important;
+    padding:0 9px!important;
+  }
+  body:not(.guide-page) .top .menu>a,
+  body:not(.guide-page) .top .av-menu-trigger{
+    padding-left:5px!important;
+    padding-right:5px!important;
+    font-size:11.5px!important;
+  }
+  body:not(.guide-page) .nav-book{display:none!important}
+}
+
+@media(min-width:981px) and (max-width:1180px){
+  body:not(.guide-page) .top .nav{
+    width:calc(100% - 18px)!important;
+    gap:4px!important;
+  }
+  body:not(.guide-page) .top .brand.av-brand-premium{
+    width:148px!important;
+    max-width:148px!important;
+    flex-basis:148px!important;
+  }
+  body:not(.guide-page) .av-desktop-lang-inline{
+    gap:2px!important;
+  }
+  body:not(.guide-page) .av-desktop-lang-inline>a{
+    flex-basis:30px!important;
+    width:30px!important;
+    min-width:30px!important;
+    max-width:30px!important;
+    height:28px!important;
+    min-height:28px!important;
+    max-height:28px!important;
+    border-radius:8px!important;
+    font-size:8px!important;
+  }
+  body:not(.guide-page) .avchat-desktop-singleline{
+    flex-basis:112px!important;
+    width:112px!important;
+    min-width:112px!important;
+    max-width:112px!important;
+    height:36px!important;
+    min-height:36px!important;
+    padding:0 7px!important;
+    margin-right:2px!important;
+  }
+  body:not(.guide-page) .avchat-desktop-singleline .avchat-launcher-label{
+    font-size:10.5px!important;
+  }
+  body:not(.guide-page) .top .menu>a,
+  body:not(.guide-page) .top .av-menu-trigger{
+    min-height:36px!important;
+    padding:5px 3px!important;
+    font-size:10.2px!important;
+  }
+  body:not(.guide-page) .nav-book{display:none!important}
+}
+
+@media(min-width:821px) and (max-width:980px){
+  body:not(.guide-page) .top .nav{
+    width:calc(100% - 16px)!important;
+    gap:5px!important;
+  }
+  body:not(.guide-page) .top .brand.av-brand-premium{
+    width:160px!important;
+    max-width:160px!important;
+    flex-basis:160px!important;
+  }
+  body:not(.guide-page) .av-desktop-lang-inline{
+    gap:2px!important;
+  }
+  body:not(.guide-page) .av-desktop-lang-inline>a{
+    flex-basis:30px!important;
+    width:30px!important;
+    min-width:30px!important;
+    max-width:30px!important;
+    height:28px!important;
+    min-height:28px!important;
+    max-height:28px!important;
+    font-size:8px!important;
+  }
+  body:not(.guide-page) .avchat-desktop-singleline{
+    flex-basis:118px!important;
+    width:118px!important;
+    min-width:118px!important;
+    max-width:118px!important;
+    height:38px!important;
+    min-height:38px!important;
+    margin-left:2px!important;
+    margin-right:auto!important;
+    padding:0 8px!important;
+  }
+  body:not(.guide-page) .avchat-desktop-singleline .avchat-launcher-label{
+    font-size:10.5px!important;
+  }
+  body:not(.guide-page) .top .menu{
+    order:4!important;
+  }
+  body:not(.guide-page) .top .nav-actions{
+    order:5!important;
+    margin-left:0!important;
+  }
+}
