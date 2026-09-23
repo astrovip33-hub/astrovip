@@ -324,6 +324,16 @@ jobs:
             exit 40
           fi
           echo "Desktop inline languages stylesheet verified."
+          if ! grep -q 'avchat-nav-slot' "$LIVE_HTML"; then
+            echo "::error::Homepage does not contain the desktop Chat AstroVip nav slot."
+            exit 41
+          fi
+          if ! grep -q 'avchat-launcher.avchat-header-slot:not(.avchat-nav-slot)' /tmp/desktop-languages-inline.css || ! grep -q 'avchat-launcher.avchat-nav-slot' /tmp/desktop-languages-inline.css; then
+            echo "::error::Desktop stylesheet does not move Chat AstroVip from language bar to nav."
+            exit 42
+          fi
+          echo "Desktop Chat AstroVip nav placement verified."
+
 
           if ! grep -q 'class="av-medical-home reveal"' "$LIVE_HTML" || ! grep -q 'DESCHIDE PAGINA' "$LIVE_HTML"; then
             echo "::error::Homepage does not expose the visible ASTROLOGIE MEDICALĂ card."
