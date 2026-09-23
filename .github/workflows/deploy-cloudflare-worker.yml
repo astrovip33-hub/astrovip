@@ -132,6 +132,47 @@ jobs:
           echo "::add-mask::$ACCOUNT_ID"
           echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
 
+      - name: Remove legacy www route conflict
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ZONES=$(curl -fsS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones?name=astrovip.ro&status=active")
+
+          ZONE_ID=$(printf '%s' "$ZONES" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+          if [ -z "$ZONE_ID" ]; then
+            echo "::error::Could not resolve Cloudflare zone ID for astrovip.ro."
+            exit 6
+          fi
+
+          ROUTES=$(curl -fsS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/workers/routes")
+
+          ROUTE_IDS=$(printf '%s' "$ROUTES" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("\n".join(str(x.get("id","")) for x in (d.get("result") or []) if x.get("pattern")=="www.astrovip.ro/*" and x.get("script")=="astrovip-www-redirect" and x.get("id")))')
+
+          if [ -z "$ROUTE_IDS" ]; then
+            echo "No legacy www route conflict found."
+          else
+            while IFS= read -r ROUTE_ID; do
+              [ -n "$ROUTE_ID" ] || continue
+              RESPONSE=$(curl -fsS -X DELETE \
+                -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+                -H "Content-Type: application/json" \
+                "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/workers/routes/$ROUTE_ID")
+              SUCCESS=$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; print(str(json.load(sys.stdin).get("success",False)).lower())')
+              if [ "$SUCCESS" != "true" ]; then
+                echo "::error::Failed to remove legacy www Worker route $ROUTE_ID."
+                exit 7
+              fi
+              echo "Removed legacy www route $ROUTE_ID from astrovip-www-redirect."
+            done <<< "$ROUTE_IDS"
+          fi
+
       - name: Deploy AstroVip directly to Cloudflare
         shell: bash
         run: |
