@@ -288,6 +288,29 @@ jobs:
             exit 32
           fi
 
+          echo "Checking medical astrology page"
+          MEDICAL_HTML=$(mktemp)
+          MEDICAL_STATUS=$(curl -sS -o "$MEDICAL_HTML" -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/astrologie-medicala/?release=$EXPECTED_RELEASE")
+          if [ "$MEDICAL_STATUS" != "200" ]; then
+            echo "::error::https://astrovip.ro/astrologie-medicala/ returned HTTP $MEDICAL_STATUS instead of 200."
+            exit 33
+          fi
+          if ! grep -q '<title>Astrologie Medicală | Zodiac, Planete și Corp | AstroVip</title>' "$MEDICAL_HTML"; then
+            echo "::error::Medical astrology page is reachable but expected title is missing."
+            exit 34
+          fi
+          if ! grep -q 'href="/astrologie-medicala/">Astrologie medicală</a>' "$LIVE_HTML"; then
+            echo "::error::Homepage Astrologie menu does not link to /astrologie-medicala/."
+            exit 35
+          fi
+          RAMURI_HTML=$(mktemp)
+          RAMURI_STATUS=$(curl -sS -o "$RAMURI_HTML" -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/ramurile-astrologiei/?release=$EXPECTED_RELEASE")
+          if [ "$RAMURI_STATUS" != "200" ] || ! grep -q 'href="/astrologie-medicala/"' "$RAMURI_HTML"; then
+            echo "::error::Ramurile Astrologiei does not expose the medical astrology page."
+            exit 36
+          fi
+          echo "Medical astrology page and internal links verified."
+
           echo "Checking Local Space case-study collection"
           LOCAL_SPACE_URLS=(
             "https://astrovip.ro/local-space/studii-de-caz/"
