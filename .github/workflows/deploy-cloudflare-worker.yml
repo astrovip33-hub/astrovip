@@ -381,6 +381,27 @@ jobs:
               exit 42
             fi
           done
+          HEADER_AR_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          section=m.group(1) if m else ""
+          print(len(re.findall(r'href="/ar/"',section)))
+          PY
+          )
+          HEADER_RU_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          section=m.group(1) if m else ""
+          print(len(re.findall(r'href="/ru/"',section)))
+          PY
+          )
+          if [ "$HEADER_AR_COUNT" != "1" ] || [ "$HEADER_RU_COUNT" != "1" ]; then
+            echo "::error::Header language duplication: AR=$HEADER_AR_COUNT RU=$HEADER_RU_COUNT (expected exactly 1 each)."
+            exit 46
+          fi
+          echo "Header language de-duplication verified: AR=1 RU=1."
           if ! grep -q 'avchat-nav-slot' "$LIVE_HTML"; then
             echo "::error::Homepage does not contain the desktop Chat AstroVip nav slot."
             exit 43
