@@ -7,6 +7,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://astrovip.ro/es/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://astrovip.ro/it/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://astrovip.ro/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://astrovip.ro/ar/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://astrovip.ro/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://astrovip.ro/"/>
   </url>
   <url>
@@ -16,6 +18,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://astrovip.ro/es/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://astrovip.ro/it/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://astrovip.ro/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://astrovip.ro/ar/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://astrovip.ro/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://astrovip.ro/"/>
   </url>
   <url>
@@ -25,6 +29,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://astrovip.ro/es/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://astrovip.ro/it/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://astrovip.ro/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://astrovip.ro/ar/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://astrovip.ro/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://astrovip.ro/"/>
   </url>
   <url>
@@ -34,6 +40,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://astrovip.ro/es/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://astrovip.ro/it/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://astrovip.ro/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://astrovip.ro/ar/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://astrovip.ro/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://astrovip.ro/"/>
   </url>
   <url>
@@ -43,6 +51,30 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://astrovip.ro/es/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://astrovip.ro/it/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://astrovip.ro/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://astrovip.ro/ar/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://astrovip.ro/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://astrovip.ro/"/>
+  </url>
+  <url>
+    <loc>https://astrovip.ro/ar/</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://astrovip.ro/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astrovip.ro/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astrovip.ro/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://astrovip.ro/it/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://astrovip.ro/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://astrovip.ro/ar/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://astrovip.ro/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://astrovip.ro/"/>
+  </url>
+  <url>
+    <loc>https://astrovip.ro/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://astrovip.ro/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astrovip.ro/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astrovip.ro/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://astrovip.ro/it/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://astrovip.ro/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://astrovip.ro/ar/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://astrovip.ro/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://astrovip.ro/"/>
   </url>
 </urlset>
