@@ -16,6 +16,7 @@ jobs:
       - run: npm install -g lighthouse@12
       - name: Audit preview
         run: |
+          sleep 25
           lighthouse https://perf-lcp-20260923-astrovip.astrovip33.workers.dev/ --chrome-flags="--headless --no-sandbox" --only-categories=performance --output=json --output-path=preview.json
       - name: Print metrics
         run: |
