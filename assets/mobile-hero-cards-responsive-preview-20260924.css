@@ -68,9 +68,9 @@
     max-width:382px!important;
     height:auto!important;
     max-height:none!important;
-    margin:8px auto 0!important;
+    margin:clamp(72px,18vh,118px) auto 0!important;
     padding:0!important;
-    gap:5px!important;
+    gap:4px!important;
     overflow:hidden!important;
     align-items:stretch!important;
     transform:none!important;
@@ -151,8 +151,8 @@
     width:calc(100% - 24px)!important;
     max-width:382px!important;
     min-height:34px!important;
-    margin:8px auto 0!important;
-    padding:8px 8px 10px!important;
+    margin:2px auto 0!important;
+    padding:7px 8px 9px!important;
     border-top:1px solid rgba(224,185,77,.34)!important;
     border-bottom:0!important;
     background:transparent!important;
@@ -172,7 +172,7 @@
     clear:both!important;
     width:100%!important;
     margin:0!important;
-    padding:30px 0 34px!important;
+    padding:20px 0 34px!important;
     transform:none!important;
     z-index:1!important;
     border-top:0!important;
