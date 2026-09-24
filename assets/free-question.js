@@ -364,7 +364,7 @@
       const ok=await doSave(em);
       if(!ok)return;
       event('astro_free_question_submit_email');
-      location.href='mailto:astrovip33@gmail.com?subject='+encodeURIComponent('AstroVip — 1 întrebare gratuită — '+state.topic)+'&body='+encodeURIComponent(buildText());
+      location.href='mailto:contact@astrovip.ro?subject='+encodeURIComponent('AstroVip — 1 întrebare gratuită — '+state.topic)+'&body='+encodeURIComponent(buildText());
     };
 
     sends.append(wa,em);
