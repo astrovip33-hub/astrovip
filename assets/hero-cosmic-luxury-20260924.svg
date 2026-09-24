@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="t d">
+<title id="t">AstroVip Cosmic Luxury Hero</title>
+<desc id="d">Peisaj cosmic premium cu roată zodiacală aurie, planete smarald și accente luminoase.</desc>
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#020503"/>
+    <stop offset=".42" stop-color="#06120c"/>
+    <stop offset=".72" stop-color="#07110c"/>
+    <stop offset="1" stop-color="#020302"/>
+  </linearGradient>
+  <radialGradient id="neb" cx="68%" cy="36%" r="50%">
+    <stop offset="0" stop-color="#0c7c48" stop-opacity=".52"/>
+    <stop offset=".35" stop-color="#0b4b31" stop-opacity=".24"/>
+    <stop offset=".7" stop-color="#03110b" stop-opacity=".08"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="goldOrb" cx="45%" cy="40%" r="60%">
+    <stop offset="0" stop-color="#fff7c7"/>
+    <stop offset=".24" stop-color="#ffd55b"/>
+    <stop offset=".54" stop-color="#c78318"/>
+    <stop offset=".82" stop-color="#49300a"/>
+    <stop offset="1" stop-color="#090602"/>
+  </radialGradient>
+  <radialGradient id="emeraldOrb" cx="38%" cy="32%" r="68%">
+    <stop offset="0" stop-color="#a7ffc0"/>
+    <stop offset=".18" stop-color="#39ef79"/>
+    <stop offset=".48" stop-color="#087945"/>
+    <stop offset=".78" stop-color="#06291a"/>
+    <stop offset="1" stop-color="#010503"/>
+  </radialGradient>
+  <linearGradient id="goldStroke" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff3ad"/>
+    <stop offset=".23" stop-color="#e4ac31"/>
+    <stop offset=".49" stop-color="#fff5c4"/>
+    <stop offset=".73" stop-color="#ba7314"/>
+    <stop offset="1" stop-color="#ffe68c"/>
+  </linearGradient>
+  <linearGradient id="mount" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#0d271a"/>
+    <stop offset=".5" stop-color="#06110c"/>
+    <stop offset="1" stop-color="#020302"/>
+  </linearGradient>
+  <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#0b2a1c"/>
+    <stop offset=".32" stop-color="#082016"/>
+    <stop offset="1" stop-color="#010302"/>
+  </linearGradient>
+  <filter id="goldGlow" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="7" result="b"/>
+    <feFlood flood-color="#ffd05b" flood-opacity=".58"/>
+    <feComposite in2="b" operator="in"/>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="greenGlow" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="9" result="b"/>
+    <feFlood flood-color="#30ef73" flood-opacity=".34"/>
+    <feComposite in2="b" operator="in"/>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="20"/>
+  </filter>
+  <pattern id="stars" width="130" height="90" patternUnits="userSpaceOnUse">
+    <circle cx="12" cy="18" r="1.2" fill="#fff0b2" opacity=".75"/>
+    <circle cx="56" cy="34" r=".8" fill="#fff" opacity=".55"/>
+    <circle cx="103" cy="14" r="1.4" fill="#52ef84" opacity=".54"/>
+    <circle cx="80" cy="74" r="1" fill="#ffd15a" opacity=".72"/>
+    <circle cx="126" cy="56" r=".7" fill="#fff" opacity=".52"/>
+    <circle cx="33" cy="69" r=".7" fill="#fff" opacity=".48"/>
+  </pattern>
+</defs>
+
+<rect width="1600" height="900" fill="url(#sky)"/>
+<rect width="1600" height="900" fill="url(#stars)" opacity=".78"/>
+<rect width="1600" height="900" fill="url(#neb)"/>
+
+<!-- soft emerald/gold nebulae -->
+<ellipse cx="1190" cy="286" rx="390" ry="250" fill="#087848" opacity=".10" filter="url(#soft)"/>
+<ellipse cx="1310" cy="270" rx="220" ry="160" fill="#e9aa2e" opacity=".10" filter="url(#soft)"/>
+<ellipse cx="830" cy="215" rx="250" ry="110" fill="#0b6c43" opacity=".08" filter="url(#soft)"/>
+
+<!-- distant planet -->
+<circle cx="1180" cy="235" r="170" fill="url(#emeraldOrb)" opacity=".88" filter="url(#greenGlow)"/>
+<path d="M1034 245 C1090 188 1180 151 1322 182 C1240 170 1150 214 1080 286 C1062 276 1048 262 1034 245Z"
+      fill="#c7ffe0" opacity=".13"/>
+<ellipse cx="1180" cy="235" rx="214" ry="48" fill="none" stroke="#ffd66c" stroke-width="4" opacity=".66" transform="rotate(-12 1180 235)" filter="url(#goldGlow)"/>
+
+<!-- zodiac wheel -->
+<g transform="translate(1120 360)" opacity=".96">
+  <circle r="300" fill="none" stroke="url(#goldStroke)" stroke-width="5" filter="url(#goldGlow)"/>
+  <circle r="267" fill="none" stroke="#e6b74b" stroke-width="1.4" opacity=".72"/>
+  <circle r="220" fill="none" stroke="#4def82" stroke-width="1.6" opacity=".36"/>
+  <circle r="165" fill="none" stroke="#e6b74b" stroke-width="1.2" opacity=".55"/>
+  <g stroke="#e8b94a" stroke-width="1.2" opacity=".55">
+    <line x1="0" y1="-300" x2="0" y2="-165"/>
+    <line x1="150" y1="-260" x2="83" y2="-144"/>
+    <line x1="260" y1="-150" x2="144" y2="-83"/>
+    <line x1="300" y1="0" x2="165" y2="0"/>
+    <line x1="260" y1="150" x2="144" y2="83"/>
+    <line x1="150" y1="260" x2="83" y2="144"/>
+    <line x1="0" y1="300" x2="0" y2="165"/>
+    <line x1="-150" y1="260" x2="-83" y2="144"/>
+    <line x1="-260" y1="150" x2="-144" y2="83"/>
+    <line x1="-300" y1="0" x2="-165" y2="0"/>
+    <line x1="-260" y1="-150" x2="-144" y2="-83"/>
+    <line x1="-150" y1="-260" x2="-83" y2="-144"/>
+  </g>
+  <g font-family="Georgia,'Times New Roman',serif" font-size="44" font-weight="700" fill="#ffd56b" text-anchor="middle" filter="url(#goldGlow)">
+    <text x="0" y="-248">♈</text><text x="124" y="-214">♉</text><text x="214" y="-119">♊</text>
+    <text x="248" y="15">♋</text><text x="214" y="143">♌</text><text x="124" y="228">♍</text>
+    <text x="0" y="264">♎</text><text x="-124" y="228">♏</text><text x="-214" y="143">♐</text>
+    <text x="-248" y="15">♑</text><text x="-214" y="-119">♒</text><text x="-124" y="-214">♓</text>
+  </g>
+  <circle r="45" fill="url(#goldOrb)" filter="url(#goldGlow)"/>
+  <path d="M0 -94 L12 -17 L90 0 L12 17 L0 94 L-12 17 L-90 0 L-12 -17Z" fill="#fff0a2" opacity=".92" filter="url(#goldGlow)"/>
+</g>
+
+<!-- secondary emerald planet -->
+<circle cx="930" cy="425" r="58" fill="url(#emeraldOrb)" filter="url(#greenGlow)"/>
+<ellipse cx="930" cy="425" rx="82" ry="19" fill="none" stroke="#f1c44f" stroke-width="2.4" transform="rotate(-16 930 425)" opacity=".82"/>
+
+<!-- mountains -->
+<path d="M0 645 L130 532 L224 603 L320 495 L410 590 L515 456 L650 610 L770 520 L875 614 L972 535 L1080 634 L1208 545 L1334 620 L1460 548 L1600 640 L1600 900 L0 900Z"
+      fill="url(#mount)"/>
+<path d="M0 706 L170 607 L296 675 L405 574 L524 666 L648 590 L750 685 L876 607 L1008 684 L1120 614 L1260 687 L1390 606 L1600 702 L1600 900 L0 900Z"
+      fill="#030705" opacity=".96"/>
+
+<!-- golden city horizon -->
+<g fill="#d89b29" opacity=".74" filter="url(#goldGlow)">
+  <rect x="655" y="610" width="15" height="70"/><rect x="677" y="593" width="21" height="87"/>
+  <rect x="705" y="624" width="18" height="56"/><rect x="732" y="575" width="24" height="105"/>
+  <rect x="765" y="604" width="13" height="76"/><rect x="786" y="589" width="19" height="91"/>
+  <rect x="816" y="615" width="27" height="65"/><rect x="851" y="566" width="20" height="114"/>
+  <rect x="882" y="600" width="17" height="80"/><rect x="908" y="579" width="25" height="101"/>
+</g>
+<g fill="#fff1a7" opacity=".88">
+  <circle cx="663" cy="633" r="2"/><circle cx="688" cy="620" r="2"/><circle cx="743" cy="608" r="2"/>
+  <circle cx="794" cy="622" r="2"/><circle cx="860" cy="596" r="2"/><circle cx="920" cy="608" r="2"/>
+</g>
+
+<!-- water -->
+<path d="M0 688 C260 658 450 714 690 691 C892 672 1034 706 1210 690 C1360 677 1490 687 1600 676 L1600 900 L0 900Z"
+      fill="url(#water)" opacity=".96"/>
+<path d="M560 706 C742 690 878 704 1014 697" fill="none" stroke="#f4c858" stroke-width="3" opacity=".40" filter="url(#goldGlow)"/>
+<path d="M626 738 C790 722 904 738 1070 728" fill="none" stroke="#f4c858" stroke-width="2" opacity=".24"/>
+<path d="M760 770 C880 758 966 770 1090 760" fill="none" stroke="#48ef7c" stroke-width="2" opacity=".18"/>
+
+<!-- starbursts -->
+<g fill="#fff0a3" filter="url(#goldGlow)">
+  <path d="M780 168 L787 194 L813 201 L787 208 L780 234 L773 208 L747 201 L773 194Z"/>
+  <path d="M1458 204 L1463 223 L1482 228 L1463 233 L1458 252 L1453 233 L1434 228 L1453 223Z"/>
+  <path d="M1378 505 L1383 524 L1402 529 L1383 534 L1378 553 L1373 534 L1354 529 L1373 524Z"/>
+</g>
+
+<!-- left-side atmospheric vignette for readable text -->
+<rect x="0" y="0" width="760" height="900" fill="url(#sky)" opacity=".18"/>
+<rect x="0" y="0" width="820" height="900" fill="url(#neb)" opacity=".18" transform="scale(-1 1) translate(-820 0)"/>
+<rect x="0" y="0" width="1600" height="900" fill="none" stroke="#d49a27" stroke-opacity=".12" stroke-width="2"/>
+</svg>
