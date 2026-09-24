@@ -1,4 +1,5 @@
 name: AstroVip Preview
+# preview retry after credential validation
 
 on:
   push:
