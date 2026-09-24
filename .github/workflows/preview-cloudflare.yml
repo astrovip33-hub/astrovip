@@ -31,7 +31,7 @@ jobs:
         run: |
           set -euo pipefail
           npx --yes wrangler@latest deploy \
-            --config wrangler.jsonc \
+            --config wrangler.preview.jsonc \
             --name astrovip-preview-mobile-hero \
             --no-routes
       - name: Verify preview
