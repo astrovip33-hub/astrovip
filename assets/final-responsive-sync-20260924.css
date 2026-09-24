@@ -1,0 +1,446 @@
+/* AstroVip final responsive harmonization — 2026-09-24
+   Single last-loaded authority for header, language rail, chat, Hero cards and professional cards. */
+
+/* Language rail: seven equal full-flag controls on every breakpoint. */
+body:not(.guide-page) .av-lang-switch{
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:3px!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+  padding:2px!important;
+}
+body:not(.guide-page) .av-lang-switch>a{
+  flex:0 0 34px!important;
+  width:34px!important;
+  min-width:34px!important;
+  max-width:34px!important;
+  height:28px!important;
+  min-height:28px!important;
+  max-height:28px!important;
+  padding:0!important;
+  border-radius:9px!important;
+  overflow:hidden!important;
+  font-size:0!important;
+  color:transparent!important;
+  text-shadow:none!important;
+  box-sizing:border-box!important;
+}
+body:not(.guide-page) .av-lang-switch>a[href="/"]{background:linear-gradient(90deg,#002b7f 0 33.333%,#fcd116 33.333% 66.666%,#ce1126 66.666% 100%)!important}
+body:not(.guide-page) .av-lang-switch>a[href="/en/"]{background:#fff url("/assets/flag-us.svg?v=20260920-usa-full") center/cover no-repeat!important}
+body:not(.guide-page) .av-lang-switch>a[href="/es/"]{background:linear-gradient(180deg,#aa151b 0 25%,#f1bf00 25% 75%,#aa151b 75% 100%)!important}
+body:not(.guide-page) .av-lang-switch>a[href="/it/"]{background:linear-gradient(90deg,#009246 0 33.333%,#fff 33.333% 66.666%,#ce2b37 66.666% 100%)!important}
+body:not(.guide-page) .av-lang-switch>a[href="/zh/"]{background:#ee1c25 url("/assets/flag-cn.svg?v=20260922-cn-fullbutton2") center/cover no-repeat!important}
+body:not(.guide-page) .av-lang-switch>a[href="/ar/"]{background:#006c35 url("/assets/flag-sa.svg?v=20260923-fullcard1") center/cover no-repeat!important}
+body:not(.guide-page) .av-lang-switch>a[href="/ru/"]{background:#fff url("/assets/flag-ru.svg?v=20260923-fullcard1") center/cover no-repeat!important}
+body:not(.guide-page) .av-lang-switch>a::before,
+body:not(.guide-page) .av-lang-switch>a::after{content:none!important;display:none!important}
+
+/* Mobile: language row + one chat row, no duplicate/pulse pseudo launcher. */
+@media(max-width:820px){
+  body:not(.guide-page) .av-langbar{overflow:visible!important}
+  body:not(.guide-page) .av-langbar .wrap{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    justify-items:center!important;
+    align-items:center!important;
+    gap:7px!important;
+    width:100%!important;
+    max-width:none!important;
+    min-height:88px!important;
+    padding:6px 8px 8px!important;
+    margin:0!important;
+  }
+  body:not(.guide-page) .av-lang-switch{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:min(100%,360px)!important;
+    max-width:360px!important;
+    margin:0 auto!important;
+  }
+  body:not(.guide-page) .av-lang-switch>a{
+    flex:1 1 0!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:28px!important;
+  }
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot{
+    grid-column:1!important;
+    grid-row:2!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:auto!important;
+    min-width:184px!important;
+    max-width:218px!important;
+    height:46px!important;
+    min-height:46px!important;
+    margin:0 auto!important;
+    padding:0 16px!important;
+    gap:8px!important;
+    border:4px solid #39ff14!important;
+    border-radius:999px!important;
+    box-sizing:border-box!important;
+  }
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot::after{
+    content:none!important;
+    display:none!important;
+    animation:none!important;
+    border:0!important;
+    box-shadow:none!important;
+  }
+  body:not(.guide-page) .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    display:inline-flex!important;
+    align-items:center!important;
+    font-size:15px!important;
+    line-height:1!important;
+    font-weight:950!important;
+    white-space:nowrap!important;
+  }
+
+  /* Hero: all four domains stay visible, in a balanced 2x2 grid. */
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    width:min(calc(100% - 24px),390px)!important;
+    max-width:390px!important;
+    gap:6px!important;
+    margin:12px auto 0!important;
+    padding:0!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card,
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(4){
+    display:grid!important;
+    grid-template-rows:auto 1fr!important;
+    width:100%!important;
+    min-width:0!important;
+    height:70px!important;
+    min-height:70px!important;
+    max-height:70px!important;
+    padding:7px 6px!important;
+    margin:0!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+    min-height:14px!important;
+    height:auto!important;
+    margin:0 0 4px!important;
+    font-size:10.5px!important;
+    line-height:1.05!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:0!important;
+    font-size:7.2px!important;
+    line-height:1.15!important;
+    overflow:visible!important;
+  }
+
+  /* The occupation evidence card is no longer desktop-only. */
+  body:not(.guide-page) .av-occupation-figure{
+    display:block!important;
+    margin:10px 0 0!important;
+    padding:10px!important;
+    line-height:0!important;
+    border:1px solid rgba(255,241,170,.68)!important;
+    border-radius:16px!important;
+    background:linear-gradient(135deg,rgba(255,244,191,.16),rgba(217,184,92,.05) 35%,rgba(4,4,4,.88) 70%),#050505!important;
+  }
+  body:not(.guide-page) .av-occupation-figure img{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    object-fit:contain!important;
+    border-radius:9px!important;
+  }
+}
+
+/* Tablet 821–980: chat remains beside hamburger; languages get their own row.
+   This closes the old breakpoint gap without moving the chat into the language bar. */
+@media(min-width:821px) and (max-width:980px){
+  body:not(.guide-page) header.top>.nav{
+    position:relative!important;
+    width:min(1180px,94%)!important;
+    height:68px!important;
+    min-height:68px!important;
+    margin:0 auto!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:12px!important;
+  }
+  body:not(.guide-page) header.top .brand.av-brand-premium{
+    width:min(220px,31vw)!important;
+    max-width:220px!important;
+    height:50px!important;
+    margin:0!important;
+  }
+  body:not(.guide-page) header.top .nav-actions{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:8px!important;
+    margin-left:auto!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .nav-book{display:none!important}
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    display:inline-flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    width:122px!important;
+    min-width:122px!important;
+    max-width:122px!important;
+    height:40px!important;
+    min-height:40px!important;
+    padding:0 9px!important;
+    margin:0!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher-label{
+    font-size:11px!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) header.top .hamb{
+    display:inline-grid!important;
+    place-items:center!important;
+    width:40px!important;
+    min-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+  }
+  body:not(.guide-page) header.top>.av-langbar{
+    display:block!important;
+    width:100%!important;
+  }
+  body:not(.guide-page) header.top>.av-langbar>.wrap{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:36px!important;
+    padding:3px 8px 5px!important;
+  }
+  body:not(.guide-page) header.top .av-lang-switch{
+    width:auto!important;
+    max-width:none!important;
+    margin:0 auto!important;
+  }
+  body:not(.guide-page) header.top .menu,
+  body:not(.guide-page) header.top .menu.open{
+    top:calc(100% + 38px)!important;
+    left:0!important;
+    right:0!important;
+    width:100%!important;
+    max-width:100%!important;
+    max-height:calc(100dvh - 120px)!important;
+    overflow-y:auto!important;
+    z-index:140!important;
+  }
+}
+
+/* Desktop: one clean line. The two wrapper elements become transparent grid containers. */
+@media(min-width:981px){
+  body:not(.guide-page) header.top{
+    display:grid!important;
+    grid-template-columns:minmax(132px,190px) auto minmax(8px,1fr) auto auto!important;
+    grid-template-rows:68px!important;
+    align-items:center!important;
+    column-gap:5px!important;
+    row-gap:0!important;
+    min-height:68px!important;
+    height:68px!important;
+    padding-left:max(8px,calc((100vw - 1540px)/2))!important;
+    padding-right:max(8px,calc((100vw - 1540px)/2))!important;
+    overflow:visible!important;
+  }
+  body:not(.guide-page) header.top>.nav,
+  body:not(.guide-page) header.top>.av-langbar,
+  body:not(.guide-page) header.top>.av-langbar>.wrap{
+    display:contents!important;
+  }
+  body:not(.guide-page) header.top .brand.av-brand-premium{
+    grid-column:1!important;
+    grid-row:1!important;
+    justify-self:start!important;
+    align-self:center!important;
+    width:186px!important;
+    max-width:186px!important;
+    height:48px!important;
+    margin:0!important;
+  }
+  body:not(.guide-page) header.top .av-lang-switch{
+    grid-column:2!important;
+    grid-row:1!important;
+    justify-self:start!important;
+    align-self:center!important;
+    margin:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  body:not(.guide-page) header.top .menu{
+    grid-column:4!important;
+    grid-row:1!important;
+    justify-self:end!important;
+    align-self:center!important;
+    position:static!important;
+    inset:auto!important;
+    display:flex!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    margin:0!important;
+    gap:0!important;
+  }
+  body:not(.guide-page) header.top .menu>a,
+  body:not(.guide-page) header.top .av-menu-trigger{
+    min-height:36px!important;
+    padding:5px 3px!important;
+    font-size:clamp(9.2px,.72vw,10.6px)!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) header.top .nav-actions{
+    grid-column:5!important;
+    grid-row:1!important;
+    justify-self:end!important;
+    align-self:center!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    display:inline-flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    width:122px!important;
+    min-width:122px!important;
+    max-width:122px!important;
+    height:36px!important;
+    min-height:36px!important;
+    margin:0!important;
+    padding:0 9px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .nav-book,
+  body:not(.guide-page) header.top .nav-actions .hamb{display:none!important}
+}
+@media(min-width:981px) and (max-width:1180px){
+  body:not(.guide-page) header.top{
+    grid-template-columns:128px auto minmax(2px,1fr) auto auto!important;
+    column-gap:2px!important;
+    padding-left:5px!important;
+    padding-right:5px!important;
+  }
+  body:not(.guide-page) header.top .brand.av-brand-premium{
+    width:126px!important;
+    max-width:126px!important;
+    height:42px!important;
+  }
+  body:not(.guide-page) header.top .av-lang-switch>a{
+    flex-basis:27px!important;
+    width:27px!important;
+    min-width:27px!important;
+    max-width:27px!important;
+  }
+  body:not(.guide-page) header.top .menu>a,
+  body:not(.guide-page) header.top .av-menu-trigger{
+    padding-left:1px!important;
+    padding-right:1px!important;
+    font-size:8.9px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    width:92px!important;
+    min-width:92px!important;
+    max-width:92px!important;
+    padding:0 5px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher-label{font-size:9.5px!important}
+}
+
+/* Professional recognition: four equal summary cards. */
+body:not(.guide-page) .trust-profession-banner.trust-profession-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  align-items:stretch!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+body:not(.guide-page) .trust-profession-grid .trust-profession-card{
+  min-width:0!important;
+  min-height:122px!important;
+  padding:18px 14px!important;
+  border:2px solid rgba(57,255,20,.48)!important;
+  border-radius:18px!important;
+  background:linear-gradient(180deg,#10170f,#040604)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 0 13px rgba(57,255,20,.12),0 12px 28px rgba(0,0,0,.30)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+body:not(.guide-page) .trust-profession-grid .trust-profession-card span{
+  display:block!important;
+  color:#a8ff92!important;
+  font-size:12px!important;
+  line-height:1.25!important;
+  font-weight:850!important;
+  letter-spacing:.04em!important;
+}
+body:not(.guide-page) .trust-profession-grid .trust-profession-card b{
+  display:block!important;
+  margin-top:7px!important;
+  color:#fff!important;
+  font-size:18px!important;
+  line-height:1.15!important;
+  font-weight:950!important;
+}
+body:not(.guide-page) .trust-commerce-card .trust-commerce-points{display:none!important}
+
+/* International research links point to Romanian archives explicitly. */
+.intl-sync-language-note{
+  display:block;
+  margin-top:8px;
+  color:#9fa9a3;
+  font-size:11px;
+  line-height:1.3;
+  font-weight:700;
+}
+@media(max-width:820px){
+  body:not(.guide-page) .trust-profession-banner.trust-profession-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  body:not(.guide-page) .trust-profession-grid .trust-profession-card{
+    min-height:108px!important;
+    padding:14px 10px!important;
+  }
+}
+@media(max-width:430px){
+  body:not(.guide-page) .trust-profession-grid .trust-profession-card b{font-size:16px!important}
+}
