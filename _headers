@@ -1,10 +1,10 @@
 /
   Cache-Control: no-store, max-age=0
-  X-AstroVip-Release: 20260924-hero-end2
+  X-AstroVip-Release: 20260924-freeq-separate3
 
 /index.html
   Cache-Control: no-store, max-age=0
-  X-AstroVip-Release: 20260924-hero-end2
+  X-AstroVip-Release: 20260924-freeq-separate3
 
 /*
   X-Content-Type-Options: nosniff
