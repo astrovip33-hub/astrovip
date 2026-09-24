@@ -1,0 +1,41 @@
+name: Backup AstroVip for Google Drive
+
+on:
+  push:
+    branches:
+      - backup-google-drive-20260924
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout production main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Build production backup ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP="AstroVip_PRODUCTION_backup_2026-09-24_${GITHUB_SHA:0:8}.zip"
+          zip -rq "$ZIP" . \
+            -x ".git/*" \
+               ".github/workflows/backup-google-drive-20260924.yml"
+          test -s "$ZIP"
+          sha256sum "$ZIP" > "$ZIP.sha256"
+          echo "BACKUP_ZIP=$ZIP" >> "$GITHUB_ENV"
+
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: astrovip-production-backup-2026-09-24
+          path: |
+            ${{ env.BACKUP_ZIP }}
+            ${{ env.BACKUP_ZIP }}.sha256
+          if-no-files-found: error
+          retention-days: 30
