@@ -1,5 +1,6 @@
 /* AstroVip: one responsive visual system for all seven homepages. */
 #astrovip-redesign{--av-gold:#edcf88;--av-pearl:#f6f7f4;--av-muted:#b3b8b6;--av-neon:#60ff70;--av-line:#28382e;background:#060908!important;color:var(--av-pearl)!important;font-family:Arial,Helvetica,sans-serif;line-height:1.6;overflow-x:clip}
+#astrovip-redesign{width:100%!important;min-width:0!important;max-width:100%!important}
 #astrovip-redesign::before{display:none!important}
 #astrovip-redesign *{box-sizing:border-box}
 #astrovip-redesign a:focus-visible,#astrovip-redesign button:focus-visible,#astrovip-redesign summary:focus-visible{outline:2px solid var(--av-neon)!important;outline-offset:5px}
@@ -29,11 +30,11 @@
 #astrovip-redesign header.top .av-menu-group.is-open>.av-submenu{display:block!important}
 #astrovip-redesign header.top .av-submenu a,#astrovip-redesign header.top .av-submenu summary{display:block!important;min-height:44px!important;padding:10px 8px!important;font:500 15px/1.5 Arial,sans-serif!important;color:#e8efe9!important;white-space:normal!important}
 #astrovip-redesign main{background:transparent!important}
-#astrovip-redesign main>.av-orbit-hero{position:relative!important;overflow:visible!important;padding:44px 0 28px!important;background:radial-gradient(ellipse at 80% 30%,#14252450,transparent 55%),#060908!important;border:0!important}
+#astrovip-redesign main>.av-orbit-hero,#astrovip-redesign #top>.av-orbit-hero{position:relative!important;overflow:visible!important;padding:32px 0 24px!important;background:radial-gradient(ellipse at 80% 30%,#14252450,transparent 55%),#060908!important;border:0!important}
 #astrovip-redesign main>.av-orbit-hero::before,#astrovip-redesign main>.av-orbit-hero::after{display:none!important}
 .av-orbit-shell{width:min(1280px,calc(100% - 80px));margin:auto}
 .av-orbit-top{display:grid;grid-template-columns:1fr 1.22fr;align-items:center;gap:36px}
-.av-orbit-copy{min-width:0;padding:24px 0 30px;position:relative;z-index:1}
+.av-orbit-copy{min-width:0;padding:16px 0 20px;position:relative;z-index:1}
 .av-orbit-kicker{margin:0 0 24px!important;font:700 14px/1.5 Arial,sans-serif!important;letter-spacing:.16em!important;color:#f1fff0!important;-webkit-text-stroke:.25px #60ff70;text-transform:uppercase!important}
 #astrovip-redesign .av-orbit-title{margin:0!important;font:700 clamp(38px,4.45vw,64px)/1.08 Georgia,'Times New Roman',serif!important;letter-spacing:-.035em!important;color:var(--av-pearl)!important;max-width:640px!important;text-shadow:none!important;background:none!important;-webkit-text-fill-color:currentColor!important}
 .av-orbit-title span{display:block;color:var(--av-gold)}
@@ -117,13 +118,15 @@
  #astrovip-redesign header.top{grid-template-columns:1fr auto!important;grid-template-rows:68px 52px!important;gap:0!important;padding:0 20px!important;min-height:120px!important;backdrop-filter:none!important}
  #astrovip-redesign header.top .brand.av-brand-premium{grid-column:1!important;grid-row:1!important;width:180px!important;max-width:180px!important;height:52px!important}
  #astrovip-redesign header.top .nav-actions{grid-column:2!important;grid-row:1!important}
- #astrovip-redesign header.top .av-lang-switch{grid-column:1!important;grid-row:2!important;gap:5px!important;align-self:start!important;padding-top:4px!important}
+ #astrovip-redesign header.top .av-lang-switch{grid-column:1!important;grid-row:2!important;gap:4px!important;align-self:start!important;padding-top:4px!important}
+ #astrovip-redesign header.top .av-lang-switch>a{width:28px!important;min-width:28px!important;max-width:28px!important;flex-basis:28px!important;height:30px!important;min-height:30px!important;max-height:30px!important}
  #astrovip-redesign header.top .avchat-launcher{grid-column:2!important;grid-row:2!important;min-width:82px!important;max-width:100px!important;height:36px!important;min-height:36px!important;padding:0 10px!important;align-self:start!important;justify-self:end!important;font-size:14px!important}
- #astrovip-redesign header.top .avchat-launcher-label{font-size:14px!important}
+ #astrovip-redesign header.top .avchat-launcher-label{font-size:0!important}
+ #astrovip-redesign header.top .avchat-launcher-label::after{content:'Chat'!important;font:700 14px/1 Arial,sans-serif!important}
  #astrovip-redesign header.top .avchat-launcher-dot{display:none!important}
  #astrovip-redesign header.top .menu{right:16px!important;left:16px!important;width:auto!important;max-height:calc(100dvh - 140px)!important;padding:16px!important;margin-top:8px!important}
  #astrovip-redesign .wrap,#astrovip-redesign main>section>.wrap,.av-orbit-shell{width:calc(100% - 40px)!important}
- #astrovip-redesign main>.av-orbit-hero{padding:24px 0 22px!important}
+ #astrovip-redesign main>.av-orbit-hero,#astrovip-redesign #top>.av-orbit-hero{padding:24px 0 22px!important}
  .av-orbit-top{display:flex;flex-direction:column;gap:0;align-items:stretch}
  .av-orbit-art{order:0;border-radius:12px;margin-bottom:26px}
  .av-orbit-caption{padding:12px 16px;font-size:11px}
@@ -161,7 +164,7 @@
 @media(max-width:370px){
  #astrovip-redesign header.top{padding-inline:14px!important}
  #astrovip-redesign header.top .av-lang-switch{gap:3px!important}
- #astrovip-redesign header.top .av-lang-switch>a{width:27px!important;min-width:27px!important;max-width:27px!important;flex-basis:27px!important;height:28px!important;min-height:28px!important;max-height:28px!important}
+ #astrovip-redesign header.top .av-lang-switch>a{width:25px!important;min-width:25px!important;max-width:25px!important;flex-basis:25px!important;height:28px!important;min-height:28px!important;max-height:28px!important}
  #astrovip-redesign header.top .avchat-launcher{min-width:72px!important;padding-inline:7px!important}
  #astrovip-redesign .av-orbit-title{font-size:35px!important}
  #astrovip-redesign .av-orbit-primary,#astrovip-redesign .av-orbit-secondary{padding:13px 14px}
