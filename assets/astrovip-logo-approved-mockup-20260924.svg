@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 220" role="img" aria-labelledby="t d">
+<title id="t">AstroVip — Astrologie Premium</title>
+<desc id="d">Logo AstroVip inspirat din conceptul aprobat: emblemă cosmică aurie cu accente smarald și wordmark elegant.</desc>
+<defs>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff8cf"/>
+    <stop offset=".18" stop-color="#ffd96a"/>
+    <stop offset=".42" stop-color="#b97815"/>
+    <stop offset=".63" stop-color="#fff1a3"/>
+    <stop offset=".83" stop-color="#d79620"/>
+    <stop offset="1" stop-color="#fff2b1"/>
+  </linearGradient>
+  <linearGradient id="emerald" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#c9ffd8"/>
+    <stop offset=".28" stop-color="#58f68a"/>
+    <stop offset=".62" stop-color="#0da552"/>
+    <stop offset="1" stop-color="#7dffa5"/>
+  </linearGradient>
+  <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#fff4bd"/>
+    <stop offset=".34" stop-color="#efb447"/>
+    <stop offset=".64" stop-color="#fff1ae"/>
+    <stop offset=".84" stop-color="#d89a28"/>
+    <stop offset=".93" stop-color="#b8ffcb"/>
+    <stop offset="1" stop-color="#52e986"/>
+  </linearGradient>
+  <radialGradient id="core" cx="50%" cy="50%" r="62%">
+    <stop offset="0" stop-color="#102317"/>
+    <stop offset=".55" stop-color="#07120c"/>
+    <stop offset="1" stop-color="#010302"/>
+  </radialGradient>
+  <filter id="g" x="-90%" y="-90%" width="280%" height="280%">
+    <feGaussianBlur stdDeviation="3.2" result="b"/>
+    <feFlood flood-color="#ffc94e" flood-opacity=".45"/>
+    <feComposite in2="b" operator="in"/>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="e" x="-90%" y="-90%" width="280%" height="280%">
+    <feGaussianBlur stdDeviation="3" result="b"/>
+    <feFlood flood-color="#43ee7d" flood-opacity=".42"/>
+    <feComposite in2="b" operator="in"/>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<g transform="translate(18 8)">
+  <circle cx="98" cy="102" r="86" fill="url(#core)" stroke="url(#gold)" stroke-width="3" filter="url(#g)"/>
+  <circle cx="98" cy="102" r="72" fill="none" stroke="#ffe58a" stroke-opacity=".34" stroke-width="1.25"/>
+  <circle cx="98" cy="102" r="57" fill="none" stroke="#52ef82" stroke-opacity=".28" stroke-width="1.2"/>
+  <ellipse cx="98" cy="102" rx="92" ry="31" fill="none" stroke="url(#gold)" stroke-width="2.2" transform="rotate(-18 98 102)" opacity=".95"/>
+  <ellipse cx="98" cy="102" rx="78" ry="23" fill="none" stroke="url(#emerald)" stroke-width="1.8" transform="rotate(17 98 102)" opacity=".86" filter="url(#e)"/>
+  <path d="M98 36 L106 76 L146 102 L106 128 L98 168 L90 128 L50 102 L90 76Z" fill="url(#gold)" filter="url(#g)"/>
+  <path d="M98 58 L103 91 L136 102 L103 113 L98 146 L93 113 L60 102 L93 91Z" fill="#fff5be" opacity=".82"/>
+  <circle cx="98" cy="102" r="9" fill="#fff3a8" filter="url(#g)"/>
+  <circle cx="168" cy="67" r="8" fill="url(#gold)" filter="url(#g)"/>
+  <circle cx="35" cy="140" r="7" fill="url(#emerald)" filter="url(#e)"/>
+  <circle cx="154" cy="155" r="6" fill="url(#emerald)" filter="url(#e)"/>
+  <path d="M98 18 L102 31 L115 35 L102 39 L98 52 L94 39 L81 35 L94 31Z" fill="#fff1a1" filter="url(#g)"/>
+</g>
+
+<g transform="translate(228 38)">
+  <text x="0" y="92" font-family="Georgia,'Times New Roman',serif" font-size="96" font-weight="700" letter-spacing=".5"
+        fill="url(#word)" stroke="#8d5c0f" stroke-width=".45" filter="url(#g)">ASTROVIP</text>
+  <line x1="4" y1="115" x2="674" y2="115" stroke="url(#gold)" stroke-width="1.35" opacity=".65"/>
+  <line x1="532" y1="118" x2="674" y2="118" stroke="url(#emerald)" stroke-width="1.7" opacity=".88" filter="url(#e)"/>
+  <text x="8" y="154" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" letter-spacing="5.3" fill="#ebe2cd">ASTROLOGIE · DESTIN · ARMONIE</text>
+</g>
+</svg>
