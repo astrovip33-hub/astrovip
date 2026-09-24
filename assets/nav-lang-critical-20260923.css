@@ -8,3 +8,24 @@ body:not(.guide-page) .top{background:linear-gradient(180deg,rgba(10,10,10,.985)
     display:none!important;
   }
 }
+
+/* ASTROVIP MOBILE MENU BLACK GLOSS TEXT — 2026-09-24 */
+@media(max-width:820px){
+html body:not(.guide-page) header.top #menu.menu.open>a,
+html body:not(.guide-page) header.top #menu.menu.open>.av-menu-group>.av-menu-trigger,
+html body:not(.guide-page) header.top #menu.menu.open .av-submenu a,
+html body:not(.guide-page) header.top #menu.menu.open .av-astro-section>summary,
+html body:not(.guide-page) header.top #menu.menu.open .av-astro-mega-head strong,
+html body:not(.guide-page) header.top #menu.menu.open .av-astro-all{
+  color:#050505!important;
+  font-weight:950!important;
+  opacity:1!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.68),0 2px 3px rgba(0,0,0,.10)!important;
+  -webkit-text-stroke:.12px rgba(0,0,0,.72)!important;
+}
+html body:not(.guide-page) header.top #menu.menu.open>.av-menu-group>.av-menu-trigger::after,
+html body:not(.guide-page) header.top #menu.menu.open>a::after{
+  color:#030303!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.58)!important;
+}
+}
