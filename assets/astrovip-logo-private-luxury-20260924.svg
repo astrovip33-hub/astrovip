@@ -1,72 +1,73 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-labelledby="title desc">
 <title id="title">AstroVip — Astrologie Premium</title>
-<desc id="desc">Identitate AstroVip Private Luxury: monogramă AV, orbită aurie și accent smarald pe fundal transparent.</desc>
+<desc id="desc">Logo AstroVip Cosmic Luxury în auriu luminos și smarald, cu monogramă AV, orbită și stea.</desc>
 <defs>
-  <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#fff4bd"/>
-    <stop offset=".24" stop-color="#efd47d"/>
-    <stop offset=".52" stop-color="#c99d3f"/>
-    <stop offset=".76" stop-color="#f7df8a"/>
-    <stop offset="1" stop-color="#9d6d1f"/>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff6c9"/>
+    <stop offset=".16" stop-color="#ffd86a"/>
+    <stop offset=".38" stop-color="#b97914"/>
+    <stop offset=".55" stop-color="#fff0a7"/>
+    <stop offset=".76" stop-color="#d99a21"/>
+    <stop offset="1" stop-color="#fff3b8"/>
   </linearGradient>
-  <linearGradient id="gPearl" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#fffef8"/>
-    <stop offset=".42" stop-color="#eee9dc"/>
-    <stop offset="1" stop-color="#bdb6a8"/>
+  <linearGradient id="emerald" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#baffc8"/>
+    <stop offset=".28" stop-color="#41f27c"/>
+    <stop offset=".62" stop-color="#05a64a"/>
+    <stop offset="1" stop-color="#7fffa6"/>
   </linearGradient>
-  <linearGradient id="gEmerald" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#91ffaf"/>
-    <stop offset=".45" stop-color="#35e96d"/>
-    <stop offset="1" stop-color="#0aa747"/>
+  <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#fff6cf"/>
+    <stop offset=".2" stop-color="#f4bd48"/>
+    <stop offset=".48" stop-color="#fff7d4"/>
+    <stop offset=".72" stop-color="#e6aa32"/>
+    <stop offset=".88" stop-color="#b8ffca"/>
+    <stop offset="1" stop-color="#37da71"/>
   </linearGradient>
-  <radialGradient id="gCore" cx="50%" cy="46%" r="64%">
-    <stop offset="0" stop-color="#11120f"/>
-    <stop offset=".7" stop-color="#070807"/>
-    <stop offset="1" stop-color="#020302"/>
+  <radialGradient id="core" cx="50%" cy="48%" r="60%">
+    <stop offset="0" stop-color="#0b1c13"/>
+    <stop offset=".5" stop-color="#07100b"/>
+    <stop offset="1" stop-color="#010302"/>
   </radialGradient>
-  <filter id="softGlow" x="-70%" y="-70%" width="240%" height="240%">
-    <feGaussianBlur stdDeviation="2.6" result="b"/>
-    <feFlood flood-color="#eacb6c" flood-opacity=".34"/>
+  <filter id="goldGlow" x="-90%" y="-90%" width="280%" height="280%">
+    <feGaussianBlur stdDeviation="3.2" result="b"/>
+    <feFlood flood-color="#ffcf4c" flood-opacity=".56"/>
     <feComposite in2="b" operator="in"/>
     <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
-  <filter id="greenGlow" x="-90%" y="-90%" width="280%" height="280%">
-    <feGaussianBlur stdDeviation="2.2" result="b"/>
-    <feFlood flood-color="#48f37c" flood-opacity=".38"/>
+  <filter id="greenGlow" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="3" result="b"/>
+    <feFlood flood-color="#35ef75" flood-opacity=".5"/>
     <feComposite in2="b" operator="in"/>
     <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
 </defs>
 
-<!-- Signature emblem -->
-<g transform="translate(14 12)">
-  <circle cx="96" cy="98" r="81" fill="url(#gCore)" stroke="url(#gGold)" stroke-width="2.4"/>
-  <circle cx="96" cy="98" r="69" fill="none" stroke="#e6cf87" stroke-opacity=".23" stroke-width="1"/>
-  <ellipse cx="96" cy="98" rx="91" ry="31" fill="none" stroke="url(#gGold)" stroke-width="1.6" transform="rotate(-19 96 98)" opacity=".92"/>
-  <ellipse cx="96" cy="98" rx="78" ry="20" fill="none" stroke="url(#gEmerald)" stroke-width="1.35" transform="rotate(17 96 98)" opacity=".78" filter="url(#greenGlow)"/>
-  <circle cx="180" cy="72" r="4.4" fill="#f4da82" filter="url(#softGlow)"/>
-  <circle cx="31" cy="137" r="3.2" fill="#48ef79" filter="url(#greenGlow)"/>
-
-  <!-- AV monogram -->
-  <path d="M54 132 L91 52 L101 52 L139 132 L123 132 L112 108 L79 108 L68 132 Z
-           M85 94 L96 69 L106 94 Z" fill="url(#gGold)" fill-rule="evenodd" filter="url(#softGlow)"/>
-  <path d="M72 73 L96 127 L121 73 L137 73 L102 145 L91 145 L56 73 Z"
-        fill="none" stroke="url(#gPearl)" stroke-width="3.2" stroke-linejoin="round" opacity=".94"/>
-  <path d="M96 34 L100 46 L112 50 L100 54 L96 66 L92 54 L80 50 L92 46 Z"
-        fill="#fff5bf" filter="url(#softGlow)"/>
-  <circle cx="96" cy="98" r="2.8" fill="#48ef79" filter="url(#greenGlow)"/>
+<g transform="translate(8 7)">
+  <circle cx="100" cy="103" r="88" fill="url(#core)" stroke="url(#gold)" stroke-width="2.7" filter="url(#goldGlow)"/>
+  <circle cx="100" cy="103" r="74" fill="none" stroke="#f4d97c" stroke-opacity=".36" stroke-width="1.2"/>
+  <circle cx="100" cy="103" r="62" fill="none" stroke="#44ef7a" stroke-opacity=".3" stroke-width="1"/>
+  <ellipse cx="100" cy="103" rx="95" ry="33" fill="none" stroke="url(#gold)" stroke-width="2" transform="rotate(-18 100 103)" opacity=".96"/>
+  <ellipse cx="100" cy="103" rx="81" ry="23" fill="none" stroke="url(#emerald)" stroke-width="1.8" transform="rotate(19 100 103)" opacity=".9" filter="url(#greenGlow)"/>
+  <path d="M52 145 L92 51 L105 51 L146 145 L128 145 L117 118 L79 118 L68 145 Z
+           M86 102 L98 73 L110 102 Z" fill="url(#gold)" fill-rule="evenodd" filter="url(#goldGlow)"/>
+  <path d="M68 78 L99 147 L132 78 L151 78 L108 164 L94 164 L50 78 Z"
+        fill="none" stroke="url(#emerald)" stroke-width="4.1" stroke-linejoin="round" filter="url(#greenGlow)"/>
+  <path d="M100 25 L105 42 L122 47 L105 52 L100 69 L95 52 L78 47 L95 42 Z"
+        fill="#fff2a7" filter="url(#goldGlow)"/>
+  <circle cx="184" cy="76" r="5" fill="#ffd962" filter="url(#goldGlow)"/>
+  <circle cx="33" cy="144" r="4.3" fill="#48f17d" filter="url(#greenGlow)"/>
+  <circle cx="159" cy="156" r="3.7" fill="#48f17d" filter="url(#greenGlow)"/>
 </g>
 
-<!-- Wordmark -->
-<g transform="translate(225 38)">
-  <text x="0" y="88" font-family="Georgia, 'Times New Roman', serif" font-size="91" font-weight="700" letter-spacing="1.2">
-    <tspan fill="url(#gPearl)">ASTRO</tspan><tspan fill="url(#gGold)">VIP</tspan>
-  </text>
-  <line x1="3" y1="111" x2="630" y2="111" stroke="url(#gGold)" stroke-width="1.1" opacity=".52"/>
-  <line x1="3" y1="116" x2="178" y2="116" stroke="url(#gEmerald)" stroke-width="1.25" opacity=".74"/>
-  <text x="4" y="151" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700"
-        letter-spacing="4.8" fill="#d8d0bf">ASTROLOGIE PREMIUM</text>
-  <text x="421" y="151" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="700"
-        letter-spacing="3.3" fill="#8d897f">TIMING · RELOCARE</text>
+<g transform="translate(226 35)">
+  <text x="0" y="92" font-family="Georgia, 'Times New Roman', serif" font-size="96" font-weight="700" letter-spacing=".6"
+        fill="url(#word)" stroke="#8c6218" stroke-width=".45" filter="url(#goldGlow)">ASTROVIP</text>
+  <line x1="3" y1="116" x2="627" y2="116" stroke="url(#gold)" stroke-width="1.45" opacity=".75"/>
+  <line x1="472" y1="119" x2="627" y2="119" stroke="url(#emerald)" stroke-width="1.8" opacity=".92" filter="url(#greenGlow)"/>
+  <path d="M316 108 L320 116 L328 120 L320 124 L316 132 L312 124 L304 120 L312 116 Z"
+        fill="#fff0a1" filter="url(#goldGlow)"/>
+  <text x="6" y="154" font-family="Arial, Helvetica, sans-serif" font-size="15.5" font-weight="700"
+        letter-spacing="5.5" fill="#e9dfc5">ASTROLOGIE · DESTIN · ARMONIE</text>
 </g>
 </svg>
