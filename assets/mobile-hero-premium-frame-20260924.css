@@ -261,7 +261,8 @@
   body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-cards{
     width:calc(100% - 20px)!important;
     max-width:404px!important;
-    grid-auto-rows:minmax(74px,auto)!important;
+    grid-template-rows:minmax(74px,auto) minmax(64px,auto)!important;
+    grid-auto-rows:auto!important;
     margin-top:-6px!important;
     padding:7px!important;
     gap:7px!important;
@@ -273,6 +274,12 @@
     min-height:74px!important;
     padding:9px 7px 8px!important;
     border-radius:12px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(3),
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(4){
+    min-height:64px!important;
+    padding:7px 7px 6px!important;
   }
 
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
@@ -293,7 +300,8 @@
 
   body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-cards{
     width:calc(100% - 14px)!important;
-    grid-auto-rows:minmax(68px,auto)!important;
+    grid-template-rows:minmax(68px,auto) minmax(60px,auto)!important;
+    grid-auto-rows:auto!important;
     margin-top:-4px!important;
     padding:6px!important;
     gap:6px!important;
@@ -304,6 +312,12 @@
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(4){
     min-height:68px!important;
     padding:8px 5px 7px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(3),
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(4){
+    min-height:60px!important;
+    padding:6px 5px 5px!important;
   }
 
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
