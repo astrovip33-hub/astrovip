@@ -1,0 +1,807 @@
+/* AstroVip — Luxury Home Preview
+   Full-home visual system. Preview only. 2026-09-24
+   Direction: private consultancy / understated luxury / high trust.
+*/
+
+body:not(.guide-page){
+  --lux-bg:#050505;
+  --lux-bg-2:#090909;
+  --lux-panel:#0d0d0d;
+  --lux-panel-2:#11110f;
+  --lux-line:rgba(232,202,109,.22);
+  --lux-line-strong:rgba(239,211,124,.42);
+  --lux-gold:#e7c96d;
+  --lux-gold-soft:#f4dfa0;
+  --lux-pearl:#f7f3e9;
+  --lux-muted:#b9b4a8;
+  --lux-green:#55ff72;
+  --lux-radius:22px;
+  --lux-shadow:0 24px 70px rgba(0,0,0,.42);
+  background:
+    radial-gradient(circle at 50% -8%,rgba(232,202,109,.055),transparent 34%),
+    linear-gradient(180deg,#030303 0%,#070707 48%,#030303 100%)!important;
+  color:var(--lux-pearl)!important;
+}
+
+body:not(.guide-page) main{
+  background:transparent!important;
+}
+
+body:not(.guide-page) main > section,
+body:not(.guide-page) .av-credentials,
+body:not(.guide-page) .trust-refs{
+  position:relative!important;
+  overflow:hidden!important;
+  border:0!important;
+}
+
+body:not(.guide-page) main > section::before,
+body:not(.guide-page) .av-credentials::before,
+body:not(.guide-page) .trust-refs::before{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:0!important;
+  width:min(86%,1120px)!important;
+  height:1px!important;
+  transform:translateX(-50%)!important;
+  background:linear-gradient(90deg,transparent,rgba(232,202,109,.24),transparent)!important;
+  pointer-events:none!important;
+}
+
+body:not(.guide-page) main > section > .wrap,
+body:not(.guide-page) .av-credentials > .wrap,
+body:not(.guide-page) .trust-refs > .wrap{
+  width:min(1180px,calc(100% - 40px))!important;
+  max-width:1180px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+body:not(.guide-page) main > section:not(.hero){
+  padding-top:76px!important;
+  padding-bottom:76px!important;
+}
+
+body:not(.guide-page) main > section:nth-of-type(odd):not(.hero){
+  background:
+    radial-gradient(circle at 16% 8%,rgba(232,202,109,.035),transparent 26%),
+    #060606!important;
+}
+body:not(.guide-page) main > section:nth-of-type(even):not(.hero){
+  background:
+    radial-gradient(circle at 84% 18%,rgba(255,255,255,.018),transparent 26%),
+    #0a0a09!important;
+}
+
+body:not(.guide-page) .title,
+body:not(.guide-page) .avkh-title,
+body:not(.guide-page) .avx-title,
+body:not(.guide-page) .av-case-showcase-head{
+  max-width:800px!important;
+  margin:0 auto 34px!important;
+  text-align:center!important;
+}
+
+body:not(.guide-page) .kicker,
+body:not(.guide-page) .avkh-title .kicker,
+body:not(.guide-page) .avx-kicker,
+body:not(.guide-page) .av-case-showcase-kicker,
+body:not(.guide-page) .mini,
+body:not(.guide-page) .avkh-mini,
+body:not(.guide-page) .av-medical-home-mini,
+body:not(.guide-page) .av-case-showcase-eyebrow{
+  color:var(--lux-gold)!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  letter-spacing:.18em!important;
+  text-transform:uppercase!important;
+}
+
+body:not(.guide-page) .title h2,
+body:not(.guide-page) .avkh-title h2,
+body:not(.guide-page) .avx-title h2,
+body:not(.guide-page) .av-case-showcase-head h2,
+body:not(.guide-page) .contact h2,
+body:not(.guide-page) .av-credentials h2{
+  margin:10px 0 12px!important;
+  color:var(--lux-pearl)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:clamp(31px,4.2vw,54px)!important;
+  line-height:1.02!important;
+  font-weight:700!important;
+  letter-spacing:-.025em!important;
+  text-wrap:balance!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.02)!important;
+}
+
+body:not(.guide-page) .title > p,
+body:not(.guide-page) .avkh-title > p,
+body:not(.guide-page) .avx-title > p,
+body:not(.guide-page) .av-case-showcase-head > p,
+body:not(.guide-page) .section-copy,
+body:not(.guide-page) .card p,
+body:not(.guide-page) .box p{
+  color:var(--lux-muted)!important;
+  font-size:15px!important;
+  line-height:1.75!important;
+}
+
+body:not(.guide-page) .cta,
+body:not(.guide-page) .btn2,
+body:not(.guide-page) .avkh-primary,
+body:not(.guide-page) .freeq-home-cta a,
+body:not(.guide-page) .pay-actions a{
+  min-height:44px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding:11px 18px!important;
+  border-radius:999px!important;
+  font-weight:850!important;
+  letter-spacing:.025em!important;
+  text-decoration:none!important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,background .22s ease!important;
+}
+
+body:not(.guide-page) .cta,
+body:not(.guide-page) .freeq-home-cta a,
+body:not(.guide-page) .pay-actions .cta{
+  border:1px solid rgba(255,235,164,.72)!important;
+  background:linear-gradient(180deg,#f6e5a8 0%,#d8b957 45%,#b6902d 100%)!important;
+  color:#161006!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 28px rgba(196,151,45,.16)!important;
+}
+
+body:not(.guide-page) .btn2,
+body:not(.guide-page) .avkh-primary{
+  border:1px solid var(--lux-line-strong)!important;
+  background:rgba(255,255,255,.018)!important;
+  color:var(--lux-pearl)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025)!important;
+}
+
+body:not(.guide-page) .cta:hover,
+body:not(.guide-page) .btn2:hover,
+body:not(.guide-page) .avkh-primary:hover,
+body:not(.guide-page) .freeq-home-cta a:hover{
+  transform:translateY(-2px)!important;
+  border-color:rgba(85,255,114,.62)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.32),0 0 0 1px rgba(85,255,114,.08)!important;
+}
+
+/* Header — quieter, more authoritative */
+body:not(.guide-page) header.top{
+  background:rgba(4,4,4,.94)!important;
+  border-bottom:1px solid rgba(232,202,109,.16)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.28)!important;
+  backdrop-filter:blur(18px)!important;
+}
+body:not(.guide-page) header.top .menu > a,
+body:not(.guide-page) header.top .av-menu-trigger{
+  color:#e8e3d8!important;
+  font-weight:750!important;
+  letter-spacing:.015em!important;
+}
+body:not(.guide-page) header.top .menu > a:hover,
+body:not(.guide-page) header.top .av-menu-trigger:hover{
+  color:var(--lux-gold-soft)!important;
+}
+body:not(.guide-page) .nav-book{
+  min-height:38px!important;
+  padding:9px 15px!important;
+}
+body:not(.guide-page) .av-langbar{
+  background:#080808!important;
+  border-bottom:1px solid rgba(255,255,255,.045)!important;
+}
+body:not(.guide-page) .av-lang-switch a{
+  filter:saturate(.88) brightness(.96)!important;
+  opacity:.9!important;
+}
+body:not(.guide-page) .av-lang-switch a:hover,
+body:not(.guide-page) .av-lang-switch a.is-active{
+  opacity:1!important;
+  filter:saturate(1) brightness(1.08)!important;
+}
+
+/* Hero desktop — retain structure, elevate finish */
+@media(min-width:821px){
+  body:not(.guide-page) section.hero.av-hero-v2{
+    background:
+      radial-gradient(circle at 50% 100%,rgba(232,202,109,.07),transparent 32%),
+      #030303!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    text-shadow:0 14px 40px rgba(0,0,0,.46)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    color:#d9d3c6!important;
+    letter-spacing:.18em!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    max-width:1080px!important;
+    border:1px solid rgba(232,202,109,.18)!important;
+    border-radius:22px!important;
+    background:rgba(7,7,7,.82)!important;
+    padding:10px!important;
+    gap:10px!important;
+    box-shadow:0 26px 60px rgba(0,0,0,.34)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+    border:1px solid rgba(232,202,109,.26)!important;
+    background:linear-gradient(180deg,rgba(21,20,16,.92),rgba(8,8,7,.98))!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+    color:var(--lux-gold-soft)!important;
+  }
+}
+
+/* Mini-consultation + free tools — concierge entry */
+body:not(.guide-page) #intrebare-gratuita,
+body:not(.guide-page) #harta-mea-cta{
+  padding-top:42px!important;
+  padding-bottom:42px!important;
+}
+body:not(.guide-page) #intrebare-gratuita{
+  background:#070707!important;
+}
+body:not(.guide-page) #harta-mea-cta{
+  background:#090908!important;
+}
+body:not(.guide-page) .freeq-home-card,
+body:not(.guide-page) .natal-home-card{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:28px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:30px 34px!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:24px!important;
+  background:
+    radial-gradient(circle at 95% 0,rgba(232,202,109,.07),transparent 24%),
+    linear-gradient(180deg,#10100e,#090909)!important;
+  box-shadow:var(--lux-shadow)!important;
+}
+body:not(.guide-page) .freeq-home-card h2,
+body:not(.guide-page) .natal-home-card h2{
+  margin:8px 0 10px!important;
+  color:var(--lux-pearl)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:clamp(26px,3vw,38px)!important;
+  line-height:1.08!important;
+}
+body:not(.guide-page) .freeq-home-topics{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:8px!important;
+  margin-top:16px!important;
+}
+body:not(.guide-page) .freeq-home-topics span{
+  border:1px solid rgba(232,202,109,.22)!important;
+  background:rgba(255,255,255,.018)!important;
+  color:#d8d2c5!important;
+  border-radius:999px!important;
+  padding:7px 11px!important;
+  font-size:12px!important;
+}
+
+/* Knowledge libraries */
+body:not(.guide-page) #biblioteci-premium{
+  background:
+    radial-gradient(circle at 50% 0,rgba(232,202,109,.055),transparent 30%),
+    #050505!important;
+}
+body:not(.guide-page) .avkh-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:18px!important;
+}
+body:not(.guide-page) .avkh-card{
+  position:relative!important;
+  min-height:100%!important;
+  padding:30px!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:24px!important;
+  background:
+    radial-gradient(circle at 100% 0,rgba(232,202,109,.05),transparent 32%),
+    linear-gradient(180deg,#0e0e0c,#080808)!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.24)!important;
+}
+body:not(.guide-page) .avkh-card::after{
+  content:""!important;
+  position:absolute!important;
+  left:28px!important;
+  right:28px!important;
+  bottom:0!important;
+  height:1px!important;
+  background:linear-gradient(90deg,transparent,rgba(85,255,114,.26),transparent)!important;
+}
+body:not(.guide-page) .avkh-symbol{
+  color:var(--lux-gold)!important;
+  opacity:.84!important;
+  filter:none!important;
+}
+body:not(.guide-page) .avkh-card h3{
+  margin:8px 0 12px!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  color:var(--lux-pearl)!important;
+  font-size:30px!important;
+}
+body:not(.guide-page) .avkh-links{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:7px!important;
+  margin:18px 0!important;
+}
+body:not(.guide-page) .avkh-links a{
+  border:1px solid rgba(232,202,109,.16)!important;
+  background:rgba(255,255,255,.014)!important;
+  color:#cfc9bc!important;
+  border-radius:999px!important;
+  padding:7px 10px!important;
+  font-size:12px!important;
+}
+body:not(.guide-page) .av-medical-home{
+  margin-top:20px!important;
+  padding:24px 28px!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:22px!important;
+  background:linear-gradient(110deg,#0d0d0b,#080808)!important;
+  box-shadow:0 16px 40px rgba(0,0,0,.22)!important;
+}
+body:not(.guide-page) .av-medical-home-symbol{
+  color:var(--lux-gold)!important;
+}
+body:not(.guide-page) .avkh-footer{
+  margin-top:18px!important;
+}
+body:not(.guide-page) .avkh-footer a{
+  color:var(--lux-gold-soft)!important;
+}
+
+/* Shared editorial cards */
+body:not(.guide-page) #servicii .grid,
+body:not(.guide-page) #ghid-astrologie .grid,
+body:not(.guide-page) #intrebari-frecvente .grid,
+body:not(.guide-page) #blog-recent .grid,
+body:not(.guide-page) #articole .grid{
+  gap:18px!important;
+}
+body:not(.guide-page) #servicii .card,
+body:not(.guide-page) #ghid-astrologie .card,
+body:not(.guide-page) #intrebari-frecvente .card,
+body:not(.guide-page) #blog-recent .card,
+body:not(.guide-page) #articole .card{
+  overflow:hidden!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,#0f0f0d,#080808)!important;
+  box-shadow:0 18px 44px rgba(0,0,0,.22)!important;
+  transition:transform .22s ease,border-color .22s ease!important;
+}
+body:not(.guide-page) #servicii .card:hover,
+body:not(.guide-page) #ghid-astrologie .card:hover,
+body:not(.guide-page) #blog-recent .card:hover,
+body:not(.guide-page) #articole .card:hover{
+  transform:translateY(-4px)!important;
+  border-color:rgba(232,202,109,.38)!important;
+}
+body:not(.guide-page) #servicii .card img{
+  width:100%!important;
+  height:230px!important;
+  object-fit:cover!important;
+  filter:saturate(.82) contrast(1.04) brightness(.9)!important;
+}
+body:not(.guide-page) .card .pad{
+  padding:24px!important;
+}
+body:not(.guide-page) .card h3{
+  margin:8px 0 10px!important;
+  color:var(--lux-pearl)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:23px!important;
+  line-height:1.12!important;
+}
+
+/* Opportunity section */
+body:not(.guide-page) #oportunitati-astrovip{
+  background:
+    radial-gradient(circle at 50% 0,rgba(232,202,109,.06),transparent 30%),
+    #090908!important;
+}
+body:not(.guide-page) .avx-card{
+  overflow:hidden!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:24px!important;
+  background:linear-gradient(180deg,#10100e,#080808)!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.24)!important;
+}
+body:not(.guide-page) .avx-card h3{
+  color:var(--lux-pearl)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+}
+body:not(.guide-page) .avx-points > *{
+  border-color:rgba(232,202,109,.14)!important;
+}
+
+/* Method */
+body:not(.guide-page) #metoda .steps{
+  gap:14px!important;
+}
+body:not(.guide-page) #metoda .step{
+  position:relative!important;
+  padding:24px 22px!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:20px!important;
+  background:linear-gradient(180deg,#10100f,#080808)!important;
+  box-shadow:0 14px 36px rgba(0,0,0,.2)!important;
+}
+body:not(.guide-page) #metoda .step::before{
+  border-color:var(--lux-gold)!important;
+  color:var(--lux-gold-soft)!important;
+}
+
+/* Case studies — editorial, less boxed */
+body:not(.guide-page) #studii-de-caz-home{
+  background:#050505!important;
+}
+body:not(.guide-page) .av-case-showcase-frame{
+  border:1px solid var(--lux-line)!important;
+  border-radius:28px!important;
+  background:
+    radial-gradient(circle at 50% 0,rgba(232,202,109,.05),transparent 28%),
+    #090909!important;
+  padding:34px!important;
+  box-shadow:var(--lux-shadow)!important;
+}
+body:not(.guide-page) .av-case-showcase-grid{
+  gap:16px!important;
+}
+body:not(.guide-page) .av-case-showcase-card{
+  overflow:hidden!important;
+  border:1px solid rgba(232,202,109,.17)!important;
+  border-radius:20px!important;
+  background:#0d0d0c!important;
+  box-shadow:none!important;
+}
+body:not(.guide-page) .av-case-showcase-card-featured{
+  border-color:rgba(232,202,109,.34)!important;
+  background:linear-gradient(180deg,#12110e,#090909)!important;
+}
+body:not(.guide-page) .av-case-showcase-card h3{
+  color:var(--lux-pearl)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+}
+body:not(.guide-page) .av-case-showcase-meta{
+  color:#a8a296!important;
+}
+
+/* Relocation */
+body:not(.guide-page) #relocare .split,
+body:not(.guide-page) #astrologie-geografica .split{
+  gap:22px!important;
+}
+body:not(.guide-page) #relocare .split > *,
+body:not(.guide-page) #astrologie-geografica .split > *{
+  padding:30px!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,#0f0f0d,#080808)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.2)!important;
+}
+body:not(.guide-page) .section-heading{
+  color:var(--lux-pearl)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:28px!important;
+}
+body:not(.guide-page) .list > div{
+  position:relative!important;
+  padding:11px 0 11px 24px!important;
+  color:#d1cbc0!important;
+  border-bottom:1px solid rgba(255,255,255,.05)!important;
+}
+body:not(.guide-page) .list > div::before{
+  content:"·"!important;
+  position:absolute!important;
+  left:6px!important;
+  top:10px!important;
+  color:var(--lux-gold)!important;
+  font-size:22px!important;
+}
+
+/* Pricing — private consultation feel */
+body:not(.guide-page) #tarife{
+  background:
+    radial-gradient(circle at 50% 18%,rgba(232,202,109,.08),transparent 32%),
+    #050505!important;
+}
+body:not(.guide-page) .price-grid{
+  max-width:880px!important;
+  margin:0 auto!important;
+  gap:18px!important;
+}
+body:not(.guide-page) .price-card{
+  padding:34px!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:26px!important;
+  background:linear-gradient(180deg,#11110f,#080808)!important;
+  box-shadow:0 22px 56px rgba(0,0,0,.28)!important;
+}
+body:not(.guide-page) .price-card.featured{
+  border-color:rgba(232,202,109,.46)!important;
+  box-shadow:0 24px 66px rgba(0,0,0,.34),0 0 0 1px rgba(232,202,109,.05)!important;
+}
+body:not(.guide-page) .price{
+  color:var(--lux-gold-soft)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+}
+body:not(.guide-page) .badge{
+  background:rgba(232,202,109,.1)!important;
+  border:1px solid rgba(232,202,109,.22)!important;
+  color:var(--lux-gold-soft)!important;
+}
+
+/* Why / identity */
+body:not(.guide-page) section.why .split{
+  gap:34px!important;
+  align-items:center!important;
+}
+body:not(.guide-page) section.why .portrait-wrap{
+  overflow:hidden!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:26px!important;
+  box-shadow:var(--lux-shadow)!important;
+}
+body:not(.guide-page) section.why .portrait-wrap img{
+  filter:saturate(.82) contrast(1.03)!important;
+}
+
+/* SEO guide sections: make them editorial, not SEO-looking */
+body:not(.guide-page) #ghiduri-seo .seo-hub-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+}
+body:not(.guide-page) #ghiduri-seo .seo-hub-card{
+  padding:22px!important;
+  border:1px solid rgba(232,202,109,.15)!important;
+  border-radius:18px!important;
+  background:#0c0c0b!important;
+}
+body:not(.guide-page) #ghiduri-seo .seo-hub-card h3{
+  color:var(--lux-pearl)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+}
+body:not(.guide-page) #ghiduri-seo .seo-hub-card a{
+  color:var(--lux-gold-soft)!important;
+}
+
+/* FAQ */
+body:not(.guide-page) #intrebari-frecvente .card{
+  background:#0c0c0b!important;
+}
+body:not(.guide-page) #intrebari-frecvente .card h3{
+  font-size:20px!important;
+}
+
+/* Forum */
+body:not(.guide-page) #comunitate .forum-entry{
+  max-width:880px!important;
+  margin:0 auto!important;
+  padding:32px!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:24px!important;
+  background:linear-gradient(180deg,#10100f,#080808)!important;
+  text-align:center!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.22)!important;
+}
+
+/* Booking + contact */
+body:not(.guide-page) #programari .booking-wrap,
+body:not(.guide-page) #contact .contact-grid{
+  gap:20px!important;
+}
+body:not(.guide-page) #programari .box,
+body:not(.guide-page) #contact .box{
+  padding:30px!important;
+  border:1px solid var(--lux-line)!important;
+  border-radius:24px!important;
+  background:linear-gradient(180deg,#10100f,#080808)!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.24)!important;
+}
+body:not(.guide-page) #programari input,
+body:not(.guide-page) #programari select,
+body:not(.guide-page) #programari textarea,
+body:not(.guide-page) #contact input,
+body:not(.guide-page) #contact select,
+body:not(.guide-page) #contact textarea{
+  min-height:48px!important;
+  border:1px solid rgba(232,202,109,.18)!important;
+  border-radius:13px!important;
+  background:#070707!important;
+  color:var(--lux-pearl)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.02)!important;
+}
+body:not(.guide-page) #programari input:focus,
+body:not(.guide-page) #programari select:focus,
+body:not(.guide-page) #programari textarea:focus,
+body:not(.guide-page) #contact input:focus,
+body:not(.guide-page) #contact select:focus,
+body:not(.guide-page) #contact textarea:focus{
+  border-color:rgba(232,202,109,.55)!important;
+  outline:none!important;
+  box-shadow:0 0 0 3px rgba(232,202,109,.06)!important;
+}
+
+/* Credentials */
+body:not(.guide-page) .av-credentials{
+  padding:82px 0!important;
+  background:
+    radial-gradient(circle at 50% 0,rgba(232,202,109,.065),transparent 30%),
+    #050505!important;
+}
+body:not(.guide-page) .av-credentials-shell{
+  gap:18px!important;
+}
+body:not(.guide-page) .av-credentials-card{
+  border:1px solid var(--lux-line)!important;
+  border-radius:24px!important;
+  background:linear-gradient(180deg,#10100e,#080808)!important;
+  box-shadow:0 20px 50px rgba(0,0,0,.25)!important;
+  overflow:hidden!important;
+}
+body:not(.guide-page) .av-certificate-frame,
+body:not(.guide-page) .av-identity-figure,
+body:not(.guide-page) .av-occupation-figure{
+  border-color:rgba(232,202,109,.22)!important;
+  background:#080808!important;
+}
+body:not(.guide-page) .av-certificate-note{
+  color:var(--lux-gold-soft)!important;
+}
+
+/* Trust — compact institutional strip */
+body:not(.guide-page) .trust-refs{
+  padding:46px 0 62px!important;
+  background:#080808!important;
+}
+body:not(.guide-page) .trust-minibox{
+  padding:20px!important;
+  border:1px solid rgba(232,202,109,.16)!important;
+  border-radius:22px!important;
+  background:#0b0b0a!important;
+}
+body:not(.guide-page) .trust-profession-grid{
+  gap:10px!important;
+}
+body:not(.guide-page) .trust-profession-card{
+  min-height:92px!important;
+  border:1px solid rgba(232,202,109,.16)!important;
+  border-radius:16px!important;
+  background:linear-gradient(180deg,#10100e,#090909)!important;
+  box-shadow:none!important;
+}
+body:not(.guide-page) .trust-profession-card span{
+  color:#aaa397!important;
+  letter-spacing:.11em!important;
+}
+body:not(.guide-page) .trust-profession-card b{
+  color:var(--lux-pearl)!important;
+}
+body:not(.guide-page) .trust-icons-only{
+  margin-top:14px!important;
+  padding-top:14px!important;
+  border-top:1px solid rgba(255,255,255,.05)!important;
+}
+body:not(.guide-page) .trust-commerce-card{
+  border:1px solid rgba(232,202,109,.14)!important;
+  background:#090909!important;
+}
+
+/* Footer */
+body:not(.guide-page) footer.foot.av-footer-premium{
+  background:#030303!important;
+  border-top:1px solid rgba(232,202,109,.18)!important;
+}
+body:not(.guide-page) .av-footer-premium-single{
+  border-color:rgba(232,202,109,.14)!important;
+  background:#070707!important;
+  box-shadow:none!important;
+}
+
+/* Mobile + tablet */
+@media(max-width:820px){
+  body:not(.guide-page) main > section:not(.hero){
+    padding-top:52px!important;
+    padding-bottom:52px!important;
+  }
+  body:not(.guide-page) main > section > .wrap,
+  body:not(.guide-page) .av-credentials > .wrap,
+  body:not(.guide-page) .trust-refs > .wrap{
+    width:calc(100% - 24px)!important;
+  }
+  body:not(.guide-page) .title,
+  body:not(.guide-page) .avkh-title,
+  body:not(.guide-page) .avx-title,
+  body:not(.guide-page) .av-case-showcase-head{
+    margin-bottom:24px!important;
+  }
+  body:not(.guide-page) .title h2,
+  body:not(.guide-page) .avkh-title h2,
+  body:not(.guide-page) .avx-title h2,
+  body:not(.guide-page) .av-case-showcase-head h2,
+  body:not(.guide-page) .contact h2,
+  body:not(.guide-page) .av-credentials h2{
+    font-size:clamp(28px,8vw,38px)!important;
+  }
+  body:not(.guide-page) .freeq-home-card,
+  body:not(.guide-page) .natal-home-card{
+    grid-template-columns:1fr!important;
+    gap:20px!important;
+    padding:24px!important;
+  }
+  body:not(.guide-page) .avkh-grid{
+    grid-template-columns:1fr!important;
+  }
+  body:not(.guide-page) .avkh-card{
+    padding:24px!important;
+  }
+  body:not(.guide-page) #ghiduri-seo .seo-hub-grid{
+    grid-template-columns:1fr!important;
+  }
+  body:not(.guide-page) .av-case-showcase-frame{
+    padding:20px!important;
+    border-radius:22px!important;
+  }
+  body:not(.guide-page) #relocare .split > *,
+  body:not(.guide-page) #astrologie-geografica .split > *,
+  body:not(.guide-page) #programari .box,
+  body:not(.guide-page) #contact .box{
+    padding:22px!important;
+  }
+  body:not(.guide-page) .av-credentials{
+    padding:58px 0!important;
+  }
+  body:not(.guide-page) .trust-profession-card{
+    min-height:78px!important;
+  }
+}
+
+@media(max-width:430px){
+  body:not(.guide-page) main > section:not(.hero){
+    padding-top:44px!important;
+    padding-bottom:44px!important;
+  }
+  body:not(.guide-page) #intrebare-gratuita,
+  body:not(.guide-page) #harta-mea-cta{
+    padding-top:26px!important;
+    padding-bottom:26px!important;
+  }
+  body:not(.guide-page) .freeq-home-card,
+  body:not(.guide-page) .natal-home-card{
+    padding:20px!important;
+    border-radius:20px!important;
+  }
+  body:not(.guide-page) .avkh-card,
+  body:not(.guide-page) #relocare .split > *,
+  body:not(.guide-page) #astrologie-geografica .split > *,
+  body:not(.guide-page) .price-card{
+    border-radius:20px!important;
+  }
+  body:not(.guide-page) #servicii .card img{
+    height:190px!important;
+  }
+  body:not(.guide-page) .card .pad{
+    padding:20px!important;
+  }
+  body:not(.guide-page) .trust-minibox{
+    padding:12px!important;
+  }
+}
