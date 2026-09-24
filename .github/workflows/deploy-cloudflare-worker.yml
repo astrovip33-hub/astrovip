@@ -95,10 +95,15 @@ jobs:
 
           missing = []
           for path in Path(".").rglob("index.html"):
+              rel = path.as_posix()
+              # The legacy 10,000-page Atlas is intentionally excluded from sitemap
+              # submission while mass-indexing remains paused. It can stay accessible
+              # without blocking ordinary editorial deployments.
+              if rel.startswith("atlas/"):
+                  continue
               text = path.read_text(encoding="utf-8", errors="ignore")
               if "noindex" in text.lower():
                   continue
-              rel = path.as_posix()
               url = base if rel == "index.html" else base + rel[:-10]
               if url not in sitemap_urls:
                   missing.append(url)
