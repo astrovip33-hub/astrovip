@@ -169,13 +169,21 @@ jobs:
           echo "::add-mask::$TOKEN"
           echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
 
+          if [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            VERIFY_URL="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify"
+            VERIFY_KIND="account"
+          else
+            VERIFY_URL="https://api.cloudflare.com/client/v4/user/tokens/verify"
+            VERIFY_KIND="user"
+          fi
+
           HTTP=$(curl -sS -o /tmp/cf-verify.json -w '%{http_code}' \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
-            "https://api.cloudflare.com/client/v4/user/tokens/verify")
+            "$VERIFY_URL")
 
           if [ "$HTTP" != "200" ]; then
-            echo "::error::Cloudflare rejected the token (HTTP $HTTP). The saved token is invalid, revoked, truncated, or not the newly generated raw token."
+            echo "::error::Cloudflare rejected the $VERIFY_KIND API token (HTTP $HTTP). Check that the saved token and account ID belong to the same Cloudflare account."
             exit 4
           fi
 
@@ -183,11 +191,11 @@ jobs:
           STATUS=$(python3 -c 'import json; d=json.load(open("/tmp/cf-verify.json")); r=d.get("result") or {}; print(r.get("status",""))')
 
           if [ "$SUCCESS" != "true" ] || [ "$STATUS" != "active" ]; then
-            echo "::error::Cloudflare API token is not active."
+            echo "::error::Cloudflare $VERIFY_KIND API token is not active."
             exit 5
           fi
 
-          echo "Cloudflare API token verified and active."
+          echo "Cloudflare $VERIFY_KIND API token verified and active."
 
       - name: Resolve Cloudflare account ID
         shell: bash
