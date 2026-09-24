@@ -262,7 +262,7 @@
     width:calc(100% - 20px)!important;
     max-width:404px!important;
     grid-auto-rows:minmax(74px,auto)!important;
-    margin-top:2px!important;
+    margin-top:-6px!important;
     padding:7px!important;
     gap:7px!important;
     border-radius:18px!important;
@@ -294,7 +294,7 @@
   body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-cards{
     width:calc(100% - 14px)!important;
     grid-auto-rows:minmax(68px,auto)!important;
-    margin-top:2px!important;
+    margin-top:-4px!important;
     padding:6px!important;
     gap:6px!important;
     border-radius:16px!important;
