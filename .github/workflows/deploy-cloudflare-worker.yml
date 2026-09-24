@@ -117,6 +117,32 @@ jobs:
           print(f"Sitemap coverage OK: {len(sitemap_urls)} sitemap URLs; no indexable index.html pages missing.")
           PY
 
+      - name: Validate release header sync
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          html = Path("index.html").read_text(encoding="utf-8", errors="ignore")
+          match = re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
+          if not match:
+              raise SystemExit("Missing astrovip-release meta in index.html.")
+
+          expected = match.group(1)
+          headers = Path("_headers").read_text(encoding="utf-8", errors="ignore")
+          releases = re.findall(r'^\s*X-AstroVip-Release:\s*(\S+)\s*$', headers, re.I | re.M)
+
+          if not releases:
+              raise SystemExit("Missing X-AstroVip-Release in _headers.")
+          if any(value != expected for value in releases):
+              raise SystemExit(
+                  f"Release mismatch: index.html={expected}; _headers={releases}"
+              )
+
+          print(f"Release header sync OK: {expected}")
+          PY
+
       - name: Normalize and validate Cloudflare token
         shell: bash
         run: |
