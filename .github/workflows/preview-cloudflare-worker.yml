@@ -31,14 +31,29 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Preview-only headers; the production source remains indexable.
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('_headers')
+          text = p.read_text()
+          text = text.replace('/*\n', '/*\n  X-Robots-Tag: noindex, nofollow\n', 1)
+          p.write_text(text)
+          PY
           npx --yes wrangler@latest deploy --config wrangler.preview.jsonc
 
       - name: Verify preview
         shell: bash
         run: |
           set -euo pipefail
-          URL="https://astrovip-preview.astrovip33.workers.dev/"
-          STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
-          test "$STATUS" = "200"
-          grep -q 'ASTROLOGIE' /tmp/preview.html
+          URL="https://astrovip-design-20260924.astrovip33.workers.dev/"
+          VERIFIED=0
+          for ATTEMPT in {1..12}; do
+            STATUS=$(curl -sS -D /tmp/preview-headers -o /tmp/preview.html -w '%{http_code}' "$URL")
+            if [ "$STATUS" = "200" ] && grep -q 'cosmic-luxury-20260924' /tmp/preview.html && grep -qi 'X-Robots-Tag: noindex' /tmp/preview-headers; then
+              VERIFIED=1
+              break
+            fi
+            sleep 3
+          done
+          test "$VERIFIED" = "1"
           echo "Preview live: $URL"
