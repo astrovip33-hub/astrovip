@@ -117,6 +117,405 @@ jobs:
           print(f"Sitemap coverage OK: {len(sitemap_urls)} sitemap URLs; no indexable index.html pages missing.")
           PY
 
+      - name: Validate release header sync
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          html = Path("index.html").read_text(encoding="utf-8", errors="ignore")
+          match = re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
+          if not match:
+              raise SystemExit("Missing astrovip-release meta in index.html.")
+
+          expected = match.group(1)
+          headers = Path("_headers").read_text(encoding="utf-8", errors="ignore")
+          releases = re.findall(r'^\s*X-AstroVip-Release:\s*(\S+)\s*        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::Missing GitHub secret CLOUDFLARE_API_TOKEN."
+            exit 2
+          fi
+
+          TOKEN=$(printf '%s' "$CLOUDFLARE_API_TOKEN" | tr -d '\r\n')
+          TOKEN=$(printf '%s' "$TOKEN" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')
+          TOKEN="${TOKEN#Bearer }"
+          TOKEN="${TOKEN#bearer }"
+          TOKEN="${TOKEN#\"}"
+          TOKEN="${TOKEN%\"}"
+          TOKEN="${TOKEN//\\_/_}"
+
+          if printf '%s' "$TOKEN" | grep -q '[[:space:]]'; then
+            echo "::error::Cloudflare token still contains internal whitespace; paste only the raw token."
+            exit 3
+          fi
+
+          echo "::add-mask::$TOKEN"
+          echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+          HTTP=$(curl -sS -o /tmp/cf-verify.json -w '%{http_code}' \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/user/tokens/verify")
+
+          if [ "$HTTP" != "200" ]; then
+            echo "::error::Cloudflare rejected the token (HTTP $HTTP). The saved token is invalid, revoked, truncated, or not the newly generated raw token."
+            exit 4
+          fi
+
+          SUCCESS=$(python3 -c 'import json; d=json.load(open("/tmp/cf-verify.json")); print(str(d.get("success",False)).lower())')
+          STATUS=$(python3 -c 'import json; d=json.load(open("/tmp/cf-verify.json")); r=d.get("result") or {}; print(r.get("status",""))')
+
+          if [ "$SUCCESS" != "true" ] || [ "$STATUS" != "active" ]; then
+            echo "::error::Cloudflare API token is not active."
+            exit 5
+          fi
+
+          echo "Cloudflare API token verified and active."
+
+      - name: Resolve Cloudflare account ID
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "Cloudflare account ID is already configured."
+            exit 0
+          fi
+
+          RESPONSE=$(curl -fsS             -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"             -H "Content-Type: application/json"             "https://api.cloudflare.com/client/v4/accounts")
+
+          ACCOUNT_ID=$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if len(r)==1 else "")')
+
+          if [ -z "$ACCOUNT_ID" ]; then
+            echo "::error::Could not auto-resolve one Cloudflare account. Add GitHub secret CLOUDFLARE_ACCOUNT_ID."
+            exit 5
+          fi
+
+          echo "::add-mask::$ACCOUNT_ID"
+          echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
+
+      - name: Remove legacy www route conflict
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ZONES=$(curl -fsS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones?name=astrovip.ro&status=active")
+
+          ZONE_ID=$(printf '%s' "$ZONES" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+          if [ -z "$ZONE_ID" ]; then
+            echo "::error::Could not resolve Cloudflare zone ID for astrovip.ro."
+            exit 6
+          fi
+
+          ROUTES=$(curl -fsS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/workers/routes")
+
+          ROUTE_IDS=$(printf '%s' "$ROUTES" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("\n".join(str(x.get("id","")) for x in (d.get("result") or []) if x.get("pattern")=="www.astrovip.ro/*" and x.get("script")=="astrovip-www-redirect" and x.get("id")))')
+
+          if [ -z "$ROUTE_IDS" ]; then
+            echo "No legacy www route conflict found."
+          else
+            while IFS= read -r ROUTE_ID; do
+              [ -n "$ROUTE_ID" ] || continue
+              RESPONSE=$(curl -fsS -X DELETE \
+                -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+                -H "Content-Type: application/json" \
+                "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/workers/routes/$ROUTE_ID")
+              SUCCESS=$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; print(str(json.load(sys.stdin).get("success",False)).lower())')
+              if [ "$SUCCESS" != "true" ]; then
+                echo "::error::Failed to remove legacy www Worker route $ROUTE_ID."
+                exit 7
+              fi
+              echo "Removed legacy www route $ROUTE_ID from astrovip-www-redirect."
+            done <<< "$ROUTE_IDS"
+          fi
+
+      - name: Deploy AstroVip directly to Cloudflare
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy
+
+      - name: Verify live AstroVip
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Checking footer de-duplication on live homepage"
+          LIVE_HTML=$(mktemp)
+          LIVE_HDR=$(mktemp)
+          EXPECTED_RELEASE=$(python3 - <<'PY'
+          import re
+          html=open("index.html",encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
+          print(m.group(1) if m else "")
+          PY
+          )
+          if [ -z "$EXPECTED_RELEASE" ]; then
+            echo "::error::Could not resolve astrovip-release from index.html."
+            exit 26
+          fi
+          echo "Expected release: $EXPECTED_RELEASE"
+          LIVE_RELEASE=""
+          RELEASE_HEADER=""
+          for ATTEMPT in $(seq 1 12); do
+            : > "$LIVE_HDR"
+            : > "$LIVE_HTML"
+            curl -sS -D "$LIVE_HDR" -o "$LIVE_HTML" --retry 3 --retry-delay 2 "https://astrovip.ro/?release=$EXPECTED_RELEASE&attempt=$ATTEMPT"
+            LIVE_RELEASE=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
+          print(m.group(1) if m else "")
+          PY
+            )
+            RELEASE_HEADER=$(awk 'BEGIN{IGNORECASE=1} /^x-astrovip-release:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$LIVE_HDR")
+            echo "Propagation check $ATTEMPT/12: html=$LIVE_RELEASE header=$RELEASE_HEADER"
+            if [ "$LIVE_RELEASE" = "$EXPECTED_RELEASE" ] && [ "$RELEASE_HEADER" = "$EXPECTED_RELEASE" ]; then
+              break
+            fi
+            sleep 5
+          done
+
+          IDENTITY_COUNT=$( { grep -o 'av-identity-image-card' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
+          LEGACY_COUNT=$( { grep -E -o 'av-credentials-kicker">Date profesionale|<h2>Cristian Cătălin Smaranda</h2>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
+
+          echo "Identity cards: $IDENTITY_COUNT"
+          echo "Legacy professional cards: $LEGACY_COUNT"
+          echo "Release header: $RELEASE_HEADER"
+          echo "Live HTML release: $LIVE_RELEASE"
+
+          if [ "$RELEASE_HEADER" != "$EXPECTED_RELEASE" ]; then
+            echo "::error::Live X-AstroVip-Release header '$RELEASE_HEADER' does not match expected '$EXPECTED_RELEASE'."
+            exit 47
+          fi
+
+          if [ "$IDENTITY_COUNT" != "1" ]; then
+            echo "::error::Live homepage does not contain exactly one premium professional identity card."
+            exit 24
+          fi
+
+          if [ "$LEGACY_COUNT" != "0" ]; then
+            echo "::error::Legacy professional footer card is still present in live HTML."
+            exit 25
+          fi
+
+          if [ "$LIVE_RELEASE" != "$EXPECTED_RELEASE" ]; then
+            echo "::error::Live homepage HTML release '$LIVE_RELEASE' does not match expected '$EXPECTED_RELEASE'."
+            exit 26
+          fi
+
+          HERO_CARD_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<div class="av-hero-v2-cards"[^>]*>(.*?)</div>\s*<div class="av-hero-v2-bottom"', html, re.S|re.I)
+          block=m.group(1) if m else ""
+          print(len(re.findall(r'<article class="av-hero-v2-card"', block, re.I)))
+          PY
+          )
+          HERO_RELOCATION_COUNT=$( { grep -o '<h3>RELOCARE</h3>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
+          echo "Hero cards live: $HERO_CARD_COUNT"
+          echo "Relocare cards live: $HERO_RELOCATION_COUNT"
+          if [ "$HERO_CARD_COUNT" != "4" ] || [ "$HERO_RELOCATION_COUNT" != "1" ]; then
+            echo "::error::Live homepage does not expose exactly four Hero cards including RELOCARE."
+            exit 32
+          fi
+
+          echo "Checking medical astrology page"
+          MEDICAL_HTML=$(mktemp)
+          MEDICAL_STATUS=$(curl -sS -o "$MEDICAL_HTML" -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/astrologie-medicala/?release=$EXPECTED_RELEASE")
+          if [ "$MEDICAL_STATUS" != "200" ]; then
+            echo "::error::https://astrovip.ro/astrologie-medicala/ returned HTTP $MEDICAL_STATUS instead of 200."
+            exit 33
+          fi
+          if ! grep -q '<title>Astrologie Medicală | Zodiac, Planete și Corp | AstroVip</title>' "$MEDICAL_HTML"; then
+            echo "::error::Medical astrology page is reachable but expected title is missing."
+            exit 34
+          fi
+          if ! grep -q 'href="/astrologie-medicala/">Astrologie medicală</a>' "$LIVE_HTML"; then
+            echo "::error::Homepage Astrologie menu does not link to /astrologie-medicala/."
+            exit 35
+          fi
+          RAMURI_HTML=$(mktemp)
+          RAMURI_STATUS=$(curl -sS -o "$RAMURI_HTML" -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/ramurile-astrologiei/?release=$EXPECTED_RELEASE")
+          if [ "$RAMURI_STATUS" != "200" ] || ! grep -q 'href="/astrologie-medicala/"' "$RAMURI_HTML"; then
+            echo "::error::Ramurile Astrologiei does not expose the medical astrology page."
+            exit 36
+          fi
+          echo "Medical astrology page and internal links verified."
+          if ! grep -q '/assets/header-layout-unified-20260923.css' "$LIVE_HTML"; then
+            echo "::error::Homepage does not load the unified desktop header stylesheet."
+            exit 38
+          fi
+          HEADER_CSS_STATUS=$(curl -sS -o /tmp/header-layout-unified.css -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/header-layout-unified-20260923.css?v=$EXPECTED_RELEASE")
+          if [ "$HEADER_CSS_STATUS" != "200" ]; then
+            echo "::error::Unified desktop header stylesheet returned HTTP $HEADER_CSS_STATUS."
+            exit 39
+          fi
+          if ! grep -q '@media (min-width:981px)' /tmp/header-layout-unified.css || \
+             ! grep -q 'header.top .av-lang-switch' /tmp/header-layout-unified.css || \
+             ! grep -q 'header.top .nav-actions .avchat-launcher.avchat-header-slot' /tmp/header-layout-unified.css || \
+             ! grep -q 'header.top .menu' /tmp/header-layout-unified.css; then
+            echo "::error::Unified desktop header stylesheet is missing required layout rules."
+            exit 40
+          fi
+          if ! grep -q 'media="(min-width:981px)"' "$LIVE_HTML"; then
+            echo "::error::Unified desktop header stylesheet is not scoped to desktop."
+            exit 41
+          fi
+          for RETIRED in desktop-languages-inline-20260923.css desktop-header-structural-fix-20260923.css desktop-chat-under-logo-20260923.css; do
+            if grep -q "$RETIRED" "$LIVE_HTML"; then
+              echo "::error::Retired conflicting header stylesheet is still linked live: $RETIRED"
+              exit 42
+            fi
+          done
+          HEADER_AR_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          section=m.group(1) if m else ""
+          print(len(re.findall(r'href="/ar/"',section)))
+          PY
+          )
+          HEADER_RU_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          section=m.group(1) if m else ""
+          print(len(re.findall(r'href="/ru/"',section)))
+          PY
+          )
+          if [ "$HEADER_AR_COUNT" != "1" ] || [ "$HEADER_RU_COUNT" != "1" ]; then
+            echo "::error::Header language duplication: AR=$HEADER_AR_COUNT RU=$HEADER_RU_COUNT (expected exactly 1 each)."
+            exit 46
+          fi
+          echo "Header language de-duplication verified: AR=1 RU=1."
+          if ! grep -q 'avchat-nav-slot' "$LIVE_HTML"; then
+            echo "::error::Homepage does not contain the desktop Chat AstroVip nav slot."
+            exit 43
+          fi
+          HEADER_CHAT_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          section=m.group(1) if m else ""
+          print(len(re.findall(r'<button class="avchat-launcher',section)))
+          PY
+          )
+          if [ "$HEADER_CHAT_COUNT" != "1" ]; then
+            echo "::error::Header exposes $HEADER_CHAT_COUNT Chat AstroVip buttons instead of exactly 1."
+            exit 44
+          fi
+          CHAT_JS_STATUS=$(curl -sS -o /tmp/astrovip-chat-structural.js -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/astrovip-chat.js?v=$EXPECTED_RELEASE")
+          if [ "$CHAT_JS_STATUS" != "200" ] || ! grep -q 'desktopHost=document.querySelector(".top .nav-actions")' /tmp/astrovip-chat-structural.js || ! grep -q 'mobileHost=document.querySelector(".av-langbar .wrap")' /tmp/astrovip-chat-structural.js; then
+            echo "::error::Live chat script does not implement desktop-nav/mobile-language-bar placement."
+            exit 45
+          fi
+          echo "Unified desktop header verified: one stylesheet, one chat launcher, desktop scope only."
+
+
+
+
+
+          if ! grep -q 'class="av-medical-home reveal"' "$LIVE_HTML" || ! grep -q 'DESCHIDE PAGINA' "$LIVE_HTML"; then
+            echo "::error::Homepage does not expose the visible ASTROLOGIE MEDICALĂ card."
+            exit 37
+          fi
+          echo "Visible medical astrology homepage card verified."
+
+
+          echo "Checking Local Space case-study collection"
+          LOCAL_SPACE_URLS=(
+            "https://astrovip.ro/local-space/studii-de-caz/"
+            "https://astrovip.ro/local-space/studii-de-caz/soare-calarasi-108/"
+            "https://astrovip.ro/local-space/studii-de-caz/luna-sulina-73/"
+            "https://astrovip.ro/local-space/studii-de-caz/mercur-medgidia-97/"
+            "https://astrovip.ro/local-space/studii-de-caz/venus-constanta-98/"
+            "https://astrovip.ro/local-space/studii-de-caz/marte-ploiesti-349/"
+            "https://astrovip.ro/local-space/studii-de-caz/jupiter-iasi-17/"
+            "https://astrovip.ro/local-space/studii-de-caz/saturn-targoviste-315/"
+            "https://astrovip.ro/local-space/studii-de-caz/uranus-vratsa-237/"
+            "https://astrovip.ro/local-space/studii-de-caz/neptun-plovdiv-206/"
+            "https://astrovip.ro/local-space/studii-de-caz/pluto-slatina-272/"
+          )
+          for URL in "${LOCAL_SPACE_URLS[@]}"
+          do
+            STATUS=$(curl -sS -o /tmp/local-space-check.html -w '%{http_code}' --retry 8 --retry-delay 4 "$URL")
+            if [ "$STATUS" != "200" ]; then
+              echo "::error::$URL returned HTTP $STATUS instead of 200."
+              exit 27
+            fi
+          done
+          HUB_HTML=$(curl -sS --retry 8 --retry-delay 4 "https://astrovip.ro/local-space/studii-de-caz/")
+          HUB_COUNT=$(printf '%s' "$HUB_HTML" | grep -o 'class="case"' | wc -l | tr -d ' ')
+          if [ "$HUB_COUNT" != "10" ]; then
+            echo "::error::Local Space hub exposes $HUB_COUNT case cards instead of 10."
+            exit 28
+          fi
+          echo "Local Space hub and all 10 case-study pages verified."
+
+          echo "Checking canonical apex"
+          APEX_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/")
+          if [ "$APEX_STATUS" != "200" ]; then
+            echo "::error::astrovip.ro returned HTTP $APEX_STATUS instead of 200."
+            exit 20
+          fi
+
+          echo "Checking direct www delivery"
+          WWW_HTML=$(mktemp)
+          WWW_STATUS=$(curl -sS -o "$WWW_HTML" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "https://www.astrovip.ro/?release=$EXPECTED_RELEASE")
+          WWW_RELEASE=$(python3 - "$WWW_HTML" <<'PY'
+          import re,sys
+          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
+          m=re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
+          print(m.group(1) if m else "")
+          PY
+          )
+
+          echo "www status: $WWW_STATUS"
+          echo "www release: $WWW_RELEASE"
+
+          if [ "$WWW_STATUS" != "200" ]; then
+            echo "::error::www.astrovip.ro returned HTTP $WWW_STATUS instead of 200."
+            exit 29
+          fi
+
+          if [ "$WWW_RELEASE" != "$EXPECTED_RELEASE" ]; then
+            echo "::error::www homepage release '$WWW_RELEASE' does not match expected '$EXPECTED_RELEASE'."
+            exit 30
+          fi
+
+          echo "Direct www delivery verified; canonical HTML continues to point to https://astrovip.ro/."
+
+          for URL in "https://astrovip.ro/assets/hero-premium-orbit-desktop.svg?v=20260920-speed2" "https://astrovip.ro/assets/hero-premium-orbit-mobile.svg?v=20260920-wheel-full2"
+          do
+            STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "$URL")
+            if [ "$STATUS" != "200" ]; then
+              echo "::error::$URL returned HTTP $STATUS."
+              exit 23
+            fi
+          done
+, headers, re.I | re.M)
+
+          if not releases:
+              raise SystemExit("Missing X-AstroVip-Release in _headers.")
+          if any(value != expected for value in releases):
+              raise SystemExit(
+                  f"Release mismatch: index.html={expected}; _headers={releases}"
+              )
+
+          print(f"Release header sync OK: {expected}")
+          PY
+
       - name: Normalize and validate Cloudflare token
         shell: bash
         run: |
