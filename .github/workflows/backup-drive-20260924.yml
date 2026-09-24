@@ -1,0 +1,37 @@
+name: AstroVip Drive Backup Artifact
+
+on:
+  push:
+    branches:
+      - backup-drive-20260924-1957
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact production commit
+        uses: actions/checkout@v4
+        with:
+          ref: 064a2cae15d175b3c6c131eae851f1c3f38e1004
+          fetch-depth: 1
+
+      - name: Verify production commit
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "064a2cae15d175b3c6c131eae851f1c3f38e1004"
+          echo "Backing up 064a2cae15d175b3c6c131eae851f1c3f38e1004"
+
+      - name: Upload complete site snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: AstroVip-site-backup-2026-09-24-1957
+          path: |
+            .
+            !.git
+            !.git/**
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
