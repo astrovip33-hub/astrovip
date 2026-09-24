@@ -1,0 +1,44 @@
+name: Preview AstroVip on Cloudflare
+
+on:
+  push:
+    branches-ignore:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: 1997683abefc1f33c4a391c0e09e63dd
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Cloudflare token
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$CLOUDFLARE_API_TOKEN"
+          STATUS=$(curl -sS -o /tmp/cf-token.json -w '%{http_code}'             -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"             "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify")
+          test "$STATUS" = "200"
+
+      - name: Deploy preview to Cloudflare Workers
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy --config wrangler.preview.jsonc
+
+      - name: Verify preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-preview.astrovip33.workers.dev/"
+          STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
+          test "$STATUS" = "200"
+          grep -q 'ASTROLOGIE' /tmp/preview.html
+          echo "Preview live: $URL"
