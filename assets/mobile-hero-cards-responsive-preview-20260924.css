@@ -68,7 +68,7 @@
     max-width:382px!important;
     height:auto!important;
     max-height:none!important;
-    margin:clamp(72px,18vh,118px) auto 0!important;
+    margin:5px auto 0!important;
     padding:0!important;
     gap:4px!important;
     overflow:hidden!important;
@@ -142,7 +142,7 @@
     overflow:hidden!important;
   }
 
-  /* Final Hero line: this is the last real content inside Hero. */
+  /* Slogan sits immediately before the final 4-card closing block. */
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-bottom{
     position:relative!important;
     display:flex!important;
@@ -151,7 +151,7 @@
     width:calc(100% - 24px)!important;
     max-width:382px!important;
     min-height:34px!important;
-    margin:2px auto 0!important;
+    margin:clamp(68px,16vh,108px) auto 0!important;
     padding:7px 8px 9px!important;
     border-top:1px solid rgba(224,185,77,.34)!important;
     border-bottom:0!important;
@@ -166,33 +166,32 @@
     overflow:hidden!important;
   }
 
-  /* Hero ends immediately after the slogan. Transition belongs to the next section. */
-  body:not(.guide-page) section.hero.av-hero-v2 + section.freeq-home{
+  /* The 4-card grid is the final Hero content. The transition starts only after Hero closes. */
+  body:not(.guide-page) .av-hero-freeq-separator{
+    display:block!important;
+    position:relative!important;
+    width:100%!important;
+    height:22px!important;
+    min-height:22px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    background:
+      linear-gradient(90deg,transparent 0,rgba(224,185,77,.35) 18%,rgba(255,239,160,.82) 50%,rgba(224,185,77,.35) 82%,transparent 100%) top/100% 1px no-repeat,
+      linear-gradient(180deg,rgba(224,185,77,.10) 0,rgba(7,7,7,.88) 52%,#070707 100%)!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .av-hero-freeq-separator + section.freeq-home{
     position:relative!important;
     clear:both!important;
     width:100%!important;
     margin:0!important;
-    padding:20px 0 34px!important;
+    padding:18px 0 34px!important;
     transform:none!important;
     z-index:1!important;
     border-top:0!important;
-    background:
-      radial-gradient(ellipse at 50% 0,rgba(224,185,77,.10),transparent 34%),
-      linear-gradient(180deg,#030403 0,#060706 22px,#070707 54px,#070707 100%)!important;
+    background:#070707!important;
     overflow:visible!important;
-  }
-  body:not(.guide-page) section.hero.av-hero-v2 + section.freeq-home::before{
-    content:""!important;
-    position:absolute!important;
-    left:0!important;
-    right:0!important;
-    top:0!important;
-    height:18px!important;
-    pointer-events:none!important;
-    background:
-      linear-gradient(90deg,transparent 0,rgba(224,185,77,.35) 18%,rgba(255,239,160,.78) 50%,rgba(224,185,77,.35) 82%,transparent 100%) top/100% 1px no-repeat,
-      linear-gradient(180deg,rgba(224,185,77,.08),rgba(7,7,7,0))!important;
-    opacity:.95!important;
   }
 }
 
