@@ -1,0 +1,33 @@
+name: AstroVip Drive Backup Artifact
+
+on:
+  push:
+    branches:
+      - backup-drive-20260924
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact site snapshot
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Build site backup archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf "AstroVip site backup\nDate: 2026-09-24\nSource branch: main\nSource commit: 064a2cae15d175b3c6c131eae851f1c3f38e1004\nBackup workflow commit: %s\n" "$GITHUB_SHA" > BACKUP-MANIFEST.txt
+          zip -r /tmp/astrovip-site-backup-2026-09-24.zip . -x ".git/*"
+
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: astrovip-site-backup-2026-09-24
+          path: /tmp/astrovip-site-backup-2026-09-24.zip
+          if-no-files-found: error
+          retention-days: 7
