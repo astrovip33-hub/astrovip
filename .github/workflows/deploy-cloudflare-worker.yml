@@ -338,9 +338,13 @@ jobs:
           HERO_CARD_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
           import re,sys
           html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
-          m=re.search(r'<div class="av-hero-v2-cards"[^>]*>(.*?)</div>\s*<div class="av-hero-v2-bottom"', html, re.S|re.I)
-          block=m.group(1) if m else ""
-          print(len(re.findall(r'<article class="av-hero-v2-card"', block, re.I)))
+          start=re.search(r'<div class="av-hero-v2-cards"[^>]*>', html, re.I)
+          block=""
+          if start:
+              tail=html[start.end():]
+              end=re.search(r'<div class="av-hero-v2-bottom\b', tail, re.I)
+              block=tail[:end.start()] if end else ""
+          print(len(re.findall(r'<article\s+class="[^"]*\bav-hero-v2-card\b[^"]*"', block, re.I)))
           PY
           )
           HERO_RELOCATION_COUNT=$( { grep -o '<h3>RELOCARE</h3>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
