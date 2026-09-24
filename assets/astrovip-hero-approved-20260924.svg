@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 650" role="img" aria-labelledby="t d">
+<title id="t">Univers astrologic AstroVip</title><desc id="d">Pământ iluminat, cerc zodiacal auriu, munți și nebuloasă smarald.</desc>
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#020402"/><stop offset=".46" stop-color="#04110a"/><stop offset="1" stop-color="#010201"/></linearGradient>
+ <radialGradient id="neb" cx="73%" cy="38%" r="52%"><stop stop-color="#0e7c4a" stop-opacity=".68"/><stop offset=".36" stop-color="#0a4a30" stop-opacity=".35"/><stop offset=".75" stop-color="#072316" stop-opacity=".10"/><stop offset="1" stop-opacity="0"/></radialGradient>
+ <radialGradient id="earth" cx="37%" cy="30%" r="72%"><stop stop-color="#ffe88a"/><stop offset=".08" stop-color="#6fdf95"/><stop offset=".24" stop-color="#0e6a4e"/><stop offset=".54" stop-color="#043b31"/><stop offset=".78" stop-color="#031a16"/><stop offset="1" stop-color="#010605"/></radialGradient>
+ <radialGradient id="planet" cx="36%" cy="28%" r="70%"><stop stop-color="#b6ffc9"/><stop offset=".22" stop-color="#26d86b"/><stop offset=".58" stop-color="#087544"/><stop offset="1" stop-color="#02100a"/></radialGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a7"/><stop offset=".25" stop-color="#d79a27"/><stop offset=".5" stop-color="#fff6c3"/><stop offset=".75" stop-color="#ad6f16"/><stop offset="1" stop-color="#ffd969"/></linearGradient>
+ <linearGradient id="mount" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#173525"/><stop offset=".32" stop-color="#0a1a12"/><stop offset="1" stop-color="#020403"/></linearGradient>
+ <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5" result="b"/><feFlood flood-color="#f5bd44" flood-opacity=".52"/><feComposite in2="b" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="green" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="10" result="b"/><feFlood flood-color="#29e670" flood-opacity=".24"/><feComposite in2="b" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="texture" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence baseFrequency=".016 .035" numOctaves="3" seed="17" type="fractalNoise" result="n"/><feColorMatrix in="n" values="1 0 0 0 .1 0 1 0 0 .25 0 0 1 0 .16 0 0 0 .62 0" result="c"/><feBlend in="SourceGraphic" in2="c" mode="screen"/></filter>
+ <pattern id="stars" width="128" height="86" patternUnits="userSpaceOnUse"><circle cx="13" cy="18" r="1.1" fill="#fff4c1"/><circle cx="62" cy="35" r=".8" fill="#fff"/><circle cx="101" cy="14" r="1.1" fill="#38e779"/><circle cx="84" cy="70" r="1" fill="#f7c44c"/><circle cx="30" cy="67" r=".7" fill="#fff"/></pattern>
+ <clipPath id="earthClip"><circle cx="1225" cy="352" r="205"/></clipPath>
+</defs>
+<rect width="1600" height="650" fill="url(#sky)"/>
+<rect width="1600" height="650" fill="url(#stars)" opacity=".72"/>
+<rect width="1600" height="650" fill="url(#neb)"/>
+<ellipse cx="1140" cy="235" rx="420" ry="250" fill="#0d7045" opacity=".12" filter="url(#green)"/>
+<circle cx="1055" cy="126" r="44" fill="url(#planet)" opacity=".66"/>
+<circle cx="1450" cy="126" r="31" fill="url(#planet)" opacity=".46"/>
+<circle cx="870" cy="186" r="20" fill="#0d2b22" stroke="#e1b446" stroke-opacity=".5"/>
+<g transform="translate(1235 302)" opacity=".98">
+ <circle r="312" fill="none" stroke="url(#gold)" stroke-width="4.2" filter="url(#glow)"/>
+ <circle r="274" fill="none" stroke="#e4b34b" stroke-width="1.5" opacity=".64"/>
+ <circle r="223" fill="none" stroke="#4be783" stroke-width="1.25" opacity=".34"/>
+ <g stroke="#e7b84e" stroke-width="1.1" opacity=".48">
+  <line x1="0" y1="-312" x2="0" y2="-223"/><line x1="156" y1="-270" x2="111" y2="-193"/><line x1="270" y1="-156" x2="193" y2="-111"/><line x1="312" y1="0" x2="223" y2="0"/><line x1="270" y1="156" x2="193" y2="111"/><line x1="156" y1="270" x2="111" y2="193"/><line x1="0" y1="312" x2="0" y2="223"/><line x1="-156" y1="270" x2="-111" y2="193"/><line x1="-270" y1="156" x2="-193" y2="111"/><line x1="-312" y1="0" x2="-223" y2="0"/><line x1="-270" y1="-156" x2="-193" y2="-111"/><line x1="-156" y1="-270" x2="-111" y2="-193"/>
+ </g>
+ <g font-family="Georgia,'Times New Roman',serif" font-size="38" font-weight="700" fill="#ffd56d" text-anchor="middle" filter="url(#glow)">
+  <text x="0" y="-248">♈</text><text x="125" y="-215">♉</text><text x="215" y="-120">♊</text><text x="248" y="14">♋</text><text x="215" y="143">♌</text><text x="125" y="228">♍</text><text x="0" y="263">♎</text><text x="-125" y="228">♏</text><text x="-215" y="143">♐</text><text x="-248" y="14">♑</text><text x="-215" y="-120">♒</text><text x="-125" y="-215">♓</text>
+ </g>
+</g>
+<circle cx="1225" cy="352" r="205" fill="url(#earth)" stroke="#e7bf62" stroke-width="1.7" filter="url(#green)"/>
+<g clip-path="url(#earthClip)" filter="url(#texture)" opacity=".78">
+ <path d="M1050 300 C1105 245 1160 250 1192 282 C1210 299 1190 321 1167 335 C1140 351 1148 376 1167 390 C1197 413 1182 445 1148 455 C1103 469 1075 446 1052 420 C1020 384 1014 338 1050 300Z" fill="#b0b66b"/>
+ <path d="M1244 245 C1290 224 1342 247 1355 286 C1366 319 1336 335 1306 343 C1282 349 1284 374 1300 392 C1320 416 1300 443 1268 448 C1230 454 1209 426 1212 396 C1216 364 1185 348 1194 316 C1202 287 1218 257 1244 245Z" fill="#d1a94f"/>
+ <path d="M1360 366 C1390 350 1418 365 1423 392 C1428 420 1408 444 1377 446 C1346 447 1328 426 1334 402 C1338 386 1345 374 1360 366Z" fill="#7cab65"/>
+</g>
+<path d="M1030 354 C1108 281 1230 229 1405 270" fill="none" stroke="#fff0a1" stroke-width="5" opacity=".56" filter="url(#glow)"/>
+<path d="M1010 390 C1120 321 1270 290 1436 325" fill="none" stroke="#35e878" stroke-width="2.2" opacity=".38"/>
+<circle cx="1424" cy="314" r="6" fill="#ffe687" filter="url(#glow)"/>
+<path d="M980 478 L1060 408 L1118 455 L1179 389 L1248 457 L1318 405 L1388 463 L1450 404 L1530 474 L1600 420 L1600 650 L900 650Z" fill="url(#mount)" opacity=".98"/>
+<path d="M0 522 L118 440 L230 506 L338 422 L450 515 L560 444 L666 520 L765 452 L875 520 L985 449 L1095 525 L1190 460 L1306 520 L1435 448 L1600 530 L1600 650 L0 650Z" fill="#041009"/>
+<path d="M0 562 C280 546 480 574 720 559 C920 546 1130 574 1600 548 L1600 650 L0 650Z" fill="#03110d"/>
+<path d="M710 567 C900 557 1074 566 1290 554" fill="none" stroke="#e8b343" stroke-width="3" opacity=".38" filter="url(#glow)"/>
+<path d="M840 590 C1010 580 1160 587 1400 576" fill="none" stroke="#e9b94c" stroke-width="2" opacity=".21"/>
+<path d="M830 72 L837 98 L863 105 L837 112 L830 138 L823 112 L797 105 L823 98Z" fill="#fff1a8" filter="url(#glow)"/>
+<path d="M1490 175 L1495 194 L1514 199 L1495 204 L1490 223 L1485 204 L1466 199 L1485 194Z" fill="#ffd766" filter="url(#glow)"/>
+</svg>
