@@ -6,7 +6,7 @@
     height:auto!important;
     min-height:0!important;
     max-height:none!important;
-    padding:0 0 8px!important;
+    padding:0!important;
     margin:0!important;
     overflow:hidden!important;
     contain:layout paint!important;
@@ -142,6 +142,7 @@
     overflow:hidden!important;
   }
 
+  /* Final Hero line: this is the last real content inside Hero. */
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-bottom{
     position:relative!important;
     display:flex!important;
@@ -149,28 +150,49 @@
     justify-content:center!important;
     width:calc(100% - 24px)!important;
     max-width:382px!important;
-    min-height:26px!important;
-    margin:7px auto 0!important;
-    padding:5px 8px!important;
-    border-top:1px solid rgba(224,185,77,.26)!important;
+    min-height:34px!important;
+    margin:8px auto 0!important;
+    padding:8px 8px 10px!important;
+    border-top:1px solid rgba(224,185,77,.34)!important;
     border-bottom:0!important;
     background:transparent!important;
     color:#fff!important;
-    font-size:8px!important;
-    line-height:1.1!important;
-    letter-spacing:.055em!important;
+    font-size:8.4px!important;
+    line-height:1.12!important;
+    font-weight:950!important;
+    letter-spacing:.058em!important;
+    text-align:center!important;
     box-sizing:border-box!important;
     overflow:hidden!important;
   }
 
+  /* Hero ends immediately after the slogan. Transition belongs to the next section. */
   body:not(.guide-page) section.hero.av-hero-v2 + section.freeq-home{
     position:relative!important;
     clear:both!important;
     width:100%!important;
     margin:0!important;
-    padding-top:18px!important;
+    padding:30px 0 34px!important;
     transform:none!important;
     z-index:1!important;
+    border-top:0!important;
+    background:
+      radial-gradient(ellipse at 50% 0,rgba(224,185,77,.10),transparent 34%),
+      linear-gradient(180deg,#030403 0,#060706 22px,#070707 54px,#070707 100%)!important;
+    overflow:visible!important;
+  }
+  body:not(.guide-page) section.hero.av-hero-v2 + section.freeq-home::before{
+    content:""!important;
+    position:absolute!important;
+    left:0!important;
+    right:0!important;
+    top:0!important;
+    height:18px!important;
+    pointer-events:none!important;
+    background:
+      linear-gradient(90deg,transparent 0,rgba(224,185,77,.35) 18%,rgba(255,239,160,.78) 50%,rgba(224,185,77,.35) 82%,transparent 100%) top/100% 1px no-repeat,
+      linear-gradient(180deg,rgba(224,185,77,.08),rgba(7,7,7,0))!important;
+    opacity:.95!important;
   }
 }
 
