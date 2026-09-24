@@ -297,9 +297,20 @@ body:not(.guide-page) .av-lang-switch>a::after{content:none!important;display:no
     position:static!important;
     inset:auto!important;
     display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
     width:auto!important;
     min-width:0!important;
     max-width:none!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
     margin:0!important;
     gap:0!important;
   }
