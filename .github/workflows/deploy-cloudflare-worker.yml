@@ -341,9 +341,16 @@ jobs:
           start=re.search(r'<div class="av-hero-v2-cards"[^>]*>', html, re.I)
           block=""
           if start:
-              tail=html[start.end():]
-              end=re.search(r'<div class="av-hero-v2-bottom\b', tail, re.I)
-              block=tail[:end.start()] if end else ""
+              depth=1
+              pos=start.end()
+              for tag in re.finditer(r'</?div\b[^>]*>', html[pos:], re.I):
+                  if tag.group(0).lower().startswith('</div'):
+                      depth-=1
+                  else:
+                      depth+=1
+                  if depth==0:
+                      block=html[pos:pos+tag.start()]
+                      break
           print(len(re.findall(r'<article\s+class="[^"]*\bav-hero-v2-card\b[^"]*"', block, re.I)))
           PY
           )
