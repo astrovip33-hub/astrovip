@@ -23,6 +23,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Enrich structured data at deploy time
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/enrich_structured_data.py
+
       - name: Validate unified header CSS
         shell: bash
         run: |
