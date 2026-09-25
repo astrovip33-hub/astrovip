@@ -475,12 +475,20 @@ jobs:
 
           echo "Checking www -> apex 301 redirect"
           WWW_HDR=$(mktemp)
-          WWW_STATUS=$(curl -sS -D "$WWW_HDR" -o /dev/null -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "https://www.astrovip.ro/test-canonical-path/?release=$EXPECTED_RELEASE")
-          WWW_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WWW_HDR")
-          echo "www status: $WWW_STATUS"
-          echo "www location: $WWW_LOCATION"
+          WWW_STATUS=""
+          WWW_LOCATION=""
+          for ATTEMPT in $(seq 1 15); do
+            : > "$WWW_HDR"
+            WWW_STATUS=$(curl -sS -D "$WWW_HDR" -o /dev/null -w '%{http_code}' --max-redirs 0 "https://www.astrovip.ro/test-canonical-path/?release=$EXPECTED_RELEASE" || true)
+            WWW_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WWW_HDR")
+            echo "www propagation $ATTEMPT/15: status=$WWW_STATUS location=$WWW_LOCATION"
+            if [ "$WWW_STATUS" = "301" ] && [ "$WWW_LOCATION" = "https://astrovip.ro/test-canonical-path/?release=$EXPECTED_RELEASE" ]; then
+              break
+            fi
+            sleep 5
+          done
           if [ "$WWW_STATUS" != "301" ]; then
-            echo "::error::www.astrovip.ro returned HTTP $WWW_STATUS instead of 301."
+            echo "::error::www.astrovip.ro returned HTTP $WWW_STATUS instead of 301 after propagation window."
             exit 29
           fi
           if [ "$WWW_LOCATION" != "https://astrovip.ro/test-canonical-path/?release=$EXPECTED_RELEASE" ]; then
@@ -491,10 +499,18 @@ jobs:
 
           echo "Checking legacy WordPress redirects"
           WP_HDR=$(mktemp)
-          WP_STATUS=$(curl -sS -D "$WP_HDR" -o /dev/null -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "https://astrovip.ro/index.php/2025/12/06/salut-lume/")
-          WP_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WP_HDR")
-          echo "legacy WordPress status: $WP_STATUS"
-          echo "legacy WordPress location: $WP_LOCATION"
+          WP_STATUS=""
+          WP_LOCATION=""
+          for ATTEMPT in $(seq 1 12); do
+            : > "$WP_HDR"
+            WP_STATUS=$(curl -sS -D "$WP_HDR" -o /dev/null -w '%{http_code}' --max-redirs 0 "https://astrovip.ro/index.php/2025/12/06/salut-lume/" || true)
+            WP_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WP_HDR")
+            echo "WordPress redirect propagation $ATTEMPT/12: status=$WP_STATUS location=$WP_LOCATION"
+            if [ "$WP_STATUS" = "301" ] && [ "$WP_LOCATION" = "https://astrovip.ro/" ]; then
+              break
+            fi
+            sleep 5
+          done
           if [ "$WP_STATUS" != "301" ] || [ "$WP_LOCATION" != "https://astrovip.ro/" ]; then
             echo "::error::Legacy WordPress URL is not permanently redirecting to canonical homepage."
             exit 31
