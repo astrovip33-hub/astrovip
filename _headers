@@ -1,10 +1,10 @@
 /
   Cache-Control: no-store, max-age=0
-  X-AstroVip-Release: 20260925-cwv-mobile1
+  X-AstroVip-Release: 20260925-cwv-mobile2
 
 /index.html
   Cache-Control: no-store, max-age=0
-  X-AstroVip-Release: 20260925-cwv-mobile1
+  X-AstroVip-Release: 20260925-cwv-mobile2
 
 /*
   X-Content-Type-Options: nosniff
