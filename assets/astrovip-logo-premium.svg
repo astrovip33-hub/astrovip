@@ -68,8 +68,5 @@
 
   <line x1="5" y1="116" x2="640" y2="116" stroke="url(#cyan)" stroke-width="1.7" opacity=".85"/>
   <circle cx="323" cy="116" r="3.6" fill="#ffd85d" filter="url(#goldGlow)"/>
-
-  <text x="322" y="158" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
-        font-size="20" font-weight="700" letter-spacing="8.2" fill="#ffe28a">ASTROLOGIE PREMIUM</text>
 </g>
 </svg>
