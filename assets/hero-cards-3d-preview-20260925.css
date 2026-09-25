@@ -1,0 +1,99 @@
+/* AstroVip Hero cards — premium 3D preview — 2026-09-25
+   Scoped only to the four Hero cards. Geometry/text remain unchanged. */
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+  perspective:1200px!important;
+  perspective-origin:50% 42%!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card,
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(4){
+  position:relative!important;
+  isolation:isolate!important;
+  transform:translateZ(0)!important;
+  transform-style:preserve-3d!important;
+  border-color:rgba(57,255,20,.78)!important;
+  background:
+    radial-gradient(ellipse at 50% -12%,rgba(255,238,170,.13),transparent 36%),
+    linear-gradient(180deg,rgba(31,38,25,.98) 0%,rgba(8,15,8,.99) 42%,rgba(2,5,2,1) 100%)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -10px 20px rgba(0,0,0,.48),
+    inset 0 0 0 1px rgba(57,255,20,.08),
+    0 3px 0 rgba(35,83,38,.88),
+    0 6px 0 rgba(7,25,10,.92),
+    0 11px 24px rgba(0,0,0,.52),
+    0 0 12px rgba(57,255,20,.20)!important;
+  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card::before{
+  border-color:rgba(212,255,199,.22)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.055),
+    inset 0 0 12px rgba(57,255,20,.045)!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card::after{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  left:8%!important;
+  right:8%!important;
+  top:4px!important;
+  height:34%!important;
+  border-radius:10px 10px 45% 45%!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.025) 42%,transparent 100%)!important;
+  opacity:.70!important;
+  pointer-events:none!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card > *{
+  position:relative!important;
+  z-index:2!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+  color:#f5d97a!important;
+  text-shadow:
+    0 1px 0 rgba(104,74,18,.95),
+    0 2px 0 rgba(46,33,8,.86),
+    0 0 10px rgba(244,211,111,.16)!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+  color:#fffdf7!important;
+  text-shadow:0 1px 0 #000,0 2px 5px rgba(0,0,0,.76)!important;
+}
+
+@media(min-width:821px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:hover{
+    transform:translateY(-4px) translateZ(12px) rotateX(1.2deg)!important;
+    border-color:#62ff46!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.24),
+      inset 0 -10px 20px rgba(0,0,0,.44),
+      inset 0 0 0 1px rgba(57,255,20,.10),
+      0 4px 0 rgba(41,102,44,.90),
+      0 8px 0 rgba(7,26,10,.95),
+      0 18px 34px rgba(0,0,0,.58),
+      0 0 18px rgba(57,255,20,.28)!important;
+  }
+}
+
+@media(max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card,
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card:nth-child(4){
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.18),
+      inset 0 -8px 14px rgba(0,0,0,.46),
+      inset 0 0 0 1px rgba(57,255,20,.07),
+      0 2px 0 rgba(34,78,37,.92),
+      0 4px 0 rgba(6,22,8,.95),
+      0 8px 14px rgba(0,0,0,.46),
+      0 0 8px rgba(57,255,20,.16)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card::after{
+    left:7%!important;
+    right:7%!important;
+    top:3px!important;
+    height:30%!important;
+    opacity:.60!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{transition:none!important}
+}
