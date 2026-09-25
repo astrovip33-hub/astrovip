@@ -18,6 +18,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Enforce AstroVip SEO quality gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/quality_gate_new_pages.py
 
       - name: Enrich structured data at deploy time
         shell: bash
