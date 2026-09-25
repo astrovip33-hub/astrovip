@@ -506,12 +506,12 @@ jobs:
             WP_STATUS=$(curl -sS -D "$WP_HDR" -o /dev/null -w '%{http_code}' --max-redirs 0 "https://astrovip.ro/index.php/2025/12/06/salut-lume/" || true)
             WP_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WP_HDR")
             echo "WordPress redirect propagation $ATTEMPT/12: status=$WP_STATUS location=$WP_LOCATION"
-            if [ "$WP_STATUS" = "301" ] && [ "$WP_LOCATION" = "https://astrovip.ro/" ]; then
+            if [ "$WP_STATUS" = "301" ] && { [ "$WP_LOCATION" = "https://astrovip.ro/" ] || [ "$WP_LOCATION" = "/" ]; }; then
               break
             fi
             sleep 5
           done
-          if [ "$WP_STATUS" != "301" ] || [ "$WP_LOCATION" != "https://astrovip.ro/" ]; then
+          if [ "$WP_STATUS" != "301" ] || { [ "$WP_LOCATION" != "https://astrovip.ro/" ] && [ "$WP_LOCATION" != "/" ]; }; then
             echo "::error::Legacy WordPress URL is not permanently redirecting to canonical homepage."
             exit 31
           fi
