@@ -225,52 +225,17 @@ jobs:
           echo "::add-mask::$ACCOUNT_ID"
           echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
 
-      - name: Remove legacy www route conflict
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          ZONES=$(curl -fsS \
-            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-            -H "Content-Type: application/json" \
-            "https://api.cloudflare.com/client/v4/zones?name=astrovip.ro&status=active")
-
-          ZONE_ID=$(printf '%s' "$ZONES" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
-          if [ -z "$ZONE_ID" ]; then
-            echo "::error::Could not resolve Cloudflare zone ID for astrovip.ro."
-            exit 6
-          fi
-
-          ROUTES=$(curl -fsS \
-            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-            -H "Content-Type: application/json" \
-            "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/workers/routes")
-
-          ROUTE_IDS=$(printf '%s' "$ROUTES" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("\n".join(str(x.get("id","")) for x in (d.get("result") or []) if x.get("pattern")=="www.astrovip.ro/*" and x.get("script")=="astrovip-www-redirect" and x.get("id")))')
-
-          if [ -z "$ROUTE_IDS" ]; then
-            echo "No legacy www route conflict found."
-          else
-            while IFS= read -r ROUTE_ID; do
-              [ -n "$ROUTE_ID" ] || continue
-              RESPONSE=$(curl -fsS -X DELETE \
-                -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-                -H "Content-Type: application/json" \
-                "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/workers/routes/$ROUTE_ID")
-              SUCCESS=$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; print(str(json.load(sys.stdin).get("success",False)).lower())')
-              if [ "$SUCCESS" != "true" ]; then
-                echo "::error::Failed to remove legacy www Worker route $ROUTE_ID."
-                exit 7
-              fi
-              echo "Removed legacy www route $ROUTE_ID from astrovip-www-redirect."
-            done <<< "$ROUTE_IDS"
-          fi
-
       - name: Deploy AstroVip directly to Cloudflare
         shell: bash
         run: |
           set -euo pipefail
           npx --yes wrangler@latest deploy
+
+      - name: Deploy www to apex redirect Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
 
       - name: Verify live AstroVip
         shell: bash
@@ -508,31 +473,33 @@ jobs:
             exit 20
           fi
 
-          echo "Checking direct www delivery"
-          WWW_HTML=$(mktemp)
-          WWW_STATUS=$(curl -sS -o "$WWW_HTML" -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "https://www.astrovip.ro/?release=$EXPECTED_RELEASE")
-          WWW_RELEASE=$(python3 - "$WWW_HTML" <<'PY'
-          import re,sys
-          html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
-          m=re.search(r'<meta\s+content="([^"]+)"\s+name="astrovip-release"\s*/?>', html, re.I)
-          print(m.group(1) if m else "")
-          PY
-          )
-
+          echo "Checking www -> apex 301 redirect"
+          WWW_HDR=$(mktemp)
+          WWW_STATUS=$(curl -sS -D "$WWW_HDR" -o /dev/null -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "https://www.astrovip.ro/test-canonical-path/?release=$EXPECTED_RELEASE")
+          WWW_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WWW_HDR")
           echo "www status: $WWW_STATUS"
-          echo "www release: $WWW_RELEASE"
-
-          if [ "$WWW_STATUS" != "200" ]; then
-            echo "::error::www.astrovip.ro returned HTTP $WWW_STATUS instead of 200."
+          echo "www location: $WWW_LOCATION"
+          if [ "$WWW_STATUS" != "301" ]; then
+            echo "::error::www.astrovip.ro returned HTTP $WWW_STATUS instead of 301."
             exit 29
           fi
-
-          if [ "$WWW_RELEASE" != "$EXPECTED_RELEASE" ]; then
-            echo "::error::www homepage release '$WWW_RELEASE' does not match expected '$EXPECTED_RELEASE'."
+          if [ "$WWW_LOCATION" != "https://astrovip.ro/test-canonical-path/?release=$EXPECTED_RELEASE" ]; then
+            echo "::error::www redirect location '$WWW_LOCATION' is not the canonical apex URL."
             exit 30
           fi
+          echo "www -> apex 301 redirect verified."
 
-          echo "Direct www delivery verified; canonical HTML continues to point to https://astrovip.ro/."
+          echo "Checking legacy WordPress redirects"
+          WP_HDR=$(mktemp)
+          WP_STATUS=$(curl -sS -D "$WP_HDR" -o /dev/null -w '%{http_code}' --max-redirs 0 --retry 8 --retry-delay 4 "https://astrovip.ro/index.php/2025/12/06/salut-lume/")
+          WP_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WP_HDR")
+          echo "legacy WordPress status: $WP_STATUS"
+          echo "legacy WordPress location: $WP_LOCATION"
+          if [ "$WP_STATUS" != "301" ] || [ "$WP_LOCATION" != "https://astrovip.ro/" ]; then
+            echo "::error::Legacy WordPress URL is not permanently redirecting to canonical homepage."
+            exit 31
+          fi
+          echo "Legacy WordPress redirect verified."
 
           for URL in "https://astrovip.ro/assets/hero-premium-orbit-desktop.svg?v=20260920-speed2" "https://astrovip.ro/assets/hero-premium-orbit-mobile.svg?v=20260920-wheel-full2"
           do
