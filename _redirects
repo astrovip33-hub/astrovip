@@ -1,2 +1,12 @@
 # AstroVip redirects — SEO cleanup
+# Legacy WordPress archives/posts: consolidate obsolete /index.php/ URLs to canonical site.
+# Specific rules first, fallback last.
+/index.php/2025/12/06/salut-lume/ / 301
+/index.php/2025/12/07/post-1-headline/ /studii-de-caz/ 301
+/index.php/2025/12/07/post-2-headline/ /studii-de-caz/ 301
+/index.php/2025/12/07/post-4-headline/ /studii-de-caz/ 301
+/index.php/2025/12/07/post-5-headline/ /studii-de-caz/ 301
+/index.php/2025/12/ / 301
+/index.php/2025/ / 301
+/index.php/category/fara-categorie/ / 301
 /index.php/* / 301
