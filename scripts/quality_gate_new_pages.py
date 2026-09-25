@@ -49,6 +49,32 @@ new_pages = git_added_index_pages()
 indexable = []
 errors = []
 
+# Internal link graph. A new indexable page must be linked from at least one
+# other HTML page in the same repository/release, not only from a sitemap.
+inbound = {}
+for source_path in Path(".").rglob("index.html"):
+    if any(part in {".git","node_modules"} for part in source_path.parts):
+        continue
+    try:
+        source_html = source_path.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        continue
+    source_url = expected_url(source_path)
+    for href in re.findall(r'href=["\']([^"\']+)["\']', source_html, flags=re.I):
+        href = html.unescape(href.strip())
+        if not href or href.startswith(("#","mailto:","tel:","javascript:")):
+            continue
+        if href.startswith("https://astrovip.ro/"):
+            target = href.split("#",1)[0].split("?",1)[0]
+        elif href.startswith("/"):
+            target = BASE_URL.rstrip("/") + href.split("#",1)[0].split("?",1)[0]
+        else:
+            continue
+        if target != BASE_URL and not target.endswith("/"):
+            continue
+        if target != source_url:
+            inbound.setdefault(target, set()).add(source_url)
+
 for path in new_pages:
     rel = path.as_posix()
     if rel.startswith("atlas/"):
@@ -86,6 +112,13 @@ for path in new_pages:
     h1_count = len(re.findall(r"<h1\b", source, flags=re.I))
     if h1_count != 1:
         errors.append(f"{rel}: expected exactly one H1, found {h1_count}")
+
+    incoming = inbound.get(expected, set())
+    if not incoming:
+        errors.append(
+            f"{rel}: orphan page — no internal HTML link points to {expected}. "
+            "Add at least one contextual or navigation link in the same release."
+        )
 
     low = source.lower()
     placeholders = ("lorem ipsum", "post 1 headline", "post-1-headline", "example headline")
