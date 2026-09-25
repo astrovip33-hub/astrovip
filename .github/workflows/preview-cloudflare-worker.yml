@@ -51,7 +51,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          URL="https://astrovip-preview.astrovip33.workers.dev/"
+          URL="https://astrovip-cards3d-preview.astrovip33.workers.dev/"
           STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
           test "$STATUS" = "200"
           grep -q 'ASTROLOGIE' /tmp/preview.html
