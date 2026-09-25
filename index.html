@@ -386,19 +386,25 @@ body #planet-strip-secondary .planet-item>span{
 </style>
 <style id="astrovip-mobile-booking-compact-preview">
 @media (max-width:760px){
-  body:not(.guide-page) header .nav-actions>.cta.nav-book{
+  body:not(.guide-page) header.top .wrap.nav .nav-actions{
+    align-items:center!important;
+  }
+  body:not(.guide-page) header.top .wrap.nav .nav-actions>.cta.nav-book{
     box-sizing:border-box!important;
+    position:relative!important;
     display:inline-flex!important;
     align-items:center!important;
     justify-content:center!important;
+    align-self:center!important;
     width:auto!important;
     min-width:0!important;
     min-height:36px!important;
     height:36px!important;
+    max-height:36px!important;
     padding:0 8px!important;
     margin:0!important;
-    border:1.5px solid #39ff14!important;
-    border-radius:8px!important;
+    border:4px solid #39FF14!important;
+    border-radius:999px!important;
     background:linear-gradient(180deg,rgba(24,24,24,.99),rgba(3,3,3,.995))!important;
     color:transparent!important;
     background-image:linear-gradient(90deg,#ffffff 0%,#dff8ff 18%,#9edcff 38%,#f7ffff 50%,#fff7c8 64%,#ffe16a 76%,#f4a900 88%,#ffd75c 100%)!important;
@@ -406,30 +412,27 @@ body #planet-strip-secondary .planet-item>span{
     -webkit-background-clip:text!important;
     -webkit-text-fill-color:transparent!important;
     font-family:Georgia,"Times New Roman",serif!important;
-    font-size:11px!important;
+    font-size:10.7px!important;
     line-height:1!important;
     font-weight:800!important;
-    letter-spacing:.04em!important;
+    letter-spacing:.035em!important;
     text-transform:uppercase!important;
     text-shadow:0 0 7px rgba(106,223,255,.18),0 0 7px rgba(255,199,47,.16)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.07),
-      inset 0 0 0 1px rgba(57,255,20,.10),
-      0 0 11px rgba(57,255,20,.38),
-      0 0 3px rgba(57,255,20,.75),
-      0 4px 10px rgba(0,0,0,.32)!important;
+    box-shadow:0 7px 18px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.16)!important;
     white-space:nowrap!important;
+    transform:none!important;
   }
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-actions{
     display:none!important;
   }
 }
-@media (max-width:430px){
-  body:not(.guide-page) header .nav-actions>.cta.nav-book{
+@media (max-width:380px){
+  body:not(.guide-page) header.top .wrap.nav .nav-actions>.cta.nav-book{
     min-height:36px!important;
     height:36px!important;
+    max-height:36px!important;
     padding:0 7px!important;
-    font-size:10.7px!important;
+    font-size:10.3px!important;
   }
 }
 </style>
