@@ -91,3 +91,18 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
 @media(prefers-reduced-motion:reduce){
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{transition:none!important}
 }
+
+
+/* Final mobile vertical position tuning — raise card block slightly, preserve layout */
+@media(max-width:430px){
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-cards{
+    margin-top:-14px!important;
+    margin-bottom:8px!important;
+  }
+}
+@media(max-width:350px){
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-cards{
+    margin-top:-10px!important;
+    margin-bottom:8px!important;
+  }
+}
