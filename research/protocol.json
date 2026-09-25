@@ -1,0 +1,57 @@
+{
+  "name": "AstroVip Research Protocol",
+  "version": "1.0",
+  "published": "2026-09-25",
+  "canonical": "https://astrovip.ro/research/metodologie/",
+  "author": {
+    "name": "Cătălin Smaranda",
+    "url": "https://astrovip.ro/despre-astrovip/"
+  },
+  "scope": "retrospective astrological case-study documentation",
+  "disclaimer": "Interpretive case documentation; not presented as scientific validation or causal proof.",
+  "aspects_degrees": [
+    0,
+    45,
+    90,
+    135,
+    165,
+    180
+  ],
+  "solar_arcs": {
+    "primary_max_orb_arcminutes": 30,
+    "application_separation": "record when determinable"
+  },
+  "transits": {
+    "primary_max_orb_degrees": 3,
+    "application_separation": "record when relevant"
+  },
+  "local_space_geodetic": {
+    "max_deviation_degrees": 3,
+    "exclude_above_degrees": 3
+  },
+  "visual_layers": [
+    "natal",
+    "solar_arcs",
+    "transits"
+  ],
+  "source_levels": {
+    "A": "primary/official/verifiable record",
+    "B": "reputable secondary source",
+    "C": "personal chronology/testimony",
+    "U": "uncertain or unverifiable datum"
+  },
+  "required_fields": [
+    "event",
+    "source_level",
+    "event_date",
+    "event_place",
+    "birth_data_or_source",
+    "zodiac",
+    "house_system_if_relevant",
+    "techniques",
+    "contacts_or_results",
+    "uncertainty",
+    "date_published",
+    "date_modified"
+  ]
+}
