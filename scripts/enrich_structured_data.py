@@ -62,11 +62,13 @@ def ensure_author(person: dict, image_url: str) -> bool:
     if person.get("@type") != "Person" or person.get("name") != "Cătălin Smaranda":
         return False
     changed = False
+    # Do not infer an author's portrait from the article/OG image.
+    # Person.image is added only when a verified author portrait is explicitly
+    # present in source markup.
     defaults = {
         "@id": AUTHOR_ID,
         "url": AUTHOR_URL,
         "jobTitle": "Astrolog",
-        "image": image_url or FALLBACK_IMAGE,
     }
     for key, value in defaults.items():
         if not person.get(key):
