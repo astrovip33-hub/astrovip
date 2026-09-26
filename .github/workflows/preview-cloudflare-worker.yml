@@ -38,7 +38,7 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$CLOUDFLARE_API_TOKEN"
-          STATUS=$(curl -sS -o /tmp/cf-token.json -w '%{http_code}'             -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"             "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify")
+          STATUS=$(curl -sS -o /tmp/cf-token.json -w '%{http_code}' -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify")
           test "$STATUS" = "200"
 
       - name: Deploy preview to Cloudflare Workers
@@ -56,3 +56,21 @@ jobs:
           test "$STATUS" = "200"
           grep -q 'ASTROLOGIE' /tmp/preview.html
           echo "Preview live: $URL"
+
+      - name: Lighthouse mobile metrics
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-preview.astrovip33.workers.dev/"
+          npx --yes lighthouse "$URL" --only-categories=performance --form-factor=mobile --output=json --output-path=/tmp/lighthouse.json --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          node - <<'NODE'
+          const fs = require('fs');
+          const d = JSON.parse(fs.readFileSync('/tmp/lighthouse.json','utf8'));
+          const a = d.audits;
+          console.log('LH_PERF=' + Math.round(d.categories.performance.score*100));
+          console.log('LH_FCP=' + a['first-contentful-paint'].displayValue);
+          console.log('LH_LCP=' + a['largest-contentful-paint'].displayValue);
+          console.log('LH_SPEED_INDEX=' + a['speed-index'].displayValue);
+          console.log('LH_TBT=' + a['total-blocking-time'].displayValue);
+          console.log('LH_CLS=' + a['cumulative-layout-shift'].displayValue);
+          NODE
