@@ -912,26 +912,9 @@ if(launcher){
   };
   launcher.addEventListener("click",boot,{capture:true,once:true});
 }
-if("requestIdleCallback" in window)requestIdleCallback(()=>load().catch(()=>{}),{timeout:3500});
-else setTimeout(()=>load().catch(()=>{}),2500);
+// Chat loads on hover, focus, touch or click; avoid background startup work.
 })();
 </script>\n
-<script id="astrovip-hero-planets-loader">
-(function(){
-  function load(src,done){var s=document.createElement('script');s.src=src;s.defer=true;s.onload=done||function(){};document.head.appendChild(s)}
-  function boot(){
-    if(!document.querySelector('.av-planet-hero-strip [data-planet-ticker]'))return;
-    load('https://astrovip.ro/assets/vendor/astronomy-engine-2.1.19.min.js',function(){
-      load('https://astrovip.ro/assets/planetary-ticker-v2.js');
-    });
-  }
-  window.addEventListener('load',function(){
-    setTimeout(function(){
-      if('requestIdleCallback' in window)requestIdleCallback(boot,{timeout:1800});
-      else boot();
-    },5000);
-  },{once:true})
-})();
-</script>
+
 </body>
 </html>
