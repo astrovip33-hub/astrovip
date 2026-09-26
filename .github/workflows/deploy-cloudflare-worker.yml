@@ -382,7 +382,7 @@ jobs:
           print(len(re.findall(r'<article\s+class="[^"]*\bav-hero-v2-card\b[^"]*"', block, re.I)))
           PY
           )
-          HERO_RELOCATION_COUNT=$( { grep -o '<h3>RELOCARE</h3>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
+          HERO_RELOCATION_COUNT=$( { grep -Eo '<h3[^>]*>RELOCARE</h3>' "$LIVE_HTML" || true; } | wc -l | tr -d ' ')
           echo "Hero cards live: $HERO_CARD_COUNT"
           echo "Relocare cards live: $HERO_RELOCATION_COUNT"
           if [ "$HERO_CARD_COUNT" != "4" ] || [ "$HERO_RELOCATION_COUNT" != "1" ]; then
