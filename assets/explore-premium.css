@@ -7,3 +7,18 @@
 .avx-rings{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}.avx-ring{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;padding:22px;border:2px solid rgba(57,255,114,.45);background:radial-gradient(circle,rgba(233,198,108,.08),transparent 56%),#090d0a;box-shadow:inset 0 0 0 10px rgba(255,255,255,.02),0 0 30px rgba(57,255,114,.06)}.avx-ring:nth-child(2){border-color:rgba(233,198,108,.55)}.avx-ring:nth-child(3){border-color:rgba(255,255,255,.25)}.avx-ring span{display:block;color:#adb8ad;font-size:.84rem;margin-top:6px}.avx-media{aspect-ratio:16/9;border-radius:16px;border:1px solid rgba(255,255,255,.09);background:radial-gradient(circle at 30% 30%,rgba(57,255,114,.12),transparent 40%),linear-gradient(145deg,#111811,#070a08);display:grid;place-items:center;text-align:center;padding:20px}.avx-media .play{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:rgba(57,255,114,.12);border:1px solid var(--av-line);color:var(--av-green);font-size:1.4rem;margin:auto auto 10px}
 .avx-footer{border-top:1px solid rgba(255,255,255,.07);padding:28px 0 44px;color:#8f9a8f;font-size:.88rem}.avx-footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.avx-footer a{color:#cfd7cf}
 @media(max-width:820px){.avx-nav{align-items:flex-start;padding:15px 0;flex-direction:column}.avx-links{justify-content:flex-start}.avx-hero{padding:58px 0 34px}.avx-grid,.avx-grid.two,.avx-rings{grid-template-columns:1fr}.avx-fields{grid-template-columns:1fr}.avx-section{border-radius:18px}.avx h1{font-size:clamp(2.25rem,13vw,4.2rem)}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* AstroVip Compact Premium — explore pages — preview 2026-09-26 */
+body.avx{background:radial-gradient(circle at 50% -8%,rgba(233,198,108,.10),transparent 28%),linear-gradient(180deg,#020202,#070604 48%,#020202)!important}
+.avx-head{background:rgba(2,2,2,.96)!important;border-bottom-color:rgba(233,198,108,.20)!important}
+.avx-hero{padding:28px 0 16px!important}
+.avx-kicker{border-color:rgba(57,255,114,.28)!important;background:rgba(57,255,114,.025)!important}
+.avx h1{margin:10px 0 11px!important;font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(34px,4.8vw,54px)!important;line-height:1.02!important;letter-spacing:-.035em!important}
+.avx h1 span{font-family:Inter,system-ui,sans-serif!important;font-size:.38em!important;margin-top:9px!important}
+.avx-lead{font-size:clamp(16px,1.55vw,19px)!important;line-height:1.6!important}
+.avx-badges{margin-top:14px!important}.avx-actions{margin-top:16px!important}
+.avx-main{padding-top:4px!important}
+.avx-section{margin-top:16px!important;border-color:rgba(233,198,108,.18)!important;background:linear-gradient(180deg,#0b0905,#050505)!important;border-radius:20px!important}
+.avx-section h2{font-family:Georgia,"Times New Roman",serif!important;color:#e9c66c!important}
+.avx-card{border-color:rgba(233,198,108,.15)!important;background:rgba(255,255,255,.024)!important}
+@media(max-width:820px){.avx-hero{padding:22px 0 12px!important}.avx h1{font-size:clamp(31px,9.3vw,38px)!important}.avx-section{border-radius:17px!important}}
