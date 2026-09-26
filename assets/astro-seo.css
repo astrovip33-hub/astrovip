@@ -823,3 +823,208 @@ body:not(.guide-page) .trust-icon-only[aria-label^="Codul Etic"] img{
     aspect-ratio:1 / 1!important;
   }
 }
+
+
+/* =========================================================
+   AstroVip Compact Premium Layer — preview 2026-09-26
+   Scope: legacy SEO guide pages only (.guide-page)
+   Goal: remove oversized hero treatment, unify premium black/gold/pearl
+   without touching homepage or newer standalone landing pages.
+   ========================================================= */
+.guide-page{
+  --av-navy:#020202;
+  --av-navy2:#070604;
+  --av-blue:#b77d16;
+  --av-electric:#42f58d;
+  --av-green:#f0cf68;
+  --av-green2:#b77d16;
+  --av-pearl:#fffaf0;
+  --av-muted:#d8d0c2;
+  --av-line:rgba(240,207,104,.24);
+  --av-shadow:0 22px 64px rgba(0,0,0,.30);
+  background:
+    radial-gradient(circle at 50% -8%,rgba(240,207,104,.10),transparent 28%),
+    linear-gradient(180deg,#020202 0%,#070604 48%,#020202 100%)!important;
+  color:var(--av-pearl);
+}
+.guide-page .guide-header{
+  background:rgba(2,2,2,.96)!important;
+  border-bottom:1px solid rgba(240,207,104,.24)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20);
+}
+.guide-page .guide-nav{height:68px}
+.guide-page .guide-brand{
+  font-family:Georgia,"Times New Roman",serif;
+  color:#f0cf68!important;
+  letter-spacing:.12em;
+  text-shadow:none!important;
+}
+.guide-page .guide-menu a{color:#fffaf0!important}
+.guide-page .guide-menu a:hover{color:#f0cf68!important}
+
+/* Planet strip remains useful, but visually joins the compact premium system. */
+.guide-page .planet-strip{
+  top:68px;
+  background:rgba(3,3,3,.97)!important;
+  border-top:0!important;
+  border-bottom:1px solid rgba(240,207,104,.22)!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.20)!important;
+}
+.guide-page .planet-item{color:#fffaf0!important}
+.guide-page .planet-item strong,
+.guide-page .planet-glyph{color:#42f58d!important;text-shadow:0 0 12px rgba(66,245,141,.22)!important}
+
+/* No large hero: retain semantic intro content, remove oversized hero treatment. */
+.guide-page .guide-hero{
+  padding:30px 0 18px!important;
+  background:transparent!important;
+  border-bottom:0!important;
+}
+.guide-page .guide-kicker{
+  color:#42f58d!important;
+  font-size:12px!important;
+  letter-spacing:.16em!important;
+}
+.guide-page .guide-hero h1{
+  margin:9px 0 12px!important;
+  max-width:1040px!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:clamp(34px,4.6vw,54px)!important;
+  line-height:1.02!important;
+  letter-spacing:-.035em!important;
+  color:#f0cf68!important;
+  text-shadow:none!important;
+  text-wrap:balance;
+}
+.guide-page .guide-lead{
+  max-width:900px!important;
+  margin:0!important;
+  color:#fffdf7!important;
+  font-size:clamp(16px,1.55vw,19px)!important;
+  line-height:1.62!important;
+}
+.guide-page .guide-cta-row{margin-top:16px!important;gap:10px!important}
+.guide-page .guide-cta,
+.guide-page .guide-ghost{
+  min-height:43px!important;
+  padding:9px 16px!important;
+  border-radius:999px!important;
+  font-size:14px!important;
+}
+.guide-page .guide-cta{
+  background:linear-gradient(180deg,#fff3a7,#e3be4d 55%,#b87a16)!important;
+  color:#161005!important;
+  border:1px solid #f8dd83!important;
+  box-shadow:0 10px 28px rgba(197,145,28,.20)!important;
+}
+.guide-page .guide-ghost{
+  border:1px solid rgba(240,207,104,.42)!important;
+  color:#fff8e5!important;
+  background:rgba(255,255,255,.025)!important;
+}
+
+/* Breadcrumb and content start sooner because the hero has been removed. */
+.guide-page .guide-breadcrumbs{
+  padding:10px 0 4px!important;
+  color:#bfb6a7!important;
+}
+.guide-page .guide-breadcrumbs a{color:#f0cf68!important}
+.guide-page .guide-main{padding:16px 0 72px!important}
+.guide-page .guide-layout{gap:28px!important}
+
+/* Upgrade legacy text sections to the same premium card language as #9/#10. */
+.guide-page .guide-content section{
+  margin:0 0 18px!important;
+  padding:24px clamp(18px,2.7vw,32px)!important;
+  border:1px solid rgba(240,207,104,.20)!important;
+  border-radius:20px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.030),rgba(255,255,255,.010))!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.18)!important;
+}
+.guide-page .guide-content h2{
+  margin:0 0 13px!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  color:#f0cf68!important;
+  font-size:clamp(27px,3.3vw,40px)!important;
+  line-height:1.08!important;
+  text-wrap:balance;
+}
+.guide-page .guide-content h3{color:#fff0aa!important}
+.guide-page .guide-content p,
+.guide-page .guide-content li{color:#fffdf7!important}
+.guide-page .guide-content a{color:#fff0aa}
+.guide-page .guide-content a:hover{color:#f0cf68}
+.guide-page .guide-note{
+  border:1px solid rgba(240,207,104,.20)!important;
+  border-left:4px solid #f0cf68!important;
+  background:rgba(240,207,104,.045)!important;
+  color:#fff8e5!important;
+}
+
+/* Sidebar, FAQ, related links and author box. */
+.guide-page .guide-aside{top:124px!important;gap:13px!important}
+.guide-page .guide-side-card,
+.guide-page .guide-author{
+  border:1px solid rgba(240,207,104,.22)!important;
+  background:linear-gradient(180deg,#0a0804,#050505)!important;
+  box-shadow:0 16px 40px rgba(0,0,0,.18)!important;
+}
+.guide-page .guide-side-card h3,
+.guide-page .guide-author strong,
+.guide-page .guide-side-price{color:#f0cf68!important}
+.guide-page .guide-side-card a{color:#fffaf0!important}
+.guide-page .guide-side-card a:hover{color:#f0cf68!important}
+.guide-page .guide-faq details{
+  border:1px solid rgba(240,207,104,.20)!important;
+  background:#070604!important;
+}
+.guide-page .guide-faq summary{color:#fff1b3!important}
+.guide-page .guide-related a{
+  border:1px solid rgba(240,207,104,.20)!important;
+  background:#080704!important;
+  color:#fffaf0!important;
+}
+.guide-page .guide-related a:hover{
+  border-color:#f0cf68!important;
+  color:#f0cf68!important;
+}
+
+/* Re-skin reusable guide grids without changing their structure. */
+.guide-page .seo-hub-card,
+.guide-page .planet-card{
+  border-color:rgba(240,207,104,.20)!important;
+  background:linear-gradient(180deg,#0b0905,#050505)!important;
+}
+.guide-page .seo-hub-card h3,
+.guide-page .planet-card .big{color:#f0cf68!important}
+.guide-page .seo-hub-card p,
+.guide-page .planet-card span{color:#d8d0c2!important}
+
+/* Premium footer. */
+.guide-page .guide-footer{
+  border-top:1px solid rgba(240,207,104,.22)!important;
+  background:#020202!important;
+  color:#cfc6b5!important;
+}
+.guide-page .guide-footer strong{color:#f0cf68!important}
+.guide-page .guide-footer a{color:#fffaf0!important}
+
+@media(max-width:900px){
+  .guide-page .guide-layout{gap:18px!important}
+  .guide-page .guide-aside{position:static!important}
+}
+@media(max-width:620px){
+  .guide-page .guide-hero{padding:22px 0 12px!important}
+  .guide-page .guide-hero h1{font-size:clamp(31px,9.3vw,38px)!important;line-height:1.04!important}
+  .guide-page .guide-lead{font-size:16px!important;line-height:1.55!important}
+  .guide-page .guide-cta-row{margin-top:13px!important}
+  .guide-page .guide-breadcrumbs{padding-top:8px!important}
+  .guide-page .guide-main{padding-top:12px!important}
+  .guide-page .guide-content section{
+    padding:20px 17px!important;
+    border-radius:17px!important;
+    margin-bottom:14px!important;
+  }
+  .guide-page .guide-content h2{font-size:clamp(26px,8vw,32px)!important}
+  .guide-page .guide-content p{font-size:16px!important}
+}
