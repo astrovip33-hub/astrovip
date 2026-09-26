@@ -115,6 +115,48 @@ jobs:
               # without blocking ordinary editorial deployments.
               if rel.startswith("atlas/"):
                   continue
+              # Curated crawl-focus exclusions: these indexable pages remain reachable
+              # through internal links, but are intentionally not promoted through the
+              # submitted sitemap while we concentrate crawl demand on stronger hubs.
+              if rel.startswith((
+                  "academia-astrologie/atlas-500/",
+                  "academia-astrologie/atlas-1000/",
+                  "academia-astrologie/atlas-1500/",
+                  "academia-astrologie/atlas-2500/",
+              )):
+                  continue
+              if rel.startswith("horoscop-chinezesc/"):
+                  chinese_sitemap_keep = {
+                      "horoscop-chinezesc/index.html",
+                      "horoscop-chinezesc/calculator/index.html",
+                      "horoscop-chinezesc/anii-1924-2043/index.html",
+                      "horoscop-chinezesc/cele-12-animale/index.html",
+                      "horoscop-chinezesc/cele-5-elemente/index.html",
+                      "horoscop-chinezesc/compatibilitate/index.html",
+                      "horoscop-chinezesc/calendar-lunar-anul-chinezesc/index.html",
+                      "horoscop-chinezesc/ore-chinezesti-ascendent/index.html",
+                      "horoscop-chinezesc/tulpini-ceresti-ramuri-pamantesti/index.html",
+                      "horoscop-chinezesc/yin-yang/index.html",
+                      "horoscop-chinezesc/bivol/index.html",
+                      "horoscop-chinezesc/caine/index.html",
+                      "horoscop-chinezesc/cal/index.html",
+                      "horoscop-chinezesc/capra/index.html",
+                      "horoscop-chinezesc/cocos/index.html",
+                      "horoscop-chinezesc/dragon/index.html",
+                      "horoscop-chinezesc/iepure/index.html",
+                      "horoscop-chinezesc/maimuta/index.html",
+                      "horoscop-chinezesc/mistret/index.html",
+                      "horoscop-chinezesc/sarpe/index.html",
+                      "horoscop-chinezesc/sobolan/index.html",
+                      "horoscop-chinezesc/tigru/index.html",
+                      "horoscop-chinezesc/element-apa/index.html",
+                      "horoscop-chinezesc/element-foc/index.html",
+                      "horoscop-chinezesc/element-lemn/index.html",
+                      "horoscop-chinezesc/element-metal/index.html",
+                      "horoscop-chinezesc/element-pamant/index.html",
+                  }
+                  if rel not in chinese_sitemap_keep:
+                      continue
               text = path.read_text(encoding="utf-8", errors="ignore")
               if "noindex" in text.lower():
                   continue
