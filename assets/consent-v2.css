@@ -54,3 +54,4 @@
     font-size:14px;
   }
 }
+@media(min-width:641px){.av-consent{width:min(920px,calc(100% - 36px));left:50%;right:auto;transform:translateX(-50%)}}
