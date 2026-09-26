@@ -85,4 +85,12 @@ jobs:
           console.log('LH_DIAGNOSTICS_START');
           for (const x of rows.slice(0,24)) console.log(JSON.stringify(x));
           console.log('LH_DIAGNOSTICS_END');
+          for (const id of ['image-delivery-insight','render-blocking-insight','mainthread-work-breakdown','network-requests']) {
+            const x=a[id];
+            if (!x) continue;
+            console.log('LH_DETAIL_' + id + '_START');
+            const items=(x.details && x.details.items) || [];
+            for (const item of items.slice(0,20)) console.log(JSON.stringify(item));
+            console.log('LH_DETAIL_' + id + '_END');
+          }
           NODE
