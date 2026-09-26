@@ -13,7 +13,7 @@
       const rawHref=link.getAttribute('href')||'';
       const absoluteHref=link.href||rawHref;
       const label=(link.textContent||link.getAttribute('aria-label')||'').trim().slice(0,100);
-      if(/wa\.me\/40722128220/i.test(absoluteHref)){
+      if(/wa\.me\/40771200446/i.test(absoluteHref)){
         trackAstroVipEvent('whatsapp_click',{link_text:label,link_url:absoluteHref,page_path:location.pathname});
       }
       if(/^tel:/i.test(rawHref)){
@@ -50,7 +50,7 @@
     menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.textContent='☰';hamb.setAttribute('aria-label','Deschide meniul')}));
     const revealEls=document.querySelectorAll('.reveal');
     if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});revealEls.forEach(el=>io.observe(el));}else{revealEls.forEach(el=>el.classList.add('in'));}
-    document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('name').value.trim(),p=document.getElementById('phone').value.trim(),s=document.getElementById('service').value,m=document.getElementById('message').value.trim();trackAstroVipEvent('generate_lead',{method:'contact_whatsapp',service:s,page_path:location.pathname});const text=`Bună ziua! Sunt ${n}. Telefon: ${p}. Doresc: ${s}.${m?` Mesaj: ${m}`:''}`;window.open('https://wa.me/40722128220?text='+encodeURIComponent(text),'_blank','noopener')});
+    document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('name').value.trim(),p=document.getElementById('phone').value.trim(),s=document.getElementById('service').value,m=document.getElementById('message').value.trim();trackAstroVipEvent('generate_lead',{method:'contact_whatsapp',service:s,page_path:location.pathname});const text=`Bună ziua! Sunt ${n}. Telefon: ${p}. Doresc: ${s}.${m?` Mesaj: ${m}`:''}`;window.open('https://wa.me/40771200446?text='+encodeURIComponent(text),'_blank','noopener')});
 
 
     const articles={
@@ -106,7 +106,7 @@
         trackAstroVipEvent('booking_complete',{service:vals.service,booking_mode:vals.mode,page_path:location.pathname});
         toast('Programarea a fost înregistrată.');
         bookingForm.reset();timeSelect.disabled=true;timeSelect.innerHTML='<option value="">Alege mai întâi data</option>';availability.textContent='Programarea a fost înregistrată. Se deschide WhatsApp…';
-        setTimeout(()=>{window.location.href='https://wa.me/40722128220?text='+encodeURIComponent(text)},450);
+        setTimeout(()=>{window.location.href='https://wa.me/40771200446?text='+encodeURIComponent(text)},450);
       }catch(error){
         toast('Programarea nu a putut fi salvată. Încearcă din nou.');
       }finally{
