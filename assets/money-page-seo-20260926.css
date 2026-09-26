@@ -1,0 +1,36 @@
+/* AstroVip money-page SEO/conversion layer — 2026-09-26 */
+.av-seo-proof{
+  margin:28px 0;padding:28px clamp(18px,3vw,34px);border:1px solid rgba(240,207,104,.34);
+  border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  box-shadow:0 18px 48px rgba(0,0,0,.22)
+}
+.av-seo-proof h2{margin:0 0 12px!important}
+.av-seo-proof>p{margin:0 0 18px}
+.av-seo-proof-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.av-seo-proof-card{
+  display:block;padding:17px 16px;border:1px solid rgba(240,207,104,.24);border-radius:16px;
+  background:rgba(0,0,0,.22);text-decoration:none!important;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease
+}
+.av-seo-proof-card:hover{transform:translateY(-2px);border-color:rgba(240,207,104,.62);box-shadow:0 10px 26px rgba(0,0,0,.22)}
+.av-seo-proof-card strong{display:block;margin-bottom:5px;color:#f0cf68!important;font-weight:950}
+.av-seo-proof-card span{display:block;color:#f7f2e6!important;line-height:1.5;font-size:14.5px;font-weight:650}
+.av-seo-path{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.av-seo-path a{
+  display:inline-flex;align-items:center;min-height:38px;padding:8px 12px;border-radius:999px;
+  border:1px solid rgba(240,207,104,.30);background:rgba(255,255,255,.035);color:#fff4c7!important;
+  text-decoration:none!important;font-weight:850;font-size:13px
+}
+.av-seo-path a:hover{border-color:#f0cf68}
+.av-seo-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.av-seo-cta a{
+  display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:999px;
+  text-decoration:none!important;font-weight:950
+}
+.av-seo-cta .primary{background:linear-gradient(180deg,#fff3a7,#e3be4d 55%,#b87a16);color:#161005!important;border:1px solid #f8dd83}
+.av-seo-cta .secondary{border:1px solid rgba(240,207,104,.55);color:#fff8e5!important;background:rgba(255,255,255,.035)}
+.av-seo-note{margin-top:14px!important;color:#d9cfba!important;font-size:14px!important;line-height:1.55!important}
+@media(max-width:820px){
+  .av-seo-proof{padding:22px 17px;border-radius:18px}
+  .av-seo-proof-grid{grid-template-columns:1fr}
+  .av-seo-cta a{width:100%}
+}

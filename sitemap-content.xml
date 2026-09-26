@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://astrovip.ro/academia-astrologie/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/arce-solare/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/aspecte-natale/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/guvernatori-case/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/planete-axe/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/planete-in-case/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/planete-in-semne/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/revolutie-solara-case/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/sinastrie-case/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/sinastrie/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/tranzite-in-semne/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1000/tranzite/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1500/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1500/configuratii-aspecte/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1500/progresii-secundare/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1500/puncte-sensibile/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-1500/tranzite-aspecte-natale/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-2500/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-2500/aspecte-natale-extinse/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-2500/compozit-case/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-2500/compozit-semne/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-2500/progresii-aspecte/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-2500/puncte-sensibile-aspecte/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-2500/revolutie-solara-semne/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-2500/sinastrie-aspecte-extinse/</loc></url>
-  <url><loc>https://astrovip.ro/academia-astrologie/atlas-500/</loc></url>
   <url><loc>https://astrovip.ro/antiscia-contra-antiscia/</loc></url>
   <url><loc>https://astrovip.ro/asteroizi-in-astrologie/</loc></url>
   <url><loc>https://astrovip.ro/astrologie-electiva/</loc></url>
@@ -57,138 +31,29 @@
   <url><loc>https://astrovip.ro/harta-compozita/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/anii-1924-2043/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-bivol/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-caine/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-cal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-capra/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-cocos/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-dragon/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-iepure/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-maimuta/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-mistret/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-sarpe/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-sobolan/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ascendent-tigru/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/bivol-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/bivol-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/bivol-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/bivol-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/bivol-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/bivol/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/caine-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/caine-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/caine-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/caine-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/caine-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/caine/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cal-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cal-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cal-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cal-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cal-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/cal/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/calculator/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/calendar-lunar-anul-chinezesc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/capra-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/capra-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/capra-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/capra-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/capra-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/capra/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/cele-12-animale/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/cele-5-elemente/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ciclul-60-ani/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cocos-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cocos-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cocos-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cocos-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/cocos-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/cocos/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-bivol/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-caine/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-cal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-capra/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-cocos/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-dragon/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-iepure/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-maimuta/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-mistret/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-sarpe/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-sobolan/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate-tigru/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/compatibilitate/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/dragon-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/dragon-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/dragon-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/dragon-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/dragon-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/dragon/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/element-apa/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/element-foc/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/element-lemn/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/element-metal/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/element-pamant/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/iepure-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/iepure-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/iepure-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/iepure-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/iepure-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/iepure/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/maimuta-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/maimuta-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/maimuta-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/maimuta-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/maimuta-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/maimuta/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/metoda-theodora-lau/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/mistret-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/mistret-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/mistret-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/mistret-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/mistret-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/mistret/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/ore-chinezesti-ascendent/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-chen-dragon/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-chou-bivol/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-hai-mistret/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-mao-iepure/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-shen-maimuta/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-si-sarpe/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-wei-capra/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-wu-cal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-xu-caine/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-yin-tigru/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-you-cocos/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/ramura-zi-sobolan/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sarpe-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sarpe-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sarpe-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sarpe-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sarpe-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/sarpe/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sobolan-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sobolan-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sobolan-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sobolan-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/sobolan-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/sobolan/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tigru-de-apa/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tigru-de-foc/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tigru-de-lemn/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tigru-de-metal/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tigru-de-pamant/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/tigru/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/toate-paginile/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-bing/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-ding/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-geng/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-gui/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-ji/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-jia/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-ren/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-wu/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-xin/</loc></url>
-  <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpina-yi/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/tulpini-ceresti-ramuri-pamantesti/</loc></url>
   <url><loc>https://astrovip.ro/horoscop-chinezesc/yin-yang/</loc></url>
   <url><loc>https://astrovip.ro/jupiter-in-astrologie/</loc></url>
@@ -318,10 +183,8 @@
   <url><loc>https://astrovip.ro/zodiac/scorpion/</loc></url>
   <url><loc>https://astrovip.ro/zodiac/taur/</loc></url>
   <url><loc>https://astrovip.ro/zodiac/varsator/</loc></url>
-
-\n  <url><loc>https://astrovip.ro/astrologie-dragoste/</loc><lastmod>2026-09-26</lastmod></url>
-
-<url><loc>https://astrovip.ro/astrologie-cariera-vocatie/</loc><lastmod>2026-09-26</lastmod></url>
+  <url><loc>https://astrovip.ro/astrologie-dragoste/</loc><lastmod>2026-09-26</lastmod></url>
+  <url><loc>https://astrovip.ro/astrologie-cariera-vocatie/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://astrovip.ro/astrologie-afaceri/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://astrovip.ro/previziuni-astrologice-2027/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://astrovip.ro/numerologie-data-nasterii/</loc><lastmod>2026-09-26</lastmod></url>
