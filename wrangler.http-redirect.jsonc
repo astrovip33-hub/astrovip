@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "astrovip-http-redirect",
+  "main": "http-redirect-worker.js",
+  "compatibility_date": "2026-09-26",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "http://astrovip.ro/*", "zone_name": "astrovip.ro" }
+  ]
+}
