@@ -1,10 +1,10 @@
 /
   Cache-Control: no-store, max-age=0
-  X-AstroVip-Release: 20260925-video1
+  X-AstroVip-Release: 20260926-audit1
 
 /index.html
   Cache-Control: no-store, max-age=0
-  X-AstroVip-Release: 20260925-video1
+  X-AstroVip-Release: 20260926-audit1
 
 /*
   X-Content-Type-Options: nosniff
@@ -56,3 +56,9 @@
 
 /assets/astrovip-hero-lux-clean-20260922-960.webp
   Cache-Control: public, max-age=31536000, immutable
+
+/atlas/*
+  X-Robots-Tag: noindex, follow
+
+/academia-astrologie/atlas-10000/*
+  X-Robots-Tag: noindex, follow
