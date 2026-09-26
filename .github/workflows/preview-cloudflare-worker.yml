@@ -73,4 +73,16 @@ jobs:
           console.log('LH_SPEED_INDEX=' + a['speed-index'].displayValue);
           console.log('LH_TBT=' + a['total-blocking-time'].displayValue);
           console.log('LH_CLS=' + a['cumulative-layout-shift'].displayValue);
+          const rows = Object.values(a).filter(x => x && x.scoreDisplayMode !== 'notApplicable' && (x.score === null || x.score < 1)).map(x => ({
+            id:x.id,
+            score:x.score,
+            title:x.title,
+            display:x.displayValue || '',
+            ms:x.numericValue || 0,
+            savingsMs:(x.details && x.details.overallSavingsMs) || 0,
+            savingsBytes:(x.details && x.details.overallSavingsBytes) || 0
+          })).sort((p,q)=>(q.savingsMs-p.savingsMs)||(q.ms-p.ms));
+          console.log('LH_DIAGNOSTICS_START');
+          for (const x of rows.slice(0,24)) console.log(JSON.stringify(x));
+          console.log('LH_DIAGNOSTICS_END');
           NODE
