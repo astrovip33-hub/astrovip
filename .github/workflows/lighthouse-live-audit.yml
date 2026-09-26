@@ -1,0 +1,33 @@
+name: Lighthouse live audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/lighthouse-live-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install -g lighthouse@12
+      - name: Run detailed mobile Lighthouse
+        run: |
+          lighthouse https://perf-mobile-speedindex-20260923-astrovip.astrovip33.workers.dev/ --chrome-flags="--headless --no-sandbox" --only-categories=performance --output=json --output-path=mobile.json
+      - name: Print detailed diagnostics
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const j=JSON.parse(fs.readFileSync('mobile.json','utf8'));
+          const a=j.audits;
+          console.log('score',Math.round(j.categories.performance.score*100));
+          for (const id of ['first-contentful-paint','largest-contentful-paint','speed-index','total-blocking-time','cumulative-layout-shift','interactive']) console.log(id,a[id]?.displayValue||a[id]?.numericValue);
+          for (const id of ['uses-rel-preconnect','unused-css-rules','uses-responsive-images','modern-image-formats','render-blocking-resources','legacy-javascript','lcp-breakdown-insight','lcp-discovery-insight','layout-shifts','cls-culprits-insight','long-tasks','mainthread-work-breakdown','network-requests']) {
+            const x=a[id]; if(!x) continue;
+            console.log('AUDIT',id,JSON.stringify({title:x.title,displayValue:x.displayValue,details:x.details},null,2).slice(0,30000));
+          }
+          NODE
