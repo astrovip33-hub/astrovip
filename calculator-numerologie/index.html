@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<script id="astrovip-consent-default">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("consent","default",{analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",personalization_storage:"denied",functionality_storage:"granted",security_storage:"granted",wait_for_update:500});gtag("set","ads_data_redaction",true);</script>
+<link rel="stylesheet" href="/assets/consent-v2.css?v=2"><script defer src="/assets/consent-v2.js?v=2"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a38">
+<title>Calculator Numerologie – Data Nașterii și Nume | AstroVip</title>
+<meta name="description" content="Calculator numerologie gratuit: calculează Calea Vieții din data nașterii, vibrația numelui și Anul Personal. Metodă explicată, rezultate instant.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://astrovip.ro/calculator-numerologie/">
+<meta property="og:type" content="website"><meta property="og:locale" content="ro_RO"><meta property="og:site_name" content="AstroVip">
+<meta property="og:title" content="Calculator Numerologie – Data Nașterii și Nume | AstroVip">
+<meta property="og:description" content="Calculează Calea Vieții, vibrația numelui și Anul Personal cu calculatorul de numerologie AstroVip.">
+<meta property="og:url" content="https://astrovip.ro/calculator-numerologie/"><meta property="og:image" content="https://astrovip.ro/assets/1000043152.png"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/calculators.css">
+<link rel="stylesheet" href="/assets/internal-luxury-core-preview-20260924.css?v=20260924-lux1">
+<style>
+.num-method{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}.num-method article{padding:18px;border:1px solid rgba(216,245,0,.24);border-radius:16px;background:rgba(255,255,255,.025)}.num-method b{display:block;margin-bottom:7px;color:#efff72}.num-result{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.num-result article{padding:22px;border:1px solid rgba(216,245,0,.28);border-radius:18px;background:linear-gradient(180deg,#101610,#070907)}.num-result small{display:block;color:#a8b9ae;text-transform:uppercase;letter-spacing:.08em;font-weight:800}.num-result strong{display:block;font-size:42px;line-height:1;margin:9px 0;color:#efff72}.num-result span{display:block;line-height:1.55}.num-explain{margin-top:18px;padding:18px;border-left:4px solid #d8f500;background:rgba(216,245,0,.05);border-radius:12px}.num-disclaimer{font-size:13px;color:#a8b9ae}.calc-form input[type=text]{text-transform:none}@media(max-width:760px){.num-method,.num-result{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Calculator Numerologie AstroVip","url":"https://astrovip.ro/calculator-numerologie/","applicationCategory":"LifestyleApplication","operatingSystem":"Web","inLanguage":"ro-RO","offers":{"@type":"Offer","price":"0","priceCurrency":"RON"},"description":"Calculator gratuit de numerologie pentru Calea Vieții, vibrația numelui și Anul Personal."},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Cum se calculează Calea Vieții?","acceptedAnswer":{"@type":"Answer","text":"Calculatorul însumează cifrele datei de naștere și reduce rezultatul la o cifră, păstrând numerele maestru 11, 22 și 33."}},{"@type":"Question","name":"Cum se calculează vibrația numelui?","acceptedAnswer":{"@type":"Answer","text":"Pagina folosește sistemul pitagoreic clasic, în care literele A–Z sunt asociate ciclic valorilor 1–9."}},{"@type":"Question","name":"Calculatorul este gratuit?","acceptedAnswer":{"@type":"Answer","text":"Da. Calculul se execută direct în browser și nu necesită plată."}}]}]}</script>
+</head>
+<body>
+<header class="calc-top"><div class="calc-wrap calc-nav"><a class="calc-brand" href="/">ASTROVIP</a><nav class="calc-menu"><a href="/harta-mea/">Hartă natală</a><a href="/calculator-ascendent/">Ascendent</a><a class="active" href="/calculator-numerologie/">Numerologie</a><a href="/sinastrie-calculator/">Sinastrie</a></nav></div></header>
+<main>
+<section class="calc-hero"><div class="calc-wrap"><div class="calc-kicker">AstroVip · instrument numerologic</div><h1>Calculator Numerologie – data nașterii și nume</h1><p>Calculează gratuit Calea Vieții, vibrația numelui și Anul Personal. Metoda folosită este afișată clar, iar rezultatele se calculează local în browser.</p><div class="calc-pills"><span>Calea Vieții</span><span>Vibrația numelui</span><span>An Personal</span><span>11 · 22 · 33</span></div></div></section>
+
+<section class="calc-main"><div class="calc-wrap calc-grid">
+<form class="calc-panel calc-form" id="numForm">
+<div class="calc-panel-head"><div><b>01</b><h2>Date pentru calcul</h2></div><span>Pitagoreic</span></div>
+<div class="calc-pad calc-form">
+<label>Data nașterii<input id="birthDate" type="date" required></label>
+<label>Numele complet<input id="fullName" type="text" autocomplete="name" placeholder="Ex.: Maria Popescu" required></label>
+<button class="calc-primary" type="submit">CALCULEAZĂ NUMEROLOGIA</button>
+<button class="calc-secondary" id="demo" type="button">Vezi un exemplu</button>
+<p class="calc-note">Calculatorul folosește metoda pitagoreică pentru nume și reducerea cifrelor pentru data nașterii. Alte școli de numerologie pot folosi reguli diferite.</p>
+</div></form>
+<div class="calc-panel"><div class="calc-panel-head"><div><b>02</b><h2>Rezultat</h2></div><span id="status">Așteaptă date</span></div><div class="calc-pad" id="result"><p>Completează data nașterii și numele pentru a vedea rezultatele.</p></div></div>
+</div></section>
+
+<section class="calc-results"><div class="calc-wrap"><div class="calc-title"><div class="calc-kicker">Răspuns rapid</div><h2>Calculator numerologie: ce calculează</h2></div><p>Acest <strong>calculator de numerologie</strong> oferă trei rezultate distincte: Calea Vieții din <strong>data nașterii</strong>, vibrația numelui din literele numelui complet și Anul Personal pentru anul calendaristic curent. Numerele 11, 22 și 33 sunt păstrate ca numere maestru în etapa finală de reducere.</p><div class="num-method"><article><b>Calea Vieții</b><span>Se însumează cifrele datei de naștere și se reduce rezultatul.</span></article><article><b>Vibrația numelui</b><span>Literele sunt convertite prin schema pitagoreică 1–9 și apoi reduse.</span></article><article><b>Anul Personal</b><span>Ziua și luna nașterii sunt combinate cu cifrele anului curent.</span></article></div></div></section>
+
+<section class="calc-results"><div class="calc-wrap"><div class="calc-title"><div class="calc-kicker">Metodologie</div><h2>Cum sunt convertite literele numelui</h2></div><p>Sistemul pitagoreic folosit aici grupează literele astfel: 1 = A J S, 2 = B K T, 3 = C L U, 4 = D M V, 5 = E N W, 6 = F O X, 7 = G P Y, 8 = H Q Z, 9 = I R. Diacriticele românești sunt normalizate la litera de bază pentru calcul.</p><p>Pentru alte metode, inclusiv numerologie tantrică și variante inspirate din Harish Johari, consultă <a href="/numerologie/"><strong>ghidul de numerologie AstroVip</strong></a> și instrumentele dedicate.</p><p class="num-disclaimer">Numerologia este un sistem interpretativ și simbolic; rezultatele nu reprezintă o măsurare științifică și nu garantează evenimente sau rezultate.</p></div></section>
+
+<section class="calc-results"><div class="calc-wrap"><div class="calc-title"><div class="calc-kicker">Continuă analiza</div><h2>Instrumente și ghiduri numerologice</h2></div><div class="tool-links"><a class="tool-link" href="/numerologie/"><strong>Ghid Numerologie</strong><span>Metode, concepte și sisteme folosite de AstroVip.</span></a><a class="tool-link" href="/calea-vietii/"><strong>Calea Vieții</strong><span>Interpretarea numărului derivat din data nașterii.</span></a><a class="tool-link" href="/vibratia-numelui/"><strong>Vibrația numelui</strong><span>Semnificația valorii numerice a numelui.</span></a><a class="tool-link" href="/an-personal/"><strong>An Personal</strong><span>Ciclul numerologic al anului curent.</span></a></div></div></section>
+</main>
+<footer class="calc-footer"><div class="calc-wrap"><strong>ASTROVIP</strong> · Calculator Numerologie · Data nașterii și nume</div></footer>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const meanings={
+1:'Inițiativă, autonomie și orientare spre începuturi.',
+2:'Cooperare, receptivitate și atenție la relații.',
+3:'Expresie, comunicare și creativitate.',
+4:'Structură, disciplină și construcție pas cu pas.',
+5:'Schimbare, mobilitate și nevoie de varietate.',
+6:'Responsabilitate, armonie și grijă pentru ceilalți.',
+7:'Analiză, introspecție și căutarea sensului.',
+8:'Organizare, administrarea resurselor și rezultate concrete.',
+9:'Sinteză, idealism și orientare către un tablou mai larg.',
+11:'Număr maestru asociat în numerologie cu intuiția și inspirația.',
+22:'Număr maestru asociat cu transformarea unei viziuni într-o structură concretă.',
+33:'Număr maestru asociat cu responsabilitatea, susținerea și expresia compasiunii.'
+};
+function reduce(n){
+  n=Math.abs(Number(n)||0);
+  while(n>9 && n!==11 && n!==22 && n!==33){
+    n=String(n).split('').reduce((a,d)=>a+Number(d),0);
+  }
+  return n;
+}
+function lifePath(date){
+  const digits=date.replace(/\D/g,'');
+  return reduce(digits.split('').reduce((a,d)=>a+Number(d),0));
+}
+function normalizeName(s){
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'');
+}
+function nameNumber(name){
+  const letters=normalizeName(name);
+  if(!letters) return 0;
+  let sum=0;
+  for(const ch of letters){sum+=((ch.charCodeAt(0)-65)%9)+1;}
+  return reduce(sum);
+}
+function personalYear(date){
+  const d=new Date(date+'T12:00:00');
+  if(isNaN(d)) return 0;
+  const y=new Date().getFullYear();
+  const raw=String(d.getDate())+String(d.getMonth()+1)+String(y);
+  return reduce(raw.split('').reduce((a,x)=>a+Number(x),0));
+}
+function label(n){return meanings[n]||'Indicator numerologic calculat din datele introduse.'}
+function calculate(){
+  const date=$('birthDate').value,name=$('fullName').value.trim();
+  if(!date||!name) throw Error('Completează data nașterii și numele.');
+  const life=lifePath(date), vibration=nameNumber(name), year=personalYear(date);
+  if(!life||!vibration||!year) throw Error('Datele introduse nu pot fi calculate.');
+  $('status').textContent='Calculat';
+  $('result').innerHTML='<div class="num-result"><article><small>Calea Vieții</small><strong>'+life+'</strong><span>'+label(life)+'</span></article><article><small>Vibrația numelui</small><strong>'+vibration+'</strong><span>'+label(vibration)+'</span></article><article><small>An Personal '+new Date().getFullYear()+'</small><strong>'+year+'</strong><span>'+label(year)+'</span></article></div><div class="num-explain"><b>Metoda:</b> data nașterii este redusă numeric, iar numele este convertit prin sistemul pitagoreic. Numerele maestru 11, 22 și 33 sunt păstrate în reducerea finală.</div>';
+}
+$('numForm').addEventListener('submit',e=>{e.preventDefault();try{calculate()}catch(err){alert(err.message)}});
+$('demo').addEventListener('click',()=>{$('birthDate').value='1990-07-14';$('fullName').value='Maria Popescu';calculate()});
+})();
+</script>
+</body>
+</html>
