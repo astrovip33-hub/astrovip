@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   preview:
@@ -20,6 +20,25 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
+
+      - name: Build lean 480px mobile Hero asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="assets/astrovip-hero-lux-clean-20260922-480.webp"
+          if [ ! -f "$OUT" ]; then
+            sudo apt-get update -y >/dev/null
+            sudo apt-get install -y webp >/dev/null
+            cwebp -quiet -mt -m 6 -q 80 -alpha_q 100 -metadata none -resize 480 0 assets/astrovip-hero-lux-clean-20260922.png -o "$OUT"
+            echo "480 bytes: $(stat -c%s "$OUT")"
+            git config user.name "astrovip33-hub"
+            git config user.email "astrovip33@gmail.com"
+            git add "$OUT"
+            git commit -m "Perf: add 480px mobile Hero asset"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          else
+            echo "480 Hero asset already exists: $(stat -c%s "$OUT") bytes"
+          fi
 
       - name: Enforce AstroVip SEO quality gate
         shell: bash
