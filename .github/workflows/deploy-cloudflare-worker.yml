@@ -282,6 +282,12 @@ jobs:
           set -euo pipefail
           npx --yes wrangler@latest deploy
 
+      - name: Deploy apex HTTP to HTTPS redirect Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy --config wrangler.http-redirect.jsonc
+
       - name: Deploy www to apex redirect Worker
         shell: bash
         run: |
@@ -516,6 +522,32 @@ jobs:
             exit 28
           fi
           echo "Local Space hub and all 10 case-study pages verified."
+
+          echo "Checking HTTP -> HTTPS 301 redirect"
+          HTTP_HDR=$(mktemp)
+          HTTP_STATUS=""
+          HTTP_LOCATION=""
+          HTTP_SOURCE="http://astrovip.ro/test-https-path/?release=$EXPECTED_RELEASE"
+          HTTP_TARGET="https://astrovip.ro/test-https-path/?release=$EXPECTED_RELEASE"
+          for ATTEMPT in $(seq 1 15); do
+            : > "$HTTP_HDR"
+            HTTP_STATUS=$(curl -sS -D "$HTTP_HDR" -o /dev/null -w '%{http_code}' --max-redirs 0 "$HTTP_SOURCE" || true)
+            HTTP_LOCATION=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$HTTP_HDR")
+            echo "http propagation $ATTEMPT/15: status=$HTTP_STATUS location=$HTTP_LOCATION"
+            if [ "$HTTP_STATUS" = "301" ] && [ "$HTTP_LOCATION" = "$HTTP_TARGET" ]; then
+              break
+            fi
+            sleep 5
+          done
+          if [ "$HTTP_STATUS" != "301" ]; then
+            echo "::error::http://astrovip.ro returned HTTP $HTTP_STATUS instead of 301 after propagation window."
+            exit 48
+          fi
+          if [ "$HTTP_LOCATION" != "$HTTP_TARGET" ]; then
+            echo "::error::HTTP redirect location '$HTTP_LOCATION' is not '$HTTP_TARGET'."
+            exit 49
+          fi
+          echo "HTTP -> HTTPS 301 redirect verified."
 
           echo "Checking canonical apex"
           APEX_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/")
