@@ -491,3 +491,11 @@ body:not(.guide-page) .trust-commerce-card .trust-commerce-points{display:none!i
     clear:both!important;
   }
 }
+
+
+/* Preview 2026-09-27: AstroVip Chat frame — same green as closed hamburger glyph, balanced visual stroke. */
+@media(max-width:980px){
+  html body:not(.guide-page) .avchat-launcher.avchat-header-slot{
+    border:3px solid #39FF14!important;
+  }
+}
