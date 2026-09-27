@@ -2,13 +2,28 @@
   'use strict';
   const SIGNS=[['Berbec','♈'],['Taur','♉'],['Gemeni','♊'],['Rac','♋'],['Leu','♌'],['Fecioară','♍'],['Balanță','♎'],['Scorpion','♏'],['Săgetător','♐'],['Capricorn','♑'],['Vărsător','♒'],['Pești','♓']];
   const BODIES=[['Sun','Soare','☉'],['Moon','Lună','☽'],['Mercury','Mercur','☿'],['Venus','Venus','♀'],['Mars','Marte','♂'],['Jupiter','Jupiter','♃'],['Saturn','Saturn','♄'],['Uranus','Uranus','♅'],['Neptune','Neptun','♆'],['Pluto','Pluto','♇']];
+  const BUCHAREST={lat:44.4268,lon:26.1025,timeZone:'Europe/Bucharest'};
+  const ROMAN=['','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
   const norm=x=>((x%360)+360)%360;
   const dayDelta=(a,b)=>((b-a+540)%360)-180;
   function geoLongitude(body,date){const eqj=Astronomy.GeoVector(body,date,true);return norm(Astronomy.Ecliptic(eqj).elon)}
   function formatLongitude(lon){lon=norm(lon);let si=Math.floor(lon/30),within=lon-si*30,d=Math.floor(within),m=Math.round((within-d)*60);if(m===60){m=0;d++;if(d===30){d=0;si=(si+1)%12}}return{sign:SIGNS[si][0],symbol:SIGNS[si][1],deg:d,min:m,text:`${d}°${String(m).padStart(2,'0')}′ ${SIGNS[si][1]} ${SIGNS[si][0]}`}}
-  function calc(){const now=new Date(),later=new Date(now.getTime()+86400000),out=[];BODIES.forEach(([body,label,glyph],i)=>{try{const lon=geoLongitude(body,now),f=formatLongitude(lon);let retro=false;if(i>1)retro=dayDelta(lon,geoLongitude(body,later))<-0.0005;out.push({label,glyph,lon,...f,retro})}catch(e){console.warn('AstroVip planet calc',label,e)}});return{now,out}}
+  function calc(){
+    const now=new Date(),later=new Date(now.getTime()+86400000),out=[];
+    let houses=null;
+    try{if(window.AstroVipKoch)houses=AstroVipKoch.calculate(now,BUCHAREST.lat,BUCHAREST.lon)}catch(e){console.warn('AstroVip Koch calc',e)}
+    BODIES.forEach(([body,label,glyph],i)=>{
+      try{
+        const lon=geoLongitude(body,now),f=formatLongitude(lon);let retro=false;
+        if(i>1)retro=dayDelta(lon,geoLongitude(body,later))<-0.0005;
+        const house=houses?AstroVipKoch.houseOfLongitude(lon,houses.cusps):null;
+        out.push({label,glyph,lon,...f,retro,house});
+      }catch(e){console.warn('AstroVip planet calc',label,e)}
+    });
+    return{now,out,houses};
+  }
 
-  const itemHtml=p=>`<span class="planet-item" role="listitem" aria-label="${p.label}, ${p.deg} grade ${p.min} minute în ${p.sign}${p.retro?', retrograd':''}"><span class="planet-glyph" aria-hidden="true">${p.glyph}︎</span><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span>${p.retro?'<span class="planet-retro" title="Retrograd" aria-hidden="true">℞</span>':''}</span>`;
+  const itemHtml=p=>`<span class="planet-item" role="listitem" aria-label="${p.label}, ${p.deg} grade ${p.min} minute în ${p.sign}${p.house?', casa '+p.house:''}${p.retro?', retrograd':''}"><span class="planet-glyph" aria-hidden="true">${p.glyph}︎</span><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span>${p.house?`<span class="planet-house">H${p.house}</span>`:''}${p.retro?'<span class="planet-retro" title="Retrograd" aria-hidden="true">℞</span>':''}</span>`;
   function applyPageTuning(){
     if(document.getElementById('astrovip-runtime-tuning'))return;
     const style=document.createElement('style');style.id='astrovip-runtime-tuning';
@@ -70,7 +85,7 @@
 
   function render(){
     if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;
-    const {now,out}=calc();if(out.length!==BODIES.length)return;
+    const {now,out,houses}=calc();if(out.length!==BODIES.length)return;
     document.querySelectorAll('[data-planet-ticker]').forEach(el=>{
       const seq=out.map(itemHtml).join('');
       let track=el.querySelector('.planet-track');
@@ -85,7 +100,11 @@
       }
     });
     document.querySelectorAll('[data-planet-updated]').forEach(el=>{el.textContent=`actualizat ${now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Bucharest'})}`});
-    document.querySelectorAll('[data-planet-grid]').forEach(el=>{el.innerHTML=out.map(p=>`<article class="planet-card"><div class="big" aria-hidden="true">${p.glyph}︎</div><strong>${p.label}</strong><span>${p.text.replace(p.symbol,p.symbol+'︎')}</span>${p.retro?'<div class="retro">Mișcare retrogradă ℞</div>':'<div>Mișcare directă</div>'}</article>`).join('')});
+    document.querySelectorAll('[data-planet-grid]').forEach(el=>{el.innerHTML=out.map(p=>`<article class="planet-card"><div class="big" aria-hidden="true">${p.glyph}︎</div><strong>${p.label}</strong><span>${p.text.replace(p.symbol,p.symbol+'︎')}</span>${p.house?`<div class="house-placement">Casa ${ROMAN[p.house]} · Koch · București</div>`:''}${p.retro?'<div class="retro">Mișcare retrogradă ℞</div>':'<div>Mișcare directă</div>'}</article>`).join('')});
+    if(houses){
+      document.querySelectorAll('[data-house-meta]').forEach(el=>{el.textContent=`Koch · București 44.4268° N, 26.1025° E · actualizat ${now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit',timeZone:BUCHAREST.timeZone})}`});
+      document.querySelectorAll('[data-house-grid]').forEach(el=>{el.innerHTML=Array.from({length:12},(_,i)=>{const h=i+1,lon=houses.cusps[h],f=formatLongitude(lon),angle=h===1?'ASC':h===10?'MC':'Cuspida';return `<article class="planet-card house-card"><div class="big" aria-hidden="true">${ROMAN[h]}</div><strong>Casa ${ROMAN[h]} ${h===1?'· ASC':h===10?'· MC':''}</strong><span>${f.text.replace(f.symbol,f.symbol+'︎')}</span><div class="house-system">${angle} · Koch</div></article>`}).join('')});
+    }
   }
   function boot(){
     applyPageTuning();applySecondBannerGreenWhite();integrateBrandMark();integrateAstroTools();integrateSecondTicker();integrateForumLink();
