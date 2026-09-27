@@ -384,6 +384,10 @@ body #planet-strip-secondary .planet-item>span{
 .av-planet-hero-strip__cta{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:7px 13px;border:1px solid rgba(54,255,136,.48);border-radius:999px;color:#eafff0;text-decoration:none;font:900 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(180deg,rgba(25,77,45,.6),rgba(4,20,11,.82));box-shadow:0 0 18px rgba(54,255,136,.08)}
 .av-planet-hero-strip__cta:hover{border-color:#36ff88;box-shadow:0 0 22px rgba(54,255,136,.18)}
 @media(max-width:820px){.av-planet-hero-strip{min-height:64px}.av-planet-hero-strip__inner{width:100%;padding:0 12px;grid-template-columns:auto minmax(0,1fr);gap:10px;min-height:64px}.av-planet-hero-strip__label{font-size:10px;letter-spacing:.11em}.av-planet-hero-strip__ticker{font-size:11px}.av-planet-hero-strip__cta{grid-column:1/-1;justify-self:center;min-height:28px;padding:5px 11px;margin-top:-8px;font-size:9px}.av-planet-hero-strip__ticker .planet-item{margin-right:12px}}
+
+.av-planet-hero-strip .av-planet-hero-strip__inner{row-gap:8px;padding-top:9px;padding-bottom:9px}
+.av-planet-hero-strip__context{grid-column:1/-1;text-align:center;color:#f5f7f5;font:800 12px/1.4 Inter,system-ui,sans-serif;letter-spacing:.04em;white-space:nowrap}
+#av-bucharest-clock{font-variant-numeric:tabular-nums}
 </style>
 <style id="astrovip-mobile-cwv-20260925">
 @media(max-width:820px){
@@ -621,7 +625,8 @@ body:not(.guide-page) .av-lang-switch>a::after{content:none!important;display:no
 
 <div class="av-planet-hero-strip" aria-label="Poziția planetelor azi">
   <div class="av-planet-hero-strip__inner">
-    <div class="av-planet-hero-strip__label"><span class="av-planet-hero-strip__live" aria-hidden="true"></span><span>PLANETELE AZI · KOCH</span><span class="av-planet-hero-strip__ref" data-planet-bucharest-time>București</span></div>
+    <div class="av-planet-hero-strip__context">București · Koch · ora <time id="av-bucharest-clock">--:--</time></div>
+    <div class="av-planet-hero-strip__label"><span class="av-planet-hero-strip__live" aria-hidden="true"></span><span>PLANETELE AZI · KOCH</span></div>
     <div class="av-planet-hero-strip__ticker" data-planet-ticker aria-live="polite">Soare · Lună · Mercur · Venus · Marte · Jupiter · Saturn · Uranus · Neptun · Pluto</div>
     <a class="av-planet-hero-strip__cta" href="/pozitii-planete-live/">POZIȚIA PLANETELOR AZI →</a>
   </div>
@@ -916,5 +921,15 @@ if(launcher){
 })();
 </script>\n
 
+<script id="av-bucharest-clock-script">
+(function(){
+  const clock=document.getElementById('av-bucharest-clock');
+  const format=new Intl.DateTimeFormat('ro-RO',{timeZone:'Europe/Bucharest',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
+  function update(){const now=new Date();clock.textContent=format.format(now);clock.dateTime=now.toISOString()}
+  update();
+  setInterval(function(){if(!document.hidden)update()},1000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)update()});
+})();
+</script>
 <script defer src="/assets/planetary-home-live.js?v=20260927-koch1"></script></body>
 </html>
