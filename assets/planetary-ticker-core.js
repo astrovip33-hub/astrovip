@@ -84,7 +84,7 @@
         track.querySelectorAll('.planet-sequence').forEach(group=>{group.innerHTML=seq});
       }
     });
-    document.querySelectorAll('[data-planet-updated]').forEach(el=>{el.textContent=`actualizat ${now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'})}`});
+    document.querySelectorAll('[data-planet-updated]').forEach(el=>{el.textContent=`actualizat ${now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Bucharest'})}`});
     document.querySelectorAll('[data-planet-grid]').forEach(el=>{el.innerHTML=out.map(p=>`<article class="planet-card"><div class="big" aria-hidden="true">${p.glyph}︎</div><strong>${p.label}</strong><span>${p.text.replace(p.symbol,p.symbol+'︎')}</span>${p.retro?'<div class="retro">Mișcare retrogradă ℞</div>':'<div>Mișcare directă</div>'}</article>`).join('')});
   }
   function boot(){
