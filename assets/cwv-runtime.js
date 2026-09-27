@@ -5,14 +5,11 @@ const loadCounter=async()=>{const el=document.getElementById('visitorCountIdle')
 const once=(fn)=>{let done=false;return()=>{if(done)return;done=true;fn()}};
 const bootTicker=once(loadTicker);
 const bootCounter=once(loadCounter);
+const observeOnce=(el,fn,rootMargin)=>{if(!el||!('IntersectionObserver'in window))return;const io=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){io.disconnect();fn()}},{rootMargin});io.observe(el)};
 const schedule=()=>{
   ['scroll','pointerdown','touchstart','keydown'].forEach(type=>window.addEventListener(type,bootTicker,{once:true,passive:type!=='keydown'}));
-  const counter=document.getElementById('visitorCountIdle');
-  if(counter&&'IntersectionObserver'in window){
-    const io=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){io.disconnect();bootCounter()}},{rootMargin:'300px 0px'});
-    io.observe(counter);
-  }else setTimeout(bootCounter,12000);
-  setTimeout(bootTicker,12000);
+  observeOnce(document.querySelector('[data-planet-ticker]'),bootTicker,'180px 0px');
+  observeOnce(document.getElementById('visitorCountIdle'),bootCounter,'300px 0px');
 };
 if(document.readyState==='complete')schedule();else window.addEventListener('load',schedule,{once:true});
 })();
