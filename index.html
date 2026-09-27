@@ -650,68 +650,126 @@ body:not(.guide-page) .top .av-header-booking__spark{
 </script>
 
 
-<style id="astrovip-trust-band-four-cards-preview-20260927">
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band{
-  width:min(1060px,calc(100% - 28px))!important;
-  margin:8px auto 6px!important;
+
+<style id="astrovip-premium-ribbon-preview-20260927">
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
+  position:relative!important;
+  z-index:8!important;
+  width:min(1080px,calc(100% - 28px))!important;
+  margin:10px auto 6px!important;
+  padding:0!important;
+  border:1px solid rgba(235,198,92,.58)!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 50% -70%,rgba(255,234,145,.13),transparent 58%),
+    linear-gradient(180deg,rgba(255,255,255,.038),rgba(255,255,255,.008) 36%),
+    linear-gradient(90deg,#070706 0%,#11100d 50%,#070706 100%)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(108,78,14,.18),
+    0 14px 34px rgba(0,0,0,.42),
+    0 0 22px rgba(225,184,66,.06)!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  pointer-events:none!important;
+  background:linear-gradient(108deg,transparent 0 28%,rgba(255,245,204,.055) 40%,transparent 51% 100%)!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:21px!important;
+  padding:5px 12px 4px!important;
+  color:#e8c75f!important;
+  border-bottom:1px solid rgba(235,198,92,.18)!important;
+  background:linear-gradient(180deg,rgba(235,198,92,.045),transparent)!important;
+  font:900 8.8px/1 Inter,system-ui,sans-serif!important;
+  letter-spacing:.20em!important;
+  text-transform:uppercase!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap::before{
+  content:""!important;
+  width:5px!important;height:5px!important;border-radius:50%!important;
+  margin-right:7px!important;
+  background:#39FF14!important;
+  box-shadow:0 0 7px rgba(57,255,20,.58)!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segments{
+  position:relative!important;
   display:grid!important;
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:4px!important;
-  padding:4px!important;
-  border:1px solid rgba(231,195,91,.46)!important;
-  border-radius:16px!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.006)),linear-gradient(90deg,#090806,#0e0c08,#090806)!important;
-  box-shadow:0 10px 28px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.025)!important;
+  align-items:stretch!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card{
-  min-height:66px!important;
-  height:66px!important;
-  padding:7px 8px 6px!important;
-  border:0!important;
-  border-radius:11px!important;
-  background:linear-gradient(180deg,rgba(255,247,210,.035),rgba(255,255,255,.008))!important;
-  box-shadow:none!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card + .av-trust-band-card{
-  border-left:1px solid rgba(231,195,91,.16)!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-hero-v2-icon{
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment{
+  position:relative!important;
+  min-height:54px!important;
   display:flex!important;
-  width:22px!important;height:22px!important;min-width:22px!important;min-height:22px!important;
-  margin:0 auto 2px!important;
-  align-items:center!important;justify-content:center!important;
-  border:0!important;background:transparent!important;box-shadow:none!important;
-  color:#e7c35b!important;
-  font:950 11px/1 Inter,system-ui,sans-serif!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:9px 12px 8px!important;
+  text-align:center!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card:first-child .av-hero-v2-icon{
-  color:#39FF14!important;text-shadow:0 0 6px rgba(57,255,20,.22)!important;
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment + .av-premium-trust-ribbon__segment{
+  border-left:1px solid rgba(235,198,92,.16)!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card h3{
-  margin:0 0 2px!important;color:#fff8e8!important;
-  font:900 9.6px/1 Inter,system-ui,sans-serif!important;letter-spacing:.08em!important;
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong{
+  display:block!important;
+  margin:0 0 3px!important;
+  color:#fff8e9!important;
+  font:950 clamp(9px,1.05vw,11.5px)/1 Inter,system-ui,sans-serif!important;
+  letter-spacing:.065em!important;
+  white-space:nowrap!important;
+  text-shadow:0 1px 0 rgba(0,0,0,.8),0 0 12px rgba(232,199,95,.08)!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card p{
-  margin:0!important;color:rgba(255,255,255,.72)!important;
-  font:750 7.3px/1.15 Inter,system-ui,sans-serif!important;letter-spacing:.025em!important;
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span{
+  color:rgba(255,255,255,.68)!important;
+  font:750 clamp(8px,.9vw,10px)/1.1 Inter,system-ui,sans-serif!important;
+  letter-spacing:.025em!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{margin-top:2px!important;}
+body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment:first-child strong{
+  color:#e8c75f!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+  margin-top:3px!important;
+}
 @media(max-width:820px){
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band{
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
     width:calc(100% - 18px)!important;
+    margin:7px auto 5px!important;
+    border-radius:14px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap{
+    min-height:18px!important;
+    padding:4px 8px 3px!important;
+    font-size:7.6px!important;
+    letter-spacing:.16em!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segments{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:3px!important;margin:6px auto 5px!important;padding:3px!important;border-radius:13px!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card{
-    min-height:54px!important;height:54px!important;padding:5px 5px 4px!important;border-radius:9px!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment{
+    min-height:42px!important;
+    padding:6px 7px!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card:nth-child(3){border-left:0!important;}
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card:nth-child(n+3){border-top:1px solid rgba(231,195,91,.12)!important;}
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-hero-v2-icon{
-    width:18px!important;height:18px!important;min-width:18px!important;min-height:18px!important;font-size:9px!important;margin-bottom:1px!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment:nth-child(3){
+    border-left:0!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card h3{font-size:8.5px!important;}
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-band .av-trust-band-card p{font-size:6.8px!important;}
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment:nth-child(n+3){
+    border-top:1px solid rgba(235,198,92,.12)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong{
+    font-size:8.6px!important;
+    letter-spacing:.04em!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span{
+    font-size:7.5px!important;
+  }
 }
 </style>
 </head>
@@ -950,27 +1008,26 @@ body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{margin-top:2px!important
 
   <div class="av-hero-v2-bottom av-desktop-only-future">VIITORUL FAVORIZEAZĂ OAMENII PREGĂTIȚI</div>
 
-  <div class="av-hero-v2-cards av-hero-trust-band" aria-label="Repere de încredere AstroVip">
-    <article class="av-hero-v2-card av-trust-band-card">
-      <div class="av-hero-v2-icon" aria-hidden="true">33+</div>
-      <h3 role="heading" aria-level="2">EXPERIENȚĂ</h3>
-      <p>33+ ANI DE PRACTICĂ</p>
-    </article>
-    <article class="av-hero-v2-card av-trust-band-card">
-      <div class="av-hero-v2-icon" aria-hidden="true">◇</div>
-      <h3 role="heading" aria-level="2">CONSULTAȚII</h3>
-      <p>INDIVIDUALE ȘI CONFIDENȚIALE</p>
-    </article>
-    <article class="av-hero-v2-card av-trust-band-card">
-      <div class="av-hero-v2-icon" aria-hidden="true">▣</div>
-      <h3 role="heading" aria-level="2">PLATĂ & FACTURĂ</h3>
-      <p>PLATĂ CU CARDUL · FACTURĂ EMISĂ</p>
-    </article>
-    <article class="av-hero-v2-card av-trust-band-card">
-      <div class="av-hero-v2-icon" aria-hidden="true">♄</div>
-      <h3 role="heading" aria-level="2">ASTROLOG</h3>
-      <p>OCUPAȚIE PROFESIONALĂ</p>
-    </article>
+  <div class="av-premium-trust-ribbon" aria-label="Repere de încredere AstroVip">
+    <div class="av-premium-trust-ribbon__cap" aria-hidden="true">ASTROVIP PREMIUM</div>
+    <div class="av-premium-trust-ribbon__segments">
+      <div class="av-premium-trust-ribbon__segment">
+        <strong>33+ ANI</strong>
+        <span>Experiență</span>
+      </div>
+      <div class="av-premium-trust-ribbon__segment">
+        <strong>CONSULTAȚII</strong>
+        <span>Individuale</span>
+      </div>
+      <div class="av-premium-trust-ribbon__segment">
+        <strong>PLATĂ CU CARDUL</strong>
+        <span>Factură emisă</span>
+      </div>
+      <div class="av-premium-trust-ribbon__segment">
+        <strong>OCUPAȚIA ASTROLOG</strong>
+        <span>Confidențialitate</span>
+      </div>
+    </div>
   </div><div id="av-hero-planets" class="av-planet-hero-strip" aria-label="Poziția planetelor azi">
   <div class="av-planet-hero-strip__inner">
     <div class="av-planet-hero-strip__context"><a href="/pozitii-planete-live/">Planetele azi ~ ora locală <time id="av-bucharest-clock">--:--</time></a></div>
