@@ -648,167 +648,96 @@ body:not(.guide-page) .top .av-header-booking__spark{
   setTimeout(syncChatSize,1000);
 })();
 </script>
-<style id="astrovip-single-trust-card-preview-20260927">
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card-wrap{
-  position:relative!important;
-  z-index:7!important;
-  width:min(1180px,calc(100% - 36px))!important;
-  margin:18px auto 18px!important;
-  padding:0!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card{
-  position:relative!important;
-  overflow:hidden!important;
-  border:1px solid rgba(241,204,101,.74)!important;
-  border-radius:24px!important;
-  background:
-    radial-gradient(circle at 16% 0%,rgba(57,255,20,.055),transparent 26%),
-    linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.008) 36%),
-    linear-gradient(135deg,#11100d 0%,#070706 48%,#0c0b09 100%)!important;
-  box-shadow:
-    0 18px 48px rgba(0,0,0,.48),
-    0 0 0 1px rgba(255,255,255,.025) inset,
-    0 0 26px rgba(220,180,68,.08)!important;
-  padding:20px 22px 18px!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card::before{
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  pointer-events:none!important;
-  background:linear-gradient(110deg,transparent 0 26%,rgba(255,235,160,.08) 38%,transparent 50% 100%)!important;
-  transform:translateX(-34%)!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__head{
-  position:relative!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:12px!important;
-  margin:0 0 16px!important;
-  text-align:left!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__mark{
-  width:38px!important;
-  height:38px!important;
-  flex:0 0 38px!important;
-  border-radius:50%!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  color:#39FF14!important;
-  border:1px solid rgba(57,255,20,.54)!important;
-  background:radial-gradient(circle,rgba(57,255,20,.10),rgba(57,255,20,.025) 64%,transparent 66%)!important;
-  box-shadow:0 0 16px rgba(57,255,20,.12)!important;
-  font-size:16px!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__eyebrow{
-  color:#e8c45e!important;
-  font:900 10px/1.1 Inter,system-ui,sans-serif!important;
-  letter-spacing:.18em!important;
-  text-transform:uppercase!important;
-  margin:0 0 4px!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card h2{
-  margin:0!important;
-  color:#fffaf0!important;
-  font:900 clamp(17px,1.6vw,23px)/1.1 Inter,system-ui,sans-serif!important;
-  letter-spacing:-.02em!important;
-}
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__grid{
-  position:relative!important;
-  display:grid!important;
-  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+
+<style id="astrovip-compact-four-cards-preview-20260927">
+/* PREVIEW ONLY: compact the existing four Hero cards; nothing else changes */
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+  width:min(980px,calc(100% - 32px))!important;
+  margin:10px auto 8px!important;
+  gap:10px!important;
   align-items:stretch!important;
-  border-top:1px solid rgba(236,198,91,.18)!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item{
-  min-width:0!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:7px!important;
-  padding:15px 10px 4px!important;
-  color:#f6f0df!important;
-  text-align:center!important;
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+  min-height:86px!important;
+  height:auto!important;
+  padding:10px 10px 9px!important;
+  border-radius:14px!important;
+  border-width:1px!important;
+  box-shadow:0 8px 18px rgba(0,0,0,.30),0 0 8px rgba(57,255,20,.07)!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item + .av-hero-trust-card__item{
-  border-left:1px solid rgba(236,198,91,.14)!important;
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-icon{
+  width:25px!important;
+  height:25px!important;
+  min-width:25px!important;
+  min-height:25px!important;
+  margin:0 auto 4px!important;
+  font-size:14px!important;
+  line-height:25px!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item>span{
-  color:#e8c45e!important;
-  font:950 13px/1 Inter,system-ui,sans-serif!important;
-  text-shadow:0 0 9px rgba(232,196,94,.16)!important;
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+  margin:0 0 3px!important;
+  font-size:11px!important;
+  line-height:1.05!important;
+  letter-spacing:.08em!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item:first-child>span{
-  color:#39FF14!important;
-  text-shadow:0 0 8px rgba(57,255,20,.20)!important;
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+  margin:0!important;
+  font-size:8.7px!important;
+  line-height:1.18!important;
+  letter-spacing:.025em!important;
 }
-body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item strong{
-  color:#fffaf0!important;
-  font:850 10.5px/1.2 Inter,system-ui,sans-serif!important;
-  letter-spacing:.01em!important;
+body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+  margin-top:4px!important;
+}
+@media(min-width:821px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
 }
 @media(max-width:820px){
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card-wrap{
-    width:calc(100% - 22px)!important;
-    margin:14px auto 14px!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    width:calc(100% - 20px)!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+    margin:8px auto 6px!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card{
-    border-radius:18px!important;
-    padding:15px 12px 12px!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+    min-height:72px!important;
+    padding:7px 7px 6px!important;
+    border-radius:12px!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__head{
-    gap:9px!important;
-    margin-bottom:11px!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-icon{
+    width:20px!important;
+    height:20px!important;
+    min-width:20px!important;
+    min-height:20px!important;
+    line-height:20px!important;
+    font-size:12px!important;
+    margin-bottom:3px!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__mark{
-    width:30px!important;
-    height:30px!important;
-    flex-basis:30px!important;
-    font-size:13px!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card h3{
+    font-size:9.5px!important;
+    margin-bottom:2px!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__eyebrow{
-    font-size:8.7px!important;
-    letter-spacing:.14em!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+    font-size:7.6px!important;
+    line-height:1.12!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card h2{
-    font-size:14px!important;
-  }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__grid{
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item{
-    min-height:44px!important;
-    padding:9px 5px!important;
-    gap:5px!important;
-  }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item:nth-child(4){
-    border-left:0!important;
-  }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item:nth-child(n+4){
-    border-top:1px solid rgba(236,198,91,.12)!important;
-  }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item strong{
-    font-size:9px!important;
-  }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item>span{
-    font-size:11px!important;
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    margin-top:2px!important;
   }
 }
 @media(max-width:430px){
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    gap:6px!important;
+    margin-top:6px!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item:nth-child(3),
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item:nth-child(5){
-    border-left:0!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card{
+    min-height:66px!important;
+    padding:6px!important;
   }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item:nth-child(4){
-    border-left:1px solid rgba(236,198,91,.14)!important;
-  }
-  body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item:nth-child(n+3){
-    border-top:1px solid rgba(236,198,91,.12)!important;
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-card p{
+    font-size:7.2px!important;
   }
 }
 </style>
@@ -1048,26 +977,28 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-trust-card__item strong{
 
   <div class="av-hero-v2-bottom av-desktop-only-future">VIITORUL FAVORIZEAZĂ OAMENII PREGĂTIȚI</div>
 
-  <div class="av-hero-trust-card-wrap" aria-label="Repere de încredere AstroVip">
-    <article class="av-hero-trust-card">
-      <div class="av-hero-trust-card__head">
-        <span class="av-hero-trust-card__mark" aria-hidden="true">✦</span>
-        <div>
-          <div class="av-hero-trust-card__eyebrow">ASTROVIP PREMIUM</div>
-          <h2>Experiență, profesionalism și confidențialitate</h2>
-        </div>
-      </div>
-      <div class="av-hero-trust-card__grid">
-        <div class="av-hero-trust-card__item"><span aria-hidden="true">33+</span><strong>Ani experiență</strong></div>
-        <div class="av-hero-trust-card__item"><span aria-hidden="true">◆</span><strong>Consultații individuale</strong></div>
-        <div class="av-hero-trust-card__item"><span aria-hidden="true">▣</span><strong>Plată cu cardul</strong></div>
-        <div class="av-hero-trust-card__item"><span aria-hidden="true">✓</span><strong>Factură emisă</strong></div>
-        <div class="av-hero-trust-card__item"><span aria-hidden="true">♄</span><strong>Ocupația Astrolog</strong></div>
-        <div class="av-hero-trust-card__item"><span aria-hidden="true">◈</span><strong>Confidențialitate</strong></div>
-      </div>
+  <div class="av-hero-v2-cards" aria-label="Domenii principale AstroVip">
+    <article class="av-hero-v2-card">
+      <div class="av-hero-v2-icon" aria-hidden="true">↗</div>
+      <h3 role="heading" aria-level="2">CARIERĂ</h3>
+      <p>DIRECȚIA POTRIVITĂ LA MOMENTUL POTRIVIT</p>
     </article>
-  </div>
-<div id="av-hero-planets" class="av-planet-hero-strip" aria-label="Poziția planetelor azi">
+    <article class="av-hero-v2-card">
+      <div class="av-hero-v2-icon" aria-hidden="true">♡</div>
+      <h3 role="heading" aria-level="2">DRAGOSTE</h3>
+      <p>RELAȚII AUTENTICE ȘI COMPATIBILITATE REALĂ</p>
+    </article>
+    <article class="av-hero-v2-card">
+      <div class="av-hero-v2-icon" aria-hidden="true">◈</div>
+      <h3 role="heading" aria-level="2">AFACERI</h3>
+      <p>DECIZII INSPIRATE PENTRU SUCCES</p>
+    </article>
+    <article class="av-hero-v2-card">
+      <div class="av-hero-v2-icon" aria-hidden="true">⌖</div>
+      <h3 role="heading" aria-level="2">RELOCARE</h3>
+      <p>LOCUL POTRIVIT PENTRU ETAPA POTRIVITĂ</p>
+    </article>
+  </div><div id="av-hero-planets" class="av-planet-hero-strip" aria-label="Poziția planetelor azi">
   <div class="av-planet-hero-strip__inner">
     <div class="av-planet-hero-strip__context"><a href="/pozitii-planete-live/">Planetele azi ~ ora locală <time id="av-bucharest-clock">--:--</time></a></div>
     <div class="av-planet-hero-strip__ticker" data-planet-ticker data-include-angles aria-live="polite">Soare · Lună · Mercur · Venus · Marte · Jupiter · Saturn · Uranus · Neptun · Pluto · ASC · MC</div>
