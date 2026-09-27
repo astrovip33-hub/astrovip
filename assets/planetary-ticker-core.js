@@ -2,6 +2,7 @@
   'use strict';
   const SIGNS=[['Berbec','♈'],['Taur','♉'],['Gemeni','♊'],['Rac','♋'],['Leu','♌'],['Fecioară','♍'],['Balanță','♎'],['Scorpion','♏'],['Săgetător','♐'],['Capricorn','♑'],['Vărsător','♒'],['Pești','♓']];
   const BODIES=[['Sun','Soare','☉'],['Moon','Lună','☽'],['Mercury','Mercur','☿'],['Venus','Venus','♀'],['Mars','Marte','♂'],['Jupiter','Jupiter','♃'],['Saturn','Saturn','♄'],['Uranus','Uranus','♅'],['Neptune','Neptun','♆'],['Pluto','Pluto','♇']];
+  const LOCAL_REFERENCE=Object.freeze({name:'București',latitude:44.4268,longitude:26.1025,timeZone:'Europe/Bucharest'});
   const norm=x=>((x%360)+360)%360;
   const dayDelta=(a,b)=>((b-a+540)%360)-180;
   function geoLongitude(body,date){const eqj=Astronomy.GeoVector(body,date,true);return norm(Astronomy.Ecliptic(eqj).elon)}
@@ -84,7 +85,7 @@
         track.querySelectorAll('.planet-sequence').forEach(group=>{group.innerHTML=seq});
       }
     });
-    document.querySelectorAll('[data-planet-updated]').forEach(el=>{el.textContent=`actualizat ${now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'})}`});
+    document.querySelectorAll('[data-planet-updated]').forEach(el=>{el.textContent=`actualizat ${now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit',timeZone:LOCAL_REFERENCE.timeZone})}`});
     document.querySelectorAll('[data-planet-grid]').forEach(el=>{el.innerHTML=out.map(p=>`<article class="planet-card"><div class="big" aria-hidden="true">${p.glyph}︎</div><strong>${p.label}</strong><span>${p.text.replace(p.symbol,p.symbol+'︎')}</span>${p.retro?'<div class="retro">Mișcare retrogradă ℞</div>':'<div>Mișcare directă</div>'}</article>`).join('')});
   }
   function boot(){
