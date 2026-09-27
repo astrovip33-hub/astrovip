@@ -674,19 +674,20 @@ body:not(.guide-page) .trust-refs{
 }
 body:not(.guide-page) .trust-minibox{
   padding:20px!important;
-  border:1px solid rgba(232,202,109,.16)!important;
+  border:2px solid #39ff14!important;
   border-radius:22px!important;
-  background:#0b0b0a!important;
+  background:linear-gradient(145deg,#102d1a 0%,#0b2415 55%,#071b10 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(170,255,157,.18),0 0 22px rgba(57,255,20,.18)!important;
 }
 body:not(.guide-page) .trust-profession-grid{
   gap:10px!important;
 }
 body:not(.guide-page) .trust-profession-card{
   min-height:92px!important;
-  border:1px solid rgba(232,202,109,.16)!important;
+  border:2px solid #39ff14!important;
   border-radius:16px!important;
-  background:linear-gradient(180deg,#10100e,#090909)!important;
-  box-shadow:none!important;
+  background:linear-gradient(180deg,#133522,#0b2316)!important;
+  box-shadow:inset 0 1px 0 rgba(190,255,174,.12),0 0 13px rgba(57,255,20,.22)!important;
 }
 body:not(.guide-page) .trust-profession-card span{
   color:#aaa397!important;
