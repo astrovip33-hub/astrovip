@@ -491,3 +491,5 @@ body:not(.guide-page) .trust-commerce-card .trust-commerce-points{display:none!i
     clear:both!important;
   }
 }
+/* AstroVip mobile performance stability — static reveal content */
+@media (max-width:820px){body:not(.guide-page) .reveal{opacity:1!important;transform:none!important;transition:none!important;}}
