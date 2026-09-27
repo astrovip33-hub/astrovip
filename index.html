@@ -377,7 +377,7 @@ body #planet-strip-secondary .planet-item>span{
 <style id="astrovip-hero-planets-preview">
 .av-planet-hero-strip{position:relative;z-index:8;background:linear-gradient(180deg,#090b09 0%,#020302 52%,#080a08 100%);border-top:1px solid rgba(224,185,77,.48);border-bottom:1px solid rgba(44,255,130,.34);box-shadow:0 14px 32px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,238,170,.04);min-height:58px;display:flex;align-items:center;overflow:hidden}
 .av-planet-hero-strip__inner{width:min(1480px,calc(100% - 32px));margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;min-height:58px}
-.av-planet-hero-strip__label{display:flex;align-items:center;gap:8px;white-space:nowrap;font:900 12px/1.1 Inter,system-ui,sans-serif;letter-spacing:.16em;color:#f5d978;text-transform:uppercase}
+.av-planet-hero-strip__label{display:flex;align-items:center;gap:8px;white-space:nowrap;font:900 12px/1.1 Inter,system-ui,sans-serif;letter-spacing:.16em;color:#f5d978;text-transform:uppercase}.av-planet-hero-strip__ref{font-size:9px;letter-spacing:.06em;color:#91f8b9;text-transform:none;opacity:.92}
 .av-planet-hero-strip__live{width:7px;height:7px;border-radius:50%;background:#36ff88;box-shadow:0 0 12px rgba(54,255,136,.95)}
 .av-planet-hero-strip__ticker{min-width:0;color:#f5f7f5;font:800 13px/1.3 Inter,system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.025em}
 .av-planet-hero-strip__ticker .planet-item{margin-right:18px}
@@ -621,7 +621,7 @@ body:not(.guide-page) .av-lang-switch>a::after{content:none!important;display:no
 
 <div class="av-planet-hero-strip" aria-label="Poziția planetelor azi">
   <div class="av-planet-hero-strip__inner">
-    <div class="av-planet-hero-strip__label"><span class="av-planet-hero-strip__live" aria-hidden="true"></span>PLANETELE AZI</div>
+    <div class="av-planet-hero-strip__label"><span class="av-planet-hero-strip__live" aria-hidden="true"></span><span>PLANETELE AZI</span><span class="av-planet-hero-strip__ref" data-planet-bucharest-time>București</span></div>
     <div class="av-planet-hero-strip__ticker" data-planet-ticker aria-live="polite">Soare · Lună · Mercur · Venus · Marte · Jupiter · Saturn · Uranus · Neptun · Pluto</div>
     <a class="av-planet-hero-strip__cta" href="/pozitii-planete-live/">POZIȚIA PLANETELOR AZI →</a>
   </div>
@@ -916,5 +916,5 @@ if(launcher){
 })();
 </script>\n
 
-</body>
+<script defer src="/assets/planetary-home-live.js?v=20260927-bucharest-live1"></script></body>
 </html>
