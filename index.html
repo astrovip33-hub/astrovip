@@ -648,6 +648,107 @@ body:not(.guide-page) .top .av-header-booking__spark{
   setTimeout(syncChatSize,1000);
 })();
 </script>
+<style id="astrovip-trust-strip-20260927">
+.av-trust-strip{
+  position:relative;
+  width:100%;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.018),transparent 42%),
+    linear-gradient(90deg,#060606 0%,#0a0907 50%,#060606 100%);
+  border-top:1px solid rgba(232,194,83,.34);
+  border-bottom:1px solid rgba(232,194,83,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+.av-trust-strip__inner{
+  width:min(1180px,calc(100% - 32px));
+  margin:0 auto;
+  min-height:72px;
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  align-items:center;
+}
+.av-trust-strip__item{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 10px;
+  color:rgba(255,255,255,.91);
+  font:800 11px/1.18 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  letter-spacing:.018em;
+  text-align:center;
+  white-space:nowrap;
+}
+.av-trust-strip__item + .av-trust-strip__item{
+  border-left:1px solid rgba(232,194,83,.16);
+}
+.av-trust-strip__icon{
+  flex:0 0 auto;
+  width:20px;
+  height:20px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#e8c253;
+  font-size:15px;
+  line-height:1;
+  text-shadow:0 0 10px rgba(232,194,83,.16);
+}
+.av-trust-strip__item:first-child .av-trust-strip__icon{
+  color:#39FF14;
+  font-size:12px;
+  text-shadow:0 0 7px rgba(57,255,20,.22);
+}
+@media(max-width:980px){
+  .av-trust-strip__inner{
+    width:min(100% - 20px,680px);
+    min-height:0;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    padding:5px 0;
+  }
+  .av-trust-strip__item{
+    min-height:44px;
+    padding:8px 5px;
+    gap:5px;
+    font-size:9.5px;
+    white-space:normal;
+  }
+  .av-trust-strip__item:nth-child(4){
+    border-left:0;
+  }
+  .av-trust-strip__item:nth-child(n+4){
+    border-top:1px solid rgba(232,194,83,.12);
+  }
+  .av-trust-strip__icon{
+    width:16px;
+    height:16px;
+    font-size:12px;
+  }
+}
+@media(max-width:430px){
+  .av-trust-strip__inner{
+    width:calc(100% - 16px);
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    padding:4px 0;
+  }
+  .av-trust-strip__item{
+    min-height:42px;
+    padding:7px 6px;
+    font-size:9.2px;
+  }
+  .av-trust-strip__item:nth-child(3),
+  .av-trust-strip__item:nth-child(5){
+    border-left:0;
+  }
+  .av-trust-strip__item:nth-child(4){
+    border-left:1px solid rgba(232,194,83,.16);
+  }
+  .av-trust-strip__item:nth-child(n+3){
+    border-top:1px solid rgba(232,194,83,.12);
+  }
+}
+</style>
 </head>
 <body class="av-motion-live"><div id="av-consent" class="av-consent" role="dialog" aria-modal="true" aria-labelledby="av-consent-title"><div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div></div><a class="skip-link" href="#top">Sari la conținut</a>
 <header class="top">
@@ -868,7 +969,18 @@ body:not(.guide-page) .top .av-header-booking__spark{
     <picture>
       <source media="(max-width:430px)" srcset="/assets/astrovip-hero-lux-clean-20260922-480.webp?v=20260926-speed1" type="image/webp"/>
       <source srcset="/assets/astrovip-hero-lux-clean-20260922-640.webp?v=20260922-desktop1 640w, /assets/astrovip-hero-lux-clean-20260922-960.webp?v=20260922-desktop1 960w, /assets/astrovip-hero-lux-clean-20260922.webp?v=20260922-desktop1 1672w" sizes="(min-width:1280px) 1400px, 100vw" type="image/webp"/>
-      <img src="/assets/astrovip-hero-lux-clean-20260922-960.webp?v=20260922-desktop1" srcset="/assets/astrovip-hero-lux-clean-20260922-640.webp?v=20260922-desktop1 640w, /assets/astrovip-hero-lux-clean-20260922-960.webp?v=20260922-desktop1 960w, /assets/astrovip-hero-lux-clean-20260922.webp?v=20260922-desktop1 1672w" sizes="100vw" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async" alt="AstroVip — hartă astrologică 3D premium"/>
+      <img src="/assets/astrovip-hero-lux-clean-20260922-960.webp?v=20260922-desktop1" srcset="/assets/astrovip-hero-lux-clean-20260922-640.webp?v=20260922-desktop1 640w, /assets/astrovip-hero-lux-clean-20260922-960.webp?v=20260922-desktop1 960w, /ass</section>
+<section class="av-trust-strip" aria-label="Repere de încredere AstroVip">
+  <div class="av-trust-strip__inner">
+    <div class="av-trust-strip__item"><span class="av-trust-strip__icon" aria-hidden="true">✦</span><span>33+ ani experiență</span></div>
+    <div class="av-trust-strip__item"><span class="av-trust-strip__icon" aria-hidden="true">◇</span><span>Consultații individuale</span></div>
+    <div class="av-trust-strip__item"><span class="av-trust-strip__icon" aria-hidden="true">▣</span><span>Plată cu cardul</span></div>
+    <div class="av-trust-strip__item"><span class="av-trust-strip__icon" aria-hidden="true">✓</span><span>Factură emisă</span></div>
+    <div class="av-trust-strip__item"><span class="av-trust-strip__icon" aria-hidden="true">♄</span><span>Ocupația Astrolog</span></div>
+    <div class="av-trust-strip__item"><span class="av-trust-strip__icon" aria-hidden="true">◈</span><span>Confidențialitate</span></div>
+  </div>
+</section>
+<div class="av-hero-freeq-separator" aria-hidden="true"></div>s="100vw" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async" alt="AstroVip — hartă astrologică 3D premium"/>
     </picture>
     <div class="av-hero-v2-sidecopy">CUNOȘTI MOMENTUL<br/>TRĂIEȘTI VIITORUL</div>
     <div class="av-hero-v2-sidecopy right">UN UNIVERS<br/>DE POSIBILITĂȚI</div>
