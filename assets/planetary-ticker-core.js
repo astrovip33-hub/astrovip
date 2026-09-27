@@ -87,7 +87,10 @@
     if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;
     const {now,out,houses}=calc();if(out.length!==BODIES.length)return;
     document.querySelectorAll('[data-planet-ticker]').forEach(el=>{
-      const seq=out.map(itemHtml).join('');
+      const angles=el.hasAttribute('data-include-angles')&&houses
+        ? [['ASC',houses.asc],['MC',houses.mc]].map(([label,lon])=>({label,glyph:'',...formatLongitude(lon),house:null,retro:false}))
+        : [];
+      const seq=out.concat(angles).map(itemHtml).join('');
       let track=el.querySelector('.planet-track');
       if(!track){
         el.setAttribute('tabindex','0');el.setAttribute('aria-label','Poziții planetare actuale');
