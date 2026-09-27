@@ -48,6 +48,13 @@
       trigger.setAttribute('aria-expanded',String(willOpen));
     }));
     menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.textContent='☰';hamb.setAttribute('aria-label','Deschide meniul')}));
+    // Keep first paint deterministic: below-fold features initialize only when they are about to be used.
+    let deferredHomepageReady=false;
+    let deferredHomepageObserver=null;
+    function initDeferredHomepageFeatures(){
+      if(deferredHomepageReady)return;
+      deferredHomepageReady=true;
+      deferredHomepageObserver?.disconnect();
     const revealEls=document.querySelectorAll('.reveal');
     if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});revealEls.forEach(el=>io.observe(el));}else{revealEls.forEach(el=>el.classList.add('in'));}
     document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('name').value.trim(),p=document.getElementById('phone').value.trim(),s=document.getElementById('service').value,m=document.getElementById('message').value.trim();trackAstroVipEvent('generate_lead',{method:'contact_whatsapp',service:s,page_path:location.pathname});const text=`Bună ziua! Sunt ${n}. Telefon: ${p}. Doresc: ${s}.${m?` Mesaj: ${m}`:''}`;window.open('https://wa.me/40771200446?text='+encodeURIComponent(text),'_blank','noopener')});
@@ -113,11 +120,23 @@
         bookingSubmit.disabled=false;bookingSubmit.textContent='Rezervă intervalul';
       }
     });
+      document.addEventListener('keydown',event=>{if(event.key==='Tab'&&modal.classList.contains('open')){event.preventDefault();document.getElementById('articleClose').focus()}});
+    }
+    const bootDeferredHomepage=()=>initDeferredHomepageFeatures();
+    window.addEventListener('scroll',bootDeferredHomepage,{once:true,passive:true});
+    window.addEventListener('keydown',bootDeferredHomepage,{once:true});
+    if(location.hash){
+      bootDeferredHomepage();
+    }else if('IntersectionObserver' in window){
+      const deferredTargets=['servicii','programari','contact'].map(id=>document.getElementById(id)).filter(Boolean);
+      if(deferredTargets.length){
+        deferredHomepageObserver=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting))bootDeferredHomepage()},{rootMargin:'120px 0px'});
+        deferredTargets.forEach(target=>deferredHomepageObserver.observe(target));
+      }
+    }
 
-  
     document.addEventListener('keydown',event=>{
       if(event.key==='Escape'){closeMenuGroups();if(menu.classList.contains('open')){menu.classList.remove('open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰';hamb.focus()}}
-      if(event.key==='Tab'&&modal.classList.contains('open')){event.preventDefault();document.getElementById('articleClose').focus()}
     });
     document.addEventListener('click',event=>{if(menu.classList.contains('open')&&!menu.contains(event.target)&&!hamb.contains(event.target)){menu.classList.remove('open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});
 
