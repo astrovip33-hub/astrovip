@@ -754,10 +754,25 @@ body:not(.guide-page) .top .av-header-booking__spark{
 </header>
 <script id="astrovip-chat-first-paint-placement">
 (function(){
-  if(!window.matchMedia("(max-width:820px)").matches)return;
-  var launcher=document.querySelector(".top .nav-actions .avchat-launcher");
-  var host=document.querySelector(".av-langbar .wrap");
-  if(launcher&&host)host.appendChild(launcher);
+  var mq=window.matchMedia("(max-width:980px)");
+  function place(){
+    if(!mq.matches)return;
+    var host=document.querySelector(".av-langbar .wrap");
+    if(!host)return;
+    var launcher=document.querySelector(".avchat-launcher");
+    if(launcher&&launcher.parentNode!==host)host.appendChild(launcher);
+    document.querySelectorAll(".av-hero-chat-slot").forEach(function(slot){
+      if(slot.querySelector(".avchat-launcher"))host.appendChild(slot.querySelector(".avchat-launcher"));
+      slot.remove();
+    });
+  }
+  place();
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",place,{once:true});
+  window.addEventListener("pageshow",place);
+  window.addEventListener("resize",place,{passive:true});
+  setTimeout(place,0);
+  setTimeout(place,250);
+  setTimeout(place,1000);
 })();
 </script>
 <main id="top" tabindex="-1">
