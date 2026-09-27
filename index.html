@@ -619,11 +619,20 @@ body:not(.guide-page) .top .av-header-booking__spark{
     var chat=document.querySelector(".av-langbar .avchat-launcher.avchat-header-slot");
     if(!booking||!chat)return;
     var r=booking.getBoundingClientRect();
-    if(r.width>0)chat.style.setProperty("width",Math.round(r.width)+"px","important");
-    if(r.height>0){
-      chat.style.setProperty("height",Math.round(r.height)+"px","important");
-      chat.style.setProperty("min-height",Math.round(r.height)+"px","important");
+    if(r.width>0){
+      var w=Math.round(r.width)+"px";
+      chat.style.setProperty("width",w,"important");
+      chat.style.setProperty("min-width",w,"important");
+      chat.style.setProperty("max-width",w,"important");
     }
+    if(r.height>0){
+      var h=Math.round(r.height)+"px";
+      chat.style.setProperty("height",h,"important");
+      chat.style.setProperty("min-height",h,"important");
+      chat.style.setProperty("max-height",h,"important");
+    }
+    chat.style.setProperty("box-sizing","border-box","important");
+    chat.style.setProperty("line-height","1","important");
   }
   if(document.readyState==="loading"){
     document.addEventListener("DOMContentLoaded",syncChatSize,{once:true});
