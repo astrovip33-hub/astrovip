@@ -6,6 +6,8 @@
   window.gtag=gtag;
 
   const GOOGLE_TAG_ID='G-Y59ZJ7L3WR';
+  const GTM_ID='GTM-N2RP7N9Q';
+  const META_PIXEL_ID='1439608778053981';
 
   function loadGoogleTag(){
     if(window.__astrovipGoogleTagLoaded)return;
@@ -23,6 +25,31 @@
     gtag('config',GOOGLE_TAG_ID,{send_page_view:false});
   }
 
+  function loadGTM(){
+    if(window.__astrovipGTMLoaded)return;
+    window.__astrovipGTMLoaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({'gtm.start':Date.now(),event:'gtm.js'});
+    const s=document.createElement('script');
+    s.async=true;
+    s.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(GTM_ID);
+    s.setAttribute('data-astrovip-gtm','1');
+    document.head.appendChild(s);
+  }
+
+  function loadMetaPixel(){
+    if(window.__astrovipMetaPixelLoaded)return;
+    window.__astrovipMetaPixelLoaded=true;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('consent','grant');
+    fbq('init',META_PIXEL_ID);
+    fbq('track','PageView');
+  }
+
   function updateConsent(analytics,ads){
     gtag('consent','update',{
       analytics_storage:analytics?'granted':'denied',
@@ -34,7 +61,9 @@
       security_storage:'granted'
     });
 
-    if(analytics||ads)loadGoogleTag();
+    if(analytics||ads){loadGoogleTag();loadGTM();}
+    if(ads)loadMetaPixel();
+    else if(window.fbq){try{fbq('consent','revoke')}catch(e){}}
 
     if(analytics && !window.__astrovipAnalyticsPageviewSent){
       window.__astrovipAnalyticsPageviewSent=true;
