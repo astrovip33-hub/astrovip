@@ -104,11 +104,11 @@ async function sendMetaPurchase(session,ref,env,eventTime){
   const text=await res.text();
   return {ok:res.ok,status:res.status,detail:res.ok?undefined:text.slice(0,240)};
 }
-async function stripeWebhook(request,env){
-  if(request.method==='GET')return new Response('AstroVip Stripe webhook endpoint',{status:200});
+async function stripeWebhook(request,env,{secretName='STRIPE_WEBHOOK_SECRET',testMode=false}={}){
+  if(request.method==='GET')return new Response(testMode?'AstroVip Stripe sandbox webhook endpoint':'AstroVip Stripe webhook endpoint',{status:200});
   if(request.method!=='POST')return new Response('Method Not Allowed',{status:405});
   const payload=await request.text();
-  if(!await validStripe(payload,request.headers.get('stripe-signature'),env.STRIPE_WEBHOOK_SECRET))
+  if(!await validStripe(payload,request.headers.get('stripe-signature'),env[secretName]))
     return new Response('Invalid Stripe signature',{status:400});
   let event;try{event=JSON.parse(payload)}catch{return new Response('Invalid JSON',{status:400})}
   if(!['checkout.session.completed','checkout.session.async_payment_succeeded'].includes(event.type))
@@ -117,6 +117,19 @@ async function stripeWebhook(request,env){
   if(session.payment_status!=='paid')return Response.json({received:true,ignored:true,reason:'not_paid'});
   const ref=parseTrackingRef(session.client_reference_id);
   const eventTime=Number(event.created)||Math.floor(Date.now()/1000);
+  if(testMode)return Response.json({
+    received:true,
+    verified:true,
+    sandbox:true,
+    dry_run:true,
+    event_id:event.id,
+    checkout_session_id:session.id,
+    amount_total:session.amount_total,
+    currency:session.currency,
+    payment_status:session.payment_status,
+    tracking_ref_present:Boolean(ref),
+    would_send:{ga4:Boolean(ref?.analytics&&ref?.clientId&&env.GA4_API_SECRET),meta:Boolean(ref?.ads&&env.META_CAPI_ACCESS_TOKEN)}
+  });
   const [ga4,meta]=await Promise.all([
     sendGA4Purchase(session,ref,env,eventTime).catch(e=>({ok:false,error:String(e?.message||e)})),
     sendMetaPurchase(session,ref,env,eventTime).catch(e=>({ok:false,error:String(e?.message||e)}))
@@ -135,6 +148,7 @@ export default {
   async fetch(request,env){
     const url=new URL(request.url);
     if(url.pathname==='/api/stripe-webhook'||url.pathname==='/api/stripe-webhook/')return stripeWebhook(request,env);
+    if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WEBHOOK_SECRET_TEST',testMode:true});
     return env.ASSETS.fetch(request);
   }
 };
