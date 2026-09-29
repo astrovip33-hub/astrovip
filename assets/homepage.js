@@ -4,8 +4,23 @@
     const toastEl=document.getElementById('toast');
     const toast=(message)=>{toastEl.textContent=message;toastEl.classList.add('show');clearTimeout(window.__astrovipToastTimer);window.__astrovipToastTimer=setTimeout(()=>toastEl.classList.remove('show'),2600)};
     function trackAstroVipEvent(name,params={}){
-      if(typeof window.gtag!=='function')return;
-      try{window.gtag('event',name,params)}catch(error){}
+      if(typeof window.gtag==='function'){
+        try{window.gtag('event',name,params)}catch(error){}
+      }
+      if(typeof window.fbq==='function'){
+        try{
+          const metaMap={
+            whatsapp_click:['Contact',{content_name:'WhatsApp'}],
+            phone_click:['Contact',{content_name:'Telefon'}],
+            booking_start:['Schedule',{}],
+            generate_lead:['Lead',{}],
+            booking_complete:['Schedule',{}],
+            begin_checkout:['InitiateCheckout',{currency:'RON',value:Number(params.value)||500}]
+          };
+          const mapped=metaMap[name];
+          if(mapped)window.fbq('track',mapped[0],mapped[1]);
+        }catch(error){}
+      }
     }
     document.addEventListener('click',event=>{
       const link=event.target.closest&&event.target.closest('a[href]');
@@ -13,7 +28,7 @@
       const rawHref=link.getAttribute('href')||'';
       const absoluteHref=link.href||rawHref;
       const label=(link.textContent||link.getAttribute('aria-label')||'').trim().slice(0,100);
-      if(/wa\.me\/40771200446/i.test(absoluteHref)){
+      if(/wa\.me\/407(?:71200446|22128220)/i.test(absoluteHref)){
         trackAstroVipEvent('whatsapp_click',{link_text:label,link_url:absoluteHref,page_path:location.pathname});
       }
       if(/^tel:/i.test(rawHref)){
