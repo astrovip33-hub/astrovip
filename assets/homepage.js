@@ -38,7 +38,10 @@
     },true);
     const menuGroups=[...menu.querySelectorAll('.av-menu-group')];
     const closeMenuGroups=()=>menuGroups.forEach(group=>{group.classList.remove('is-open');group.querySelector('.av-menu-trigger')?.setAttribute('aria-expanded','false')});
-    hamb.addEventListener('click',(event)=>{event.preventDefault();event.stopPropagation();const open=!menu.classList.contains('open');menu.classList.toggle('open',open);hamb.setAttribute('aria-expanded',String(open));hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');hamb.textContent=open?'×':'☰';if(!open)closeMenuGroups()});
+    const setMenuOpen=(open)=>{menu.classList.toggle('open',open);hamb.setAttribute('aria-expanded',String(open));hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');hamb.textContent=open?'×':'☰';if(!open)closeMenuGroups()};
+    let menuPointerHandled=false;
+    hamb.addEventListener('pointerup',(event)=>{if(event.pointerType==='mouse')return;event.preventDefault();event.stopImmediatePropagation();menuPointerHandled=true;setMenuOpen(!menu.classList.contains('open'));setTimeout(()=>{menuPointerHandled=false},0)},{capture:true});
+    hamb.addEventListener('click',(event)=>{event.preventDefault();event.stopImmediatePropagation();if(menuPointerHandled)return;setMenuOpen(!menu.classList.contains('open'))},{capture:true});
     menu.querySelectorAll('.av-menu-trigger').forEach(trigger=>trigger.addEventListener('click',event=>{
       event.preventDefault();
       const group=trigger.closest('.av-menu-group');
