@@ -38,7 +38,7 @@
     },true);
     const menuGroups=[...menu.querySelectorAll('.av-menu-group')];
     const closeMenuGroups=()=>menuGroups.forEach(group=>{group.classList.remove('is-open');group.querySelector('.av-menu-trigger')?.setAttribute('aria-expanded','false')});
-    hamb.addEventListener('click',()=>{const open=menu.classList.toggle('open');hamb.setAttribute('aria-expanded',open);hamb.textContent=open?'✕':'☰';hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');if(!open)closeMenuGroups()});
+    hamb.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();const open=!menu.classList.contains('open');menu.classList.toggle('open',open);hamb.setAttribute('aria-expanded',String(open));hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');if(matchMedia('(max-width:820px)').matches)hamb.textContent=open?'✕':'☰';if(!open)closeMenuGroups()});
     menu.querySelectorAll('.av-menu-trigger').forEach(trigger=>trigger.addEventListener('click',event=>{
       event.preventDefault();
       const group=trigger.closest('.av-menu-group');
