@@ -38,7 +38,7 @@
     },true);
     const menuGroups=[...menu.querySelectorAll('.av-menu-group')];
     const closeMenuGroups=()=>menuGroups.forEach(group=>{group.classList.remove('is-open');group.querySelector('.av-menu-trigger')?.setAttribute('aria-expanded','false')});
-    hamb.addEventListener('click',()=>{const open=menu.classList.toggle('open');hamb.setAttribute('aria-expanded',String(open));hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');if(!open)closeMenuGroups()});
+    /* Mobile menu toggle is handled inline in index.html, matching the working international pages. */
     menu.querySelectorAll('.av-menu-trigger').forEach(trigger=>trigger.addEventListener('click',event=>{
       event.preventDefault();
       const group=trigger.closest('.av-menu-group');
