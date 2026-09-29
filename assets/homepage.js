@@ -14,8 +14,7 @@
             phone_click:['Contact',{content_name:'Telefon'}],
             booking_start:['Schedule',{}],
             generate_lead:['Lead',{}],
-            booking_complete:['Schedule',{}],
-            begin_checkout:['InitiateCheckout',{currency:'RON',value:Number(params.value)||500}]
+            booking_complete:['Schedule',{}]
           };
           const mapped=metaMap[name];
           if(mapped)window.fbq('track',mapped[0],mapped[1]);
@@ -36,19 +35,6 @@
       }
       if(/#programari/i.test(rawHref)){
         trackAstroVipEvent('booking_start',{link_text:label,page_path:location.pathname});
-      }
-      if(/buy\.stripe\.com/i.test(absoluteHref)){
-        event.preventDefault();
-        let navigated=false;
-        const go=()=>{if(navigated)return;navigated=true;window.location.href=absoluteHref};
-        trackAstroVipEvent('begin_checkout',{
-          currency:'RON',value:500,
-          items:[{item_id:'consultatie-premium-60',item_name:'Consultație premium 60 min',price:500,quantity:1}],
-          page_path:location.pathname,
-          event_callback:go,
-          event_timeout:650
-        });
-        setTimeout(go,700);
       }
     },true);
     const menuGroups=[...menu.querySelectorAll('.av-menu-group')];
