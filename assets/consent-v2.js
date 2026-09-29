@@ -191,7 +191,10 @@
     if(!choice||(!choice.analytics&&!choice.ads))return;
     event.preventDefault();
     sendCheckoutIntent(choice);
-    const clientId=await getGoogleClientId(choice);
+    const [clientId]=await Promise.all([
+      getGoogleClientId(choice),
+      new Promise(resolve=>setTimeout(resolve,450))
+    ]);
     const ref='av1a'+(choice.analytics?'1':'0')+'d'+(choice.ads?'1':'0')+'g'+b64url(clientId);
     url.searchParams.set('client_reference_id',ref);
     location.href=url.toString();
