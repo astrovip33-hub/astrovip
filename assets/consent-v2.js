@@ -152,5 +152,50 @@
     }
   }
 
+
+  function b64url(value){
+    try{
+      const bytes=new TextEncoder().encode(String(value||''));
+      let raw='';bytes.forEach(b=>raw+=String.fromCharCode(b));
+      return btoa(raw).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    }catch(e){return ''}
+  }
+
+  function getGoogleClientId(choice){
+    return new Promise(resolve=>{
+      if(!choice||!choice.analytics)return resolve('');
+      loadGoogleTag();
+      let done=false;
+      const finish=value=>{if(done)return;done=true;resolve(typeof value==='string'?value:'')};
+      try{gtag('get',GOOGLE_TAG_ID,'client_id',finish)}catch(e){finish('');return}
+      setTimeout(()=>finish(''),500);
+    });
+  }
+
+  function sendCheckoutIntent(choice){
+    const currency='RON',value=500;
+    if(choice&&choice.analytics){
+      try{gtag('event','begin_checkout',{currency,value,items:[{item_id:'astrovip-consultatie-60',item_name:'Consultatie AstroVip - 60 minute',price:value,quantity:1}]})}catch(e){}
+    }
+    if(choice&&choice.ads&&window.fbq){
+      try{fbq('track','InitiateCheckout',{currency,value,content_type:'product',content_ids:['astrovip-consultatie-60'],content_name:'Consultatie AstroVip - 60 minute'})}catch(e){}
+    }
+  }
+
+  document.addEventListener('click',async event=>{
+    const link=event.target&&event.target.closest?event.target.closest('a[href*="buy.stripe.com"]'):null;
+    if(!link)return;
+    let url;try{url=new URL(link.href,location.href)}catch(e){return}
+    if(url.hostname!=='buy.stripe.com')return;
+    const choice=loadChoice();
+    if(!choice||(!choice.analytics&&!choice.ads))return;
+    event.preventDefault();
+    sendCheckoutIntent(choice);
+    const clientId=await getGoogleClientId(choice);
+    const ref='av1a'+(choice.analytics?'1':'0')+'d'+(choice.ads?'1':'0')+'g'+b64url(clientId);
+    url.searchParams.set('client_reference_id',ref);
+    location.href=url.toString();
+  },true);
+
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build,{once:true});else build();
 })();
