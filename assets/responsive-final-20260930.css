@@ -1159,7 +1159,7 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
 @media (max-width:820px){
   body:not(.guide-page) section.hero.hero-split.av-hero-v2{
     box-sizing:border-box!important;
-    padding-bottom:8px!important;
+    padding-bottom:16px!important;
     border-bottom:1px solid rgba(57,255,20,.48)!important;
   }
   body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
@@ -1196,7 +1196,7 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
   }
   body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
     order:4!important;
-    margin:-16px auto 0!important;
+    margin:-8px auto 0!important;
     z-index:6!important;
     position:relative!important;
     inset:auto!important;
