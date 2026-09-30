@@ -1306,3 +1306,13 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     text-shadow:0 1px 0 rgba(0,0,0,.78),0 0 7px rgba(255,222,128,.16)!important;
   }
 }
+
+
+/* Mobile planet ticker vertical polish */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__ticker{
+    position:relative!important;
+    top:-4px!important;
+    margin-bottom:-4px!important;
+  }
+}
