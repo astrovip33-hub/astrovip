@@ -1020,3 +1020,110 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     font-size:11px!important;
   }
 }
+
+
+/* Mobile text fidelity — approved screenshot */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title,
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span,
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle,
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap,
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong,
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span,
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a,
+  body:not(.guide-page) .top .av-header-booking,
+  html body:not(.guide-page) .av-langbar .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    hyphens:none!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{
+    min-height:94px!important;
+    padding:13px 10px 12px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    font-size:30px!important;
+    line-height:.92!important;
+    letter-spacing:.08em!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
+    font-size:1em!important;
+    line-height:.95!important;
+    letter-spacing:.09em!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
+    margin-top:3px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    margin-top:9px!important;
+    font-size:13px!important;
+    line-height:1!important;
+    letter-spacing:.045em!important;
+    white-space:nowrap!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap{
+    min-height:23px!important;
+    padding:5px 8px!important;
+    font-size:10.5px!important;
+    line-height:1!important;
+    letter-spacing:.17em!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment{
+    min-height:48px!important;
+    padding:8px 5px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong{
+    margin:0 0 3px!important;
+    font-size:13.2px!important;
+    line-height:1!important;
+    letter-spacing:.015em!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span{
+    font-size:10.5px!important;
+    line-height:1.05!important;
+    letter-spacing:0!important;
+    white-space:nowrap!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a{
+    font-size:15px!important;
+    line-height:1.15!important;
+    letter-spacing:0!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__ticker{
+    font-size:15px!important;
+    line-height:1.15!important;
+  }
+
+  body:not(.guide-page) .top .av-header-booking{
+    white-space:nowrap!important;
+  }
+  html body:not(.guide-page) .av-langbar .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    white-space:nowrap!important;
+  }
+}
+
+@media (max-width:380px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    font-size:27px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    font-size:11.8px!important;
+    letter-spacing:.03em!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong{
+    font-size:12px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span{
+    font-size:9.8px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a{
+    font-size:13.5px!important;
+  }
+}
