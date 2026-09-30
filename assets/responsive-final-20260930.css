@@ -687,9 +687,9 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     justify-self:center!important;
     align-items:center!important;
     justify-content:center!important;
-    width:154px!important;
-    min-width:154px!important;
-    max-width:154px!important;
+    width:126px!important;
+    min-width:126px!important;
+    max-width:126px!important;
     height:42px!important;
     min-height:42px!important;
     max-height:42px!important;
@@ -844,7 +844,7 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
   /* Gold trust ribbon */
   body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
     position:relative!important;
-    width:calc(100% - 20px)!important;
+    width:calc(100% - 14px)!important;
     margin:46px auto 0!important;
     padding:0!important;
     overflow:hidden!important;
@@ -927,7 +927,7 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
   body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
     display:block!important;
     position:relative!important;
-    width:calc(100% - 20px)!important;
+    width:calc(100% - 14px)!important;
     margin:9px auto 0!important;
     padding:0!important;
     overflow:hidden!important;
