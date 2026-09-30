@@ -62,4 +62,11 @@ jobs:
           grep -Eo '<html[^>]*lang="[^"]+"|<title>[^<]+' /tmp/preview-en.html | head -5 || true
           grep -q 'lang="en"' /tmp/preview-en.html
           grep -q 'PREMIUM ASTROLOGY' /tmp/preview-en.html
+          NETLIFY_EN="https://deploy-preview-236--astrovip33.netlify.app/en/"
+          NETLIFY_STATUS=$(curl -sS -L -o /tmp/netlify-en.html -w '%{http_code}|%{url_effective}' --retry 5 --retry-delay 2 "$NETLIFY_EN")
+          echo "Netlify EN fetch: $NETLIFY_STATUS"
+          echo "Netlify EN html lang/title:"
+          grep -Eo '<html[^>]*lang="[^"]+"|<title>[^<]+' /tmp/netlify-en.html | head -5 || true
+          grep -q 'lang="en"' /tmp/netlify-en.html
+          grep -q 'PREMIUM ASTROLOGY' /tmp/netlify-en.html
           echo "Preview live: $URL"
