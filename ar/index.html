@@ -55,6 +55,9 @@ html[lang="ar"] header.top .nav-actions{
     display:flex!important;
     flex-direction:row!important;
     align-items:center!important;
+    position:relative!important;
+    direction:ltr!important;
+    padding-right:50px!important;
   }
   html[lang="ar"] header.top .av-brand-premium{
     order:1!important;
@@ -63,15 +66,25 @@ html[lang="ar"] header.top .nav-actions{
     order:3!important;
     margin-left:auto!important;
     margin-right:0!important;
+    position:static!important;
+    direction:ltr!important;
   }
-  html[lang="ar"] header.top #hamb{
-    order:99!important;
-    position:relative!important;
+  html[lang="ar"] header.top #hamb,
+  html[lang="ar"] header.top #hamb[aria-expanded="true"],
+  html[lang="ar"] header.top #hamb[aria-expanded="false"]{
+    position:absolute!important;
+    top:50%!important;
+    right:0!important;
     left:auto!important;
-    right:auto!important;
-    margin-left:0!important;
-    margin-right:0!important;
-    transform:none!important;
+    margin:0!important;
+    transform:translateY(-50%)!important;
+    direction:ltr!important;
+    z-index:650!important;
+  }
+  html[lang="ar"] header.top #menu.menu,
+  html[lang="ar"] header.top #menu.menu.open{
+    direction:rtl!important;
+    text-align:right!important;
   }
 }
 </style>
