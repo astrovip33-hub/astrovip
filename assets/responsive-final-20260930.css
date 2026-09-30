@@ -1388,3 +1388,9 @@ body:not(.guide-page) #hamb[aria-expanded="false"]{
 body:not(.guide-page) #hamb[aria-expanded="true"]{
   color:#ff3838!important;
 }
+
+
+/* Reverse planet ticker direction */
+body:not(.guide-page) .av-planet-hero-strip__ticker .planet-track{
+  animation-direction:reverse!important;
+}
