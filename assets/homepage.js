@@ -27,7 +27,7 @@
       const rawHref=link.getAttribute('href')||'';
       const absoluteHref=link.href||rawHref;
       const label=(link.textContent||link.getAttribute('aria-label')||'').trim().slice(0,100);
-      if(/wa\.me\/407(?:71200446|22128220)/i.test(absoluteHref)){
+      if(/wa\.me\/40722128220/i.test(absoluteHref)){
         trackAstroVipEvent('whatsapp_click',{link_text:label,link_url:absoluteHref,page_path:location.pathname});
       }
       if(/^tel:/i.test(rawHref)){
