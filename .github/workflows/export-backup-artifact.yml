@@ -1,0 +1,33 @@
+name: Export AstroVip backup artifact
+
+on:
+  push:
+    branches:
+      - backup-export-20260930-2025
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout backup branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Export exact production commit
+        shell: bash
+        run: |
+          mkdir -p backup-export
+          git archive e4390563d5af0fabe40772116298295c95d70b6d | tar -x -C backup-export
+
+      - name: Upload complete site backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: AstroVip-backup-2026-09-30-e4390563
+          path: backup-export
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
