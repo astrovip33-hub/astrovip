@@ -1200,8 +1200,8 @@ radial-gradient(circle at 12% 18%,rgba(88,255,142,.07),transparent 28%),
 radial-gradient(circle at 88% 78%,rgba(212,175,55,.08),transparent 26%),
 linear-gradient(180deg,#06100a 0,#070707 100%);border-top:1px solid rgba(88,255,142,.16);border-bottom:1px solid rgba(212,175,55,.18)}
 .av-expert-shell{display:grid;grid-template-columns:minmax(280px,.86fr) minmax(0,1.25fr);gap:30px;align-items:center;padding:22px;border:1px solid rgba(88,255,142,.55);border-radius:28px;background:linear-gradient(145deg,rgba(12,20,14,.97),rgba(5,5,5,.98));box-shadow:0 24px 65px rgba(0,0,0,.35),0 0 0 1px rgba(212,175,55,.20),0 0 32px rgba(88,255,142,.07)}
-.av-expert-media{position:relative;overflow:hidden;min-height:330px;border-radius:21px;border:1px solid rgba(212,175,55,.46);background:#090909}
-.av-expert-media img{display:block;width:100%;height:100%;min-height:330px;object-fit:cover;object-position:center}
+.av-expert-media{position:relative;overflow:hidden;aspect-ratio:16/9;min-height:0;margin:0;display:flex;align-items:center;justify-content:center;border-radius:21px;border:1px solid rgba(212,175,55,.46);background:radial-gradient(circle at 50% 45%,rgba(212,175,55,.08),transparent 46%),#090909}
+.av-expert-media img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;object-position:center}
 .av-expert-media:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 48%,rgba(0,0,0,.50) 100%)}
 .av-expert-copy{padding:10px 8px 10px 2px}
 .av-expert-kicker{margin:0 0 10px;color:#7dffad;font-size:.78rem;font-weight:950;letter-spacing:.2em;text-transform:uppercase}
@@ -1216,7 +1216,7 @@ linear-gradient(180deg,#06100a 0,#070707 100%);border-top:1px solid rgba(88,255,
 .av-expert-actions{display:flex;flex-wrap:wrap;gap:12px}
 .av-expert-actions .cta,.av-expert-actions .btn2{min-width:190px}
 .av-expert-proof{margin:16px 0 0;color:#9fa69f;font-size:.82rem}
-@media(max-width:860px){.av-expert-trust{padding:46px 0 50px}.av-expert-shell{grid-template-columns:1fr;gap:20px;padding:14px;border-radius:22px}.av-expert-media{min-height:250px}.av-expert-media img{min-height:250px;max-height:360px}.av-expert-copy{padding:4px 5px 8px}.av-expert-actions .cta,.av-expert-actions .btn2{width:100%}}
+@media(max-width:860px){.av-expert-trust{padding:46px 0 50px}.av-expert-shell{grid-template-columns:1fr;gap:20px;padding:14px;border-radius:22px}.av-expert-media{aspect-ratio:16/9;min-height:0}.av-expert-media img{width:100%;height:100%;min-height:0;max-height:none;object-fit:contain}.av-expert-copy{padding:4px 5px 8px}.av-expert-actions .cta,.av-expert-actions .btn2{width:100%}}
 </style>
 <section class="av-expert-trust" id="cine-analizeaza-harta" aria-labelledby="av-expert-title">
   <div class="wrap">
