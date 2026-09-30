@@ -39,7 +39,7 @@
     },true);
     const menuGroups=[...menu.querySelectorAll('.av-menu-group')];
     const closeMenuGroups=()=>menuGroups.forEach(group=>{group.classList.remove('is-open');group.querySelector('.av-menu-trigger')?.setAttribute('aria-expanded','false')});
-    hamb.addEventListener('click',()=>{const open=menu.classList.toggle('open');document.body.classList.toggle('av-menu-open',open);hamb.setAttribute('aria-expanded',String(open));hamb.textContent=open?'✕':'☰';hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');if(!open)closeMenuGroups()});
+    hamb.addEventListener('click',()=>{const open=menu.classList.toggle('open');document.body.classList.toggle('av-menu-open',open);hamb.setAttribute('aria-expanded',String(open));hamb.dataset.iconState=open?'open':'closed';hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');if(!open)closeMenuGroups()});
     menu.querySelectorAll('.av-menu-trigger').forEach(trigger=>trigger.addEventListener('click',event=>{
       event.preventDefault();
       const group=trigger.closest('.av-menu-group');
@@ -48,7 +48,7 @@
       group.classList.toggle('is-open',willOpen);
       trigger.setAttribute('aria-expanded',String(willOpen));
     }));
-    menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');document.body.classList.remove('av-menu-open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.textContent='☰';hamb.setAttribute('aria-label','Deschide meniul')}));
+    menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');document.body.classList.remove('av-menu-open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.dataset.iconState='closed';hamb.setAttribute('aria-label','Deschide meniul')}));
     const mobileRevealStatic=matchMedia('(max-width:820px)').matches;
     if(!mobileRevealStatic){
       const revealEls=document.querySelectorAll('.reveal');
@@ -120,10 +120,10 @@
 
   
     document.addEventListener('keydown',event=>{
-      if(event.key==='Escape'){closeMenuGroups();if(menu.classList.contains('open')){menu.classList.remove('open');document.body.classList.remove('av-menu-open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰';hamb.focus()}}
+      if(event.key==='Escape'){closeMenuGroups();if(menu.classList.contains('open')){menu.classList.remove('open');document.body.classList.remove('av-menu-open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.dataset.iconState='closed';hamb.focus()}}
       if(event.key==='Tab'&&modal.classList.contains('open')){event.preventDefault();document.getElementById('articleClose').focus()}
     });
-    document.addEventListener('click',event=>{if(menu.classList.contains('open')&&!menu.contains(event.target)&&!hamb.contains(event.target)){menu.classList.remove('open');document.body.classList.remove('av-menu-open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});
-    addEventListener('resize',()=>{if(innerWidth>1450&&menu.classList.contains('open')){menu.classList.remove('open');document.body.classList.remove('av-menu-open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});
+    document.addEventListener('click',event=>{if(menu.classList.contains('open')&&!menu.contains(event.target)&&!hamb.contains(event.target)){menu.classList.remove('open');document.body.classList.remove('av-menu-open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.dataset.iconState='closed'}});
+    addEventListener('resize',()=>{if(innerWidth>1450&&menu.classList.contains('open')){menu.classList.remove('open');document.body.classList.remove('av-menu-open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.dataset.iconState='closed'}});
 
 })();
