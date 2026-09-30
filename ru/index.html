@@ -33,8 +33,61 @@
 <link rel="stylesheet" href="/assets/header-layout-unified-20260923.css?v=20260923-header-clean8" media="(min-width:981px)"/>
 <link rel="stylesheet" href="/assets/intl-sync-20260924.css?v=20260924-1"/>
 <link rel="stylesheet" href="/assets/final-responsive-sync-20260924.css?v=20260924-1"/>
+
+<style id="ru-header-side-fix-20260930">
+html[lang="ru"] header.top,
+html[lang="ru"] header.top .wrap.nav,
+html[lang="ru"] header.top .nav-actions{
+  direction:ltr!important;
+}
+html[lang="ru"] header.top .nav-actions{
+  flex-direction:row!important;
+  margin-left:auto!important;
+  margin-right:0!important;
+}
+@media(max-width:980px){
+  html[lang="ru"] header.top .wrap.nav{
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+  }
+  html[lang="ru"] header.top .av-brand-premium{
+    order:1!important;
+  }
+  html[lang="ru"] header.top .nav-actions{
+    order:3!important;
+    margin-left:auto!important;
+    margin-right:0!important;
+  }
+  html[lang="ru"] header.top #hamb{
+    order:99!important;
+    position:relative!important;
+    left:auto!important;
+    right:auto!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    transform:none!important;
+  }
+}
+</style>
 </head>
 <body>
+
+<script id="ru-stray-n-cleanup-20260930">
+(function(){
+  function clean(){
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    var remove=[],n;
+    while((n=w.nextNode())){
+      var t=(n.nodeValue||"").trim();
+      if(t==="n"||t==="\\n") remove.push(n);
+    }
+    remove.forEach(function(n){n.remove();});
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",clean,{once:true});
+  else clean();
+})();
+</script>
 <header class="top">
   <div class="wrap nav">
     <a class="brand av-brand-premium" href="/ru/" aria-label="AstroVip"><svg class="av-brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-labelledby="avLogoTitle avLogoDesc" width="900" height="220" style="display:block;width:min(250px,44vw);height:auto;overflow:visible">
