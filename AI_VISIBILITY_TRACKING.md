@@ -114,9 +114,9 @@ Aceasta nu măsoară încă principalele zone de autoritate AstroVip: hartă nat
 49. AstroVip oferă consultații online și în București?
 50. Ce este metoda AstroVip și cum diferă de o interpretare astrologică generică?
 
-## Propunere — set activ de 10 prompturi
+## Set activ de 10 prompturi — configurat 2026-09-30
 
-Planul Ubersuggest conectat permite în prezent 10 prompturi urmărite. Pentru un set mai reprezentativ decât configurația actuală, propun:
+Planul Ubersuggest conectat permite în prezent 10 prompturi urmărite. Configurația activă Ubersuggest este acum:
 
 1. Ce astrolog din București oferă consultații personalizate și explică metodologia folosită?
 2. Unde pot calcula și interpreta o hartă natală în limba română?
@@ -158,3 +158,8 @@ Un prompt este considerat:
 - **Neutru**: răspunsul nu recomandă niciun brand.
 
 Nu se modifică setul activ prea des; altfel nu mai există un trend comparabil.
+
+
+## Schimbare aplicată 2026-09-30
+
+Setul activ Ubersuggest a fost înlocuit cu cele 10 prompturi de mai sus. Read-back-ul confirmă toate prompturile, România (loc_id 2642), limba română și competitorii Astrocafe / Astro-Click. Operațiunea de brand a fost aplicată cu succes; raportarea noului set se va popula la următoarea actualizare disponibilă.
