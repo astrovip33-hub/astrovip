@@ -25,6 +25,7 @@ const desktopChatMq=window.matchMedia("(min-width:981px)");
 function placeLauncher(){
   const mobileHost=document.querySelector(".av-langbar .wrap");
   const desktopHost=document.querySelector(".top .nav-actions");
+  const mobileHeaderHost=document.querySelector(".top .nav-actions");
   if(desktopChatMq.matches&&desktopHost){
     launcher.classList.add("avchat-header-slot","avchat-nav-slot");
     const book=desktopHost.querySelector(".nav-book");
@@ -35,8 +36,15 @@ function placeLauncher(){
     return;
   }
   launcher.classList.remove("avchat-nav-slot");
-  launcher.classList.toggle("avchat-header-slot",!!mobileHost);
-  if(mobileHost){
+  launcher.classList.toggle("avchat-header-slot",!!mobileHeaderHost);
+  if(mobileHeaderHost){
+    const hamb=mobileHeaderHost.querySelector("#hamb");
+    if(hamb){
+      if(launcher.parentNode!==mobileHeaderHost||launcher.nextElementSibling!==hamb)mobileHeaderHost.insertBefore(launcher,hamb);
+    }else if(launcher.parentNode!==mobileHeaderHost){
+      mobileHeaderHost.appendChild(launcher);
+    }
+  }else if(mobileHost){
     if(launcher.parentNode!==mobileHost)mobileHost.appendChild(launcher);
   }else if(launcher.parentNode!==document.body){
     document.body.appendChild(launcher);
@@ -62,7 +70,7 @@ function alignPanel(){
 }
 const $=s=>panel.querySelector(s),body=$(".avchat-body"),messages=$(".avchat-messages"),empty=$(".avchat-empty"),input=$(".avchat-input"),send=$(".avchat-send"),status=$(".avchat-status"),langSel=$(".avchat-lang");
 langSel.value=state.lang;
-function paintCopy(){const c=currentCopy();launcher.querySelector(".avchat-launcher-label").textContent=desktopChatMq.matches?"Chat":c.open;launcher.setAttribute("aria-label",c.open);$(".avchat-brand strong").textContent=c.title;$(".avchat-brand span").textContent=c.sub;$(".avchat-empty strong").textContent=c.title;$(".avchat-empty span").textContent=c.hello;input.placeholder=c.placeholder;send.title=c.send}
+function paintCopy(){const c=currentCopy();launcher.querySelector(".avchat-launcher-label").textContent=desktopChatMq.matches?"Chat":"CHAT";launcher.setAttribute("aria-label",c.open);$(".avchat-brand strong").textContent=c.title;$(".avchat-brand span").textContent=c.sub;$(".avchat-empty strong").textContent=c.title;$(".avchat-empty span").textContent=c.hello;input.placeholder=c.placeholder;send.title=c.send}
 function setStatus(t="",err=false){status.textContent=t;status.classList.toggle("error",!!err)}
 function showMsg(m){if(messages.querySelector('[data-id="'+m.id+'"]'))return;const c=currentCopy(),d=document.createElement("div");d.className="avchat-msg "+m.sender;d.dataset.id=m.id;if(m.sender==="admin"){const shown=m.translated_for_visitor||m.original_text;d.innerHTML=esc(shown);if(m.translated_for_visitor&&m.translated_for_visitor!==m.original_text)d.innerHTML+='<small>'+esc(c.translated)+'</small><details><summary>'+esc(c.original)+'</summary>'+esc(m.original_text)+'</details>'}else{d.textContent=m.original_text}messages.appendChild(d);state.lastId=Math.max(state.lastId,Number(m.id)||0);empty.style.display="none"}
 async function ensureThread(){if(state.thread)return state.thread;setStatus(currentCopy().connecting);const r=await post({action:"create_thread",session_token:state.session,preferred_lang:state.lang,page_url:location.href});state.thread=r.thread.id;persist();setStatus(currentCopy().online);return state.thread}
