@@ -1131,3 +1131,25 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     font-size:13.5px!important;
   }
 }
+
+
+/* Mobile Hero vertical geometry — gold panel + planet ticker stay inside Hero */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    margin:-8px auto 0!important;
+    float:none!important;
+    clear:both!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    margin:7px auto 0!important;
+    float:none!important;
+    clear:both!important;
+    order:initial!important;
+  }
+}
