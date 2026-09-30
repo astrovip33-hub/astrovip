@@ -1316,3 +1316,35 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     margin-bottom:-4px!important;
   }
 }
+
+
+/* Final hamburger cleanup — icon only, no frame in any state */
+body:not(.guide-page) #hamb,
+body:not(.guide-page) #hamb:hover,
+body:not(.guide-page) #hamb:active,
+body:not(.guide-page) #hamb:focus,
+body:not(.guide-page) #hamb:focus-visible,
+body:not(.guide-page) #hamb[aria-expanded="true"],
+body:not(.guide-page) #hamb[aria-expanded="false"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  border:0!important;
+  outline:0!important;
+  outline-offset:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+body:not(.guide-page) #hamb::before,
+body:not(.guide-page) #hamb::after,
+body:not(.guide-page) #hamb[aria-expanded="true"]::before,
+body:not(.guide-page) #hamb[aria-expanded="true"]::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  background:none!important;
+  box-shadow:none!important;
+}
