@@ -349,26 +349,42 @@ body:not(.guide-page) #hamb::after{
   }
 
   body:not(.guide-page) #av-hero-planets{
+    display:block!important;
+    position:relative!important;
+    width:100%!important;
     margin:12px 0 0!important;
-    border-bottom:0!important;
+    padding:0!important;
+    border-bottom:2px solid rgba(57,255,20,.72)!important;
+    border-radius:0!important;
+    clear:both!important;
+    z-index:4!important;
   }
   body:not(.guide-page) section.hero.hero-split.av-hero-v2 > #av-hero-planets:last-child{
     margin-bottom:0!important;
   }
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    border-bottom:0!important;
+  }
 
   /* Explicit separation: free question never enters the Hero. */
   body:not(.guide-page) .av-hero-freeq-separator{
-    display:block!important;
-    height:1px!important;
+    display:none!important;
+    height:0!important;
     margin:0!important;
-    background:linear-gradient(90deg,transparent,rgba(57,255,20,.55),transparent)!important;
+    padding:0!important;
   }
   body:not(.guide-page) section.freeq-home.av-freeq-after-hero{
     position:relative!important;
     margin:0!important;
-    padding:28px 0 42px!important;
+    padding:18px 0 42px!important;
     transform:none!important;
     border-top:0!important;
+    background:
+      radial-gradient(ellipse at 50% 0,rgba(57,255,20,.045),transparent 30%),
+      #050505!important;
+  }
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2 + .av-hero-freeq-separator + section.freeq-home.av-freeq-after-hero{
+    margin-top:0!important;
   }
 
   /* ---------- General mobile rhythm ---------- */
