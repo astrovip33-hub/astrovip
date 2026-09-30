@@ -54,7 +54,7 @@
       const revealEls=document.querySelectorAll('.reveal');
       if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});revealEls.forEach(el=>io.observe(el));}else{revealEls.forEach(el=>el.classList.add('in'));}
     }
-    document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('name').value.trim(),p=document.getElementById('phone').value.trim(),s=document.getElementById('service').value,m=document.getElementById('message').value.trim();trackAstroVipEvent('generate_lead',{method:'contact_whatsapp',service:s,page_path:location.pathname});const text=`Bună ziua! Sunt ${n}. Telefon: ${p}. Doresc: ${s}.${m?` Mesaj: ${m}`:''}`;window.open('https://wa.me/40722128220?text='+encodeURIComponent(text),'_blank','noopener')});
+    document.getElementById('contactForm')?.addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('name').value.trim(),p=document.getElementById('phone').value.trim(),s=document.getElementById('service').value,m=document.getElementById('message').value.trim();trackAstroVipEvent('generate_lead',{method:'contact_whatsapp',service:s,page_path:location.pathname});const text=`Bună ziua! Sunt ${n}. Telefon: ${p}. Doresc: ${s}.${m?` Mesaj: ${m}`:''}`;window.open('https://wa.me/40722128220?text='+encodeURIComponent(text),'_blank','noopener')});
 
 
     const articles={
