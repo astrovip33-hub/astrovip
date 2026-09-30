@@ -1348,3 +1348,43 @@ body:not(.guide-page) #hamb[aria-expanded="true"]::after{
   background:none!important;
   box-shadow:none!important;
 }
+
+
+/* Final free three-bar menu icon */
+body:not(.guide-page) #hamb .hamb-lines{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  width:30px!important;
+  height:24px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  pointer-events:none!important;
+}
+
+body:not(.guide-page) #hamb .hamb-line{
+  display:block!important;
+  width:30px!important;
+  height:3px!important;
+  min-height:3px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:2px!important;
+  background:currentColor!important;
+  box-shadow:none!important;
+  transform:none!important;
+  opacity:1!important;
+}
+
+body:not(.guide-page) #hamb[aria-expanded="false"]{
+  color:#39ff14!important;
+}
+body:not(.guide-page) #hamb[aria-expanded="true"]{
+  color:#ff3838!important;
+}
