@@ -81,7 +81,7 @@
       const date=d.value;timeSelect.disabled=true;timeSelect.innerHTML='<option value="">Se verifică disponibilitatea…</option>';availability.textContent='Se verifică intervalele disponibile…';
       if(!date){timeSelect.innerHTML='<option value="">Alege mai întâi data</option>';availability.textContent='Selectează data pentru a vedea orele disponibile.';return}
       try{
-        const response=await fetch(`${bookingApi}?select=booking_time&booking_date=eq.${encodeURIComponent(date)}`,{headers:{apikey:bookingKey},cache:'no-store'});
+        const response=await fetch('https://hhzsecdtqacyroxiywpm.supabase.co/rest/v1/rpc/get_booking_taken_slots',{method:'POST',headers:{apikey:bookingKey,'Content-Type':'application/json'},body:JSON.stringify({p_date:date}),cache:'no-store'});
         if(!response.ok)throw new Error('availability unavailable');
         const rows=await response.json();
         const taken=new Set(rows.map(r=>String(r.booking_time||'').slice(0,5)));
@@ -144,16 +144,15 @@
           const response=await fetch(bookingApi,{method:'POST',headers:{apikey:bookingKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(vals)});
           if(response.status===409){await refreshSlots();toast('Intervalul tocmai a fost rezervat. Alege altă oră.');return}
           if(!response.ok)throw new Error('booking failed');
-          const text=`Bună ziua! Am rezervat online un interval AstroVip. Nume: ${vals.name}. Telefon: ${vals.phone}. Serviciu: ${vals.service}. Data: ${vals.booking_date}. Ora: ${slotLabels[vals.booking_time]||vals.booking_time}. Format: ${vals.mode}.${vals.note?` Detalii: ${vals.note}`:''}`;
           trackAstroVipEvent('generate_lead',{method:'booking_form',service:vals.service,booking_mode:vals.mode,page_path:location.pathname});
           trackAstroVipEvent('booking_complete',{service:vals.service,booking_mode:vals.mode,page_path:location.pathname});
-          toast('Programarea a fost înregistrată.');
-          bookingForm.reset();timeSelect.disabled=true;timeSelect.innerHTML='<option value="">Alege mai întâi data</option>';availability.textContent='Programarea a fost înregistrată. Se deschide WhatsApp…';
-          setTimeout(()=>{window.location.href='https://wa.me/40722128220?text='+encodeURIComponent(text)},450);
+          try{localStorage.setItem('astrovip_pending_booking',JSON.stringify({...vals,created_at:new Date().toISOString()}))}catch(error){}
+          toast('Intervalul a fost rezervat. Continuăm la plata securizată.');
+          setTimeout(()=>{window.location.href='https://buy.stripe.com/4gMeVcbz75J207y6fefjG00'},450);
         }catch(error){
           toast('Programarea nu a putut fi salvată. Încearcă din nou.');
         }finally{
-          bookingSubmit.disabled=false;bookingSubmit.textContent='Rezervă intervalul';
+          bookingSubmit.disabled=false;bookingSubmit.textContent='REZERVĂ ȘI CONTINUĂ LA PLATĂ →';
         }
       });
     }
