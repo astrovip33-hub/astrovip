@@ -845,7 +845,7 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
   body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
     position:relative!important;
     width:calc(100% - 14px)!important;
-    margin:46px auto 0!important;
+    margin:14px auto 0!important;
     padding:0!important;
     overflow:hidden!important;
     border:1px solid rgba(255,236,166,.96)!important;
@@ -928,7 +928,7 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     display:block!important;
     position:relative!important;
     width:calc(100% - 14px)!important;
-    margin:9px auto 0!important;
+    margin:7px auto 0!important;
     padding:0!important;
     overflow:hidden!important;
     border:1px solid rgba(225,190,91,.38)!important;
@@ -1046,10 +1046,10 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     font-size:30px!important;
     line-height:.92!important;
     letter-spacing:.08em!important;
-    color:#ffe7a0!important;
+    color:#fff1bd!important;
     text-shadow:
-      0 1px 0 rgba(0,0,0,.72),
-      0 0 10px rgba(255,222,128,.24)!important;
+      0 1px 0 rgba(0,0,0,.62),
+      0 0 11px rgba(255,235,170,.30)!important;
   }
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
     font-size:1em!important;
