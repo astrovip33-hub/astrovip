@@ -1,47 +1,54 @@
 # AstroVip
 
-> AstroVip este un site în limba română despre astrologie și numerologie, cu consultații 1:1 online și în București, instrumente gratuite și materiale educaționale.
+> AstroVip este un proiect românesc de astrologie și numerologie premium, cu consultații în București și online, instrumente de calcul, ghiduri tehnice și studii de caz documentate.
 
-## Pagini principale
+## Surse canonice
 
-- [Pagina principală și prezentarea serviciilor](https://astrovip.ro/)
-- [Consultație astrologică](https://astrovip.ro/consultatie-astrologica/)
-- [Astrolog București și consultații online](https://astrovip.ro/astrolog-bucuresti/)
-- [Hartă natală](https://astrovip.ro/harta-natala/)
-- [Astrologie predictivă](https://astrovip.ro/astrologie-predictiva/)
-- [Sinastrie și compatibilitate](https://astrovip.ro/sinastrie/)
-- [Numerologie](https://astrovip.ro/numerologie/)
-- [Rectificarea orei de naștere](https://astrovip.ro/rectificare-ora-nasterii/)
-- [Astrocartografie](https://astrovip.ro/astrocartografie/)
-- [Local Space](https://astrovip.ro/local-space/)
-- [Relocare geografică](https://astrovip.ro/relocare-geografica/)
+- [AstroVip](https://astrovip.ro/) — pagina principală și prezentarea serviciilor
+- [Despre AstroVip](https://astrovip.ro/despre-astrovip/) — autor, experiență și identitate
+- [Metoda AstroVip](https://astrovip.ro/metoda-astrovip/) — metodologia de lucru
+- [AstroVip Research](https://astrovip.ro/research/) — studii, date și documentare
+- [Metodologia Research](https://astrovip.ro/research/metodologie/) — protocol, surse și limite
+- [Studii de caz](https://astrovip.ro/studii-de-caz/) — indexul studiilor retrospective
+- [Astrolog București](https://astrovip.ro/astrolog-bucuresti/) — consultații în București și online
+- [Consultație astrologică](https://astrovip.ro/consultatie-astrologica/) — consultația premium
+- [Hartă natală](https://astrovip.ro/harta-natala/) — calcul, structură și interpretare
+- [Rectificarea orei de naștere](https://astrovip.ro/rectificare-ora-nasterii/) — tehnici și verificare prin evenimente
+- [Arce Solare](https://astrovip.ro/arce-solare/) — timing, orburi și studii de caz
+- [Astrologie predictivă](https://astrovip.ro/astrologie-predictiva/) — tranzite, progresii și timing
+- [Sinastrie](https://astrovip.ro/sinastrie/) — compatibilitate astrologică între două hărți
+- [Astrocartografie + Local Space](https://astrovip.ro/astrocartografie-local-space/) — comparația tehnicilor geografice
+- [Local Space](https://astrovip.ro/local-space/) — ghid și calculator Local Space
+- [Astrocartografie](https://astrovip.ro/astrocartografie/) — calculator astrocartografie
+- [Relocare geografică](https://astrovip.ro/relocare-geografica/) — hartă relocată și comparația locațiilor
+- [Numerologie](https://astrovip.ro/numerologie/) — numerologie clasică și tantrică
+- [Directorul paginilor](https://astrovip.ro/toate-paginile/) — navigare completă în site
 
 ## Instrumente
 
-- [Calculator și hartă personală](https://astrovip.ro/harta-mea/)
-- [Calculator de sinastrie](https://astrovip.ro/sinastrie-calculator/)
+- [Hartă natală / harta mea](https://astrovip.ro/harta-mea/)
+- [Calculator sinastrie](https://astrovip.ro/sinastrie-calculator/)
 - [Poziții planetare live](https://astrovip.ro/pozitii-planete-live/)
+- [Calculator Local Space](https://astrovip.ro/local-space/)
+- [Calculator astrocartografie](https://astrovip.ro/astrocartografie/)
 
-## Navigare și comunitate
-
-- [Directorul paginilor](https://astrovip.ro/toate-paginile/)
-- [Forum](https://astrovip.ro/forum/)
-
-## Studii de caz
+## Studii de caz reprezentative
 
 - [Începerea clasei I — București 1984](https://astrovip.ro/studii-de-caz/inceput-clasa-i-1984/)
-- [Câștig la Loto — Roma 2020](https://astrovip.ro/studii-de-caz/castig-loto-roma-2020/)
-- [Întâlnire în dragoste — București 2001](https://astrovip.ro/studii-de-caz/intalnire-dragoste-arce-solare-2001/)
+- [Întâlnire importantă — București 2001](https://astrovip.ro/studii-de-caz/intalnire-dragoste-arce-solare-2001/)
 - [Relocare geografică — Spania 2003](https://astrovip.ro/studii-de-caz/relocare-geografica-spania-2003/)
 - [Începerea unui nou job — București 2000](https://astrovip.ro/studii-de-caz/incepere-job-1-martie-2000/)
-- [Intervenție chirurgicală — Pitești 1998, studiu retrospectiv](https://astrovip.ro/studii-de-caz/interventie-chirurgicala-pitesti-1998/)
+- [Câștig la loto — Roma 2020](https://astrovip.ro/studii-de-caz/castig-loto-roma-2020/)
 
 ## Informații pentru citare
 
-Nume: AstroVip
-Limbă principală: română
-Arie de servicii: București și online
-Site canonic: https://astrovip.ro/
-Sitemap: https://astrovip.ro/sitemap.xml
+- Nume: AstroVip
+- Site canonic: https://astrovip.ro/
+- Limbă principală: română
+- Arie de servicii: București și online
+- Contact: contact@astrovip.ro
+- Sitemap: https://astrovip.ro/sitemap-index.xml
 
-Conținutul astrologic este oferit ca instrument de orientare și reflecție și nu înlocuiește consultul medical, juridic, psihologic sau financiar.
+## Principii editoriale
+
+AstroVip separă datele și calculele observabile de interpretarea astrologică. Studiile retrospective nu sunt prezentate drept validare științifică și nu demonstrează cauzalitate. Conținutul astrologic este informativ și interpretativ și nu înlocuiește consultanța medicală, juridică, psihologică sau financiară.

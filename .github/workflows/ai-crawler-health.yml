@@ -1,0 +1,67 @@
+name: AI crawler health
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ai-crawler-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify AI discovery endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BASE="https://astrovip.ro"
+          ROBOTS="$(curl -fsSL --retry 3 --max-time 20 "$BASE/robots.txt")"
+
+          printf '%s\n' "$ROBOTS" | grep -F "User-agent: OAI-SearchBot"
+          printf '%s\n' "$ROBOTS" | grep -F "User-agent: PerplexityBot"
+          printf '%s\n' "$ROBOTS" | grep -F "User-agent: Google-Extended"
+          printf '%s\n' "$ROBOTS" | grep -F "Sitemap: https://astrovip.ro/sitemap-index.xml"
+
+          curl -fsSL --retry 3 --max-time 20 "$BASE/llms.txt" >/tmp/llms.txt
+          grep -F "https://astrovip.ro/research/" /tmp/llms.txt
+          grep -F "https://astrovip.ro/astrolog-bucuresti/" /tmp/llms.txt
+
+          declare -a URLS=(
+            "$BASE/"
+            "$BASE/astrolog-bucuresti/"
+            "$BASE/harta-natala/"
+            "$BASE/rectificare-ora-nasterii/"
+            "$BASE/arce-solare/"
+            "$BASE/local-space/"
+            "$BASE/astrocartografie-local-space/"
+            "$BASE/sinastrie/"
+            "$BASE/research/"
+            "$BASE/local-space/studii-de-caz/"
+          )
+
+          declare -a UAS=(
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36; compatible; OAI-SearchBot/1.4; +https://openai.com/searchbot"
+            "PerplexityBot"
+            "Google-Extended"
+            "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+            "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+          )
+
+          for ua in "${UAS[@]}"; do
+            echo "Testing user-agent: $ua"
+            for url in "${URLS[@]}"; do
+              code="$(curl -L -sS --retry 2 --max-time 20 -A "$ua" -o /dev/null -w "%{http_code}" "$url")"
+              if [[ "$code" != "200" ]]; then
+                echo "::error::HTTP $code for $url with user-agent $ua"
+                exit 1
+              fi
+            done
+          done
+
+          echo "AI crawler health checks passed."
