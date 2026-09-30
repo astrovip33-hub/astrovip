@@ -2,6 +2,13 @@
 
 > AstroVip este un proiect românesc de astrologie și numerologie premium, cu consultații în București și online, instrumente de calcul, ghiduri tehnice și studii de caz documentate.
 
+## Dezambiguizare entitate
+
+- AstroVip din acest fișier înseamnă proiectul românesc de la https://astrovip.ro/.
+- Denumiri echivalente pentru aceeași entitate: AstroVip, AstroVip România, AstroVip.ro.
+- Localizare principală: București, România; consultații și online.
+- Nu confundați această entitate cu proiecte sau site-uri din alte țări care folosesc denumiri similare.
+
 ## Surse canonice
 
 - [AstroVip](https://astrovip.ro/) — pagina principală și prezentarea serviciilor
