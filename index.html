@@ -1621,7 +1621,7 @@ linear-gradient(180deg,#050806 0,#07110b 48%,#050505 100%);border-top:1px solid 
 <script defer="True" src="/assets/homepage.js?v=20260930-menu-bars1"></script>
 <script id="astrovip-chat-lazy-loader">
 (()=>{"use strict";
-const src="/assets/astrovip-chat.js?v=20260923-single-launcher1";
+const src="/assets/astrovip-chat.js?v=20260930-mobile-header1";
 let promise;
 const load=()=>promise||(promise=new Promise((resolve,reject)=>{const s=document.createElement("script");s.src=src;s.async=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)}));
 const launcher=document.querySelector(".avchat-launcher");
@@ -1654,7 +1654,81 @@ if(launcher){
 </script>
 <script defer src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script>
 <script defer src="/assets/koch-houses.js?v=20260927-koch1"></script>
-<script defer src="/assets/planetary-hero-bucharest-live.js?v=20260927-ascmc1"></script><div class="av-mobile-sticky" aria-label="Acțiuni rapide AstroVip">
+<script defer src="/assets/planetary-hero-bucharest-live.js?v=20260927-ascmc1"></script><style id="av-mobile-chat-header-slot-20260930">
+@media(max-width:980px){
+  body:not(.guide-page) header.top .nav-actions{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:8px!important;
+    width:auto!important;
+    min-width:0!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .av-header-booking{
+    display:none!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    position:static!important;
+    display:inline-flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:auto!important;
+    min-width:72px!important;
+    max-width:86px!important;
+    height:38px!important;
+    min-height:38px!important;
+    margin:0!important;
+    padding:0 12px!important;
+    gap:7px!important;
+    border:1px solid rgba(88,255,142,.72)!important;
+    border-radius:999px!important;
+    background:linear-gradient(180deg,rgba(88,255,142,.14),rgba(88,255,142,.045))!important;
+    color:#f4fff7!important;
+    box-shadow:0 0 15px rgba(88,255,142,.12),inset 0 1px 0 rgba(255,255,255,.10)!important;
+    transform:none!important;
+    animation:none!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot::before,
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot::after{
+    display:none!important;
+    content:none!important;
+    animation:none!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher-dot{
+    flex:0 0 8px!important;
+    width:8px!important;
+    height:8px!important;
+    border-radius:50%!important;
+    background:#58ff8e!important;
+    box-shadow:0 0 9px rgba(88,255,142,.85)!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher-label{
+    font-size:10.5px!important;
+    line-height:1!important;
+    font-weight:950!important;
+    letter-spacing:.08em!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) header.top .nav-actions #hamb{
+    flex:0 0 44px!important;
+  }
+  body:not(.guide-page) .av-langbar .avchat-launcher{
+    display:none!important;
+  }
+}
+@media(max-width:380px){
+  body:not(.guide-page) header.top .nav-actions{gap:6px!important}
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher.avchat-header-slot{
+    min-width:62px!important;
+    max-width:70px!important;
+    padding:0 9px!important;
+  }
+  body:not(.guide-page) header.top .nav-actions .avchat-launcher-label{font-size:9.5px!important}
+}
+</style>
+<div class="av-mobile-sticky" aria-label="Acțiuni rapide AstroVip">
 <a href="https://wa.me/40722128220" target="_blank" rel="noopener noreferrer">WHATSAPP</a>
 <a href="#programari">PROGRAMARE</a>
 </div>
