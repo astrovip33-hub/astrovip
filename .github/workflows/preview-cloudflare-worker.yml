@@ -55,4 +55,11 @@ jobs:
           STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
           test "$STATUS" = "200"
           grep -q 'ASTROLOGIE' /tmp/preview.html
+          EN_URL="${URL}en/"
+          EN_STATUS=$(curl -sS -L -o /tmp/preview-en.html -w '%{http_code}|%{url_effective}' --retry 8 --retry-delay 3 "$EN_URL")
+          echo "EN fetch: $EN_STATUS"
+          echo "EN html lang/title:"
+          grep -Eo '<html[^>]*lang="[^"]+"|<title>[^<]+' /tmp/preview-en.html | head -5 || true
+          grep -q 'lang="en"' /tmp/preview-en.html
+          grep -q 'PREMIUM ASTROLOGY' /tmp/preview-en.html
           echo "Preview live: $URL"
