@@ -1046,10 +1046,10 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     font-size:30px!important;
     line-height:.92!important;
     letter-spacing:.08em!important;
-    color:#f3db79!important;
+    color:#ffe7a0!important;
     text-shadow:
-      0 1px 0 rgba(0,0,0,.82),
-      0 0 8px rgba(232,199,95,.16)!important;
+      0 1px 0 rgba(0,0,0,.72),
+      0 0 10px rgba(255,222,128,.24)!important;
   }
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
     font-size:1em!important;
