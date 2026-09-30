@@ -98,3 +98,19 @@
  .av-footer-grid>section:before{inset:5px!important;border-radius:13px!important}
  .av-footer-brand{grid-column:auto!important}
 }
+/* v8 — focused homepage footer */
+.av-footer-focused{padding-top:34px!important;padding-bottom:20px!important}
+.av-footer-grid--focused{grid-template-columns:1.35fr 1fr 1fr!important;gap:28px!important;padding-bottom:24px!important}
+.av-footer-grid--focused .av-footer-brand{grid-column:auto!important}
+.av-footer-grid--focused .av-footer-experience{max-width:330px!important}
+.av-footer-focused .av-footer-bottom{padding-top:18px!important}
+@media(max-width:900px){
+  .av-footer-grid--focused{grid-template-columns:1fr 1fr!important}
+  .av-footer-grid--focused .av-footer-brand{grid-column:1/-1!important;text-align:center!important}
+  .av-footer-grid--focused .av-footer-experience{margin-left:auto!important;margin-right:auto!important}
+}
+@media(max-width:600px){
+  .av-footer-focused{padding:26px 18px 18px!important}
+  .av-footer-grid--focused{grid-template-columns:1fr!important;gap:18px!important;padding-bottom:18px!important}
+  .av-footer-grid--focused .av-footer-brand{grid-column:auto!important}
+}
