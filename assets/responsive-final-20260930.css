@@ -1394,3 +1394,18 @@ body:not(.guide-page) #hamb[aria-expanded="true"]{
 body:not(.guide-page) .av-planet-hero-strip__ticker .planet-track{
   animation-direction:reverse!important;
 }
+
+
+/* Final ASTROLOGIE PREMIUM clarity */
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+  color:#fff8d8!important;
+  font-weight:800!important;
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.72),
+    0 0 4px rgba(255,255,255,.38),
+    0 0 12px rgba(255,231,157,.42),
+    0 0 20px rgba(242,196,75,.20)!important;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
+  color:inherit!important;
+}
