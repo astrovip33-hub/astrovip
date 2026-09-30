@@ -8,8 +8,25 @@
 }
 
 /* ---------- Header / navigation ---------- */
+body:not(.guide-page) .top{
+  overflow:visible!important;
+}
 body:not(.guide-page) .top .wrap.nav{
   min-width:0;
+  position:relative!important;
+  overflow:visible!important;
+}
+body:not(.guide-page) .top #menu.menu{
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+body:not(.guide-page) .top #menu.menu.open{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  z-index:500!important;
 }
 body:not(.guide-page) .top .av-brand-premium,
 body:not(.guide-page) .top .nav-actions,
@@ -27,6 +44,9 @@ body:not(.guide-page) #hamb::after{
 }
 
 @media (min-width:821px) and (max-width:1450px){
+  body:not(.guide-page) .top #menu.menu:not(.open){
+    display:none!important;
+  }
   body:not(.guide-page) .top .wrap.nav{
     min-height:72px!important;
   }
@@ -68,6 +88,9 @@ body:not(.guide-page) #hamb::after{
 }
 
 @media (max-width:820px){
+  body:not(.guide-page) .top #menu.menu:not(.open){
+    display:none!important;
+  }
   body.av-menu-open{
     overflow:hidden!important;
   }
