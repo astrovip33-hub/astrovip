@@ -1396,38 +1396,39 @@ body:not(.guide-page) .av-planet-hero-strip__ticker .planet-track{
 }
 
 
-/* Final ASTROLOGIE PREMIUM clarity — match header gold */
+/* Final ASTROLOGIE PREMIUM clarity — brighter header gold */
 body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
   font-weight:900!important;
-  color:#fff3a9!important;
+  color:#fffbdc!important;
   text-shadow:
-    0 1px 0 rgba(0,0,0,.90),
-    0 2px 3px rgba(0,0,0,.48),
-    0 0 7px rgba(255,230,128,.46),
-    0 0 15px rgba(242,194,79,.30)!important;
+    0 1px 0 rgba(0,0,0,.86),
+    0 2px 3px rgba(0,0,0,.42),
+    0 0 8px rgba(255,246,200,.62),
+    0 0 17px rgba(255,222,112,.46),
+    0 0 26px rgba(239,188,45,.20)!important;
 }
 body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
-  color:#fff3a9!important;
+  color:#fffbdc!important;
   background:
     linear-gradient(
       180deg,
-      #fffde8 0%,
-      #fff6bd 15%,
-      #ffe98c 34%,
-      #f6d66c 53%,
-      #f2c24f 68%,
-      #ffe37a 84%,
-      #fff4b2 100%
+      #ffffff 0%,
+      #fffde9 12%,
+      #fff8c9 30%,
+      #ffe98c 52%,
+      #f7d66a 70%,
+      #fff0a8 86%,
+      #fffbe0 100%
     )!important;
   -webkit-background-clip:text!important;
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
-  -webkit-text-stroke:.52px rgba(255,246,205,.90)!important;
+  -webkit-text-stroke:.56px rgba(255,252,226,.96)!important;
   filter:
-    drop-shadow(0 1px 0 rgba(0,0,0,.86))
-    drop-shadow(0 0 4px rgba(255,238,156,.78))
-    drop-shadow(0 0 10px rgba(244,196,63,.48))
-    drop-shadow(0 0 16px rgba(225,167,29,.22))!important;
+    drop-shadow(0 1px 0 rgba(0,0,0,.84))
+    drop-shadow(0 0 5px rgba(255,249,213,.92))
+    drop-shadow(0 0 11px rgba(255,224,116,.64))
+    drop-shadow(0 0 18px rgba(241,191,48,.30))!important;
   letter-spacing:.10em!important;
 }
 body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
@@ -1436,11 +1437,11 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premiu
 
 @media(max-width:820px){
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
-    -webkit-text-stroke:.48px rgba(255,247,211,.94)!important;
+    -webkit-text-stroke:.52px rgba(255,253,232,.98)!important;
     filter:
-      drop-shadow(0 1px 0 rgba(0,0,0,.88))
-      drop-shadow(0 0 4px rgba(255,240,169,.82))
-      drop-shadow(0 0 9px rgba(246,198,66,.52))
-      drop-shadow(0 0 14px rgba(226,168,31,.24))!important;
+      drop-shadow(0 1px 0 rgba(0,0,0,.86))
+      drop-shadow(0 0 5px rgba(255,250,218,.96))
+      drop-shadow(0 0 10px rgba(255,226,122,.70))
+      drop-shadow(0 0 16px rgba(242,193,50,.34))!important;
   }
 }
