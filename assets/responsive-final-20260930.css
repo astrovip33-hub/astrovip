@@ -1,0 +1,1390 @@
+/* AstroVip responsive consolidation — 2026-09-30
+   Loaded last on the homepage to neutralize legacy responsive overrides
+   without changing the approved premium visual language. */
+
+:root{
+  --av-touch:44px;
+  --av-mobile-gutter:14px;
+}
+
+/* ---------- Header / navigation ---------- */
+body:not(.guide-page) .top{
+  overflow:visible!important;
+}
+body:not(.guide-page) .top .wrap.nav{
+  min-width:0;
+  position:relative!important;
+  overflow:visible!important;
+}
+body:not(.guide-page) .top #menu.menu{
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+body:not(.guide-page) .top #menu.menu.open{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  z-index:500!important;
+}
+body:not(.guide-page) .top .av-brand-premium,
+body:not(.guide-page) .top .nav-actions,
+body:not(.guide-page) .top .menu{
+  min-width:0;
+}
+body:not(.guide-page) #hamb{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+body:not(.guide-page) #hamb::before,
+body:not(.guide-page) #hamb::after{
+  content:none!important;
+  display:none!important;
+}
+
+@media (min-width:821px) and (max-width:1450px){
+  body:not(.guide-page) .top #menu.menu:not(.open){
+    display:none!important;
+  }
+  body:not(.guide-page) .top .wrap.nav{
+    min-height:72px!important;
+  }
+  body:not(.guide-page) .top .menu{
+    top:calc(100% + 1px)!important;
+    left:max(18px,4vw)!important;
+    right:max(18px,4vw)!important;
+    max-height:calc(100dvh - 92px)!important;
+    overflow:auto!important;
+    overscroll-behavior:contain!important;
+    padding:10px!important;
+  }
+  body:not(.guide-page) .top .menu a,
+  body:not(.guide-page) .top .av-menu-trigger{
+    min-height:46px!important;
+  }
+  body:not(.guide-page) #hamb{
+    display:inline-grid!important;
+    place-items:center!important;
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    color:#39ff14!important;
+    font-size:30px!important;
+    font-weight:900!important;
+    line-height:1!important;
+    text-shadow:0 0 9px rgba(57,255,20,.45)!important;
+  }
+  body:not(.guide-page) #hamb[aria-expanded="true"]{
+    color:#ff3838!important;
+    text-shadow:0 0 9px rgba(255,56,56,.42)!important;
+  }
+}
+
+@media (max-width:820px){
+  body:not(.guide-page) .top #menu.menu:not(.open){
+    display:none!important;
+  }
+  body.av-menu-open{
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .top{
+    min-height:0!important;
+  }
+  body:not(.guide-page) .top .wrap.nav{
+    width:calc(100% - 18px)!important;
+    min-height:62px!important;
+    height:auto!important;
+    margin-inline:auto!important;
+    padding:6px 0!important;
+    gap:8px!important;
+    display:flex!important;
+    align-items:center!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium{
+    flex:1 1 auto!important;
+    min-width:0!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium .av-brand-logo{
+    display:block!important;
+    width:clamp(118px,34vw,168px)!important;
+    max-width:100%!important;
+    max-height:46px!important;
+    height:auto!important;
+  }
+  body:not(.guide-page) .top .nav-actions{
+    flex:0 0 auto!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:7px!important;
+    margin-left:auto!important;
+  }
+  body:not(.guide-page) .top .av-header-booking{
+    display:none!important;
+  }
+  html body:not(.guide-page) header.top .avchat-launcher.avchat-header-slot{
+    position:relative!important;
+    inset:auto!important;
+    width:clamp(126px,36vw,148px)!important;
+    min-width:126px!important;
+    max-width:148px!important;
+    height:42px!important;
+    min-height:42px!important;
+    padding:0 10px!important;
+    margin:0!important;
+    gap:6px!important;
+    border-width:2px!important;
+    border-radius:999px!important;
+    box-sizing:border-box!important;
+  }
+  html body:not(.guide-page) header.top .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    font-size:12px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+  html body:not(.guide-page) header.top .avchat-launcher.avchat-header-slot .avchat-launcher-dot{
+    width:8px!important;
+    height:8px!important;
+    flex-basis:8px!important;
+  }
+  body:not(.guide-page) #hamb{
+    display:inline-grid!important;
+    place-items:center!important;
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+    max-width:44px!important;
+    max-height:44px!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    color:#39ff14!important;
+    font-size:30px!important;
+    font-weight:900!important;
+    line-height:1!important;
+    text-shadow:0 0 9px rgba(57,255,20,.50)!important;
+    -webkit-text-stroke:0!important;
+  }
+  body:not(.guide-page) #hamb[aria-expanded="true"]{
+    color:#ff3838!important;
+    text-shadow:0 0 10px rgba(255,56,56,.45)!important;
+  }
+
+  body:not(.guide-page) .top .menu{
+    position:absolute!important;
+    top:calc(100% + 1px)!important;
+    left:9px!important;
+    right:9px!important;
+    width:auto!important;
+    max-height:calc(100dvh - 76px)!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    padding:9px!important;
+    border-radius:16px!important;
+    z-index:150!important;
+  }
+  body:not(.guide-page) .top .menu a,
+  body:not(.guide-page) .top .av-menu-trigger{
+    min-height:48px!important;
+    padding:12px 13px!important;
+    font-size:15px!important;
+    line-height:1.3!important;
+    white-space:normal!important;
+  }
+
+  /* Seven flags remain on one compact row. */
+  body:not(.guide-page) .av-langbar .wrap{
+    width:100%!important;
+    min-height:38px!important;
+    padding:4px 8px!important;
+  }
+  body:not(.guide-page) .av-lang-switch{
+    width:auto!important;
+    max-width:100%!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:center!important;
+    align-items:center!important;
+    gap:5px!important;
+    padding:0!important;
+    margin:0 auto!important;
+    overflow:visible!important;
+  }
+  body:not(.guide-page) .av-lang-switch>a{
+    flex:0 0 34px!important;
+    width:34px!important;
+    min-width:34px!important;
+    max-width:34px!important;
+    height:28px!important;
+    min-height:28px!important;
+    padding:0!important;
+    border-radius:6px!important;
+    overflow:hidden!important;
+    border:1px solid rgba(255,224,118,.55)!important;
+  }
+  body:not(.guide-page) .av-lang-switch>a img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+  }
+
+  /* ---------- Hero ---------- */
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    display:block!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual{
+    position:relative!important;
+    width:100%!important;
+    min-height:0!important;
+    height:auto!important;
+    margin:-30px 0 0!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual picture{
+    position:static!important;
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual img{
+    display:block!important;
+    width:100%!important;
+    height:clamp(275px,76vw,340px)!important;
+    min-height:0!important;
+    object-fit:cover!important;
+    object-position:center 48%!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-sidecopy{
+    font-size:9px!important;
+    bottom:12px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{
+    box-sizing:border-box!important;
+    width:calc(100% - 24px)!important;
+    max-width:620px!important;
+    margin:10px auto 10px!important;
+    padding:16px 12px 15px!important;
+    border-radius:17px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    font-size:clamp(36px,10.4vw,48px)!important;
+    line-height:.93!important;
+    text-wrap:balance!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
+    font-size:.56em!important;
+    letter-spacing:.18em!important;
+    margin-top:6px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    margin-top:10px!important;
+    font-size:12px!important;
+    line-height:1.35!important;
+    letter-spacing:.075em!important;
+    text-wrap:balance!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-actions{
+    display:flex!important;
+    justify-content:center!important;
+    margin-top:13px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-actions a{
+    width:min(100%,260px)!important;
+    min-height:46px!important;
+    padding:10px 16px!important;
+    font-size:13px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-cards{
+    display:none!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-bottom{
+    width:calc(100% - 24px)!important;
+    margin:13px auto 0!important;
+    padding:12px 8px 0!important;
+    font-size:10px!important;
+    line-height:1.4!important;
+    letter-spacing:.09em!important;
+  }
+
+  /* Trust ribbon: readable, not micro-text. */
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
+    width:calc(100% - 24px)!important;
+    margin:14px auto 0!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap{
+    font-size:10px!important;
+    line-height:1.25!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segments{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment{
+    min-width:0!important;
+    padding:10px 7px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong{
+    font-size:11.5px!important;
+    line-height:1.2!important;
+    overflow-wrap:anywhere!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span{
+    font-size:10.5px!important;
+    line-height:1.25!important;
+  }
+
+  body:not(.guide-page) #av-hero-planets{
+    display:block!important;
+    position:relative!important;
+    width:100%!important;
+    margin:12px 0 0!important;
+    padding:0!important;
+    border-bottom:2px solid rgba(57,255,20,.72)!important;
+    border-radius:0!important;
+    clear:both!important;
+    z-index:4!important;
+  }
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2 > #av-hero-planets:last-child{
+    margin-bottom:0!important;
+  }
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    border-bottom:0!important;
+  }
+
+  /* Explicit separation: free question never enters the Hero. */
+  body:not(.guide-page) .av-hero-freeq-separator{
+    display:none!important;
+    height:0!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  body:not(.guide-page) section.freeq-home.av-freeq-after-hero{
+    position:relative!important;
+    margin:0!important;
+    padding:18px 0 42px!important;
+    transform:none!important;
+    border-top:0!important;
+    background:
+      radial-gradient(ellipse at 50% 0,rgba(57,255,20,.045),transparent 30%),
+      #050505!important;
+  }
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2 + .av-hero-freeq-separator + section.freeq-home.av-freeq-after-hero{
+    margin-top:0!important;
+  }
+
+  /* ---------- General mobile rhythm ---------- */
+  body:not(.guide-page) section:not(.hero):not(.freeq-home){
+    scroll-margin-top:118px!important;
+  }
+  body:not(.guide-page) .grid,
+  body:not(.guide-page) .steps,
+  body:not(.guide-page) .contact-grid,
+  body:not(.guide-page) .split{
+    min-width:0!important;
+  }
+  body:not(.guide-page) img,
+  body:not(.guide-page) video,
+  body:not(.guide-page) iframe{
+    max-width:100%;
+  }
+  body:not(.guide-page) h1,
+  body:not(.guide-page) h2,
+  body:not(.guide-page) h3,
+  body:not(.guide-page) p,
+  body:not(.guide-page) a,
+  body:not(.guide-page) span{
+    overflow-wrap:break-word;
+  }
+  body:not(.guide-page) .cta,
+  body:not(.guide-page) .btn2,
+  body:not(.guide-page) button,
+  body:not(.guide-page) input,
+  body:not(.guide-page) select,
+  body:not(.guide-page) textarea{
+    min-height:var(--av-touch);
+  }
+
+  /* Cookie banner keeps first paint usable. */
+  .av-consent{
+    left:8px!important;
+    right:8px!important;
+    bottom:max(8px,env(safe-area-inset-bottom))!important;
+    max-height:min(62dvh,480px)!important;
+    overflow:auto!important;
+    overscroll-behavior:contain!important;
+  }
+  .av-consent__inner{
+    padding:13px!important;
+  }
+  .av-consent__title{
+    font-size:17px!important;
+  }
+  .av-consent__text{
+    font-size:13px!important;
+    line-height:1.4!important;
+  }
+}
+
+@media (max-width:480px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual{
+    margin:-44px 0 0!important;
+  }
+}
+
+@media (max-width:430px){
+  body:not(.guide-page) .top .wrap.nav{
+    width:calc(100% - 14px)!important;
+    gap:6px!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium .av-brand-logo{
+    width:clamp(112px,32vw,138px)!important;
+  }
+  html body:not(.guide-page) header.top .avchat-launcher.avchat-header-slot{
+    width:clamp(118px,34vw,138px)!important;
+    min-width:118px!important;
+    max-width:138px!important;
+    height:40px!important;
+    min-height:40px!important;
+    padding-inline:8px!important;
+  }
+  html body:not(.guide-page) header.top .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    font-size:11px!important;
+  }
+  body:not(.guide-page) #hamb{
+    width:42px!important;
+    height:42px!important;
+    min-width:42px!important;
+    min-height:42px!important;
+    max-width:42px!important;
+    max-height:42px!important;
+    font-size:29px!important;
+  }
+  body:not(.guide-page) .av-lang-switch{
+    gap:4px!important;
+  }
+  body:not(.guide-page) .av-lang-switch>a{
+    flex-basis:32px!important;
+    width:32px!important;
+    min-width:32px!important;
+    max-width:32px!important;
+    height:27px!important;
+    min-height:27px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-sidecopy{
+    display:none!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual img{
+    height:clamp(260px,73vw,315px)!important;
+    object-position:center center!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{
+    width:calc(100% - 18px)!important;
+    margin-top:8px!important;
+    padding:14px 10px!important;
+    border-radius:15px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    font-size:clamp(34px,10vw,42px)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    font-size:11px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
+    width:calc(100% - 18px)!important;
+  }
+}
+
+@media (max-width:360px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual{
+    margin-top:-38px!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium .av-brand-logo{
+    width:110px!important;
+  }
+  html body:not(.guide-page) header.top .avchat-launcher.avchat-header-slot{
+    width:116px!important;
+    min-width:116px!important;
+  }
+  html body:not(.guide-page) header.top .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    font-size:10.5px!important;
+  }
+  body:not(.guide-page) .av-lang-switch>a{
+    flex-basis:30px!important;
+    width:30px!important;
+    min-width:30px!important;
+    max-width:30px!important;
+    height:25px!important;
+    min-height:25px!important;
+  }
+}
+
+/* Desktop keeps the approved composition, but restores a visible CTA. */
+@media (min-width:821px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-actions{
+    display:flex!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-actions a{
+    min-height:48px!important;
+    padding:11px 20px!important;
+  }
+}
+
+/* Keyboard accessibility */
+body:not(.guide-page) #hamb:focus-visible,
+body:not(.guide-page) .menu a:focus-visible,
+body:not(.guide-page) .av-menu-trigger:focus-visible,
+body:not(.guide-page) .av-lang-switch>a:focus-visible,
+body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
+  outline:2px solid #fff0a0!important;
+  outline-offset:3px!important;
+}
+
+@media (prefers-reduced-motion:reduce){
+  body:not(.guide-page) *,
+  body:not(.guide-page) *::before,
+  body:not(.guide-page) *::after{
+    scroll-behavior:auto!important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE VISUAL TARGET — matches approved 2026-09-30 capture
+   ========================================================= */
+@media (max-width:820px){
+  /* Header row: logo + booking + hamburger */
+  body:not(.guide-page) .top .wrap.nav{
+    width:calc(100% - 16px)!important;
+    min-height:70px!important;
+    height:70px!important;
+    padding:7px 0!important;
+    gap:7px!important;
+    align-items:center!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    max-width:148px!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium .av-brand-logo{
+    width:148px!important;
+    max-width:100%!important;
+    max-height:52px!important;
+    height:auto!important;
+  }
+  body:not(.guide-page) .top .nav-actions{
+    display:flex!important;
+    flex:0 0 auto!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:7px!important;
+    margin-left:auto!important;
+  }
+  body:not(.guide-page) .top .av-header-booking{
+    display:inline-flex!important;
+    width:auto!important;
+    min-width:124px!important;
+    max-width:132px!important;
+    height:46px!important;
+    min-height:46px!important;
+    padding:0 13px!important;
+    gap:6px!important;
+    border:1px solid rgba(255,232,153,.96)!important;
+    border-radius:999px!important;
+    font-size:11.5px!important;
+    letter-spacing:0!important;
+  }
+  body:not(.guide-page) .top .av-header-booking__spark{
+    font-size:13px!important;
+    color:#0a9f55!important;
+  }
+  body:not(.guide-page) #hamb{
+    display:inline-grid!important;
+    place-items:center!important;
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+    max-width:44px!important;
+    max-height:44px!important;
+    padding:0!important;
+    color:#39ff14!important;
+    font-size:30px!important;
+    line-height:1!important;
+  }
+  body:not(.guide-page) #hamb[aria-expanded="true"]{
+    color:#ff3b3b!important;
+  }
+
+  /* Language row + centered gold chat */
+  body:not(.guide-page) .av-langbar{
+    margin:0!important;
+    padding:0!important;
+    background:#030303!important;
+    border-top:0!important;
+    border-bottom:1px solid rgba(231,194,92,.25)!important;
+  }
+  body:not(.guide-page) .av-langbar .wrap{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    justify-items:center!important;
+    align-items:center!important;
+    width:100%!important;
+    min-height:92px!important;
+    padding:6px 8px 9px!important;
+    gap:8px!important;
+  }
+  body:not(.guide-page) .av-lang-switch{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:center!important;
+    align-items:center!important;
+    width:min(100%,374px)!important;
+    max-width:374px!important;
+    gap:4px!important;
+    margin:0 auto!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  body:not(.guide-page) .av-lang-switch>a{
+    flex:1 1 0!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:31px!important;
+    min-height:31px!important;
+    padding:0!important;
+    border:1px solid rgba(236,205,111,.72)!important;
+    border-radius:11px!important;
+    overflow:hidden!important;
+    box-shadow:0 2px 7px rgba(0,0,0,.28)!important;
+  }
+  body:not(.guide-page) .av-lang-switch>a img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+  }
+  html body:not(.guide-page) .av-langbar .avchat-launcher.avchat-header-slot{
+    display:inline-flex!important;
+    position:relative!important;
+    inset:auto!important;
+    justify-self:center!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:126px!important;
+    min-width:126px!important;
+    max-width:126px!important;
+    height:42px!important;
+    min-height:42px!important;
+    max-height:42px!important;
+    margin:0 auto!important;
+    padding:0 14px!important;
+    gap:7px!important;
+    border:1px solid rgba(255,230,143,.96)!important;
+    border-radius:999px!important;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.22),transparent 30%),
+      linear-gradient(135deg,#fff4ad 0%,#f1c95d 24%,#bd8412 52%,#f1cf64 79%,#ffefa1 100%)!important;
+    color:#171006!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      inset 0 -1px 0 rgba(102,61,0,.24),
+      0 7px 16px rgba(0,0,0,.36),
+      0 0 10px rgba(236,190,54,.14)!important;
+  }
+  html body:not(.guide-page) .av-langbar .avchat-launcher.avchat-header-slot::after{
+    content:none!important;
+    display:none!important;
+  }
+  html body:not(.guide-page) .av-langbar .avchat-launcher.avchat-header-slot .avchat-launcher-dot{
+    flex:0 0 8px!important;
+    width:8px!important;
+    height:8px!important;
+    background:#39ff14!important;
+    box-shadow:0 0 7px rgba(57,255,20,.75)!important;
+  }
+  html body:not(.guide-page) .av-langbar .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    color:#171006!important;
+    font-size:13px!important;
+    line-height:1!important;
+    font-weight:950!important;
+    letter-spacing:0!important;
+    text-shadow:0 1px 0 rgba(255,255,255,.52)!important;
+  }
+
+  /* Hero image: full-width, immediately under chat, natural 16:9-ish aspect */
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#020302!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual{
+    display:block!important;
+    position:relative!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    border:0!important;
+    border-radius:0!important;
+    background:#020302!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual picture{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual img{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    aspect-ratio:auto!important;
+    margin:0!important;
+    padding:0!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    transform:none!important;
+    border:0!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-sidecopy{
+    display:none!important;
+  }
+
+  /* Green title panel from approved capture */
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    box-sizing:border-box!important;
+    width:calc(100% - 24px)!important;
+    max-width:none!important;
+    min-height:86px!important;
+    margin:8px auto 0!important;
+    padding:12px 10px 11px!important;
+    border:2px solid #39ff14!important;
+    border-radius:16px!important;
+    background:
+      radial-gradient(circle at 50% 20%,rgba(57,255,20,.06),transparent 62%),
+      linear-gradient(180deg,#0a2917 0%,#071d11 100%)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.05),
+      0 0 11px rgba(57,255,20,.42)!important;
+    text-align:center!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    color:#e8cf75!important;
+    font-size:24px!important;
+    line-height:.94!important;
+    font-family:Georgia,"Times New Roman",serif!important;
+    font-weight:700!important;
+    letter-spacing:.12em!important;
+    text-shadow:0 1px 0 rgba(0,0,0,.85)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
+    display:block!important;
+    width:auto!important;
+    margin:0!important;
+    padding:0!important;
+    font-size:1em!important;
+    line-height:.98!important;
+    letter-spacing:.13em!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
+    margin-top:2px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    margin:8px 0 0!important;
+    color:#fff!important;
+    font-size:12.5px!important;
+    line-height:1!important;
+    font-family:Georgia,"Times New Roman",serif!important;
+    font-weight:800!important;
+    letter-spacing:.055em!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-actions{
+    display:none!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-bottom{
+    display:none!important;
+  }
+
+  /* Gold trust ribbon */
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
+    position:relative!important;
+    width:calc(100% - 14px)!important;
+    margin:14px auto 0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    border:1px solid rgba(255,236,166,.96)!important;
+    border-radius:14px!important;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.28),transparent 23%),
+      linear-gradient(135deg,#fff5b8 0%,#e9b83e 27%,#cf941c 52%,#edc85a 78%,#fff0a6 100%)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.92),
+      inset 0 -1px 0 rgba(105,67,0,.24),
+      0 9px 22px rgba(0,0,0,.38),
+      0 0 11px rgba(236,190,54,.12)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon::before{
+    content:""!important;
+    position:absolute!important;
+    inset:0!important;
+    pointer-events:none!important;
+    background:linear-gradient(108deg,transparent 0 30%,rgba(255,255,255,.20) 43%,transparent 56% 100%)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:20px!important;
+    padding:4px 8px!important;
+    color:#15120b!important;
+    border-bottom:1px solid rgba(98,66,0,.18)!important;
+    background:rgba(255,244,188,.34)!important;
+    font:950 9px/1 Inter,system-ui,sans-serif!important;
+    letter-spacing:.20em!important;
+    text-transform:uppercase!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap::before{
+    width:6px!important;
+    height:6px!important;
+    margin-right:7px!important;
+    background:#39ff14!important;
+    box-shadow:0 0 7px rgba(57,255,20,.72)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segments{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    background:transparent!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment{
+    min-height:44px!important;
+    padding:7px 6px!important;
+    border-color:rgba(93,61,0,.15)!important;
+    background:transparent!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment:nth-child(odd){
+    border-left:0!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment:nth-child(even){
+    border-left:1px solid rgba(93,61,0,.18)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment:nth-child(n+3){
+    border-top:1px solid rgba(93,61,0,.15)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong{
+    margin:0 0 2px!important;
+    color:#111!important;
+    font:950 11px/1 Inter,system-ui,sans-serif!important;
+    letter-spacing:.035em!important;
+    white-space:nowrap!important;
+    text-shadow:0 1px 0 rgba(255,255,255,.45)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment:first-child strong{
+    color:#111!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span{
+    color:#3e2c0e!important;
+    font:800 9px/1.1 Inter,system-ui,sans-serif!important;
+    letter-spacing:0!important;
+  }
+
+  /* Planet strip closes the Hero */
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    display:block!important;
+    position:relative!important;
+    width:calc(100% - 14px)!important;
+    margin:7px auto 0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    border:1px solid rgba(225,190,91,.38)!important;
+    border-radius:14px!important;
+    background:
+      radial-gradient(circle at 50% 0,rgba(57,255,20,.04),transparent 55%),
+      #030806!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.025)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__inner{
+    min-height:76px!important;
+    padding:10px 8px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context{
+    margin:0 0 8px!important;
+    text-align:center!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a{
+    color:#f0d37a!important;
+    font-size:13px!important;
+    line-height:1.15!important;
+    font-weight:900!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__ticker{
+    min-height:36px!important;
+    font-size:14px!important;
+    line-height:1.2!important;
+    font-weight:850!important;
+  }
+  body:not(.guide-page) .av-hero-freeq-separator{
+    display:none!important;
+  }
+  body:not(.guide-page) section.freeq-home.av-freeq-after-hero{
+    margin:18px 0 0!important;
+  }
+}
+
+@media (max-width:430px){
+  body:not(.guide-page) .top .av-brand-premium{
+    max-width:142px!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium .av-brand-logo{
+    width:142px!important;
+  }
+  body:not(.guide-page) .top .av-header-booking{
+    min-width:119px!important;
+    max-width:126px!important;
+    padding-inline:11px!important;
+    font-size:11px!important;
+  }
+}
+
+@media (max-width:360px){
+  body:not(.guide-page) .top .wrap.nav{
+    width:calc(100% - 12px)!important;
+    gap:5px!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium{
+    max-width:126px!important;
+  }
+  body:not(.guide-page) .top .av-brand-premium .av-brand-logo{
+    width:126px!important;
+  }
+  body:not(.guide-page) .top .av-header-booking{
+    min-width:108px!important;
+    max-width:112px!important;
+    height:42px!important;
+    min-height:42px!important;
+    padding-inline:9px!important;
+    font-size:10px!important;
+  }
+  body:not(.guide-page) #hamb{
+    width:42px!important;
+    height:42px!important;
+    min-width:42px!important;
+    min-height:42px!important;
+  }
+  body:not(.guide-page) .av-lang-switch{
+    gap:3px!important;
+  }
+  body:not(.guide-page) .av-lang-switch>a{
+    height:29px!important;
+    min-height:29px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    font-size:22px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    font-size:11px!important;
+  }
+}
+
+
+/* Mobile text fidelity — approved screenshot */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title,
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span,
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle,
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap,
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong,
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span,
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a,
+  body:not(.guide-page) .top .av-header-booking,
+  html body:not(.guide-page) .av-langbar .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    hyphens:none!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{
+    min-height:94px!important;
+    padding:13px 10px 12px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    font-size:30px!important;
+    line-height:.92!important;
+    letter-spacing:.08em!important;
+    color:#fff1bd!important;
+    text-shadow:
+      0 1px 0 rgba(0,0,0,.62),
+      0 0 11px rgba(255,235,170,.30)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
+    font-size:1em!important;
+    line-height:.95!important;
+    letter-spacing:.09em!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
+    margin-top:3px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    margin-top:9px!important;
+    font-size:13px!important;
+    line-height:1!important;
+    letter-spacing:.045em!important;
+    white-space:nowrap!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__cap{
+    min-height:23px!important;
+    padding:5px 8px!important;
+    font-size:10.5px!important;
+    line-height:1!important;
+    letter-spacing:.17em!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment{
+    min-height:48px!important;
+    padding:8px 5px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong{
+    margin:0 0 3px!important;
+    font-size:13.2px!important;
+    line-height:1!important;
+    letter-spacing:.015em!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span{
+    font-size:10.5px!important;
+    line-height:1.05!important;
+    letter-spacing:0!important;
+    white-space:nowrap!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a{
+    font-size:15px!important;
+    line-height:1.15!important;
+    letter-spacing:0!important;
+    white-space:nowrap!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__ticker{
+    font-size:15px!important;
+    line-height:1.15!important;
+  }
+
+  body:not(.guide-page) .top .av-header-booking{
+    white-space:nowrap!important;
+  }
+  html body:not(.guide-page) .av-langbar .avchat-launcher.avchat-header-slot .avchat-launcher-label{
+    white-space:nowrap!important;
+  }
+}
+
+@media (max-width:380px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
+    font-size:27px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{
+    font-size:11.8px!important;
+    letter-spacing:.03em!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment strong{
+    font-size:12px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon__segment span{
+    font-size:9.8px!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a{
+    font-size:13.5px!important;
+  }
+}
+
+
+/* Mobile Hero vertical geometry — gold panel + planet ticker stay inside Hero */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    margin:-16px auto 0!important;
+    float:none!important;
+    clear:both!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    margin:7px auto 0!important;
+    float:none!important;
+    clear:both!important;
+    order:initial!important;
+  }
+}
+
+
+/* Mobile Hero closing line — keep gold panel + ticker fully above it */
+@media (max-width:820px){
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    box-sizing:border-box!important;
+    padding-bottom:16px!important;
+    border-bottom:1px solid rgba(57,255,20,.48)!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    margin-bottom:0!important;
+  }
+  body:not(.guide-page) section.freeq-home.av-freeq-after-hero{
+    margin-top:0!important;
+  }
+}
+
+
+/* Mobile Hero experiment — ticker between green and gold panels */
+@media (max-width:820px){
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual{
+    order:1!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{
+    order:2!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    order:3!important;
+    margin:8px auto 0!important;
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    float:none!important;
+    clear:both!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon{
+    order:4!important;
+    margin:-8px auto 0!important;
+    z-index:6!important;
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    float:none!important;
+    clear:both!important;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-bottom{
+    order:5!important;
+  }
+}
+
+
+/* Mobile premium frame for Planetele azi ticker */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    position:relative!important;
+    width:calc(100% - 20px)!important;
+    margin:8px auto 0!important;
+    padding:3px!important;
+    box-sizing:border-box!important;
+    border:1px solid rgba(255,226,128,.96)!important;
+    border-radius:16px!important;
+    background:
+      linear-gradient(180deg,rgba(255,248,205,.11),rgba(255,255,255,0) 28%),
+      linear-gradient(135deg,rgba(232,199,95,.26),rgba(57,255,20,.10) 46%,rgba(232,199,95,.22) 100%),
+      #050705!important;
+    box-shadow:
+      0 10px 24px rgba(0,0,0,.42),
+      0 0 12px rgba(232,199,95,.22),
+      0 0 20px rgba(57,255,20,.10),
+      inset 0 1px 0 rgba(255,255,255,.15)!important;
+    overflow:hidden!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets::before{
+    content:""!important;
+    position:absolute!important;
+    inset:2px!important;
+    border:1px solid rgba(57,255,20,.58)!important;
+    border-radius:12px!important;
+    pointer-events:none!important;
+    box-shadow:
+      inset 0 0 12px rgba(57,255,20,.08),
+      0 0 8px rgba(57,255,20,.08)!important;
+    z-index:2!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__inner{
+    position:relative!important;
+    z-index:3!important;
+    min-height:74px!important;
+    padding:10px 8px 9px!important;
+    border-radius:11px!important;
+    background:
+      radial-gradient(circle at 50% 0,rgba(232,199,95,.08),transparent 46%),
+      linear-gradient(180deg,#080b08 0%,#020403 100%)!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context{
+    margin-bottom:7px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a{
+    color:#ffe7a0!important;
+    text-shadow:
+      0 1px 0 rgba(0,0,0,.85),
+      0 0 8px rgba(255,222,128,.22)!important;
+  }
+}
+
+
+/* Mobile free planet ticker — no frame */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    width:100%!important;
+    margin:8px auto 0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    overflow:hidden!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets::before{
+    content:none!important;
+    display:none!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__inner{
+    min-height:68px!important;
+    padding:8px 0 7px!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context{
+    margin-bottom:5px!important;
+    padding:0 10px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a{
+    color:#ffe7a0!important;
+    text-shadow:0 1px 0 rgba(0,0,0,.78),0 0 7px rgba(255,222,128,.16)!important;
+  }
+}
+
+
+/* Mobile planet ticker vertical polish */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__ticker{
+    position:relative!important;
+    top:-4px!important;
+    margin-bottom:-4px!important;
+  }
+}
+
+
+/* Final hamburger cleanup — icon only, no frame in any state */
+body:not(.guide-page) #hamb,
+body:not(.guide-page) #hamb:hover,
+body:not(.guide-page) #hamb:active,
+body:not(.guide-page) #hamb:focus,
+body:not(.guide-page) #hamb:focus-visible,
+body:not(.guide-page) #hamb[aria-expanded="true"],
+body:not(.guide-page) #hamb[aria-expanded="false"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  border:0!important;
+  outline:0!important;
+  outline-offset:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+body:not(.guide-page) #hamb::before,
+body:not(.guide-page) #hamb::after,
+body:not(.guide-page) #hamb[aria-expanded="true"]::before,
+body:not(.guide-page) #hamb[aria-expanded="true"]::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+
+
+/* Final free three-bar menu icon */
+body:not(.guide-page) #hamb .hamb-lines{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  width:30px!important;
+  height:24px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  pointer-events:none!important;
+}
+
+body:not(.guide-page) #hamb .hamb-line{
+  display:block!important;
+  width:30px!important;
+  height:3px!important;
+  min-height:3px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:2px!important;
+  background:currentColor!important;
+  box-shadow:none!important;
+  transform:none!important;
+  opacity:1!important;
+}
+
+body:not(.guide-page) #hamb[aria-expanded="false"]{
+  color:#39ff14!important;
+}
+body:not(.guide-page) #hamb[aria-expanded="true"]{
+  color:#ff3838!important;
+}
