@@ -1398,36 +1398,36 @@ body:not(.guide-page) .av-planet-hero-strip__ticker .planet-track{
 
 /* Final ASTROLOGIE PREMIUM clarity — match header gold */
 body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title{
-  font-weight:800!important;
-  color:#f6d66c!important;
-  -webkit-text-stroke:.34px rgba(255,240,181,.58)!important;
+  font-weight:900!important;
+  color:#fff3a9!important;
   text-shadow:
-    0 1px 0 rgba(61,35,0,.88),
-    0 2px 2px rgba(0,0,0,.34),
-    0 0 5px rgba(255,245,199,.32),
-    0 0 11px rgba(246,214,108,.38),
-    0 0 19px rgba(235,190,55,.22)!important;
+    0 1px 0 rgba(0,0,0,.90),
+    0 2px 3px rgba(0,0,0,.48),
+    0 0 7px rgba(255,230,128,.46),
+    0 0 15px rgba(242,194,79,.30)!important;
 }
 body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
-  color:transparent!important;
+  color:#fff3a9!important;
   background:
     linear-gradient(
       180deg,
-      #fff8c7 0%,
-      #fff3a9 16%,
-      #f2c24f 38%,
-      #b98212 58%,
-      #f6d66c 78%,
-      #fff0a0 100%
+      #fffde8 0%,
+      #fff6bd 15%,
+      #ffe98c 34%,
+      #f6d66c 53%,
+      #f2c24f 68%,
+      #ffe37a 84%,
+      #fff4b2 100%
     )!important;
   -webkit-background-clip:text!important;
   background-clip:text!important;
   -webkit-text-fill-color:transparent!important;
-  -webkit-text-stroke:.34px rgba(255,238,169,.54)!important;
+  -webkit-text-stroke:.52px rgba(255,246,205,.90)!important;
   filter:
-    drop-shadow(0 1px 0 rgba(61,35,0,.86))
-    drop-shadow(0 0 4px rgba(255,235,151,.34))
-    drop-shadow(0 0 9px rgba(235,190,55,.24))!important;
+    drop-shadow(0 1px 0 rgba(0,0,0,.86))
+    drop-shadow(0 0 4px rgba(255,238,156,.78))
+    drop-shadow(0 0 10px rgba(244,196,63,.48))
+    drop-shadow(0 0 16px rgba(225,167,29,.22))!important;
   letter-spacing:.10em!important;
 }
 body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premium{
@@ -1436,10 +1436,11 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title .av-hero-v2-line-premiu
 
 @media(max-width:820px){
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-title span{
-    -webkit-text-stroke:.30px rgba(255,241,186,.56)!important;
+    -webkit-text-stroke:.48px rgba(255,247,211,.94)!important;
     filter:
-      drop-shadow(0 1px 0 rgba(61,35,0,.86))
-      drop-shadow(0 0 4px rgba(255,238,163,.38))
-      drop-shadow(0 0 8px rgba(235,190,55,.26))!important;
+      drop-shadow(0 1px 0 rgba(0,0,0,.88))
+      drop-shadow(0 0 4px rgba(255,240,169,.82))
+      drop-shadow(0 0 9px rgba(246,198,66,.52))
+      drop-shadow(0 0 14px rgba(226,168,31,.24))!important;
   }
 }
