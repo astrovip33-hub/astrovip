@@ -153,7 +153,7 @@
         }catch(error){
           toast('Programarea nu a putut fi salvată. Încearcă din nou.');
         }finally{
-          bookingSubmit.disabled=false;bookingSubmit.textContent='REZERVĂ ȘI CONTINUĂ LA PLATĂ →';
+          bookingSubmit.disabled=false;bookingSubmit.textContent='CONFIRMĂ INTERVALUL →';
         }
       });
     }
