@@ -160,6 +160,21 @@ Un prompt este considerat:
 Nu se modifică setul activ prea des; altfel nu mai există un trend comparabil.
 
 
+## Read-back după schimbarea setului activ — 2026-09-30
+
+Citirea live a proiectului Ubersuggest arată că noul set este configurat corect, dar raportarea este încă parțială:
+
+- 10 prompturi active, România (loc_id 2642), limba română.
+- 5 din 10 prompturi au deja câte un răspuns OpenAI procesat.
+- 5 din 10 prompturi nu au încă răspuns procesat.
+- AstroVip: 0 mențiuni în eșantionul parțial curent.
+- AI Visibility AstroVip: 0% în eșantionul parțial curent.
+- Share of voice AstroVip: 0 în eșantionul parțial curent.
+- Frecvența raportului pentru planul conectat: MONTHLY.
+- Nu se interpretează acest 0% ca rezultat final al noului set până când toate cele 10 prompturi nu au răspunsuri disponibile.
+
+Primele răspunsuri procesate acoperă: astrolog București, hartă natală, rectificare, Arce Solare și Local Space. Prompturile încă nepopulate includ diferența Local Space/astrocartografie, comparația a două orașe, sinastrie, studii de caz și „Ce este AstroVip?”.
+
 ## Schimbare aplicată 2026-09-30
 
 Setul activ Ubersuggest a fost înlocuit cu cele 10 prompturi de mai sus. Read-back-ul confirmă toate prompturile, România (loc_id 2642), limba română și competitorii Astrocafe / Astro-Click. Operațiunea de brand a fost aplicată cu succes; raportarea noului set se va popula la următoarea actualizare disponibilă.
