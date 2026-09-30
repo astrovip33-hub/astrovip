@@ -564,3 +564,75 @@ body:not(.guide-page) .trust-commerce-card .trust-commerce-points{display:none!i
     padding: 8px 14px !important;
   }
 }
+
+
+/* GLOBAL HAMBURGER — free lines only, no visible frame */
+html body:not(.guide-page) header.top button#hamb.hamb,
+html body:not(.guide-page) header.top button#hamb.hamb:hover,
+html body:not(.guide-page) header.top button#hamb.hamb:active,
+html body:not(.guide-page) header.top button#hamb.hamb:focus,
+html body:not(.guide-page) header.top button#hamb.hamb:focus-visible,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="false"],
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="true"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  border:0!important;
+  outline:0!important;
+  outline-offset:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+html body:not(.guide-page) header.top button#hamb.hamb::before,
+html body:not(.guide-page) header.top button#hamb.hamb::after,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="false"]::before,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="false"]::after,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="true"]::before,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="true"]::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+
+/* INTL HAMBURGER REAL BARS — no glyph, no frame */
+html body:not(.guide-page) header.top #hamb .hamb-lines{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  width:30px!important;
+  height:24px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  pointer-events:none!important;
+}
+html body:not(.guide-page) header.top #hamb .hamb-line{
+  display:block!important;
+  width:30px!important;
+  height:3px!important;
+  min-height:3px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:currentColor!important;
+  box-shadow:none!important;
+  transform:none!important;
+  opacity:1!important;
+}
+html body:not(.guide-page) header.top #hamb[aria-expanded="false"]{color:#39ff14!important}
+html body:not(.guide-page) header.top #hamb[aria-expanded="true"]{color:#ff3838!important}
