@@ -1123,3 +1123,40 @@ body:not(.guide-page) .av-astro-all{
     box-shadow:inset 0 1px 0 rgba(255,255,255,.34)!important;
   }
 }
+
+
+/* GLOBAL HAMBURGER — free lines only, no visible frame */
+html body:not(.guide-page) header.top button#hamb.hamb,
+html body:not(.guide-page) header.top button#hamb.hamb:hover,
+html body:not(.guide-page) header.top button#hamb.hamb:active,
+html body:not(.guide-page) header.top button#hamb.hamb:focus,
+html body:not(.guide-page) header.top button#hamb.hamb:focus-visible,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="false"],
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="true"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  border:0!important;
+  outline:0!important;
+  outline-offset:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+html body:not(.guide-page) header.top button#hamb.hamb::before,
+html body:not(.guide-page) header.top button#hamb.hamb::after,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="false"]::before,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="false"]::after,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="true"]::before,
+html body:not(.guide-page) header.top button#hamb.hamb[aria-expanded="true"]::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
