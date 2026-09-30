@@ -25,30 +25,25 @@ const desktopChatMq=window.matchMedia("(min-width:981px)");
 function placeLauncher(){
   const mobileHost=document.querySelector(".av-langbar .wrap");
   const desktopHost=document.querySelector(".top .nav-actions");
-  const mobileHeaderHost=document.querySelector(".top .nav-actions");
-  if(desktopChatMq.matches&&desktopHost){
+  const headerHost=desktopHost;
+  if(headerHost){
     launcher.classList.add("avchat-header-slot","avchat-nav-slot");
-    const book=desktopHost.querySelector(".nav-book");
-    if(launcher.parentNode!==desktopHost||launcher.nextElementSibling!==book){
-      if(book)desktopHost.insertBefore(launcher,book);
-      else desktopHost.prepend(launcher);
+    const hamb=headerHost.querySelector("#hamb");
+    const book=headerHost.querySelector(".nav-book,.av-header-booking");
+    if(desktopChatMq.matches){
+      if(book){
+        if(launcher.parentNode!==headerHost||launcher.nextElementSibling!==book)headerHost.insertBefore(launcher,book);
+      }else if(launcher.parentNode!==headerHost){
+        headerHost.prepend(launcher);
+      }
+    }else if(hamb){
+      if(launcher.parentNode!==headerHost||launcher.nextElementSibling!==hamb)headerHost.insertBefore(launcher,hamb);
+    }else if(launcher.parentNode!==headerHost){
+      headerHost.appendChild(launcher);
     }
     return;
   }
-  launcher.classList.remove("avchat-nav-slot");
-  launcher.classList.toggle("avchat-header-slot",!!mobileHeaderHost);
-  if(mobileHeaderHost){
-    const hamb=mobileHeaderHost.querySelector("#hamb");
-    if(hamb){
-      if(launcher.parentNode!==mobileHeaderHost||launcher.nextElementSibling!==hamb)mobileHeaderHost.insertBefore(launcher,hamb);
-    }else if(launcher.parentNode!==mobileHeaderHost){
-      mobileHeaderHost.appendChild(launcher);
-    }
-  }else if(mobileHost){
-    if(launcher.parentNode!==mobileHost)mobileHost.appendChild(launcher);
-  }else if(launcher.parentNode!==document.body){
-    document.body.appendChild(launcher);
-  }
+  if(mobileHost&&launcher.parentNode!==mobileHost)mobileHost.appendChild(launcher);
 }
 function alignLauncher(){
   launcher.style.removeProperty("top");
