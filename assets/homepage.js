@@ -81,7 +81,7 @@
       const date=d.value;timeSelect.disabled=true;timeSelect.innerHTML='<option value="">Se verifică disponibilitatea…</option>';availability.textContent='Se verifică intervalele disponibile…';
       if(!date){timeSelect.innerHTML='<option value="">Alege mai întâi data</option>';availability.textContent='Selectează data pentru a vedea orele disponibile.';return}
       try{
-        const response=await fetch('https://hhzsecdtqacyroxiywpm.supabase.co/rest/v1/rpc/get_booking_taken_slots',{method:'POST',headers:{apikey:bookingKey,'Content-Type':'application/json'},body:JSON.stringify({p_date:date}),cache:'no-store'});
+        const response=await fetch(`${bookingApi}?select=booking_time&booking_date=eq.${encodeURIComponent(date)}&status=eq.booked`,{headers:{apikey:bookingKey},cache:'no-store'});
         if(!response.ok)throw new Error('availability unavailable');
         const rows=await response.json();
         const taken=new Set(rows.map(r=>String(r.booking_time||'').slice(0,5)));
