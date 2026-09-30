@@ -123,6 +123,7 @@
       if(event.key==='Escape'){closeMenuGroups();if(menu.classList.contains('open')){menu.classList.remove('open');document.body.classList.remove('av-menu-open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰';hamb.focus()}}
       if(event.key==='Tab'&&modal.classList.contains('open')){event.preventDefault();document.getElementById('articleClose').focus()}
     });
-    document.addEventListener('click',event=>{if(menu.classList.contains('open')&&!menu.contains(event.target)&&!hamb.contains(event.target)){menu.classList.remove('open');document.body.classList.remove('av-menu-open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});\n    addEventListener('resize',()=>{if(innerWidth>1450&&menu.classList.contains('open')){menu.classList.remove('open');document.body.classList.remove('av-menu-open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});
+    document.addEventListener('click',event=>{if(menu.classList.contains('open')&&!menu.contains(event.target)&&!hamb.contains(event.target)){menu.classList.remove('open');document.body.classList.remove('av-menu-open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});
+    addEventListener('resize',()=>{if(innerWidth>1450&&menu.classList.contains('open')){menu.classList.remove('open');document.body.classList.remove('av-menu-open');closeMenuGroups();hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','Deschide meniul');hamb.textContent='☰'}});
 
 })();
