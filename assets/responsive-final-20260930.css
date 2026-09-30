@@ -1208,3 +1208,62 @@ body:not(.guide-page) .av-hero-v2-actions a:focus-visible{
     order:5!important;
   }
 }
+
+
+/* Mobile premium frame for Planetele azi ticker */
+@media (max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+    position:relative!important;
+    width:calc(100% - 20px)!important;
+    margin:8px auto 0!important;
+    padding:3px!important;
+    box-sizing:border-box!important;
+    border:1px solid rgba(255,226,128,.96)!important;
+    border-radius:16px!important;
+    background:
+      linear-gradient(180deg,rgba(255,248,205,.11),rgba(255,255,255,0) 28%),
+      linear-gradient(135deg,rgba(232,199,95,.26),rgba(57,255,20,.10) 46%,rgba(232,199,95,.22) 100%),
+      #050705!important;
+    box-shadow:
+      0 10px 24px rgba(0,0,0,.42),
+      0 0 12px rgba(232,199,95,.22),
+      0 0 20px rgba(57,255,20,.10),
+      inset 0 1px 0 rgba(255,255,255,.15)!important;
+    overflow:hidden!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets::before{
+    content:""!important;
+    position:absolute!important;
+    inset:2px!important;
+    border:1px solid rgba(57,255,20,.58)!important;
+    border-radius:12px!important;
+    pointer-events:none!important;
+    box-shadow:
+      inset 0 0 12px rgba(57,255,20,.08),
+      0 0 8px rgba(57,255,20,.08)!important;
+    z-index:2!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__inner{
+    position:relative!important;
+    z-index:3!important;
+    min-height:74px!important;
+    padding:10px 8px 9px!important;
+    border-radius:11px!important;
+    background:
+      radial-gradient(circle at 50% 0,rgba(232,199,95,.08),transparent 46%),
+      linear-gradient(180deg,#080b08 0%,#020403 100%)!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context{
+    margin-bottom:7px!important;
+  }
+
+  body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets .av-planet-hero-strip__context a{
+    color:#ffe7a0!important;
+    text-shadow:
+      0 1px 0 rgba(0,0,0,.85),
+      0 0 8px rgba(255,222,128,.22)!important;
+  }
+}
