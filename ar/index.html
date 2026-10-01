@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="/assets/final-card-polish-20260923.css?v=20260923-preview1"/>
 <link rel="stylesheet" href="/assets/header-layout-unified-20260923.css?v=20260923-header-clean8" media="(min-width:981px)"/>
 <link rel="stylesheet" href="/assets/intl-sync-20260924.css?v=20260924-1"/>
-<link rel="stylesheet" href="/assets/final-responsive-sync-20260924.css?v=20260930-hamb-noframe2"/>
+<link rel="stylesheet" href="/assets/final-responsive-sync-20260924.css?v=20261001-ar-right1"/>
 
 <style id="ar-header-side-fix-20260930">
 html[lang="ar"] header.top,
@@ -84,6 +84,29 @@ html[lang="ar"] header.top .avchat-launcher{
   html[lang="ar"] header.top #menu.menu.open{
     direction:rtl!important;
     text-align:right!important;
+    left:auto!important;
+    right:0!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    transform-origin:top right!important;
+  }
+}
+@media(max-width:820px){
+  html[lang="ar"] header.top #menu.menu,
+  html[lang="ar"] header.top #menu.menu.open{
+    left:auto!important;
+    right:0!important;
+    width:min(360px,calc(100vw - 20px))!important;
+    max-width:calc(100vw - 20px)!important;
+  }
+}
+@media(min-width:821px) and (max-width:980px){
+  html[lang="ar"] header.top #menu.menu,
+  html[lang="ar"] header.top #menu.menu.open{
+    left:auto!important;
+    right:0!important;
+    width:min(430px,calc(100vw - 16px))!important;
+    max-width:calc(100vw - 16px)!important;
   }
 }
 </style>
