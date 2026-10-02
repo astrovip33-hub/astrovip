@@ -339,22 +339,42 @@ body .av-planet-hero-strip__ticker .planet-sequence{display:flex;flex:none;align
 body .av-planet-hero-strip__ticker .planet-item{display:inline-flex;flex:none;align-items:center;gap:6px;margin:0;padding:0;font-size:13px;line-height:1.5;white-space:nowrap}
 body .av-planet-hero-strip .planet-house{padding:2px 6px;border:1px solid rgba(56,245,138,.45);border-radius:99px;color:#9dffc0;font-size:11px}
 body .av-planet-hero-strip .planet-retro{color:#ffd479}
-body .av-planet-hero-strip__axis-separator{height:1px;margin:3px 14px 1px;background:linear-gradient(90deg,transparent,rgba(56,245,138,.44) 18%,rgba(224,185,77,.42) 50%,rgba(56,245,138,.44) 82%,transparent)}
-body .av-planet-hero-strip__axis-label{padding:1px 10px 0;text-align:center;color:#bfffd4;font:900 10px/1.35 Inter,system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase}
+body .av-ticker-card{position:relative;margin:5px 10px 7px;padding:7px 0 6px;border:1px solid rgba(224,185,77,.62);border-radius:14px;overflow:hidden;background:
+linear-gradient(180deg,rgba(255,255,255,.035),transparent 28%),
+radial-gradient(circle at 12% 0,rgba(56,245,138,.09),transparent 34%),
+linear-gradient(135deg,rgba(9,14,11,.98),rgba(2,4,3,.99));box-shadow:
+inset 0 1px 0 rgba(255,255,255,.06),
+inset 0 0 0 1px rgba(56,245,138,.08),
+0 8px 20px rgba(0,0,0,.34),
+0 0 16px rgba(56,245,138,.08)}
+body .av-ticker-card::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,220,120,.05) 50%,transparent);mix-blend-mode:screen}
+body .av-ticker-card--planets{border-color:rgba(224,185,77,.66);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),inset 0 0 0 1px rgba(56,245,138,.09),0 8px 20px rgba(0,0,0,.34),0 0 18px rgba(224,185,77,.08)}
+body .av-ticker-card--axes{border-color:rgba(56,245,138,.48);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 0 0 1px rgba(224,185,77,.10),0 8px 20px rgba(0,0,0,.34),0 0 18px rgba(56,245,138,.08)}
+body .av-ticker-card__head{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 10px 4px;color:#dfffea;font:900 9px/1.25 Inter,system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase}
+body .av-ticker-card__head strong{color:#f6db82;font-size:10px;letter-spacing:.16em}
+body .av-ticker-card--axes .av-ticker-card__head strong{color:#9dffc0}
+body .av-ticker-card__head>span:last-child{color:#93a99a;font-size:8px;letter-spacing:.11em}
+body .av-ticker-card__diamond{color:#f5d978!important;font-size:8px!important;filter:drop-shadow(0 0 5px rgba(224,185,77,.75))}
+body .av-ticker-card--axes .av-ticker-card__diamond{color:#7dffad!important;filter:drop-shadow(0 0 5px rgba(56,245,138,.75))}
+body .av-planet-hero-strip__ticker .planet-sequence{gap:0!important}
+body .av-planet-hero-strip__ticker .planet-item{position:relative;margin-right:0!important;padding-right:21px!important;margin-left:0!important}
+body .av-planet-hero-strip__ticker .planet-item:not(:last-child)::after{content:"◆";position:absolute;right:7px;top:50%;transform:translateY(-50%);font-size:7px;line-height:1;color:#f5d978;text-shadow:0 0 4px rgba(245,217,120,.95),0 0 9px rgba(56,245,138,.42)}
+body .av-planet-hero-strip__ticker--axes .planet-item:not(:last-child)::after{color:#7dffad;text-shadow:0 0 4px rgba(125,255,173,.95),0 0 9px rgba(224,185,77,.38)}
 body .av-planet-hero-strip__ticker--axes .planet-item strong{color:#f5d978}
 body .av-planet-hero-strip__ticker--axes .planet-glyph{color:#f5d978}
 body .av-planet-hero-strip__ticker:focus .planet-track{animation-play-state:paused}
+@media(max-width:430px){body .av-ticker-card{margin:4px 6px 6px;border-radius:12px}body .av-ticker-card__head{font-size:8px;gap:5px}body .av-ticker-card__head strong{font-size:9px}body .av-planet-hero-strip__ticker .planet-item{padding-right:18px!important}body .av-planet-hero-strip__ticker .planet-item:not(:last-child)::after{right:6px;font-size:6px}}
 @keyframes avHeroPlanets{to{transform:translateX(-50%)}}
 @media(max-width:430px){body .av-planet-hero-strip__context{font-size:10px;gap:3px 6px}body .av-planet-hero-strip__ticker .planet-item{font-size:12px}}
 @media(prefers-reduced-motion:reduce){body .av-planet-hero-strip__ticker{overflow-x:auto}body .av-planet-hero-strip__ticker .planet-track{animation:none;transform:none;will-change:auto}body .av-planet-hero-strip__ticker .planet-sequence[aria-hidden=true]{display:none}}
 
 /* Keep the complete planet panel within Hero, with a single unbroken heading. */
 body .hero #av-hero-planets{position:relative!important;inset:auto!important;order:99!important;flex:0 0 auto!important;grid-column:1/-1;width:calc(100% - 24px)!important;max-width:1180px!important;min-width:0!important;margin:10px auto 0!important;padding:0!important;transform:none!important;overflow:hidden!important;border:1px solid rgba(224,185,77,.25);border-radius:10px;box-sizing:border-box!important}
-body .hero #av-hero-planets .av-planet-hero-strip__inner{display:block!important;width:100%!important;min-width:0!important;min-height:0!important;padding:5px 0!important}
+body .hero #av-hero-planets .av-planet-hero-strip__inner{display:block!important;width:100%!important;min-width:0!important;min-height:0!important;padding:5px 0 7px!important}
 body .hero #av-hero-planets .av-planet-hero-strip__context{display:block!important;width:100%!important;min-height:0!important;margin:0!important;padding:0 6px!important;text-align:center!important;white-space:nowrap!important;font:800 11px/18px Inter,system-ui,sans-serif!important;letter-spacing:0!important}
 body .hero #av-hero-planets .av-planet-hero-strip__context a,
 body .hero #av-hero-planets #av-bucharest-clock{display:inline!important;position:static!important;float:none!important;width:auto!important;min-width:0!important;max-width:none!important;height:auto!important;margin:0!important;padding:0!important;transform:none!important;font:inherit!important;letter-spacing:0!important;white-space:nowrap!important;text-transform:none!important;background:none!important;border:0!important;box-shadow:none!important}
-body .hero #av-hero-planets .av-planet-hero-strip__ticker{height:30px!important;min-height:30px!important;max-height:30px!important;margin:0!important;padding:0!important;overflow:hidden!important}
+body .hero #av-hero-planets .av-planet-hero-strip__ticker{height:30px!important;min-height:30px!important;max-height:30px!important;margin:0!important;padding:0 4px!important;overflow:hidden!important}
 body .hero #av-hero-planets .planet-sequence{padding-top:3px!important;padding-bottom:3px!important}
 body .hero #av-hero-planets .planet-item{font-size:12px!important;line-height:22px!important}
 @media(max-width:430px){body .hero #av-hero-planets{width:calc(100% - 20px)!important;margin-top:7px!important}}
@@ -1666,10 +1686,16 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-subtitle{color:#fffdf7!import
   </div><div id="av-hero-planets" class="av-planet-hero-strip" aria-label="Pozițiile astrologice de azi">
   <div class="av-planet-hero-strip__inner">
     <div class="av-planet-hero-strip__context"><a href="/pozitii-planete-live/">Planetele azi ~ ora locală <time id="av-bucharest-clock">--:--</time></a></div>
-    <div class="av-planet-hero-strip__ticker" data-planet-ticker aria-live="polite">Lună · Soare · Mercur · Venus · Marte · Saturn · Jupiter · Uranus · Neptun · Pluto</div>
-    <div class="av-planet-hero-strip__axis-separator" aria-hidden="true"></div>
-    <div class="av-planet-hero-strip__axis-label">PUNCT SENSIBIL &amp; AXELE CASELOR · KOCH</div>
-    <div class="av-planet-hero-strip__ticker av-planet-hero-strip__ticker--axes" data-planet-ticker data-axis-only aria-live="polite">PARS FORTUNA · AXA 1/7 · AXA 2/8 · AXA 3/9 · AXA 4/10 · AXA 5/11 · AXA 6/12</div>
+
+    <div class="av-ticker-card av-ticker-card--planets" aria-label="Card premium cu pozițiile planetelor">
+      <div class="av-ticker-card__head"><span class="av-ticker-card__diamond">◆</span><strong>PLANETE</strong><span>MIȘCARE ACTUALĂ</span></div>
+      <div class="av-planet-hero-strip__ticker" data-planet-ticker aria-live="polite">Lună · Soare · Mercur · Venus · Marte · Saturn · Jupiter · Uranus · Neptun · Pluto</div>
+    </div>
+
+    <div class="av-ticker-card av-ticker-card--axes" aria-label="Card premium cu Pars Fortuna și axele caselor">
+      <div class="av-ticker-card__head"><span class="av-ticker-card__diamond">◆</span><strong>PARS FORTUNA &amp; AXELE CASELOR</strong><span>KOCH</span></div>
+      <div class="av-planet-hero-strip__ticker av-planet-hero-strip__ticker--axes" data-planet-ticker data-axis-only aria-live="polite">PARS FORTUNA · AXA 1/7 · AXA 2/8 · AXA 3/9 · AXA 4/10 · AXA 5/11 · AXA 6/12</div>
+    </div>
   </div>
 </div>
 </section>
