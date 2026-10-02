@@ -1,3 +1,4 @@
+import { handleCommandCenter } from './command-center-api.js';
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 const GA4_MEASUREMENT_ID='G-Y59ZJ7L3WR';
@@ -147,8 +148,18 @@ async function stripeWebhook(request,env,{secretName='STRIPE_WEBHOOK_SECRET',tes
 export default {
   async fetch(request,env){
     const url=new URL(request.url);
+    const commandResponse=await handleCommandCenter(request,env);
+    if(commandResponse)return commandResponse;
     if(url.pathname==='/api/stripe-webhook'||url.pathname==='/api/stripe-webhook/')return stripeWebhook(request,env);
     if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WEBHOOK_SECRET_TEST',testMode:true});
-    return env.ASSETS.fetch(request);
+    const assetResponse=await env.ASSETS.fetch(request);
+    if(url.pathname.startsWith('/command-center')){
+      const headers=new Headers(assetResponse.headers);
+      headers.set('X-Robots-Tag','noindex, nofollow, noarchive');
+      headers.set('Referrer-Policy','no-referrer');
+      headers.set('X-Content-Type-Options','nosniff');
+      return new Response(assetResponse.body,{status:assetResponse.status,statusText:assetResponse.statusText,headers});
+    }
+    return assetResponse;
   }
 };
