@@ -127,6 +127,102 @@ function base64Url(input) {
   return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
 }
 
+function base64Std(input) {
+  const bytes = typeof input === 'string' ? enc.encode(input) : new Uint8Array(input);
+  let s = '';
+  for (const b of bytes) s += String.fromCharCode(b);
+  return btoa(s);
+}
+
+function cleanString(value, max = 160) {
+  return String(value ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max);
+}
+
+function safeEditorUrl(value, { allowEmpty = true } = {}) {
+  const v = cleanString(value, 700);
+  if (!v && allowEmpty) return '';
+  if (v.startsWith('/')) return v;
+  try {
+    const u = new URL(v);
+    if (u.protocol === 'https:' || u.protocol === 'http:') return u.href;
+  } catch {}
+  return '';
+}
+
+function sanitizeEditorConfig(input) {
+  const h = input?.hero || {};
+  const r = input?.ribbon || {};
+  const s = input?.sections || {};
+  const labels = Array.from({ length: 4 }, (_, i) => cleanString(h.labels?.[i] ?? '', 40));
+  const items = Array.from({ length: 4 }, (_, i) => ({
+    title: cleanString(r.items?.[i]?.title ?? '', 48),
+    subtitle: cleanString(r.items?.[i]?.subtitle ?? '', 60),
+  }));
+  const accent = /^#[0-9a-f]{6}$/i.test(String(h.frameAccent || '')) ? String(h.frameAccent) : '#f0cf67';
+  return {
+    version: 1,
+    hero: {
+      labels,
+      titleMain: cleanString(h.titleMain, 48),
+      titlePremium: cleanString(h.titlePremium, 48),
+      subtitle: cleanString(h.subtitle, 120),
+      buttonText: cleanString(h.buttonText, 60),
+      buttonUrl: safeEditorUrl(h.buttonUrl, { allowEmpty: false }),
+      sideLeft: cleanString(h.sideLeft, 120),
+      sideRight: cleanString(h.sideRight, 120),
+      bottomText: cleanString(h.bottomText, 140),
+      image: safeEditorUrl(h.image),
+      frameAccent: accent,
+      frameWidth: Math.max(0, Math.min(6, Number(h.frameWidth) || 1)),
+    },
+    ribbon: {
+      visible: r.visible !== false,
+      cap: cleanString(r.cap, 60),
+      items,
+    },
+    sections: {
+      planets: s.planets !== false,
+      freeQuestion: s.freeQuestion !== false,
+      opportunities: s.opportunities !== false,
+    },
+  };
+}
+
+async function readEditorConfig(request, env) {
+  const assetUrl = new URL('/assets/site-editor-config.json', request.url);
+  const res = await env.ASSETS.fetch(new Request(assetUrl, { method: 'GET' }));
+  if (!res.ok) throw new Error('editor_config_not_found');
+  return res.json();
+}
+
+async function publishEditorConfig(env, input) {
+  if (!env.GITHUB_ADMIN_TOKEN) return { ok: false, status: 503, error: 'github_admin_token_not_configured' };
+  const config = sanitizeEditorConfig(input);
+  if (!config.hero.buttonUrl) return { ok: false, status: 400, error: 'invalid_button_url' };
+  const path = 'assets/site-editor-config.json';
+  const meta = await githubJson(`/repos/${REPO}/contents/${path}?ref=main`, { token: env.GITHUB_ADMIN_TOKEN });
+  if (!meta.ok || !meta.data?.sha) return { ok: false, status: meta.status || 502, error: meta.data?.message || 'editor_config_metadata_failed' };
+  const put = await githubJson(`/repos/${REPO}/contents/${path}`, {
+    token: env.GITHUB_ADMIN_TOKEN,
+    method: 'PUT',
+    body: {
+      message: 'Update homepage from AstroVip Visual Editor',
+      content: base64Std(JSON.stringify(config, null, 2) + '\n'),
+      sha: meta.data.sha,
+      branch: 'main',
+    },
+  });
+  if (!put.ok) return { ok: false, status: put.status || 502, error: put.data?.message || 'editor_publish_failed' };
+  return {
+    ok: true,
+    config,
+    commit: {
+      sha: put.data?.commit?.sha || null,
+      url: put.data?.commit?.html_url || null,
+    },
+  };
+}
+
 async function googleAccessToken(env, scopes) {
   if (!env.GOOGLE_SERVICE_ACCOUNT_JSON) throw new Error('google_service_account_not_configured');
   let sa;
@@ -297,6 +393,21 @@ export async function handleCommandCenter(request, env) {
 
     if (url.pathname === '/api/command/github') {
       return json({ ok: true, ...(await githubStatus(env)) });
+    }
+
+    if (url.pathname === '/api/command/editor-config') {
+      if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
+      return json({ ok: true, config: sanitizeEditorConfig(await readEditorConfig(request, env)) });
+    }
+
+    if (url.pathname === '/api/command/editor-publish') {
+      if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST' });
+      const len = Number(request.headers.get('content-length') || 0);
+      if (len > 100000) return json({ ok: false, error: 'payload_too_large' }, 413);
+      const body = await request.json().catch(() => null);
+      if (!body || typeof body !== 'object') return json({ ok: false, error: 'invalid_json' }, 400);
+      const result = await publishEditorConfig(env, body);
+      return json(result, result.ok ? 202 : (result.status || 500));
     }
 
     if (url.pathname === '/api/command/deploy') {
