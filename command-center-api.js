@@ -36,7 +36,10 @@ function isAuthorized(request, env) {
   return Boolean(expected) && safeEqual(received, expected);
 }
 
-function unauthorized() {
+function unauthorized(env) {
+  if (!String(env.COMMAND_CENTER_TOKEN || '').trim()) {
+    return json({ ok: false, error: 'command_center_token_not_configured' }, 503);
+  }
   return json({ ok: false, error: 'unauthorized' }, 401, { 'www-authenticate': 'Bearer realm="AstroVip Command Center"' });
 }
 
@@ -371,7 +374,7 @@ export async function handleCommandCenter(request, env) {
   const url = new URL(request.url);
   if (!url.pathname.startsWith('/api/command/')) return null;
 
-  if (!isAuthorized(request, env)) return unauthorized();
+  if (!isAuthorized(request, env)) return unauthorized(env);
 
   try {
     if (url.pathname === '/api/command/ping') {
