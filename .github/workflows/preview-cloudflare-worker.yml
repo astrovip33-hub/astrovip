@@ -63,9 +63,11 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://astrovip-preview.astrovip33.workers.dev"
-          EDITOR_STATUS=$(curl -sS -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
+          EDITOR_STATUS=$(curl -sSL -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
+          echo "EDITOR_STATUS=$EDITOR_STATUS"
           test "$EDITOR_STATUS" = "200"
           grep -q 'EDITOR VIZUAL ASTROVIP' /tmp/editor.html
           API_STATUS=$(curl -sS -o /tmp/command-api.json -w '%{http_code}' "$BASE/api/command/ping")
+          echo "API_STATUS=$API_STATUS"
           test "$API_STATUS" = "401"
           echo "Visual editor route OK; command API correctly requires authentication."
