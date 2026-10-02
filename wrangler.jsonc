@@ -16,10 +16,5 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none"
   },
-  "secrets": {
-    "required": [
-      "COMMAND_CENTER_TOKEN",
-      "GITHUB_ADMIN_TOKEN"
-    ]
-  }
+  "keep_vars": true
 }
