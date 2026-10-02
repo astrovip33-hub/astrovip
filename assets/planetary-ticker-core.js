@@ -109,6 +109,7 @@
           {label:'AXA 2/8',axisPair:true,houseA:2,houseB:8,glyph:'',lon:houses.cusps[2],...formatLongitude(houses.cusps[2]),other:formatLongitude(houses.cusps[8]),house:null,retro:false},
           {label:'AXA 3/9',axisPair:true,houseA:3,houseB:9,glyph:'',lon:houses.cusps[3],...formatLongitude(houses.cusps[3]),other:formatLongitude(houses.cusps[9]),house:null,retro:false},
           {label:'AXA 5/11',axisPair:true,houseA:5,houseB:11,glyph:'',lon:houses.cusps[5],...formatLongitude(houses.cusps[5]),other:formatLongitude(houses.cusps[11]),house:null,retro:false},
+          {label:'AXA 6/12',axisPair:true,houseA:6,houseB:12,glyph:'',lon:houses.cusps[6],...formatLongitude(houses.cusps[6]),other:formatLongitude(houses.cusps[12]),house:null,retro:false},
           fortune,
           byLabel['Lună'],
           byLabel['Soare'],
