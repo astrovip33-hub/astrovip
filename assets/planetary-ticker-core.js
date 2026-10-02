@@ -89,44 +89,61 @@
     if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;
     const {now,out,houses}=calc();if(out.length!==BODIES.length)return;
     const byLabel=Object.fromEntries(out.map(p=>[p.label,p]));
+    const planetSequence=[
+      byLabel['Lună'],
+      byLabel['Soare'],
+      byLabel['Mercur'],
+      byLabel['Venus'],
+      byLabel['Marte'],
+      byLabel['Saturn'],
+      byLabel['Jupiter'],
+      byLabel['Uranus'],
+      byLabel['Neptun'],
+      byLabel['Pluto']
+    ].filter(Boolean);
+    const axisPair=(a,b)=>({
+      label:`AXA ${a}/${b}`,
+      axisPair:true,
+      houseA:a,
+      houseB:b,
+      glyph:'',
+      lon:houses.cusps[a],
+      ...formatLongitude(houses.cusps[a]),
+      other:formatLongitude(houses.cusps[b]),
+      house:null,
+      retro:false
+    });
+    let axisSequence=[];
+    if(houses){
+      const sun=byLabel['Soare'],moon=byLabel['Lună'];
+      const isDay=!!(sun&&sun.house>=7&&sun.house<=12);
+      const fortuneLon=norm(houses.asc+(isDay?(moon.lon-sun.lon):(sun.lon-moon.lon)));
+      const fortune={
+        label:'PARS FORTUNA',
+        glyph:'⊗',
+        lon:fortuneLon,
+        ...formatLongitude(fortuneLon),
+        house:AstroVipKoch.houseOfLongitude(fortuneLon,houses.cusps),
+        retro:false
+      };
+      axisSequence=[
+        fortune,
+        axisPair(1,7),
+        axisPair(2,8),
+        axisPair(3,9),
+        axisPair(4,10),
+        axisPair(5,11),
+        axisPair(6,12)
+      ];
+    }
     document.querySelectorAll('[data-planet-ticker]').forEach(el=>{
-      let sequenceItems=out;
-      if(el.hasAttribute('data-include-angles')&&houses){
-        const sun=byLabel['Soare'],moon=byLabel['Lună'];
-        const isDay=!!(sun&&sun.house>=7&&sun.house<=12);
-        const fortuneLon=norm(houses.asc+(isDay?(moon.lon-sun.lon):(sun.lon-moon.lon)));
-        const fortune={
-          label:'PARS FORTUNA',
-          glyph:'⊗',
-          lon:fortuneLon,
-          ...formatLongitude(fortuneLon),
-          house:AstroVipKoch.houseOfLongitude(fortuneLon,houses.cusps),
-          retro:false
-        };
-        sequenceItems=[
-          {label:'ASC',glyph:'',lon:houses.asc,...formatLongitude(houses.asc),house:null,retro:false},
-          {label:'MC',glyph:'',lon:houses.mc,...formatLongitude(houses.mc),house:null,retro:false},
-          {label:'AXA 2/8',axisPair:true,houseA:2,houseB:8,glyph:'',lon:houses.cusps[2],...formatLongitude(houses.cusps[2]),other:formatLongitude(houses.cusps[8]),house:null,retro:false},
-          {label:'AXA 3/9',axisPair:true,houseA:3,houseB:9,glyph:'',lon:houses.cusps[3],...formatLongitude(houses.cusps[3]),other:formatLongitude(houses.cusps[9]),house:null,retro:false},
-          {label:'AXA 5/11',axisPair:true,houseA:5,houseB:11,glyph:'',lon:houses.cusps[5],...formatLongitude(houses.cusps[5]),other:formatLongitude(houses.cusps[11]),house:null,retro:false},
-          {label:'AXA 6/12',axisPair:true,houseA:6,houseB:12,glyph:'',lon:houses.cusps[6],...formatLongitude(houses.cusps[6]),other:formatLongitude(houses.cusps[12]),house:null,retro:false},
-          fortune,
-          byLabel['Lună'],
-          byLabel['Soare'],
-          byLabel['Mercur'],
-          byLabel['Venus'],
-          byLabel['Marte'],
-          byLabel['Saturn'],
-          byLabel['Jupiter'],
-          byLabel['Uranus'],
-          byLabel['Neptun'],
-          byLabel['Pluto']
-        ].filter(Boolean);
-      }
+      const sequenceItems=el.hasAttribute('data-axis-only') ? axisSequence : planetSequence;
+      if(!sequenceItems.length)return;
       const seq=sequenceItems.map(itemHtml).join('');
       let track=el.querySelector('.planet-track');
       if(!track){
-        el.setAttribute('tabindex','0');el.setAttribute('aria-label','Poziții planetare actuale');
+        el.setAttribute('tabindex','0');
+        el.setAttribute('aria-label',el.hasAttribute('data-axis-only')?'Pars Fortuna și axele caselor':'Poziții planetare actuale');
         el.innerHTML=`<div class="planet-track"><div class="planet-sequence" role="list">${seq}</div><div class="planet-sequence" aria-hidden="true">${seq}</div></div>`;
         track=el.querySelector('.planet-track');
         const width=track.firstElementChild.getBoundingClientRect().width;
