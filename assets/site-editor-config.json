@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "hero": {
+    "labels": [
+      "ASTROLOGIE",
+      "NUMEROLOGIE",
+      "RELOCARE",
+      "PREVIZIUNI"
+    ],
+    "titleMain": "ASTROLOGIE",
+    "titlePremium": "PREMIUM",
+    "subtitle": "CARIERĂ · DRAGOSTE · AFACERI",
+    "buttonText": "PROGRAMEAZĂ-TE",
+    "buttonUrl": "https://wa.me/40722128220?text=Bun%C4%83%2C%20doresc%20s%C4%83%20m%C4%83%20programez%20pentru%20o%20consulta%C8%9Bie%20AstroVip.",
+    "sideLeft": "CUNOȘTI MOMENTUL\nTRĂIEȘTI VIITORUL",
+    "sideRight": "UN UNIVERS\nDE POSIBILITĂȚI",
+    "bottomText": "VIITORUL FAVORIZEAZĂ OAMENII PREGĂTIȚI",
+    "image": "",
+    "frameAccent": "#f0cf67",
+    "frameWidth": 1
+  },
+  "ribbon": {
+    "visible": true,
+    "cap": "ASTROVIP PREMIUM",
+    "items": [
+      {
+        "title": "33+ ANI",
+        "subtitle": "Experiență"
+      },
+      {
+        "title": "CONSULTAȚII",
+        "subtitle": "Individuale"
+      },
+      {
+        "title": "PLATĂ CU CARDUL",
+        "subtitle": "Factură emisă"
+      },
+      {
+        "title": "OCUPAȚIA ASTROLOG",
+        "subtitle": "Confidențialitate"
+      }
+    ]
+  },
+  "sections": {
+    "planets": true,
+    "freeQuestion": true,
+    "opportunities": true
+  }
+}
