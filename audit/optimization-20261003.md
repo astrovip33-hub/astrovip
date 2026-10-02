@@ -25,3 +25,26 @@ Validation results are recorded in GitHub Actions artifacts. Do not merge until 
 - Cache configuration requires live response-header verification after an approved deployment; browser/CDN caches already populated with older immutable URLs cannot be retroactively cleared by this commit.
 - Excluded short/template pages need editorial work, not automatic sitemap inclusion.
 - Legacy Hero asset deletion is gated by a repository-wide reference scan, including 10,000 legacy Atlas files.
+
+## Legacy asset cleanup
+Repository-wide HTML/CSS/JS/JSON reference audit found 14 removable image/video assets (6112446 bytes). Assets required by deploy/optimizer workflows are retained, as are the 960 px portrait and social images.
+
+Removed assets:
+- assets/astrovip-hero-lux-clean-20260922-480.webp
+- assets/astrovip-hero-final.svg
+- assets/astrovip-hero-user-20260921.jpg
+- assets/hero-premium-orbit-desktop-v2.svg
+- assets/hero-astrovip-premium-20261001-480.webp
+- assets/astrovip-hero-premium.svg
+- assets/hero-bg-textless-mobile.svg
+- assets/hero-bg-textless-desktop.svg
+- assets/hero-premium-orbit-mobile-v2.svg
+- assets/astrovip-hero-optimized.mp4
+- assets/astrovip-hero-current.mp4
+- assets/hero-premium-gold-20260921.svg
+- assets/astrovip-hero-signature-mobile-20261001.webp
+- assets/astrovip-hero-premium-mobile-20261001.webp
+
+Cloudflare header patterns use a top-level placeholder and separate versioned/vendor folders to avoid conflicting max-age values. See https://developers.cloudflare.com/workers/static-assets/headers/ .
+
+Visual comparison ignores anti-aliasing with pixelmatch threshold 0.1; all Hero computed layouts must match exactly. Initial raw-pixel comparison found only 48 edge pixels at 360 px and zero at the other nine sizes. No image asset changes were used to hide differences.

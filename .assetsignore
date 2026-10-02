@@ -11,3 +11,4 @@ validation-output
 audit
 scripts/validate_optimization.py
 scripts/validate_optimization.mjs
+scripts/validate_cache_headers.py

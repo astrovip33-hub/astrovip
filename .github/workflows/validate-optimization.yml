@@ -26,7 +26,7 @@ jobs:
         working-directory: candidate
         run: |
           python -m pip install Pillow==11.3.0
-          npm install --no-save --package-lock=false playwright@1.55.0 pngjs@7.0.0
+          npm install --no-save --package-lock=false playwright@1.55.0 pngjs@7.0.0 pixelmatch@7.1.0
           npx playwright install --with-deps chromium
       - name: Prepare and audit
         working-directory: candidate
@@ -37,6 +37,13 @@ jobs:
           python -m http.server 8765 --directory ../baseline > /tmp/astrovip-baseline.log 2>&1 &
           python -m http.server 8766 --directory . > /tmp/astrovip-candidate.log 2>&1 &
           node scripts/validate_optimization.mjs
+      - name: Verify local Cloudflare cache headers
+        working-directory: candidate
+        env:
+          CLOUDFLARE_SEND_METRICS: 'false'
+        run: |
+          npx --yes wrangler@latest dev --local --port 8767 > /tmp/astrovip-wrangler.log 2>&1 &
+          python scripts/validate_cache_headers.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
