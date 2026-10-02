@@ -23,7 +23,9 @@
     return{now,out,houses};
   }
 
-  const itemHtml=p=>`<span class="planet-item" role="listitem" aria-label="${p.label}, ${p.deg} grade ${p.min} minute în ${p.sign}${p.house?', casa '+p.house:''}${p.retro?', retrograd':''}"><span class="planet-glyph" aria-hidden="true">${p.glyph}︎</span><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span>${p.house?`<span class="planet-house">H${p.house}</span>`:''}${p.retro?'<span class="planet-retro" title="Retrograd" aria-hidden="true">℞</span>':''}</span>`;
+  const itemHtml=p=>p.axisPair
+    ? `<span class="planet-item" role="listitem" aria-label="${p.label}, casa ${p.houseA} la ${p.deg} grade ${p.min} minute în ${p.sign}, casa ${p.houseB} la ${p.other.deg} grade ${p.other.min} minute în ${p.other.sign}"><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span><span aria-hidden="true">/</span><span>${p.other.deg}°${String(p.other.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.other.symbol}︎</span><span>${p.other.sign}</span></span>`
+    : `<span class="planet-item" role="listitem" aria-label="${p.label}, ${p.deg} grade ${p.min} minute în ${p.sign}${p.house?', casa '+p.house:''}${p.retro?', retrograd':''}"><span class="planet-glyph" aria-hidden="true">${p.glyph}︎</span><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span>${p.house?`<span class="planet-house">H${p.house}</span>`:''}${p.retro?'<span class="planet-retro" title="Retrograd" aria-hidden="true">℞</span>':''}</span>`;
   function applyPageTuning(){
     if(document.getElementById('astrovip-runtime-tuning'))return;
     const style=document.createElement('style');style.id='astrovip-runtime-tuning';
@@ -104,6 +106,9 @@
         sequenceItems=[
           {label:'ASC',glyph:'',lon:houses.asc,...formatLongitude(houses.asc),house:null,retro:false},
           {label:'MC',glyph:'',lon:houses.mc,...formatLongitude(houses.mc),house:null,retro:false},
+          {label:'AXA 2/8',axisPair:true,houseA:2,houseB:8,glyph:'',lon:houses.cusps[2],...formatLongitude(houses.cusps[2]),other:formatLongitude(houses.cusps[8]),house:null,retro:false},
+          {label:'AXA 3/9',axisPair:true,houseA:3,houseB:9,glyph:'',lon:houses.cusps[3],...formatLongitude(houses.cusps[3]),other:formatLongitude(houses.cusps[9]),house:null,retro:false},
+          {label:'AXA 5/11',axisPair:true,houseA:5,houseB:11,glyph:'',lon:houses.cusps[5],...formatLongitude(houses.cusps[5]),other:formatLongitude(houses.cusps[11]),house:null,retro:false},
           fortune,
           byLabel['Lună'],
           byLabel['Soare'],
