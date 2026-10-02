@@ -276,6 +276,23 @@ jobs:
           echo "::add-mask::$ACCOUNT_ID"
           echo "CLOUDFLARE_ACCOUNT_ID=$ACCOUNT_ID" >> "$GITHUB_ENV"
 
+      - name: Verify production Worker secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest secret list --name astrovip --format json > /tmp/astrovip-secrets.json
+          python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/astrovip-secrets.json'))
+          names=sorted(x.get('name','') for x in data if isinstance(x,dict))
+          print('Production Worker secret names:', ', '.join(names) if names else '(none)')
+          required={'COMMAND_CENTER_TOKEN','GITHUB_ADMIN_TOKEN'}
+          missing=sorted(required-set(names))
+          if missing:
+              raise SystemExit('Missing production Worker secrets: ' + ', '.join(missing))
+          print('Required Command Center secrets are present on Worker astrovip.')
+          PY
+
       - name: Deploy apex HTTP to HTTPS redirect Worker
         shell: bash
         run: |
