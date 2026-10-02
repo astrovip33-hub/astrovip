@@ -139,7 +139,9 @@
     document.querySelectorAll('[data-planet-ticker]').forEach(el=>{
       const sequenceItems=el.hasAttribute('data-axis-only') ? axisSequence : planetSequence;
       if(!sequenceItems.length)return;
-      const seq=sequenceItems.map(itemHtml).join('');
+      const symbolOnly=el.hasAttribute('data-symbol-only');
+      const symbolItemHtml=p=>`<span class="planet-item planet-item--symbol-only" role="listitem" aria-label="${p.label}, ${p.deg} grade ${p.min} minute în ${p.sign}${p.house?', casa '+p.house:''}${p.retro?', retrograd':''}"><span class="planet-glyph planet-glyph--solo" aria-hidden="true">${p.glyph}︎</span><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span>${p.house?`<span class="planet-house">H${p.house}</span>`:''}${p.retro?'<span class="planet-retro" title="Retrograd" aria-hidden="true">℞</span>':''}</span>`;
+      const seq=sequenceItems.map(symbolOnly?symbolItemHtml:itemHtml).join('');
       let track=el.querySelector('.planet-track');
       if(!track){
         el.setAttribute('tabindex','0');
