@@ -1,0 +1,46 @@
+name: Validate AstroVip optimization
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: candidate
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: baseline
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation tools
+        working-directory: candidate
+        run: |
+          python -m pip install Pillow==11.3.0
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Prepare and audit
+        working-directory: candidate
+        run: python scripts/validate_optimization.py
+      - name: Compare responsive rendering and exercise booking with mocked services
+        working-directory: candidate
+        run: |
+          python -m http.server 8765 --directory ../baseline > /tmp/astrovip-baseline.log 2>&1 &
+          python -m http.server 8766 --directory . > /tmp/astrovip-candidate.log 2>&1 &
+          node scripts/validate_optimization.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: optimization-validation
+          path: |
+            candidate/validation-output/
+            candidate/assets/astrovip-hero-desktop-final-20261002.webp

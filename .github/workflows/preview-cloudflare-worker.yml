@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore:
       - main
+      - codex/optimize-astrovip-20261003
   workflow_dispatch:
 
 permissions:

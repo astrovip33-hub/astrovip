@@ -1,9 +1,9 @@
 /
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=0, must-revalidate
   X-AstroVip-Release: 20260927-chatrestore1
 
 /index.html
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=0, must-revalidate
   X-AstroVip-Release: 20260927-chatrestore1
 
 /*
@@ -13,7 +13,7 @@
   X-Frame-Options: SAMEORIGIN
 
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /assets/vendor/*
   Cache-Control: public, max-age=31536000, immutable
@@ -62,3 +62,18 @@
 
 /academia-astrologie/atlas-10000/*
   X-Robots-Tag: noindex, follow
+
+/assets/homepage-cascade-base-20261003.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/homepage-cascade-final-20261003.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/astrovip-hero-desktop-final-20261002.avif
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/astrovip-hero-desktop-final-20261002.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/site-editor-config.json
+  Cache-Control: no-store
