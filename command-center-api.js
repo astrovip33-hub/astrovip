@@ -138,6 +138,10 @@ function cleanString(value, max = 160) {
   return String(value ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max);
 }
 
+function cleanMultiline(value, max = 160) {
+  return String(value ?? '').replace(/\r/g, '').replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, ' ').trim().slice(0, max);
+}
+
 function safeEditorUrl(value, { allowEmpty = true } = {}) {
   const v = cleanString(value, 700);
   if (!v && allowEmpty) return '';
@@ -168,8 +172,8 @@ function sanitizeEditorConfig(input) {
       subtitle: cleanString(h.subtitle, 120),
       buttonText: cleanString(h.buttonText, 60),
       buttonUrl: safeEditorUrl(h.buttonUrl, { allowEmpty: false }),
-      sideLeft: cleanString(h.sideLeft, 120),
-      sideRight: cleanString(h.sideRight, 120),
+      sideLeft: cleanMultiline(h.sideLeft, 120),
+      sideRight: cleanMultiline(h.sideRight, 120),
       bottomText: cleanString(h.bottomText, 140),
       image: safeEditorUrl(h.image),
       frameAccent: accent,
