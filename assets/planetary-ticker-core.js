@@ -86,11 +86,38 @@
   function render(){
     if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;
     const {now,out,houses}=calc();if(out.length!==BODIES.length)return;
+    const byLabel=Object.fromEntries(out.map(p=>[p.label,p]));
     document.querySelectorAll('[data-planet-ticker]').forEach(el=>{
-      const angles=el.hasAttribute('data-include-angles')&&houses
-        ? [['ASC',houses.asc],['MC',houses.mc]].map(([label,lon])=>({label,glyph:'',...formatLongitude(lon),house:null,retro:false}))
-        : [];
-      const seq=out.concat(angles).map(itemHtml).join('');
+      let sequenceItems=out;
+      if(el.hasAttribute('data-include-angles')&&houses){
+        const sun=byLabel['Soare'],moon=byLabel['Lună'];
+        const isDay=!!(sun&&sun.house>=7&&sun.house<=12);
+        const fortuneLon=norm(houses.asc+(isDay?(moon.lon-sun.lon):(sun.lon-moon.lon)));
+        const fortune={
+          label:'PARS FORTUNA',
+          glyph:'⊗',
+          lon:fortuneLon,
+          ...formatLongitude(fortuneLon),
+          house:AstroVipKoch.houseOfLongitude(fortuneLon,houses.cusps),
+          retro:false
+        };
+        sequenceItems=[
+          {label:'ASC',glyph:'',lon:houses.asc,...formatLongitude(houses.asc),house:null,retro:false},
+          {label:'MC',glyph:'',lon:houses.mc,...formatLongitude(houses.mc),house:null,retro:false},
+          fortune,
+          byLabel['Lună'],
+          byLabel['Soare'],
+          byLabel['Mercur'],
+          byLabel['Venus'],
+          byLabel['Marte'],
+          byLabel['Saturn'],
+          byLabel['Jupiter'],
+          byLabel['Uranus'],
+          byLabel['Neptun'],
+          byLabel['Pluto']
+        ].filter(Boolean);
+      }
+      const seq=sequenceItems.map(itemHtml).join('');
       let track=el.querySelector('.planet-track');
       if(!track){
         el.setAttribute('tabindex','0');el.setAttribute('aria-label','Poziții planetare actuale');
