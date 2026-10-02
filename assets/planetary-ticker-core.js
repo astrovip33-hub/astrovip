@@ -23,7 +23,9 @@
     return{now,out,houses};
   }
 
-  const itemHtml=p=>`<span class="planet-item" role="listitem" aria-label="${p.label}, ${p.deg} grade ${p.min} minute în ${p.sign}${p.house?', casa '+p.house:''}${p.retro?', retrograd':''}"><span class="planet-glyph" aria-hidden="true">${p.glyph}︎</span><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span>${p.house?`<span class="planet-house">H${p.house}</span>`:''}${p.retro?'<span class="planet-retro" title="Retrograd" aria-hidden="true">℞</span>':''}</span>`;
+  const itemHtml=p=>p.axisPair
+    ? `<span class="planet-item" role="listitem" aria-label="${p.label}, casa ${p.houseA} la ${p.deg} grade ${p.min} minute în ${p.sign}, casa ${p.houseB} la ${p.other.deg} grade ${p.other.min} minute în ${p.other.sign}"><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span><span aria-hidden="true">/</span><span>${p.other.deg}°${String(p.other.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.other.symbol}︎</span><span>${p.other.sign}</span></span>`
+    : `<span class="planet-item" role="listitem" aria-label="${p.label}, ${p.deg} grade ${p.min} minute în ${p.sign}${p.house?', casa '+p.house:''}${p.retro?', retrograd':''}"><span class="planet-glyph" aria-hidden="true">${p.glyph}︎</span><strong>${p.label}</strong><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span>${p.house?`<span class="planet-house">H${p.house}</span>`:''}${p.retro?'<span class="planet-retro" title="Retrograd" aria-hidden="true">℞</span>':''}</span>`;
   function applyPageTuning(){
     if(document.getElementById('astrovip-runtime-tuning'))return;
     const style=document.createElement('style');style.id='astrovip-runtime-tuning';
@@ -86,14 +88,64 @@
   function render(){
     if(!window.Astronomy||typeof Astronomy.GeoVector!=='function'||typeof Astronomy.Ecliptic!=='function')return;
     const {now,out,houses}=calc();if(out.length!==BODIES.length)return;
+    const byLabel=Object.fromEntries(out.map(p=>[p.label,p]));
+    const planetSequence=[
+      byLabel['Lună'],
+      byLabel['Soare'],
+      byLabel['Mercur'],
+      byLabel['Venus'],
+      byLabel['Marte'],
+      byLabel['Saturn'],
+      byLabel['Jupiter'],
+      byLabel['Uranus'],
+      byLabel['Neptun'],
+      byLabel['Pluto']
+    ].filter(Boolean);
+    const axisPair=(a,b)=>({
+      label:`AXA ${a}/${b}`,
+      axisPair:true,
+      houseA:a,
+      houseB:b,
+      glyph:'',
+      lon:houses.cusps[a],
+      ...formatLongitude(houses.cusps[a]),
+      other:formatLongitude(houses.cusps[b]),
+      house:null,
+      retro:false
+    });
+    let axisSequence=[];
+    if(houses){
+      const sun=byLabel['Soare'],moon=byLabel['Lună'];
+      const isDay=!!(sun&&sun.house>=7&&sun.house<=12);
+      const fortuneLon=norm(houses.asc+(isDay?(moon.lon-sun.lon):(sun.lon-moon.lon)));
+      const fortune={
+        label:'PARS FORTUNA',
+        glyph:'⊗',
+        lon:fortuneLon,
+        ...formatLongitude(fortuneLon),
+        house:AstroVipKoch.houseOfLongitude(fortuneLon,houses.cusps),
+        retro:false
+      };
+      axisSequence=[
+        fortune,
+        axisPair(1,7),
+        axisPair(2,8),
+        axisPair(3,9),
+        axisPair(4,10),
+        axisPair(5,11),
+        axisPair(6,12)
+      ];
+    }
     document.querySelectorAll('[data-planet-ticker]').forEach(el=>{
-      const angles=el.hasAttribute('data-include-angles')&&houses
-        ? [['ASC',houses.asc],['MC',houses.mc]].map(([label,lon])=>({label,glyph:'',...formatLongitude(lon),house:null,retro:false}))
-        : [];
-      const seq=out.concat(angles).map(itemHtml).join('');
+      const sequenceItems=el.hasAttribute('data-axis-only') ? axisSequence : planetSequence;
+      if(!sequenceItems.length)return;
+      const symbolOnly=el.hasAttribute('data-symbol-only');
+      const symbolItemHtml=p=>`<span class="planet-item planet-item--symbol-only" role="listitem" aria-label="${p.label}, ${p.deg} grade ${p.min} minute în ${p.sign}${p.house?', casa '+p.house:''}${p.retro?', retrograd':''}"><span class="planet-glyph planet-glyph--solo" aria-hidden="true">${p.glyph}︎</span><span>${p.deg}°${String(p.min).padStart(2,'0')}′</span><span class="planet-sign" aria-hidden="true">${p.symbol}︎</span><span>${p.sign}</span>${p.house?`<span class="planet-house">H${p.house}</span>`:''}${p.retro?'<span class="planet-retro" title="Retrograd" aria-hidden="true">℞</span>':''}</span>`;
+      const seq=sequenceItems.map(symbolOnly?symbolItemHtml:itemHtml).join('');
       let track=el.querySelector('.planet-track');
       if(!track){
-        el.setAttribute('tabindex','0');el.setAttribute('aria-label','Poziții planetare actuale');
+        el.setAttribute('tabindex','0');
+        el.setAttribute('aria-label',el.hasAttribute('data-axis-only')?'Pars Fortuna și axele caselor':'Poziții planetare actuale');
         el.innerHTML=`<div class="planet-track"><div class="planet-sequence" role="list">${seq}</div><div class="planet-sequence" aria-hidden="true">${seq}</div></div>`;
         track=el.querySelector('.planet-track');
         const width=track.firstElementChild.getBoundingClientRect().width;
