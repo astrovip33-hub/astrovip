@@ -55,4 +55,17 @@ jobs:
           STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
           test "$STATUS" = "200"
           grep -q 'ASTROLOGIE' /tmp/preview.html
+          grep -q 'site-editor-runtime.js' /tmp/preview.html
           echo "Preview live: $URL"
+
+      - name: Verify visual editor
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://astrovip-preview.astrovip33.workers.dev"
+          EDITOR_STATUS=$(curl -sS -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
+          test "$EDITOR_STATUS" = "200"
+          grep -q 'EDITOR VIZUAL ASTROVIP' /tmp/editor.html
+          API_STATUS=$(curl -sS -o /tmp/command-api.json -w '%{http_code}' "$BASE/api/command/ping")
+          test "$API_STATUS" = "401"
+          echo "Visual editor route OK; command API correctly requires authentication."
