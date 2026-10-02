@@ -1465,8 +1465,8 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-lux-labels span{display:flex;ali
     position:relative!important;
     width:min(1420px,calc(100% - 40px))!important;
     max-width:1420px!important;
-    height:clamp(640px,72vh,820px)!important;
-    min-height:640px!important;
+    height:clamp(590px,66vh,740px)!important;
+    min-height:590px!important;
     margin:0 auto!important;
     overflow:hidden!important;
     background:linear-gradient(180deg,#020302 0%,#040604 100%)!important;
@@ -1533,6 +1533,98 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-lux-labels span{display:flex;ali
   html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-sidecopy{
     z-index:3!important;
   }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-desktop-cosmos{
+    position:absolute!important;
+    inset:0!important;
+    z-index:1!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-desktop-cosmos::before{
+    content:""!important;
+    position:absolute!important;
+    inset:0!important;
+    background:
+      radial-gradient(circle at 8% 18%,rgba(255,236,160,.95) 0 1.2px,transparent 1.9px),
+      radial-gradient(circle at 15% 36%,rgba(57,255,20,.78) 0 1px,transparent 1.8px),
+      radial-gradient(circle at 91% 26%,rgba(255,220,110,.9) 0 1.1px,transparent 1.8px),
+      radial-gradient(circle at 84% 68%,rgba(57,255,20,.72) 0 1px,transparent 1.7px),
+      radial-gradient(circle at 4% 73%,rgba(255,255,255,.72) 0 1px,transparent 1.7px),
+      radial-gradient(circle at 96% 78%,rgba(255,255,255,.72) 0 1px,transparent 1.7px)!important;
+    opacity:.92!important;
+    filter:drop-shadow(0 0 5px rgba(255,214,86,.45))!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-orbit{
+    position:absolute!important;
+    display:block!important;
+    border:1px solid rgba(225,184,62,.42)!important;
+    border-radius:50%!important;
+    box-shadow:0 0 18px rgba(57,255,20,.07),inset 0 0 18px rgba(255,205,70,.04)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-orbit--left{
+    width:430px!important;height:250px!important;left:-110px!important;top:210px!important;transform:rotate(-18deg)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-orbit--right{
+    width:470px!important;height:270px!important;right:-125px!important;top:170px!important;transform:rotate(16deg)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-wheel{
+    position:absolute!important;
+    width:290px!important;height:290px!important;right:34px!important;bottom:-118px!important;
+    border:1px solid rgba(236,194,73,.48)!important;border-radius:50%!important;
+    background:
+      repeating-conic-gradient(from 0deg,rgba(232,190,64,.40) 0 1deg,transparent 1deg 15deg),
+      radial-gradient(circle,transparent 0 38%,rgba(226,183,58,.18) 39% 40%,transparent 41% 58%,rgba(57,255,20,.12) 59% 60%,transparent 61%)!important;
+    box-shadow:0 0 28px rgba(218,175,55,.14)!important;
+    opacity:.82!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-planet{
+    position:absolute!important;display:block!important;border-radius:50%!important;
+    box-shadow:inset -18px -14px 24px rgba(0,0,0,.46),inset 10px 8px 18px rgba(255,255,255,.08),0 0 24px rgba(218,175,55,.20)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-planet--amber{
+    width:118px!important;height:118px!important;left:5.5%!important;top:15%!important;
+    background:
+      radial-gradient(circle at 35% 30%,#fff1aa 0 4%,#d59634 14%,#7b4217 38%,#25150c 72%,#090807 100%)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-planet--blue{
+    width:88px!important;height:88px!important;left:15%!important;bottom:14%!important;
+    background:
+      radial-gradient(circle at 32% 28%,#caefff 0 4%,#2c8eb7 16%,#0f4f74 38%,#082436 65%,#050b10 100%)!important;
+    box-shadow:inset -13px -11px 18px rgba(0,0,0,.52),0 0 28px rgba(65,188,255,.18)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-planet--saturn{
+    width:118px!important;height:118px!important;right:5.7%!important;top:12%!important;
+    background:
+      linear-gradient(176deg,#ffe4a0 0 14%,#c79245 15% 23%,#f0ca7d 24% 34%,#8e5c2a 35% 43%,#dfb56a 44% 57%,#7a4c23 58% 65%,#d8a95c 66% 77%,#4f321a 78% 100%)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-planet--saturn::before{
+    content:""!important;position:absolute!important;left:50%!important;top:50%!important;
+    width:178px!important;height:43px!important;transform:translate(-50%,-50%) rotate(-14deg)!important;
+    border:7px solid rgba(229,189,92,.68)!important;border-left-color:rgba(255,234,151,.34)!important;border-right-color:rgba(132,87,34,.72)!important;
+    border-radius:50%!important;box-shadow:0 0 15px rgba(242,206,111,.18)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-planet--emerald{
+    width:104px!important;height:104px!important;right:13%!important;bottom:11%!important;
+    background:
+      radial-gradient(circle at 33% 27%,#b8ffd0 0 3%,#2dbb73 15%,#0b6840 38%,#052e23 68%,#030b09 100%)!important;
+    box-shadow:inset -15px -13px 22px rgba(0,0,0,.55),0 0 30px rgba(57,255,20,.18)!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-stars{
+    position:absolute!important;width:230px!important;height:180px!important;opacity:.74!important;
+    background:
+      radial-gradient(circle at 12% 28%,#ffe9a3 0 1.4px,transparent 2px),
+      radial-gradient(circle at 32% 12%,#7dff9d 0 1.1px,transparent 1.8px),
+      radial-gradient(circle at 51% 48%,#fff 0 1px,transparent 1.7px),
+      radial-gradient(circle at 73% 24%,#ffe9a3 0 1.2px,transparent 1.9px),
+      radial-gradient(circle at 88% 67%,#7dff9d 0 1px,transparent 1.7px),
+      radial-gradient(circle at 44% 82%,#fff 0 1px,transparent 1.7px)!important;
+    filter:drop-shadow(0 0 4px rgba(255,215,100,.38))!important;
+  }
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-stars--left{left:1.8%!important;top:42%!important}
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-cosmos-stars--right{right:1.5%!important;top:46%!important;transform:scaleX(-1)!important}
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-visual picture{z-index:2!important}
+  html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-sidecopy{z-index:4!important}
+
 }
 </style>
 <script defer src="/assets/site-editor-runtime.js?v=1"></script>
@@ -1752,6 +1844,17 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-lux-labels span{display:flex;ali
 <main id="top" tabindex="-1">
 <section class="hero hero-split av-hero-v2 av-hero-mobile-restore" aria-labelledby="astrovipHeroTitleMobile">
   <div class="av-hero-v2-visual">
+    <div class="av-desktop-cosmos" aria-hidden="true">
+      <span class="av-cosmos-orbit av-cosmos-orbit--left"></span>
+      <span class="av-cosmos-orbit av-cosmos-orbit--right"></span>
+      <span class="av-cosmos-wheel"></span>
+      <span class="av-cosmos-planet av-cosmos-planet--amber"></span>
+      <span class="av-cosmos-planet av-cosmos-planet--blue"></span>
+      <span class="av-cosmos-planet av-cosmos-planet--saturn"></span>
+      <span class="av-cosmos-planet av-cosmos-planet--emerald"></span>
+      <span class="av-cosmos-stars av-cosmos-stars--left"></span>
+      <span class="av-cosmos-stars av-cosmos-stars--right"></span>
+    </div>
     <picture>
       <source media="(max-width:820px)" srcset="/assets/astrovip-hero-signature-mobile-clean-480.avif?v=20261001-perf1 480w, /assets/astrovip-hero-signature-mobile-clean-640.avif?v=20261001-perf1 640w, /assets/astrovip-hero-signature-mobile-clean-768.avif?v=20261001-perf1 768w, /assets/astrovip-hero-signature-mobile-clean-941.avif?v=20261001-perf1 941w" sizes="100vw" type="image/avif" width="941" height="1220"/>
       <source media="(max-width:820px)" srcset="/assets/astrovip-hero-signature-mobile-clean-20261001.webp?v=20261001-clean1" sizes="100vw" type="image/webp" width="941" height="1220"/>
