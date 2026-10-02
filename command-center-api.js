@@ -31,7 +31,9 @@ function authToken(request) {
 }
 
 function isAuthorized(request, env) {
-  return Boolean(env.COMMAND_CENTER_TOKEN) && safeEqual(authToken(request), String(env.COMMAND_CENTER_TOKEN));
+  const expected = String(env.COMMAND_CENTER_TOKEN || '').trim();
+  const received = authToken(request).trim();
+  return Boolean(expected) && safeEqual(received, expected);
 }
 
 function unauthorized() {
