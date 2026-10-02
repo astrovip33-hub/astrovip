@@ -12,11 +12,20 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-Frame-Options: SAMEORIGIN
 
-/assets/*
+# Top-level mutable assets: refresh in at most an hour.
+# Placeholders do not match slashes, so these rules do not overlap.
+/assets/:file
   Cache-Control: public, max-age=3600, must-revalidate
 
 /assets/vendor/*
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/optimized-20261003/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# no-store takes precedence over the general top-level asset policy.
+/assets/site-editor-config.json
+  Cache-Control: no-store
 
 /favicon.ico
   Cache-Control: public, max-age=604800, stale-while-revalidate=2592000
@@ -24,56 +33,14 @@
 /robots.txt
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 
-/sitemap.xml
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-/sitemap-studii-de-caz.xml
+/sitemap*.xml
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 
 /llms.txt
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-
-/assets/astrovip-hero-current.mp4
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/1000049884-lcp.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/hero-final-static.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/hero-vivid-desktop.avif
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/hero-vivid-mobile.avif
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/astrovip-hero-lux-clean-20260922.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/astrovip-hero-lux-clean-20260922-640.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/astrovip-hero-lux-clean-20260922-960.webp
-  Cache-Control: public, max-age=31536000, immutable
 
 /atlas/*
   X-Robots-Tag: noindex, follow
 
 /academia-astrologie/atlas-10000/*
   X-Robots-Tag: noindex, follow
-
-/assets/homepage-cascade-base-20261003.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/homepage-cascade-final-20261003.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/astrovip-hero-desktop-final-20261002.avif
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/astrovip-hero-desktop-final-20261002.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/site-editor-config.json
-  Cache-Control: no-store

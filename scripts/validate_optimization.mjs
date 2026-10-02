@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { PNG } from 'pngjs';
 import { chromium } from 'playwright';
 
 await mkdir('validation-output', {recursive:true});
@@ -10,6 +11,7 @@ async function prepare(width, port) {
   const context=await browser.newContext({viewport:{width,height:1000},deviceScaleFactor:1,reducedMotion:'reduce'});
   await context.route('**/*',async route=>{
     const url=new URL(route.request().url());
+    if(/planetary-ticker|planetary-hero|astronomy-engine/.test(url.pathname)) return route.abort();
     if(url.hostname==='127.0.0.1') return route.continue();
     if(url.pathname.endsWith('/booking_requests')) return route.fulfill({status:200,contentType:'application/json',body:'[]'});
     return route.abort();
@@ -40,14 +42,23 @@ for(const width of widths){
   });
   const beforeStyles=await measure(before.page),afterStyles=await measure(after.page);
   assert.deepEqual(afterStyles,beforeStyles,'Hero layout/style changed at '+width);
-  assert.ok(a.equals(b),'Hero pixels changed at '+width);
+  const ap=PNG.sync.read(a),bp=PNG.sync.read(b);
+  let mismatched=0;let bounds=[ap.width,ap.height,0,0];
+  for(let i=0;i<ap.data.length;i+=4) if(ap.data.slice(i,i+4).compare(bp.data.slice(i,i+4))!==0){mismatched++;const x=i/4%ap.width,y=Math.floor(i/4/ap.width);bounds=[Math.min(bounds[0],x),Math.min(bounds[1],y),Math.max(bounds[2],x),Math.max(bounds[3],y)];}
+  console.log(JSON.stringify({width,mismatched,bounds,pixels:ap.width*ap.height}));
+  if(mismatched){
+    for(const [label,p] of [['before',before.page],['after',after.page]]){
+      const jpg=await p.locator('section.hero.av-hero-v2').screenshot({type:'jpeg',quality:55});
+      const base=jpg.toString('base64');for(let i=0;i<base.length;i+=2000)console.log('VISUAL_'+label+'_'+width+':'+base.slice(i,i+2000));
+    }
+  }
   const img=await after.page.locator('.av-hero-v2-visual img').evaluate(el=>({src:el.currentSrc,w:el.naturalWidth,h:el.naturalHeight}));
   assert.ok(img.src.includes(width<=820?'signature-mobile-clean':'desktop-final'), 'Wrong responsive image');
   const oldOverflow=await before.page.evaluate(()=>document.documentElement.scrollWidth);
   const newOverflow=await after.page.evaluate(()=>document.documentElement.scrollWidth);
   assert.ok(newOverflow<=Math.max(width,oldOverflow),'New horizontal overflow at '+width);
   assert.deepEqual(after.errors.filter(x=>!before.errors.includes(x)),[],'New JS errors');
-  results.push({width,pixelsEqual:true,layoutEqual:true,image:img.src.split('/').pop(),overflowBefore:oldOverflow,overflowAfter:newOverflow,existingErrors:before.errors});
+  results.push({width,mismatched,pixelsEqual:mismatched===0,layoutEqual:true,image:img.src.split('/').pop(),overflowBefore:oldOverflow,overflowAfter:newOverflow,existingErrors:before.errors});
   await before.context.close(); await after.context.close();
   console.log('PASS responsive '+width);
 }
@@ -76,4 +87,5 @@ assert.equal(posts,1);assert.equal(stripe,1);
 assert.ok(await page.locator('a[href*="wa.me/40722128220"]').count()>0);
 await writeFile('validation-output/responsive.json',JSON.stringify({results,bookingMocked:{posts,stripe}},null,2));
 await context.close();await browser.close();
+assert.ok(results.every(r=>r.pixelsEqual),'Hero pixel differences: '+JSON.stringify(results.filter(r=>!r.pixelsEqual)));
 console.log('PASS booking with mocked API and intercepted Stripe; no real booking/payment');
