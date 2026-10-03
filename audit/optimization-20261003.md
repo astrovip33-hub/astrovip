@@ -52,3 +52,5 @@ Visual comparison ignores anti-aliasing with pixelmatch threshold 0.1 and allows
 Exact UTF-8 sizes: homepage 238141 → 73028 bytes; inline CSS 172824 → 16035 bytes; style blocks 43 → 6. These are source-size reductions, not measured Core Web Vitals improvements.
 
 Schema semantics: moved availableLanguage from ProfessionalService to ContactPoint on all seven language homepages, preserving supported languages and linking the shared organization ID. Removed the Romanian homepage Blog block for three articles that are no longer shown there. Sources: https://schema.org/availableLanguage and https://developers.google.com/search/docs/appearance/structured-data/sd-policies .
+
+Independent diff review reconstructed all 25 original external head stylesheets and compared 3,327 original cascade entries against 3,316 final entries: every distinct rule/declaration is preserved in order; only the 11 exact duplicates were removed. Cache response checks use an isolated local Cloudflare static-assets fixture with the actual _headers file, avoiding a development watcher loop in the full repository. No cloud deployment occurs.

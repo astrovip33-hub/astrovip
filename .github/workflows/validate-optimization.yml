@@ -34,6 +34,7 @@ jobs:
         run: |
           python scripts/quality_gate_new_pages.py
           python scripts/audit_seo_graph.py
+          python scripts/validate_optimization.py
           python scripts/enrich_structured_data.py
           python scripts/validate_optimization.py
       - name: Compare responsive rendering and exercise booking with mocked services
@@ -42,14 +43,18 @@ jobs:
           python -m http.server 8765 --directory ../baseline > /tmp/astrovip-baseline.log 2>&1 &
           python -m http.server 8766 --directory . > /tmp/astrovip-candidate.log 2>&1 &
           node scripts/validate_optimization.mjs
+      - name: Compare compressed cold-load performance
+        working-directory: candidate
+        run: |
+          python scripts/serve_validation.py --port 8768 --directory ../baseline > /tmp/astrovip-perf-before.log 2>&1 &
+          python scripts/serve_validation.py --port 8769 --directory . > /tmp/astrovip-perf-after.log 2>&1 &
+          node scripts/validate_performance.mjs
       - name: Verify local Cloudflare cache headers
         if: ${{ !cancelled() }}
         working-directory: candidate
         env:
           CLOUDFLARE_SEND_METRICS: 'false'
-        run: |
-          npx --yes wrangler@latest dev --local --port 8767 > /tmp/astrovip-wrangler.log 2>&1 &
-          python scripts/validate_cache_headers.py
+        run: python scripts/validate_cache_headers.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

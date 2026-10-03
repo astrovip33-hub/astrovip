@@ -12,3 +12,5 @@ audit
 scripts/validate_optimization.py
 scripts/validate_optimization.mjs
 scripts/validate_cache_headers.py
+scripts/serve_validation.py
+scripts/validate_performance.mjs
