@@ -232,6 +232,63 @@ async function publishEditorConfig(env, input) {
   };
 }
 
+
+function sanitizePageOverrides(input) {
+  const pages = {};
+  const source = input?.pages && typeof input.pages === 'object' ? input.pages : {};
+  for (const [rawPath, rawItems] of Object.entries(source)) {
+    const path = cleanString(rawPath, 240);
+    if (!path.startsWith('/') || path.startsWith('/command-center')) continue;
+    const items = Array.isArray(rawItems) ? rawItems : [];
+    pages[path] = items.slice(0, 250).map(x => ({
+      selector: cleanString(x?.selector, 500),
+      text: cleanMultiline(x?.text, 4000),
+      style: {
+        color: /^#[0-9a-f]{6}$/i.test(String(x?.style?.color||'')) ? x.style.color : '',
+        backgroundColor: /^#[0-9a-f]{6}$/i.test(String(x?.style?.backgroundColor||'')) ? x.style.backgroundColor : '',
+        borderColor: /^#[0-9a-f]{6}$/i.test(String(x?.style?.borderColor||'')) ? x.style.borderColor : '',
+        borderWidth: /^\d{1,2}px$/.test(String(x?.style?.borderWidth||'')) ? x.style.borderWidth : '',
+        borderStyle: x?.style?.borderStyle === 'solid' ? 'solid' : '',
+        borderRadius: /^\d{1,2}px$/.test(String(x?.style?.borderRadius||'')) ? x.style.borderRadius : '',
+        opacity: /^(?:0\.\d+|1(?:\.0+)?)$/.test(String(x?.style?.opacity||'')) ? x.style.opacity : '',
+        fontSize: /^\d{1,2}px$/.test(String(x?.style?.fontSize||'')) ? x.style.fontSize : '',
+        fontWeight: /^(400|700|900)$/.test(String(x?.style?.fontWeight||'')) ? x.style.fontWeight : '',
+        padding: /^\d{1,2}px \d{1,3}px$/.test(String(x?.style?.padding||'')) ? x.style.padding : '',
+        boxShadow: cleanString(x?.style?.boxShadow, 180),
+        display: x?.style?.display === 'none' ? 'none' : '',
+      },
+    })).filter(x => x.selector && x.text);
+  }
+  return { version: 1, pages };
+}
+
+async function readPageOverrides(request, env) {
+  const assetUrl = new URL('/assets/site-page-overrides.json', request.url);
+  const res = await env.ASSETS.fetch(new Request(assetUrl, { method: 'GET' }));
+  if (!res.ok) return { version: 1, pages: {} };
+  return sanitizePageOverrides(await res.json().catch(() => ({ pages: {} })));
+}
+
+async function publishPageOverrides(env, input) {
+  if (!env.GITHUB_ADMIN_TOKEN) return { ok: false, status: 503, error: 'github_admin_token_not_configured' };
+  const config = sanitizePageOverrides(input);
+  const path = 'assets/site-page-overrides.json';
+  const meta = await githubJson(`/repos/${REPO}/contents/${path}?ref=main`, { token: env.GITHUB_ADMIN_TOKEN });
+  if (!meta.ok || !meta.data?.sha) return { ok: false, status: meta.status || 502, error: meta.data?.message || 'page_overrides_metadata_failed' };
+  const put = await githubJson(`/repos/${REPO}/contents/${path}`, {
+    token: env.GITHUB_ADMIN_TOKEN,
+    method: 'PUT',
+    body: {
+      message: 'Update site page from AstroVip Visual Editor',
+      content: base64Std(JSON.stringify(config, null, 2) + '\n'),
+      sha: meta.data.sha,
+      branch: 'main',
+    },
+  });
+  if (!put.ok) return { ok: false, status: put.status || 502, error: put.data?.message || 'page_overrides_publish_failed' };
+  return { ok: true, config, commit: { sha: put.data?.commit?.sha || null, url: put.data?.commit?.html_url || null } };
+}
+
 async function googleAccessToken(env, scopes) {
   if (!env.GOOGLE_SERVICE_ACCOUNT_JSON) throw new Error('google_service_account_not_configured');
   let sa;
@@ -528,6 +585,21 @@ export async function handleCommandCenter(request, env) {
       const body = await request.json().catch(() => null);
       if (!body || typeof body !== 'object') return json({ ok: false, error: 'invalid_json' }, 400);
       const result = await publishEditorConfig(env, body);
+      return json(result, result.ok ? 202 : (result.status || 500));
+    }
+
+    if (url.pathname === '/api/command/page-overrides') {
+      if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
+      return json({ ok: true, config: await readPageOverrides(request, env) });
+    }
+
+    if (url.pathname === '/api/command/page-overrides-publish') {
+      if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST' });
+      const len = Number(request.headers.get('content-length') || 0);
+      if (len > 500000) return json({ ok: false, error: 'payload_too_large' }, 413);
+      const body = await request.json().catch(() => null);
+      if (!body || typeof body !== 'object') return json({ ok: false, error: 'invalid_json' }, 400);
+      const result = await publishPageOverrides(env, body);
       return json(result, result.ok ? 202 : (result.status || 500));
     }
 
