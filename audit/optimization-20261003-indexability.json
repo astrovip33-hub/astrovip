@@ -1,0 +1,818 @@
+{
+  "base_commit": "0287137484087bb27062a4c1624023da58b3306b",
+  "scope": "538 non-legacy-Atlas HTML files; 10000 legacy Atlas pages checked separately by CI",
+  "missing_indexable": 135,
+  "added_to_sitemap": 0,
+  "pages": [
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/arce-solare/",
+      "estimated_words": 679,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/aspecte-natale/",
+      "estimated_words": 920,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/guvernatori-case/",
+      "estimated_words": 1344,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/planete-axe/",
+      "estimated_words": 621,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/planete-in-case/",
+      "estimated_words": 1338,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/planete-in-semne/",
+      "estimated_words": 1219,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/revolutie-solara-case/",
+      "estimated_words": 1467,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/sinastrie-case/",
+      "estimated_words": 985,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/sinastrie/",
+      "estimated_words": 471,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/tranzite-in-semne/",
+      "estimated_words": 1341,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1000/tranzite/",
+      "estimated_words": 683,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1500/configuratii-aspecte/",
+      "estimated_words": 160,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1500/",
+      "estimated_words": 163,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1500/progresii-secundare/",
+      "estimated_words": 1412,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1500/puncte-sensibile/",
+      "estimated_words": 1269,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-1500/tranzite-aspecte-natale/",
+      "estimated_words": 2907,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-2500/aspecte-natale-extinse/",
+      "estimated_words": 1374,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-2500/compozit-case/",
+      "estimated_words": 1352,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-2500/compozit-semne/",
+      "estimated_words": 1234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-2500/",
+      "estimated_words": 212,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-2500/progresii-aspecte/",
+      "estimated_words": 784,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-2500/puncte-sensibile-aspecte/",
+      "estimated_words": 2740,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-2500/revolutie-solara-semne/",
+      "estimated_words": 1355,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-2500/sinastrie-aspecte-extinse/",
+      "estimated_words": 1649,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/academia-astrologie/atlas-500/",
+      "estimated_words": 5297,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Existing Atlas crawl-focus exclusion; directory/template content"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-bivol/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-caine/",
+      "estimated_words": 230,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-cal/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-capra/",
+      "estimated_words": 229,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-cocos/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-dragon/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-iepure/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-maimuta/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-mistret/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-sarpe/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-sobolan/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ascendent-tigru/",
+      "estimated_words": 228,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/bivol-de-apa/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/bivol-de-foc/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/bivol-de-lemn/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/bivol-de-metal/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/bivol-de-pamant/",
+      "estimated_words": 235,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/caine-de-apa/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/caine-de-foc/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/caine-de-lemn/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/caine-de-metal/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/caine-de-pamant/",
+      "estimated_words": 237,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cal-de-apa/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cal-de-foc/",
+      "estimated_words": 259,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Directory/list-dominated content; word count is not evidence of original quality"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cal-de-lemn/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cal-de-metal/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cal-de-pamant/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/capra-de-apa/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/capra-de-foc/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/capra-de-lemn/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/capra-de-metal/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/capra-de-pamant/",
+      "estimated_words": 238,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ciclul-60-ani/",
+      "estimated_words": 571,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Directory/list-dominated content; word count is not evidence of original quality"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cocos-de-apa/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cocos-de-foc/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cocos-de-lemn/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cocos-de-metal/",
+      "estimated_words": 237,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/cocos-de-pamant/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-bivol/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-caine/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-cal/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-capra/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-cocos/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-dragon/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-iepure/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-maimuta/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-mistret/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-sarpe/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-sobolan/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/compatibilitate-tigru/",
+      "estimated_words": 388,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Repeated compatibility template; editorial differentiation needed"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/dragon-de-apa/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/dragon-de-foc/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/dragon-de-lemn/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/dragon-de-metal/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/dragon-de-pamant/",
+      "estimated_words": 237,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/iepure-de-apa/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/iepure-de-foc/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/iepure-de-lemn/",
+      "estimated_words": 235,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/iepure-de-metal/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/iepure-de-pamant/",
+      "estimated_words": 231,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/maimuta-de-apa/",
+      "estimated_words": 232,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/maimuta-de-foc/",
+      "estimated_words": 232,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/maimuta-de-lemn/",
+      "estimated_words": 232,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/maimuta-de-metal/",
+      "estimated_words": 236,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/maimuta-de-pamant/",
+      "estimated_words": 232,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/metoda-theodora-lau/",
+      "estimated_words": 172,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/mistret-de-apa/",
+      "estimated_words": 238,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/mistret-de-foc/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/mistret-de-lemn/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/mistret-de-metal/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/mistret-de-pamant/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-chen-dragon/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-chou-bivol/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-hai-mistret/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-mao-iepure/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-shen-maimuta/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-si-sarpe/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-wei-capra/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-wu-cal/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-xu-caine/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-yin-tigru/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-you-cocos/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/ramura-zi-sobolan/",
+      "estimated_words": 137,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sarpe-de-apa/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sarpe-de-foc/",
+      "estimated_words": 238,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sarpe-de-lemn/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sarpe-de-metal/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sarpe-de-pamant/",
+      "estimated_words": 234,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sobolan-de-apa/",
+      "estimated_words": 237,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sobolan-de-foc/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sobolan-de-lemn/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sobolan-de-metal/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/sobolan-de-pamant/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tigru-de-apa/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tigru-de-foc/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tigru-de-lemn/",
+      "estimated_words": 237,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tigru-de-metal/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tigru-de-pamant/",
+      "estimated_words": 233,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/toate-paginile/",
+      "estimated_words": 859,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Directory/list-dominated content; word count is not evidence of original quality"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-bing/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-ding/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-geng/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-gui/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-ji/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-jia/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-ren/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-wu/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-xin/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    },
+    {
+      "url": "https://astrovip.ro/horoscop-chinezesc/tulpina-yi/",
+      "estimated_words": 154,
+      "decision": "keep_out_of_sitemap",
+      "reason": "Short template; requires substantive editorial expansion"
+    }
+  ]
+}

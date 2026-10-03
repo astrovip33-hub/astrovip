@@ -6,3 +6,11 @@ wrangler.www-redirect.jsonc
 www-redirect-worker.js
 .assetsignore
 README.md
+node_modules
+validation-output
+audit
+scripts/validate_optimization.py
+scripts/validate_optimization.mjs
+scripts/validate_cache_headers.py
+scripts/serve_validation.py
+scripts/validate_performance.mjs
