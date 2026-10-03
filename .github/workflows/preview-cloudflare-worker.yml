@@ -69,5 +69,11 @@ jobs:
           grep -q 'EDITOR VIZUAL ASTROVIP' /tmp/editor.html
           API_STATUS=$(curl -sS -o /tmp/command-api.json -w '%{http_code}' "$BASE/api/command/ping")
           echo "API_STATUS=$API_STATUS"
-          test "$API_STATUS" = "401"
-          echo "Visual editor route OK; command API correctly requires authentication."
+          if [ "$API_STATUS" = "401" ]; then
+            echo "Visual editor route OK; preview command API has auth configured."
+          elif [ "$API_STATUS" = "503" ] && grep -q 'command_center_token_not_configured' /tmp/command-api.json; then
+            echo "Visual editor route OK; preview command secret is intentionally not configured."
+          else
+            cat /tmp/command-api.json
+            exit 1
+          fi
