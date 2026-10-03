@@ -153,6 +153,11 @@ export default {
     if(url.pathname==='/api/stripe-webhook'||url.pathname==='/api/stripe-webhook/')return stripeWebhook(request,env);
     if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WEBHOOK_SECRET_TEST',testMode:true});
     const assetResponse=await env.ASSETS.fetch(request);
+    const ct=assetResponse.headers.get('content-type')||'';
+    if(assetResponse.ok&&ct.includes('text/html')&&!url.pathname.startsWith('/command-center')){
+      const runtime=`<script src="/assets/page-editor-runtime.js?v=1" defer></script>`;
+      return new HTMLRewriter().on('head',{element(el){el.append(runtime,{html:true})}}).transform(assetResponse);
+    }
     if(url.pathname.startsWith('/command-center')){
       const headers=new Headers(assetResponse.headers);
       headers.set('X-Robots-Tag','noindex, nofollow, noarchive');
