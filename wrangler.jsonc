@@ -16,5 +16,10 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none"
   },
+  "vars": {
+    "GSC_SITE_URL": "sc-domain:astrovip.ro",
+    "GA4_PROPERTY_ID": "555065363",
+    "DRIVE_BACKUP_FOLDER_ID": "1XajM-Z4H4Hyc-LM2pbXh6ZYeFjeo7Q5B"
+  },
   "keep_vars": true
 }
