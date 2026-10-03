@@ -243,6 +243,15 @@ function sanitizePageOverrides(input) {
     pages[path] = items.slice(0, 250).map(x => ({
       selector: cleanString(x?.selector, 500),
       text: cleanMultiline(x?.text, 4000),
+      style: {
+        color: /^#[0-9a-f]{6}$/i.test(String(x?.style?.color||'')) ? x.style.color : '',
+        backgroundColor: /^#[0-9a-f]{6}$/i.test(String(x?.style?.backgroundColor||'')) ? x.style.backgroundColor : '',
+        borderColor: /^#[0-9a-f]{6}$/i.test(String(x?.style?.borderColor||'')) ? x.style.borderColor : '',
+        borderWidth: /^\d{1,2}px$/.test(String(x?.style?.borderWidth||'')) ? x.style.borderWidth : '',
+        borderStyle: x?.style?.borderStyle === 'solid' ? 'solid' : '',
+        borderRadius: /^\d{1,2}px$/.test(String(x?.style?.borderRadius||'')) ? x.style.borderRadius : '',
+        opacity: /^(?:0\.\d+|1(?:\.0+)?)$/.test(String(x?.style?.opacity||'')) ? x.style.opacity : '',
+      },
     })).filter(x => x.selector && x.text);
   }
   return { version: 1, pages };
