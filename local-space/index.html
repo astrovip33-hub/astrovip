@@ -8,9 +8,9 @@
 <meta name="description" content="Calculează Local Space AstroVip: azimuturile și altitudinile planetelor la naștere, busola planetară și varianta relocată pentru alt loc de referință.">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <link rel="canonical" href="https://astrovip.ro/local-space/">
-<link rel="stylesheet" href="../assets/local-space.css">
+<link rel="stylesheet" href="../assets/local-space.css"><link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3yn5xNVZBMR0dN5J7kq5A5n5uKs6I=" crossorigin="">
 <script defer src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script>
-<script defer src="../assets/local-space.js"></script>
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script defer src="../assets/local-space.js?v=20261003-map1"></script>
 <link rel="stylesheet" href="/assets/internal-luxury-core-preview-20260924.css?v=20260924-lux1"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","@id":"https://astrovip.ro/local-space/#app","name":"Calculator Local Space AstroVip","url":"https://astrovip.ro/local-space/","applicationCategory":"LifestyleApplication","operatingSystem":"Any","isPartOf":{"@id":"https://astrovip.ro/#website"},"publisher":{"@id":"https://astrovip.ro/#organization"},"offers":{"@type":"Offer","price":"0","priceCurrency":"RON"},"description":"Calculator Local Space cu azimuturile și altitudinile planetelor, busolă planetară și opțiune de relocare."}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://astrovip.ro/local-space/#webpage","name":"Local Space AstroVip – busolă planetară și relocare","url":"https://astrovip.ro/local-space/","description":"Ghid și calculator Local Space pentru azimuturi planetare, direcții, anti-direcții și comparații geografice.","inLanguage":"ro-RO","isPartOf":{"@id":"https://astrovip.ro/#website"},"author":{"@id":"https://astrovip.ro/despre-astrovip/#catalin-smaranda"},"dateModified":"2026-09-30","mainEntity":{"@id":"https://astrovip.ro/local-space/#app"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Local Space în astrologie – direcții planetare și busolă geografică","mainEntityOfPage":{"@id":"https://astrovip.ro/local-space/#webpage"},"inLanguage":"ro-RO","author":{"@id":"https://astrovip.ro/despre-astrovip/#catalin-smaranda"},"publisher":{"@id":"https://astrovip.ro/#organization"},"datePublished":"2026-09-30","dateModified":"2026-09-30","image":"https://astrovip.ro/assets/1000043152.png"}</script>
@@ -69,7 +69,15 @@
     </div>
   </div>
 </section>
-<section class="ls-results" id="lsResults" hidden>
+<section class="ls-results ls-map-section" id="lsMapSection" hidden>
+  <div class="ls-wrap">
+    <div class="ls-title"><div class="ls-kicker">Hartă Local Space interactivă</div><h2>Liniile planetelor pe hartă</h2><p>Fiecare linie pornește din locul de referință pe azimutul astronomic calculat și continuă pe anti-azimut. Activează sau dezactivează planetele pentru o hartă mai clară.</p></div>
+    <div class="ls-map-layout">
+      <aside class="ls-map-controls"><h3>Planete</h3><div id="lsPlanetToggles" class="ls-planet-toggles"></div><div class="ls-map-note"><strong>Hartă:</strong> OpenStreetMap · fără Google Maps API.<br><strong>Geometrie:</strong> trasee geodezice calculate din azimuturile Local Space.</div></aside>
+      <div class="ls-map-shell"><div id="lsMap" role="application" aria-label="Hartă Local Space cu liniile planetelor"></div><div class="ls-map-badge">ASTROVIP · LOCAL SPACE</div></div>
+    </div>
+  </div>
+</section><section class="ls-results" id="lsResults" hidden>
   <div class="ls-wrap">
     <div class="ls-title"><div class="ls-kicker">Rezultat Local Space</div><h2>Azimuturi planetare</h2><p id="lsMeta"></p></div>
     <div class="ls-table-wrap"><table><thead><tr><th>Planetă</th><th>Azimut</th><th>Direcție</th><th>Altitudine</th><th>Poziție</th></tr></thead><tbody id="lsTable"></tbody></table></div>
