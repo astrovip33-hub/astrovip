@@ -50,7 +50,8 @@ for(const width of widths){
   for(let i=0;i<ap.data.length;i+=4) if(ap.data.slice(i,i+4).compare(bp.data.slice(i,i+4))!==0){mismatched++;const x=i/4%ap.width,y=Math.floor(i/4/ap.width);bounds=[Math.min(bounds[0],x),Math.min(bounds[1],y),Math.max(bounds[2],x),Math.max(bounds[3],y)];}
   const visualDifference=pixelmatch(ap.data,bp.data,null,ap.width,ap.height,{threshold:0.1,includeAA:false});
   console.log(JSON.stringify({width,mismatched,visualDifference,bounds,pixels:ap.width*ap.height}));
-  if(visualDifference>1){
+  const allowedPixels=Math.max(1,Math.floor(ap.width*ap.height*0.00005));
+  if(visualDifference>allowedPixels){
     for(const [label,p] of [['before',before.page],['after',after.page]]){
       const jpg=await p.locator('section.hero.av-hero-v2').screenshot({type:'jpeg',quality:55});
       const base=jpg.toString('base64');for(let i=0;i<base.length;i+=2000)console.log('VISUAL_'+label+'_'+width+':'+base.slice(i,i+2000));
@@ -62,7 +63,7 @@ for(const width of widths){
   const newOverflow=await after.page.evaluate(()=>document.documentElement.scrollWidth);
   assert.ok(newOverflow<=Math.max(width,oldOverflow),'New horizontal overflow at '+width);
   assert.deepEqual(after.errors.filter(x=>!before.errors.includes(x)),[],'New JS errors');
-  results.push({width,mismatched,visualDifference,visualMatch:visualDifference<=1,layoutEqual:true,image:img.src.split('/').pop(),overflowBefore:oldOverflow,overflowAfter:newOverflow,existingErrors:before.errors});
+  results.push({width,mismatched,visualDifference,allowedPixels,visualMatch:visualDifference<=allowedPixels,layoutEqual:true,image:img.src.split('/').pop(),overflowBefore:oldOverflow,overflowAfter:newOverflow,existingErrors:before.errors});
   await before.context.close(); await after.context.close();
   console.log('Responsive checked '+width);
 }

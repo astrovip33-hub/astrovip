@@ -63,7 +63,18 @@ for path in ROOT.rglob("*.html"):
         if page.h1!=1: errors.append(f"H1 count: {rel}")
         if not page.title.strip() or not page.description: errors.append(f"Metadata: {rel}")
     for raw in re.findall(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>([\s\S]*?)</script>',html,re.I):
-        try: json.loads(raw); blocks+=1
+        try:
+            node=json.loads(raw); blocks+=1
+            def check_semantics(value):
+                if isinstance(value,list):
+                    for item in value: check_semantics(item)
+                elif isinstance(value,dict):
+                    types=value.get("@type",[])
+                    if isinstance(types,str): types=[types]
+                    if "availableLanguage" in value and "ProfessionalService" in types:
+                        errors.append(f"availableLanguage belongs on ContactPoint: {rel}")
+                    for item in value.values(): check_semantics(item)
+            check_semantics(node)
         except Exception as exc: errors.append(f"JSON-LD {rel}: {exc}")
     if "astrovip33@gmail.com" in html: errors.append(f"Legacy public email: {rel}")
 for url in locations:

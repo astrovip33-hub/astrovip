@@ -43,6 +43,7 @@ jobs:
           python -m http.server 8766 --directory . > /tmp/astrovip-candidate.log 2>&1 &
           node scripts/validate_optimization.mjs
       - name: Verify local Cloudflare cache headers
+        if: ${{ !cancelled() }}
         working-directory: candidate
         env:
           CLOUDFLARE_SEND_METRICS: 'false'
