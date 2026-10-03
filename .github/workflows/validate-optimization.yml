@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: candidate
+          fetch-depth: 2
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.sha }}
@@ -30,7 +31,11 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Prepare and audit
         working-directory: candidate
-        run: python scripts/validate_optimization.py
+        run: |
+          python scripts/quality_gate_new_pages.py
+          python scripts/audit_seo_graph.py
+          python scripts/enrich_structured_data.py
+          python scripts/validate_optimization.py
       - name: Compare responsive rendering and exercise booking with mocked services
         working-directory: candidate
         run: |

@@ -60,6 +60,7 @@ for path in ROOT.rglob("*.html"):
     if url in locations:
         if page.canonical != [url]: errors.append(f"Canonical: {rel}")
         if "noindex" in page.robots.lower(): errors.append(f"Noindex in sitemap: {rel}")
+        if page.h1!=1: errors.append(f"H1 count: {rel}")
         if not page.title.strip() or not page.description: errors.append(f"Metadata: {rel}")
     for raw in re.findall(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>([\s\S]*?)</script>',html,re.I):
         try: json.loads(raw); blocks+=1

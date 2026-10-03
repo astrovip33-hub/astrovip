@@ -47,4 +47,6 @@ Removed assets:
 
 Cloudflare header patterns use a top-level placeholder and separate versioned/vendor folders to avoid conflicting max-age values. See https://developers.cloudflare.com/workers/static-assets/headers/ .
 
-Visual comparison ignores anti-aliasing with pixelmatch threshold 0.1; all Hero computed layouts must match exactly. Initial raw-pixel comparison found only 48 edge pixels at 360 px and zero at the other nine sizes. No image asset changes were used to hide differences.
+Visual comparison ignores anti-aliasing with pixelmatch threshold 0.1 and allows at most one residual pixel per screenshot; all Hero computed layouts must match exactly. Initial raw-pixel comparison found only 48 edge pixels at 360 px and zero at the other nine sizes. No image asset changes were used to hide differences.
+
+Exact UTF-8 sizes: homepage 238141 → 73951 bytes; inline CSS 172824 → 16035 bytes; style blocks 43 → 6. These are source-size reductions, not measured Core Web Vitals improvements.
