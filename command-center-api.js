@@ -370,6 +370,117 @@ async function backupRepo(env) {
   return new Response(res.body, { status: 200, headers: h });
 }
 
+
+function integrationStatus(env) {
+  const googleServiceAccount = Boolean(env.GOOGLE_SERVICE_ACCOUNT_JSON);
+  const googleOauth = Boolean(
+    env.GOOGLE_OAUTH_CLIENT_ID &&
+    env.GOOGLE_OAUTH_CLIENT_SECRET &&
+    env.GOOGLE_OAUTH_REFRESH_TOKEN
+  );
+  return {
+    githubDeploy: Boolean(env.GITHUB_ADMIN_TOKEN),
+    cloudflareRuntime: Boolean(env.ASSETS),
+    gsc: googleServiceAccount,
+    ga4: Boolean(googleServiceAccount && env.GA4_PROPERTY_ID),
+    stripe: Boolean(env.STRIPE_WEBHOOK_SECRET || env.STRIPE_SECRET_KEY),
+    meta: Boolean(env.META_CAPI_ACCESS_TOKEN),
+    googleAds: Boolean(
+      googleOauth &&
+      env.GOOGLE_ADS_DEVELOPER_TOKEN &&
+      env.GOOGLE_ADS_CUSTOMER_ID
+    ),
+    googleBusiness: Boolean(
+      googleOauth &&
+      env.GOOGLE_BUSINESS_ACCOUNT_ID &&
+      env.GOOGLE_BUSINESS_LOCATION_ID
+    ),
+    metricool: Boolean(env.METRICOOL_API_TOKEN),
+    driveAutoBackup: Boolean(googleServiceAccount && env.DRIVE_BACKUP_FOLDER_ID),
+  };
+}
+
+function integrationDetails(env) {
+  const status = integrationStatus(env);
+  const missing = (...names) => names.filter(name => !String(env[name] || '').trim());
+  return {
+    githubDeploy: {
+      connected: status.githubDeploy,
+      required: ['GITHUB_ADMIN_TOKEN'],
+      missing: missing('GITHUB_ADMIN_TOKEN'),
+    },
+    cloudflareRuntime: {
+      connected: status.cloudflareRuntime,
+      required: [],
+      missing: [],
+    },
+    gsc: {
+      connected: status.gsc,
+      required: ['GOOGLE_SERVICE_ACCOUNT_JSON'],
+      missing: missing('GOOGLE_SERVICE_ACCOUNT_JSON'),
+    },
+    ga4: {
+      connected: status.ga4,
+      required: ['GOOGLE_SERVICE_ACCOUNT_JSON', 'GA4_PROPERTY_ID'],
+      missing: missing('GOOGLE_SERVICE_ACCOUNT_JSON', 'GA4_PROPERTY_ID'),
+    },
+    stripe: {
+      connected: status.stripe,
+      required: ['STRIPE_WEBHOOK_SECRET or STRIPE_SECRET_KEY'],
+      missing: status.stripe ? [] : ['STRIPE_WEBHOOK_SECRET or STRIPE_SECRET_KEY'],
+    },
+    meta: {
+      connected: status.meta,
+      required: ['META_CAPI_ACCESS_TOKEN'],
+      missing: missing('META_CAPI_ACCESS_TOKEN'),
+    },
+    googleAds: {
+      connected: status.googleAds,
+      required: [
+        'GOOGLE_OAUTH_CLIENT_ID',
+        'GOOGLE_OAUTH_CLIENT_SECRET',
+        'GOOGLE_OAUTH_REFRESH_TOKEN',
+        'GOOGLE_ADS_DEVELOPER_TOKEN',
+        'GOOGLE_ADS_CUSTOMER_ID',
+      ],
+      missing: missing(
+        'GOOGLE_OAUTH_CLIENT_ID',
+        'GOOGLE_OAUTH_CLIENT_SECRET',
+        'GOOGLE_OAUTH_REFRESH_TOKEN',
+        'GOOGLE_ADS_DEVELOPER_TOKEN',
+        'GOOGLE_ADS_CUSTOMER_ID',
+      ),
+    },
+    googleBusiness: {
+      connected: status.googleBusiness,
+      required: [
+        'GOOGLE_OAUTH_CLIENT_ID',
+        'GOOGLE_OAUTH_CLIENT_SECRET',
+        'GOOGLE_OAUTH_REFRESH_TOKEN',
+        'GOOGLE_BUSINESS_ACCOUNT_ID',
+        'GOOGLE_BUSINESS_LOCATION_ID',
+      ],
+      missing: missing(
+        'GOOGLE_OAUTH_CLIENT_ID',
+        'GOOGLE_OAUTH_CLIENT_SECRET',
+        'GOOGLE_OAUTH_REFRESH_TOKEN',
+        'GOOGLE_BUSINESS_ACCOUNT_ID',
+        'GOOGLE_BUSINESS_LOCATION_ID',
+      ),
+    },
+    metricool: {
+      connected: status.metricool,
+      required: ['METRICOOL_API_TOKEN'],
+      missing: missing('METRICOOL_API_TOKEN'),
+    },
+    driveAutoBackup: {
+      connected: status.driveAutoBackup,
+      required: ['GOOGLE_SERVICE_ACCOUNT_JSON', 'DRIVE_BACKUP_FOLDER_ID'],
+      missing: missing('GOOGLE_SERVICE_ACCOUNT_JSON', 'DRIVE_BACKUP_FOLDER_ID'),
+    },
+  };
+}
+
 export async function handleCommandCenter(request, env) {
   const url = new URL(request.url);
   if (!url.pathname.startsWith('/api/command/')) return null;
@@ -387,21 +498,22 @@ export async function handleCommandCenter(request, env) {
         ok: true,
         version: 3,
         serverTime: new Date().toISOString(),
-        integrations: {
-          githubDeploy: Boolean(env.GITHUB_ADMIN_TOKEN),
-          googleServiceAccount: Boolean(env.GOOGLE_SERVICE_ACCOUNT_JSON),
-          gsc: Boolean(env.GOOGLE_SERVICE_ACCOUNT_JSON),
-          ga4: Boolean(env.GOOGLE_SERVICE_ACCOUNT_JSON && env.GA4_PROPERTY_ID),
-          metricool: false,
-          googleAds: false,
-          driveAutoBackup: false,
-        },
+        integrations: integrationStatus(env),
+        integrationDetails: integrationDetails(env),
         github,
       });
     }
 
     if (url.pathname === '/api/command/github') {
       return json({ ok: true, ...(await githubStatus(env)) });
+    }
+
+    if (url.pathname === '/api/command/integrations') {
+      return json({
+        ok: true,
+        integrations: integrationStatus(env),
+        details: integrationDetails(env),
+      });
     }
 
     if (url.pathname === '/api/command/editor-config') {
