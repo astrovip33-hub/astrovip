@@ -42,7 +42,7 @@
     ]
   },
   "sections": {
-    "planets": false,
+    "planets": true,
     "freeQuestion": true,
     "opportunities": true
   }
