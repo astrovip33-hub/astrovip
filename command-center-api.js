@@ -251,6 +251,11 @@ function sanitizePageOverrides(input) {
         borderStyle: x?.style?.borderStyle === 'solid' ? 'solid' : '',
         borderRadius: /^\d{1,2}px$/.test(String(x?.style?.borderRadius||'')) ? x.style.borderRadius : '',
         opacity: /^(?:0\.\d+|1(?:\.0+)?)$/.test(String(x?.style?.opacity||'')) ? x.style.opacity : '',
+        fontSize: /^\d{1,2}px$/.test(String(x?.style?.fontSize||'')) ? x.style.fontSize : '',
+        fontWeight: /^(400|700|900)$/.test(String(x?.style?.fontWeight||'')) ? x.style.fontWeight : '',
+        padding: /^\d{1,2}px \d{1,3}px$/.test(String(x?.style?.padding||'')) ? x.style.padding : '',
+        boxShadow: cleanString(x?.style?.boxShadow, 180),
+        display: x?.style?.display === 'none' ? 'none' : '',
       },
     })).filter(x => x.selector && x.text);
   }
