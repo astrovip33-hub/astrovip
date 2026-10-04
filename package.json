@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:swiss": "node scripts/test-swiss-koch.mjs"
+  },
+  "devDependencies": {
+    "@kuntay/swisseph": "0.2.2"
+  }
+}
