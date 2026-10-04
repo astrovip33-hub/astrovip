@@ -2,9 +2,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:swiss": "node scripts/test-swiss-koch.mjs"
+    "test:swiss": "node scripts/test-swiss-koch.mjs",
+    "build:swiss": "esbuild assets/astro/swiss-browser-entry.js --bundle --format=esm --platform=browser --target=es2020 --outfile=assets/vendor/astrovip-swiss-koch.js"
   },
   "devDependencies": {
-    "@kuntay/swisseph": "0.2.2"
+    "@kuntay/swisseph": "0.2.2",
+    "esbuild": "0.25.10"
   }
 }
