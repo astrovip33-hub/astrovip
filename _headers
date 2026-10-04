@@ -62,3 +62,10 @@
 
 /academia-astrologie/atlas-10000/*
   X-Robots-Tag: noindex, follow
+
+# Preview copies must not compete with the canonical production domain.
+https://astrovip-preview.astrovip33.workers.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://astrovip.astrovip33.workers.dev/*
+  X-Robots-Tag: noindex, nofollow
