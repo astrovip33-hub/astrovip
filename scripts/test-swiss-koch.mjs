@@ -17,8 +17,8 @@ try {
   assert.equal(houses.cusps.length,12);
   assert.ok(houses.axes.asc>=0&&houses.axes.asc<360);
   assert.ok(houses.axes.mc>=0&&houses.axes.mc<360);
-  assert.ok(Math.abs((((houses.axes.dsc-houses.axes.asc)+540)%360)-180)<1e-12);
-  assert.ok(Math.abs((((houses.axes.ic-houses.axes.mc)+540)%360)-180)<1e-12);
+  assert.ok(Math.abs((((houses.axes.dsc-houses.axes.asc)+360)%360)-180)<1e-12);
+  assert.ok(Math.abs((((houses.axes.ic-houses.axes.mc)+360)%360)-180)<1e-12);
 
   console.log(JSON.stringify({ok:true,jd,sunEphemeris:sun.ephemeris,asc:houses.axes.asc,mc:houses.axes.mc,cusps:houses.cusps},null,2));
 } finally {
