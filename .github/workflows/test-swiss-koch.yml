@@ -17,3 +17,5 @@ jobs:
           node-version: '20'
       - run: npm install --ignore-scripts
       - run: npm run test:swiss
+      - run: npm run build:swiss
+      - run: test -s assets/vendor/astrovip-swiss-koch.js
