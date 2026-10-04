@@ -27,6 +27,9 @@ jobs:
           set -euo pipefail
           python3 scripts/quality_gate_new_pages.py
 
+      - name: Validate SEO links, metadata and canonical URLs
+        run: python3 scripts/audit_seo_graph.py
+
       - name: Enrich structured data at deploy time
         shell: bash
         run: |
