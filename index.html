@@ -1482,6 +1482,95 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-lux-labels span{display:flex;ali
 }
 </style>
 <script defer src="/assets/site-editor-runtime.js?v=1"></script>
+
+<style id="av-google-review-ticker-preview-20261004">
+body .av-google-review-rail{
+  position:relative;
+  z-index:3;
+  margin:0 10px 2px;
+  overflow:hidden;
+  border:1px solid rgba(245,208,92,.72);
+  border-radius:999px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.08),transparent 34%),
+    radial-gradient(circle at 10% 50%,rgba(255,205,70,.12),transparent 24%),
+    linear-gradient(90deg,#070907 0%,#0b1a0d 45%,#070907 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 0 0 1px rgba(57,255,20,.12),
+    0 0 16px rgba(238,193,61,.11),
+    0 0 18px rgba(57,255,20,.08);
+}
+body .av-google-review-rail::before,
+body .av-google-review-rail::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  z-index:4;
+  width:48px;
+  pointer-events:none;
+}
+body .av-google-review-rail::before{left:0;background:linear-gradient(90deg,#071008,transparent)}
+body .av-google-review-rail::after{right:0;background:linear-gradient(270deg,#071008,transparent)}
+body .av-google-review-rail__track{
+  display:flex;
+  width:max-content;
+  will-change:transform;
+  animation:avGoogleReviewsRail 24s linear infinite;
+}
+body .av-google-review-rail__sequence{
+  display:flex;
+  flex:none;
+  align-items:center;
+  gap:24px;
+  padding:8px 26px 8px 0;
+}
+body .av-google-review-rail__item{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+  font:900 12px/1 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+body .av-google-review-rail__google{
+  color:#f4f7f4;
+  letter-spacing:.08em;
+}
+body .av-google-review-rail__stars{
+  color:#ffd84d;
+  letter-spacing:.11em;
+  text-shadow:0 0 8px rgba(255,210,70,.30);
+}
+body .av-google-review-rail__score{
+  color:#8dffad;
+  text-shadow:0 0 10px rgba(57,255,20,.22);
+}
+body .av-google-review-rail__count{color:#fff1b0}
+body .av-google-review-rail__cta{
+  color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid rgba(141,255,173,.52);
+  padding-bottom:1px;
+}
+body .av-google-review-rail__cta:hover,
+body .av-google-review-rail__cta:focus-visible{color:#8dffad;outline:none}
+body .av-google-review-rail__dot{color:#d5aa36;opacity:.9}
+@keyframes avGoogleReviewsRail{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(hover:hover){body .av-google-review-rail:hover .av-google-review-rail__track{animation-play-state:paused}}
+@media(max-width:820px){
+  body .av-google-review-rail{margin:0 8px 1px}
+  body .av-google-review-rail__sequence{gap:18px;padding:7px 20px 7px 0}
+  body .av-google-review-rail__item{font-size:11px;letter-spacing:.04em}
+}
+@media(prefers-reduced-motion:reduce){
+  body .av-google-review-rail__track{animation:none;transform:none}
+  body .av-google-review-rail{overflow-x:auto}
+  body .av-google-review-rail__sequence[aria-hidden="true"]{display:none}
+}
+</style>
 </head>
 <body class="av-motion-live"><div id="av-consent" class="av-consent" role="dialog" aria-modal="true" aria-labelledby="av-consent-title"><div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div></div><a class="skip-link" href="#top">Sari la conținut</a>
 <header class="top">
@@ -1742,6 +1831,29 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-lux-labels span{display:flex;ali
   </div><div id="av-hero-planets" class="av-planet-hero-strip" aria-label="Pozițiile astrologice de azi">
   <div class="av-planet-hero-strip__inner">
     <div class="av-planet-hero-strip__context"><a href="/pozitii-planete-live/">Planetele azi ~ ora locală <time id="av-bucharest-clock">--:--</time></a></div>
+
+    <div class="av-google-review-rail" aria-label="Recenzii Google AstroVip">
+      <div class="av-google-review-rail__track">
+        <div class="av-google-review-rail__sequence">
+          <span class="av-google-review-rail__item av-google-review-rail__google">GOOGLE REVIEWS</span>
+          <span class="av-google-review-rail__item av-google-review-rail__stars" aria-label="5 stele">★★★★★</span>
+          <span class="av-google-review-rail__item av-google-review-rail__score">5,0 / 5</span>
+          <span class="av-google-review-rail__item av-google-review-rail__dot" aria-hidden="true">◆</span>
+          <span class="av-google-review-rail__item av-google-review-rail__count">25 RECENZII GOOGLE</span>
+          <span class="av-google-review-rail__item av-google-review-rail__dot" aria-hidden="true">◆</span>
+          <a class="av-google-review-rail__item av-google-review-rail__cta" href="https://search.google.com/local/reviews?placeid=ChIJb8zjk-7_sUARdcftjopVq9g" target="_blank" rel="noopener noreferrer">VEZI RECENZIILE ASTROVIP ↗</a>
+        </div>
+        <div class="av-google-review-rail__sequence" aria-hidden="true">
+          <span class="av-google-review-rail__item av-google-review-rail__google">GOOGLE REVIEWS</span>
+          <span class="av-google-review-rail__item av-google-review-rail__stars">★★★★★</span>
+          <span class="av-google-review-rail__item av-google-review-rail__score">5,0 / 5</span>
+          <span class="av-google-review-rail__item av-google-review-rail__dot">◆</span>
+          <span class="av-google-review-rail__item av-google-review-rail__count">25 RECENZII GOOGLE</span>
+          <span class="av-google-review-rail__item av-google-review-rail__dot">◆</span>
+          <span class="av-google-review-rail__item av-google-review-rail__cta">VEZI RECENZIILE ASTROVIP ↗</span>
+        </div>
+      </div>
+    </div>
 
     <div class="av-ticker-card av-ticker-card--planets" aria-label="Card premium cu pozițiile planetelor">
       <div class="av-ticker-card__head"><span class="av-ticker-card__diamond">◆</span><strong>PLANETE</strong><span>MIȘCARE ACTUALĂ</span></div>
