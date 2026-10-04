@@ -1586,12 +1586,29 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards span{
 }
 @media(max-width:820px){
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards{
-    top:3.3%;
+    top:5.1%;
     left:3%;
     width:94%;
     gap:4px;
-    padding:6px 5px;
+    padding:7px 5px 9px;
     border-radius:10px;
+    background:#020302;
+    box-shadow:
+      0 -1px 0 rgba(218,178,65,.42),
+      0 1px 0 rgba(218,178,65,.28),
+      0 0 16px rgba(0,0,0,.88);
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards::before{
+    left:-6px;
+    right:-6px;
+    top:-9px;
+    bottom:-22px;
+    border-radius:10px;
+    background:#020302;
+    box-shadow:
+      0 -1px 0 rgba(218,178,65,.24),
+      0 1px 0 rgba(218,178,65,.20),
+      0 0 18px rgba(0,0,0,.92);
   }
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards span{
     min-height:28px;
@@ -1603,9 +1620,13 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards span{
 }
 @media(max-width:380px){
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards{
-    left:3%;
-    width:94%;
+    top:5.3%;
+    left:2.5%;
+    width:95%;
     gap:3px;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards::before{
+    bottom:-20px;
   }
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards span{
     min-height:26px;
