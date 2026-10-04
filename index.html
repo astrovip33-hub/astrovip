@@ -1567,7 +1567,28 @@ body:not(.guide-page) .av-lang-reviews__count{
     0 0 11px rgba(57,255,20,.78),
     0 0 18px rgba(57,255,20,.42);
 }
-body:not(.guide-page) .av-lang-reviews__dot{color:#ffea00;font-size:8px;text-shadow:0 0 6px rgba(255,234,0,.92)}
+body:not(.guide-page) .av-lang-reviews__dot{
+  position:relative;
+  color:#ffd84a;
+  font-size:13px;
+  line-height:1;
+  transform:translateY(-.5px);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.45),
+    0 0 6px rgba(255,216,74,1),
+    0 0 12px rgba(255,184,0,.62),
+    0 0 18px rgba(212,175,55,.34);
+  filter:drop-shadow(0 0 2px rgba(255,239,166,.70));
+}
+body:not(.guide-page) .av-lang-reviews__dot::after{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border:1px solid rgba(255,215,90,.22);
+  border-radius:50%;
+  box-shadow:0 0 8px rgba(212,175,55,.18);
+  pointer-events:none;
+}
 body:not(.guide-page) .av-lang-reviews__cta{
   color:#ffea00;
   text-decoration:none;
@@ -1674,6 +1695,7 @@ body .hero #av-hero-planets .av-ticker-card--axes .planet-glyph{color:#ffe083!im
   body:not(.guide-page) .av-lang-reviews__stars{font-size:19px}
   body:not(.guide-page) .av-lang-reviews__score{font-size:14px}
   body:not(.guide-page) .av-lang-reviews__count{font-size:13px}
+  body:not(.guide-page) .av-lang-reviews__dot{font-size:11px}
   body .hero .av-lower-planets,
   body .hero #av-hero-planets .av-ticker-card--axes{height:32px!important;min-height:32px!important}
   body .hero .av-lower-planets__ticker,
