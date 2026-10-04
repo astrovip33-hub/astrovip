@@ -21,6 +21,15 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Build Swiss Ephemeris Koch browser bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --ignore-scripts
+          npm run build:swiss
+          test -s assets/vendor/astrovip-swiss-koch.js
+          test -s assets/vendor/swisseph.wasm
+
       - name: Enforce AstroVip SEO quality gate
         shell: bash
         run: |
