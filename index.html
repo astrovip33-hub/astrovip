@@ -1484,239 +1484,154 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-lux-labels span{display:flex;ali
 <script defer src="/assets/site-editor-runtime.js?v=1"></script>
 
 <style id="av-google-review-ticker-preview-20261004">
-/* Preview: lower Hero strip contains only Google reviews + axes. */
-body .hero #av-hero-planets{
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-body .hero #av-hero-planets .av-planet-hero-strip__inner{
-  padding:6px 0 8px!important;
-}
+/* PREVIEW 2026-10-04 — Google Reviews moved to the upper Hero ribbon; planets moved down. */
 
-/* Google Reviews — stronger premium, highly visible background. */
-body .av-google-review-rail{
+/* Upper ribbon: Google Reviews, in the exact slim slot formerly used by planets. */
+body:not(.guide-page) .av-lang-reviews{
   position:relative;
-  z-index:3;
-  margin:0 10px 7px;
+  width:100%;
+  max-width:100%;
+  height:34px;
   overflow:hidden;
-  min-height:42px;
-  border:2px solid rgba(246,207,83,.96);
-  border-radius:12px;
+  box-sizing:border-box;
+  border-top:2px solid rgba(241,203,88,.96);
+  border-bottom:2px solid rgba(57,255,20,.76);
   background:
-    radial-gradient(circle at 12% 50%,rgba(255,214,82,.22),transparent 24%),
-    radial-gradient(circle at 50% 130%,rgba(57,255,20,.22),transparent 42%),
-    radial-gradient(circle at 88% 35%,rgba(255,214,82,.18),transparent 26%),
-    linear-gradient(100deg,#030503 0%,#0a2410 24%,#123718 50%,#0a2410 76%,#030503 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.20),
-    inset 0 -1px 0 rgba(57,255,20,.30),
-    inset 0 0 24px rgba(57,255,20,.08),
-    0 0 0 1px rgba(57,255,20,.18),
-    0 8px 22px rgba(0,0,0,.42),
-    0 0 18px rgba(246,207,83,.22),
-    0 0 30px rgba(57,255,20,.12);
+    radial-gradient(circle at 18% 50%,rgba(255,216,83,.16),transparent 22%),
+    radial-gradient(circle at 82% 50%,rgba(57,255,20,.14),transparent 22%),
+    linear-gradient(180deg,#07130a 0%,#06150a 48%,#010402 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(245,208,92,.18),0 0 14px rgba(57,255,20,.13);
 }
-body .av-google-review-rail::before{
-  content:"";
-  position:absolute;
-  z-index:4;
-  left:4%;
-  right:4%;
-  top:0;
-  height:2px;
-  pointer-events:none;
-  background:linear-gradient(90deg,transparent,#39ff14 20%,#fff0a0 50%,#39ff14 80%,transparent);
-  filter:drop-shadow(0 0 6px rgba(57,255,20,.78));
+body:not(.guide-page) .av-lang-reviews::before{
+  content:"";position:absolute;z-index:3;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,#39ff14 20%,#ffe083 50%,#39ff14 80%,transparent);
+  filter:drop-shadow(0 0 4px rgba(57,255,20,.8));pointer-events:none;
 }
-body .av-google-review-rail::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-  background:
-    linear-gradient(115deg,transparent 0 24%,rgba(255,255,255,.08) 29%,transparent 34% 69%,rgba(255,255,255,.06) 74%,transparent 80%),
-    radial-gradient(circle at 18% 50%,rgba(255,246,178,.72) 0 1px,rgba(255,205,54,.35) 2px,transparent 7px),
-    radial-gradient(circle at 82% 50%,rgba(157,255,184,.68) 0 1px,rgba(57,255,20,.28) 2px,transparent 7px);
-  opacity:.72;
-}
-body .av-google-review-rail__track{
-  position:relative;
-  z-index:2;
-  display:flex;
-  width:max-content;
-  will-change:transform;
+body:not(.guide-page) .av-lang-reviews__track{
+  display:flex;width:max-content;height:30px;will-change:transform;
   animation:avGoogleReviewsRail 24s linear infinite;
 }
-body .av-google-review-rail__sequence{
-  display:flex;
-  flex:none;
-  align-items:center;
-  gap:24px;
-  min-height:38px;
-  padding:0 28px 0 0;
+body:not(.guide-page) .av-lang-reviews__sequence{
+  display:flex;flex:none;align-items:center;gap:18px;height:30px;padding:0 22px 0 0;
 }
-body .av-google-review-rail__item{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  white-space:nowrap;
-  font:950 12px/1 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
-  letter-spacing:.06em;
-  text-transform:uppercase;
+body:not(.guide-page) .av-lang-reviews__sequence>*{
+  display:inline-flex;align-items:center;white-space:nowrap;
+  font:900 11px/30px Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  letter-spacing:.055em;text-transform:uppercase;
 }
-body .av-google-review-rail__google{
-  color:#fff;
-  letter-spacing:.10em;
-  text-shadow:0 0 8px rgba(255,255,255,.22);
-}
-body .av-google-review-rail__stars{
-  color:#ffe26b;
-  letter-spacing:.12em;
-  text-shadow:0 0 6px rgba(255,226,107,.62),0 0 13px rgba(255,184,0,.30);
-}
-body .av-google-review-rail__score{
-  color:#9dffb7;
-  text-shadow:0 0 9px rgba(57,255,20,.42);
-}
-body .av-google-review-rail__count{
-  color:#fff2ad;
-  text-shadow:0 0 7px rgba(246,207,83,.30);
-}
-body .av-google-review-rail__cta{
-  color:#fff;
-  text-decoration:none;
-  padding:5px 10px;
-  border:1px solid rgba(157,255,183,.50);
-  border-radius:999px;
-  background:rgba(3,13,6,.56);
-  box-shadow:inset 0 0 0 1px rgba(246,207,83,.10);
-}
-body .av-google-review-rail__cta:hover,
-body .av-google-review-rail__cta:focus-visible{
-  color:#9dffb7;
-  border-color:#9dffb7;
-  outline:none;
-}
-body .av-google-review-rail__dot{
-  color:#ffe083;
-  opacity:.96;
-  text-shadow:0 0 6px rgba(255,224,131,.62);
-}
-@keyframes avGoogleReviewsRail{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(hover:hover){body .av-google-review-rail:hover .av-google-review-rail__track{animation-play-state:paused}}
+body:not(.guide-page) .av-lang-reviews__brand{color:#fff}
+body:not(.guide-page) .av-lang-reviews__stars{color:#ffe26b;letter-spacing:.10em;text-shadow:0 0 7px rgba(255,210,55,.46)}
+body:not(.guide-page) .av-lang-reviews__score{color:#9dffc0;text-shadow:0 0 7px rgba(57,255,20,.38)}
+body:not(.guide-page) .av-lang-reviews__count{color:#fff1b0}
+body:not(.guide-page) .av-lang-reviews__dot{color:#ffe083;font-size:7px;text-shadow:0 0 5px rgba(255,224,131,.8)}
+body:not(.guide-page) .av-lang-reviews__cta{color:#fff;text-decoration:none;border-bottom:1px solid rgba(157,255,192,.55);line-height:18px}
+body:not(.guide-page) .av-lang-reviews__cta:hover,
+body:not(.guide-page) .av-lang-reviews__cta:focus-visible{color:#9dffc0;outline:none}
+@media(hover:hover){body:not(.guide-page) .av-lang-reviews:hover .av-lang-reviews__track{animation-play-state:paused}}
 
-/* Axes — deliberately identical to the upper Hero planet ribbon. */
-body .hero #av-hero-planets .av-ticker-card--axes{
+/* Lower Hero group: planets + axes. */
+body .hero #av-hero-planets{
+  border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
+}
+body .hero #av-hero-planets .av-planet-hero-strip__inner{padding:6px 0 8px!important}
+
+/* Lower planets now use the same visual language as the former upper planet ribbon. */
+body .hero .av-lower-planets{
   position:relative!important;
-  width:100%!important;
-  max-width:100%!important;
-  height:34px!important;
-  min-height:34px!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-  border:0!important;
+  width:100%!important;max-width:100%!important;height:34px!important;
+  margin:0 0 7px!important;overflow:hidden!important;box-sizing:border-box!important;
   border-top:2px solid rgba(241,203,88,.92)!important;
   border-bottom:2px solid rgba(57,255,20,.72)!important;
-  border-radius:0!important;
   background:linear-gradient(180deg,#07130a 0%,#021006 48%,#010402 100%)!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 -1px 0 rgba(245,208,92,.18),0 0 14px rgba(57,255,20,.13)!important;
 }
-body .hero #av-hero-planets .av-ticker-card--axes::before{
-  content:""!important;
-  position:absolute!important;
-  z-index:2!important;
-  left:0!important;
-  right:0!important;
-  top:0!important;
-  bottom:auto!important;
-  height:1px!important;
-  border:0!important;
-  border-radius:0!important;
+body .hero .av-lower-planets::before{
+  content:""!important;position:absolute!important;z-index:2!important;left:0!important;right:0!important;top:0!important;height:1px!important;
   background:linear-gradient(90deg,transparent,#39ff14 20%,#ffe083 50%,#39ff14 80%,transparent)!important;
-  filter:drop-shadow(0 0 4px rgba(57,255,20,.8))!important;
-  box-shadow:none!important;
-  pointer-events:none!important;
+  filter:drop-shadow(0 0 4px rgba(57,255,20,.8))!important;pointer-events:none!important;
+}
+body .hero .av-lower-planets__ticker{
+  display:block!important;width:100%!important;height:30px!important;overflow:hidden!important;
+  color:#f7fff9!important;font:850 12px/30px Inter,system-ui,sans-serif!important;white-space:nowrap!important;
+}
+body .hero .av-lower-planets__ticker .planet-track,
+body .hero #av-hero-planets .av-ticker-card--axes .planet-track{
+  display:flex!important;width:max-content!important;gap:0!important;padding:0!important;
+  animation:avHeroPlanets var(--ticker-duration,48s) linear infinite!important;will-change:transform!important;
+}
+body .hero .av-lower-planets__ticker .planet-sequence,
+body .hero #av-hero-planets .av-ticker-card--axes .planet-sequence{
+  display:flex!important;flex:none!important;align-items:center!important;gap:0!important;padding:0 18px 0 0!important;
+}
+body .hero .av-lower-planets__ticker .planet-item,
+body .hero #av-hero-planets .av-ticker-card--axes .planet-item{
+  position:relative!important;display:inline-flex!important;flex:none!important;align-items:center!important;gap:6px!important;
+  margin:0!important;padding:0 22px 0 0!important;line-height:30px!important;white-space:nowrap!important;
+}
+body .hero .av-lower-planets__ticker .planet-item:not(:last-child)::after,
+body .hero #av-hero-planets .av-ticker-card--axes .planet-item:not(:last-child)::after{
+  content:"◆"!important;position:absolute!important;right:7px!important;top:50%!important;transform:translateY(-50%)!important;
+  font-size:7px!important;line-height:1!important;color:#ffe083!important;
+  text-shadow:0 0 4px rgba(255,224,131,1),0 0 9px rgba(57,255,20,.55)!important;
+}
+body .hero .av-lower-planets__ticker .planet-glyph--solo{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:20px!important;
+  color:#ffe083!important;font-size:18px!important;line-height:1!important;font-weight:900!important;
+  filter:drop-shadow(0 0 4px rgba(255,224,131,.95)) drop-shadow(0 0 8px rgba(57,255,20,.34))!important;
+}
+body .hero .av-lower-planets__ticker .planet-sign,
+body .hero #av-hero-planets .av-ticker-card--axes .planet-sign{
+  color:#9dffc0!important;filter:drop-shadow(0 0 3px rgba(57,255,20,.32))!important;
+}
+body .hero .av-lower-planets__ticker .planet-house,
+body .hero #av-hero-planets .av-ticker-card--axes .planet-house{
+  padding:1px 5px!important;border:1px solid rgba(245,208,92,.56)!important;border-radius:99px!important;
+  color:#b9ffca!important;font-size:10px!important;line-height:16px!important;background:rgba(57,255,20,.04)!important;
+}
+
+/* Axes stay identical to the lower planets ribbon. */
+body .hero #av-hero-planets .av-ticker-card--axes{
+  position:relative!important;width:100%!important;max-width:100%!important;height:34px!important;min-height:34px!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;box-sizing:border-box!important;
+  border:0!important;border-top:2px solid rgba(241,203,88,.92)!important;border-bottom:2px solid rgba(57,255,20,.72)!important;
+  border-radius:0!important;background:linear-gradient(180deg,#07130a 0%,#021006 48%,#010402 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 -1px 0 rgba(245,208,92,.18),0 0 14px rgba(57,255,20,.13)!important;
+}
+body .hero #av-hero-planets .av-ticker-card--axes::before{
+  content:""!important;position:absolute!important;z-index:2!important;left:0!important;right:0!important;top:0!important;bottom:auto!important;
+  height:1px!important;border:0!important;border-radius:0!important;
+  background:linear-gradient(90deg,transparent,#39ff14 20%,#ffe083 50%,#39ff14 80%,transparent)!important;
+  filter:drop-shadow(0 0 4px rgba(57,255,20,.8))!important;box-shadow:none!important;pointer-events:none!important;
 }
 body .hero #av-hero-planets .av-ticker-card--axes::after{display:none!important}
 body .hero #av-hero-planets .av-ticker-card--axes .av-planet-hero-strip__ticker--axes{
-  display:block!important;
-  width:100%!important;
-  height:30px!important;
-  overflow:hidden!important;
-  color:#f7fff9!important;
-  font:850 12px/30px Inter,system-ui,sans-serif!important;
-  white-space:nowrap!important;
-}
-body .hero #av-hero-planets .av-ticker-card--axes .planet-track{
-  display:flex!important;
-  width:max-content!important;
-  gap:0!important;
-  padding:0!important;
-  animation:avHeroPlanets var(--ticker-duration,48s) linear infinite!important;
-  will-change:transform!important;
-}
-body .hero #av-hero-planets .av-ticker-card--axes .planet-sequence{
-  display:flex!important;
-  flex:none!important;
-  align-items:center!important;
-  gap:0!important;
-  padding:0 18px 0 0!important;
-}
-body .hero #av-hero-planets .av-ticker-card--axes .planet-item{
-  position:relative!important;
-  display:inline-flex!important;
-  flex:none!important;
-  align-items:center!important;
-  gap:6px!important;
-  margin:0!important;
-  padding:0 22px 0 0!important;
-  line-height:30px!important;
-  white-space:nowrap!important;
-}
-body .hero #av-hero-planets .av-ticker-card--axes .planet-item:not(:last-child)::after{
-  content:"◆"!important;
-  position:absolute!important;
-  right:7px!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-  font-size:7px!important;
-  line-height:1!important;
-  color:#ffe083!important;
-  text-shadow:0 0 4px rgba(255,224,131,1),0 0 9px rgba(57,255,20,.55)!important;
+  display:block!important;width:100%!important;height:30px!important;overflow:hidden!important;
+  color:#f7fff9!important;font:850 12px/30px Inter,system-ui,sans-serif!important;white-space:nowrap!important;
 }
 body .hero #av-hero-planets .av-ticker-card--axes .planet-item strong,
 body .hero #av-hero-planets .av-ticker-card--axes .planet-glyph{color:#ffe083!important}
-body .hero #av-hero-planets .av-ticker-card--axes .planet-sign{
-  color:#9dffc0!important;
-  filter:drop-shadow(0 0 3px rgba(57,255,20,.32))!important;
-}
-body .hero #av-hero-planets .av-ticker-card--axes .planet-house{
-  padding:1px 5px!important;
-  border:1px solid rgba(245,208,92,.56)!important;
-  border-radius:99px!important;
-  color:#b9ffca!important;
-  font-size:10px!important;
-  line-height:16px!important;
-  background:rgba(57,255,20,.04)!important;
-}
+
+@keyframes avGoogleReviewsRail{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:820px){
-  body .av-google-review-rail{margin:0 8px 6px;min-height:40px;border-radius:10px}
-  body .av-google-review-rail__sequence{gap:18px;min-height:36px;padding-right:20px}
-  body .av-google-review-rail__item{font-size:11px;letter-spacing:.045em}
+  body:not(.guide-page) .av-lang-reviews{height:32px}
+  body:not(.guide-page) .av-lang-reviews__track,
+  body:not(.guide-page) .av-lang-reviews__sequence{height:28px}
+  body:not(.guide-page) .av-lang-reviews__sequence>*{font-size:10px;line-height:28px}
+  body .hero .av-lower-planets,
   body .hero #av-hero-planets .av-ticker-card--axes{height:32px!important;min-height:32px!important}
-  body .hero #av-hero-planets .av-ticker-card--axes .av-planet-hero-strip__ticker--axes{height:28px!important;font-size:11px!important;line-height:28px!important}
-  body .hero #av-hero-planets .av-ticker-card--axes .planet-item{line-height:28px!important;padding-right:19px!important}
-  body .hero #av-hero-planets .av-ticker-card--axes .planet-item:not(:last-child)::after{right:6px!important;font-size:6px!important}
+  body .hero .av-lower-planets__ticker,
+  body .hero #av-hero-planets .av-ticker-card--axes .av-planet-hero-strip__ticker--axes{
+    height:28px!important;font-size:11px!important;line-height:28px!important;
+  }
+  body .hero .av-lower-planets__ticker .planet-item,
+  body .hero #av-hero-planets .av-ticker-card--axes .planet-item{
+    line-height:28px!important;padding-right:19px!important;
+  }
 }
 @media(prefers-reduced-motion:reduce){
-  body .av-google-review-rail__track{animation:none;transform:none}
-  body .av-google-review-rail{overflow-x:auto}
-  body .av-google-review-rail__sequence[aria-hidden="true"]{display:none}
+  body:not(.guide-page) .av-lang-reviews__track{animation:none;transform:none}
+  body:not(.guide-page) .av-lang-reviews{overflow-x:auto}
+  body:not(.guide-page) .av-lang-reviews__sequence[aria-hidden="true"]{display:none}
 }
 </style>
 </head>
@@ -1908,7 +1823,28 @@ body .hero #av-hero-planets .av-ticker-card--axes .planet-house{
 </nav>
 <div class="nav-actions"><a class="av-header-booking" href="https://wa.me/40722128220?text=Bun%C4%83%2C%20doresc%20s%C4%83%20m%C4%83%20programez%20pentru%20o%20consulta%C8%9Bie%20AstroVip." target="_blank" rel="noopener noreferrer" aria-label="Programează-te pe WhatsApp"><span class="av-header-booking__spark" aria-hidden="true">✦</span><span>Programează-te</span></a><button class="avchat-launcher avchat-header-slot avchat-nav-slot" type="button" aria-expanded="false" aria-label="AstroVip Chat"><span class="avchat-launcher-dot"></span><span class="avchat-launcher-label">CHAT</span></button><button aria-controls="menu" aria-expanded="false" aria-label="Deschide meniul" class="hamb" id="hamb" type="button" style="appearance:none!important;-webkit-appearance:none!important;border:0!important;outline:0!important;outline-offset:0!important;border-radius:0!important;background:transparent!important;background-image:none!important;box-shadow:none!important;filter:none!important;"><span class="hamb-lines" aria-hidden="true"><span class="hamb-line"></span><span class="hamb-line"></span><span class="hamb-line"></span></span></button></div>
 </div>
-<div class="av-langbar" aria-label="Selector limbă"><div class="wrap"><nav class="av-lang-switch" aria-label="Alege limba"><a class="is-active" href="/" lang="ro" aria-current="page" aria-label="Română"><img src="/assets/flag-ro.svg?v=20260926" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/en/" lang="en" aria-label="English"><img src="/assets/flag-us.svg?v=20260920-usa-full" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/es/" lang="es" aria-label="Español"><img src="/assets/flag-es.svg?v=20260926" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/it/" lang="it" aria-label="Italiano"><img src="/assets/flag-it.svg?v=20260926" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/zh/" lang="zh-Hans" aria-label="中文"><img src="/assets/flag-cn.svg?v=20260922-cn-fullbutton2" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/ar/" lang="ar" aria-label="العربية"><img src="/assets/flag-sa.svg?v=20260923-fullcard1" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/ru/" lang="ru" aria-label="Русский"><img src="/assets/flag-ru.svg?v=20260923-fullcard1" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a></nav></div><div id="av-lang-planets" class="av-lang-planets" aria-label="Pozițiile planetelor"><div class="av-lang-planets__ticker" data-planet-ticker data-symbol-only aria-live="polite">☽ · ☉ · ☿ · ♀ · ♂ · ♄ · ♃ · ♅ · ♆ · ♇</div></div></div>
+<div class="av-langbar" aria-label="Selector limbă"><div class="wrap"><nav class="av-lang-switch" aria-label="Alege limba"><a class="is-active" href="/" lang="ro" aria-current="page" aria-label="Română"><img src="/assets/flag-ro.svg?v=20260926" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/en/" lang="en" aria-label="English"><img src="/assets/flag-us.svg?v=20260920-usa-full" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/es/" lang="es" aria-label="Español"><img src="/assets/flag-es.svg?v=20260926" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/it/" lang="it" aria-label="Italiano"><img src="/assets/flag-it.svg?v=20260926" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/zh/" lang="zh-Hans" aria-label="中文"><img src="/assets/flag-cn.svg?v=20260922-cn-fullbutton2" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/ar/" lang="ar" aria-label="العربية"><img src="/assets/flag-sa.svg?v=20260923-fullcard1" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a><a href="/ru/" lang="ru" aria-label="Русский"><img src="/assets/flag-ru.svg?v=20260923-fullcard1" alt="" aria-hidden="true" width="34" height="28" style="display:block;width:100%;height:100%;object-fit:cover" fetchpriority="low" decoding="async"></a></nav></div><div id="av-lang-reviews" class="av-lang-reviews" aria-label="Recenzii Google AstroVip">
+  <div class="av-lang-reviews__track">
+    <div class="av-lang-reviews__sequence">
+      <span class="av-lang-reviews__brand">GOOGLE REVIEWS</span>
+      <span class="av-lang-reviews__stars" aria-label="5 stele">★★★★★</span>
+      <span class="av-lang-reviews__score">5,0 / 5</span>
+      <span class="av-lang-reviews__dot" aria-hidden="true">◆</span>
+      <span class="av-lang-reviews__count">25 RECENZII</span>
+      <span class="av-lang-reviews__dot" aria-hidden="true">◆</span>
+      <a class="av-lang-reviews__cta" href="https://search.google.com/local/reviews?placeid=ChIJb8zjk-7_sUARdcftjopVq9g" target="_blank" rel="noopener noreferrer">VEZI RECENZIILE ↗</a>
+    </div>
+    <div class="av-lang-reviews__sequence" aria-hidden="true">
+      <span class="av-lang-reviews__brand">GOOGLE REVIEWS</span>
+      <span class="av-lang-reviews__stars">★★★★★</span>
+      <span class="av-lang-reviews__score">5,0 / 5</span>
+      <span class="av-lang-reviews__dot">◆</span>
+      <span class="av-lang-reviews__count">25 RECENZII</span>
+      <span class="av-lang-reviews__dot">◆</span>
+      <span class="av-lang-reviews__cta">VEZI RECENZIILE ↗</span>
+    </div>
+  </div>
+</div></div>
 </header>
 <script id="astrovip-chat-first-paint-placement">
 (function(){
@@ -1979,27 +1915,8 @@ body .hero #av-hero-planets .av-ticker-card--axes .planet-house{
   </div><div id="av-hero-planets" class="av-planet-hero-strip" aria-label="Recenzii Google și axele astrologice AstroVip">
   <div class="av-planet-hero-strip__inner">
 
-    <div class="av-google-review-rail" aria-label="Recenzii Google AstroVip">
-      <div class="av-google-review-rail__track">
-        <div class="av-google-review-rail__sequence">
-          <span class="av-google-review-rail__item av-google-review-rail__google">GOOGLE REVIEWS</span>
-          <span class="av-google-review-rail__item av-google-review-rail__stars" aria-label="5 stele">★★★★★</span>
-          <span class="av-google-review-rail__item av-google-review-rail__score">5,0 / 5</span>
-          <span class="av-google-review-rail__item av-google-review-rail__dot" aria-hidden="true">◆</span>
-          <span class="av-google-review-rail__item av-google-review-rail__count">25 RECENZII GOOGLE</span>
-          <span class="av-google-review-rail__item av-google-review-rail__dot" aria-hidden="true">◆</span>
-          <a class="av-google-review-rail__item av-google-review-rail__cta" href="https://search.google.com/local/reviews?placeid=ChIJb8zjk-7_sUARdcftjopVq9g" target="_blank" rel="noopener noreferrer">VEZI RECENZIILE ASTROVIP ↗</a>
-        </div>
-        <div class="av-google-review-rail__sequence" aria-hidden="true">
-          <span class="av-google-review-rail__item av-google-review-rail__google">GOOGLE REVIEWS</span>
-          <span class="av-google-review-rail__item av-google-review-rail__stars">★★★★★</span>
-          <span class="av-google-review-rail__item av-google-review-rail__score">5,0 / 5</span>
-          <span class="av-google-review-rail__item av-google-review-rail__dot">◆</span>
-          <span class="av-google-review-rail__item av-google-review-rail__count">25 RECENZII GOOGLE</span>
-          <span class="av-google-review-rail__item av-google-review-rail__dot">◆</span>
-          <span class="av-google-review-rail__item av-google-review-rail__cta">VEZI RECENZIILE ASTROVIP ↗</span>
-        </div>
-      </div>
+    <div class="av-lower-planets" aria-label="Pozițiile planetelor de azi">
+      <div class="av-lower-planets__ticker" data-planet-ticker data-symbol-only aria-live="polite">☽ · ☉ · ☿ · ♀ · ♂ · ♄ · ♃ · ♅ · ♆ · ♇</div>
     </div>
 
     <div class="av-ticker-card av-ticker-card--axes" aria-label="Card premium cu Pars Fortuna și axele caselor">
