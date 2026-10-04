@@ -330,15 +330,18 @@ jobs:
           set -euo pipefail
           npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
 
-      - name: Verify Swiss WASM asset in production
+      - name: Verify Swiss Koch browser chain in production
         shell: bash
         run: |
           set -euo pipefail
-          WASM_URL="https://astrovip.ro/assets/vendor/swisseph.wasm?sha=${GITHUB_SHA}"
+          VERSION="20261004-wasmfix2"
+          WASM_URL="https://astrovip.ro/assets/vendor/swisseph.wasm?v=$VERSION&sha=${GITHUB_SHA}"
           WASM_FILE=$(mktemp)
+          WASM_HDR=$(mktemp)
           STATUS=""
           for ATTEMPT in $(seq 1 12); do
-            STATUS=$(curl -sS -o "$WASM_FILE" -w '%{http_code}' --retry 2 --retry-delay 2 "$WASM_URL" || true)
+            : > "$WASM_HDR"
+            STATUS=$(curl -sS -D "$WASM_HDR" -o "$WASM_FILE" -w '%{http_code}' --retry 2 --retry-delay 2 "$WASM_URL" || true)
             echo "Swiss WASM propagation $ATTEMPT/12: HTTP $STATUS"
             if [ "$STATUS" = "200" ]; then
               break
@@ -349,6 +352,18 @@ jobs:
             echo "::error::Swiss WASM asset is not live (HTTP $STATUS)."
             exit 61
           fi
+          CONTENT_TYPE=$(awk 'BEGIN{IGNORECASE=1} /^content-type:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WASM_HDR")
+          CACHE_CONTROL=$(awk 'BEGIN{IGNORECASE=1} /^cache-control:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$WASM_HDR")
+          echo "Swiss WASM Content-Type: $CONTENT_TYPE"
+          echo "Swiss WASM Cache-Control: $CACHE_CONTROL"
+          case "$CONTENT_TYPE" in
+            application/wasm*) ;;
+            *) echo "::error::Swiss WASM is served with unexpected Content-Type '$CONTENT_TYPE'."; exit 62 ;;
+          esac
+          case "$CACHE_CONTROL" in
+            *no-store*) ;;
+            *) echo "::error::Swiss WASM must be no-store while the browser integration is stabilized."; exit 63 ;;
+          esac
           python3 - "$WASM_FILE" <<'PY'
           import pathlib, sys
           data = pathlib.Path(sys.argv[1]).read_bytes()
@@ -358,6 +373,17 @@ jobs:
               raise SystemExit("Swiss WASM asset does not have the WebAssembly magic header.")
           print(f"Swiss WASM live and valid: {len(data)} bytes")
           PY
+
+          HARTA=$(mktemp)
+          CALC=$(mktemp)
+          BUNDLE=$(mktemp)
+          test "$(curl -sS -o "$HARTA" -w '%{http_code}' --retry 6 --retry-delay 3 "https://astrovip.ro/harta-mea/?v=$VERSION")" = "200"
+          grep -q "natal-calculator-swiss.js?v=$VERSION" "$HARTA"
+          test "$(curl -sS -o "$CALC" -w '%{http_code}' --retry 6 --retry-delay 3 "https://astrovip.ro/assets/natal-calculator-swiss.js?v=$VERSION")" = "200"
+          grep -q "astrovip-swiss-koch.js?v=$VERSION" "$CALC"
+          test "$(curl -sS -o "$BUNDLE" -w '%{http_code}' --retry 6 --retry-delay 3 "https://astrovip.ro/assets/vendor/astrovip-swiss-koch.js?v=$VERSION")" = "200"
+          grep -q "swisseph.wasm?v=$VERSION" "$BUNDLE"
+          echo "Swiss Koch live chain verified: harta-mea -> calculator -> bundle -> versioned WASM."
 
       - name: Verify live AstroVip
         shell: bash
