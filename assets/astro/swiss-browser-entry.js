@@ -48,6 +48,14 @@ function swissPosition(swe,jd,[key,label,glyph,body]){
   };
 }
 
+export async function calculateSwissBody(date,key){
+  const swe=await engine();
+  const jd=julianFromDate(swe,date);
+  const item=BODY_MAP.find(x=>x[0]===key);
+  if(!item) throw new RangeError('Unsupported Swiss body: '+key);
+  return {engine:'swisseph',ephemerisSource:'swiss-files',jd,date:date.toISOString(),...swissPosition(swe,jd,item)};
+}
+
 export async function calculateSwissPositions(date){
   const swe=await engine();
   const jd=julianFromDate(swe,date);
