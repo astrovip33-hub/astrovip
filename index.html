@@ -1593,38 +1593,39 @@ body:not(.guide-page) .av-lang-reviews__cta{
   position:relative;
   overflow:hidden;
   display:inline-flex;
-  width:max-content;
+  width:auto;
+  max-width:max-content;
   flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
   color:#041106;
   text-decoration:none;
-  line-height:22px;
-  padding:2px 9px;
-  margin-left:2px;
-  border:1px solid rgba(255,220,90,.72);
-  border-radius:999px;
+  line-height:18px;
+  padding:0 4px;
+  margin-left:1px;
+  border:1px solid rgba(255,220,90,.68);
+  border-radius:6px;
   background:
-    linear-gradient(180deg,rgba(255,255,255,.32) 0%,rgba(255,255,255,.07) 24%,transparent 40%),
-    linear-gradient(180deg,#6eff52 0%,#39ff14 50%,#18d800 100%);
+    linear-gradient(180deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.04) 32%,transparent 44%),
+    linear-gradient(180deg,#63ff49 0%,#39ff14 52%,#19d900 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.52),
-    inset 0 -1px 0 rgba(0,0,0,.16),
-    0 0 0 1px rgba(212,175,55,.18),
-    0 0 7px rgba(57,255,20,.48),
-    0 0 13px rgba(57,255,20,.24);
+    inset 0 1px 0 rgba(255,255,255,.44),
+    inset 0 -1px 0 rgba(0,0,0,.14),
+    0 0 5px rgba(57,255,20,.36);
   font-weight:950;
-  letter-spacing:.055em;
-  text-shadow:0 1px 0 rgba(255,255,255,.28);
+  letter-spacing:.035em;
+  text-shadow:0 1px 0 rgba(255,255,255,.22);
   transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
 }
 body:not(.guide-page) .av-lang-reviews__cta::before{
   content:"";
   position:absolute;
-  left:8%;
-  right:8%;
-  top:2px;
-  height:38%;
-  border-radius:999px;
-  background:linear-gradient(180deg,rgba(255,255,255,.52),rgba(255,255,255,0));
+  left:5%;
+  right:5%;
+  top:1px;
+  height:32%;
+  border-radius:4px;
+  background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0));
   pointer-events:none;
 }
 body:not(.guide-page) .av-lang-reviews__cta:hover,
@@ -1634,11 +1635,9 @@ body:not(.guide-page) .av-lang-reviews__cta:focus-visible{
   transform:translateY(-1px);
   filter:saturate(1.08) brightness(1.04);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.62),
-    inset 0 -1px 0 rgba(0,0,0,.16),
-    0 0 0 1px rgba(255,220,90,.36),
-    0 0 8px rgba(57,255,20,.66),
-    0 0 15px rgba(57,255,20,.34);
+    inset 0 1px 0 rgba(255,255,255,.54),
+    inset 0 -1px 0 rgba(0,0,0,.14),
+    0 0 6px rgba(57,255,20,.52);
 }
 @media(hover:hover){body:not(.guide-page) .av-lang-reviews:hover .av-lang-reviews__track{animation-play-state:paused}}
 
