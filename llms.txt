@@ -39,6 +39,23 @@
 - [Calculator Local Space](https://astrovip.ro/local-space/)
 - [Calculator astrocartografie](https://astrovip.ro/astrocartografie/)
 
+
+## Numerologie — pagini canonice și instrumente
+
+- [Numerologie + calculator profil](https://astrovip.ro/numerologie/) — hub și calculator local pentru Calea Vieții, Expresie, Suflet și Personalitate
+- [Numărul Destinului](https://astrovip.ro/numarul-destinului/) — calcul din data nașterii și semnificații
+- [Numerologia Numelui](https://astrovip.ro/numerologia-numelui/) — conversia literelor și interpretare
+- [Numărul Sufletului](https://astrovip.ro/numarul-sufletului/) — calcul din vocalele numelui
+- [Numărul Expresiei](https://astrovip.ro/numarul-expresiei/) — calcul din numele complet
+- [Compatibilitate Numerologică](https://astrovip.ro/compatibilitate-numerologica/) — comparația profilurilor; instrumentul interactiv este în hub
+- [Numere Maestru 11, 22 și 33](https://astrovip.ro/numere-maestru/) — reguli de reducere și interpretare
+- [Numerologia Casei](https://astrovip.ro/numerologia-casei/) — interpretarea simbolică a numărului locuinței
+- [An Personal](https://astrovip.ro/an-personal/) — calcul și interpretarea ciclului anual
+
+### Convenții numerologice AstroVip
+
+AstroVip declară metoda înaintea interpretării. Calculatorul de profil folosește maparea pitagoreică pentru nume, normalizează diacriticele românești și păstrează 11, 22 și 33 în reducerea finală. Rezultatele sunt interpretări simbolice, nu predicții certe sau validare științifică.
+
 ## Studii de caz reprezentative
 
 - [Începerea clasei I — București 1984](https://astrovip.ro/studii-de-caz/inceput-clasa-i-1984/)
