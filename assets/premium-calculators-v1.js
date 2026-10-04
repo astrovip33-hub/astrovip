@@ -1,4 +1,4 @@
-import { calculateSwissChart, calculateSwissPositions, calculateSwissBody, calculateSwissLots, calculateSwissFixedStars } from '/assets/vendor/astrovip-swiss-koch.js?v=20261004-calc-suite2';
+import { calculateSwissChart, calculateSwissPositions, calculateSwissBody, calculateSwissLots, calculateSwissFixedStars, calculateSwissSunEvents } from '/assets/vendor/astrovip-swiss-koch.js?v=20261004-calc-suite3';
 
 const PROFILE_KEY='astrovip_birth_profile_v1';
 const SIGNS=[['Berbec','♈'],['Taur','♉'],['Gemeni','♊'],['Rac','♋'],['Leu','♌'],['Fecioară','♍'],['Balanță','♎'],['Scorpion','♏'],['Săgetător','♐'],['Capricorn','♑'],['Vărsător','♒'],['Pești','♓']];
@@ -291,9 +291,124 @@ function retrogradeCalendarTool(){
   });
 }
 
+
+function birthMoment(prefix){
+  const date=document.getElementById(`${prefix}-date`)?.value;
+  const time=document.getElementById(`${prefix}-time`)?.value;
+  const offset=document.getElementById(`${prefix}-offset`)?.value||'+02:00';
+  if(!date||!time)throw new Error('Completează data și ora.');
+  const instant=new Date(`${date}T${time}:00${offset}`);
+  if(Number.isNaN(instant.getTime()))throw new Error('Data introdusă nu este validă.');
+  return {date,time,offset,instant};
+}
+function momentFields(prefix,title){
+  return `<div class="avc-card"><h3>${title}</h3><div class="avc-form-grid">
+    <div class="avc-field"><label for="${prefix}-date">Data nașterii</label><input id="${prefix}-date" type="date" required></div>
+    <div class="avc-field"><label for="${prefix}-time">Ora nașterii</label><input id="${prefix}-time" type="time" step="60" required></div>
+    <div class="avc-field"><label for="${prefix}-offset">Fus orar</label><select id="${prefix}-offset">${offsets()}</select></div>
+  </div></div>`;
+}
+function houseForLon(lon,cusps){
+  for(let i=0;i<12;i++){
+    const start=norm(cusps[i]),end=norm(cusps[(i+1)%12]),span=norm(end-start),off=norm(lon-start);
+    if(off<span||Math.abs(off-span)<1e-9)return i+1;
+  }
+  return null;
+}
+function offsetMinutes(v){
+  const m=String(v||'+00:00').match(/^([+-])(\d{2}):(\d{2})$/);
+  if(!m)return 0;
+  return (m[1]==='-'?-1:1)*(Number(m[2])*60+Number(m[3]));
+}
+function localDateTime(date,offset){
+  const d=new Date(date.getTime()+offsetMinutes(offset)*60000);
+  return `${String(d.getUTCDate()).padStart(2,'0')}.${String(d.getUTCMonth()+1).padStart(2,'0')}.${d.getUTCFullYear()} ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}`;
+}
+function planetaryHoursTool(){
+  const el=shell('calculator-ore-planetare','AstroVip · răsărit/apus Swiss Ephemeris','Calculator Ore Planetare','Calculează cele 24 de ore planetare pentru o dată și o locație. Ziua este împărțită în 12 intervale egale între răsărit și apus, iar noaptea în 12 intervale între apus și următorul răsărit.',`<form id="avc-ph-form"><div class="avc-card"><h3>Data și locația</h3><div class="avc-form-grid">
+    <div class="avc-field"><label for="avc-ph-date">Data</label><input id="avc-ph-date" type="date" required></div>
+    <div class="avc-field"><label for="avc-ph-offset">Fus orar</label><select id="avc-ph-offset">${offsets()}</select></div>
+    <div class="avc-field"><label for="avc-ph-place">Localitate</label><input id="avc-ph-place" placeholder="București, România"></div>
+    <div class="avc-field"><label for="avc-ph-lat">Latitudine</label><input id="avc-ph-lat" type="number" min="-90" max="90" step="0.000001" placeholder="44.4268" required></div>
+    <div class="avc-field"><label for="avc-ph-lon">Longitudine</label><input id="avc-ph-lon" type="number" min="-180" max="180" step="0.000001" placeholder="26.1025" required></div>
+  </div></div><div class="avc-actions"><button class="avc-btn" type="submit">CALCULEAZĂ ORELE PLANETARE</button><button class="avc-btn secondary" type="button" id="avc-fill-ph">Folosește profilul meu</button></div><p class="avc-status" id="avc-ph-status">Răsăritul și apusul sunt calculate astronomic pentru coordonatele introduse.</p></form><div class="avc-result" id="avc-ph-result" hidden></div>`);
+  placeSection(el);fill('avc-ph',savedProfile());document.getElementById('avc-fill-ph').onclick=()=>fill('avc-ph',savedProfile());
+  const today=new Date();const d=document.getElementById('avc-ph-date');if(d&&!d.value)d.value=today.toISOString().slice(0,10);
+  document.getElementById('avc-ph-form').addEventListener('submit',async e=>{
+    e.preventDefault();const out=document.getElementById('avc-ph-result');
+    try{
+      const date=document.getElementById('avc-ph-date').value,offset=document.getElementById('avc-ph-offset').value,lat=Number(document.getElementById('avc-ph-lat').value),lon=Number(document.getElementById('avc-ph-lon').value);
+      if(!date||!Number.isFinite(lat)||!Number.isFinite(lon))throw new Error('Completează data și coordonatele.');
+      const midnight=new Date(`${date}T00:00:00${offset}`);
+      setStatus('avc-ph-status','Calculez răsăritul, apusul și cele 24 de ore…',true);
+      const ev=await calculateSwissSunEvents(midnight,lat,lon),rise=new Date(ev.sunrise),set=new Date(ev.sunset),nextRise=new Date(ev.nextSunrise);
+      const dayLen=(set-rise)/12,nightLen=(nextRise-set)/12;
+      const weekday=new Date(date+'T12:00:00Z').getUTCDay();
+      const weekdayRulers=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn'];
+      const names={Sun:['Soare','☉'],Moon:['Lună','☽'],Mars:['Marte','♂'],Mercury:['Mercur','☿'],Jupiter:['Jupiter','♃'],Venus:['Venus','♀'],Saturn:['Saturn','♄']};
+      const chaldean=['Saturn','Jupiter','Mars','Sun','Venus','Mercury','Moon'];
+      const first=chaldean.indexOf(weekdayRulers[weekday]),rows=[];
+      for(let i=0;i<24;i++){
+        const start=i<12?new Date(rise.getTime()+i*dayLen):new Date(set.getTime()+(i-12)*nightLen);
+        const end=i<12?new Date(rise.getTime()+(i+1)*dayLen):new Date(set.getTime()+(i-11)*nightLen);
+        const key=chaldean[(first+i)%7],n=names[key];
+        rows.push(`<tr><td>${i+1}</td><td>${i<12?'Zi':'Noapte'}</td><td><strong>${n[1]} ${n[0]}</strong></td><td>${localDateTime(start,offset)}</td><td>${localDateTime(end,offset)}</td></tr>`);
+      }
+      const dayR=names[weekdayRulers[weekday]];
+      out.innerHTML=`<p class="avc-meta"><strong>Guvernatorul zilei:</strong> ${dayR[1]} ${dayR[0]} · <strong>Răsărit:</strong> ${localDateTime(rise,offset)} · <strong>Apus:</strong> ${localDateTime(set,offset)}.</p><div class="avc-table-wrap"><table class="avc-table"><thead><tr><th>#</th><th>Perioadă</th><th>Planetă</th><th>Început</th><th>Sfârșit</th></tr></thead><tbody>${rows.join('')}</tbody></table></div><p class="avc-note">Orele planetare sunt ore inegale: durata lor se schimbă odată cu lungimea zilei și a nopții.</p>`;
+      out.hidden=false;setStatus('avc-ph-status','Ore planetare calculate',true);out.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(err){setStatus('avc-ph-status',err.message||'Calculul nu a putut fi realizat.')}
+  });
+}
+function bigThreeTool(){
+  const el=shell('calculator-big-three','AstroVip · Soare · Lună · Ascendent','Calculator Big Three','Află cele trei repere de bază ale hărții natale: semnul Soarelui, semnul Lunii și Ascendentul, cu gradele exacte și case Koch pentru momentul și locul nașterii.',`<form id="avc-big-form">${profileFields('avc-big','Date natale')}<div class="avc-actions"><button class="avc-btn" type="submit">CALCULEAZĂ BIG THREE</button><button class="avc-btn secondary" type="button" id="avc-fill-big">Folosește profilul meu</button></div><p class="avc-status" id="avc-big-status">Soare și Lună: Swiss Ephemeris · Ascendent: case Koch.</p></form><div class="avc-result" id="avc-big-result" hidden></div>`);
+  placeSection(el);fill('avc-big',savedProfile());document.getElementById('avc-fill-big').onclick=()=>fill('avc-big',savedProfile());
+  document.getElementById('avc-big-form').addEventListener('submit',async e=>{
+    e.preventDefault();const out=document.getElementById('avc-big-result');
+    try{
+      const p=profile('avc-big');setStatus('avc-big-status','Calculez Big Three…',true);
+      const c=await calculateSwissChart(p.instant,p.lat,p.lon),sun=c.planets.find(x=>x.key==='Sun'),moon=c.planets.find(x=>x.key==='Moon'),asc={label:'Ascendent',glyph:'ASC',lon:c.axes.asc};
+      const items=[{label:'Soare',glyph:'☉',lon:sun.longitude},{label:'Lună',glyph:'☽',lon:moon.longitude},asc];
+      out.innerHTML=`${cards(items)}<p class="avc-meta"><strong>Luna în casa ${houseForLon(moon.longitude,c.cusps)}</strong> · Soarele în casa ${houseForLon(sun.longitude,c.cusps)} · sistem de case Koch.</p><div class="avc-tools-nav"><a href="/semnul-lunii/">Analizează Semnul Lunii</a><a href="/faza-lunii-la-nastere/">Vezi Faza Lunii</a><a href="/calculator-ascendent/">Calculator Ascendent</a></div>`;
+      out.hidden=false;setStatus('avc-big-status','Big Three calculat',true);out.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(err){setStatus('avc-big-status',err.message||'Calculul nu a putut fi realizat.')}
+  });
+}
+function moonSignTool(){
+  const el=shell('calculator-semn-lunar','AstroVip · Lună natală · Swiss Ephemeris','Calculator Semnul Lunii','Calculează semnul și gradul exact al Lunii la naștere și casa Koch în care se află. Ora este importantă deoarece Luna se deplasează rapid și poate schimba semnul în cursul aceleiași zile.',`<form id="avc-moon-form">${profileFields('avc-moon','Date natale')}<div class="avc-actions"><button class="avc-btn" type="submit">CALCULEAZĂ SEMNUL LUNII</button><button class="avc-btn secondary" type="button" id="avc-fill-moon">Folosește profilul meu</button></div><p class="avc-status" id="avc-moon-status">Poziție tropicală Swiss Ephemeris și casă Koch.</p></form><div class="avc-result" id="avc-moon-result" hidden></div>`);
+  placeSection(el);fill('avc-moon',savedProfile());document.getElementById('avc-fill-moon').onclick=()=>fill('avc-moon',savedProfile());
+  document.getElementById('avc-moon-form').addEventListener('submit',async e=>{
+    e.preventDefault();const out=document.getElementById('avc-moon-result');
+    try{
+      const p=profile('avc-moon');setStatus('avc-moon-status','Calculez Luna natală…',true);
+      const c=await calculateSwissChart(p.instant,p.lat,p.lon),moon=c.planets.find(x=>x.key==='Moon'),m=fmt(moon.longitude),h=houseForLon(moon.longitude,c.cusps);
+      out.innerHTML=`<div class="avc-cards"><div class="avc-pos"><b>Semnul Lunii</b><strong>☽ ${m.sym}</strong><span>${m.text}</span><span>Casa Koch ${h}</span></div></div><p class="avc-meta">Luna natală se află la <strong>${m.text}</strong>, în <strong>casa ${h}</strong>. Gradul exact este mai util decât o interpretare bazată doar pe ziua nașterii.</p><div class="avc-tools-nav"><a href="/faza-lunii-la-nastere/">Faza Lunii la naștere</a><a href="/big-three/">Big Three</a><a href="/revolutie-lunara/">Revoluție Lunară</a></div>`;
+      out.hidden=false;setStatus('avc-moon-status','Semnul Lunii calculat',true);out.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(err){setStatus('avc-moon-status',err.message||'Calculul nu a putut fi realizat.')}
+  });
+}
+function moonPhaseTool(){
+  const phases=[
+    ['Lună Nouă','🌑'],['Semilună în creștere','🌒'],['Primul Pătrar','🌓'],['Gibboasă în creștere','🌔'],
+    ['Lună Plină','🌕'],['Gibboasă în descreștere','🌖'],['Ultimul Pătrar','🌗'],['Semilună în descreștere','🌘']
+  ];
+  const el=shell('calculator-faza-lunii','AstroVip · fază natală · Swiss Ephemeris','Calculator Faza Lunii la Naștere','Determină faza Lunii din unghiul exact dintre Soare și Lună la momentul nașterii și estimează procentul de iluminare și vârsta fazei în ciclul sinodic.',`<form id="avc-phase-form">${momentFields('avc-phase','Momentul nașterii')}<div class="avc-actions"><button class="avc-btn" type="submit">CALCULEAZĂ FAZA LUNII</button><button class="avc-btn secondary" type="button" id="avc-fill-phase">Folosește profilul meu</button></div><p class="avc-status" id="avc-phase-status">Calcul bazat pe elongarea ecliptică Soare–Lună.</p></form><div class="avc-result" id="avc-phase-result" hidden></div>`);
+  placeSection(el);fill('avc-phase',savedProfile());document.getElementById('avc-fill-phase').onclick=()=>fill('avc-phase',savedProfile());
+  document.getElementById('avc-phase-form').addEventListener('submit',async e=>{
+    e.preventDefault();const out=document.getElementById('avc-phase-result');
+    try{
+      const p=birthMoment('avc-phase');setStatus('avc-phase-status','Calculez faza Lunii…',true);
+      const ps=await calculateSwissPositions(p.instant),sun=ps.planets.find(x=>x.key==='Sun'),moon=ps.planets.find(x=>x.key==='Moon'),elong=norm(moon.longitude-sun.longitude);
+      const idx=Math.floor((elong+22.5)/45)%8,phase=phases[idx],illum=(1-Math.cos(elong*Math.PI/180))/2*100,age=elong/360*29.530588853,trend=elong<180?'în creștere':'în descreștere';
+      out.innerHTML=`<div class="avc-cards"><div class="avc-pos"><b>Faza natală</b><strong>${phase[1]}</strong><span>${phase[0]}</span><span>Luna este ${trend}</span></div><div class="avc-pos"><b>Elongare</b><strong>${elong.toFixed(2)}°</strong><span>Soare → Lună</span></div><div class="avc-pos"><b>Iluminare estimată</b><strong>${illum.toFixed(1)}%</strong><span>din geometria fazei</span></div><div class="avc-pos"><b>Vârsta fazei</b><strong>${age.toFixed(2)} zile</strong><span>din ciclul sinodic</span></div></div><p class="avc-note">Procentul de iluminare și vârsta sunt derivate din elongarea geocentrică tropicală; denumirea fazei folosește împărțirea clasică în opt faze.</p><div class="avc-tools-nav"><a href="/semnul-lunii/">Semnul Lunii</a><a href="/big-three/">Big Three</a><a href="/revolutie-lunara/">Revoluție Lunară</a></div>`;
+      out.hidden=false;setStatus('avc-phase-status','Faza Lunii calculată',true);out.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(err){setStatus('avc-phase-status',err.message||'Calculul nu a putut fi realizat.')}
+  });
+}
+
 function toolsNav(){
   const host=document.querySelector('main')||document.body;
-  const sec=document.createElement('section');sec.className='avc-shell';sec.innerHTML=`<div class="avc-tool"><div class="avc-head"><div class="avc-kicker">Nou în AstroVip Tools</div><h2>Calculatoare avansate</h2><p>Instrumentele folosesc aceeași infrastructură AstroVip pentru poziții planetare și case Koch.</p><div class="avc-tools-nav"><a href="/harta-compozita/">Hartă Compozită</a><a href="/harta-davison/">Hartă Davison</a><a href="/puncte-mijlocii/">66 Puncte Mijlocii</a><a href="/revolutie-lunara/">Revoluție Lunară</a><a href="/tranzitele-mele/">Calendar Tranzite</a><a href="/arce-solare/">Arce Solare</a><a href="/progresii-secundare/">Progresii</a><a href="/revolutie-solara/">Revoluție Solară</a><a href="/pars-fortunae-partea-norocului/">16 Lots Arabe</a><a href="/stele-fixe-in-astrologie/">Stele Fixe</a><a href="/revenirea-lui-saturn/">Saturn Return</a><a href="/retrogradare-astrologie/">Retrogradări</a></div></div></div>`;host.append(sec);
+  const sec=document.createElement('section');sec.className='avc-shell';sec.innerHTML=`<div class="avc-tool"><div class="avc-head"><div class="avc-kicker">Nou în AstroVip Tools</div><h2>Calculatoare avansate</h2><p>Instrumentele folosesc aceeași infrastructură AstroVip pentru poziții planetare și case Koch.</p><div class="avc-tools-nav"><a href="/harta-compozita/">Hartă Compozită</a><a href="/harta-davison/">Hartă Davison</a><a href="/puncte-mijlocii/">66 Puncte Mijlocii</a><a href="/revolutie-lunara/">Revoluție Lunară</a><a href="/tranzitele-mele/">Calendar Tranzite</a><a href="/arce-solare/">Arce Solare</a><a href="/progresii-secundare/">Progresii</a><a href="/revolutie-solara/">Revoluție Solară</a><a href="/pars-fortunae-partea-norocului/">16 Lots Arabe</a><a href="/stele-fixe-in-astrologie/">Stele Fixe</a><a href="/revenirea-lui-saturn/">Saturn Return</a><a href="/retrogradare-astrologie/">Retrogradări</a><a href="/ore-planetare/">Ore Planetare</a><a href="/big-three/">Big Three</a><a href="/semnul-lunii/">Semnul Lunii</a><a href="/faza-lunii-la-nastere/">Faza Lunii</a></div></div></div>`;host.append(sec);
 }
 function boot(){
   const p=location.pathname.replace(/\/+$/,'/')||'/';
@@ -306,6 +421,10 @@ function boot(){
   else if(p==='/stele-fixe-in-astrologie/')fixedStarsTool();
   else if(p==='/revenirea-lui-saturn/')saturnReturnTool();
   else if(p==='/retrogradare-astrologie/')retrogradeCalendarTool();
+  else if(p==='/ore-planetare/')planetaryHoursTool();
+  else if(p==='/big-three/')bigThreeTool();
+  else if(p==='/semnul-lunii/')moonSignTool();
+  else if(p==='/faza-lunii-la-nastere/')moonPhaseTool();
   else if(p==='/instrumente-astrologie/')toolsNav();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
