@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "test:swiss": "node scripts/test-swiss-koch.mjs",
-    "build:swiss": "esbuild assets/astro/swiss-browser-entry.js --bundle --format=esm --platform=browser --target=es2020 --outfile=assets/vendor/astrovip-swiss-koch.js"
+    "build:swiss": "esbuild assets/astro/swiss-browser-entry.js --bundle --format=esm --platform=browser --target=es2022 --external:node:fs/promises --external:node:path --external:node:module --outfile=assets/vendor/astrovip-swiss-koch.js"
   },
   "devDependencies": {
     "@kuntay/swisseph": "0.2.2",
