@@ -33,6 +33,7 @@ jobs:
           npm install --ignore-scripts
           npm run build:swiss
           test -s assets/vendor/astrovip-swiss-koch.js
+          test -s assets/vendor/swisseph.wasm
 
       - name: Enforce AstroVip SEO quality gate
         shell: bash
@@ -328,6 +329,35 @@ jobs:
         run: |
           set -euo pipefail
           npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc
+
+      - name: Verify Swiss WASM asset in production
+        shell: bash
+        run: |
+          set -euo pipefail
+          WASM_URL="https://astrovip.ro/assets/vendor/swisseph.wasm?sha=${GITHUB_SHA}"
+          WASM_FILE=$(mktemp)
+          STATUS=""
+          for ATTEMPT in $(seq 1 12); do
+            STATUS=$(curl -sS -o "$WASM_FILE" -w '%{http_code}' --retry 2 --retry-delay 2 "$WASM_URL" || true)
+            echo "Swiss WASM propagation $ATTEMPT/12: HTTP $STATUS"
+            if [ "$STATUS" = "200" ]; then
+              break
+            fi
+            sleep 5
+          done
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::Swiss WASM asset is not live (HTTP $STATUS)."
+            exit 61
+          fi
+          python3 - "$WASM_FILE" <<'PY'
+          import pathlib, sys
+          data = pathlib.Path(sys.argv[1]).read_bytes()
+          if len(data) < 100000:
+              raise SystemExit("Swiss WASM asset is unexpectedly small.")
+          if data[:4] != b"\x00asm":
+              raise SystemExit("Swiss WASM asset does not have the WebAssembly magic header.")
+          print(f"Swiss WASM live and valid: {len(data)} bytes")
+          PY
 
       - name: Verify live AstroVip
         shell: bash
