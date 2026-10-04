@@ -1523,6 +1523,76 @@ body:not(.guide-page) .hero.av-hero-v2 .av-hero-lux-labels span{
   body:not(.guide-page) .hero.av-hero-v2 .av-hero-lux-labels span{font-size:7.4px}
 }
 </style>
+<style id="av-hero-image-service-cards-20261004">
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-visual{position:relative!important}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards{
+  position:absolute;
+  z-index:6;
+  top:4.8%;
+  left:5.4%;
+  width:min(71%,860px);
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  align-items:center;
+  padding:5px 6px;
+  border-radius:13px;
+  background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(2,8,4,.76),rgba(0,0,0,.78));
+  box-shadow:0 0 18px rgba(0,0,0,.58);
+  pointer-events:none;
+}
+body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  min-height:34px;
+  padding:5px 8px;
+  border:1.6px solid #39ff14;
+  border-radius:10px;
+  background:
+    linear-gradient(180deg,rgba(14,35,18,.96),rgba(2,11,5,.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 0 0 1px rgba(57,255,20,.18),
+    0 0 7px rgba(57,255,20,.74),
+    0 0 14px rgba(57,255,20,.26);
+  color:#fffef2;
+  font:900 clamp(10px,1vw,14px)/1 Inter,Arial,sans-serif;
+  letter-spacing:.04em;
+  text-align:center;
+  white-space:nowrap;
+  text-shadow:0 1px 2px #000,0 0 7px rgba(255,255,255,.10);
+}
+@media(max-width:820px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards{
+    top:3.7%;
+    left:4%;
+    width:92%;
+    gap:4px;
+    padding:4px;
+    border-radius:10px;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards span{
+    min-height:28px;
+    padding:4px 3px;
+    border-radius:8px;
+    font-size:clamp(7.2px,2.35vw,10px);
+    letter-spacing:.01em;
+  }
+}
+@media(max-width:380px){
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards{
+    left:3%;
+    width:94%;
+    gap:3px;
+  }
+  body:not(.guide-page) .hero.av-hero-v2 .av-hero-image-service-cards span{
+    min-height:26px;
+    font-size:7px;
+  }
+}
+</style>
 <style id="astrovip-desktop-mobile-hero-image-20261002">
 @media(min-width:821px){
   html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-hero-v2-visual{
@@ -2057,12 +2127,17 @@ body .hero #av-hero-planets .av-ticker-card--axes .planet-glyph{color:#ffe083!im
       <source media="(min-width:821px)" srcset="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261002-finalhero1" type="image/avif" width="1280" height="720"/>
       <img src="/assets/astrovip-hero-signature-mobile-clean-20261001.webp?v=20261002-desktop-mobilehero1" width="941" height="1220" loading="eager" fetchpriority="high" decoding="async" alt="AstroVip — imagine Hero premium"/>
     </picture>
+    <div class="av-hero-image-service-cards" aria-label="Servicii AstroVip">
+      <span>ASTROLOGIE</span>
+      <span>NUMEROLOGIE</span>
+      <span>PREVIZIUNI</span>
+      <span>DESTINE</span>
+    </div>
     <div class="av-hero-v2-sidecopy">CUNOȘTI MOMENTUL<br/>TRĂIEȘTI VIITORUL</div>
     <div class="av-hero-v2-sidecopy right">UN UNIVERS<br/>DE POSIBILITĂȚI</div>
   </div>
 
   <div class="av-hero-v2-copy">
-    <div class="av-hero-lux-labels" aria-label="Servicii AstroVip"><span>ASTROLOGIE</span><span>NUMEROLOGIE</span><span>RELOCARE</span><span>PREVIZIUNI</span></div>
     <h1 class="av-hero-v2-title" id="astrovipHeroTitleMobile"><span class="av-hero-v2-line-main">ASTROLOGIE</span><span class="av-hero-v2-line-premium">PREMIUM</span></h1>
     <p class="av-hero-v2-subtitle">CARIERĂ · DRAGOSTE · AFACERI</p>
     <div class="av-hero-v2-actions">
