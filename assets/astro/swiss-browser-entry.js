@@ -1,4 +1,4 @@
-import { createSwissEph, FetchEphemeris, Body, ROYAL_STARS, BEHENIAN_STARS, NOTABLE_STARS, byDesignation } from '@kuntay/swisseph';
+import { createSwissEph, FetchEphemeris, Body, RiseTransit, ROYAL_STARS, BEHENIAN_STARS, NOTABLE_STARS, byDesignation } from '@kuntay/swisseph';
 import { normalizeKochHouses } from './koch-houses.js';
 
 let enginePromise;
@@ -131,4 +131,30 @@ export async function calculateSwissFixedStars(date,group='royal'){
     };
   });
   return {engine:'swisseph',ephemerisSource:'swiss-files',jd,date:date.toISOString(),group,stars};
+}
+
+
+function jdToIso(jd){
+  return new Date((Number(jd)-2440587.5)*86400000).toISOString();
+}
+
+export async function calculateSwissSunEvents(localMidnight,lat,lon){
+  const swe=await engine();
+  const jd=julianFromDate(swe,localMidnight);
+  const place={latitude:Number(lat),longitude:Number(lon)};
+  const rise=swe.riseTransit(jd,Body.Sun,place,RiseTransit.Rise);
+  if(!rise.occurs||rise.jd===null) throw new Error('Răsăritul Soarelui nu are loc la această locație și dată.');
+  const set=swe.riseTransit(rise.jd+1e-6,Body.Sun,place,RiseTransit.Set);
+  if(!set.occurs||set.jd===null) throw new Error('Apusul Soarelui nu are loc la această locație și dată.');
+  const nextRise=swe.riseTransit(set.jd+1e-6,Body.Sun,place,RiseTransit.Rise);
+  if(!nextRise.occurs||nextRise.jd===null) throw new Error('Următorul răsărit nu a putut fi calculat.');
+  return {
+    engine:'swisseph',
+    sunriseJd:rise.jd,
+    sunsetJd:set.jd,
+    nextSunriseJd:nextRise.jd,
+    sunrise:jdToIso(rise.jd),
+    sunset:jdToIso(set.jd),
+    nextSunrise:jdToIso(nextRise.jd)
+  };
 }
