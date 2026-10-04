@@ -43,3 +43,11 @@ if (wasmSize < 100000) {
 
 console.log(`Swiss Koch bundle: ${bundleSize} bytes`);
 console.log(`Swiss WASM asset: ${wasmSize} bytes -> assets/vendor/swisseph.wasm`);
+
+const built = await (await import('node:fs/promises')).readFile(bundle, 'utf8');
+const ref = built.indexOf('swisseph.wasm');
+if (ref >= 0) {
+  console.log('WASM reference context:', built.slice(Math.max(0, ref - 700), ref + 900));
+} else {
+  console.log('WASM reference context: no literal swisseph.wasm found in bundle');
+}
