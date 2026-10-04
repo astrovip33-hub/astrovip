@@ -1536,3 +1536,24 @@ body:not(.guide-page) #hamb[aria-expanded="false"] .hamb-line{
       0 0 12px rgba(86,199,80,.13)!important;
   }
 }
+
+
+/* Homepage rendering cleanup — 2026-10-04 */
+body:not(.guide-page) .av-anchor-alias{
+  display:block;
+  position:relative;
+  width:0;
+  height:0;
+  scroll-margin-top:140px;
+}
+@supports (content-visibility:auto){
+  body:not(.guide-page) #studii-de-caz-home,
+  body:not(.guide-page) #recenzii-google,
+  body:not(.guide-page) #oferte,
+  body:not(.guide-page) #programari,
+  body:not(.guide-page) #intrebari-frecvente,
+  body:not(.guide-page) #contact{
+    content-visibility:auto;
+    contain-intrinsic-size:1px 760px;
+  }
+}
