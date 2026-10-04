@@ -1,4 +1,4 @@
-import { calculateSwissChart, calculateSwissPositions, calculateSwissBody } from '/assets/vendor/astrovip-swiss-koch.js?v=20261004-calc-suite1';
+import { calculateSwissChart, calculateSwissPositions, calculateSwissBody, calculateSwissLots, calculateSwissFixedStars } from '/assets/vendor/astrovip-swiss-koch.js?v=20261004-calc-suite2';
 
 const PROFILE_KEY='astrovip_birth_profile_v1';
 const SIGNS=[['Berbec','♈'],['Taur','♉'],['Gemeni','♊'],['Rac','♋'],['Leu','♌'],['Fecioară','♍'],['Balanță','♎'],['Scorpion','♏'],['Săgetător','♐'],['Capricorn','♑'],['Vărsător','♒'],['Pești','♓']];
@@ -186,9 +186,114 @@ function transitCalendarTool(){
     }catch(err){setStatus('avc-tr-status',err.message||'Calendarul nu a putut fi generat.')}
   });
 }
+
+function lotsTool(){
+  const el=shell('calculator-lots','AstroVip · Lots arabe · sectă diurnă/nocturnă','Calculator Pars Fortunae & 16 Lots Arabe','Calculează automat secta hărții și cele 16 Lots arabe, inclusiv Fortune, Spirit, Eros, Necessity, Courage, Victory, Nemesis și loturile tradiționale suplimentare. Formulele sunt aplicate în funcție de hartă diurnă sau nocturnă.',`<form id="avc-lots-form">${profileFields('avc-lots','Harta natală')}<div class="avc-actions"><button class="avc-btn" type="submit">CALCULEAZĂ LOTURILE</button><button class="avc-btn secondary" type="button" id="avc-fill-lots">Folosește profilul meu</button></div><p class="avc-status" id="avc-lots-status">Sectă determinată astronomic după poziția Soarelui față de orizont.</p></form><div class="avc-result" id="avc-lots-result" hidden></div>`);
+  placeSection(el);fill('avc-lots',savedProfile());document.getElementById('avc-fill-lots').onclick=()=>fill('avc-lots',savedProfile());
+  document.getElementById('avc-lots-form').addEventListener('submit',async e=>{
+    e.preventDefault();const out=document.getElementById('avc-lots-result');
+    try{
+      setStatus('avc-lots-status','Calculez secta și Lots arabe…',true);
+      const p=profile('avc-lots'),r=await calculateSwissLots(p.instant,p.lat,p.lon);
+      const vals=Object.values(r.lots);
+      const rows=vals.map(x=>`<tr><td><strong>${esc(x.name)}</strong></td><td>${fmt(x.longitude).text}</td><td>${esc(x.sectUsed)}</td><td>${esc(x.source||'')}</td></tr>`).join('');
+      out.innerHTML=`<p class="avc-meta"><strong>Sectă:</strong> ${r.sect.sect==='day'?'diurnă':'nocturnă'} · Soare la ${Number(r.sect.sunElevation).toFixed(2)}° față de orizont · ${vals.length} Lots calculate.</p><div class="avc-table-wrap"><table class="avc-table"><thead><tr><th>Lot</th><th>Poziție</th><th>Sectă</th><th>Sursă tradițională</th></tr></thead><tbody>${rows}</tbody></table></div><p class="avc-note">Fortune și Spirit își inversează formula în hărțile nocturne. Calculatorul nu presupune automat că toate hărțile sunt diurne.</p>`;
+      out.hidden=false;setStatus('avc-lots-status','Calcul finalizat · sectă + 16 Lots',true);out.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(err){setStatus('avc-lots-status',err.message||'Calculul nu a putut fi realizat.')}
+  });
+}
+function fixedStarsTool(){
+  const el=shell('calculator-stele-fixe','AstroVip · sefstars.txt · precesie reală','Calculator Stele Fixe','Compară planetele natale, ASC și MC cu stelele fixe calculate pentru data nașterii din catalogul Swiss Ephemeris. Poți selecta Stelele Regale, cele 15 Beheniene sau setul de stele notabile.',`<form id="avc-stars-form">${profileFields('avc-stars','Harta natală')}<div class="avc-form-grid" style="margin-top:14px"><div class="avc-field"><label for="avc-stars-group">Catalog</label><select id="avc-stars-group"><option value="royal">4 Stele Regale</option><option value="behenian">15 Stele Beheniene</option><option value="notable">Stele notabile</option></select></div><div class="avc-field"><label for="avc-stars-orb">Orb conjuncție</label><select id="avc-stars-orb"><option value="0.5">0°30′</option><option value="1" selected>1°00′</option><option value="2">2°00′</option><option value="3">3°00′</option></select></div></div><div class="avc-actions"><button class="avc-btn" type="submit">CALCULEAZĂ STELELE FIXE</button><button class="avc-btn secondary" type="button" id="avc-fill-stars">Folosește profilul meu</button></div><p class="avc-status" id="avc-stars-status">Pozițiile stelelor sunt calculate pentru data nașterii; nu folosim grade fixe memorate.</p></form><div class="avc-result" id="avc-stars-result" hidden></div>`);
+  placeSection(el);fill('avc-stars',savedProfile());document.getElementById('avc-fill-stars').onclick=()=>fill('avc-stars',savedProfile());
+  document.getElementById('avc-stars-form').addEventListener('submit',async e=>{
+    e.preventDefault();const out=document.getElementById('avc-stars-result');
+    try{
+      setStatus('avc-stars-status','Încarc catalogul Swiss și calculez precesia…',true);
+      const p=profile('avc-stars'),group=document.getElementById('avc-stars-group').value,orbMax=Number(document.getElementById('avc-stars-orb').value);
+      const [chart,starData]=await Promise.all([calculateSwissChart(p.instant,p.lat,p.lon),calculateSwissFixedStars(p.instant,group)]);
+      const fs=factors(chart),hits=[];
+      for(const star of starData.stars)for(const f of fs){const orb=Math.abs(delta(star.longitude,f.lon));if(orb<=orbMax)hits.push({star,f,orb})}
+      hits.sort((a,b)=>a.orb-b.orb);
+      const starRows=starData.stars.map(x=>`<tr><td><strong>${esc(x.name)}</strong></td><td>${esc(x.designation)}</td><td>${fmt(x.longitude).text}</td><td>${Number(x.magnitude).toFixed(2)}</td></tr>`).join('');
+      const hitRows=hits.map(x=>`<tr><td>${esc(x.star.name)}</td><td>☌</td><td>${esc(x.f.glyph)} ${esc(x.f.label)}</td><td>${x.orb.toFixed(3)}°</td></tr>`).join('');
+      out.innerHTML=`<p class="avc-meta"><strong>${starData.stars.length} stele</strong> calculate la data natală · ${hits.length} conjuncții în orb ≤ ${orbMax.toFixed(1)}°.</p><h3 style="color:#f0cf68">Pozițiile stelelor</h3><div class="avc-table-wrap"><table class="avc-table"><thead><tr><th>Stea</th><th>Designație</th><th>Poziție tropicală</th><th>Magnitudine</th></tr></thead><tbody>${starRows}</tbody></table></div><h3 style="color:#f0cf68;margin-top:22px">Conjuncții cu harta natală</h3><div class="avc-table-wrap"><table class="avc-table"><thead><tr><th>Stea</th><th>Aspect</th><th>Factor natal</th><th>Orb</th></tr></thead><tbody>${hitRows||'<tr><td colspan="4">Nicio conjuncție în orbul ales.</td></tr>'}</tbody></table></div>`;
+      out.hidden=false;setStatus('avc-stars-status','Calcul finalizat · catalog Swiss',true);out.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(err){setStatus('avc-stars-status',err.message||'Calculul stelelor fixe nu a putut fi realizat.')}
+  });
+}
+async function saturnExact(natalLon,lo,hi){
+  let dlo=delta(natalLon,(await calculateSwissBody(new Date(lo),'Saturn')).longitude);
+  for(let i=0;i<34;i++){
+    const mid=(lo+hi)/2,dm=delta(natalLon,(await calculateSwissBody(new Date(mid),'Saturn')).longitude);
+    if(Math.abs(dm)<1e-7)return new Date(mid);
+    if((dlo<=0&&dm>=0)||(dlo>=0&&dm<=0)){hi=mid}else{lo=mid;dlo=dm}
+  }
+  return new Date((lo+hi)/2);
+}
+async function saturnReturns(natalDate,natalLon,minAge,maxAge,onProgress){
+  const start=natalDate.getTime()+minAge*365.2425*86400000,end=natalDate.getTime()+maxAge*365.2425*86400000,step=3*86400000,roots=[];
+  let t0=start,p0=await calculateSwissBody(new Date(t0),'Saturn'),d0=delta(natalLon,p0.longitude),n=0,total=Math.ceil((end-start)/step);
+  for(let t=t0+step;t<=end;t+=step){
+    const p=await calculateSwissBody(new Date(t),'Saturn'),d=delta(natalLon,p.longitude);
+    if(d0*d<=0&&Math.abs(d-d0)<15){
+      const root=await saturnExact(natalLon,t-step,t);
+      if(!roots.some(x=>Math.abs(x-root)<5*86400000))roots.push(root);
+    }
+    t0=t;d0=d;n++;if(onProgress&&n%20===0)onProgress(n/total);
+  }
+  return roots;
+}
+function saturnReturnTool(){
+  const el=shell('calculator-saturn-return','AstroVip · Saturn Return · exactitate','Calculator Revenirea lui Saturn','Găsește toate trecerile exacte ale lui Saturn peste poziția natală, inclusiv repetările produse de retrogradare. Sunt analizate prima, a doua și a treia revenire, acolo unde intervalul cronologic este disponibil.',`<form id="avc-sat-form">${profileFields('avc-sat','Harta natală')}<div class="avc-actions"><button class="avc-btn" type="submit">CALCULEAZĂ SATURN RETURN</button><button class="avc-btn secondary" type="button" id="avc-fill-sat">Folosește profilul meu</button></div><p class="avc-status" id="avc-sat-status">Fiecare fereastră este scanată și apoi momentul exact este rafinat iterativ.</p><div class="avc-progress"><i id="avc-sat-progress"></i></div></form><div class="avc-result" id="avc-sat-result" hidden></div>`);
+  placeSection(el);fill('avc-sat',savedProfile());document.getElementById('avc-fill-sat').onclick=()=>fill('avc-sat',savedProfile());
+  document.getElementById('avc-sat-form').addEventListener('submit',async e=>{
+    e.preventDefault();const out=document.getElementById('avc-sat-result'),bar=document.getElementById('avc-sat-progress');
+    try{
+      const p=profile('avc-sat'),natal=await calculateSwissBody(p.instant,'Saturn'),sets=[[27,32,'Prima revenire'],[56,61,'A doua revenire'],[85,91,'A treia revenire']],all=[];
+      setStatus('avc-sat-status','Caut trecerile exacte ale lui Saturn…',true);bar.style.width='2%';
+      for(let i=0;i<sets.length;i++){const [a,b,label]=sets[i],roots=await saturnReturns(p.instant,natal.longitude,a,b,x=>bar.style.width=Math.round((i+x)/sets.length*95)+'%');for(const r of roots){const sat=await calculateSwissBody(r,'Saturn');all.push({label,date:r,retro:sat.retrograde,lon:sat.longitude})}}
+      bar.style.width='100%';
+      const rows=all.map(x=>`<tr><td>${esc(x.label)}</td><td>${x.date.toISOString().replace('T',' ').slice(0,19)} UTC</td><td>${fmt(x.lon).text}</td><td>${x.retro?'Retrograd ℞':'Direct'}</td></tr>`).join('');
+      out.innerHTML=`<p class="avc-meta"><strong>Saturn natal:</strong> ${fmt(natal.longitude).text} · ${all.length} contacte exacte identificate în ferestrele de revenire.</p><div class="avc-table-wrap"><table class="avc-table"><thead><tr><th>Ciclu</th><th>Moment exact</th><th>Saturn</th><th>Mișcare</th></tr></thead><tbody>${rows||'<tr><td colspan="4">Nu au fost găsite reveniri în intervalele standard.</td></tr>'}</tbody></table></div><p class="avc-note">O revenire poate avea una sau trei treceri exacte, în funcție de ciclul de retrogradare al lui Saturn.</p>`;
+      out.hidden=false;setStatus('avc-sat-status','Calcul finalizat · Saturn Return',true);out.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(err){setStatus('avc-sat-status',err.message||'Calculul revenirii lui Saturn nu a putut fi realizat.')}
+  });
+}
+async function stationaryMoment(key,lo,hi){
+  let slo=(await calculateSwissBody(new Date(lo),key)).longitudeSpeed;
+  for(let i=0;i<30;i++){
+    const mid=(lo+hi)/2,sm=(await calculateSwissBody(new Date(mid),key)).longitudeSpeed;
+    if(Math.abs(sm)<1e-8)return new Date(mid);
+    if(slo*sm<=0)hi=mid;else{lo=mid;slo=sm}
+  }
+  return new Date((lo+hi)/2);
+}
+function retrogradeCalendarTool(){
+  const year=new Date().getFullYear();
+  const el=shell('calculator-retrogradari','AstroVip · stații planetare · Swiss Ephemeris','Calendar Retrogradări Planetare','Generează pentru un an momentele în care Mercur, Venus, Marte, Jupiter, Saturn, Uranus, Neptun și Pluto intră în retrogradare sau revin în mers direct. Stațiile sunt rafinate până la schimbarea semnului vitezei longitudinale.',`<form id="avc-ret-form"><div class="avc-card"><h3>Anul analizat</h3><div class="avc-form-grid"><div class="avc-field"><label for="avc-ret-year">An</label><input id="avc-ret-year" type="number" min="1801" max="2398" value="${year}" required></div></div></div><div class="avc-actions"><button class="avc-btn" type="submit">GENEREAZĂ RETROGRADĂRILE</button></div><p class="avc-status" id="avc-ret-status">Se caută schimbarea vitezei longitudinale de la + la − și de la − la +.</p><div class="avc-progress"><i id="avc-ret-progress"></i></div></form><div class="avc-result" id="avc-ret-result" hidden></div>`);
+  placeSection(el);
+  document.getElementById('avc-ret-form').addEventListener('submit',async e=>{
+    e.preventDefault();const out=document.getElementById('avc-ret-result'),bar=document.getElementById('avc-ret-progress');
+    try{
+      const y=Number(document.getElementById('avc-ret-year').value);if(y<1801||y>2398)throw new Error('Alege un an între 1801 și 2398.');
+      const start=Date.UTC(y,0,1,12),end=Date.UTC(y+1,0,1,12),days=Math.round((end-start)/86400000),keys=new Set(['Mercury','Venus','Mars','Jupiter','Saturn','Uranus','Neptune','Pluto']),events=[],prev=new Map();
+      setStatus('avc-ret-status',`Scanez anul ${y}…`,true);bar.style.width='1%';
+      for(let i=0;i<=days;i++){
+        const t=start+i*86400000,ps=await calculateSwissPositions(new Date(t));
+        for(const p of ps.planets){if(!keys.has(p.key))continue;const old=prev.get(p.key);if(old&&old.speed*p.longitudeSpeed<0){const when=await stationaryMoment(p.key,old.t,t),exact=await calculateSwissBody(when,p.key);events.push({key:p.key,label:p.label,glyph:p.glyph,date:when,type:old.speed>0?'Retrograd':'Direct',lon:exact.longitude})}prev.set(p.key,{t,speed:p.longitudeSpeed})}
+        if(i%10===0){bar.style.width=Math.round(i/days*98)+'%';await new Promise(r=>setTimeout(r,0))}
+      }
+      events.sort((a,b)=>a.date-b.date);bar.style.width='100%';
+      const rows=events.map(x=>`<tr><td>${x.date.toISOString().replace('T',' ').slice(0,19)} UTC</td><td>${esc(x.glyph)} ${esc(x.label)}</td><td><span class="avc-badge">${esc(x.type)}</span></td><td>${fmt(x.lon).text}</td></tr>`).join('');
+      out.innerHTML=`<p class="avc-meta"><strong>${events.length} stații planetare</strong> identificate pentru ${y}.</p><div class="avc-table-wrap"><table class="avc-table"><thead><tr><th>Moment</th><th>Planetă</th><th>Stație</th><th>Poziție</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      out.hidden=false;setStatus('avc-ret-status','Calendarul retrogradărilor este gata',true);out.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(err){setStatus('avc-ret-status',err.message||'Calendarul nu a putut fi generat.')}
+  });
+}
+
 function toolsNav(){
   const host=document.querySelector('main')||document.body;
-  const sec=document.createElement('section');sec.className='avc-shell';sec.innerHTML=`<div class="avc-tool"><div class="avc-head"><div class="avc-kicker">Nou în AstroVip Tools</div><h2>Calculatoare avansate</h2><p>Instrumentele folosesc aceeași infrastructură AstroVip pentru poziții planetare și case Koch.</p><div class="avc-tools-nav"><a href="/harta-compozita/">Hartă Compozită</a><a href="/harta-davison/">Hartă Davison</a><a href="/puncte-mijlocii/">66 Puncte Mijlocii</a><a href="/revolutie-lunara/">Revoluție Lunară</a><a href="/tranzitele-mele/">Calendar Tranzite</a><a href="/arce-solare/">Arce Solare</a><a href="/progresii-secundare/">Progresii</a><a href="/revolutie-solara/">Revoluție Solară</a></div></div></div>`;host.append(sec);
+  const sec=document.createElement('section');sec.className='avc-shell';sec.innerHTML=`<div class="avc-tool"><div class="avc-head"><div class="avc-kicker">Nou în AstroVip Tools</div><h2>Calculatoare avansate</h2><p>Instrumentele folosesc aceeași infrastructură AstroVip pentru poziții planetare și case Koch.</p><div class="avc-tools-nav"><a href="/harta-compozita/">Hartă Compozită</a><a href="/harta-davison/">Hartă Davison</a><a href="/puncte-mijlocii/">66 Puncte Mijlocii</a><a href="/revolutie-lunara/">Revoluție Lunară</a><a href="/tranzitele-mele/">Calendar Tranzite</a><a href="/arce-solare/">Arce Solare</a><a href="/progresii-secundare/">Progresii</a><a href="/revolutie-solara/">Revoluție Solară</a><a href="/pars-fortunae-partea-norocului/">16 Lots Arabe</a><a href="/stele-fixe-in-astrologie/">Stele Fixe</a><a href="/revenirea-lui-saturn/">Saturn Return</a><a href="/retrogradare-astrologie/">Retrogradări</a></div></div></div>`;host.append(sec);
 }
 function boot(){
   const p=location.pathname.replace(/\/+$/,'/')||'/';
@@ -197,6 +302,10 @@ function boot(){
   else if(p==='/puncte-mijlocii/')midpointTool();
   else if(p==='/revolutie-lunara/')lunarReturnTool();
   else if(p==='/tranzitele-mele/')transitCalendarTool();
+  else if(p==='/pars-fortunae-partea-norocului/')lotsTool();
+  else if(p==='/stele-fixe-in-astrologie/')fixedStarsTool();
+  else if(p==='/revenirea-lui-saturn/')saturnReturnTool();
+  else if(p==='/retrogradare-astrologie/')retrogradeCalendarTool();
   else if(p==='/instrumente-astrologie/')toolsNav();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
