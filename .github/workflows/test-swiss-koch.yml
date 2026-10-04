@@ -1,0 +1,20 @@
+name: Swiss Ephemeris Koch validation
+on:
+  pull_request:
+    paths:
+      - 'assets/astro/**'
+      - 'scripts/test-swiss-koch.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
+jobs:
+  swiss-koch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm install --ignore-scripts
+      - run: npm run test:swiss
