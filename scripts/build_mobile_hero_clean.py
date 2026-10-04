@@ -64,7 +64,7 @@ with Image.open(src) as im:
         # AVIF is the primary mobile LCP format. It cuts transfer size on
         # throttled mobile networks while preserving the portrait/text detail.
         out.save(
-            ROOT / "assets" / f"astrovip-hero-mobile-no-banners-{width}.avif",
+            ROOT / "assets" / f"astrovip-hero-mobile-clean-cards-{width}.avif",
             "AVIF",
             quality=62,
             speed=6,
@@ -72,10 +72,10 @@ with Image.open(src) as im:
 
         # WebP remains as a broad fallback for browsers without AVIF support.
         out.save(
-            ROOT / "assets" / f"astrovip-hero-mobile-no-banners-{width}.webp",
+            ROOT / "assets" / f"astrovip-hero-mobile-clean-cards-{width}.webp",
             "WEBP",
             quality=82,
             method=6,
         )
 
-print("Prepared no-banners mobile Hero AVIF + WebP variants.")
+print("Prepared clean mobile Hero AVIF + WebP variants without baked-in service labels.")
