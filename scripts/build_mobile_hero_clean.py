@@ -1,5 +1,6 @@
 from pathlib import Path
 from PIL import Image
+import pillow_avif  # registers AVIF support in Pillow
 import random
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,18 +53,29 @@ with Image.open(src) as im:
                 cur = im.getpixel((xr, y))
                 im.putpixel((xr, y), tuple(int(orig[c]*(1-a)+cur[c]*a) for c in range(3)))
 
-    outputs = [
-        (941, "astrovip-hero-mobile-clean-cards-941.webp"),
-        (768, "astrovip-hero-mobile-clean-cards-768.webp"),
-        (640, "astrovip-hero-mobile-clean-cards-640.webp"),
-        (480, "astrovip-hero-mobile-clean-cards-480.webp"),
-    ]
-    for width, name in outputs:
+    widths = [941, 736, 640, 480]
+    for width in widths:
         if width == w:
             out = im
         else:
             height = round(h * width / w)
             out = im.resize((width, height), Image.Resampling.LANCZOS)
-        out.save(ROOT / "assets" / name, "WEBP", quality=88, method=6)
 
-print("Prepared clean mobile Hero variants without baked-in service labels.")
+        # AVIF is the primary mobile LCP format. It cuts transfer size on
+        # throttled mobile networks while preserving the portrait/text detail.
+        out.save(
+            ROOT / "assets" / f"astrovip-hero-mobile-clean-cards-{width}.avif",
+            "AVIF",
+            quality=62,
+            speed=6,
+        )
+
+        # WebP remains as a broad fallback for browsers without AVIF support.
+        out.save(
+            ROOT / "assets" / f"astrovip-hero-mobile-clean-cards-{width}.webp",
+            "WEBP",
+            quality=82,
+            method=6,
+        )
+
+print("Prepared clean mobile Hero AVIF + WebP variants without baked-in service labels.")

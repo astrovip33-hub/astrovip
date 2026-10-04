@@ -40,7 +40,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m pip install --quiet Pillow
+          python3 -m pip install --quiet Pillow pillow-avif-plugin
           python3 scripts/build_mobile_hero_clean.py
 
       - name: Validate Cloudflare token
