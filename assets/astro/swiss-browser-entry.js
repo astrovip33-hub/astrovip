@@ -1,11 +1,11 @@
-import { createSwissEph, FetchEphemeris, Body } from '@kuntay/swisseph';
+import { createSwissEph, FetchEphemeris, Body, ROYAL_STARS, BEHENIAN_STARS, NOTABLE_STARS, byDesignation } from '@kuntay/swisseph';
 import { normalizeKochHouses } from './koch-houses.js';
 
 let enginePromise;
 async function engine(){
   if(!enginePromise) enginePromise=(async()=>{
     const swe=await createSwissEph();
-    const load=await swe.loadEphemeris(new FetchEphemeris(),{fromYear:1800,toYear:2399});
+    const load=await swe.loadEphemeris(new FetchEphemeris(),{fromYear:1800,toYear:2399,fixedStars:true});
     if(load.missing?.length) throw new Error('Swiss ephemeris files incomplete.');
     return swe;
   })();
@@ -94,4 +94,41 @@ export async function calculateSwissChart(date,lat,lon){
     cusps:houses.cusps,
     axes:houses.axes
   };
+}
+
+
+export async function calculateSwissLots(date,lat,lon){
+  const swe=await engine();
+  const jd=julianFromDate(swe,date);
+  const result=swe.lots(jd,{latitude:Number(lat),longitude:Number(lon),houseSystem:'K'});
+  return {
+    engine:'swisseph',
+    ephemerisSource:'swiss-files',
+    jd,
+    date:date.toISOString(),
+    sect:result.sect,
+    points:result.points,
+    lots:result.lots
+  };
+}
+
+export async function calculateSwissFixedStars(date,group='royal'){
+  const swe=await engine();
+  const jd=julianFromDate(swe,date);
+  const groups={royal:ROYAL_STARS,behenian:BEHENIAN_STARS,notable:NOTABLE_STARS};
+  const selected=groups[group]||ROYAL_STARS;
+  const stars=selected.map(star=>{
+    const p=swe.fixedStar(byDesignation(star.designation),jd);
+    return {
+      name:star.name,
+      designation:star.designation,
+      magnitude:star.magnitude,
+      groups:star.groups,
+      longitude:Number(p.longitude),
+      latitude:Number(p.latitude),
+      longitudeSpeed:Number(p.longitudeSpeed||0),
+      resolvedName:p.name||star.name
+    };
+  });
+  return {engine:'swisseph',ephemerisSource:'swiss-files',jd,date:date.toISOString(),group,stars};
 }
