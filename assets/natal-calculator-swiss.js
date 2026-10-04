@@ -1,4 +1,4 @@
-import { calculateSwissKoch } from '/assets/vendor/astrovip-swiss-koch.js';
+import { calculateSwissKoch } from '/assets/vendor/astrovip-swiss-koch.js?v=20261004-wasmfix2';
 (function(){
 'use strict';
 const PROFILE_KEY='astrovip_birth_profile_v1';
