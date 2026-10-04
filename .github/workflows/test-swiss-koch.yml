@@ -19,3 +19,6 @@ jobs:
       - run: npm run test:swiss
       - run: npm run build:swiss
       - run: test -s assets/vendor/astrovip-swiss-koch.js
+      - run: test -s SWISS-EPHEMERIS-AGPL.md
+      - run: grep -q 'natal-calculator-swiss.js' harta-mea/index.html
+      - run: grep -q 'Case Koch' harta-mea/index.html
