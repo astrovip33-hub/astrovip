@@ -27,6 +27,16 @@ await build({
   outfile: bundle,
 });
 
+const { readFile, writeFile } = await import('node:fs/promises');
+let built = await readFile(bundle, 'utf8');
+const wasmRuntimeRef = 'new URL("swisseph.wasm", import.meta.url).href';
+const wasmVersionedRef = 'new URL("swisseph.wasm?v=20261004-wasmfix2", import.meta.url).href';
+if (!built.includes(wasmRuntimeRef)) {
+  throw new Error('Could not locate the Emscripten Swiss WASM runtime URL in the browser bundle.');
+}
+built = built.replace(wasmRuntimeRef, wasmVersionedRef);
+await writeFile(bundle, built, 'utf8');
+
 await copyFile(wasmSource, wasmTarget);
 
 const [{ size: bundleSize }, { size: wasmSize }] = await Promise.all([
@@ -44,10 +54,4 @@ if (wasmSize < 100000) {
 console.log(`Swiss Koch bundle: ${bundleSize} bytes`);
 console.log(`Swiss WASM asset: ${wasmSize} bytes -> assets/vendor/swisseph.wasm`);
 
-const built = await (await import('node:fs/promises')).readFile(bundle, 'utf8');
-const ref = built.indexOf('swisseph.wasm');
-if (ref >= 0) {
-  console.log('WASM reference context:', built.slice(Math.max(0, ref - 700), ref + 900));
-} else {
-  console.log('WASM reference context: no literal swisseph.wasm found in bundle');
-}
+
