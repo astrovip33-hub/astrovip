@@ -1,9 +1,0 @@
-AstroVip SEO cleanup pass 2 — 2026-10-05
-Atlas families excluded and untouched.
-HTML files changed: 38
-Titles cleaned: 21
-Descriptions reduced: 9
-Twitter metadata synchronized: 26
-
-VALIDATION
-- PASS: no title/description length or double-separator issues outside Atlas.
