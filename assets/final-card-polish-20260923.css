@@ -226,3 +226,13 @@ body:not(.guide-page) .av-lang-chat-flank .av-lang-side.is-active{
     justify-content:center!important;
   }
 }
+
+/* 2026-10-05 — hide the same four Hero ribbons on every viewport.
+   Markup stays intact so all four can be restored instantly. */
+html body:not(.guide-page) .av-lang-reviews,
+html body:not(.guide-page) .hero.av-hero-v2 .av-premium-trust-ribbon,
+html body:not(.guide-page) .hero.av-hero-v2 .av-lower-planets,
+html body:not(.guide-page) .hero.av-hero-v2 .av-ticker-card--axes,
+html body:not(.guide-page) .hero.av-hero-v2 #av-hero-planets{
+  display:none!important;
+}
