@@ -1,0 +1,376 @@
+AstroVip — SE Ranking remediation 2026-10-05
+Scope: all public HTML except Atlas families (atlas/, atlas-*, academia-astrologie/atlas-*).
+Atlas indexing/content intentionally unchanged.
+
+COUNTS
+- css_minified: 54
+- descriptions_shortened: 104
+- empty_anchor_fixed: 53
+- external_4xx_unwrapped: 21
+- external_redirects_updated: 63
+- external_timeouts_skipped: 1
+- external_urls_checked: 127
+- h1_shortened: 1
+- html_files_changed: 238
+- images_optimized: 1
+- inbound_links_added: 2
+- js_minified: 19
+- missing_js_removed: 11
+- titles_shortened: 67
+- twitter_cards_added: 119
+
+VALIDATION
+- description>155: horoscop-chinezesc/metoda-theodora-lau/index.html (156)
+- description>155: local-space/studii-de-caz/venus-constanta-98/index.html (156)
+- description>155: ramurile-astrologiei/index.html (156)
+- description>155: revenirea-lui-jupiter/index.html (156)
+- description>155: revolutie-lunara/index.html (156)
+- description>155: studii-de-caz/presedinti/charles-de-gaulle-investitura-1959/index.html (156)
+- description>155: studii-de-caz/presedinti/index.html (156)
+- description>155: zodiac/gemeni/index.html (156)
+- description>155: zodiac/scorpion/index.html (156)
+
+DETAILS
+- TITLE academia-astrologie/index.html :: Academia de astrologie AstroVip | Ghiduri fundamentale și avansate -> Academia de astrologie AstroVip | Ghiduri | AstroVip
+- DESCRIPTION academia-astrologie/index.html :: 172 -> 150 chars
+- DESCRIPTION algoritm-astrovip/index.html :: 160 -> 148 chars
+- JS REMOVE algoritm-astrovip/index.html :: /assets/planetary-ticker-v2.js
+- JS REMOVE arce-solare/index.html :: /assets/planetary-ticker-v2.js
+- TITLE asteroizi-in-astrologie/index.html :: Asteroizi în astrologie | Ceres, Pallas, Juno, Vesta | AstroVip -> Asteroizi în astrologie | Ceres, Pallas, Juno | AstroVip
+- TITLE astrocartografie/index.html :: Calculator Astrocartografie: Linii Planetare și Orașe | AstroVip -> Calculator Astrocartografie: Linii Planetare și | AstroVip
+- TITLE astrocartografie-local-space/index.html :: Astrocartografie: Hartă, Linii Planetare și Relocare | AstroVip -> Astrocartografie: Hartă, Linii Planetare și | AstroVip
+- TITLE astrologie/index.html :: Astrologie: Hartă Natală, Previziuni, Relații și Relocare | AstroVip -> Astrologie: Hartă Natală, Previziuni, Relații și | AstroVip
+- DESCRIPTION astrologie/index.html :: 168 -> 146 chars
+- DESCRIPTION astrologie-financiara/index.html :: 161 -> 154 chars
+- DESCRIPTION astrologie-mundana/index.html :: 177 -> 154 chars
+- DESCRIPTION astrologie-orara/index.html :: 160 -> 139 chars
+- JS REMOVE astrologie-predictiva/index.html :: /assets/planetary-ticker-v2.js
+- DESCRIPTION astrologie-relationala/index.html :: 175 -> 148 chars
+- JS REMOVE astrologie-vocationala/index.html :: /assets/planetary-ticker-v2.js
+- TITLE blog/arce-solare-timing-evenimente/index.html :: Arce Solare: cum identifici ferestrele importante de timing | AstroVip -> Arce Solare: cum identifici ferestrele importante | AstroVip
+- TITLE blog/relocare-astrocartografie-local-space/index.html :: Relocare: hartă relocată, astrocartografie și Local Space | AstroVip -> Relocare: hartă relocată, astrocartografie și Local | AstroVip
+- TITLE calculator-ascendent/index.html :: Calculator Ascendent Gratuit – Calcul Ascendent Zodiac | AstroVip -> Calculator Ascendent Gratuit – Calcul Ascendent | AstroVip
+- TITLE calendar-astrologic-2026-2027/index.html :: Calendar Astrologic 2026–2027 | Retrogradări & Eclipse | AstroVip -> Calendar Astrologic 2026–2027 | Retrogradări & | AstroVip
+- TITLE chiron-in-astrologie/index.html :: Chiron în astrologie | Interpretare natală, case și aspecte | AstroVip -> Chiron în astrologie | Interpretare natală, case și | AstroVip
+- TITLE compatibilitate-numerologica/index.html :: Compatibilitate numerologică | Calcul și interpretare | AstroVip -> Compatibilitate numerologică | Calcul și | AstroVip
+- DESCRIPTION compatibilitate-zodii/index.html :: 157 -> 148 chars
+- H1 consultatie-astrologica/index.html :: Analiză și Consultație Astrologică Hartă natală, timing și decizii importante — într-o analiză personalizată -> Consultație astrologică personalizată
+- TITLE declinatie-paralele-contraparalele/index.html :: Declinație, paralele și contraparalele în astrologie | AstroVip -> Declinație, paralele și contraparalele în | AstroVip
+- JS REMOVE despre-astrovip/index.html :: /assets/planetary-ticker-v2.js
+- TITLE harta-compozita/index.html :: Harta compozită | Astrologia relației și punctele mijlocii | AstroVip -> Harta compozită | Astrologia relației și punctele | AstroVip
+- TITLE horoscop-chinezesc/calculator/index.html :: Calculator Zodie Chinezească – Semn, Element și Ascendent | AstroVip -> Calculator Zodie Chinezească – Semn, Element și | AstroVip
+- DESCRIPTION horoscop-chinezesc/calendar-lunar-anul-chinezesc/index.html :: 170 -> 91 chars
+- DESCRIPTION horoscop-chinezesc/cele-12-animale/index.html :: 163 -> 117 chars
+- DESCRIPTION horoscop-chinezesc/compatibilitate/index.html :: 181 -> 115 chars
+- DESCRIPTION horoscop-chinezesc/element-apa/index.html :: 174 -> 91 chars
+- DESCRIPTION horoscop-chinezesc/element-foc/index.html :: 171 -> 154 chars
+- DESCRIPTION horoscop-chinezesc/element-lemn/index.html :: 172 -> 89 chars
+- DESCRIPTION horoscop-chinezesc/element-metal/index.html :: 167 -> 153 chars
+- DESCRIPTION horoscop-chinezesc/element-pamant/index.html :: 180 -> 97 chars
+- DESCRIPTION horoscop-chinezesc/index.html :: 159 -> 90 chars
+- DESCRIPTION horoscop-chinezesc/metoda-theodora-lau/index.html :: 170 -> 156 chars
+- DESCRIPTION horoscop-chinezesc/ore-chinezesti-ascendent/index.html :: 177 -> 148 chars
+- TITLE lilith-luna-neagra/index.html :: Lilith în astrologie | Luna Neagră, Mean și True Lilith | AstroVip -> Lilith în astrologie | Luna Neagră, Mean și True | AstroVip
+- DESCRIPTION local-space/studii-de-caz/index.html :: 157 -> 144 chars
+- DESCRIPTION local-space/studii-de-caz/venus-constanta-98/index.html :: 173 -> 156 chars
+- TITLE metoda-astrovip/index.html :: Metoda AstroVip | Hartă Natală, Arce Solare, Tranzite și Timing -> Metoda AstroVip | Hartă Natală, Arce Solare | AstroVip
+- DESCRIPTION metoda-astrovip/index.html :: 174 -> 152 chars
+- JS REMOVE metoda-astrovip/index.html :: /assets/planetary-ticker-v2.js
+- TITLE nod-lunar-adevarat-vs-mediu/index.html :: True Node vs Mean Node | Nodul Lunar adevărat și mediu | AstroVip -> True Node vs Mean Node | Nodul Lunar adevărat și | AstroVip
+- DESCRIPTION nodurile-lunare/index.html :: 162 -> 103 chars
+- TITLE numarul-destinului/index.html :: Numărul Destinului în Numerologie | Calcul și Semnificație | AstroVip -> Numărul Destinului în Numerologie | Calcul și | AstroVip
+- TITLE numarul-expresiei/index.html :: Numărul Expresiei în Numerologie | Calcul și Semnificație | AstroVip -> Numărul Expresiei în Numerologie | Calcul și | AstroVip
+- TITLE numarul-sufletului/index.html :: Numărul Sufletului în Numerologie | Calcul și Semnificație | AstroVip -> Numărul Sufletului în Numerologie | Calcul și | AstroVip
+- TITLE numere-maestru/index.html :: Numere maestru 11, 22 și 33 | Calcul și semnificație | AstroVip -> Numere maestru 11, 22 și 33 | Calcul și | AstroVip
+- TITLE numerologia-casei/index.html :: Numerologia Casei în Numerologie | Calcul și Semnificație | AstroVip -> Numerologia Casei în Numerologie | Calcul și | AstroVip
+- TITLE numerologia-numelui/index.html :: Numerologia Numelui în Numerologie | Calcul și Semnificație | AstroVip -> Numerologia Numelui în Numerologie | Calcul și | AstroVip
+- JS REMOVE numerologie/index.html :: /assets/planetary-ticker-v2.js
+- TITLE numerologie-data-nasterii/index.html :: Numerologie după Data Nașterii | Calea Vieții & An Personal | AstroVip -> Numerologie după Data Nașterii | Calea Vieții & An | AstroVip
+- TITLE numerologie-tantrica/index.html :: Numerologia tantrică după Harish Johari — ghid AstroVip | AstroVip -> Numerologia tantrică după Harish Johari — ghid | AstroVip
+- DESCRIPTION numerologie-tantrica/index.html :: 165 -> 150 chars
+- DESCRIPTION numerologie-tantrica/numarul-1/index.html :: 167 -> 109 chars
+- DESCRIPTION numerologie-tantrica/numarul-2/index.html :: 178 -> 120 chars
+- DESCRIPTION numerologie-tantrica/numarul-3/index.html :: 157 -> 99 chars
+- DESCRIPTION numerologie-tantrica/numarul-4/index.html :: 167 -> 109 chars
+- DESCRIPTION numerologie-tantrica/numarul-6/index.html :: 157 -> 99 chars
+- DESCRIPTION numerologie-tantrica/numarul-7/index.html :: 161 -> 103 chars
+- DESCRIPTION numerologie-tantrica/numarul-8/index.html :: 160 -> 102 chars
+- DESCRIPTION numerologie-tantrica/numarul-9/index.html :: 157 -> 99 chars
+- TITLE numerologie-tantrica/sanatate-in-context-traditional/index.html :: Sănătatea în Numerologia tantrică: context și limite | AstroVip -> Sănătatea în Numerologia tantrică: context și | AstroVip
+- DESCRIPTION presa/index.html :: 162 -> 151 chars
+- TITLE previziuni-astrologice-2027/index.html :: Previziuni Astrologice 2027 | Dragoste, Carieră & Afaceri | AstroVip -> Previziuni Astrologice 2027 | Dragoste, Carieră & | AstroVip
+- JS REMOVE progresii-secundare/index.html :: /assets/planetary-ticker-v2.js
+- JS REMOVE puncte-mijlocii/index.html :: /assets/planetary-ticker-v2.js
+- DESCRIPTION ramurile-astrologiei/index.html :: 166 -> 156 chars
+- DESCRIPTION research/index.html :: 159 -> 150 chars
+- DESCRIPTION research/metodologie/index.html :: 157 -> 150 chars
+- TITLE research/nord-spania-venus-uranus-pluto/index.html :: Nordul Spaniei — Venus și midpoint Uranus/Pluto | AstroVip Research -> Nordul Spaniei — Venus și midpoint Uranus/Pluto | | AstroVip
+- TITLE resurse-astrologie/index.html :: Resurse Astrologie: Calculatoare, Date Live & Metodologie | AstroVip -> Resurse Astrologie: Calculatoare, Date Live & | AstroVip
+- DESCRIPTION resurse-astrologie/index.html :: 158 -> 148 chars
+- TITLE retrogradare-astrologie/index.html :: Retrogradarea planetelor în astrologie | Natal și tranzite | AstroVip -> Retrogradarea planetelor în astrologie | Natal și | AstroVip
+- DESCRIPTION retrogradare-astrologie/index.html :: 159 -> 152 chars
+- TITLE revenirea-lui-jupiter/index.html :: Revenirea lui Jupiter | Ciclul de aproximativ 12 ani | AstroVip -> Revenirea lui Jupiter | Ciclul de aproximativ 12 | AstroVip
+- DESCRIPTION revenirea-lui-jupiter/index.html :: 170 -> 156 chars
+- DESCRIPTION revolutie-lunara/index.html :: 163 -> 156 chars
+- JS REMOVE revolutie-solara/index.html :: /assets/planetary-ticker-v2.js
+- DESCRIPTION semne-interceptate-case-interceptate/index.html :: 172 -> 152 chars
+- DESCRIPTION sinastrie/index.html :: 157 -> 136 chars
+- JS REMOVE sinastrie/index.html :: /assets/planetary-ticker-v2.js
+- TITLE sisteme-de-case-astrologice/index.html :: Sisteme de case astrologice | Placidus, Koch, Whole Sign | AstroVip -> Sisteme de case astrologice | Placidus, Koch, Whole | AstroVip
+- DESCRIPTION sisteme-de-case-astrologice/index.html :: 171 -> 152 chars
+- DESCRIPTION studii-de-caz/cutremure/alaska-prince-william-1964/index.html :: 164 -> 150 chars
+- DESCRIPTION studii-de-caz/cutremure/andreanof-alaska-1957/index.html :: 161 -> 147 chars
+- TITLE studii-de-caz/cutremure/arequipa-peru-2001/index.html :: Sudul Peru / Arequipa 2001, Mw 8.4 | Cutremur & Astrologie | AstroVip -> Sudul Peru / Arequipa 2001, Mw 8.4 | Cutremur & | AstroVip
+- DESCRIPTION studii-de-caz/cutremure/arequipa-peru-2001/index.html :: 157 -> 143 chars
+- TITLE studii-de-caz/cutremure/ecuador-colombia-1906/index.html :: Ecuador–Colombia 1906, Mw 8.8 | Cutremur & Astrologie | AstroVip -> Ecuador–Colombia 1906, Mw 8.8 | Cutremur & | AstroVip
+- DESCRIPTION studii-de-caz/cutremure/index.html :: 159 -> 145 chars
+- TITLE studii-de-caz/cutremure/kamchatka-rusia-1923/index.html :: Kamchatka, Rusia 1923, Mw 8.4 | Cutremur & Astrologie | AstroVip -> Kamchatka, Rusia 1923, Mw 8.4 | Cutremur & | AstroVip
+- TITLE studii-de-caz/cutremure/kamchatka-rusia-1952/index.html :: Kamchatka, Rusia 1952, Mw 9.0 | Cutremur & Astrologie | AstroVip -> Kamchatka, Rusia 1952, Mw 9.0 | Cutremur & | AstroVip
+- TITLE studii-de-caz/cutremure/kamchatka-rusia-2025/index.html :: Kamchatka, Rusia 2025, Mw 8.8 | Cutremur & Astrologie | AstroVip -> Kamchatka, Rusia 2025, Mw 8.8 | Cutremur & | AstroVip
+- TITLE studii-de-caz/cutremure/kuril-islands-1963/index.html :: Insulele Kurile 1963, Mw 8.5 | Cutremur & Astrologie | AstroVip -> Insulele Kurile 1963, Mw 8.5 | Cutremur & | AstroVip
+- DESCRIPTION studii-de-caz/cutremure/maule-chile-2010/index.html :: 157 -> 143 chars
+- TITLE studii-de-caz/cutremure/sumatra-2012/index.html :: Nordul Sumatrei 2012, Mw 8.6 | Cutremur & Astrologie | AstroVip -> Nordul Sumatrei 2012, Mw 8.6 | Cutremur & | AstroVip
+- TITLE studii-de-caz/cutremure/sumatra-andaman-2004/index.html :: Sumatra–Andaman 2004, Mw 9.1 | Cutremur & Astrologie | AstroVip -> Sumatra–Andaman 2004, Mw 9.1 | Cutremur & | AstroVip
+- TITLE studii-de-caz/cutremure/tohoku-japonia-2011/index.html :: Tōhoku, Japonia 2011, Mw 9.1 | Cutremur & Astrologie | AstroVip -> Tōhoku, Japonia 2011, Mw 9.1 | Cutremur & | AstroVip
+- DESCRIPTION studii-de-caz/cutremure/unimak-alaska-1946/index.html :: 157 -> 143 chars
+- TITLE studii-de-caz/cutremure/valdivia-chile-1960/index.html :: Valdivia, Chile 1960, Mw 9.5 | Cutremur & Astrologie | AstroVip -> Valdivia, Chile 1960, Mw 9.5 | Cutremur & | AstroVip
+- DESCRIPTION studii-de-caz/inceput-clasa-i-1984/index.html :: 165 -> 152 chars
+- DESCRIPTION studii-de-caz/interventie-chirurgicala-pitesti-1998/index.html :: 188 -> 143 chars
+- TITLE studii-de-caz/persoane-publice/al-pacino-oscar-1993/index.html :: Al Pacino — Oscar pentru Scent of a Woman | Arce Solare | AstroVip -> Al Pacino — Oscar pentru Scent of a Woman | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/al-pacino-oscar-1993/index.html :: 162 -> 109 chars
+- DESCRIPTION studii-de-caz/persoane-publice/angelina-jolie-oscar-2000/index.html :: 168 -> 115 chars
+- TITLE studii-de-caz/persoane-publice/ayrton-senna-japonia-1988/index.html :: Ayrton Senna: victoria din Japonia 1988 | Arce Solare | AstroVip -> Ayrton Senna: victoria din Japonia 1988 | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/ayrton-senna-japonia-1988/index.html :: 176 -> 123 chars
+- DESCRIPTION studii-de-caz/persoane-publice/brad-pitt-oscar-2020/index.html :: 176 -> 124 chars
+- DESCRIPTION studii-de-caz/persoane-publice/bruce-lee-big-boss-1971/index.html :: 157 -> 104 chars
+- DESCRIPTION studii-de-caz/persoane-publice/dakota-johnson-fifty-shades-2015/index.html :: 169 -> 117 chars
+- TITLE studii-de-caz/persoane-publice/dolly-parton-opry-1969/index.html :: Dolly Parton — Intrarea în Grand Ole Opry | Arce Solare | AstroVip -> Dolly Parton — Intrarea în Grand Ole Opry | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/dolly-parton-opry-1969/index.html :: 163 -> 110 chars
+- DESCRIPTION studii-de-caz/persoane-publice/elvis-presley-casatorie-1967/index.html :: 164 -> 111 chars
+- DESCRIPTION studii-de-caz/persoane-publice/george-clooney-oscar-2006/index.html :: 157 -> 104 chars
+- TITLE studii-de-caz/persoane-publice/jodie-foster-oscar-1989/index.html :: Jodie Foster — Oscar pentru The Accused | Arce Solare | AstroVip -> Jodie Foster — Oscar pentru The Accused | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/jodie-foster-oscar-1989/index.html :: 160 -> 107 chars
+- DESCRIPTION studii-de-caz/persoane-publice/johnny-depp-pirates-2003/index.html :: 196 -> 143 chars
+- TITLE studii-de-caz/persoane-publice/julia-roberts-oscar-2001/index.html :: Julia Roberts — Oscar pentru Erin Brockovich | Arce Solare | AstroVip -> Julia Roberts — Oscar pentru Erin Brockovich | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/julia-roberts-oscar-2001/index.html :: 165 -> 112 chars
+- DESCRIPTION studii-de-caz/persoane-publice/king-charles-accesiune-2022/index.html :: 160 -> 108 chars
+- TITLE studii-de-caz/persoane-publice/kurt-cobain-nevermind-1991/index.html :: Kurt Cobain — Lansarea albumului Nevermind | Arce Solare | AstroVip -> Kurt Cobain — Lansarea albumului Nevermind | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/kurt-cobain-nevermind-1991/index.html :: 167 -> 114 chars
+- TITLE studii-de-caz/persoane-publice/meryl-streep-oscar-2012/index.html :: Meryl Streep — Oscar pentru The Iron Lady | Arce Solare | AstroVip -> Meryl Streep — Oscar pentru The Iron Lady | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/meryl-streep-oscar-2012/index.html :: 165 -> 112 chars
+- TITLE studii-de-caz/persoane-publice/michael-b-jordan-creed-2015/index.html :: Michael B. Jordan — Lansarea filmului Creed | Arce Solare | AstroVip -> Michael B. Jordan — Lansarea filmului Creed | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/michael-b-jordan-creed-2015/index.html :: 167 -> 114 chars
+- DESCRIPTION studii-de-caz/persoane-publice/muhammad-ali-titlu-mondial-1964/index.html :: 177 -> 124 chars
+- DESCRIPTION studii-de-caz/persoane-publice/prince-william-nunta-2011/index.html :: 171 -> 118 chars
+- TITLE studii-de-caz/persoane-publice/robert-downey-jr-oscar-2024/index.html :: Robert Downey Jr. — Oscar pentru Oppenheimer | Arce Solare | AstroVip -> Robert Downey Jr. — Oscar pentru Oppenheimer | Arce | AstroVip
+- DESCRIPTION studii-de-caz/persoane-publice/robert-downey-jr-oscar-2024/index.html :: 164 -> 112 chars
+- DESCRIPTION studii-de-caz/persoane-publice/robin-williams-oscar-1998/index.html :: 168 -> 115 chars
+- DESCRIPTION studii-de-caz/persoane-publice/steven-spielberg-oscar-1994/index.html :: 175 -> 122 chars
+- DESCRIPTION studii-de-caz/persoane-publice/sylvester-stallone-rocky-1976/index.html :: 170 -> 118 chars
+- DESCRIPTION studii-de-caz/persoane-publice/tom-hanks-oscar-1994/index.html :: 168 -> 115 chars
+- DESCRIPTION studii-de-caz/persoane-publice/whitney-houston-bodyguard-1992/index.html :: 173 -> 120 chars
+- TITLE studii-de-caz/presedinti/barack-obama-inaugurare-2009/index.html :: Barack Obama — 20 ianuarie 2009 | Președinte · Arce Solare | AstroVip -> Barack Obama — 20 ianuarie 2009 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/barack-obama-inaugurare-2009/index.html :: 169 -> 151 chars
+- TITLE studii-de-caz/presedinti/bill-clinton-inaugurare-1993/index.html :: Bill Clinton — 20 ianuarie 1993 | Președinte · Arce Solare | AstroVip -> Bill Clinton — 20 ianuarie 1993 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/bill-clinton-inaugurare-1993/index.html :: 164 -> 152 chars
+- TITLE studii-de-caz/presedinti/carlos-menem-investitura-1989/index.html :: Carlos Menem — 8 iulie 1989 | Președinte · Arce Solare | AstroVip -> Carlos Menem — 8 iulie 1989 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/carlos-menem-investitura-1989/index.html :: 162 -> 150 chars
+- DESCRIPTION studii-de-caz/presedinti/charles-de-gaulle-investitura-1959/index.html :: 194 -> 156 chars
+- TITLE studii-de-caz/presedinti/donald-trump-inaugurare-2017/index.html :: Donald Trump — 20 ianuarie 2017 | Președinte · Arce Solare | AstroVip -> Donald Trump — 20 ianuarie 2017 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/donald-trump-inaugurare-2017/index.html :: 164 -> 152 chars
+- TITLE studii-de-caz/presedinti/emmanuel-macron-investitura-2017/index.html :: Emmanuel Macron — 14 mai 2017 | Președinte · Arce Solare | AstroVip -> Emmanuel Macron — 14 mai 2017 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/emmanuel-macron-investitura-2017/index.html :: 161 -> 149 chars
+- TITLE studii-de-caz/presedinti/francois-hollande-investitura-2012/index.html :: François Hollande — 15 mai 2012 | Președinte · Arce Solare | AstroVip -> François Hollande — 15 mai 2012 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/francois-hollande-investitura-2012/index.html :: 163 -> 151 chars
+- DESCRIPTION studii-de-caz/presedinti/francois-mitterrand-investitura-1981/index.html :: 165 -> 153 chars
+- DESCRIPTION studii-de-caz/presedinti/franklin-d-roosevelt-inaugurare-1933/index.html :: 170 -> 152 chars
+- DESCRIPTION studii-de-caz/presedinti/george-w-bush-inaugurare-2001/index.html :: 166 -> 154 chars
+- DESCRIPTION studii-de-caz/presedinti/harry-truman-presedinte-1945/index.html :: 191 -> 115 chars
+- DESCRIPTION studii-de-caz/presedinti/index.html :: 156 -> 156 chars
+- DESCRIPTION studii-de-caz/presedinti/john-f-kennedy-inaugurare-1961/index.html :: 172 -> 154 chars
+- TITLE studii-de-caz/presedinti/juan-peron-investitura-1946/index.html :: Juan Perón — 4 iunie 1946 | Președinte · Arce Solare | AstroVip -> Juan Perón — 4 iunie 1946 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/juan-peron-investitura-1946/index.html :: 165 -> 153 chars
+- TITLE studii-de-caz/presedinti/lech-walesa-presedinte-1990/index.html :: Lech Wałęsa — 22 decembrie 1990 | Președinte · Arce Solare | AstroVip -> Lech Wałęsa — 22 decembrie 1990 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/lech-walesa-presedinte-1990/index.html :: 172 -> 154 chars
+- DESCRIPTION studii-de-caz/presedinti/michelle-bachelet-investitura-2006/index.html :: 169 -> 151 chars
+- TITLE studii-de-caz/presedinti/nicolas-sarkozy-investitura-2007/index.html :: Nicolas Sarkozy — 16 mai 2007 | Președinte · Arce Solare | AstroVip -> Nicolas Sarkozy — 16 mai 2007 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/nicolas-sarkozy-investitura-2007/index.html :: 161 -> 149 chars
+- TITLE studii-de-caz/presedinti/richard-nixon-inaugurare-1969/index.html :: Richard Nixon — 20 ianuarie 1969 | Președinte · Arce Solare | AstroVip -> Richard Nixon — 20 ianuarie 1969 | Președinte · | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/richard-nixon-inaugurare-1969/index.html :: 160 -> 148 chars
+- DESCRIPTION studii-de-caz/presedinti/salvador-allende-investitura-1970/index.html :: 165 -> 153 chars
+- TITLE studii-de-caz/presedinti/vaclav-havel-juramant-1993/index.html :: Václav Havel — 2 februarie 1993 | Președinte · Arce Solare | AstroVip -> Václav Havel — 2 februarie 1993 | Președinte · Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/vaclav-havel-juramant-1993/index.html :: 171 -> 153 chars
+- TITLE studii-de-caz/presedinti/valery-giscard-destaing-investitura-1974/index.html :: Valéry Giscard d'Estaing — 27 mai 1974 | Arce Solare | AstroVip -> Valéry Giscard d'Estaing — 27 mai 1974 | Arce | AstroVip
+- DESCRIPTION studii-de-caz/presedinti/valery-giscard-destaing-investitura-1974/index.html :: 170 -> 152 chars
+- TITLE studii-de-caz/relatie-septembrie-1996/index.html :: Început de relație — septembrie 1996 | Studiu de caz | AstroVip -> Început de relație — septembrie 1996 | Studiu de | AstroVip
+- TITLE toate-paginile/index.html :: Toate paginile AstroVip | Calculatoare, ghiduri și studii de caz -> Toate paginile AstroVip | Calculatoare, ghiduri și | AstroVip
+- DESCRIPTION tranzitele-mele/index.html :: 165 -> 110 chars
+- TITLE vertex-anti-vertex/index.html :: Vertex și Anti-Vertex în astrologie | Sinastrie și tranzite | AstroVip -> Vertex și Anti-Vertex în astrologie | Sinastrie și | AstroVip
+- DESCRIPTION zodiac/capricorn/index.html :: 157 -> 150 chars
+- DESCRIPTION zodiac/fecioara/index.html :: 157 -> 150 chars
+- DESCRIPTION zodiac/gemeni/index.html :: 156 -> 156 chars
+- TITLE zodiac/pesti/index.html :: Pești în astrologie | Apă, mutabilă, Jupiter / Neptun | AstroVip -> Pești în astrologie | Apă, mutabilă, Jupiter / | AstroVip
+- DESCRIPTION zodiac/pesti/index.html :: 164 -> 151 chars
+- DESCRIPTION zodiac/sagetator/index.html :: 157 -> 150 chars
+- DESCRIPTION zodiac/scorpion/index.html :: 156 -> 156 chars
+- DESCRIPTION zodiac/varsator/index.html :: 157 -> 150 chars
+- INTERNAL canonicalized homepage link -> /intrebare-gratuita/
+- INTERNAL added hub link -> /horoscop-chinezesc/metoda-theodora-lau/
+- EXT 404 UNWRAP astrologie-medicala/index.html :: https://wellcomecollection.org/works/gftr4sa9
+- EXT REDIRECT case-derivate-astrologie/index.html :: https://www.astro.com/astrowiki/en/Derived_Houses -> https://www.astro.com/cgi/prep.cgi/astrowiki/en/Derived_Houses
+- EXT 403 UNWRAP case-derivate-astrologie/index.html :: https://www.skyscript.co.uk/glossary/
+- EXT REDIRECT command-center/index.html :: https://ads.google.com -> https://business.google.com/us/google-ads/
+- EXT REDIRECT command-center/index.html :: https://metricool.com -> https://metricool.com/
+- EXT REDIRECT command-center/index.html :: https://www.figma.com -> https://www.figma.com/
+- EXT REDIRECT command-center/index.html :: https://search.google.com/search-console -> https://search.google.com/search-console/about
+- EXT REDIRECT command-center/index.html :: https://analytics.google.com -> https://analytics.google.com/analytics/web/
+- EXT REDIRECT command-center/index.html :: https://drive.google.com -> https://accounts.google.com/v3/signin/identifier?continue=https://drive.google.com/&emr=1&followup=https://drive.google.com/&osid=1&passive=1209600&service=wise&flowName=WebLiteSignIn&flowEntry=ServiceLogin&dsh=S204884930:1791178064191280
+- EXT 403 UNWRAP command-center/index.html :: https://dash.cloudflare.com
+- EXT 404 UNWRAP index.html :: https://search.google.com/local/reviews?placeid=ChIJb8zjk-7_sUARdcftjopVq9g
+- EXT 404 UNWRAP index.html :: https://search.google.com/local/reviews?placeid=ChIJb8zjk-7_sUARdcftjopVq9g
+- EXT REDIRECT index.html :: https://search.google.com/local/writereview?placeid=ChIJb8zjk-7_sUARdcftjopVq9g -> https://accounts.google.com/v3/signin/identifier?continue=https://search.google.com/local/writereview?placeid%3DChIJb8zjk-7_sUARdcftjopVq9g&flowName=WebLiteSignIn&flowEntry=ServiceLogin&dsh=S-49652174:1791178064308216
+- EXT 404 UNWRAP recenzii/index.html :: https://search.google.com/local/reviews?placeid=ChIJb8zjk-7_sUARdcftjopVq9g
+- EXT REDIRECT recenzii/index.html :: https://search.google.com/local/writereview?placeid=ChIJb8zjk-7_sUARdcftjopVq9g -> https://accounts.google.com/v3/signin/identifier?continue=https://search.google.com/local/writereview?placeid%3DChIJb8zjk-7_sUARdcftjopVq9g&flowName=WebLiteSignIn&flowEntry=ServiceLogin&dsh=S-49652174:1791178064308216
+- EXT REDIRECT semne-interceptate-case-interceptate/index.html :: https://www.astro.com/astrowiki/en/Intercepted_Sign -> https://www.astro.com/cgi/prep.cgi/astrowiki/en/Intercepted_Sign
+- EXT REDIRECT semne-interceptate-case-interceptate/index.html :: https://www.astro.com/faq/fq_ua_houses_e.htm -> https://www.astro.com/cgi/prep.cgi/faq/fq_ua_houses_e.htm
+- EXT 403 UNWRAP semne-interceptate-case-interceptate/index.html :: https://www.skyscript.co.uk/glossary/intercepted-signs/
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/al-pacino-oscar-1993/index.html :: https://www.oscars.org/oscars/ceremonies/1993/S
+- EXT REDIRECT studii-de-caz/persoane-publice/al-pacino-oscar-1993/index.html :: https://www.astro.com/astro-databank/Pacino%2C_Al -> https://www.astro.com/cgi/prep.cgi/astro-databank/Pacino,_Al
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/angelina-jolie-oscar-2000/index.html :: https://www.oscars.org/oscars/ceremonies/2000
+- EXT REDIRECT studii-de-caz/persoane-publice/angelina-jolie-oscar-2000/index.html :: https://www.astro.com/astro-databank/Jolie%2C_Angelina -> https://www.astro.com/cgi/prep.cgi/astro-databank/Jolie,_Angelina
+- EXT REDIRECT studii-de-caz/persoane-publice/ayrton-senna-japonia-1988/index.html :: https://www.astro.com/astro-databank/Senna%2C_Ayrton -> https://www.astro.com/cgi/prep.cgi/astro-databank/Senna,_Ayrton
+- EXT REDIRECT studii-de-caz/persoane-publice/bill-gates-microsoft-1975/index.html :: https://devblogs.microsoft.com/oldnewthing/20160209-00/?p=93002 -> https://devblogs.microsoft.com/oldnewthing/20160209-00/?p=93002/
+- EXT REDIRECT studii-de-caz/persoane-publice/bill-gates-microsoft-1975/index.html :: https://www.astro.com/astro-databank/Gates%2C_Bill -> https://www.astro.com/cgi/prep.cgi/astro-databank/Gates,_Bill
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/brad-pitt-oscar-2020/index.html :: https://www.oscars.org/oscars/ceremonies/2020
+- EXT REDIRECT studii-de-caz/persoane-publice/brad-pitt-oscar-2020/index.html :: https://www.astro.com/astro-databank/Pitt%2C_Brad -> https://www.astro.com/cgi/prep.cgi/astro-databank/Pitt,_Brad
+- EXT REDIRECT studii-de-caz/persoane-publice/bruce-lee-big-boss-1971/index.html :: https://www.astro.com/astro-databank/Lee%2C_Bruce -> https://www.astro.com/cgi/prep.cgi/astro-databank/Lee,_Bruce
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/cher-oscar-1988/index.html :: https://www.oscars.org/oscars/ceremonies/1988
+- EXT REDIRECT studii-de-caz/persoane-publice/cher-oscar-1988/index.html :: https://www.astro.com/astro-databank/Cher -> https://www.astro.com/cgi/prep.cgi/astro-databank/Cher
+- EXT REDIRECT studii-de-caz/persoane-publice/dakota-johnson-fifty-shades-2015/index.html :: https://www.astro.com/astro-databank/Johnson%2C_Dakota -> https://www.astro.com/cgi/prep.cgi/astro-databank/Johnson,_Dakota
+- EXT 406 UNWRAP studii-de-caz/persoane-publice/dolly-parton-opry-1969/index.html :: https://www.opry.com/artists/dolly-parton
+- EXT REDIRECT studii-de-caz/persoane-publice/dolly-parton-opry-1969/index.html :: https://www.astro.com/astro-databank/Parton%2C_Dolly -> https://www.astro.com/cgi/prep.cgi/astro-databank/Parton,_Dolly
+- EXT REDIRECT studii-de-caz/persoane-publice/elvis-presley-casatorie-1967/index.html :: https://www.astro.com/astro-databank/Presley%2C_Elvis -> https://www.astro.com/cgi/prep.cgi/astro-databank/Presley,_Elvis
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/george-clooney-oscar-2006/index.html :: https://www.oscars.org/oscars/ceremonies/2006/G
+- EXT REDIRECT studii-de-caz/persoane-publice/george-clooney-oscar-2006/index.html :: https://www.astro.com/astro-databank/Clooney%2C_George -> https://www.astro.com/cgi/prep.cgi/astro-databank/Clooney,_George
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/jodie-foster-oscar-1989/index.html :: https://www.oscars.org/oscars/ceremonies/1989
+- EXT REDIRECT studii-de-caz/persoane-publice/jodie-foster-oscar-1989/index.html :: https://www.astro.com/astro-databank/Foster%2C_Jodie -> https://www.astro.com/cgi/prep.cgi/astro-databank/Foster,_Jodie
+- EXT REDIRECT studii-de-caz/persoane-publice/johnny-depp-pirates-2003/index.html :: https://www.astro.com/astro-databank/Depp%2C_Johnny -> https://www.astro.com/cgi/prep.cgi/astro-databank/Depp,_Johnny
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/julia-roberts-oscar-2001/index.html :: https://www.oscars.org/oscars/ceremonies/2001
+- EXT REDIRECT studii-de-caz/persoane-publice/julia-roberts-oscar-2001/index.html :: https://www.astro.com/astro-databank/Roberts%2C_Julia -> https://www.astro.com/cgi/prep.cgi/astro-databank/Roberts,_Julia
+- EXT REDIRECT studii-de-caz/persoane-publice/king-charles-accesiune-2022/index.html :: https://www.astro.com/astro-databank/Charles_III%2C_King_of_the_United_Kingdom -> https://www.astro.com/cgi/prep.cgi/astro-databank/Charles_III,_King_of_the_United_Kingdom
+- EXT REDIRECT studii-de-caz/persoane-publice/kurt-cobain-nevermind-1991/index.html :: https://www.astro.com/astro-databank/Cobain%2C_Kurt -> https://www.astro.com/cgi/prep.cgi/astro-databank/Cobain,_Kurt
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/leonardo-dicaprio-oscar-2016/index.html :: https://www.oscars.org/oscars/ceremonies/2016/J
+- EXT REDIRECT studii-de-caz/persoane-publice/leonardo-dicaprio-oscar-2016/index.html :: https://www.astro.com/astro-databank/DiCaprio%2C_Leonardo -> https://www.astro.com/cgi/prep.cgi/astro-databank/DiCaprio,_Leonardo
+- EXT REDIRECT studii-de-caz/persoane-publice/marilyn-monroe-casatorie-1956/index.html :: https://www.astro.com/astro-databank/Monroe%2C_Marilyn -> https://www.astro.com/cgi/prep.cgi/astro-databank/Monroe,_Marilyn
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/meryl-streep-oscar-2012/index.html :: https://www.oscars.org/oscars/ceremonies/2012/M
+- EXT REDIRECT studii-de-caz/persoane-publice/meryl-streep-oscar-2012/index.html :: https://www.astro.com/astro-databank/Streep%2C_Meryl -> https://www.astro.com/cgi/prep.cgi/astro-databank/Streep,_Meryl
+- EXT REDIRECT studii-de-caz/persoane-publice/michael-b-jordan-creed-2015/index.html :: https://www.astro.com/astro-databank/Jordan%2C_Michael_B. -> https://www.astro.com/cgi/prep.cgi/astro-databank/Jordan,_Michael_B.
+- EXT REDIRECT studii-de-caz/persoane-publice/michael-jordan-primul-titlu-nba-1991/index.html :: https://www.astro.com/astro-databank/Jordan%2C_Michael -> https://www.astro.com/cgi/prep.cgi/astro-databank/Jordan,_Michael
+- EXT REDIRECT studii-de-caz/persoane-publice/muhammad-ali-titlu-mondial-1964/index.html :: https://www.astro.com/astro-databank/Ali%2C_Muhammad -> https://www.astro.com/cgi/prep.cgi/astro-databank/Ali,_Muhammad
+- EXT REDIRECT studii-de-caz/persoane-publice/prince-william-nunta-2011/index.html :: https://www.astro.com/astro-databank/William%2C_Prince_(1982) -> https://www.astro.com/cgi/prep.cgi/astro-databank/William,_Prince_(1982)
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/robert-downey-jr-oscar-2024/index.html :: https://www.oscars.org/oscars/ceremonies/2024
+- EXT REDIRECT studii-de-caz/persoane-publice/robert-downey-jr-oscar-2024/index.html :: https://www.astro.com/astro-databank/Downey%2C_Robert_Jr. -> https://www.astro.com/cgi/prep.cgi/astro-databank/Downey,_Robert_Jr.
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/robin-williams-oscar-1998/index.html :: https://www.oscars.org/oscars/ceremonies/1998
+- EXT REDIRECT studii-de-caz/persoane-publice/robin-williams-oscar-1998/index.html :: https://www.astro.com/astro-databank/Williams%2C_Robin -> https://www.astro.com/cgi/prep.cgi/astro-databank/Williams,_Robin
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/steven-spielberg-oscar-1994/index.html :: https://www.oscars.org/oscars/ceremonies/1994/P?qt-honorees=1
+- EXT REDIRECT studii-de-caz/persoane-publice/steven-spielberg-oscar-1994/index.html :: https://www.astro.com/astro-databank/Spielberg%2C_Steven -> https://www.astro.com/cgi/prep.cgi/astro-databank/Spielberg,_Steven
+- EXT REDIRECT studii-de-caz/persoane-publice/sylvester-stallone-rocky-1976/index.html :: https://www.astro.com/astro-databank/Stallone%2C_Sylvester -> https://www.astro.com/cgi/prep.cgi/astro-databank/Stallone,_Sylvester
+- EXT REDIRECT studii-de-caz/persoane-publice/tiger-woods-masters-1997/index.html :: https://www.astro.com/astro-databank/Woods%2C_Tiger -> https://www.astro.com/cgi/prep.cgi/astro-databank/Woods,_Tiger
+- EXT 403 UNWRAP studii-de-caz/persoane-publice/tom-hanks-oscar-1994/index.html :: https://www.oscars.org/oscars/ceremonies/1994/P?qt-honorees=1
+- EXT REDIRECT studii-de-caz/persoane-publice/tom-hanks-oscar-1994/index.html :: https://www.astro.com/astro-databank/Hanks%2C_Tom -> https://www.astro.com/cgi/prep.cgi/astro-databank/Hanks,_Tom
+- EXT REDIRECT studii-de-caz/persoane-publice/whitney-houston-bodyguard-1992/index.html :: https://www.astro.com/astro-databank/Houston%2C_Whitney -> https://www.astro.com/cgi/prep.cgi/astro-databank/Houston,_Whitney
+- EXT REDIRECT studii-de-caz/presedinti/barack-obama-inaugurare-2009/index.html :: https://www.astro.com/astro-databank/Obama%2C_Barack -> https://www.astro.com/cgi/prep.cgi/astro-databank/Obama,_Barack
+- EXT REDIRECT studii-de-caz/presedinti/bill-clinton-inaugurare-1993/index.html :: https://www.astro.com/astro-databank/Clinton%2C_Bill -> https://www.astro.com/cgi/prep.cgi/astro-databank/Clinton,_Bill
+- EXT REDIRECT studii-de-caz/presedinti/carlos-menem-investitura-1989/index.html :: https://www.astro.com/astro-databank/Menem%2C_Carlos -> https://www.astro.com/cgi/prep.cgi/astro-databank/Menem,_Carlos
+- EXT REDIRECT studii-de-caz/presedinti/charles-de-gaulle-investitura-1959/index.html :: https://www.astro.com/astro-databank/De_Gaulle%2C_Charles -> https://www.astro.com/cgi/prep.cgi/astro-databank/De_Gaulle,_Charles
+- EXT REDIRECT studii-de-caz/presedinti/donald-trump-inaugurare-2017/index.html :: https://www.astro.com/astro-databank/Trump%2C_Donald -> https://www.astro.com/cgi/prep.cgi/astro-databank/Trump,_Donald
+- EXT REDIRECT studii-de-caz/presedinti/emmanuel-macron-investitura-2017/index.html :: https://www.astro.com/astro-databank/Macron%2C_Emmanuel -> https://www.astro.com/cgi/prep.cgi/astro-databank/Macron,_Emmanuel
+- EXT REDIRECT studii-de-caz/presedinti/francois-hollande-investitura-2012/index.html :: https://www.astro.com/astro-databank/Hollande%2C_Fran%C3%A7ois -> https://www.astro.com/cgi/prep.cgi/astro-databank/Hollande,_Fran%c3%a7ois
+- EXT REDIRECT studii-de-caz/presedinti/francois-mitterrand-investitura-1981/index.html :: https://www.astro.com/astro-databank/Mitterrand%2C_Francois -> https://www.astro.com/cgi/prep.cgi/astro-databank/Mitterrand,_Francois
+- EXT REDIRECT studii-de-caz/presedinti/franklin-d-roosevelt-inaugurare-1933/index.html :: https://www.astro.com/astro-databank/Roosevelt%2C_Franklin -> https://www.astro.com/cgi/prep.cgi/astro-databank/Roosevelt,_Franklin
+- EXT REDIRECT studii-de-caz/presedinti/george-w-bush-inaugurare-2001/index.html :: https://www.astro.com/astro-databank/Bush%2C_George_W. -> https://www.astro.com/cgi/prep.cgi/astro-databank/Bush,_George_W.
+- EXT REDIRECT studii-de-caz/presedinti/harry-truman-presedinte-1945/index.html :: https://www.astro.com/astro-databank/Truman%2C_Harry_S. -> https://www.astro.com/cgi/prep.cgi/astro-databank/Truman,_Harry_S.
+- EXT REDIRECT studii-de-caz/presedinti/john-f-kennedy-inaugurare-1961/index.html :: https://www.astro.com/astro-databank/Kennedy%2C_John_F. -> https://www.astro.com/cgi/prep.cgi/astro-databank/Kennedy,_John_F.
+- EXT REDIRECT studii-de-caz/presedinti/juan-peron-investitura-1946/index.html :: https://www.astro.com/astro-databank/Per%C3%B3n%2C_Juan -> https://www.astro.com/cgi/prep.cgi/astro-databank/Per%c3%b3n,_Juan
+- EXT REDIRECT studii-de-caz/presedinti/lech-walesa-presedinte-1990/index.html :: https://www.ilw.org.pl/en/founder/biography -> https://ilw.org.pl/en/biography/
+- EXT REDIRECT studii-de-caz/presedinti/lech-walesa-presedinte-1990/index.html :: https://www.astro.com/astro-databank/Walesa%2C_Lech -> https://www.astro.com/cgi/prep.cgi/astro-databank/Walesa,_Lech
+- EXT REDIRECT studii-de-caz/presedinti/michelle-bachelet-investitura-2006/index.html :: https://www.astro.com/astro-databank/Bachelet%2C_Michelle -> https://www.astro.com/cgi/prep.cgi/astro-databank/Bachelet,_Michelle
+- EXT REDIRECT studii-de-caz/presedinti/nicolas-sarkozy-investitura-2007/index.html :: https://www.astro.com/astro-databank/Sarkozy%2C_Nicolas -> https://www.astro.com/cgi/prep.cgi/astro-databank/Sarkozy,_Nicolas
+- EXT REDIRECT studii-de-caz/presedinti/richard-nixon-inaugurare-1969/index.html :: https://www.astro.com/astro-databank/Nixon%2C_Richard -> https://www.astro.com/cgi/prep.cgi/astro-databank/Nixon,_Richard
+- EXT REDIRECT studii-de-caz/presedinti/salvador-allende-investitura-1970/index.html :: https://www.astro.com/astro-databank/Allende%2C_Salvador -> https://www.astro.com/cgi/prep.cgi/astro-databank/Allende,_Salvador
+- EXT REDIRECT studii-de-caz/presedinti/vaclav-havel-juramant-1993/index.html :: https://www.astro.com/astro-databank/Havel%2C_V%C3%A1clav -> https://www.astro.com/cgi/prep.cgi/astro-databank/Havel,_V%c3%a1clav
+- EXT REDIRECT studii-de-caz/presedinti/valery-giscard-destaing-investitura-1974/index.html :: https://www.astro.com/astro-databank/Giscard_d%27Estaing%2C_Valery -> https://www.astro.com/cgi/prep.cgi/astro-databank/Giscard_d'Estaing,_Valery
+- JS MINIFY assets/astrovip-chat-admin.js :: 4537 -> 4429
+- JS MINIFY assets/astrovip-chat.js :: 11905 -> 11208
+- JS MINIFY assets/chinese-tools.js :: 1466 -> 1412
+- JS MINIFY assets/consent-v2.js :: 7777 -> 6364
+- JS MINIFY assets/cwv-runtime.js :: 1894 -> 1713
+- JS MINIFY assets/ephemeris-2026-2036.js :: 2956 -> 2882
+- JS MINIFY assets/free-question.js :: 13361 -> 10523
+- JS MINIFY assets/homepage.js :: 15248 -> 13635
+- JS MINIFY assets/knowledge-tools.js :: 1393 -> 1350
+- JS MINIFY assets/koch-houses.js :: 3003 -> 2420
+- JS MINIFY assets/local-space.js :: 9265 -> 8966
+- JS MINIFY assets/motion-lite.js :: 948 -> 716
+- JS MINIFY assets/natal-calculator-swiss.js :: 7794 -> 7057
+- JS MINIFY assets/planetary-ticker-core.js :: 14166 -> 12692
+- JS MINIFY assets/planetary-ticker.js :: 3206 -> 2907
+- JS MINIFY assets/premium-calculators-v1.js :: 36378 -> 34527
+- JS MINIFY assets/tantric-tools.js :: 995 -> 968
+- JS MINIFY forum/config.js :: 337 -> 165
+- JS MINIFY forum/forum.js :: 27641 -> 26785
+- CSS MINIFY assets/academy-neon.css :: 6216 -> 5778
+- CSS MINIFY assets/astro-seo.css :: 44058 -> 38852
+- CSS MINIFY assets/astrologie-medicala-premium.css :: 13543 -> 12872
+- CSS MINIFY assets/astrovip-chat-admin.css :: 4174 -> 4117
+- CSS MINIFY assets/astrovip-chat.css :: 16432 -> 14388
+- CSS MINIFY assets/calculators.css :: 11140 -> 11024
+- CSS MINIFY assets/case-showcase-20260923.css :: 7604 -> 7428
+- CSS MINIFY assets/chinese-premium.css :: 4235 -> 4234
+- CSS MINIFY assets/consent-v2.css :: 3824 -> 3523
+- CSS MINIFY assets/credentials-flow-lock-20260921-v1.css :: 2463 -> 2039
+- CSS MINIFY assets/desktop-final-20260922.css :: 16315 -> 13488
+- CSS MINIFY assets/desktop-premium-v2-20260922.css :: 22917 -> 20886
+- CSS MINIFY assets/desktop-visual-polish-20260922.css :: 9094 -> 7141
+- CSS MINIFY assets/explore-premium.css :: 8237 -> 8136
+- CSS MINIFY assets/final-card-polish-20260923.css :: 8472 -> 7162
+- CSS MINIFY assets/final-responsive-sync-20260924.css :: 21700 -> 17843
+- CSS MINIFY assets/footer-credentials-premium.css :: 30800 -> 24177
+- CSS MINIFY assets/footer-premium-runtime-20260923.css :: 17921 -> 17104
+- CSS MINIFY assets/free-question.css :: 10161 -> 9491
+- CSS MINIFY assets/header-layout-unified-20260923.css :: 11021 -> 9098
+- CSS MINIFY assets/hero-html-i18n.css :: 11917 -> 10996
+- CSS MINIFY assets/home-hero-premium-v2.css :: 37199 -> 33103
+- CSS MINIFY assets/home-luxury-all-sections-preview-20260924.css :: 25701 -> 22897
+- CSS MINIFY assets/homepage-bundle-base.css :: 75044 -> 74357
+- CSS MINIFY assets/homepage-knowledge-hubs.css :: 3070 -> 3068
+- CSS MINIFY assets/homepage-neon-gloss.css :: 16335 -> 14140
+- CSS MINIFY assets/homepage-trust-lux.css :: 20133 -> 18303
+- CSS MINIFY assets/internal-luxury-batch2-preview-20260924.css :: 11517 -> 10230
+- CSS MINIFY assets/internal-luxury-batch3-preview-20260924.css :: 6892 -> 6072
+- CSS MINIFY assets/internal-luxury-batch4-preview-20260924.css :: 4905 -> 4302
+- CSS MINIFY assets/internal-luxury-core-preview-20260924.css :: 20099 -> 18005
+- CSS MINIFY assets/intl-home.css :: 2749 -> 2684
+- CSS MINIFY assets/intl-sync-20260924.css :: 4743 -> 4553
+- CSS MINIFY assets/knowledge-compact-nonatlas.css :: 1607 -> 1500
+- CSS MINIFY assets/knowledge-premium.css :: 3963 -> 3961
+- CSS MINIFY assets/lang-switcher.css :: 10789 -> 9315
+- CSS MINIFY assets/local-space-cases.css :: 4489 -> 4480
+- CSS MINIFY assets/local-space.css :: 10873 -> 10808
+- CSS MINIFY assets/mobile-final-20260919.css :: 20783 -> 17120
+- CSS MINIFY assets/mobile-freeq-card-separate-20260924.css :: 4891 -> 4009
+- CSS MINIFY assets/mobile-hero-cards-responsive-preview-20260924.css :: 7346 -> 6060
+- CSS MINIFY assets/mobile-hero-premium-frame-20260924.css :: 10198 -> 8643
+- CSS MINIFY assets/mobile-language-chat-final.css :: 9117 -> 7485
+- CSS MINIFY assets/mobile-premium-home-20260920-v1.css :: 8757 -> 8701
+- CSS MINIFY assets/money-page-seo-20260926.css :: 2231 -> 2107
+- CSS MINIFY assets/natal-calculator.css :: 8188 -> 8178
+- CSS MINIFY assets/nav-lang-critical-20260923.css :: 43630 -> 42736
+- CSS MINIFY assets/premium-calculators-v1.css :: 5337 -> 5289
+- CSS MINIFY assets/premium-nav.css :: 37398 -> 31434
+- CSS MINIFY assets/public-figure-case-studies.css :: 7219 -> 7205
+- CSS MINIFY assets/responsive-final-20260930.css :: 48744 -> 40673
+- CSS MINIFY assets/site-directory.css :: 3562 -> 3245
+- CSS MINIFY assets/studiu-caz-scoala.css :: 17991 -> 16260
+- CSS MINIFY forum/forum.css :: 14321 -> 14206
+- IMAGE assets/astrovip-hero-lux-clean-20260922.png -> assets/astrovip-hero-lux-clean-20260922.optimized.webp :: 2290522 -> 195322
