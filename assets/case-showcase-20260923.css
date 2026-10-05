@@ -16,3 +16,19 @@ html body:not(.guide-page) section.hero.hero-split.av-hero-v2 .av-ticker-card--a
   overflow:hidden!important;
 }
 }
+
+/* Final legacy ribbon shutdown — keep markup for possible restore. */
+html body:not(.guide-page) #planet-strip-secondary,
+html body:not(.guide-page) .planet-strip-secondary,
+html body:not(.guide-page) .av-lang-planets,
+html body:not(.guide-page) .planet-strip{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
