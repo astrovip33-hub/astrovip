@@ -74,7 +74,7 @@ jobs:
           STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
           test "$STATUS" = "200"
           grep -q 'ASTROLOGIE' /tmp/preview.html
-          grep -q 'site-editor-runtime.js' /tmp/preview.html
+          grep -q 'page-editor-runtime.js' /tmp/preview.html
           echo "Preview live: $URL"
 
       - name: Verify visual editor
