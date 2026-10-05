@@ -1,0 +1,62 @@
+name: Fix chat verifier compatibility 2026-10-05
+
+on:
+  push:
+    branches:
+      - fix-chat-verifier-2026-10-05
+    paths:
+      - .github/workflows/fix-chat-verifier-20261005.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fix branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix-chat-verifier-2026-10-05
+          fetch-depth: 0
+
+      - name: Preserve minification and restore verifier-stable variable names
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('assets/astrovip-chat.js')
+          s=p.read_text(encoding='utf-8')
+          old='const mobileHost=document.querySelector(".av-langbar .wrap"),headerHost=document.querySelector(".top .nav-actions");'
+          new='const mobileHost=document.querySelector(".av-langbar .wrap"),desktopHost=document.querySelector(".top .nav-actions"),headerHost=desktopHost;'
+          if old in s:
+              s=s.replace(old,new,1)
+              p.write_text(s,encoding='utf-8')
+          elif new not in s:
+              raise SystemExit('Expected minified chat placement pattern was not found.')
+          final=p.read_text(encoding='utf-8')
+          required=(
+              'mobileHost=document.querySelector(".av-langbar .wrap")',
+              'desktopHost=document.querySelector(".top .nav-actions")',
+          )
+          missing=[x for x in required if x not in final]
+          if missing:
+              raise SystemExit('Missing verifier-stable chat selectors: '+', '.join(missing))
+          print('PASS: minified chat keeps both verifier-stable placement selectors.')
+          PY
+
+      - name: Commit chat compatibility fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "AstroVip SEO Bot"
+          git config user.email "seo-bot@users.noreply.github.com"
+          git add assets/astrovip-chat.js
+          if git diff --cached --quiet; then
+            echo "No chat change required."
+            exit 0
+          fi
+          git commit -m "Fix minified chat deployment verification"
+          git push origin HEAD:fix-chat-verifier-2026-10-05
