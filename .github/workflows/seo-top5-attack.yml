@@ -1,0 +1,140 @@
+name: SEO Top 5 one-shot
+
+on:
+  push:
+    branches: [seo-top5-20261005]
+    paths:
+      - .github/workflows/seo-top5-attack.yml
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply focused SEO improvements
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def load(path):
+              p = Path(path)
+              return p, p.read_text(encoding='utf-8')
+
+          def replace_required(text, old, new, label):
+              if old not in text:
+                  raise SystemExit(f'Missing expected text for {label}')
+              return text.replace(old, new, 1)
+
+          def insert_once(text, marker, block, unique, label):
+              if unique in text:
+                  return text
+              if marker not in text:
+                  raise SystemExit(f'Missing insertion marker for {label}')
+              return text.replace(marker, block + '\n' + marker, 1)
+
+          # 1) Harta natala / astrograma natala cluster
+          p, t = load('harta-natala/index.html')
+          t = replace_required(t,
+              '<title>Hartă Natală Online – Calculator & Interpretare | AstroVip</title>',
+              '<title>Hartă natală & astrogramă natală – Calcul online | AstroVip</title>',
+              'harta title')
+          t = replace_required(t,
+              '<meta name="description" content="Hartă natală online gratuită: calculează astrograma și înțelege Ascendentul, MC, planetele, cele 12 case și aspectele. Ghid complet AstroVip.">',
+              '<meta name="description" content="Hartă natală și astrogramă natală: calcul online gratuit, Ascendent, MC, planete, case și aspecte, plus ghid de interpretare AstroVip.">',
+              'harta meta')
+          t = replace_required(t,
+              '<meta property="og:title" content="Hartă Natală Online – Calculator & Interpretare | AstroVip">',
+              '<meta property="og:title" content="Hartă natală & astrogramă natală – Calcul online | AstroVip">',
+              'harta og title')
+          t = t.replace('"dateModified":"2026-10-03"', '"dateModified":"2026-10-05"')
+          t = t.replace('<p>Continuă cu <a href="/harta-draconica/">Harta DraconicăNodul Nord la 0° Berbec</a>.</p>', '<p>Continuă cu <a href="/harta-draconica/">Harta Draconică – Nodul Nord la 0° Berbec</a>.</p>')
+          harta_block = '''<section id="av-seranking-harta-20261005"><h2>Astrogramă natală: calculul hărții natale online</h2><p><strong>Harta natală</strong>, <strong>astrograma natală</strong> și harta astrală descriu aceeași hartă astrologică ridicată pentru data, ora și localitatea nașterii. Pentru calcul poți folosi instrumentul AstroVip, apoi revii aici pentru interpretarea Ascendentului, MC-ului, planetelor, caselor și aspectelor.</p><p>Pentru interogări precum <em>calcul hartă natală</em>, <em>calcul astrogramă</em> sau <em>astrogramă online</em>, punctul de pornire este calculatorul, iar interpretarea se face separat, în contextul întregii hărți.</p><div class="guide-related"><a href="/harta-mea/"><strong>Calcul hartă natală</strong></a><a href="/calculator-ascendent/">Calculator Ascendent</a><a href="/interpretare-harta-natala/">Interpretare hartă natală</a><a href="/astrolog-bucuresti/">Astrolog București</a><a href="/consultatie-astrologica/">Consultație astrologică</a></div></section>'''
+          t = insert_once(t, '</article>', harta_block, 'av-seranking-harta-20261005', 'harta block')
+          p.write_text(t, encoding='utf-8')
+
+          # 2) Astrolog Bucuresti / astrologie Bucuresti local intent
+          p, t = load('astrolog-bucuresti/index.html')
+          t = replace_required(t,
+              '<title>Astrolog București | Consultație 1:1, 500 lei | AstroVip</title>',
+              '<title>Astrolog București | Consultație astrologică 1:1 | AstroVip</title>',
+              'local title')
+          t = replace_required(t,
+              '<meta name="description" content="Astrolog București și online: consultație astrologică premium 1:1, 500 lei / 60 min, pentru hartă natală, relații, carieră, timing și relocare.">',
+              '<meta name="description" content="Astrolog București: consultație astrologică 1:1 în București și online, pentru hartă natală, relații, carieră, timing, rectificare și relocare.">',
+              'local meta')
+          t = replace_required(t,
+              '<meta property="og:title" content="Astrolog București | Consultații Premium 1:1 | AstroVip">',
+              '<meta property="og:title" content="Astrolog București | Consultație astrologică 1:1 | AstroVip">',
+              'local og title')
+          t = t.replace('"dateModified":"2026-10-03"', '"dateModified":"2026-10-05"')
+          local_block = '''<div class="wrap" id="av-seranking-local-20261005"><section class="section"><h2>Astrologie în București: consultație personalizată, nu horoscop generic</h2><p>Pentru căutări precum <strong>astrolog București</strong>, <strong>astrologie București</strong> sau consultație astrologică în București, această pagină centralizează formatul 1:1 AstroVip. Analiza poate porni de la harta natală și, în funcție de întrebare, poate integra timing astrologic, sinastrie, rectificarea orei de naștere, astrocartografie și relocare.</p><p>Consultația este disponibilă și online; metoda, tariful și limitele interpretării sunt prezentate transparent înainte de programare.</p><div class="related"><a href="/consultatie-astrologica/">Consultație astrologică</a><a href="/harta-natala/">Hartă natală</a><a href="/rectificare-ora-nasterii/">Rectificare oră naștere</a><a href="/astrocartografie-local-space/">Astrocartografie & Local Space</a><a href="/studii-de-caz/">Studii de caz</a></div></section></div>'''
+          t = insert_once(t, '</main>', local_block, 'av-seranking-local-20261005', 'local block')
+          p.write_text(t, encoding='utf-8')
+
+          # 3) Revolutie Solara - emphasize real calculator + interpretation intent
+          p, t = load('revolutie-solara/index.html')
+          t = replace_required(t,
+              '<title>Revoluție Solară | Ascendent, Case și Tema Anului | AstroVip</title>',
+              '<title>Revoluție Solară – Calculator & Interpretare | AstroVip</title>',
+              'solar title')
+          t = replace_required(t,
+              '<meta name="description" content="Revoluția Solară: revenirea Soarelui, Ascendentul anual, MC, case și planete angulare. Ghid AstroVip cu verificare prin Arce Solare, tranzite și progresii.">',
+              '<meta name="description" content="Revoluție Solară: calculator anual, Ascendent, MC, case și planete angulare. Interpretare corelată cu harta natală, tranzite, Arce Solare și progresii.">',
+              'solar meta')
+          t = replace_required(t,
+              '<meta property="og:title" content="Revoluție Solară | Ascendent, Case și Tema Anului | AstroVip">',
+              '<meta property="og:title" content="Revoluție Solară – Calculator & Interpretare | AstroVip">',
+              'solar og title')
+          t = t.replace('"dateModified":"2026-10-03"', '"dateModified":"2026-10-05"')
+          solar_block = '''<section id="av-seranking-solar-20261005"><h2>Interpretare Revoluție Solară: de la calculator la tema anului</h2><p>Calculatorul identifică momentul revenirii Soarelui la poziția natală. Interpretarea unei <strong>Revoluții Solare</strong> merge mai departe: urmărește Ascendentul și MC-ul anual, Soarele, Luna, planetele angulare, casele dominante și suprapunerea peste harta natală.</p><p>Pentru timing, rezultatul anual se verifică împreună cu <a href="/arce-solare/"><strong>Arcele Solare</strong></a>, <a href="/tranzite-astrologice/"><strong>tranzitele astrologice</strong></a> și <a href="/progresii-secundare/"><strong>progresiile</strong></a>.</p><div class="guide-related"><a href="#calculator-revolutie-solara">Calculator Revoluție Solară</a><a href="/harta-natala/">Hartă natală</a><a href="/astrologie-predictiva/">Astrologie predictivă</a><a href="/consultatie-astrologica/">Interpretare personalizată</a></div></section>'''
+          t = insert_once(t, '<div class="guide-author">', solar_block, 'av-seranking-solar-20261005', 'solar block')
+          p.write_text(t, encoding='utf-8')
+
+          # 4) Vibratia numelui - connect to numerologie nume cluster
+          p, t = load('vibratia-numelui/index.html')
+          t = replace_required(t,
+              '<title>Vibrația numelui în numerologie | AstroVip</title>',
+              '<title>Vibrația numelui – Calculator numerologie nume | AstroVip</title>',
+              'name title')
+          t = replace_required(t,
+              '<meta name="description" content="Vibrația numelui în numerologie: explicație, metodă de calcul și calculator gratuit AstroVip. Interpretare simbolică, clară și fără promisiuni absolute.">',
+              '<meta name="description" content="Vibrația numelui și numerologia numelui: calculator gratuit, metodă 1–9, numere maestru 11/22/33 și interpretare simbolică AstroVip.">',
+              'name meta')
+          t = replace_required(t,
+              '<meta property="og:title" content="Vibrația numelui în numerologie | AstroVip">',
+              '<meta property="og:title" content="Vibrația numelui – Calculator numerologie nume | AstroVip">',
+              'name og title')
+          t = t.replace('"dateModified":"2026-09-18"', '"dateModified":"2026-10-05"')
+          name_block = '''<section id="av-seranking-name-20261005"><h2>Numerologia numelui: cum se leagă de vibrația numelui</h2><p>În <strong>numerologia numelui</strong>, literele sunt convertite în valori numerice, iar suma este redusă conform metodei folosite. Calculatorul de pe această pagină oferă rapid vibrația numelui; pentru explicații despre structură, numere maestru și interpretare, continuă cu ghidurile dedicate.</p><div class="kb-links"><a href="/numerologia-numelui/">Numerologia numelui</a><a href="/numerologie/">Numerologie</a><a href="/numarul-destinului/">Numărul destinului</a><a href="/numerologie-data-nasterii/">Numerologie după data nașterii</a></div></section>'''
+          t = insert_once(t, '<div class="kb-author">', name_block, 'av-seranking-name-20261005', 'name block')
+          p.write_text(t, encoding='utf-8')
+
+          # Basic HTML/SEO sanity checks.
+          for path in ['harta-natala/index.html','astrolog-bucuresti/index.html','revolutie-solara/index.html','vibratia-numelui/index.html']:
+              s = Path(path).read_text(encoding='utf-8')
+              assert s.count('<title>') == 1, path
+              assert s.count('<meta name="description"') == 1, path
+              assert '<link rel="canonical"' in s, path
+              assert '</html>' in s, path
+
+          Path('.github/workflows/seo-top5-attack.yml').unlink(missing_ok=True)
+          PY
+
+          git diff --check
+          git status --short
+
+      - name: Commit optimized pages
+        shell: bash
+        run: |
+          git config user.name "AstroVip SEO Automation"
+          git config user.email "astrovip33@users.noreply.github.com"
+          git add harta-natala/index.html astrolog-bucuresti/index.html revolutie-solara/index.html vibratia-numelui/index.html .github/workflows/seo-top5-attack.yml
+          git commit -m "SEO: attack Top 5 intent clusters from SE Ranking"
+          git push origin HEAD:seo-top5-20261005
