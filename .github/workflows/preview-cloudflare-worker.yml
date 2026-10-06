@@ -70,18 +70,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          URL="https://astrovip-preview.astrovip33.workers.dev/"
+          URL="https://astrovip-preview-premium-home.astrovip33.workers.dev/?verify=wow3"
           STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
           test "$STATUS" = "200"
           grep -q 'ASTROLOGIE' /tmp/preview.html
-          grep -q 'site-editor-runtime.js' /tmp/preview.html
-          echo "Preview live: $URL"
+          grep -q 'astrovip-premium-preview' /tmp/preview.html
+          grep -q 'premium-home-wow-preview-20261006.css?v=wow3-20261006-1' /tmp/preview.html
+          grep -q 'astrovip-wow3-direct' /tmp/preview.html
+          echo "Premium wow preview live: $URL"
 
       - name: Verify visual editor
         shell: bash
         run: |
           set -euo pipefail
-          BASE="https://astrovip-preview.astrovip33.workers.dev"
+          BASE="https://astrovip-preview-premium-home.astrovip33.workers.dev"
           EDITOR_STATUS=$(curl -sSL -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
           echo "EDITOR_STATUS=$EDITOR_STATUS"
           test "$EDITOR_STATUS" = "200"
