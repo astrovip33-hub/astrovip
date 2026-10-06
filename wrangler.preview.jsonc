@@ -1,14 +1,13 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "astrovip-preview-premium-home",
-  "main": "worker.preview-premium.js",
+  "name": "astrovip-preview",
+  "main": "worker.js",
   "compatibility_date": "2026-09-15",
   "workers_dev": true,
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none",
-    "run_worker_first": true
+    "not_found_handling": "none"
   }
 }
