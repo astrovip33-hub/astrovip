@@ -1,0 +1,67 @@
+name: Lighthouse live audit
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-live-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Audit mobile
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes lighthouse@12 https://astrovip.ro/ \
+            --output=json \
+            --output-path=/tmp/lh-mobile.json \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --form-factor=mobile \
+            --only-categories=performance,accessibility,best-practices,seo
+
+      - name: Audit desktop
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes lighthouse@12 https://astrovip.ro/ \
+            --output=json \
+            --output-path=/tmp/lh-desktop.json \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --preset=desktop \
+            --only-categories=performance,accessibility,best-practices,seo
+
+      - name: Print actionable report
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          for (const [label, file] of [['MOBILE','/tmp/lh-mobile.json'],['DESKTOP','/tmp/lh-desktop.json']]) {
+            const r = JSON.parse(fs.readFileSync(file,'utf8'));
+            const a = r.audits;
+            const cat = r.categories;
+            const pct = x => Math.round((x?.score ?? 0) * 100);
+            console.log(`\n===== ${label} =====`);
+            console.log(`Performance ${pct(cat.performance)} | Accessibility ${pct(cat.accessibility)} | Best Practices ${pct(cat['best-practices'])} | SEO ${pct(cat.seo)}`);
+            for (const id of ['first-contentful-paint','largest-contentful-paint','speed-index','total-blocking-time','cumulative-layout-shift','interactive','server-response-time']) {
+              if (a[id]) console.log(`${id}: ${a[id].displayValue ?? a[id].numericValue}`);
+            }
+            const opps = Object.values(a)
+              .filter(x => x.details && x.details.type === 'opportunity' && x.score !== 1)
+              .map(x => ({id:x.id,title:x.title,s:x.details.overallSavingsMs || 0,b:x.details.overallSavingsBytes || 0,display:x.displayValue || ''}))
+              .sort((x,y)=>(y.s-x.s)||(y.b-x.b))
+              .slice(0,15);
+            console.log('\nTOP OPPORTUNITIES');
+            for (const x of opps) console.log(`${x.id} | ${x.title} | save_ms=${Math.round(x.s)} | save_bytes=${Math.round(x.b)} | ${x.display}`);
+            const ids = ['render-blocking-resources','unused-css-rules','unused-javascript','uses-optimized-images','uses-responsive-images','modern-image-formats','offscreen-images','uses-text-compression','uses-long-cache-ttl','font-display','third-party-summary','mainthread-work-breakdown','bootup-time','dom-size','lcp-lazy-loaded','largest-contentful-paint-element','prioritize-lcp-image','network-dependency-tree-insight','image-delivery-insight','document-latency-insight','render-blocking-insight','lcp-discovery-insight'];
+            console.log('\nKEY DIAGNOSTICS');
+            for (const id of ids) if (a[id] && a[id].score !== 1) console.log(`${id} | score=${a[id].score} | ${a[id].title} | ${a[id].displayValue || ''}`);
+          }
+          NODE
