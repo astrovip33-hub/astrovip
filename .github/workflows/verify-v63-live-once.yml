@@ -1,0 +1,31 @@
+name: Verify V6.3 production live once
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-v63-live-once.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify live V6.3 homepage
+        shell: bash
+        run: |
+          set -euo pipefail
+          HTML=$(mktemp)
+          HDR=$(mktemp)
+          URL="https://astrovip.ro/?v63check=$(date +%s)"
+          STATUS=$(curl -sS -D "$HDR" -o "$HTML" -w '%{http_code}' --retry 5 --retry-delay 2 "$URL")
+          echo "HTTP=$STATUS"
+          test "$STATUS" = "200"
+          grep -q 'V63-MOBILE-PROD-START' "$HTML"
+          grep -q 'v63-mobile-prod' "$HTML"
+          grep -q 'CÂND CUNOȘTI' "$HTML"
+          grep -q 'CLARITATE · TIMING · DECIZIE' "$HTML"
+          grep -q 'astrovip-hero-premium-mobile-20261001.webp?v=20261006-v63' "$HTML"
+          ASSET_STATUS=$(curl -sS -o /tmp/v63-hero.webp -w '%{http_code}' --retry 5 --retry-delay 2 'https://astrovip.ro/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261006-v63')
+          echo "ASSET_HTTP=$ASSET_STATUS SIZE=$(wc -c < /tmp/v63-hero.webp)"
+          test "$ASSET_STATUS" = "200"
+          test "$(wc -c < /tmp/v63-hero.webp)" -gt 10000
+          echo 'V63_LIVE_OK=1'
