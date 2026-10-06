@@ -161,7 +161,7 @@ export default {
       let rewriter=new HTMLRewriter().on('head',{element(el){el.append(runtime,{html:true})}});
       if(isHomepage){
         rewriter=rewriter
-          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore',{element(el){el.remove()}})
+          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture',{element(el){el.remove()}})
           .on('script#astrovip-planetary-postload',{element(el){el.remove()}});
       }
       return rewriter.transform(assetResponse);
