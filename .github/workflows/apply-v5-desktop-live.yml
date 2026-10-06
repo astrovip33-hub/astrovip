@@ -1,0 +1,38 @@
+name: Apply V5 desktop live
+
+on:
+  push:
+    branches:
+      - publish-v5-desktop-20261006
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: publish-v5-desktop-20261006
+      - name: Add desktop V5 asset and stylesheet link
+        run: |
+          mkdir -p assets
+          curl -L --fail 'https://raw.githubusercontent.com/astrovip33-hub/astrovip/abdeba41df490f2226cd38bf7c404d5a7fa40955/premium-preview-v5/astrolabe-vivid.webp' -o assets/astrolabe-v5-vivid.webp
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          tag='<link rel="stylesheet" href="/assets/v5-desktop-live.css?v=20261006-v5" media="(min-width:981px)">'
+          if tag not in s:
+              s=s.replace('</head>',tag+'\n</head>',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          rm -f .github/workflows/apply-v5-desktop-live.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish V5 vivid styling on desktop"
+          git push origin HEAD:publish-v5-desktop-20261006
