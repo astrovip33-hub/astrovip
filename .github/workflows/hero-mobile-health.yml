@@ -1,0 +1,58 @@
+name: Mobile Hero asset health
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-mobile-hero:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify mobile Hero WebP and AVIF are live
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASES=(
+            "https://astrovip.ro"
+            "https://astrovip.astrovip33.workers.dev"
+          )
+          ASSETS=(
+            "assets/astrovip-hero-mobile-clean-cards-941.webp:image/webp"
+            "assets/astrovip-hero-mobile-clean-cards-941.avif:image/avif"
+          )
+
+          for ITEM in "${ASSETS[@]}"; do
+            PATH_PART="${ITEM%%:*}"
+            EXPECTED_TYPE="${ITEM#*:}"
+            OK=0
+            for ATTEMPT in $(seq 1 24); do
+              ALL_OK=1
+              for BASE in "${BASES[@]}"; do
+                BODY=$(mktemp)
+                HDR=$(mktemp)
+                STATUS=$(curl -sS -D "$HDR" -o "$BODY" -w '%{http_code}' --max-time 15 "$BASE/$PATH_PART?hero_health=${GITHUB_SHA}-${ATTEMPT}" || true)
+                TYPE=$(awk 'BEGIN{IGNORECASE=1} /^content-type:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$HDR")
+                SIZE=$(wc -c < "$BODY" | tr -d ' ')
+                echo "$PATH_PART attempt $ATTEMPT base=$BASE status=$STATUS type=$TYPE size=$SIZE"
+                if [ "$STATUS" != "200" ] || [[ "$TYPE" != "$EXPECTED_TYPE"* ]] || [ "$SIZE" -lt 10000 ]; then
+                  ALL_OK=0
+                fi
+                rm -f "$BODY" "$HDR"
+              done
+              if [ "$ALL_OK" = "1" ]; then
+                OK=1
+                break
+              fi
+              sleep 5
+            done
+            if [ "$OK" != "1" ]; then
+              echo "::error::$PATH_PART is not healthy on both production routes."
+              exit 71
+            fi
+          done
+
+          echo "Mobile Hero production assets verified on apex and workers.dev."
