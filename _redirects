@@ -1,14 +1,4 @@
 # AstroVip redirects — SEO cleanup
-# Mobile Hero asset recovery: preserve current markup while serving existing responsive artwork.
-/assets/astrovip-hero-mobile-clean-cards-480.avif /assets/astrovip-hero-signature-mobile-clean-480.avif 302
-/assets/astrovip-hero-mobile-clean-cards-640.avif /assets/astrovip-hero-signature-mobile-clean-640.avif 302
-/assets/astrovip-hero-mobile-clean-cards-736.avif /assets/astrovip-hero-signature-mobile-clean-768.avif 302
-/assets/astrovip-hero-mobile-clean-cards-941.avif /assets/astrovip-hero-signature-mobile-clean-941.avif 302
-/assets/astrovip-hero-mobile-clean-cards-480.webp /assets/astrovip-hero-signature-mobile-clean-20261001.webp 302
-/assets/astrovip-hero-mobile-clean-cards-640.webp /assets/astrovip-hero-signature-mobile-clean-20261001.webp 302
-/assets/astrovip-hero-mobile-clean-cards-736.webp /assets/astrovip-hero-signature-mobile-clean-20261001.webp 302
-/assets/astrovip-hero-mobile-clean-cards-941.webp /assets/astrovip-hero-signature-mobile-clean-20261001.webp 302
-
 # Legacy WordPress archives/posts: consolidate obsolete /index.php/ URLs to canonical site.
 # Specific rules first, fallback last.
 /index.php/2025/12/06/salut-lume/ / 301
