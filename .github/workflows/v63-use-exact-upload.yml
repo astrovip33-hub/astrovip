@@ -1,0 +1,49 @@
+name: V63 Use Exact Uploaded Portrait
+
+on:
+  push:
+    branches:
+      - preview-mobile-v63-20261006
+
+permissions:
+  contents: write
+
+jobs:
+  clean-hero:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview-mobile-v63-20261006
+      - name: Decode exact uploaded portrait and rebuild Hero cleanly
+        run: |
+          base64 -d premium-preview-v63/portrait.webp.b64 > premium-preview-v63/portrait.webp
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('premium-preview-v63/index.html')
+          s = p.read_text(encoding='utf-8')
+
+          pattern = re.compile(r'\.hero\{position:relative;min-height:720px;overflow:hidden;background:#020706\}\.hero-media\{.*?\.hero-content\{position:relative;z-index:3;padding:395px 20px 24px;text-align:center\}', re.S)
+          replacement = '.hero{position:relative;min-height:800px;overflow:hidden;background:#020706}.hero-media{position:absolute;inset:0;z-index:0;background:#020706 url("portrait.webp") 50% 76px/auto 570px no-repeat}.hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,6,5,.04) 0%,rgba(1,6,5,.02) 35%,rgba(1,6,5,.18) 49%,rgba(1,6,5,.78) 68%,#020706 84%),radial-gradient(circle at 50% 31%,transparent 0 35%,rgba(0,0,0,.15) 58%,rgba(0,0,0,.50) 100%)}.hero-content{position:relative;z-index:3;padding:470px 20px 30px;text-align:center}'
+          s2, n = pattern.subn(replacement, s, count=1)
+          if n != 1:
+              raise SystemExit(f'Hero CSS replacement failed: {n}')
+
+          portrait_block = re.compile(r'\n\s*<div class="hero-portrait"><img src="/assets/hero-final-static\.webp" alt="AstroVip — astrolog"></div>')
+          s3, n2 = portrait_block.subn('', s2, count=1)
+          if n2 != 1:
+              raise SystemExit(f'Old portrait layer removal failed: {n2}')
+
+          p.write_text(s3, encoding='utf-8')
+          PY
+      - name: Remove temporary helper files and commit clean Hero
+        run: |
+          rm premium-preview-v63/portrait.webp.b64
+          rm .github/workflows/v63-use-exact-upload.yml
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add -A
+          git commit -m "Use exact uploaded portrait in clean V6.3 Hero [skip ci]"
+          git push origin preview-mobile-v63-20261006
