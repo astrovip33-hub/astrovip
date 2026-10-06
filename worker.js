@@ -4,6 +4,7 @@ const dec = new TextDecoder();
 const GA4_MEASUREMENT_ID='G-Y59ZJ7L3WR';
 const META_PIXEL_ID='1439608778053981';
 const META_GRAPH_VERSION='v23.0';
+const TRANSPARENT_PIXEL='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
 
 function hex(bytes){return [...new Uint8Array(bytes)].map(b=>b.toString(16).padStart(2,'0')).join('')}
 function safeEqual(a,b){if(a.length!==b.length)return false;let x=0;for(let i=0;i<a.length;i++)x|=a.charCodeAt(i)^b.charCodeAt(i);return x===0}
@@ -160,7 +161,11 @@ export default {
       const runtime=homepageRibbonCleanup+`<script src="/assets/page-editor-runtime.js?v=20261006-premium-wow3" defer></script>`;
       let rewriter=new HTMLRewriter().on('head',{element(el){el.append(runtime,{html:true})}});
       if(isHomepage){
+        const desktopHero=`<picture class="v63d-hero-picture"><source media="(min-width:821px)" srcset="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261006-v63-desktop" type="image/avif"><img src="${TRANSPARENT_PIXEL}" width="1280" height="720" alt="AstroVip — astrologie premium" loading="eager" fetchpriority="high" decoding="async"></picture>`;
+        const mobileHero=`<picture class="v63-hero-picture" style="display:block;width:100%"><source media="(max-width:820px)" srcset="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261006-v63" type="image/webp"><img src="${TRANSPARENT_PIXEL}" width="941" height="1672" loading="eager" fetchpriority="high" decoding="async" alt="Cătălin Smaranda — AstroVip, astrologie premium"></picture>`;
         rewriter=rewriter
+          .on('#v63-desktop-prod .v63d-hero-visual > img',{element(el){el.replace(desktopHero,{html:true})}})
+          .on('#v63-mobile-prod .v63-visual > img',{element(el){el.replace(mobileHero,{html:true})}})
           .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture',{element(el){el.remove()}})
           .on('script#astrovip-planetary-postload',{element(el){el.remove()}});
       }
