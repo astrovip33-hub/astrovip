@@ -148,6 +148,18 @@ def enrich(node, image_url: str) -> bool:
             changed = enrich(value, image_url) or changed
     return changed
 
+def normalize_home_reviews(html: str) -> str:
+    replacements = (
+        ("25+ RECENZII", "33+ RECENZII"),
+        ("CELE 25 DE RECENZII", "CELE 33 DE RECENZII"),
+        ("25 DE RECENZII", "33 DE RECENZII"),
+        ("25 de recenzii", "33 de recenzii"),
+        ('<div class="av-gr-count"><b>25</b><span>recenzii Google</span></div>', '<div class="av-gr-count"><b>33</b><span>recenzii Google</span></div>'),
+    )
+    for old, new in replacements:
+        html = html.replace(old, new)
+    return html
+
 files_scanned = 0
 files_changed = 0
 blocks_changed = 0
@@ -184,6 +196,11 @@ for path in ROOT.rglob("index.html"):
         return match.group(0)
 
     updated = SCRIPT_RE.sub(repl, html)
+
+    # Keep the public Google Reviews count consistent in the production homepage
+    # before Cloudflare deploys the static HTML, so crawlers and browsers see 33.
+    if path == ROOT / "index.html":
+        updated = normalize_home_reviews(updated)
 
     # Visible E-E-A-T signal: add a consistent author box only to article pages
     # that use the editorial guide layout and do not already have one.
