@@ -1,0 +1,37 @@
+name: V63 Fix Preview Hero
+
+on:
+  push:
+    branches:
+      - preview-mobile-v63-20261006
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview-mobile-v63-20261006
+      - name: Fix Hero asset path
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('premium-preview-v63/index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '/assets/astrovip-hero-mobile-clean-cards-941.webp'
+          new = '/assets/astrovip-hero-signature-mobile-clean-20261001.webp'
+          if old not in s:
+              raise SystemExit('Expected old Hero path not found')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit fix
+        run: |
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add premium-preview-v63/index.html
+          git commit -m "Fix V6.3 preview Hero asset [skip ci]"
+          git push origin preview-mobile-v63-20261006
