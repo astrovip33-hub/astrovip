@@ -1,0 +1,73 @@
+/* Laptop-only Hero correction — keeps large desktop and mobile unchanged. */
+@media (min-width:821px) and (max-width:1440px) and (max-height:900px){
+  body:not(.guide-page) section.hero.hero-split.av-hero-v2{
+    padding-bottom:26px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual{
+    width:min(1080px,calc(100% - 72px))!important;
+    max-width:1080px!important;
+    margin:0 auto!important;
+    border-radius:0 0 20px 20px!important;
+    overflow:hidden!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual picture{
+    display:block!important;
+    width:100%!important;
+  }
+  body:not(.guide-page) .av-hero-v2-visual img{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    aspect-ratio:1672/941!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
+  body:not(.guide-page) .av-hero-v2-copy{
+    width:min(900px,calc(100% - 72px))!important;
+    padding-top:18px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-title{
+    font-size:clamp(42px,4.4vw,60px)!important;
+    line-height:.96!important;
+  }
+  body:not(.guide-page) .av-hero-v2-subtitle{
+    margin-top:10px!important;
+    font-size:clamp(13px,1.1vw,16px)!important;
+  }
+  body:not(.guide-page) .av-hero-v2-actions{
+    margin-top:14px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-cards{
+    width:min(860px,calc(100% - 72px))!important;
+    margin-top:16px!important;
+    gap:10px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card{
+    min-height:106px!important;
+    padding:12px 14px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card h3{
+    font-size:15px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-card p{
+    font-size:10.5px!important;
+  }
+  body:not(.guide-page) .av-hero-v2-bottom{
+    width:min(860px,calc(100% - 72px))!important;
+    margin-top:9px!important;
+    padding:10px 12px!important;
+    font-size:12px!important;
+  }
+}
+
+@media (min-width:821px) and (max-width:1100px) and (max-height:900px){
+  body:not(.guide-page) .av-hero-v2-visual{
+    width:calc(100% - 44px)!important;
+  }
+  body:not(.guide-page) .av-hero-v2-copy,
+  body:not(.guide-page) .av-hero-v2-cards,
+  body:not(.guide-page) .av-hero-v2-bottom{
+    width:calc(100% - 52px)!important;
+  }
+}
