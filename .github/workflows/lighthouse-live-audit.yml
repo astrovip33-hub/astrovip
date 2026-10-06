@@ -43,6 +43,7 @@ jobs:
         run: |
           node <<'NODE'
           const fs = require('fs');
+          const compact = v => JSON.stringify(v).slice(0,1600);
           for (const [label, file] of [['MOBILE','/tmp/lh-mobile.json'],['DESKTOP','/tmp/lh-desktop.json']]) {
             const r = JSON.parse(fs.readFileSync(file,'utf8'));
             const a = r.audits;
@@ -63,5 +64,40 @@ jobs:
             const ids = ['render-blocking-resources','unused-css-rules','unused-javascript','uses-optimized-images','uses-responsive-images','modern-image-formats','offscreen-images','uses-text-compression','uses-long-cache-ttl','font-display','third-party-summary','mainthread-work-breakdown','bootup-time','dom-size','lcp-lazy-loaded','largest-contentful-paint-element','prioritize-lcp-image','network-dependency-tree-insight','image-delivery-insight','document-latency-insight','render-blocking-insight','lcp-discovery-insight'];
             console.log('\nKEY DIAGNOSTICS');
             for (const id of ids) if (a[id] && a[id].score !== 1) console.log(`${id} | score=${a[id].score} | ${a[id].title} | ${a[id].displayValue || ''}`);
+
+            console.log('\nDETAILED ITEMS');
+            for (const id of ['largest-contentful-paint-element','prioritize-lcp-image','unused-css-rules','unused-javascript','uses-responsive-images','uses-long-cache-ttl','bootup-time','mainthread-work-breakdown','render-blocking-resources','network-dependency-tree-insight','image-delivery-insight','lcp-discovery-insight']) {
+              const audit = a[id];
+              const items = audit?.details?.items;
+              if (!Array.isArray(items) || !items.length) continue;
+              console.log(`-- ${id} --`);
+              for (const item of items.slice(0,12)) {
+                const picked = {
+                  url:item.url,
+                  totalBytes:item.totalBytes,
+                  transferSize:item.transferSize,
+                  wastedBytes:item.wastedBytes,
+                  wastedMs:item.wastedMs,
+                  total:item.total,
+                  scripting:item.scripting,
+                  scriptParseCompile:item.scriptParseCompile,
+                  selector:item.node?.selector,
+                  snippet:item.node?.snippet,
+                  label:item.label,
+                  duration:item.duration,
+                  mainThreadTime:item.mainThreadTime,
+                  cacheLifetimeMs:item.cacheLifetimeMs,
+                  requestCount:item.requestCount
+                };
+                console.log(compact(picked));
+              }
+            }
+
+            const net = a['network-requests']?.details?.items || [];
+            console.log('\nLARGEST NETWORK RESOURCES');
+            net.filter(x => x.url && !x.url.startsWith('data:'))
+              .sort((x,y)=>(y.transferSize||0)-(x.transferSize||0))
+              .slice(0,20)
+              .forEach(x => console.log(compact({url:x.url,transferSize:x.transferSize,resourceSize:x.resourceSize,mimeType:x.mimeType,resourceType:x.resourceType,statusCode:x.statusCode}))); 
           }
           NODE
