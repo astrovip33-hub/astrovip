@@ -155,9 +155,16 @@ export default {
     const assetResponse=await env.ASSETS.fetch(request);
     const ct=assetResponse.headers.get('content-type')||'';
     if(assetResponse.ok&&ct.includes('text/html')&&!url.pathname.startsWith('/command-center')){
-      const homepageRibbonCleanup=(url.pathname==='/'||url.pathname==='')?`<style id="astrovip-hide-secondary-planet-ribbon">html body #planet-strip-secondary,html body .planet-strip-secondary{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}</style><script id="astrovip-remove-secondary-planet-ribbon">(()=>{const kill=()=>{document.querySelectorAll('#planet-strip-secondary,.planet-strip-secondary').forEach(el=>el.remove());const studies=document.querySelector('#studii-de-caz-home');if(studies){let prev=studies.previousElementSibling;if(prev&&prev.matches('.planet-strip,[id*="planet-strip"],[class*="planet-strip"]'))prev.remove();}};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',kill,{once:true});else kill();new MutationObserver(kill).observe(document.documentElement,{childList:true,subtree:true});})();</script>`:'';
+      const isHomepage=url.pathname==='/'||url.pathname==='';
+      const homepageRibbonCleanup=isHomepage?`<style id="astrovip-hide-secondary-planet-ribbon">html body #planet-strip-secondary,html body .planet-strip-secondary{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}</style><script id="astrovip-remove-secondary-planet-ribbon">(()=>{const kill=()=>{document.querySelectorAll('#planet-strip-secondary,.planet-strip-secondary').forEach(el=>el.remove());const studies=document.querySelector('#studii-de-caz-home');if(studies){let prev=studies.previousElementSibling;if(prev&&prev.matches('.planet-strip,[id*="planet-strip"],[class*="planet-strip"]'))prev.remove();}};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',kill,{once:true});else kill();new MutationObserver(kill).observe(document.documentElement,{childList:true,subtree:true});})();</script>`:'';
       const runtime=homepageRibbonCleanup+`<script src="/assets/page-editor-runtime.js?v=20261006-premium-wow3" defer></script>`;
-      return new HTMLRewriter().on('head',{element(el){el.append(runtime,{html:true})}}).transform(assetResponse);
+      let rewriter=new HTMLRewriter().on('head',{element(el){el.append(runtime,{html:true})}});
+      if(isHomepage){
+        rewriter=rewriter
+          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore',{element(el){el.remove()}})
+          .on('script#astrovip-planetary-postload',{element(el){el.remove()}});
+      }
+      return rewriter.transform(assetResponse);
     }
     if(url.pathname.startsWith('/command-center')){
       const headers=new Headers(assetResponse.headers);
