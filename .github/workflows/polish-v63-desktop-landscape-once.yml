@@ -1,0 +1,93 @@
+name: Polish V6.3 desktop landscape once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/polish-v63-desktop-landscape-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Apply desktop landscape polish
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          # Replace only the V6.3 desktop Hero image with the already approved mobile Hero asset.
+          start = s.find('<!-- V63-DESKTOP-PROD-START -->')
+          end = s.find('<!-- V63-DESKTOP-PROD-END -->', start)
+          if start == -1 or end == -1:
+              raise SystemExit('V63 desktop block not found')
+          block = s[start:end]
+          old = 'src="/assets/hero-final-static.webp"'
+          new = 'src="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261006-v63-clean"'
+          if old in block:
+              block = block.replace(old, new, 1)
+          elif new not in block:
+              raise SystemExit('Expected desktop hero image reference not found')
+          s = s[:start] + block + s[end:]
+
+          style = r'''<!-- V63-DESKTOP-LANDSCAPE-POLISH-START -->
+<style id="v63-desktop-landscape-polish">
+@media(min-width:821px){
+  body:not(.guide-page) .top .nav{height:64px!important;min-height:64px!important}
+  body:not(.guide-page) .top{min-height:64px!important}
+  body:not(.guide-page) .top .brand img{max-height:42px!important;width:auto!important}
+  body:not(.guide-page) .av-langbar{padding:4px 0!important;min-height:42px!important}
+  body:not(.guide-page) .av-langbar .wrap{min-height:38px!important;margin-top:0!important;margin-bottom:0!important}
+  body:not(.guide-page) .av-lang-switch{min-height:34px!important;gap:6px!important}
+  body:not(.guide-page) .av-lang-switch>a{min-height:30px!important;padding:3px 8px!important}
+
+  .v63d-hero{min-height:min(720px,calc(100vh - 106px))!important}
+  .v63d-hero-grid{min-height:min(720px,calc(100vh - 106px))!important;align-items:start!important}
+  .v63d-hero-copy{align-self:start!important;padding:44px 0 42px!important}
+  .v63d-h1{font-size:clamp(48px,4.35vw,72px)!important;line-height:.94!important;max-width:680px!important}
+  .v63d-hero-lead{margin-top:20px!important;font-size:17px!important;line-height:1.55!important}
+  .v63d-actions{margin-top:24px!important}
+  .v63d-trust{margin-top:26px!important}
+
+  .v63d-hero-visual{min-height:min(720px,calc(100vh - 106px))!important;overflow:hidden!important}
+  .v63d-hero-visual img{object-fit:cover!important;object-position:center 22%!important;filter:saturate(.94) contrast(1.04) brightness(.88)!important}
+  .v63d-hero-visual{ -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 19%,#000 100%);mask-image:linear-gradient(90deg,transparent 0,#000 19%,#000 100%)}
+  .v63d-hero-visual:after{background:linear-gradient(90deg,#020504 0,rgba(2,5,4,.88) 8%,rgba(2,5,4,.28) 24%,transparent 43%,rgba(2,5,4,.14) 78%,rgba(2,5,4,.42) 100%),linear-gradient(180deg,rgba(2,5,4,.04),transparent 58%,#020504 100%)!important}
+}
+@media(min-width:821px) and (max-height:760px){
+  .v63d-hero{min-height:560px!important}
+  .v63d-hero-grid{min-height:560px!important}
+  .v63d-hero-copy{padding:28px 0 30px!important}
+  .v63d-h1{font-size:clamp(42px,3.8vw,62px)!important;line-height:.95!important}
+  .v63d-hero-lead{margin-top:16px!important;font-size:15.5px!important;line-height:1.48!important;max-width:560px!important}
+  .v63d-actions{margin-top:18px!important}
+  .v63d-btn{min-height:48px!important;padding:0 20px!important}
+  .v63d-trust{margin-top:20px!important}
+  .v63d-trust div{padding-top:12px!important;padding-bottom:12px!important}
+  .v63d-hero-visual{min-height:560px!important}
+}
+</style>
+<!-- V63-DESKTOP-LANDSCAPE-POLISH-END -->'''
+
+          # Make this rerunnable without duplicating the style block.
+          a = s.find('<!-- V63-DESKTOP-LANDSCAPE-POLISH-START -->')
+          b = s.find('<!-- V63-DESKTOP-LANDSCAPE-POLISH-END -->')
+          if a != -1 and b != -1:
+              b += len('<!-- V63-DESKTOP-LANDSCAPE-POLISH-END -->')
+              s = s[:a] + s[b:]
+          s = s.replace('</head>', style + '\n</head>', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Polish V6.3 desktop landscape Hero"
+          git push origin main
