@@ -22,3 +22,4 @@
 .v63d-hero-lead{font-size:14px!important}
 .v63d-trust div{font-size:9px!important}
 }`;document.head.appendChild(st)})();
+;(()=>{if(location.pathname!=='/'&&location.pathname!=='')return;if(document.getElementById('astrovip-premium-home-preview-css'))return;const l=document.createElement('link');l.id='astrovip-premium-home-preview-css';l.rel='stylesheet';l.href='/assets/premium-home-preview-20261006.css?v=20261006-1800';document.head.appendChild(l)})();
