@@ -29,6 +29,23 @@ AUTHOR_BOX = """
 </div>
 """.strip()
 
+DESKTOP_TRUST_RIBBON_STYLE = """
+<style id="astrovip-desktop-hide-hero-trust-ribbon-20261006">
+@media (min-width:821px){
+  html body:not(.guide-page) main#top .hero.av-hero-v2 .av-premium-trust-ribbon{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    overflow:hidden!important;
+  }
+}
+</style>
+""".strip()
+
 def page_image(html: str) -> str:
     m = OG_RE.search(html)
     if not m:
@@ -160,6 +177,21 @@ def normalize_home_reviews(html: str) -> str:
         html = html.replace(old, new)
     return html
 
+def force_desktop_hide_trust_ribbon(html: str) -> str:
+    # Inject a late, inline production rule so browser/CDN caches of external CSS
+    # cannot keep the Hero trust ribbon visible on desktop.
+    html = re.sub(
+        r'\s*<style\s+id=["\']astrovip-desktop-hide-hero-trust-ribbon-20261006["\'][\s\S]*?</style>\s*',
+        "\n",
+        html,
+        flags=re.I,
+    )
+    marker = "</head>"
+    if marker in html.lower():
+        pos = html.lower().rfind(marker)
+        return html[:pos] + DESKTOP_TRUST_RIBBON_STYLE + "\n" + html[pos:]
+    return DESKTOP_TRUST_RIBBON_STYLE + "\n" + html
+
 files_scanned = 0
 files_changed = 0
 blocks_changed = 0
@@ -201,6 +233,7 @@ for path in ROOT.rglob("index.html"):
     # before Cloudflare deploys the static HTML, so crawlers and browsers see 33.
     if path == ROOT / "index.html":
         updated = normalize_home_reviews(updated)
+        updated = force_desktop_hide_trust_ribbon(updated)
 
     # Visible E-E-A-T signal: add a consistent author box only to article pages
     # that use the editorial guide layout and do not already have one.
