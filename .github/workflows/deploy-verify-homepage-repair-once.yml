@@ -46,8 +46,8 @@ jobs:
           for(const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:900}]]){
             const context=await browser.newContext({viewport});
             const page=await context.newPage();
-            const errors=[];
-            page.on('pageerror',e=>errors.push(String(e.message||e)));
+            const pageErrors=[];
+            page.on('pageerror',e=>pageErrors.push(String(e.message||e)));
             await page.goto('https://astrovip.ro/?visual_verify='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
             await page.waitForTimeout(3500);
             const reject=page.getByRole('button',{name:/Respinge opționale/i});
@@ -58,8 +58,9 @@ jobs:
               const text=norm(document.body.innerText);
               const imgs=[...document.images].filter(i=>/hero/i.test((i.currentSrc||i.src||'')+' '+(i.alt||''))).map(i=>{const r=i.getBoundingClientRect(),s=getComputedStyle(i);return {src:i.currentSrc||i.src,alt:i.alt,natural:[i.naturalWidth,i.naturalHeight],rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)],display:s.display,visibility:s.visibility,opacity:s.opacity}});
               const visibleEls=[...document.querySelectorAll('h1,h2,h3,p,div,span')].filter(el=>norm(el.textContent).includes('CUNOȘTI MOMENTUL')&&el.getBoundingClientRect().width>0&&el.getBoundingClientRect().height>0).slice(0,5).map(el=>{const r=el.getBoundingClientRect();return {tag:el.tagName,cls:el.className,rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)],text:norm(el.textContent).slice(0,180)}});
-              return {innerWidth,scrollWidth:document.documentElement.scrollWidth,lang:document.documentElement.lang,hasModernText:text.includes('CUNOȘTI MOMENTUL')&&text.includes('TRĂIEȘTI VIITORUL'),has33:text.includes('33')&&text.toLowerCase().includes('recenzi'),premiumCss:!!document.querySelector('#astrovip-premium-home-preview-css'),wowCss:!!document.querySelector('#astrovip-premium-home-wow-css'),bookingBridge:[...document.scripts].some(s=>(s.src||'').includes('booking-bridge-20261007.js')),runtime:[...document.scripts].map(s=>s.src||'').find(x=>x.includes('page-editor-runtime.js'))||'',visibleModern:visibleEls,heroImages:imgs,errors};
+              return {innerWidth,scrollWidth:document.documentElement.scrollWidth,lang:document.documentElement.lang,hasModernText:text.includes('CUNOȘTI MOMENTUL')&&text.includes('TRĂIEȘTI VIITORUL'),has33:text.includes('33')&&text.toLowerCase().includes('recenzi'),premiumCss:!!document.querySelector('#astrovip-premium-home-preview-css'),wowCss:!!document.querySelector('#astrovip-premium-home-wow-css'),bookingBridge:[...document.scripts].some(s=>(s.src||'').includes('booking-bridge-20261007.js')),runtime:[...document.scripts].map(s=>s.src||'').find(x=>x.includes('page-editor-runtime.js'))||'',visibleModern:visibleEls,heroImages:imgs};
             });
+            data.pageErrors=pageErrors;
             await page.screenshot({path:`modern-${name}.png`,fullPage:false});
             console.log('MODERN_HOME_RESULT '+name+' '+JSON.stringify(data));
             results.push({name,data});
