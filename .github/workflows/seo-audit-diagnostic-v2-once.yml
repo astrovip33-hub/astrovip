@@ -1,0 +1,32 @@
+name: SEO graph diagnostic v2 once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/seo-audit-diagnostic-v2-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Capture current SEO graph report
+        shell: bash
+        run: |
+          mkdir -p tmp
+          python3 scripts/audit_seo_graph.py --json > tmp/seo-audit-report-v2.txt 2>&1 || true
+      - name: Persist diagnostic
+        shell: bash
+        run: |
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add tmp/seo-audit-report-v2.txt
+          git commit -m "Capture current SEO graph diagnostic [skip ci]"
+          git push origin HEAD:main
