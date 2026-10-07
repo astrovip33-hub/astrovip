@@ -1,0 +1,72 @@
+name: UX UI preview audit 2026-10-07
+
+on:
+  push:
+    branches: [preview/ux-ui-perfect-20261007]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Audit live UX UI
+        shell: bash
+        run: |
+          cat > .ux-audit.mjs <<'JS'
+          import { chromium } from 'playwright';
+          import fs from 'fs';
+          const browser=await chromium.launch({headless:true});
+          const all=[];
+          for (const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:900}]]) {
+            const context=await browser.newContext({viewport});
+            const page=await context.newPage();
+            const errors=[];
+            page.on('pageerror',e=>errors.push(String(e.message||e)));
+            await page.goto('https://astrovip.ro/?ux_audit='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
+            await page.waitForTimeout(3500);
+            const reject=page.getByRole('button',{name:/Respinge opționale/i});
+            if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
+            await page.waitForTimeout(400);
+            const audit=await page.evaluate(()=>{
+              const rect=o=>o?(()=>{const r=o.getBoundingClientRect();return {x:Math.round(r.x),y:Math.round(r.y),w:Math.round(r.width),h:Math.round(r.height),bottom:Math.round(r.bottom)}})():null;
+              const visible=e=>{if(!e)return false;const s=getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity)>0&&r.width>1&&r.height>1};
+              const hero=document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore');
+              const heroVisual=hero?.querySelector('.av-hero-v2-visual');
+              const heroImg=heroVisual?.querySelector('picture img');
+              const chips=heroVisual?.querySelector('.av-hero-image-service-cards');
+              const heroContent=[...hero?.children||[]].find(e=>e!==heroVisual && visible(e))||null;
+              const sections=[...document.querySelectorAll('main > section,main > div')].filter(visible).map((e,i)=>({i,tag:e.tagName,id:e.id,cls:e.className,rect:rect(e),text:(e.innerText||'').trim().slice(0,120)}));
+              const gaps=[]; for(let i=1;i<sections.length;i++){const g=sections[i].rect.y-sections[i-1].rect.bottom;if(g>80)gaps.push({after:sections[i-1].id||sections[i-1].cls,before:sections[i].id||sections[i].cls,gap:g});}
+              const buttons=[...document.querySelectorAll('a,button')].filter(visible).slice(0,120).map(e=>({text:(e.innerText||e.getAttribute('aria-label')||'').trim().slice(0,60),href:e.getAttribute('href'),rect:rect(e),font:getComputedStyle(e).fontSize}));
+              const small=buttons.filter(b=>b.rect&& (b.rect.w<44||b.rect.h<44));
+              const header=document.querySelector('header,.top');
+              const flags=[...document.querySelectorAll('a[href*="/en"],a[href*="/es"],a[href*="/it"],a[href*="/zh"],a[href*="/ar"],a[href*="/ru"]')].filter(visible).map(e=>({text:e.innerText.trim(),rect:rect(e),href:e.getAttribute('href')}));
+              return {url:location.href,doc:{w:document.documentElement.scrollWidth,h:document.documentElement.scrollHeight},header:rect(header),hero:rect(hero),heroVisual:rect(heroVisual),heroImg:{rect:rect(heroImg),natural:heroImg?[heroImg.naturalWidth,heroImg.naturalHeight]:null,src:heroImg?.currentSrc||heroImg?.src||null},chips:rect(chips),heroContent:rect(heroContent),sections,gaps,smallTapTargets:small,flags};
+            });
+            await page.screenshot({path:`ux-live-${name}-viewport.png`,fullPage:false});
+            await page.screenshot({path:`ux-live-${name}-full.png`,fullPage:true});
+            const row={name,viewport,audit,errors}; all.push(row); console.log('UX_AUDIT '+JSON.stringify(row));
+            await context.close();
+          }
+          await browser.close();
+          fs.writeFileSync('ux-audit.json',JSON.stringify(all,null,2));
+          JS
+          node .ux-audit.mjs
+      - name: Upload UX audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: ux-ui-live-audit-20261007
+          path: |
+            ux-audit.json
+            ux-live-mobile-viewport.png
+            ux-live-mobile-full.png
+            ux-live-desktop-viewport.png
+            ux-live-desktop-full.png
