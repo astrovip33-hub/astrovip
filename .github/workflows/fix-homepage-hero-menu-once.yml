@@ -1,4 +1,4 @@
-name: Restore modern AstroVip homepage worker
+name: Force fresh AstroVip homepage assets
 
 on:
   push:
@@ -16,7 +16,7 @@ env:
   CLOUDFLARE_ACCOUNT_ID: 1997683abefc1f33c4a391c0e09e63dd
 
 jobs:
-  restore-and-deploy:
+  patch-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current main
@@ -24,24 +24,34 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Restore only worker.js from last modern production state
+      - name: Cache-bust homepage runtime and keep authored Hero
         shell: bash
         run: |
           set -euo pipefail
-          git checkout 04ec594d9b6d37d3a0a44eb7e6e8141ea9556203 -- worker.js
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('worker.js')
+          s=p.read_text()
+          s=s.replace('/assets/page-editor-runtime.js?v=20261006-premium-wow3','/assets/page-editor-runtime.js?v=20261007-1728-fresh')
+          s=s.replace('/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261006-v63','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-1728-fresh')
+          s=s.replace('/assets/astrovip-hero-desktop-final-20261002.avif?v=20261006-v63-desktop','/assets/astrovip-hero-desktop-final-20261002.avif?v=20261007-1728-fresh')
+          stale="          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture',{element(el){el.remove()}})\n"
+          s=s.replace(stale,'')
+          p.write_text(s)
+          PY
           node --check worker.js
           git diff --check
-          grep -q 'booking-bridge-20261007.js' worker.js
-          ! grep -q 'astrovip-homepage-ui-repair-20261007' worker.js
+          grep -q '20261007-1728-fresh' worker.js
+          ! grep -q "av-hero-mobile-restore .av-hero-v2-visual picture',{element(el){el.remove()}}" worker.js
 
-      - name: Commit restored worker only
+      - name: Commit homepage freshness repair
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name "AstroVip Restore Bot"
+          git config user.name "AstroVip Repair Bot"
           git config user.email "actions@users.noreply.github.com"
           git add worker.js
-          git commit -m "Restore modern homepage worker"
+          git commit -m "Force fresh homepage assets and preserve Hero"
           git push origin HEAD:main
 
       - name: Normalize Cloudflare token
@@ -53,14 +63,16 @@ jobs:
           echo "::add-mask::$TOKEN"
           echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
 
-      - name: Deploy restored worker
+      - name: Deploy repaired Worker
         run: npx --yes wrangler@latest deploy
 
-      - name: Verify production responds
+      - name: Verify fresh production HTML
         shell: bash
         run: |
           set -euo pipefail
           tmp="$(mktemp)"
-          curl -fsS "https://astrovip.ro/?modern_restore=$GITHUB_SHA" -o "$tmp"
+          curl -fsS "https://astrovip.ro/?fresh_home=$GITHUB_SHA" -o "$tmp"
           test -s "$tmp"
+          grep -q '20261007-1728-fresh' "$tmp"
+          grep -q 'CUNOȘTI MOMENTUL' "$tmp"
           grep -q 'booking-bridge-20261007.js' "$tmp"
