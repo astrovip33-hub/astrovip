@@ -1,0 +1,116 @@
+name: Audit AstroVip mobile layout once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/mobile-layout-audit-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit-mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.56.0
+          npx playwright install --with-deps chromium
+
+      - name: Audit live mobile layout
+        shell: bash
+        run: |
+          cat > .audit-mobile.mjs <<'JS'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+
+          const browser = await chromium.launch({headless:true});
+          const out = {generatedAt:new Date().toISOString(), url:'https://astrovip.ro/', viewports:[]};
+          const specs = [
+            ['phone-390',{width:390,height:844}],
+            ['phone-430',{width:430,height:932}]
+          ];
+
+          for (const [name, viewport] of specs) {
+            const context = await browser.newContext({viewport, deviceScaleFactor:1});
+            const page = await context.newPage();
+            const pageErrors=[];
+            page.on('pageerror',e=>pageErrors.push(String(e?.message||e)));
+            await page.goto('https://astrovip.ro/?mobile_audit='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
+            await page.waitForTimeout(3500);
+            const reject=page.getByRole('button',{name:/Respinge opționale/i});
+            if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
+            await page.waitForTimeout(600);
+
+            const data = await page.evaluate(() => {
+              const rect = el => {
+                if(!el) return null;
+                const r=el.getBoundingClientRect();
+                const s=getComputedStyle(el);
+                return {
+                  tag:el.tagName.toLowerCase(), id:el.id||'', cls:String(el.className||''),
+                  x:+r.x.toFixed(1), y:+r.y.toFixed(1), w:+r.width.toFixed(1), h:+r.height.toFixed(1),
+                  right:+r.right.toFixed(1), bottom:+r.bottom.toFixed(1),
+                  display:s.display, position:s.position, overflowX:s.overflowX,
+                  gridTemplateColumns:s.gridTemplateColumns, flexDirection:s.flexDirection,
+                  fontSize:s.fontSize, lineHeight:s.lineHeight,
+                  text:(el.textContent||'').replace(/\s+/g,' ').trim().slice(0,160)
+                };
+              };
+              const q = sel => rect(document.querySelector(sel));
+              const qa = sel => [...document.querySelectorAll(sel)].slice(0,12).map(rect);
+              const vw=document.documentElement.clientWidth;
+              const overflow=[...document.body.querySelectorAll('*')].map(el=>({el,r:el.getBoundingClientRect(),s:getComputedStyle(el)})).filter(o=>o.s.display!=='none'&&o.s.position!=='fixed'&&o.r.width>0&&(o.r.right>vw+1||o.r.left<-1||o.r.width>vw+1)).slice(0,30).map(o=>rect(o.el));
+              const main=document.querySelector('main#top')||document.querySelector('main');
+              const mainChildren=main?[...main.children].slice(0,12).map(rect):[];
+              const hero=document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore')||document.querySelector('section.hero')||document.querySelector('.hero');
+              const heroImgs=hero?[...hero.querySelectorAll('img')].map(i=>{const r=i.getBoundingClientRect(); const s=getComputedStyle(i); return {src:i.currentSrc||i.src,natural:[i.naturalWidth,i.naturalHeight],x:+r.x.toFixed(1),y:+r.y.toFixed(1),w:+r.width.toFixed(1),h:+r.height.toFixed(1),objectFit:s.objectFit,objectPosition:s.objectPosition,display:s.display}}):[];
+              return {
+                viewport:{innerWidth,innerHeight,vw},
+                document:{scrollWidth:document.documentElement.scrollWidth,scrollHeight:document.documentElement.scrollHeight,bodyScrollWidth:document.body.scrollWidth},
+                selectors:{
+                  top:q('.top'), nav:q('.nav'), brand:q('.brand'), menu:q('.menu'), hamb:q('#hamb'), navActions:q('.nav-actions'),
+                  hero:rect(hero), heroGrid:q('.av-hero-v2-grid'), heroCopy:q('.av-hero-v2-copy'), heroVisual:q('.av-hero-v2-visual'),
+                  heroCards:q('.av-hero-image-service-cards'), heroCardItems:qa('.av-hero-image-service-card'),
+                  v63:q('#v63-mobile-prod'), v63Visual:q('#v63-mobile-prod .v63-visual'), v63Copy:q('#v63-mobile-prod .v63-copy'),
+                  trust:q('.trust'), trustGrid:q('.trust-grid'), languages:q('.lang-switcher'), reviewRibbon:q('.google-review-strip')
+                },
+                mainChildren, heroImgs, overflow,
+                bodyClasses:document.body.className,
+                textHead:(document.body.innerText||'').replace(/\s+/g,' ').trim().slice(0,1200)
+              };
+            });
+            data.pageErrors=pageErrors;
+            out.viewports.push({name, ...data});
+            await page.screenshot({path:`mobile-audit-${name}.png`,fullPage:false});
+            await context.close();
+          }
+          await browser.close();
+          fs.writeFileSync('.mobile-layout-audit.json',JSON.stringify(out,null,2));
+          JS
+          node .audit-mobile.mjs
+          cat .mobile-layout-audit.json
+
+      - name: Commit audit report
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "AstroVip Audit Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add .mobile-layout-audit.json
+          git commit -m "Record live mobile layout audit" || exit 0
+          git push origin HEAD:main
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: astrovip-mobile-layout-audit
+          path: mobile-audit-*.png
