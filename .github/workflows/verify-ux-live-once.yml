@@ -1,0 +1,45 @@
+name: Verify UX UI remediation live once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/verify-ux-live-once.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify production without cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          ok=0
+          for i in $(seq 1 12); do
+            stamp="$(date +%s)-${i}"
+            home="$(curl -fsSL --retry 2 -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' "https://astrovip.ro/?ux_verify=${stamp}")"
+            natal="$(curl -fsSL --retry 2 -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' "https://astrovip.ro/harta-mea/?ux_verify=${stamp}")"
+
+            home_marker=0; menu=0; booking=0; no_legacy=0; no_early_stripe=0; natal_copy=0
+            grep -q 'av-ux-remediation-20261007' <<<"$home" && home_marker=1 || true
+            grep -q 'class="av-menu-booking" href="#programari">Programare</a>' <<<"$home" && menu=1 || true
+            grep -q 'class="av-header-booking" href="#programari"' <<<"$home" && booking=1 || true
+            ! grep -q 'V63-DESKTOP-PROD-START' <<<"$home" && no_legacy=1 || true
+            ! grep -q 'PLĂTEȘTE CU CARDUL →</a>' <<<"$home" && no_early_stripe=1 || true
+            grep -q 'Ascendentul, MC-ul și casele sunt calculate în acest instrument' <<<"$natal" && natal_copy=1 || true
+
+            echo "attempt=${i} marker=${home_marker} menu=${menu} booking=${booking} no_legacy=${no_legacy} no_early_stripe=${no_early_stripe} natal_copy=${natal_copy}"
+            if [ "$home_marker" = 1 ] && [ "$menu" = 1 ] && [ "$booking" = 1 ] && [ "$no_legacy" = 1 ] && [ "$no_early_stripe" = 1 ] && [ "$natal_copy" = 1 ]; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          if [ "$ok" != 1 ]; then
+            echo "Production verification failed after retries." >&2
+            exit 1
+          fi
+          echo "Production UX/UI remediation verified live."
