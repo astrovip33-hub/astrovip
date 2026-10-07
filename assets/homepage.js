@@ -1,4 +1,5 @@
 !function(){"use strict";
+const navCss=document.createElement("link");navCss.rel="stylesheet";navCss.href="/assets/mobile-nav-clean.css?v=20261007-1";document.head.appendChild(navCss);
 const hamb=document.getElementById("hamb"),menu=document.getElementById("menu");
 if(!hamb||!menu)return;
 const groups=[...menu.querySelectorAll(".av-menu-group")];
