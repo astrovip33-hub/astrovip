@@ -1,4 +1,4 @@
-name: Force fresh AstroVip homepage assets
+name: Repair blank AstroVip homepage
 
 on:
   push:
@@ -16,7 +16,7 @@ env:
   CLOUDFLARE_ACCOUNT_ID: 1997683abefc1f33c4a391c0e09e63dd
 
 jobs:
-  patch-and-deploy:
+  repair-deploy-verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current main
@@ -24,35 +24,47 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Cache-bust homepage runtime and keep authored Hero
+      - name: Disable stale V63 hiding CSS and guard clock
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          p=Path('worker.js')
-          s=p.read_text()
-          s=s.replace('/assets/page-editor-runtime.js?v=20261006-premium-wow3','/assets/page-editor-runtime.js?v=20261007-1728-fresh')
-          s=s.replace('/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261006-v63','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-1728-fresh')
-          s=s.replace('/assets/astrovip-hero-desktop-final-20261002.avif?v=20261006-v63-desktop','/assets/astrovip-hero-desktop-final-20261002.avif?v=20261007-1728-fresh')
-          stale="          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture',{element(el){el.remove()}})\n"
-          s=s.replace(stale,'')
-          p.write_text(s)
+
+          wp=Path('worker.js')
+          s=wp.read_text()
+          marker="        rewriter=rewriter\n          .on('link[rel=\"preload\"][as=\"image\"]'"
+          replacement="        rewriter=rewriter\n          .on('#v63-mobile-prod-css',{element(el){el.remove()}})\n          .on('#v63-desktop-prod-css',{element(el){el.remove()}})\n          .on('link[rel=\"preload\"][as=\"image\"]'"
+          if "on('#v63-mobile-prod-css'" not in s:
+              if marker not in s:
+                  raise SystemExit('worker insertion marker not found')
+              s=s.replace(marker,replacement,1)
+          wp.write_text(s)
+
+          ip=Path('index.html')
+          h=ip.read_text()
+          old="const clock=document.getElementById('av-bucharest-clock');\n  const format="
+          new="const clock=document.getElementById('av-bucharest-clock');\n  if(!clock)return;\n  const format="
+          h=h.replace(old,new)
+          ip.write_text(h)
           PY
           node --check worker.js
           git diff --check
-          grep -q '20261007-1728-fresh' worker.js
-          ! grep -q "av-hero-mobile-restore .av-hero-v2-visual picture',{element(el){el.remove()}}" worker.js
+          grep -q "on('#v63-mobile-prod-css'" worker.js
+          grep -q "on('#v63-desktop-prod-css'" worker.js
+          grep -q "if(!clock)return" index.html
 
-      - name: Commit homepage freshness repair
+      - name: Commit repair
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "AstroVip Repair Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add worker.js
-          git commit -m "Force fresh homepage assets and preserve Hero"
-          git push origin HEAD:main
+          git add worker.js index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Fix blank homepage from stale V63 CSS"
+            git push origin HEAD:main
+          fi
 
       - name: Normalize Cloudflare token
         shell: bash
@@ -66,13 +78,69 @@ jobs:
       - name: Deploy repaired Worker
         run: npx --yes wrangler@latest deploy
 
-      - name: Verify fresh production HTML
+      - name: Verify stale V63 CSS is absent from live response
         shell: bash
         run: |
           set -euo pipefail
           tmp="$(mktemp)"
-          curl -fsS "https://astrovip.ro/?fresh_home=$GITHUB_SHA" -o "$tmp"
+          curl -fsS "https://astrovip.ro/?v63_repair=$GITHUB_SHA" -o "$tmp"
           test -s "$tmp"
-          grep -q '20261007-1728-fresh' "$tmp"
-          grep -q 'CUNOȘTI MOMENTUL' "$tmp"
+          if grep -q 'id="v63-mobile-prod-css"' "$tmp"; then echo 'mobile V63 CSS still live'; exit 1; fi
+          if grep -q 'id="v63-desktop-prod-css"' "$tmp"; then echo 'desktop V63 CSS still live'; exit 1; fi
           grep -q 'booking-bridge-20261007.js' "$tmp"
+
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.56.0
+          npx playwright install --with-deps chromium
+
+      - name: Render repaired homepage
+        shell: bash
+        run: |
+          cat > .verify-v63-repair.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const browser=await chromium.launch({headless:true});
+          const results=[];
+          for(const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:900}]]){
+            const context=await browser.newContext({viewport});
+            const page=await context.newPage();
+            const errors=[];
+            page.on('pageerror',e=>errors.push(String(e.message||e)));
+            await page.goto('https://astrovip.ro/?v63_visual='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
+            await page.waitForTimeout(3500);
+            const data=await page.evaluate(()=>{
+              const main=document.querySelector('main#top');
+              const hero=document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore');
+              const hr=hero?.getBoundingClientRect();
+              const visibleMainChildren=main?[...main.children].filter(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'}).length:0;
+              const text=(document.body.innerText||'').replace(/\s+/g,' ').trim();
+              const heroImgs=[...(hero?.querySelectorAll('img')||[])].map(i=>{const r=i.getBoundingClientRect();return {src:i.currentSrc||i.src,natural:[i.naturalWidth,i.naturalHeight],rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}});
+              return {innerWidth,scrollWidth:document.documentElement.scrollWidth,textLength:text.length,hasAstrologiePremium:text.toUpperCase().includes('ASTROLOGIE PREMIUM'),visibleMainChildren,heroRect:hr?[Math.round(hr.x),Math.round(hr.y),Math.round(hr.width),Math.round(hr.height)]:null,heroImgs,v63MobileCss:!!document.querySelector('#v63-mobile-prod-css'),v63DesktopCss:!!document.querySelector('#v63-desktop-prod-css')};
+            });
+            data.errors=errors;
+            await page.screenshot({path:`repaired-${name}.png`,fullPage:false});
+            console.log('V63_REPAIR_RESULT '+name+' '+JSON.stringify(data));
+            results.push({name,data});
+            await context.close();
+          }
+          await browser.close();
+          const fail=[];
+          for(const r of results){
+            if(r.data.v63MobileCss||r.data.v63DesktopCss)fail.push(r.name+': stale V63 CSS still present');
+            if(r.data.visibleMainChildren<1)fail.push(r.name+': main still blank');
+            if(!r.data.heroRect||r.data.heroRect[2]<100||r.data.heroRect[3]<100)fail.push(r.name+': authored Hero not visible '+JSON.stringify(r.data.heroRect));
+            if(r.name==='mobile'&&r.data.scrollWidth>392)fail.push('mobile horizontal overflow '+r.data.scrollWidth);
+          }
+          if(fail.length){console.error('V63_REPAIR_FAILURE '+JSON.stringify(fail));process.exit(1)}
+          console.log('V63_REPAIR_OK authored current homepage is visible');
+          JS
+          node .verify-v63-repair.mjs
+
+      - name: Upload repaired screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: repaired-current-homepage
+          path: |
+            repaired-mobile.png
+            repaired-desktop.png
