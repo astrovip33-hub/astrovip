@@ -1,6 +1,10 @@
 (() => {
   'use strict';
   if (!document.body.classList.contains('av-ux-home')) return;
+  const flagStyle = document.createElement('style');
+  flagStyle.id = 'astrovip-ux-full-flags-20261007';
+  flagStyle.textContent = 'html body.av-ux-home.av-ux-home.av-ux-home .av-lang-switch>a{width:44px!important;min-width:44px!important;max-width:44px!important;height:44px!important;min-height:44px!important;max-height:44px!important;padding:5px!important}html body.av-ux-home.av-ux-home.av-ux-home .av-lang-switch>a img{display:block!important;width:36px!important;height:26px!important;min-width:36px!important;max-width:36px!important;min-height:26px!important;max-height:26px!important;border-radius:5px!important;object-fit:cover!important}';
+  document.head.appendChild(flagStyle);
   const locale = document.documentElement.lang.split('-')[0];
   const labels = {
     ro:['Deschide meniul','Închide meniul','Sari la conținut'],
