@@ -168,6 +168,8 @@ export default {
           .on('#v63-mobile-prod-css',{element(el){el.remove()}})
           .on('#v63-desktop-prod-css',{element(el){el.remove()}})
           .on('link[rel="preload"][as="image"]',{element(el){const srcset=el.getAttribute('imagesrcset')||'';const href=el.getAttribute('href')||'';if(srcset.includes('astrovip-hero-mobile-clean-cards-')||srcset.includes('astrovip-hero-lux-clean-20260922')||href.includes('astrovip-hero-mobile-clean-cards-')||href.includes('astrovip-hero-lux-clean-20260922'))el.remove();}})
+          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture source[media="(max-width:820px)"]',{element(el){el.setAttribute('srcset','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-worker-final');el.setAttribute('type','image/webp');el.removeAttribute('sizes')}})
+          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture img',{element(el){el.setAttribute('src','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-worker-final');el.setAttribute('width','600');el.setAttribute('height','496')}})
           .on('#v63-desktop-prod .v63d-hero-visual > img',{element(el){el.replace(desktopHero,{html:true})}})
           .on('#v63-mobile-prod .v63-visual > img',{element(el){el.replace(mobileHero,{html:true})}})
           .on('script#astrovip-planetary-postload',{element(el){el.remove()}});
