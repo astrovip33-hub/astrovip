@@ -5,12 +5,11 @@
   const bookingWords=/program|consulta|book|appointment|reserv|cita|prenot|запис|консульта|احجز|استشارة|预约|咨询/i;
 
   const isProgramariHref=(href='')=>{
-    const value=String(href).trim();
-    return value==='#programari'||value==='/#programari'||/\/#programari$/.test(value);
+    try{const target=new URL(href,location.href);return target.origin===location.origin&&target.hash==='#programari'}catch{return false}
   };
 
   const isBookingLink=(anchor)=>{
-    if(!anchor)return false;
+    if(!anchor||anchor.hasAttribute("data-direct-contact"))return false;
     const href=anchor.getAttribute('href')||'';
     const label=((anchor.textContent||'')+' '+(anchor.getAttribute('aria-label')||'')).trim();
     return isProgramariHref(href)||(/wa\.me\/40722128220/.test(href)&&bookingWords.test(label));
@@ -44,7 +43,7 @@
       return false;
     }
     if(location.hash!=='#programari')history.pushState(null,'','#programari');
-    requestAnimationFrame(()=>section.scrollIntoView({behavior:'smooth',block:'start'}));
+    requestAnimationFrame(()=>{section.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});const title=section.querySelector('h2');if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true})}});
     return true;
   };
 
