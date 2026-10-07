@@ -1,4 +1,4 @@
-# Triggered after repair commit 1232504e5ca55b2110a4fcbc6594f916ffb4f33c
+# Final verification after mobile Hero repair add2a2ea8988d0249a2f302aba3d096e5ef3e3c3
 name: Deploy and verify homepage repair once
 
 on:
@@ -98,7 +98,7 @@ jobs:
             if(!h)fail.push(`${label} Hero DOM missing`);
             else if(h.natural[0]<1||h.natural[1]<1||h.rect[2]<10||h.rect[3]<10||h.display==='none'||h.visibility==='hidden'||h.opacity==='0')fail.push(`${label} Hero not visibly loaded ${JSON.stringify(h)}`);
           }
-          if(m.hero&&!/astrovip-hero-mobile-clean-cards-/i.test(m.hero.src))fail.push(`mobile Hero source wrong ${m.hero.src}`);
+          if(m.hero&&!/astrovip-hero-premium-mobile-20261001\.webp/i.test(m.hero.src))fail.push(`mobile Hero source wrong ${m.hero.src}`);
           if(d.hero&&!/astrovip-hero-desktop-final-20261002\.avif/i.test(d.hero.src))fail.push(`desktop Hero source wrong ${d.hero.src}`);
           if(!m.menu?.visible||m.menu.before!=='false'||m.menu.after!=='true'||m.menu.closed?.expanded!=='false')fail.push('Romanian hamburger state broken');
           if(m.menu?.display==='none'||m.menu?.visibility==='hidden')fail.push('Romanian menu hidden after click');
