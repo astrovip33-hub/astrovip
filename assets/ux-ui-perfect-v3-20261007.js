@@ -19,11 +19,13 @@
   const menu = document.getElementById('menu');
   const toggle = document.getElementById('hamb');
   const compact = matchMedia('(max-width:1459px)');
+  const background = [document.querySelector('main'),document.querySelector('footer')].filter(Boolean);
   function setMenu(open, restoreFocus=false) {
     if (!menu || !toggle) return;
     menu.classList.toggle('open',open);
     menu.inert = compact.matches && !open;
     document.body.classList.toggle('av-menu-open',open && compact.matches);
+    background.forEach(el => { el.inert = compact.matches && open; });
     toggle.setAttribute('aria-expanded',String(open));
     toggle.setAttribute('aria-label',labels[open ? 1 : 0]);
     toggle.dataset.iconState = open ? 'open' : 'closed';
