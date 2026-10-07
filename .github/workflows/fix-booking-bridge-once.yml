@@ -1,0 +1,50 @@
+name: Fix AstroVip booking bridge once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/fix-booking-bridge-once.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch booking CTA bridge in Cloudflare Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('worker.js')
+          text = path.read_text(encoding='utf-8')
+          needle = '      const runtime=heroPreloads+homepageRibbonCleanup+`<script src="/assets/page-editor-runtime.js?v=20261006-premium-wow3" defer></script>`;'
+          replacement = '''      const bookingBridge=`<script id="astrovip-booking-bridge">(()=>{"use strict";const words=/program|consulta|book|appointment|reserv|cita|prenot|запис|консульта|احجز|استشارة|预约|咨询/i;const targetHref=h=>{h=(h||'').trim();return h==='#programari'||h==='/#programari'||/\\/#programari$/.test(h)};const isBooking=a=>{if(!a)return false;const h=a.getAttribute('href')||'';const label=((a.textContent||'')+' '+(a.getAttribute('aria-label')||'')).trim();return targetHref(h)||(/wa\\.me\\/40722128220/.test(h)&&words.test(label))};const reveal=()=>{const s=document.getElementById('programari');if(!s)return null;s.style.setProperty('display','block','important');s.style.setProperty('visibility','visible','important');s.style.setProperty('content-visibility','visible','important');s.style.setProperty('height','auto','important');s.style.setProperty('max-height','none','important');s.style.setProperty('scroll-margin-top','96px');return s};const normalize=()=>document.querySelectorAll('a[href]').forEach(a=>{if(!isBooking(a))return;a.setAttribute('href','#programari');a.setAttribute('target','_self');a.style.setProperty('pointer-events','auto','important')});const open=()=>{const s=reveal();if(!s){if(location.pathname!=='/')location.assign('/#programari');return false}if(location.hash!=='#programari')history.pushState(null,'','#programari');requestAnimationFrame(()=>s.scrollIntoView({behavior:'smooth',block:'start'}));return true};const init=()=>{normalize();if(location.hash==='#programari')setTimeout(open,0)};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();window.addEventListener('pageshow',init);document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href]');if(!isBooking(a))return;e.preventDefault();e.stopPropagation();open()},true)})();</script>`;
+      const runtime=heroPreloads+homepageRibbonCleanup+bookingBridge+`<script src="/assets/page-editor-runtime.js?v=20261006-premium-wow3" defer></script>`;'''
+          if needle not in text:
+              raise SystemExit('Expected runtime injection point not found; refusing unsafe patch')
+          text = text.replace(needle, replacement, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit repair and remove one-time workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "AstroVip Repair Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git rm .github/workflows/fix-booking-bridge-once.yml
+          git add worker.js
+          git diff --cached --check
+          git commit -m "Fix booking CTA bridge across V63 layouts"
+          git push origin HEAD:main
