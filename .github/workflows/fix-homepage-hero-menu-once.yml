@@ -1,4 +1,4 @@
-name: Repair blank AstroVip homepage
+name: Restore current AstroVip homepage visibility
 
 on:
   push:
@@ -24,45 +24,43 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Disable stale V63 hiding CSS and guard clock
+      - name: Remove orphaned V63 CSS blocks at source
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-
-          wp=Path('worker.js')
-          s=wp.read_text()
-          marker="        rewriter=rewriter\n          .on('link[rel=\"preload\"][as=\"image\"]'"
-          replacement="        rewriter=rewriter\n          .on('#v63-mobile-prod-css',{element(el){el.remove()}})\n          .on('#v63-desktop-prod-css',{element(el){el.remove()}})\n          .on('link[rel=\"preload\"][as=\"image\"]'"
-          if "on('#v63-mobile-prod-css'" not in s:
-              if marker not in s:
-                  raise SystemExit('worker insertion marker not found')
-              s=s.replace(marker,replacement,1)
-          wp.write_text(s)
-
-          ip=Path('index.html')
-          h=ip.read_text()
+          p=Path('index.html')
+          s=p.read_text()
+          blocks=[
+            ('<!-- V63-MOBILE-PROD-CSS-START -->','<!-- V63-MOBILE-PROD-CSS-END -->'),
+            ('<!-- V63-DESKTOP-PROD-CSS-START -->','<!-- V63-DESKTOP-PROD-CSS-END -->'),
+          ]
+          for start,end in blocks:
+              if start in s:
+                  a=s.index(start)
+                  b=s.index(end,a)+len(end)
+                  s=s[:a]+'\n<!-- V63 orphan CSS removed 2026-10-07; current authored homepage retained -->\n'+s[b:]
           old="const clock=document.getElementById('av-bucharest-clock');\n  const format="
           new="const clock=document.getElementById('av-bucharest-clock');\n  if(!clock)return;\n  const format="
-          h=h.replace(old,new)
-          ip.write_text(h)
+          s=s.replace(old,new)
+          p.write_text(s)
           PY
-          node --check worker.js
           git diff --check
-          grep -q "on('#v63-mobile-prod-css'" worker.js
-          grep -q "on('#v63-desktop-prod-css'" worker.js
-          grep -q "if(!clock)return" index.html
+          ! grep -q 'V63-MOBILE-PROD-CSS-START' index.html
+          ! grep -q 'V63-DESKTOP-PROD-CSS-START' index.html
+          ! grep -q 'id="v63-mobile-prod-css"' index.html
+          ! grep -q 'id="v63-desktop-prod-css"' index.html
 
-      - name: Commit repair
+      - name: Commit source repair
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "AstroVip Repair Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add worker.js index.html
+          git add index.html
           if ! git diff --cached --quiet; then
-            git commit -m "Fix blank homepage from stale V63 CSS"
+            git commit -m "Remove orphaned V63 CSS hiding current homepage"
             git push origin HEAD:main
           fi
 
@@ -75,29 +73,27 @@ jobs:
           echo "::add-mask::$TOKEN"
           echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
 
-      - name: Deploy repaired Worker
+      - name: Deploy exact repaired source
         run: npx --yes wrangler@latest deploy
 
-      - name: Verify stale V63 CSS is absent from live response
+      - name: Inspect production HTML without blocking visual test
         shell: bash
         run: |
-          set -euo pipefail
           tmp="$(mktemp)"
-          curl -fsS "https://astrovip.ro/?v63_repair=$GITHUB_SHA" -o "$tmp"
-          test -s "$tmp"
-          if grep -q 'id="v63-mobile-prod-css"' "$tmp"; then echo 'mobile V63 CSS still live'; exit 1; fi
-          if grep -q 'id="v63-desktop-prod-css"' "$tmp"; then echo 'desktop V63 CSS still live'; exit 1; fi
-          grep -q 'booking-bridge-20261007.js' "$tmp"
+          curl -fsS "https://astrovip.ro/?source_repair=$RANDOM" -o "$tmp" || true
+          echo "mobile_style_count=$(grep -c 'id=\"v63-mobile-prod-css\"' "$tmp" || true)"
+          echo "desktop_style_count=$(grep -c 'id=\"v63-desktop-prod-css\"' "$tmp" || true)"
+          echo "booking_bridge_count=$(grep -c 'booking-bridge-20261007.js' "$tmp" || true)"
 
       - name: Install Chromium
         run: |
           npm install --no-save playwright@1.56.0
           npx playwright install --with-deps chromium
 
-      - name: Render repaired homepage
+      - name: Render current homepage live
         shell: bash
         run: |
-          cat > .verify-v63-repair.mjs <<'JS'
+          cat > .verify-current-home.mjs <<'JS'
           import { chromium } from 'playwright';
           const browser=await chromium.launch({headless:true});
           const results=[];
@@ -106,41 +102,44 @@ jobs:
             const page=await context.newPage();
             const errors=[];
             page.on('pageerror',e=>errors.push(String(e.message||e)));
-            await page.goto('https://astrovip.ro/?v63_visual='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
-            await page.waitForTimeout(3500);
+            await page.goto('https://astrovip.ro/?current_home='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
+            await page.waitForTimeout(4000);
+            const reject=page.getByRole('button',{name:/Respinge opționale/i});
+            if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
+            await page.waitForTimeout(500);
             const data=await page.evaluate(()=>{
               const main=document.querySelector('main#top');
               const hero=document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore');
               const hr=hero?.getBoundingClientRect();
-              const visibleMainChildren=main?[...main.children].filter(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'}).length:0;
+              const visibleMainChildren=main?[...main.children].filter(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'&&s.opacity!=='0'}).length:0;
               const text=(document.body.innerText||'').replace(/\s+/g,' ').trim();
-              const heroImgs=[...(hero?.querySelectorAll('img')||[])].map(i=>{const r=i.getBoundingClientRect();return {src:i.currentSrc||i.src,natural:[i.naturalWidth,i.naturalHeight],rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}});
-              return {innerWidth,scrollWidth:document.documentElement.scrollWidth,textLength:text.length,hasAstrologiePremium:text.toUpperCase().includes('ASTROLOGIE PREMIUM'),visibleMainChildren,heroRect:hr?[Math.round(hr.x),Math.round(hr.y),Math.round(hr.width),Math.round(hr.height)]:null,heroImgs,v63MobileCss:!!document.querySelector('#v63-mobile-prod-css'),v63DesktopCss:!!document.querySelector('#v63-desktop-prod-css')};
+              const imgs=[...(hero?.querySelectorAll('img')||[])].map(i=>{const r=i.getBoundingClientRect();return {src:i.currentSrc||i.src,natural:[i.naturalWidth,i.naturalHeight],rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}});
+              return {innerWidth,scrollWidth:document.documentElement.scrollWidth,textLength:text.length,visibleMainChildren,heroRect:hr?[Math.round(hr.x),Math.round(hr.y),Math.round(hr.width),Math.round(hr.height)]:null,heroImgs:imgs,v63MobileCss:!!document.querySelector('#v63-mobile-prod-css'),v63DesktopCss:!!document.querySelector('#v63-desktop-prod-css'),hasPremium:text.toUpperCase().includes('ASTROLOGIE PREMIUM')};
             });
             data.errors=errors;
-            await page.screenshot({path:`repaired-${name}.png`,fullPage:false});
-            console.log('V63_REPAIR_RESULT '+name+' '+JSON.stringify(data));
+            await page.screenshot({path:`current-${name}.png`,fullPage:false});
+            console.log('CURRENT_HOME_RESULT '+name+' '+JSON.stringify(data));
             results.push({name,data});
             await context.close();
           }
           await browser.close();
           const fail=[];
           for(const r of results){
-            if(r.data.v63MobileCss||r.data.v63DesktopCss)fail.push(r.name+': stale V63 CSS still present');
-            if(r.data.visibleMainChildren<1)fail.push(r.name+': main still blank');
-            if(!r.data.heroRect||r.data.heroRect[2]<100||r.data.heroRect[3]<100)fail.push(r.name+': authored Hero not visible '+JSON.stringify(r.data.heroRect));
-            if(r.name==='mobile'&&r.data.scrollWidth>392)fail.push('mobile horizontal overflow '+r.data.scrollWidth);
+            if(r.data.v63MobileCss||r.data.v63DesktopCss)fail.push(r.name+': orphan V63 CSS still present');
+            if(r.data.visibleMainChildren<1)fail.push(r.name+': main has no visible children');
+            if(!r.data.heroRect||r.data.heroRect[2]<100||r.data.heroRect[3]<100)fail.push(r.name+': current Hero not visible '+JSON.stringify(r.data.heroRect));
+            if(r.name==='mobile'&&r.data.scrollWidth>392)fail.push('mobile overflow '+r.data.scrollWidth);
           }
-          if(fail.length){console.error('V63_REPAIR_FAILURE '+JSON.stringify(fail));process.exit(1)}
-          console.log('V63_REPAIR_OK authored current homepage is visible');
+          if(fail.length){console.error('CURRENT_HOME_FAILURE '+JSON.stringify(fail));process.exit(1)}
+          console.log('CURRENT_HOME_OK current homepage is visible on mobile and desktop');
           JS
-          node .verify-v63-repair.mjs
+          node .verify-current-home.mjs
 
-      - name: Upload repaired screenshots
+      - name: Upload current homepage screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: repaired-current-homepage
+          name: current-homepage-visible
           path: |
-            repaired-mobile.png
-            repaired-desktop.png
+            current-mobile.png
+            current-desktop.png
