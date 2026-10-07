@@ -1,4 +1,4 @@
-/* ASTROVIP UX FINAL 20261007-ux4 */
+/* ASTROVIP UX FINAL 20261007-ux5 */
 :root{--avux-gold:#efd36c;--avux-gold2:#b77a14;--avux-green:#39ff14;--avux-black:#020302;--avux-panel:rgba(3,7,4,.95)}
 html body:not(.guide-page) :focus-visible{outline:2px solid var(--avux-gold)!important;outline-offset:3px!important}
 html body:not(.guide-page) .cta,html body:not(.guide-page) .btn2,html body:not(.guide-page) button{min-height:44px!important}

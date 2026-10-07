@@ -11,7 +11,7 @@ for(const [name,path,width,height] of [
  const context=await browser.newContext({viewport:{width,height},timezoneId:'America/New_York'});
  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
  try{
-  await page.goto(base+path+'?ux_final=20261007-ux4',{waitUntil:'networkidle',timeout:90000});
+  await page.goto(base+path+'?ux_final=20261007-ux5',{waitUntil:'networkidle',timeout:90000});
   await page.locator('#astrovip-ux-final-css').waitFor();
   await page.waitForTimeout(600);
   const reject=page.locator('#av-consent-reject');if(await reject.isVisible().catch(()=>false))await reject.click();
@@ -32,6 +32,7 @@ for(const [name,path,width,height] of [
   await hamb.click();const home=menu.locator('a').first();await home.click();
   check(await hamb.getAttribute('aria-expanded')==='false',name+' navigation does not close menu');
   await page.waitForTimeout(300);
+  if(path==='/'){await hamb.click();await menu.locator('a[href="#programari"]').click();check(await hamb.getAttribute('aria-expanded')==='false',name+' booking menu stays open');check(!await page.locator('main').evaluate(el=>el.inert),name+' booking remains inert');await page.locator('header.top .brand').click();await page.waitForTimeout(300)}
   const chat=page.locator('header.top .avchat-launcher').first();await chat.click();
   const panel=page.locator('.avchat-panel');await panel.waitFor({state:'visible',timeout:15000});
   const cg=await panel.boundingBox();check(cg&&cg.x>=-2&&cg.x+cg.width<=width+2&&cg.y>=-2&&cg.y+cg.height<=height+2,name+' chat outside viewport '+JSON.stringify(cg));

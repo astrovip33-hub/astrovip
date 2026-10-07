@@ -16,8 +16,8 @@ jobs:
         run: |
           set -euo pipefail
           ok=0
-          for i in $(seq 1 45); do
-            if curl -fsS 'https://astrovip-preview.astrovip33.workers.dev/?ux_final=20261007-ux4' | grep -q 'ux-final-20261007.js?v=20261007-ux4'; then ok=1; break; fi
+          for i in $(seq 1 120); do
+            if curl -fsS 'https://astrovip-preview.astrovip33.workers.dev/?ux_final=20261007-ux5' | grep -q 'ux-final-20261007.js?v=20261007-ux5'; then ok=1; break; fi
             sleep 4
           done
           test "$ok" = 1

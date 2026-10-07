@@ -60,7 +60,6 @@
     const anchor=event.target.closest&&event.target.closest('a[href]');
     if(!isBookingLink(anchor))return;
     event.preventDefault();
-    event.stopPropagation();
     openBooking();
   },true);
 })();

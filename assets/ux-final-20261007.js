@@ -1,4 +1,4 @@
-/* ASTROVIP UX FINAL 20261007-ux4 */
+/* ASTROVIP UX FINAL 20261007-ux5 */
 (()=>{
   'use strict';
   const labels={ro:['Deschide meniul','Închide meniul'],en:['Open menu','Close menu'],es:['Abrir menú','Cerrar menú'],it:['Apri menu','Chiudi menu'],zh:['打开菜单','关闭菜单'],ar:['افتح القائمة','أغلق القائمة'],ru:['Открыть меню','Закрыть меню']};
