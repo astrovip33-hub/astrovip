@@ -1,3 +1,4 @@
+# trigger 2026-10-07T17:23+03:00
 name: Live homepage snapshot once
 
 on:
@@ -31,7 +32,7 @@ jobs:
             const reject=page.getByRole('button',{name:/Respinge opționale/i});
             if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
             await page.screenshot({path:`live-${name}.png`,fullPage:true});
-            console.log('LIVE_SNAPSHOT',name,await page.evaluate(()=>({title:document.title,bodyClass:document.body.className,hasV63Mobile:!!document.querySelector('#v63-mobile-prod'),hasV63Desktop:!!document.querySelector('#v63-desktop-prod'),v63MobileDisplay:document.querySelector('#v63-mobile-prod')?getComputedStyle(document.querySelector('#v63-mobile-prod')).display:null,v63DesktopDisplay:document.querySelector('#v63-desktop-prod')?getComputedStyle(document.querySelector('#v63-desktop-prod')).display:null,hasLegacyHero:!!document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore'),legacyHeroDisplay:document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore')?getComputedStyle(document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore')).display:null,hasPremiumCss:!!document.querySelector('#astrovip-premium-home-preview-css'),hasWowCss:!!document.querySelector('#astrovip-premium-home-wow-css'),text:document.body.innerText.slice(0,800)})));
+            console.log('LIVE_SNAPSHOT',name,JSON.stringify(await page.evaluate(()=>({title:document.title,bodyClass:document.body.className,hasV63Mobile:!!document.querySelector('#v63-mobile-prod'),hasV63Desktop:!!document.querySelector('#v63-desktop-prod'),v63MobileDisplay:document.querySelector('#v63-mobile-prod')?getComputedStyle(document.querySelector('#v63-mobile-prod')).display:null,v63DesktopDisplay:document.querySelector('#v63-desktop-prod')?getComputedStyle(document.querySelector('#v63-desktop-prod')).display:null,hasLegacyHero:!!document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore'),legacyHeroDisplay:document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore')?getComputedStyle(document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore')).display:null,hasPremiumCss:!!document.querySelector('#astrovip-premium-home-preview-css'),hasWowCss:!!document.querySelector('#astrovip-premium-home-wow-css'),text:document.body.innerText.slice(0,800)}))));
             await context.close();
           }
           await browser.close();
