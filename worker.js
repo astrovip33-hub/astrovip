@@ -168,6 +168,9 @@ export default {
         rewriter=rewriter
           .on('#v63-mobile-prod-css',{element(el){el.remove()}})
           .on('#v63-desktop-prod-css',{element(el){el.remove()}})
+          // astrovip-mobile-hero-source-fix-20261007: the old clean-cards AVIF/WebP files are not deployed.
+          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture source',{element(el){const media=el.getAttribute('media')||'';if(media.includes('max-width')){el.setAttribute('srcset','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-mobilefix1');el.setAttribute('type','image/webp')}}})
+          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture img',{element(el){el.setAttribute('src','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-mobilefix1')}})
           .on('link[rel="preload"][as="image"]',{element(el){const srcset=el.getAttribute('imagesrcset')||'';const href=el.getAttribute('href')||'';if(srcset.includes('astrovip-hero-mobile-clean-cards-')||srcset.includes('astrovip-hero-lux-clean-20260922')||href.includes('astrovip-hero-mobile-clean-cards-')||href.includes('astrovip-hero-lux-clean-20260922'))el.remove();}})
           .on('#v63-desktop-prod .v63d-hero-visual > img',{element(el){el.replace(desktopHero,{html:true})}})
           .on('#v63-mobile-prod .v63-visual > img',{element(el){el.replace(mobileHero,{html:true})}})
