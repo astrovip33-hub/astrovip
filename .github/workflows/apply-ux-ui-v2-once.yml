@@ -1,0 +1,46 @@
+name: Apply UX UI V2 once
+on:
+  push:
+    branches: [preview/ux-ui-perfect-20261007]
+    paths:
+      - .github/workflows/apply-ux-ui-v2-once.yml
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore legacy polish and inject final V2 stylesheet last
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main --depth=1
+          git show origin/main:assets/final-card-polish-20260923.css > assets/final-card-polish-20260923.css
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('worker.js')
+          s=p.read_text()
+          marker='      const runtime=heroPreloads+homepageRibbonCleanup+homepageMenuFix+`<script src="/assets/booking-bridge-20261007.js" defer></script><script src="/assets/page-editor-runtime.js?v=20261007-1728-fresh" defer></script>`;'
+          if 'ux-ui-perfect-v2-20261007.css' not in s:
+              if marker not in s: raise SystemExit('Worker runtime marker missing')
+              replacement='      const homepageUxV2=isHomepage?`<link rel="stylesheet" href="/assets/ux-ui-perfect-v2-20261007.css?v=20261007-v2">`:\'\';\n      const runtime=heroPreloads+homepageRibbonCleanup+homepageMenuFix+homepageUxV2+`<script src="/assets/booking-bridge-20261007.js" defer></script><script src="/assets/page-editor-runtime.js?v=20261007-1728-fresh" defer></script>`;'
+              s=s.replace(marker,replacement,1)
+          p.write_text(s)
+          PY
+          node --check worker.js
+          git diff --check
+          grep -q 'ux-ui-perfect-v2-20261007.css' worker.js
+      - name: Commit V2 preview wiring
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "AstroVip UX Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add worker.js assets/final-card-polish-20260923.css
+          if ! git diff --cached --quiet; then
+            git commit -m "Wire final UX UI V2 preview overrides"
+            git push origin HEAD:preview/ux-ui-perfect-20261007
+          fi
