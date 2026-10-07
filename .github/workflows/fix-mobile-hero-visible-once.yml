@@ -1,10 +1,11 @@
-name: Fix mobile Hero visibility once
+name: Force current mobile Hero live
 
 on:
   push:
     branches: [main]
     paths:
       - .github/workflows/fix-mobile-hero-visible-once.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -21,39 +22,36 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Replace missing mobile Hero files with deployed premium image
+      - name: Force authored mobile Hero through Worker
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          import re
-          p=Path('index.html')
+          p=Path('worker.js')
           s=p.read_text()
-          pattern=re.compile(r'''\s*<source media="\(max-width:820px\)" srcset="/assets/astrovip-hero-mobile-clean-cards-480\.avif[^>]*?/?>\s*<source media="\(max-width:820px\)" srcset="/assets/astrovip-hero-mobile-clean-cards-480\.webp[^>]*?/?>''')
-          repl='\n      <source media="(max-width:820px)" srcset="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-final-mobile" type="image/webp" width="600" height="496"/>'
-          s,n=pattern.subn(repl,s,count=1)
-          if n!=1:
-              raise SystemExit(f'expected one current mobile Hero source pair, replaced {n}')
-          old='<img src="/assets/astrovip-hero-mobile-clean-cards-941.webp" width="941" height="1220"'
-          new='<img src="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-final-mobile" width="600" height="496"'
-          if old not in s:
-              raise SystemExit('mobile Hero fallback image marker not found')
-          s=s.replace(old,new,1)
+          marker="          .on('link[rel=\"preload\"][as=\"image\"]',{element(el){const srcset=el.getAttribute('imagesrcset')||'';const href=el.getAttribute('href')||'';if(srcset.includes('astrovip-hero-mobile-clean-cards-')||srcset.includes('astrovip-hero-lux-clean-20260922')||href.includes('astrovip-hero-mobile-clean-cards-')||href.includes('astrovip-hero-lux-clean-20260922'))el.remove();}})\n"
+          add=marker+"          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture source[media=\"(max-width:820px)\"]',{element(el){el.setAttribute('srcset','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-worker-final');el.setAttribute('type','image/webp');el.removeAttribute('sizes')}})\n          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture img',{element(el){el.setAttribute('src','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-worker-final');el.setAttribute('width','600');el.setAttribute('height','496')}})\n"
+          if '20261007-worker-final' not in s:
+              if marker not in s: raise SystemExit('Worker Hero insertion marker not found')
+              s=s.replace(marker,add,1)
           p.write_text(s)
           PY
+          node --check worker.js
           git diff --check
-          grep -q 'astrovip-hero-premium-mobile-20261001.webp?v=20261007-final-mobile' index.html
+          grep -q '20261007-worker-final' worker.js
 
-      - name: Commit Hero source repair
+      - name: Commit Worker Hero guard
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "AstroVip Repair Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add index.html
-          git commit -m "Fix current mobile Hero image source"
-          git push origin HEAD:main
+          git add worker.js
+          if ! git diff --cached --quiet; then
+            git commit -m "Force valid current mobile Hero in Worker"
+            git push origin HEAD:main
+          fi
 
       - name: Normalize Cloudflare token
         shell: bash
@@ -64,7 +62,7 @@ jobs:
           echo "::add-mask::$TOKEN"
           echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
 
-      - name: Deploy exact current source
+      - name: Deploy exact guarded Worker
         run: npx --yes wrangler@latest deploy
 
       - name: Install Chromium
@@ -72,23 +70,22 @@ jobs:
           npm install --no-save playwright@1.56.0
           npx playwright install --with-deps chromium
 
-      - name: Verify Hero and Romanian mobile menu live
+      - name: Verify final Hero and Romanian menu live
         shell: bash
         run: |
-          cat > .verify-final-home.mjs <<'JS'
+          cat > .verify-final-live.mjs <<'JS'
           import { chromium } from 'playwright';
           const browser=await chromium.launch({headless:true});
           const results=[];
           for(const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:900}]]){
             const context=await browser.newContext({viewport});
             const page=await context.newPage();
-            const errors=[];
-            page.on('pageerror',e=>errors.push(String(e.message||e)));
-            await page.goto('https://astrovip.ro/?final_home='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
+            const errors=[]; page.on('pageerror',e=>errors.push(String(e.message||e)));
+            await page.goto('https://astrovip.ro/?hero_worker_final='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
             await page.waitForTimeout(3500);
             const reject=page.getByRole('button',{name:/Respinge opționale/i});
             if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
-            await page.waitForTimeout(400);
+            await page.waitForTimeout(350);
             const hero=await page.evaluate(()=>{
               const section=document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore');
               const img=section?.querySelector('.av-hero-v2-visual picture img');
@@ -100,46 +97,37 @@ jobs:
             if(name==='mobile'){
               const hamb=page.locator('#hamb');
               menu={visible:await hamb.isVisible(),before:await hamb.getAttribute('aria-expanded')};
-              await hamb.click({force:true});
-              await page.waitForTimeout(300);
+              await hamb.click({force:true}); await page.waitForTimeout(300);
               Object.assign(menu,await page.evaluate(()=>{
                 const h=document.querySelector('#hamb'),m=document.querySelector('#menu'),r=m?.getBoundingClientRect();
-                return {after:h?.getAttribute('aria-expanded'),menuDisplay:m?getComputedStyle(m).display:null,menuVisibility:m?getComputedStyle(m).visibility:null,rect:r?[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),Math.round(r.right)]:null,programare:[...m.querySelectorAll('a')].find(a=>(a.textContent||'').trim()==='Programare')?.getAttribute('href')||null,label:h?.getAttribute('aria-label')||null};
+                const lines=[...h.querySelectorAll('.hamb-line')].map(el=>({transform:getComputedStyle(el).transform,opacity:getComputedStyle(el).opacity}));
+                return {after:h?.getAttribute('aria-expanded'),display:m?getComputedStyle(m).display:null,visibility:m?getComputedStyle(m).visibility:null,rect:r?[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),Math.round(r.right)]:null,programare:[...m.querySelectorAll('a')].find(a=>(a.textContent||'').trim()==='Programare')?.getAttribute('href')||null,label:h?.getAttribute('aria-label')||null,lines};
               }));
-              await page.screenshot({path:'final-mobile-menu-open.png',fullPage:false});
-              await hamb.click({force:true});
-              await page.waitForTimeout(150);
-              menu.closed=await hamb.getAttribute('aria-expanded');
+              await page.screenshot({path:'verified-mobile-menu.png',fullPage:false});
+              await hamb.click({force:true}); await page.waitForTimeout(150); menu.closed=await hamb.getAttribute('aria-expanded');
             }
-            await page.screenshot({path:`final-${name}.png`,fullPage:false});
-            const data={name,viewport,hero,menu,errors,scrollWidth:await page.evaluate(()=>document.documentElement.scrollWidth)};
-            console.log('FINAL_HOME_RESULT '+JSON.stringify(data));
-            results.push(data);
-            await context.close();
+            await page.screenshot({path:`verified-${name}.png`,fullPage:false});
+            const data={name,hero,menu,errors,scrollWidth:await page.evaluate(()=>document.documentElement.scrollWidth)};
+            console.log('VERIFIED_FINAL '+JSON.stringify(data)); results.push(data); await context.close();
           }
           await browser.close();
           const fail=[];
-          for(const r of results){
-            const h=r.hero;
-            if(!h||h.natural[0]<1||h.natural[1]<1||h.rect[2]<100||h.rect[3]<100||h.display==='none'||h.visibility==='hidden'||h.opacity==='0')fail.push(r.name+': Hero image not loaded '+JSON.stringify(h));
-            if(r.name==='mobile'&&r.scrollWidth>392)fail.push('mobile overflow '+r.scrollWidth);
-          }
+          for(const r of results){const h=r.hero;if(!h||h.natural[0]<1||h.natural[1]<1||h.rect[2]<100||h.rect[3]<100||h.display==='none'||h.visibility==='hidden'||h.opacity==='0')fail.push(r.name+': Hero '+JSON.stringify(h));if(r.name==='mobile'&&r.scrollWidth>392)fail.push('mobile overflow '+r.scrollWidth)}
           const m=results.find(r=>r.name==='mobile');
-          if(!m.menu?.visible||m.menu.before!=='false'||m.menu.after!=='true'||m.menu.closed!=='false')fail.push('Romanian menu toggle broken '+JSON.stringify(m.menu));
-          if(m.menu?.menuDisplay==='none'||m.menu?.menuVisibility==='hidden')fail.push('Romanian menu not visible after click');
-          if((m.menu?.rect?.[0]??-10)<-2||(m.menu?.rect?.[4]??999)>392)fail.push('Romanian menu outside viewport '+JSON.stringify(m.menu?.rect));
-          if(m.menu?.programare!=='#programari')fail.push('Programare link wrong '+m.menu?.programare);
-          if(fail.length){console.error('FINAL_HOME_FAILURE '+JSON.stringify(fail));process.exit(1)}
-          console.log('FINAL_HOME_OK current Hero mobile/desktop and Romanian menu are functional');
+          if(!m.hero?.src.includes('astrovip-hero-premium-mobile-20261001.webp'))fail.push('mobile Hero source '+m.hero?.src);
+          if(!m.menu?.visible||m.menu.before!=='false'||m.menu.after!=='true'||m.menu.closed!=='false'||m.menu.display==='none'||m.menu.visibility==='hidden'||m.menu.programare!=='#programari')fail.push('Romanian menu '+JSON.stringify(m.menu));
+          if((m.menu?.rect?.[0]??-10)<-2||(m.menu?.rect?.[4]??999)>392)fail.push('Romanian menu bounds '+JSON.stringify(m.menu?.rect));
+          if(fail.length){console.error('VERIFIED_FINAL_FAILURE '+JSON.stringify(fail));process.exit(1)}
+          console.log('VERIFIED_FINAL_OK');
           JS
-          node .verify-final-home.mjs
+          node .verify-final-live.mjs
 
       - name: Upload final screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: final-current-home-verification
+          name: verified-final-home
           path: |
-            final-mobile.png
-            final-mobile-menu-open.png
-            final-desktop.png
+            verified-mobile.png
+            verified-mobile-menu.png
+            verified-desktop.png
