@@ -1,3 +1,4 @@
+# Final mobile Hero source pass 2026-10-07
 name: Fix homepage Hero and Romanian menu once
 
 on:
@@ -20,9 +21,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Apply deterministic repair
+      - name: Apply mobile Hero source repair
         run: |
-          python3 scripts/fix_homepage_hero_menu_20261007.py
+          python3 scripts/fix_mobile_hero_source_20261007.py
           node --check worker.js
           git diff --check
 
@@ -31,5 +32,5 @@ jobs:
           git config user.name "AstroVip Repair Bot"
           git config user.email "actions@users.noreply.github.com"
           git add worker.js
-          git commit -m "Restore homepage Hero and hamburger X"
+          git commit -m "Fix mobile Hero image source"
           git push origin HEAD:main
