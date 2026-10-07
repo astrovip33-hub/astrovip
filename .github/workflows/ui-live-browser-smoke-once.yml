@@ -23,7 +23,7 @@ jobs:
       - name: Run live browser checks
         shell: bash
         run: |
-          cat > /tmp/astrovip-ui-smoke.mjs <<'JS'
+          cat > .astrovip-ui-smoke.mjs <<'JS'
           import { chromium } from 'playwright';
           const browser = await chromium.launch({headless:true});
           const results=[];
@@ -60,7 +60,7 @@ jobs:
               await page.waitForTimeout(200);
               menu.closedAgain=await page.evaluate(()=>({expanded:document.querySelector('#hamb')?.getAttribute('aria-expanded'),menuClass:document.querySelector('#menu')?.className,display:getComputedStyle(document.querySelector('#menu')).display}));
             }
-            await page.screenshot({path:`/tmp/${name}.png`,fullPage:false});
+            await page.screenshot({path:`${name}.png`,fullPage:false});
             const out={name,viewport,base,heroCandidates,menu};
             console.log('ASTROVIP_UI_RESULT '+JSON.stringify(out));
             results.push(out);
@@ -86,12 +86,12 @@ jobs:
           if(failures.length){console.error('ASTROVIP_UI_FAILURES '+JSON.stringify(failures));process.exit(1)}
           console.log('ASTROVIP_UI_OK hero mobile/desktop and Romanian menu passed');
           JS
-          node /tmp/astrovip-ui-smoke.mjs
+          node .astrovip-ui-smoke.mjs
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: astrovip-ui-smoke-screenshots
           path: |
-            /tmp/mobile.png
-            /tmp/desktop.png
+            mobile.png
+            desktop.png
