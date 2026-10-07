@@ -1,5 +1,4 @@
-# Final mobile Hero source pass 2026-10-07
-name: Fix homepage Hero and Romanian menu once
+name: Restore modern AstroVip homepage worker
 
 on:
   push:
@@ -12,25 +11,56 @@ on:
 permissions:
   contents: write
 
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: 1997683abefc1f33c4a391c0e09e63dd
+
 jobs:
-  patch:
+  restore-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout current main
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Apply mobile Hero source repair
+      - name: Restore only worker.js from last modern production state
+        shell: bash
         run: |
-          python3 scripts/fix_mobile_hero_source_20261007.py
+          set -euo pipefail
+          git checkout 04ec594d9b6d37d3a0a44eb7e6e8141ea9556203 -- worker.js
           node --check worker.js
           git diff --check
+          grep -q 'booking-bridge-20261007.js' worker.js
+          ! grep -q 'astrovip-homepage-ui-repair-20261007' worker.js
 
-      - name: Commit repair
+      - name: Commit restored worker only
+        shell: bash
         run: |
-          git config user.name "AstroVip Repair Bot"
+          set -euo pipefail
+          git config user.name "AstroVip Restore Bot"
           git config user.email "actions@users.noreply.github.com"
           git add worker.js
-          git commit -m "Fix mobile Hero image source"
+          git commit -m "Restore modern homepage worker"
           git push origin HEAD:main
+
+      - name: Normalize Cloudflare token
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOKEN="$(printf '%s' "$CLOUDFLARE_API_TOKEN" | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          test -n "$TOKEN"
+          echo "::add-mask::$TOKEN"
+          echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Deploy restored worker
+        run: npx --yes wrangler@latest deploy
+
+      - name: Verify production responds
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp)"
+          curl -fsS "https://astrovip.ro/?modern_restore=$GITHUB_SHA" -o "$tmp"
+          test -s "$tmp"
+          grep -q 'booking-bridge-20261007.js' "$tmp"
