@@ -1966,6 +1966,16 @@ html body:not(.guide-page) .foot.av-footer-premium{display:none!important}
 .v63d-interest.av-interest-image:focus-visible,.v63-interest.av-interest-image:focus-visible{outline:2px solid #e3bd61;outline-offset:4px}
 @media(prefers-reduced-motion:reduce){.v63d-interest.av-interest-image{transition:none}.v63d-interest.av-interest-image:hover{transform:none}}
 </style>
+<style id="astrovip-language-viewport-fix-20261007">
+@media(max-width:980px){
+html body:not(.guide-page){width:auto!important;min-width:0!important;max-width:100%!important}
+html body:not(.guide-page) header.top>.wrap.nav{width:100%!important;max-width:100%!important;padding-left:8px!important;padding-right:8px!important}
+html body:not(.guide-page) header.top .nav .nav-actions button#hamb.hamb{order:99!important}
+html body:not(.guide-page) header.top .av-langbar .wrap{max-width:100%!important}
+html body:not(.guide-page) header.top #menu.menu,html body:not(.guide-page) header.top #menu.menu.open{left:8px!important;right:8px!important;width:auto!important;max-width:calc(100% - 16px)!important}
+}
+@media(max-width:390px){html body:not(.guide-page) header.top .brand.av-brand-premium{width:min(175px,42vw)!important;max-width:min(175px,42vw)!important}}
+</style>
 </head>
 <body class="av-motion-live"><div id="av-consent" class="av-consent" role="dialog" aria-modal="true" aria-labelledby="av-consent-title"><div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div></div><a class="skip-link" href="#top">Sari la conținut</a>
 <header class="top">
@@ -2736,7 +2746,7 @@ linear-gradient(180deg,#050806 0,#07110b 48%,#050505 100%);border-top:1px solid 
 <script defer="True" src="/assets/homepage.js?v=20260930-payment-cta1"></script>
 <script id="astrovip-chat-lazy-loader">
 (()=>{"use strict";
-const src="/assets/astrovip-chat.js?v=20260930-mobile-header2";
+const src="/assets/astrovip-chat.js?v=20261007-languages2";
 let promise;
 const load=()=>promise||(promise=new Promise((resolve,reject)=>{const s=document.createElement("script");s.src=src;s.async=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)}));
 const launcher=document.querySelector(".avchat-launcher");
@@ -2760,6 +2770,7 @@ if(launcher){
 <script id="av-bucharest-clock-script">
 (function(){
   const clock=document.getElementById('av-bucharest-clock');
+  if(!clock)return;
   const format=new Intl.DateTimeFormat('ro-RO',{timeZone:'Europe/Bucharest',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
   function update(){const now=new Date();clock.textContent=format.format(now);clock.dateTime=now.toISOString()}
   update();
@@ -2803,4 +2814,5 @@ if(launcher){
 
 </body>
 </html>
+
 
