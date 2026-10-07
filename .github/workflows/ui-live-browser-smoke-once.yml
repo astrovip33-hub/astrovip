@@ -1,0 +1,97 @@
+name: UI live browser smoke once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/ui-live-browser-smoke-once.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Run live browser checks
+        shell: bash
+        run: |
+          cat > /tmp/astrovip-ui-smoke.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const browser = await chromium.launch({headless:true});
+          const results=[];
+          async function test(name, viewport){
+            const page=await browser.newPage({viewportSize:viewport});
+            const url='https://astrovip.ro/?ui_smoke='+Date.now()+'-'+name;
+            await page.goto(url,{waitUntil:'networkidle',timeout:90000});
+            const reject=page.getByRole('button',{name:/Respinge opționale/i});
+            if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click().catch(()=>{});
+            await page.waitForTimeout(500);
+            const base=await page.evaluate(()=>({
+              width:innerWidth,
+              scrollWidth:document.documentElement.scrollWidth,
+              lang:document.documentElement.lang,
+              title:document.title,
+              visibleTopImages:[...document.images].map(img=>{const r=img.getBoundingClientRect();const s=getComputedStyle(img);return {src:img.currentSrc||img.src,alt:img.alt,natural:[img.naturalWidth,img.naturalHeight],rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)],display:s.display,visibility:s.visibility,opacity:s.opacity}}).filter(x=>x.rect[1]<1100&&x.rect[2]>1&&x.rect[3]>1),
+              bodyOverflowX:getComputedStyle(document.body).overflowX
+            }));
+            const heroCandidates=base.visibleTopImages.filter(x=>/hero|astrovip/i.test(x.src+' '+x.alt));
+            let menu=null;
+            if(name==='mobile'){
+              const hamb=page.locator('#hamb');
+              const nav=page.locator('#menu');
+              menu={hambVisible:await hamb.isVisible(),beforeExpanded:await hamb.getAttribute('aria-expanded'),beforeClass:await nav.getAttribute('class')};
+              await hamb.click();
+              await page.waitForTimeout(300);
+              Object.assign(menu,await page.evaluate(()=>{
+                const h=document.querySelector('#hamb'),m=document.querySelector('#menu');
+                const mr=m?.getBoundingClientRect();
+                const lines=[...document.querySelectorAll('#hamb .hamb-line')].map(el=>{const s=getComputedStyle(el);const r=el.getBoundingClientRect();return {transform:s.transform,opacity:s.opacity,rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}});
+                return {afterExpanded:h?.getAttribute('aria-expanded'),afterClass:m?.className,menuDisplay:m?getComputedStyle(m).display:null,menuVisibility:m?getComputedStyle(m).visibility:null,menuRect:mr?[Math.round(mr.x),Math.round(mr.y),Math.round(mr.width),Math.round(mr.height)]:null,lines,menuText:(m?.innerText||'').replace(/\s+/g,' ').trim()};
+              }));
+              await hamb.click();
+              await page.waitForTimeout(200);
+              menu.closedAgain=await page.evaluate(()=>({expanded:document.querySelector('#hamb')?.getAttribute('aria-expanded'),menuClass:document.querySelector('#menu')?.className,display:getComputedStyle(document.querySelector('#menu')).display}));
+            }
+            await page.screenshot({path:`/tmp/${name}.png`,fullPage:false});
+            const out={name,viewport,base,heroCandidates,menu};
+            console.log('ASTROVIP_UI_RESULT '+JSON.stringify(out));
+            results.push(out);
+            await page.close();
+          }
+          await test('mobile',{width:390,height:844});
+          await test('desktop',{width:1440,height:900});
+          await browser.close();
+          const mobile=results.find(r=>r.name==='mobile');
+          const desktop=results.find(r=>r.name==='desktop');
+          const failures=[];
+          if(mobile.base.lang!=='ro') failures.push('mobile html lang is not ro');
+          if(mobile.base.scrollWidth>mobile.base.width+2) failures.push(`mobile horizontal overflow ${mobile.base.scrollWidth}>${mobile.base.width}`);
+          if(!mobile.menu?.hambVisible) failures.push('mobile hamburger not visible');
+          if(mobile.menu?.afterExpanded!=='true') failures.push('mobile hamburger aria-expanded did not become true');
+          if(!String(mobile.menu?.afterClass||'').includes('open')) failures.push('mobile menu did not receive open class');
+          if(mobile.menu?.menuDisplay==='none') failures.push('mobile menu still display:none after click');
+          if(!/Acasă/.test(mobile.menu?.menuText||'')||!/Programare/.test(mobile.menu?.menuText||'')) failures.push('Romanian menu text incomplete');
+          if(mobile.menu?.closedAgain?.expanded!=='false') failures.push('mobile hamburger did not close');
+          if(mobile.heroCandidates.length===0) failures.push('no visible mobile hero image');
+          if(desktop.heroCandidates.length===0) failures.push('no visible desktop hero image');
+          for(const r of [mobile,desktop]) for(const h of r.heroCandidates) if(!h.natural[0]||!h.natural[1]) failures.push(`${r.name} hero image not loaded`);
+          if(failures.length){console.error('ASTROVIP_UI_FAILURES '+JSON.stringify(failures));process.exit(1)}
+          console.log('ASTROVIP_UI_OK hero mobile/desktop and Romanian menu passed');
+          JS
+          node /tmp/astrovip-ui-smoke.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: astrovip-ui-smoke-screenshots
+          path: |
+            /tmp/mobile.png
+            /tmp/desktop.png
