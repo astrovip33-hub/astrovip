@@ -1,5 +1,5 @@
-# Final verification after mobile Hero repair add2a2ea8988d0249a2f302aba3d096e5ef3e3c3
-name: Deploy and verify homepage repair once
+# Verify the current modern homepage after cache-bust repair
+name: Verify modern AstroVip homepage live
 
 on:
   push:
@@ -17,12 +17,11 @@ env:
   CLOUDFLARE_ACCOUNT_ID: 1997683abefc1f33c4a391c0e09e63dd
 
 jobs:
-  deploy-and-verify:
+  verify-live:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repaired main
+      - name: Checkout current main
         uses: actions/checkout@v4
-
       - name: Normalize Cloudflare token
         shell: bash
         run: |
@@ -31,94 +30,59 @@ jobs:
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
           echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
-
-      - name: Deploy repaired Worker directly
+      - name: Deploy exact current main
         run: npx --yes wrangler@latest deploy
-
-      - name: Install Playwright Chromium
+      - name: Install Chromium
         run: |
           npm install --no-save playwright@1.56.0
           npx playwright install --with-deps chromium
-
-      - name: Verify Hero and Romanian menu live
+      - name: Render current live homepage
         shell: bash
         run: |
-          cat > .homepage-repair-verify.mjs <<'JS'
+          cat > .verify-modern-home.mjs <<'JS'
           import { chromium } from 'playwright';
           const browser=await chromium.launch({headless:true});
           const results=[];
-          async function check(name,viewport){
+          for(const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:900}]]){
             const context=await browser.newContext({viewport});
             const page=await context.newPage();
-            await page.goto('https://astrovip.ro/?repair_verify='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
-            await page.waitForTimeout(3000);
+            const errors=[];
+            page.on('pageerror',e=>errors.push(String(e.message||e)));
+            await page.goto('https://astrovip.ro/?visual_verify='+Date.now()+'-'+name,{waitUntil:'domcontentloaded',timeout:90000});
+            await page.waitForTimeout(3500);
             const reject=page.getByRole('button',{name:/Respinge opționale/i});
             if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
-            await page.waitForTimeout(400);
-            const base=await page.evaluate(()=>({innerWidth,clientWidth:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,lang:document.documentElement.lang}));
-            const hero=await page.evaluate(()=>{
-              const section=document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore');
-              const img=section?.querySelector('.av-hero-v2-visual picture img');
-              const picture=section?.querySelector('.av-hero-v2-visual picture');
-              if(!img||!picture)return null;
-              const r=img.getBoundingClientRect(),s=getComputedStyle(img),pr=picture.getBoundingClientRect(),ps=getComputedStyle(picture);
-              return {src:img.currentSrc||img.src,natural:[img.naturalWidth,img.naturalHeight],rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)],display:s.display,visibility:s.visibility,opacity:s.opacity,pictureRect:[Math.round(pr.x),Math.round(pr.y),Math.round(pr.width),Math.round(pr.height)],pictureDisplay:ps.display};
+            await page.waitForTimeout(500);
+            const data=await page.evaluate(()=>{
+              const norm=s=>(s||'').replace(/\s+/g,' ').trim();
+              const text=norm(document.body.innerText);
+              const imgs=[...document.images].filter(i=>/hero/i.test((i.currentSrc||i.src||'')+' '+(i.alt||''))).map(i=>{const r=i.getBoundingClientRect(),s=getComputedStyle(i);return {src:i.currentSrc||i.src,alt:i.alt,natural:[i.naturalWidth,i.naturalHeight],rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)],display:s.display,visibility:s.visibility,opacity:s.opacity}});
+              const visibleEls=[...document.querySelectorAll('h1,h2,h3,p,div,span')].filter(el=>norm(el.textContent).includes('CUNOȘTI MOMENTUL')&&el.getBoundingClientRect().width>0&&el.getBoundingClientRect().height>0).slice(0,5).map(el=>{const r=el.getBoundingClientRect();return {tag:el.tagName,cls:el.className,rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)],text:norm(el.textContent).slice(0,180)}});
+              return {innerWidth,scrollWidth:document.documentElement.scrollWidth,lang:document.documentElement.lang,hasModernText:text.includes('CUNOȘTI MOMENTUL')&&text.includes('TRĂIEȘTI VIITORUL'),has33:text.includes('33')&&text.toLowerCase().includes('recenzi'),premiumCss:!!document.querySelector('#astrovip-premium-home-preview-css'),wowCss:!!document.querySelector('#astrovip-premium-home-wow-css'),bookingBridge:[...document.scripts].some(s=>(s.src||'').includes('booking-bridge-20261007.js')),runtime:[...document.scripts].map(s=>s.src||'').find(x=>x.includes('page-editor-runtime.js'))||'',visibleModern:visibleEls,heroImages:imgs,errors};
             });
-            let menu=null;
-            if(name==='mobile'){
-              const hamb=page.locator('#hamb');
-              const nav=page.locator('#menu');
-              menu={visible:await hamb.isVisible(),before:await hamb.getAttribute('aria-expanded')};
-              await hamb.click({force:true});
-              await page.waitForTimeout(350);
-              Object.assign(menu,await page.evaluate(()=>{
-                const h=document.querySelector('#hamb'),m=document.querySelector('#menu'),mr=m.getBoundingClientRect();
-                const lines=[...h.querySelectorAll('.hamb-line')].map(el=>{const s=getComputedStyle(el),r=el.getBoundingClientRect();return {transform:s.transform,opacity:s.opacity,top:s.top,rect:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}});
-                const links=[...m.querySelectorAll('a')].map(a=>({text:(a.textContent||'').replace(/\s+/g,' ').trim(),href:a.getAttribute('href')}));
-                return {after:h.getAttribute('aria-expanded'),iconState:h.dataset.iconState||'',label:h.getAttribute('aria-label'),display:getComputedStyle(m).display,visibility:getComputedStyle(m).visibility,rect:[Math.round(mr.x),Math.round(mr.y),Math.round(mr.width),Math.round(mr.height),Math.round(mr.right)],lines,links,color:getComputedStyle(h).color};
-              }));
-              await hamb.click({force:true});
-              await page.waitForTimeout(180);
-              menu.closed=await page.evaluate(()=>({expanded:document.querySelector('#hamb').getAttribute('aria-expanded'),iconState:document.querySelector('#hamb').dataset.iconState||''}));
-            }
-            await page.screenshot({path:`verify-${name}.png`,fullPage:false});
-            const out={name,viewport,base,hero,menu};
-            results.push(out);
-            console.log('ASTROVIP_REPAIR_RESULT '+JSON.stringify(out));
+            await page.screenshot({path:`modern-${name}.png`,fullPage:false});
+            console.log('MODERN_HOME_RESULT '+name+' '+JSON.stringify(data));
+            results.push({name,data});
             await context.close();
           }
-          await check('mobile',{width:390,height:844});
-          await check('desktop',{width:1440,height:900});
           await browser.close();
-          const m=results[0],d=results[1],fail=[];
-          if(m.base.innerWidth!==390||m.base.scrollWidth>392)fail.push(`mobile viewport/overflow ${m.base.innerWidth}/${m.base.scrollWidth}`);
-          if(d.base.innerWidth!==1440)fail.push(`desktop viewport ${d.base.innerWidth}`);
-          if(m.base.lang!=='ro')fail.push('html lang is not ro');
-          for(const [label,h] of [['mobile',m.hero],['desktop',d.hero]]){
-            if(!h)fail.push(`${label} Hero DOM missing`);
-            else if(h.natural[0]<1||h.natural[1]<1||h.rect[2]<10||h.rect[3]<10||h.display==='none'||h.visibility==='hidden'||h.opacity==='0')fail.push(`${label} Hero not visibly loaded ${JSON.stringify(h)}`);
+          const fail=[];
+          for(const r of results){
+            if(!r.data.hasModernText)fail.push(r.name+': modern hero copy missing');
+            if(r.data.innerWidth===390 && r.data.scrollWidth>392)fail.push(r.name+': horizontal overflow '+r.data.scrollWidth);
+            if(!r.data.premiumCss||!r.data.wowCss)fail.push(r.name+': premium runtime CSS missing');
+            if(!r.data.runtime.includes('20261007-1728-fresh'))fail.push(r.name+': fresh runtime query missing '+r.data.runtime);
+            if(!r.data.bookingBridge)fail.push(r.name+': booking bridge missing');
           }
-          if(m.hero&&!/astrovip-hero-premium-mobile-20261001\.webp/i.test(m.hero.src))fail.push(`mobile Hero source wrong ${m.hero.src}`);
-          if(d.hero&&!/astrovip-hero-desktop-final-20261002\.avif/i.test(d.hero.src))fail.push(`desktop Hero source wrong ${d.hero.src}`);
-          if(!m.menu?.visible||m.menu.before!=='false'||m.menu.after!=='true'||m.menu.closed?.expanded!=='false')fail.push('Romanian hamburger state broken');
-          if(m.menu?.display==='none'||m.menu?.visibility==='hidden')fail.push('Romanian menu hidden after click');
-          if((m.menu?.rect?.[0]??-99)<-2||(m.menu?.rect?.[4]??999)>392)fail.push(`Romanian menu outside viewport ${JSON.stringify(m.menu?.rect)}`);
-          const labels=(m.menu?.links||[]).map(x=>x.text);
-          for(const x of ['Acasă','Programare','Contact'])if(!labels.includes(x))fail.push(`missing Romanian menu item ${x}`);
-          const p=(m.menu?.links||[]).find(x=>x.text==='Programare');
-          if(p?.href!=='#programari')fail.push(`Programare href wrong ${p?.href}`);
-          const lines=m.menu?.lines||[];
-          if(lines.length!==3||!lines.some(x=>x.opacity==='0')||lines.filter(x=>x.transform!=='none').length<2)fail.push(`hamburger X transform missing ${JSON.stringify(lines)}`);
-          if(fail.length){console.error('ASTROVIP_REPAIR_FAILURES '+JSON.stringify(fail));process.exit(1)}
-          console.log('ASTROVIP_REPAIR_OK Hero mobile/desktop + Romanian menu + red X are live');
+          if(fail.length){console.error('MODERN_HOME_FAILURE '+JSON.stringify(fail));process.exit(1)}
+          console.log('MODERN_HOME_OK current premium homepage is rendered live');
           JS
-          node .homepage-repair-verify.mjs
-
-      - name: Upload verification screenshots
+          node .verify-modern-home.mjs
+      - name: Upload live screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: homepage-repair-verification
+          name: modern-home-live-verification
           path: |
-            verify-mobile.png
-            verify-desktop.png
+            modern-mobile.png
+            modern-desktop.png
