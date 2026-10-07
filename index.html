@@ -2652,6 +2652,7 @@ if(launcher){
 <script id="av-bucharest-clock-script">
 (function(){
   const clock=document.getElementById('av-bucharest-clock');
+  if(!clock)return;
   const format=new Intl.DateTimeFormat('ro-RO',{timeZone:'Europe/Bucharest',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
   function update(){const now=new Date();clock.textContent=format.format(now);clock.dateTime=now.toISOString()}
   update();

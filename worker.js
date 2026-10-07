@@ -165,6 +165,8 @@ export default {
         const desktopHero=`<picture class="v63d-hero-picture"><source media="(min-width:821px)" srcset="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261007-1728-fresh" type="image/avif"><img src="${TRANSPARENT_PIXEL}" width="1280" height="720" alt="AstroVip — astrologie premium" loading="eager" fetchpriority="high" decoding="async"></picture>`;
         const mobileHero=`<picture class="v63-hero-picture" style="display:block;width:100%"><source media="(max-width:820px)" srcset="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-1728-fresh" type="image/webp"><img src="${TRANSPARENT_PIXEL}" width="941" height="1672" loading="eager" fetchpriority="high" decoding="async" alt="Cătălin Smaranda — AstroVip, astrologie premium"></picture>`;
         rewriter=rewriter
+          .on('#v63-mobile-prod-css',{element(el){el.remove()}})
+          .on('#v63-desktop-prod-css',{element(el){el.remove()}})
           .on('link[rel="preload"][as="image"]',{element(el){const srcset=el.getAttribute('imagesrcset')||'';const href=el.getAttribute('href')||'';if(srcset.includes('astrovip-hero-mobile-clean-cards-')||srcset.includes('astrovip-hero-lux-clean-20260922')||href.includes('astrovip-hero-mobile-clean-cards-')||href.includes('astrovip-hero-lux-clean-20260922'))el.remove();}})
           .on('#v63-desktop-prod .v63d-hero-visual > img',{element(el){el.replace(desktopHero,{html:true})}})
           .on('#v63-mobile-prod .v63-visual > img',{element(el){el.replace(mobileHero,{html:true})}})
