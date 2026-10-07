@@ -1,0 +1,42 @@
+name: Wire UX UI V3 once
+on:
+  push:
+    branches: [preview/ux-ui-perfect-20261007]
+    paths:
+      - .github/workflows/wire-ux-ui-v3-once.yml
+permissions:
+  contents: write
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Load V3 after page editor runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('worker.js')
+          s=p.read_text()
+          old='<script src="/assets/page-editor-runtime.js?v=20261007-1728-fresh" defer></script>'
+          new=old+'<script src="/assets/ux-ui-perfect-v3-20261007.js?v=20261007-v3a" defer></script>'
+          if 'ux-ui-perfect-v3-20261007.js' not in s:
+              if old not in s: raise SystemExit('page editor runtime marker missing')
+              s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+          node --check worker.js
+          git diff --check
+          grep -q 'ux-ui-perfect-v3-20261007.js' worker.js
+      - name: Commit V3 runtime order
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "AstroVip UX Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add worker.js
+          git commit -m "Load UX UI V3 after page editor runtime"
+          git push origin HEAD:preview/ux-ui-perfect-20261007
