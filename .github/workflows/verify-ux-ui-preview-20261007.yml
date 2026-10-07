@@ -1,0 +1,92 @@
+name: Verify UX UI preview 2026-10-07
+on:
+  push:
+    branches: [preview/ux-ui-perfect-20261007]
+permissions:
+  contents: read
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for updated Cloudflare preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://astrovip-preview.astrovip33.workers.dev/assets/final-card-polish-20260923.css?ux=20261007'
+          ok=0
+          for i in $(seq 1 30); do
+            if curl -fsS "$URL&n=$i" | grep -q 'UX/UI PERFECT PREVIEW'; then ok=1; break; fi
+            sleep 4
+          done
+          test "$ok" = 1
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Render and measure preview
+        shell: bash
+        run: |
+          cat > .verify-ux-preview.mjs <<'JS'
+          import { chromium } from 'playwright';
+          import fs from 'fs';
+          const base='https://astrovip-preview.astrovip33.workers.dev/?ux_final='+Date.now();
+          const browser=await chromium.launch({headless:true});
+          const results=[];
+          for(const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:900}]]){
+            const context=await browser.newContext({viewport});
+            const page=await context.newPage();
+            const errors=[]; page.on('pageerror',e=>errors.push(String(e.message||e)));
+            await page.goto(base+'&vp='+name,{waitUntil:'domcontentloaded',timeout:90000});
+            await page.waitForTimeout(3200);
+            const reject=page.getByRole('button',{name:/Respinge opționale/i});
+            if(await reject.count()&&await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
+            await page.waitForTimeout(300);
+            const total=await page.evaluate(()=>document.documentElement.scrollHeight);
+            for(let y=0;y<total;y+=650){await page.evaluate(y=>scrollTo(0,y),y);await page.waitForTimeout(55)}
+            await page.evaluate(()=>scrollTo(0,0)); await page.waitForTimeout(400);
+            const data=await page.evaluate(()=>{
+              const q=s=>document.querySelector(s), r=e=>{if(!e)return null;const x=e.getBoundingClientRect();return {x:Math.round(x.x),y:Math.round(x.y),w:Math.round(x.width),h:Math.round(x.height),bottom:Math.round(x.bottom)}};
+              const hero=q('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore');
+              const img=hero?.querySelector('.av-hero-v2-visual picture img');
+              const copy=hero?.querySelector('.av-hero-v2-copy');
+              const cta=hero?.querySelector('.av-hero-v2-actions a');
+              const chips=hero?.querySelector('.av-hero-image-service-cards');
+              const cases=q('#studii-de-caz-home'), reviews=q('#recenzii-google'), offers=q('#oferte');
+              const hamb=q('#hamb');
+              return {doc:{w:document.documentElement.scrollWidth,h:document.documentElement.scrollHeight},hero:r(hero),image:{rect:r(img),natural:img?[img.naturalWidth,img.naturalHeight]:null,src:img?.currentSrc||img?.src||null},copy:r(copy),cta:r(cta),chips:r(chips),cases:r(cases),reviews:r(reviews),offers:r(offers),hamb:r(hamb),programare:[...document.querySelectorAll('a')].some(a=>a.getAttribute('href')==='#programari')};
+            });
+            await page.screenshot({path:`ux-after-${name}-viewport.png`,fullPage:false});
+            await page.screenshot({path:`ux-after-${name}-full.png`,fullPage:true});
+            const row={name,viewport,data,errors}; results.push(row); console.log('UX_AFTER '+JSON.stringify(row));
+            await context.close();
+          }
+          await browser.close();
+          fs.writeFileSync('ux-after.json',JSON.stringify(results,null,2));
+          const m=results.find(x=>x.name==='mobile'),d=results.find(x=>x.name==='desktop'),fail=[];
+          if(m.data.doc.w>392)fail.push('mobile overflow '+m.data.doc.w);
+          if(!m.data.image.natural||m.data.image.natural[0]<1)fail.push('mobile hero missing');
+          if(!m.data.cta||m.data.cta.h<44)fail.push('mobile hero CTA');
+          if(!m.data.hamb||m.data.hamb.w<44||m.data.hamb.h<44)fail.push('mobile hamburger target');
+          if(!m.data.programare)fail.push('booking anchor missing');
+          if(m.data.cases?.h>2400)fail.push('cases still too tall '+m.data.cases.h);
+          if(m.data.reviews?.h>1150)fail.push('reviews still too tall '+m.data.reviews.h);
+          if(m.data.offers?.h>1900)fail.push('offers still too tall '+m.data.offers.h);
+          if(!d.data.cta||d.data.cta.y>820)fail.push('desktop CTA below fold '+JSON.stringify(d.data.cta));
+          if(d.data.hero?.h>960)fail.push('desktop hero too tall '+d.data.hero.h);
+          if(m.errors.length||d.errors.length)fail.push('page errors '+JSON.stringify({m:m.errors,d:d.errors}));
+          if(fail.length){console.error('UX_VERIFY_FAIL '+JSON.stringify(fail));process.exit(1)}
+          console.log('UX_VERIFY_OK');
+          JS
+          node .verify-ux-preview.mjs
+      - name: Upload preview screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ux-ui-perfect-preview-20261007
+          path: |
+            ux-after.json
+            ux-after-mobile-viewport.png
+            ux-after-mobile-full.png
+            ux-after-desktop-viewport.png
+            ux-after-desktop-full.png
