@@ -51,7 +51,17 @@
   style.textContent = css;
   document.head.appendChild(style);
 
+  function analyticsGranted() {
+    try {
+      const choice = JSON.parse(localStorage.getItem('astrovip_consent_v2') || 'null');
+      return !!(choice && choice.v === 2 && choice.analytics === true);
+    } catch (_) {
+      return false;
+    }
+  }
+
   function emit(name, detail={}) {
+    if (!analyticsGranted()) return;
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({event:name, ...detail});
   }
