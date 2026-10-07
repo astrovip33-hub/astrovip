@@ -17,3 +17,4 @@ function enhanceCaseStudies(){addCaseStyles();const ds=document.getElementById('
 function init(){document.body.classList.add('av-motion-live');addStripeButtons();enhanceCaseStudies();if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&matchMedia('(pointer: fine) and (min-width: 981px)').matches)document.querySelectorAll('.card').forEach(c=>c.addEventListener('pointermove',e=>{const b=c.getBoundingClientRect();c.style.setProperty('--av-mx',100*(e.clientX-b.left)/b.width+'%');c.style.setProperty('--av-my',100*(e.clientY-b.top)/b.height+'%')},{passive:true}))}
 if(!document.documentElement.dataset.avMotionLoaded){document.documentElement.dataset.avMotionLoaded='1';document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init,{once:true}):init()}
 }();
+/* AstroVip six-card preview refresh 2026-10-07 */
