@@ -149,6 +149,12 @@ async function stripeWebhook(request,env,{secretName='STRIPE_WEBHOOK_SECRET',tes
 export default {
   async fetch(request,env){
     const url=new URL(request.url);
+    // Same-origin responsive QA is available only on the existing preview host.
+    if(url.hostname==='astrovip-preview.astrovip33.workers.dev'&&url.pathname==='/__ux-responsive-preview'){
+      const width=[320,360,390,430,768].includes(Number(url.searchParams.get('width')))?Number(url.searchParams.get('width')):390;
+      const lang=['en','es','it','zh','ar','ru'].includes(url.searchParams.get('lang'))?url.searchParams.get('lang'):'';
+      return new Response(`<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AstroVip responsive QA</title><style>body{margin:0;background:#242424;color:#fff;font:14px Arial}p{text-align:center;margin:12px}iframe{display:block;width:${width}px;height:844px;margin:0 auto;border:1px solid #555;background:#050706}</style></head><body><p>AstroVip · ${width}px · ${lang||'ro'}</p><iframe title="AstroVip phone viewport" src="/${lang?lang+'/':''}"></iframe></body></html>`,{headers:{'Content-Type':'text/html; charset=utf-8','X-Robots-Tag':'noindex, nofollow','Cache-Control':'no-store'}});
+    }
     const commandResponse=await handleCommandCenter(request,env);
     if(commandResponse)return commandResponse;
     if(url.pathname==='/api/stripe-webhook'||url.pathname==='/api/stripe-webhook/')return stripeWebhook(request,env);
