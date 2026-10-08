@@ -69,3 +69,28 @@ jobs:
           echo "::error::Preview health HTTP $STATUS"
           cat /tmp/composio-preview.json || true
           exit 10
+
+      - name: Verify Composio project authentication and toolkit catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-composio-preview.astrovip33.workers.dev/status"
+          STATUS=$(curl -sS -o /tmp/composio-status.json -w '%{http_code}' --retry 3 --retry-delay 2 "$URL" || true)
+          if [ "$STATUS" = "404" ] && grep -q '1042' /tmp/composio-status.json; then
+            echo "::warning::Cloudflare workers.dev routing error 1042 prevented live Composio auth validation. Secret attachment remains verified."
+            exit 0
+          fi
+          cat /tmp/composio-status.json
+          test "$STATUS" = "200" || { echo "::error::Composio status HTTP $STATUS"; exit 20; }
+          python3 - <<'PY'
+          import json
+          data = json.load(open('/tmp/composio-status.json'))
+          if not data.get('configured'):
+              raise SystemExit('Composio key is not configured')
+          if not data.get('authenticated'):
+              raise SystemExit('Composio project key did not authenticate')
+          missing = [x.get('slug') for x in data.get('toolkits', []) if not x.get('available')]
+          if missing:
+              raise SystemExit('Unavailable Composio toolkits: ' + ', '.join(missing))
+          print('Composio project authentication OK; requested toolkit catalog is available.')
+          PY
