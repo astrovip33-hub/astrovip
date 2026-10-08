@@ -37,6 +37,24 @@
           "boxShadow": "none",
           "display": ""
         }
+      },
+      {
+        "selector": "form.av-checkout-card > div.av-checkout-panel.is-active:nth-of-type(1) > div.av-checkout-service.av-checkout-service--unified:nth-of-type(1) > div.av-checkout-price:nth-of-type(2) > small.",
+        "text": "Analiza Completa !",
+        "style": {
+          "color": "#aaaaaa",
+          "backgroundColor": "#000000",
+          "borderColor": "#aaaaaa",
+          "borderWidth": "0px",
+          "borderStyle": "solid",
+          "borderRadius": "0px",
+          "opacity": "1",
+          "fontSize": "12px",
+          "fontWeight": "700",
+          "padding": "0px 0px",
+          "boxShadow": "none",
+          "display": ""
+        }
       }
     ]
   }
