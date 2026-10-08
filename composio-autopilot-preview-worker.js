@@ -1,5 +1,6 @@
 const COMPOSIO_BASE = 'https://backend.composio.dev/api/v3.1';
 const TOOLKITS = ['github', 'cloudflare', 'google_search_console', 'googlesheets'];
+const USER_ID = 'astrovip-admin';
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data, null, 2), {
@@ -22,7 +23,7 @@ async function composioGet(env, path) {
     headers: {
       'x-api-key': key,
       'accept': 'application/json',
-      'user-agent': 'AstroVip-Composio-Preview/1.0',
+      'user-agent': 'AstroVip-Composio-Preview/1.1',
     },
   });
 
@@ -80,6 +81,43 @@ async function status(env) {
   }, authenticated && allAvailable ? 200 : 502);
 }
 
+async function connections(env) {
+  if (!env.COMPOSIO_API_KEY) {
+    return json({ ok: false, configured: false, error: 'composio_api_key_not_configured' }, 503);
+  }
+
+  const params = new URLSearchParams();
+  for (const slug of TOOLKITS) params.append('toolkit_slugs', slug);
+  params.append('limit', '100');
+  const r = await composioGet(env, `/connected_accounts?${params.toString()}`);
+  if (!r.ok) {
+    return json({ ok: false, configured: true, authenticated: ![401, 403].includes(r.status), error: r.error, status: r.status }, r.status || 502);
+  }
+
+  const items = Array.isArray(r.data?.items) ? r.data.items : [];
+  const relevant = items.filter(item => TOOLKITS.includes(String(item?.toolkit?.slug || '').toLowerCase()));
+  const byToolkit = Object.fromEntries(TOOLKITS.map(slug => {
+    const accounts = relevant.filter(item => String(item?.toolkit?.slug || '').toLowerCase() === slug);
+    const active = accounts.filter(item => item?.status === 'ACTIVE' && item?.is_disabled !== true);
+    return [slug, {
+      connected: active.length > 0,
+      activeCount: active.length,
+      totalCount: accounts.length,
+      statuses: [...new Set(accounts.map(item => item?.status).filter(Boolean))],
+    }];
+  }));
+
+  return json({
+    ok: true,
+    configured: true,
+    authenticated: true,
+    userIdTarget: USER_ID,
+    phase: 'preview-read-only',
+    connections: byToolkit,
+    ready: TOOLKITS.every(slug => byToolkit[slug].connected),
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -97,6 +135,7 @@ export default {
     }
 
     if (url.pathname === '/status') return status(env);
+    if (url.pathname === '/connections') return connections(env);
 
     return json({ ok: false, error: 'not_found' }, 404);
   },
