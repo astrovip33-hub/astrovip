@@ -15,16 +15,19 @@ function json(data, status = 200) {
   });
 }
 
-async function composioGet(env, path) {
+async function composioRequest(env, path, method = 'GET', body = undefined) {
   const key = String(env.COMPOSIO_API_KEY || '').trim();
   if (!key) return { ok: false, status: 503, error: 'composio_api_key_not_configured' };
 
   const res = await fetch(`${COMPOSIO_BASE}${path}`, {
+    method,
     headers: {
       'x-api-key': key,
       'accept': 'application/json',
-      'user-agent': 'AstroVip-Composio-Preview/1.1',
+      'content-type': 'application/json',
+      'user-agent': 'AstroVip-Composio-Preview/1.2',
     },
+    body: body === undefined ? undefined : JSON.stringify(body),
   });
 
   const text = await res.text();
@@ -38,6 +41,9 @@ async function composioGet(env, path) {
     data,
   };
 }
+
+const composioGet = (env, path) => composioRequest(env, path, 'GET');
+const composioPost = (env, path, body) => composioRequest(env, path, 'POST', body);
 
 async function status(env) {
   if (!env.COMPOSIO_API_KEY) {
@@ -118,9 +124,88 @@ async function connections(env) {
   });
 }
 
+async function sessionState(env) {
+  const sessionId = String(env.COMPOSIO_SESSION_ID || '').trim();
+  if (!sessionId) {
+    return json({ ok: false, configured: false, sessionPresent: false, phase: 'preview-read-only' }, 503);
+  }
+
+  const r = await composioGet(env, `/tool_router/session/${encodeURIComponent(sessionId)}`);
+  return json({
+    ok: r.ok,
+    configured: true,
+    authenticated: r.status !== 401 && r.status !== 403,
+    sessionPresent: r.ok,
+    phase: 'preview-read-only',
+    userId: USER_ID,
+    toolkits: TOOLKITS,
+    policy: {
+      readOnlyTagsOnly: true,
+      destructiveToolsDisabled: true,
+      connectionMetaToolsDisabled: true,
+      sandboxDisabled: true,
+      premiumUsageDisabled: true,
+      productionTouched: false,
+    },
+    error: r.ok ? null : r.error,
+  }, r.ok ? 200 : (r.status || 502));
+}
+
+async function bootstrapSession(request, env) {
+  const expected = String(env.BOOTSTRAP_TOKEN || '');
+  const provided = String(request.headers.get('x-bootstrap-token') || '');
+  if (!expected || !provided || expected !== provided) {
+    return json({ ok: false, error: 'forbidden' }, 403);
+  }
+
+  const existing = String(env.COMPOSIO_SESSION_ID || '').trim();
+  if (existing) {
+    const check = await composioGet(env, `/tool_router/session/${encodeURIComponent(existing)}`);
+    if (check.ok) {
+      return json({ ok: true, created: false, session_id: existing, phase: 'preview-read-only' });
+    }
+  }
+
+  const r = await composioPost(env, '/tool_router/session', {
+    user_id: USER_ID,
+    toolkits: { enable: TOOLKITS },
+    tags: {
+      enable: ['readOnlyHint'],
+      disable: ['destructiveHint'],
+    },
+    manage_connections: { enable: false },
+    workbench: { enable: false },
+    premium_usage: false,
+  });
+
+  const sessionId = r.data?.session_id;
+  if (!r.ok || !sessionId) {
+    return json({
+      ok: false,
+      created: false,
+      status: r.status,
+      error: r.error || 'session_id_missing',
+      details: r.data || null,
+    }, r.status || 502);
+  }
+
+  return json({
+    ok: true,
+    created: true,
+    session_id: sessionId,
+    phase: 'preview-read-only',
+    userId: USER_ID,
+    toolkits: TOOLKITS,
+  }, 201);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (request.method === 'POST' && url.pathname === '/bootstrap/session') {
+      return bootstrapSession(request, env);
+    }
 
     if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405);
 
@@ -130,12 +215,14 @@ export default {
         service: 'AstroVip Composio Auto-Pilot Preview',
         phase: 'preview-read-only',
         configured: Boolean(env.COMPOSIO_API_KEY),
+        sessionConfigured: Boolean(env.COMPOSIO_SESSION_ID),
         productionTouched: false,
       });
     }
 
     if (url.pathname === '/status') return status(env);
     if (url.pathname === '/connections') return connections(env);
+    if (url.pathname === '/session-state') return sessionState(env);
 
     return json({ ok: false, error: 'not_found' }, 404);
   },
