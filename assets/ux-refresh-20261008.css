@@ -161,8 +161,8 @@ html body.av-ux-refresh header.top nav#menu.menu{top:72px!important;max-height:c
 html body.av-ux-refresh .av-pro-backdrop{top:64px}
 html body.av-ux-refresh.av-menu-open{overflow:hidden!important}
 html body.av-ux-refresh header.top button#hamb.hamb[aria-expanded=true]{color:#ff5b55!important}
-html body.av-ux-refresh main#top>section{padding-block:32px!important;min-height:0!important}
-html body.av-ux-refresh main#top>.av-pro-hero{padding-block:24px 20px!important}
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh main#top>section{padding-block:32px!important;min-height:0!important}
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh main#top>.av-pro-hero{padding-block:24px 20px!important}
 html body.av-ux-refresh .av-pro-hero-grid{gap:28px!important}
 html body.av-ux-refresh .av-pro-kicker{margin:0 0 10px!important;line-height:1.4!important}
 html body.av-ux-refresh .av-pro-hero h1{font-size:clamp(38px,4vw,54px)!important;margin-bottom:14px!important}
@@ -215,8 +215,8 @@ html body.av-ux-refresh #av-consent [hidden]{display:none!important}
  html body.av-ux-refresh .av-language-picker>summary>span{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
  html body.av-ux-refresh header.top nav#menu.menu{top:68px!important;max-height:calc(100dvh - 80px)!important}
  html body.av-ux-refresh .av-pro-backdrop{top:60px}
- html body.av-ux-refresh main#top>section{padding-block:24px!important}
- html body.av-ux-refresh main#top>.av-pro-hero{padding-block:20px 16px!important}
+ html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh main#top>section{padding-block:24px!important}
+ html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh main#top>.av-pro-hero{padding-block:20px 16px!important}
  html body.av-ux-refresh .av-pro-hero-grid{gap:16px!important}
  html body.av-ux-refresh .av-pro-hero h1{font-size:clamp(34px,9vw,40px)!important;margin-bottom:12px!important}
  html body.av-ux-refresh .av-pro-kicker{font-size:11px!important;margin-bottom:8px!important}
