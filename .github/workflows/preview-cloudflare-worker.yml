@@ -70,7 +70,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          URL="https://astrovip-preview.astrovip33.workers.dev/"
+          URL="https://astrovip-preview-ux-compact.astrovip33.workers.dev/"
           STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
           test "$STATUS" = "200"
           grep -q 'ASTROLOGIE' /tmp/preview.html
@@ -81,7 +81,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE="https://astrovip-preview.astrovip33.workers.dev"
+          BASE="https://astrovip-preview-ux-compact.astrovip33.workers.dev"
           EDITOR_STATUS=$(curl -sSL -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
           echo "EDITOR_STATUS=$EDITOR_STATUS"
           test "$EDITOR_STATUS" = "200"
