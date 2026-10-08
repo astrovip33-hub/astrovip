@@ -61,16 +61,16 @@
         "text": "Astrologie medicală · DESCHIDE PAGINA →",
         "style": {
           "color": "#ffffff",
-          "backgroundColor": "#1000f0",
+          "backgroundColor": "#071009",
           "borderColor": "#39ff76",
           "borderWidth": "0px",
           "borderStyle": "solid",
           "borderRadius": "80px",
           "opacity": "1",
           "fontSize": "12px",
-          "fontWeight": "700",
+          "fontWeight": "400",
           "padding": "9px 15px",
-          "boxShadow": "0 0 18px rgba(57,255,118,.32),0 0 32px rgba(232,199,95,.18)",
+          "boxShadow": "none",
           "display": ""
         }
       }
