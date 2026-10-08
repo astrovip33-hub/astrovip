@@ -74,7 +74,7 @@ jobs:
           STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
           test "$STATUS" = "200"
           grep -q 'id="av-pro-title"' /tmp/preview.html
-          grep -q 'ux-refresh-20261008.css?v=20261008-compact2' /tmp/preview.html
+          grep -q 'ux-refresh-20261008.css?v=20261008-compact3' /tmp/preview.html
           grep -q 'site-editor-runtime.js' /tmp/preview.html
           echo "Preview live: $URL"
 
