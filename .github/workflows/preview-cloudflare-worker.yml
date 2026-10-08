@@ -71,11 +71,21 @@ jobs:
         run: |
           set -euo pipefail
           URL="https://astrovip-preview-ux-compact.astrovip33.workers.dev/"
-          STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
-          test "$STATUS" = "200"
-          grep -q 'id="av-pro-title"' /tmp/preview.html
-          grep -q 'ux-refresh-20261008.css?v=20261008-compact4' /tmp/preview.html
-          grep -q 'site-editor-runtime.js' /tmp/preview.html
+          # A successful response can still contain the preceding deployment briefly.
+          READY=0
+          for ATTEMPT in $(seq 1 12); do
+            STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' "$URL")
+            if [ "$STATUS" = "200" ] &&
+               grep -Fq 'id="av-pro-title"' /tmp/preview.html &&
+               grep -Fq 'ux-refresh-20261008.css?v=20261008-compact4' /tmp/preview.html &&
+               grep -Fq 'site-editor-runtime.js' /tmp/preview.html; then
+              READY=1
+              break
+            fi
+            echo "Waiting for current preview: attempt=$ATTEMPT status=$STATUS"
+            sleep 3
+          done
+          test "$READY" = "1"
           echo "Preview live: $URL"
 
       - name: Verify visual editor
