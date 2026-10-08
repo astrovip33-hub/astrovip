@@ -236,5 +236,5 @@ html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh .avchat-panel{
  html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh :is(section[id],main[id]){scroll-margin-top:76px!important}
  html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh .intl-section{padding-block:24px!important}
  html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh #av-consent.av-consent{left:12px!important;right:12px!important;width:auto!important;transform:none!important}
- html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh .avchat-panel{inset:auto 12px 84px auto!important;width:calc(100vw - 24px)!important;max-width:calc(100vw - 24px)!important;height:min(560px,calc(100dvh - 156px))!important;max-height:calc(100dvh - 156px)!important}
+ html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh .avchat-panel{inset:auto 12px 84px auto!important;width:calc(100% - 24px)!important;max-width:calc(100% - 24px)!important;height:min(560px,calc(100dvh - 156px))!important;max-height:calc(100dvh - 156px)!important}
 }

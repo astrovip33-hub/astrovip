@@ -77,7 +77,7 @@ jobs:
             STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' "$URL")
             if [ "$STATUS" = "200" ] &&
                grep -Fq 'id="av-pro-title"' /tmp/preview.html &&
-               grep -Fq 'ux-refresh-20261008.css?v=20261008-compact4' /tmp/preview.html &&
+               grep -Fq 'ux-refresh-20261008.css?v=20261008-compact5' /tmp/preview.html &&
                grep -Fq 'site-editor-runtime.js' /tmp/preview.html; then
               READY=1
               break
