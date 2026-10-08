@@ -147,3 +147,8 @@ html body.av-ux-refresh header.top .nav-actions .avchat-launcher-label{color:#f8
 html body.av-ux-refresh header.top button#hamb.hamb{max-width:44px!important;max-height:44px!important}
 html body.av-ux-refresh header.top button#hamb.hamb .hamb-lines{display:block!important;width:26px!important;height:20px!important}
 html body.av-ux-refresh header.top button#hamb.hamb .hamb-line{min-height:2px!important;height:2px!important;width:26px!important}
+
+/* Keep the legacy CTA sheen inside the button and use clean menu typography. */
+html body.av-ux-refresh header.top .av-header-booking{position:relative!important;overflow:hidden!important}
+html body.av-ux-refresh header.top .av-header-booking::before,html body.av-ux-refresh header.top .av-header-booking::after{content:none!important;display:none!important}
+html body.av-ux-refresh header.top nav#menu.menu a,html body.av-ux-refresh header.top nav#menu.menu.open a,html body.av-ux-refresh header.top nav#menu.menu summary{font-family:Arial,Helvetica,sans-serif!important;text-shadow:none!important}
