@@ -135,3 +135,15 @@ html body.av-ux-refresh .intl-hero img{max-height:380px!important;object-fit:cov
 }
 @media(max-width:359px){.av-pro-interest-grid{grid-template-columns:1fr}.av-pro-actions{grid-template-columns:1fr}.av-pro-primary,.av-pro-secondary{min-height:46px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}body.av-ux-refresh *,body.av-ux-refresh *::before,body.av-ux-refresh *::after{animation:none!important;transition:none!important}}
+
+/* Neutralize legacy open-menu skins and viewport-wide mobile sizing. */
+html body.av-ux-refresh{width:100%!important;min-width:0!important;max-width:100%!important}
+html body.av-ux-refresh header.top:has(nav#menu.menu.open){background:#060908!important;background-image:none!important;border-bottom-color:rgba(227,189,97,.24)!important}
+html body.av-ux-refresh header.top nav#menu.menu.open{background:#0a100c!important;background-image:none!important;border-color:rgba(227,189,97,.5)!important;box-shadow:0 24px 60px #0009!important}
+html body.av-ux-refresh header.top nav#menu.menu.open>a,html body.av-ux-refresh header.top nav#menu.menu.open summary{background:transparent!important;color:#f8f3e8!important}
+html body.av-ux-refresh header.top nav#menu.menu.open>a.av-menu-booking{background:#e3bd61!important;color:#17150c!important}
+html body.av-ux-refresh header.top nav#menu.menu.open>a::after{background:#17221a!important;color:#e3bd61!important}
+html body.av-ux-refresh header.top .nav-actions .avchat-launcher-label{color:#f8f3e8!important}
+html body.av-ux-refresh header.top button#hamb.hamb{max-width:44px!important;max-height:44px!important}
+html body.av-ux-refresh header.top button#hamb.hamb .hamb-lines{display:block!important;width:26px!important;height:20px!important}
+html body.av-ux-refresh header.top button#hamb.hamb .hamb-line{min-height:2px!important;height:2px!important;width:26px!important}
