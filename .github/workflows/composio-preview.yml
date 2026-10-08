@@ -95,7 +95,19 @@ jobs:
           printf '%s' "$BOOTSTRAP_TOKEN" | npx --yes wrangler@4.137.0 secret put BOOTSTRAP_TOKEN --name astrovip-composio-preview
 
           URL="https://astrovip-composio-preview.astrovip33.workers.dev/bootstrap/session"
-          STATUS=$(curl -sS -X POST -H "x-bootstrap-token: $BOOTSTRAP_TOKEN" -o /tmp/composio-session.json -w '%{http_code}' --retry 5 --retry-delay 2 "$URL" || true)
+          STATUS=""
+          for attempt in $(seq 1 12); do
+            STATUS=$(curl -sS -X POST -H "x-bootstrap-token: $BOOTSTRAP_TOKEN" -o /tmp/composio-session.json -w '%{http_code}' "$URL" || true)
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "201" ]; then
+              break
+            fi
+            if [ "$STATUS" = "403" ]; then
+              echo "Waiting for Cloudflare BOOTSTRAP_TOKEN propagation (attempt $attempt/12)..."
+              sleep 2
+              continue
+            fi
+            break
+          done
           cat /tmp/composio-session.json
           if [ "$STATUS" != "200" ] && [ "$STATUS" != "201" ]; then
             echo "::error::Composio session bootstrap HTTP $STATUS"
@@ -128,7 +140,15 @@ jobs:
         run: |
           set -euo pipefail
           URL="https://astrovip-composio-preview.astrovip33.workers.dev/session-state"
-          STATUS=$(curl -sS -o /tmp/composio-session-state.json -w '%{http_code}' --retry 8 --retry-delay 2 "$URL" || true)
+          STATUS=""
+          for attempt in $(seq 1 12); do
+            STATUS=$(curl -sS -o /tmp/composio-session-state.json -w '%{http_code}' "$URL" || true)
+            if [ "$STATUS" = "200" ]; then
+              break
+            fi
+            echo "Waiting for COMPOSIO_SESSION_ID propagation (attempt $attempt/12, HTTP $STATUS)..."
+            sleep 2
+          done
           cat /tmp/composio-session-state.json
           test "$STATUS" = "200" || { echo "::error::Session-state HTTP $STATUS"; exit 40; }
           python3 - <<'PY'
