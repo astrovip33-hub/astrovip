@@ -74,7 +74,7 @@ jobs:
           STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' --retry 8 --retry-delay 3 "$URL")
           test "$STATUS" = "200"
           grep -q 'id="av-pro-title"' /tmp/preview.html
-          grep -q 'ux-refresh-20261008.css?v=20261008-compact1' /tmp/preview.html
+          grep -q 'ux-refresh-20261008.css?v=20261008-compact2' /tmp/preview.html
           grep -q 'site-editor-runtime.js' /tmp/preview.html
           echo "Preview live: $URL"
 
@@ -86,7 +86,7 @@ jobs:
           EDITOR_STATUS=$(curl -sSL -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
           echo "EDITOR_STATUS=$EDITOR_STATUS"
           test "$EDITOR_STATUS" = "200"
-          grep -q 'AstroVip.*Editor' /tmp/editor.html
+          grep -q 'Editor Vizual AstroVip' /tmp/editor.html
           API_STATUS=$(curl -sS -o /tmp/command-api.json -w '%{http_code}' "$BASE/api/command/ping")
           echo "API_STATUS=$API_STATUS"
           if [ "$API_STATUS" = "401" ]; then
