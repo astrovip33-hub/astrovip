@@ -144,7 +144,7 @@ async function sessionState(env) {
       destructiveToolsDisabled: true,
       connectionMetaToolsDisabled: true,
       sandboxDisabled: true,
-      premiumUsageDisabled: true,
+      instantUsageDisabled: true,
       productionTouched: false,
     },
     error: r.ok ? null : r.error,
@@ -175,7 +175,7 @@ async function bootstrapSession(request, env) {
     },
     manage_connections: { enable: false },
     workbench: { enable: false },
-    premium_usage: false,
+    instant: false,
   });
 
   const sessionId = r.data?.session_id;
