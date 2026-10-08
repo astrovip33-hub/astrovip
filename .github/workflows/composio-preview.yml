@@ -37,6 +37,20 @@ jobs:
           set -euo pipefail
           npx --yes wrangler@4.137.0 deploy --config wrangler.composio-preview.jsonc
 
+      - name: Verify Composio secret is attached to preview Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@4.137.0 secret list --name astrovip-composio-preview --format json > /tmp/composio-secrets.json
+          python3 - <<'PY'
+          import json
+          data = json.load(open('/tmp/composio-secrets.json'))
+          names = {x.get('name') for x in data if isinstance(x, dict)}
+          if 'COMPOSIO_API_KEY' not in names:
+              raise SystemExit('Missing COMPOSIO_API_KEY on astrovip-composio-preview')
+          print('COMPOSIO_API_KEY is attached to the isolated preview Worker.')
+          PY
+
       - name: Verify isolated preview health
         shell: bash
         run: |
@@ -49,7 +63,7 @@ jobs:
             exit 0
           fi
           if [ "$STATUS" = "404" ] && grep -q '1042' /tmp/composio-preview.json; then
-            echo "::warning::Cloudflare workers.dev returned known routing error 1042 before Worker execution. Deployment itself succeeded; keep production untouched and validate through the Command Center integration before merge."
+            echo "::warning::Cloudflare workers.dev returned known routing error 1042 before Worker execution. Deployment itself succeeded; secret attachment was verified separately."
             exit 0
           fi
           echo "::error::Preview health HTTP $STATUS"
