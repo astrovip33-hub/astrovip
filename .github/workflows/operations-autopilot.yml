@@ -1,0 +1,123 @@
+name: AstroVip Operations Auto-Pilot 24-7
+
+on:
+  schedule:
+    - cron: "17 */4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astrovip-operations-autopilot
+  cancel-in-progress: true
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Run production guard checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, re, subprocess, time, urllib.request, urllib.error
+          from pathlib import Path
+
+          targets = {
+              'homepage': 'https://astrovip.ro/',
+              'robots': 'https://astrovip.ro/robots.txt',
+              'sitemap': 'https://astrovip.ro/sitemap.xml',
+              'command_center': 'https://astrovip.ro/command-center/',
+          }
+          results = []
+          bodies = {}
+          for key, url in targets.items():
+              started = time.time()
+              req = urllib.request.Request(url + ('&' if '?' in url else '?') + 'autopilot=' + str(int(time.time())), headers={'User-Agent':'AstroVip-AutoPilot/1.0'})
+              try:
+                  with urllib.request.urlopen(req, timeout=20) as r:
+                      body = r.read().decode('utf-8', 'ignore')
+                      bodies[key] = body
+                      results.append({'key':key,'ok':200 <= r.status < 400,'status':r.status,'ms':round((time.time()-started)*1000),'url':url})
+              except Exception as exc:
+                  results.append({'key':key,'ok':False,'status':0,'ms':round((time.time()-started)*1000),'url':url,'error':str(exc)[:220]})
+
+          home = bodies.get('homepage','')
+          robots = bodies.get('robots','')
+          sitemap = bodies.get('sitemap','')
+          semantic = [
+              {'key':'canonical','ok':bool(re.search(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']https://astrovip\.ro/?["\']', home, re.I))},
+              {'key':'structured_data','ok':'application/ld+json' in home.lower()},
+              {'key':'robots_sitemap','ok':'sitemap' in robots.lower() and 'astrovip.ro' in robots.lower()},
+              {'key':'sitemap_home','ok':'https://astrovip.ro/' in sitemap},
+          ]
+
+          redirect_checks = []
+          for key, url, expected in [
+              ('http_to_https','http://astrovip.ro/','https://astrovip.ro/'),
+              ('www_to_apex','https://www.astrovip.ro/','https://astrovip.ro/'),
+          ]:
+              try:
+                  proc = subprocess.run(['curl','-sS','-o','/dev/null','-w','%{url_effective}|%{http_code}','-L','--max-redirs','5',url],capture_output=True,text=True,timeout=25)
+                  effective, code = (proc.stdout.strip().split('|',1)+[''])[:2]
+                  redirect_checks.append({'key':key,'ok':effective.startswith(expected) and code.startswith(('2','3')),'effective':effective,'status':code})
+              except Exception as exc:
+                  redirect_checks.append({'key':key,'ok':False,'error':str(exc)[:220]})
+
+          all_checks = results + semantic + redirect_checks
+          ok = all(x.get('ok') for x in all_checks)
+          report = {
+              'ok':ok,
+              'checkedAt':time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+              'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+              'checks':all_checks,
+          }
+          Path('autopilot-report.json').write_text(json.dumps(report, indent=2, ensure_ascii=False)+'\n',encoding='utf-8')
+          print(json.dumps(report, indent=2, ensure_ascii=False))
+          if not ok:
+              raise SystemExit('AstroVip Auto-Pilot detected one or more failed production checks.')
+          PY
+
+      - name: Create technical source snapshot
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git archive --format=zip --output=astrovip-autopilot-snapshot.zip HEAD
+
+      - name: Upload Auto-Pilot report and snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: astrovip-autopilot-${{ github.run_id }}
+          path: |
+            autopilot-report.json
+            astrovip-autopilot-snapshot.zip
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Publish run summary
+        if: always()
+        shell: bash
+        run: |
+          echo "## AstroVip Auto-Pilot 24/7" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Cadence: every 4 hours" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Production: https://astrovip.ro" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Snapshot retention: 14 days" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f autopilot-report.json ]; then
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open('autopilot-report.json',encoding='utf-8'))
+          print(f"- Overall: {'OK' if d.get('ok') else 'ATTENTION'}")
+          print(f"- Checked at: {d.get('checkedAt','—')}")
+          for x in d.get('checks',[]):
+              print(f"- {'✅' if x.get('ok') else '❌'} {x.get('key')}: {x.get('status', x.get('effective',''))}")
+          PY
+          fi
