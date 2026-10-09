@@ -6,7 +6,8 @@ await mkdir('assets/premium-v9/chunks', { recursive: true });
 await build({
   entryPoints: {
     main: 'src/premium-v9/main.ts',
-    client: 'src/premium-v9/client.ts'
+    client: 'src/premium-v9/client.ts',
+    report: 'src/premium-v9/report.ts'
   },
   outdir: 'assets/premium-v9',
   entryNames: '[name]',
@@ -24,4 +25,4 @@ await build({
   }
 });
 
-console.log('Premium V9 main/client bundles built.');
+console.log('Premium V9 main/client/report bundles built.');
