@@ -127,6 +127,24 @@
           "boxShadow": "none",
           "display": ""
         }
+      },
+      {
+        "selector": "body.av-ux-refresh.av-motion-live > header.top > div.wrap.nav > div.nav-actions:nth-of-type(2) > button.avchat-launcher.avchat-header-slot:nth-of-type(1) > span.avchat-launcher-label:nth-of-type(2)",
+        "text": "CHAT",
+        "style": {
+          "color": "#f8f3e8",
+          "backgroundColor": "#000000",
+          "borderColor": "#f8f3e8",
+          "borderWidth": "0px",
+          "borderStyle": "solid",
+          "borderRadius": "0px",
+          "opacity": "1",
+          "fontSize": "11px",
+          "fontWeight": "400",
+          "padding": "0px 0px",
+          "boxShadow": "none",
+          "display": ""
+        }
       }
     ]
   }
