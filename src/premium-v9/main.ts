@@ -2,6 +2,7 @@ import { loadFeatureFlags, track } from './data';
 import { initExperiments } from './experiments';
 import { initConcierge } from './concierge';
 import { initMotion, initViewTransitions, initWebGLHero } from './visual';
+import { initObservability } from './observability';
 
 function instrumentClicks() {
   document.addEventListener('click', (event) => {
@@ -30,6 +31,7 @@ async function boot() {
   addRuntimeBadge();
   const flags = await loadFeatureFlags();
   instrumentClicks();
+  initObservability();
   track('page_view_v9', { title: document.title, lang: document.documentElement.lang || 'ro' });
 
   if (flags.view_transitions !== false) initViewTransitions();
