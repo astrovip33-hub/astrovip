@@ -79,6 +79,44 @@ test('OAuth connect creates a temporary link with a fixed AstroVip callback',asy
   assert.equal(status,201);assert.equal(data.redirectUrl,'https://connect.composio.dev/session');
   assert.equal(linkBody.user_id,'astrovip-admin');assert.equal(linkBody.callback_url,'https://astrovip.ro/command-center/connections/');
 });
+test('report authorization creates a read-only config instead of reusing broad defaults',async()=>{
+  for(const [key,toolkit,scope] of [['gsc','google_search_console','webmasters.readonly'],['ga4','google_analytics','analytics.readonly']]) {
+    let configBody,linkBody;
+    globalThis.fetch=async(url,options={})=>{
+      if(url.includes('/connected_accounts?'))return reply({items:[]});
+      if(url.includes('/auth_configs?'))return reply({items:[{id:'broad-config',credentials:{scopes:'https://www.googleapis.com/auth/'+scope.replace('.readonly','')}}]});
+      if(url.endsWith('/auth_configs')){configBody=JSON.parse(options.body);return reply({auth_config:{id:'read-only-config'}})}
+      if(url.endsWith('/connected_accounts/link')){linkBody=JSON.parse(options.body);return reply({redirect_url:'https://connect.composio.dev/session'})}
+      throw Error('Unexpected request '+url);
+    };
+    const result=await run('connect',{key},{COMPOSIO_API_KEY:'secret'});
+    assert.equal(result.status,201);
+    assert.equal(configBody.toolkit.slug,toolkit);
+    assert.equal(configBody.auth_config.type,'use_composio_managed_auth');
+    assert.equal(configBody.auth_config.credentials.scopes,'https://www.googleapis.com/auth/'+scope);
+    assert.equal(linkBody.auth_config_id,'read-only-config');
+  }
+});
+test('an existing read-only report config is reused; scope setup failure does not fall back',async()=>{
+  let createCount=0;
+  globalThis.fetch=async(url,options={})=>{
+    if(url.includes('/connected_accounts?'))return reply({items:[]});
+    if(url.includes('/auth_configs?'))return reply({items:[{id:'readonly',shared_credentials:{scopes:'https://www.googleapis.com/auth/webmasters.readonly'}}]});
+    if(url.endsWith('/auth_configs')){createCount++;throw Error('must reuse')}
+    if(url.endsWith('/connected_accounts/link')){assert.equal(JSON.parse(options.body).auth_config_id,'readonly');return reply({redirect_url:'https://connect.composio.dev/session'})}
+    throw Error('Unexpected request '+url);
+  };
+  assert.equal((await run('connect',{key:'gsc'},{COMPOSIO_API_KEY:'secret'})).status,201);
+  assert.equal(createCount,0);
+  globalThis.fetch=async(url)=>{
+    if(url.includes('/connected_accounts?'))return reply({items:[]});
+    if(url.includes('/auth_configs?'))return reply({items:[{id:'broad-config'}]});
+    if(url.endsWith('/auth_configs'))return Response.json({message:'scope configuration unavailable'},{status:400});
+    throw Error('must not request a broad connection');
+  };
+  const failed=await run('connect',{key:'gsc'},{COMPOSIO_API_KEY:'secret'});
+  assert.equal(failed.status,502);assert.equal(failed.data.ok,false);
+});
 test('conversion configuration never claims a delivered test event',async()=>{
   globalThis.fetch=()=>{throw Error('no conversion event may be sent')};
   const {data}=await run('connection-test',{key:'meta'},{META_CAPI_ACCESS_TOKEN:'private-token'});

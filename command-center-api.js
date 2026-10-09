@@ -7,6 +7,10 @@ const COMPOSIO_USER = 'astrovip-admin';
 const GSC_TOOLKIT = 'google_search_console';
 const GA4_TOOLKIT = 'google_analytics';
 const DRIVE_TOOLKIT = 'googledrive';
+const REPORT_SCOPES = {
+  [GSC_TOOLKIT]: 'https://www.googleapis.com/auth/webmasters.readonly',
+  [GA4_TOOLKIT]: 'https://www.googleapis.com/auth/analytics.readonly',
+};
 const CONNECTIONS = [
   { key: 'githubDeploy', name: 'GitHub · publicare', url: 'https://github.com/astrovip33-hub/astrovip/actions', needs: ['GITHUB_ADMIN_TOKEN'], test: '/api/command/github' },
   { key: 'cloudflareRuntime', name: 'Cloudflare · site', url: 'https://dash.cloudflare.com/1997683abefc1f33c4a391c0e09e63dd/workers/services/view/astrovip/production', needs: [], test: '/api/command/site-health' },
@@ -138,15 +142,25 @@ async function composioGoogleStatus(env) {
 }
 
 async function composioAuthConfig(env, toolkit) {
+  const scopes = REPORT_SCOPES[toolkit];
+  const normalizedScopes = value => String(value || '').split(/[\s,]+/).filter(Boolean).sort().join(',');
   const q = new URLSearchParams({ toolkit_slug: toolkit, is_composio_managed: 'true', limit: '100' });
   let r = await composioFetch(env, `/auth_configs?${q}`);
   if (!r.ok) throw new Error(r.data?.message || r.data?.error || `composio_auth_configs_http_${r.status}`);
-  let config = (r.data?.items || []).find(x => !x.is_disabled && String(x?.status || 'ENABLED') === 'ENABLED') || null;
+  let config = (r.data?.items || []).find(x => !x.is_disabled && String(x?.status || 'ENABLED') === 'ENABLED' &&
+    (!scopes || normalizedScopes(x.credentials?.scopes || x.shared_credentials?.scopes) === normalizedScopes(scopes))) || null;
   if (config?.id) return config;
 
   r = await composioFetch(env, '/auth_configs', {
     method: 'POST',
-    body: { toolkit: { slug: toolkit } },
+    body: {
+      toolkit: { slug: toolkit },
+      ...(scopes ? { auth_config: {
+        type: 'use_composio_managed_auth',
+        name: `AstroVip ${toolkit} read-only`,
+        credentials: { scopes },
+      } } : {}),
+    },
   });
   if (!r.ok) throw new Error(r.data?.message || r.data?.error || `composio_auth_config_create_http_${r.status}`);
   return r.data?.auth_config || r.data;
