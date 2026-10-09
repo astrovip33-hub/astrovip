@@ -2,7 +2,7 @@
   "id": "/",
   "name": "AstroVip Premium",
   "short_name": "AstroVip",
-  "description": "Astrologie premium, instrumente interactive și portal client AstroVip.",
+  "description": "Astrologie premium, instrumente interactive, programări și portal client AstroVip.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
@@ -16,7 +16,7 @@
   ],
   "shortcuts": [
     {"name":"Harta natală","url":"/calculator/","icons":[{"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml"}]},
-    {"name":"Contul meu","url":"/client/","icons":[{"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml"}]},
-    {"name":"Programare","url":"/?booking=1","icons":[{"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml"}]}
+    {"name":"Programare","url":"/booking/","icons":[{"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Contul meu","url":"/client/","icons":[{"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml"}]}
   ]
 }
