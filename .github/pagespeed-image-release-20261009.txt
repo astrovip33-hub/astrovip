@@ -1,0 +1,2 @@
+AstroVip PageSpeed responsive-image release: 2026-10-09
+Includes 320/640 WebP candidates for interest cards and responsive identity image selection.
