@@ -11,6 +11,11 @@ const REPORT_SCOPES = {
   [GSC_TOOLKIT]: 'https://www.googleapis.com/auth/webmasters.readonly',
   [GA4_TOOLKIT]: 'https://www.googleapis.com/auth/analytics.readonly',
 };
+const GOOGLE_IDENTITY_SCOPES = new Set([
+  'openid', 'email', 'profile',
+  'https://www.googleapis.com/auth/userinfo.email',
+  'https://www.googleapis.com/auth/userinfo.profile',
+]);
 const CONNECTIONS = [
   { key: 'githubDeploy', name: 'GitHub · publicare', url: 'https://github.com/astrovip33-hub/astrovip/actions', needs: ['GITHUB_ADMIN_TOKEN'], test: '/api/command/github' },
   { key: 'cloudflareRuntime', name: 'Cloudflare · site', url: 'https://dash.cloudflare.com/1997683abefc1f33c4a391c0e09e63dd/workers/services/view/astrovip/production', needs: [], test: '/api/command/site-health' },
@@ -149,7 +154,7 @@ async function composioGoogleStatus(env) {
 
 async function composioAuthConfig(env, toolkit) {
   const scopes = REPORT_SCOPES[toolkit];
-  const normalizedScopes = value => String(value || '').split(/[\s,]+/).filter(Boolean).sort().join(',');
+  const normalizedScopes = value => String(value || '').split(/[\s,]+/).filter(scope => scope && !GOOGLE_IDENTITY_SCOPES.has(scope)).sort().join(',');
   const q = new URLSearchParams({ toolkit_slug: toolkit, is_composio_managed: 'true', limit: '100' });
   let r = await composioFetch(env, `/auth_configs?${q}`);
   if (!r.ok) throw new Error(composioError(r, 'auth_configs'));

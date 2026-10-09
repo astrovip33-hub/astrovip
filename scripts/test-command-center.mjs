@@ -101,7 +101,7 @@ test('an existing read-only report config is reused; scope setup failure does no
   let createCount=0;
   globalThis.fetch=async(url,options={})=>{
     if(url.includes('/connected_accounts?'))return reply({items:[]});
-    if(url.includes('/auth_configs?'))return reply({items:[{id:'readonly',shared_credentials:{scopes:'https://www.googleapis.com/auth/webmasters.readonly'}}]});
+    if(url.includes('/auth_configs?'))return reply({items:[{id:'readonly',shared_credentials:{scopes:'https://www.googleapis.com/auth/webmasters.readonly,https://www.googleapis.com/auth/userinfo.profile,https://www.googleapis.com/auth/userinfo.email'}}]});
     if(url.endsWith('/auth_configs')){createCount++;throw Error('must reuse')}
     if(url.endsWith('/connected_accounts/link')){assert.equal(JSON.parse(options.body).auth_config_id,'readonly');return reply({redirect_url:'https://connect.composio.dev/session'})}
     throw Error('Unexpected request '+url);
