@@ -662,7 +662,8 @@ async function driveBackupViaComposio(env) {
     parameters: [{ name: 'Content-Type', value: 'application/json', in: 'header' }, { name: 'X-Upload-Content-Type', value: 'application/zip', in: 'header' }],
     body: { name, parents: [String(env.DRIVE_BACKUP_FOLDER_ID).trim()] },
   } });
-  if (!init.ok || Number(init.data?.status || 200) >= 400) throw new Error('drive_upload_init_failed');
+  if (!init.ok) throw new Error(`drive_upload_init_failed: ${composioError(init, 'drive_upload_init')}`);
+  if (Number(init.data?.status || 200) >= 400) throw new Error(`drive_upload_init_failed: ${init.data?.data?.error?.message || init.data?.data?.message || `provider_http_${init.data?.status}`}`);
   const uploadUrl = Object.entries(init.data?.headers || {}).find(([key]) => key.toLowerCase() === 'location')?.[1];
   if (!uploadUrl || new URL(uploadUrl).hostname !== 'www.googleapis.com') throw new Error('drive_upload_location_missing');
   const upload = await composioFetch(env, '/tools/execute/proxy', { method: 'POST', body: {
