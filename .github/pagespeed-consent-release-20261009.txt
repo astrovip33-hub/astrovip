@@ -1,0 +1,2 @@
+AstroVip PageSpeed consent CLS release: 2026-10-09
+Stabilizes the final desktop consent-banner geometry before external CSS loads.
