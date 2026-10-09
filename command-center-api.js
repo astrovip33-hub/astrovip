@@ -566,9 +566,18 @@ async function connectedProxy(env, toolkit, endpoint, method = 'GET', body) {
 async function driveFolder(env) {
   if (!has(env, 'DRIVE_BACKUP_FOLDER_ID')) throw new Error('drive_backup_folder_not_configured');
   const endpoint = `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(env.DRIVE_BACKUP_FOLDER_ID)}?fields=id,name,mimeType,capabilities(canAddChildren)&supportsAllDrives=true`;
-  const data = googleOauthReady(env) || googleServiceReady(env)
-    ? await providerJson(endpoint, { authorization: `Bearer ${await googleUserToken(env, ['https://www.googleapis.com/auth/drive'])}` })
-    : await connectedProxy(env, DRIVE_TOOLKIT, endpoint);
+
+  let data = null;
+  if (has(env, 'COMPOSIO_API_KEY')) {
+    const account = selectAccount(await composioConnectedAccounts(env, [DRIVE_TOOLKIT]), DRIVE_TOOLKIT, env);
+    if (account?.id) data = await composioProxy(env, account.id, endpoint, 'GET');
+  }
+  if (!data) {
+    data = googleOauthReady(env) || googleServiceReady(env)
+      ? await providerJson(endpoint, { authorization: `Bearer ${await googleUserToken(env, ['https://www.googleapis.com/auth/drive'])}` })
+      : await connectedProxy(env, DRIVE_TOOLKIT, endpoint);
+  }
+
   if (data.mimeType !== 'application/vnd.google-apps.folder' || data.capabilities?.canAddChildren !== true) throw new Error('drive_folder_write_access_required');
   return { name: data.name || 'Backup AstroVip', canAddChildren: true };
 }
@@ -666,6 +675,10 @@ async function driveBackupViaComposio(env) {
 
 async function driveBackup(env) {
   if (!has(env, 'DRIVE_BACKUP_FOLDER_ID')) return { ok: false, status: 503, error: 'drive_backup_folder_not_configured' };
+  if (has(env, 'COMPOSIO_API_KEY')) {
+    const account = selectAccount(await composioConnectedAccounts(env, [DRIVE_TOOLKIT]), DRIVE_TOOLKIT, env);
+    if (account?.id) return driveBackupViaComposio(env);
+  }
   if (!googleOauthReady(env) && !googleServiceReady(env)) return driveBackupViaComposio(env);
   const token = await googleUserToken(env, ['https://www.googleapis.com/auth/drive']);
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
