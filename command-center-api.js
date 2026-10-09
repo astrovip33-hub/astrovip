@@ -704,6 +704,68 @@ async function driveBackup(env) {
   return { ok: true, file };
 }
 
+
+async function githubControl(env, path, { method = 'GET', body } = {}) {
+  if (!has(env, 'GITHUB_ADMIN_TOKEN')) return { ok: false, status: 503, data: { error: 'github_admin_token_not_configured' } };
+  const response = await fetch(`https://api.github.com${path}`, {
+    method,
+    headers: {
+      authorization: `Bearer ${String(env.GITHUB_ADMIN_TOKEN).trim()}`,
+      accept: 'application/vnd.github+json',
+      'x-github-api-version': '2022-11-28',
+      'user-agent': 'AstroVip-Operations-Center/8.0',
+      ...(body === undefined ? {} : { 'content-type': 'application/json' }),
+    },
+    body: body === undefined ? undefined : JSON.stringify(body),
+    signal: AbortSignal.timeout(20000),
+  });
+  if (response.status === 204) return { ok: true, status: 204, data: null };
+  const text = await response.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch { data = { message: text.slice(0, 500) }; }
+  return { ok: response.ok, status: response.status, data };
+}
+
+async function recoveryPoints(env) {
+  const result = await githubControl(env, `/repos/${REPO}/commits?sha=main&per_page=10`);
+  if (!result.ok) return { ok: false, status: result.status, error: result.data?.message || result.data?.error || 'github_recovery_points_failed' };
+  const points = (Array.isArray(result.data) ? result.data : []).map(item => ({
+    sha: item.sha || null,
+    shortSha: item.sha ? item.sha.slice(0, 7) : null,
+    message: item.commit?.message?.split('\n')[0] || 'Commit AstroVip',
+    date: item.commit?.committer?.date || item.commit?.author?.date || null,
+    url: item.html_url || null,
+  })).filter(x => x.sha);
+  return { ok: true, points };
+}
+
+async function autopilotStatus(env) {
+  const result = await githubControl(env, `/repos/${REPO}/actions/workflows/operations-autopilot.yml/runs?per_page=1`);
+  if (!result.ok) return { ok: false, status: result.status, error: result.data?.message || result.data?.error || 'autopilot_status_failed' };
+  const run = result.data?.workflow_runs?.[0] || null;
+  return { ok: true, enabled: true, cadence: 'la fiecare 4 ore', run: run ? {
+    id: run.id || null, status: run.status || null, conclusion: run.conclusion || null,
+    event: run.event || null, createdAt: run.created_at || null, updatedAt: run.updated_at || null,
+    url: run.html_url || null,
+  } : null };
+}
+
+async function restoreProduction(env, requestedRef) {
+  const ref = String(requestedRef || '').trim();
+  if (!/^[0-9a-f]{7,40}$/i.test(ref)) return { ok: false, status: 400, error: 'invalid_restore_ref' };
+  const commit = await githubControl(env, `/repos/${REPO}/commits/${encodeURIComponent(ref)}`);
+  if (!commit.ok || !commit.data?.sha) return { ok: false, status: commit.status || 404, error: commit.data?.message || 'restore_commit_not_found' };
+  const sha = String(commit.data.sha);
+  const dispatch = await githubControl(env, `/repos/${REPO}/actions/workflows/restore-production.yml/dispatches`, {
+    method: 'POST', body: { ref: 'main', inputs: { target_ref: sha } },
+  });
+  if (!dispatch.ok) return { ok: false, status: dispatch.status || 502, error: dispatch.data?.message || 'restore_dispatch_failed' };
+  return { ok: true, target: {
+    sha, shortSha: sha.slice(0, 7), message: commit.data?.commit?.message?.split('\n')[0] || 'AstroVip restore point',
+    date: commit.data?.commit?.committer?.date || null, url: commit.data?.html_url || null,
+  }, workflow: 'restore-production.yml', note: 'Production restore started. Main branch was not changed.' };
+}
+
 async function siteHealth() {
   const targets = [
     ['homepage', 'https://astrovip.ro/'],
@@ -816,6 +878,33 @@ export async function handleCommandCenter(request, env) {
     } catch (e) {
       return json({ ok: false, error: String(e?.message || e) }, 500);
     }
+  }
+
+
+  if (url.pathname === '/api/command/recovery-points') {
+    const gate = await authGate(request, env);
+    if (!gate?.ok) return gate;
+    if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
+    const result = await recoveryPoints(env);
+    return json(result, result.ok ? 200 : (result.status || 500));
+  }
+
+  if (url.pathname === '/api/command/autopilot-status') {
+    const gate = await authGate(request, env);
+    if (!gate?.ok) return gate;
+    if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
+    const result = await autopilotStatus(env);
+    return json(result, result.ok ? 200 : (result.status || 500));
+  }
+
+  if (url.pathname === '/api/command/restore') {
+    const gate = await authGate(request, env);
+    if (!gate?.ok) return gate;
+    if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST' });
+    if (Number(request.headers.get('content-length') || 0) > 2048) return json({ ok: false, error: 'payload_too_large' }, 413);
+    const body = await request.json().catch(() => ({}));
+    const result = await restoreProduction(env, body?.ref);
+    return json(result, result.ok ? 202 : (result.status || 500));
   }
 
   if (url.pathname === '/api/command/site-health') {
