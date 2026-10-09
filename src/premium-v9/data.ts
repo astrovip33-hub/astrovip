@@ -58,14 +58,24 @@ export async function track(eventName: string, properties: Record<string, unknow
   }
 }
 
-export async function searchKnowledge(query: string, lang = document.documentElement.lang || 'ro') {
-  const { data, error } = await supabase.rpc('av_search_content', {
+async function knowledgeRpc(query: string, lang: string) {
+  return supabase.rpc('av_search_content', {
     query_text: query,
     match_count: 6,
     lang_filter: lang.slice(0, 2)
   });
-  if (error) throw error;
-  return Array.isArray(data) ? data : [];
+}
+
+export async function searchKnowledge(query: string, lang = document.documentElement.lang || 'ro') {
+  const primaryLang = lang.slice(0, 2).toLowerCase();
+  const primary = await knowledgeRpc(query, primaryLang);
+  if (!primary.error && Array.isArray(primary.data) && primary.data.length) return primary.data;
+  if (primaryLang !== 'ro') {
+    const fallback = await knowledgeRpc(query, 'ro');
+    if (!fallback.error && Array.isArray(fallback.data)) return fallback.data;
+  }
+  if (primary.error) throw primary.error;
+  return Array.isArray(primary.data) ? primary.data : [];
 }
 
 export async function sendMagicLink(email: string) {
@@ -106,4 +116,35 @@ export async function saveBirthProfile(payload: Record<string, unknown>) {
     .single();
   if (error) throw error;
   return data;
+}
+
+export async function loadTakenBookingSlots(from?: string, days = 60) {
+  const { data, error } = await supabase.rpc('av_taken_booking_slots', {
+    p_from: from || null,
+    p_days: Math.max(1, Math.min(days, 60))
+  });
+  if (error) throw error;
+  return Array.isArray(data) ? data : [];
+}
+
+export async function createBooking(payload: {
+  bookingDate: string;
+  bookingTime: string;
+  name: string;
+  phone: string;
+  service: string;
+  mode: string;
+  note?: string;
+}) {
+  const { data, error } = await supabase.rpc('av_create_booking', {
+    p_booking_date: payload.bookingDate,
+    p_booking_time: payload.bookingTime,
+    p_name: payload.name,
+    p_phone: payload.phone,
+    p_service: payload.service,
+    p_mode: payload.mode,
+    p_note: payload.note || null
+  });
+  if (error) throw error;
+  return Array.isArray(data) ? data[0] : data;
 }
