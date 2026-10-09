@@ -117,6 +117,16 @@ test('an existing read-only report config is reused; scope setup failure does no
   const failed=await run('connect',{key:'gsc'},{COMPOSIO_API_KEY:'secret'});
   assert.equal(failed.status,502);assert.equal(failed.data.ok,false);
 });
+test('structured Composio errors are readable and still redact credentials',async()=>{
+  globalThis.fetch=async(url)=>{
+    if(url.includes('/connected_accounts?'))return reply({items:[]});
+    if(url.includes('/auth_configs?'))return reply({items:[]});
+    return Response.json({error:{message:'Invalid scopes for secret-key-value',status:400,request_id:'request1'}},{status:400});
+  };
+  const failed=await run('connect',{key:'gsc'},{COMPOSIO_API_KEY:'secret-key-value'});
+  assert.equal(failed.status,502);assert.match(failed.data.error,/Invalid scopes/);
+  assert(!failed.data.error.includes('secret-key-value'));assert(!failed.data.error.includes('[object Object]'));
+});
 test('conversion configuration never claims a delivered test event',async()=>{
   globalThis.fetch=()=>{throw Error('no conversion event may be sent')};
   const {data}=await run('connection-test',{key:'meta'},{META_CAPI_ACCESS_TOKEN:'private-token'});

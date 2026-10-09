@@ -96,6 +96,12 @@ function composioUser(env) {
   return String(env.COMPOSIO_USER_ID || COMPOSIO_USER).trim();
 }
 
+function composioError(result, operation) {
+  const data = result.data;
+  const message = data?.error?.message || data?.message || (typeof data?.error === 'string' ? data.error : null);
+  return typeof message === 'string' ? message : `composio_${operation}_http_${result.status}`;
+}
+
 async function composioConnectedAccounts(env, toolkitSlugs = [GSC_TOOLKIT, GA4_TOOLKIT]) {
   if (!has(env, 'COMPOSIO_API_KEY')) return [];
   const q = new URLSearchParams();
@@ -104,7 +110,7 @@ async function composioConnectedAccounts(env, toolkitSlugs = [GSC_TOOLKIT, GA4_T
   q.append('user_ids', composioUser(env));
   q.set('limit', '100');
   const r = await composioFetch(env, `/connected_accounts?${q}`);
-  if (!r.ok) throw new Error(r.data?.message || r.data?.error || `composio_accounts_http_${r.status}`);
+  if (!r.ok) throw new Error(composioError(r, 'accounts'));
   return Array.isArray(r.data?.items) ? r.data.items : [];
 }
 
@@ -146,7 +152,7 @@ async function composioAuthConfig(env, toolkit) {
   const normalizedScopes = value => String(value || '').split(/[\s,]+/).filter(Boolean).sort().join(',');
   const q = new URLSearchParams({ toolkit_slug: toolkit, is_composio_managed: 'true', limit: '100' });
   let r = await composioFetch(env, `/auth_configs?${q}`);
-  if (!r.ok) throw new Error(r.data?.message || r.data?.error || `composio_auth_configs_http_${r.status}`);
+  if (!r.ok) throw new Error(composioError(r, 'auth_configs'));
   let config = (r.data?.items || []).find(x => !x.is_disabled && String(x?.status || 'ENABLED') === 'ENABLED' &&
     (!scopes || normalizedScopes(x.credentials?.scopes || x.shared_credentials?.scopes) === normalizedScopes(scopes))) || null;
   if (config?.id) return config;
@@ -162,7 +168,7 @@ async function composioAuthConfig(env, toolkit) {
       } } : {}),
     },
   });
-  if (!r.ok) throw new Error(r.data?.message || r.data?.error || `composio_auth_config_create_http_${r.status}`);
+  if (!r.ok) throw new Error(composioError(r, 'auth_config_create'));
   return r.data?.auth_config || r.data;
 }
 
@@ -181,7 +187,7 @@ async function composioConnectLink(env, toolkit, callbackUrl) {
       callback_url: callbackUrl,
     },
   });
-  if (!r.ok) throw new Error(r.data?.message || r.data?.error || `composio_link_http_${r.status}`);
+  if (!r.ok) throw new Error(composioError(r, 'link'));
   return {
     toolkit,
     connected: false,
@@ -201,7 +207,7 @@ async function composioProxy(env, connectedAccountId, endpoint, method, body) {
       ...(body === undefined ? {} : { body }),
     },
   });
-  if (!r.ok) throw new Error(r.data?.message || r.data?.error || `composio_proxy_http_${r.status}`);
+  if (!r.ok) throw new Error(composioError(r, 'proxy'));
   if (Number(r.data?.status || 200) >= 400) {
     throw new Error(r.data?.data?.error?.message || r.data?.data?.message || `provider_http_${r.data?.status}`);
   }
