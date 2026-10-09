@@ -32,6 +32,8 @@ jobs:
           test -s assets/vendor/swisseph.wasm
           test -s assets/premium-v9/main.js
           test -s assets/premium-v9/client.js
+          test -s assets/premium-v9/booking.js
+          test -s assets/premium-v9/report.js
 
       - name: Inject Premium V9 runtime
         run: python3 scripts/inject-premium-v9.py
@@ -42,8 +44,11 @@ jobs:
           set -euo pipefail
           grep -q "ASTROVIP_PREMIUM_V9" index.html
           grep -q "/assets/premium-v9/main.js" index.html
+          grep -q "ASTROVIP_COMMAND_V9" command-center/index.html
           grep -q "Swiss Ephemeris" calculator/index.html
           grep -q "CLIENT PORTAL" client/index.html
+          grep -q "PREMIUM BOOKING" booking/index.html
+          grep -q "Raport personal" report/index.html
           node --check worker.js
 
       - name: Deploy isolated Cloudflare preview
@@ -70,7 +75,13 @@ jobs:
           MAIN_JS="$(curl -fsS "$BASE/assets/premium-v9/main.js?v=${GITHUB_SHA}")"
           CALCULATOR_HTML="$(curl -fsS "$BASE/calculator/?v=${GITHUB_SHA}")"
           CLIENT_HTML="$(curl -fsS "$BASE/client/?v=${GITHUB_SHA}")"
+          BOOKING_HTML="$(curl -fsS "$BASE/booking/?v=${GITHUB_SHA}")"
+          REPORT_HTML="$(curl -fsS "$BASE/report/?v=${GITHUB_SHA}")"
+          COMMAND_HTML="$(curl -fsS "$BASE/command-center/?v=${GITHUB_SHA}")"
           grep -Fq "AstroVip" <<<"$MAIN_JS"
           grep -Fq "Hartă natală interactivă" <<<"$CALCULATOR_HTML"
           grep -Fq "Contul meu AstroVip" <<<"$CLIENT_HTML"
+          grep -Fq "Programare AstroVip Premium" <<<"$BOOKING_HTML"
+          grep -Fq "Raport personal" <<<"$REPORT_HTML"
+          grep -Fq "/command-center/v9-extension.js" <<<"$COMMAND_HTML"
           echo "Premium V9 preview verified."
