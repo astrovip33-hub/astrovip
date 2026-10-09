@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Programare AstroVip Premium</title>
+<meta name="description" content="Alege serviciul, data și ora pentru o consultație AstroVip premium.">
+<link rel="canonical" href="https://astrovip.ro/booking/">
+<meta name="theme-color" content="#030604">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/assets/astrovip-design-system-v9.css">
+<style>
+body{margin:0;background:radial-gradient(circle at 12% 0,rgba(57,255,118,.10),transparent 30%),radial-gradient(circle at 88% 0,rgba(231,201,99,.08),transparent 28%),#020403;color:#fffdf5;font:15px system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.shell{width:min(980px,calc(100% - 24px));margin:auto;padding:22px 0 70px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.brand{color:#ffeaa0;font-weight:950}.back{color:#39ff76;text-decoration:none;font-weight:850}.hero{padding:28px 0 16px}.hero h1{margin:5px 0 9px;font-size:clamp(34px,6vw,58px)}.hero p{max-width:760px;color:#aeb9b2;line-height:1.6}.badge{display:inline-flex;border:1px solid #2d7045;border-radius:999px;padding:5px 9px;color:#39ff76;font-size:10px;font-weight:900}.panel{border:1px solid rgba(231,201,99,.32);background:linear-gradient(180deg,rgba(9,20,12,.97),rgba(4,8,5,.985));border-radius:20px;box-shadow:0 24px 72px #0008;padding:18px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form{display:grid;gap:11px}.form label{display:grid;gap:5px;color:#b9c4bc;font-size:12px}.form input,.form select,.form textarea{border:1px solid #315d40;background:#030805;color:#fff;border-radius:11px;padding:11px 12px;font:inherit}.form textarea{resize:vertical;min-height:92px}.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.slot{position:relative}.slot input{position:absolute;opacity:0;pointer-events:none}.slot span{display:block;text-align:center;border:1px solid #315d40;border-radius:10px;padding:10px 5px;color:#d9e0db;cursor:pointer;background:#050b07;font-weight:800}.slot input:checked+span{border-color:#39ff76;color:#39ff76;background:#0a1a10;box-shadow:0 0 18px rgba(57,255,118,.08)}.slot.busy span{opacity:.42;text-decoration:line-through;cursor:not-allowed}.consent{display:flex!important;grid-template-columns:auto 1fr!important;align-items:flex-start;gap:8px!important;font-size:11px!important;line-height:1.5}.consent input{margin-top:2px}.submit{border:1px solid #39ff76;background:linear-gradient(180deg,#0d2114,#07120b);color:#39ff76;border-radius:12px;padding:13px 14px;font-weight:950;cursor:pointer}.submit:disabled{opacity:.5;cursor:wait}.status{margin-top:12px;border:1px solid #2a5538;border-radius:11px;padding:10px 12px;color:#b7c2ba;min-height:20px}.status[data-tone="error"]{border-color:#7b303d;color:#ff9aa5}.status[data-tone="warn"]{border-color:#6e5d2b;color:#f0d889}.success{margin-top:12px;border:1px solid #39ff76;border-radius:13px;padding:13px;background:rgba(57,255,118,.035)}.success strong{color:#39ff76}.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.trust div{border:1px solid rgba(231,201,99,.18);border-radius:12px;padding:10px}.trust b{display:block;color:#ffeaa0;font-size:11px}.trust span{display:block;color:#85938a;font-size:9px;margin-top:4px;line-height:1.4}@media(max-width:760px){.grid{grid-template-columns:1fr}.slots{grid-template-columns:repeat(2,1fr)}.trust{grid-template-columns:1fr}.top{align-items:flex-start}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="top"><div class="brand">ASTROVIP · PREMIUM BOOKING</div><a class="back" href="/">← Site</a></div>
+  <section class="hero"><span class="badge">DISPONIBILITATE LIVE · BUCUREȘTI</span><h1>Programează consultația</h1><p>Alege serviciul, ziua și intervalul disponibil. Sloturile sunt verificate live înainte de confirmare, iar același interval nu poate fi rezervat de două ori.</p></section>
+  <section class="panel">
+    <form id="booking-form" class="form">
+      <div class="grid">
+        <label>Serviciu<select name="service" required><option>Consultație premium — 500 lei / 60 min</option><option>Previziuni astrologice</option><option>Sinastrie</option><option>Carieră & afaceri</option><option>Relocare / Local Space</option></select></label>
+        <label>Format<select name="mode" required><option>Online</option><option>București</option></select></label>
+      </div>
+      <label>Data<input id="booking-date" type="date" name="booking_date" required></label>
+      <label>Ora disponibilă<div id="booking-times" class="slots" aria-live="polite"></div></label>
+      <div class="grid"><label>Nume și prenume<input name="name" minlength="2" maxlength="100" autocomplete="name" required></label><label>Telefon<input name="phone" minlength="7" maxlength="25" autocomplete="tel" inputmode="tel" required></label></div>
+      <label>Mesaj opțional<textarea name="note" maxlength="1000" placeholder="Ce dorești să analizăm?"></textarea></label>
+      <label class="consent"><input type="checkbox" required><span>Confirm că datele introduse pot fi folosite pentru administrarea programării și contactarea mea în legătură cu această solicitare.</span></label>
+      <button class="submit" type="submit">Confirmă programarea</button>
+    </form>
+    <div id="booking-status" class="status" data-tone="ok" aria-live="polite"></div>
+    <div id="booking-success" class="success" hidden><strong>Programarea a fost înregistrată.</strong><div style="color:#aeb9b2;margin-top:4px">Păstrează această pagină până primești detaliile de confirmare.</div></div>
+    <div class="trust"><div><b>Slot protejat</b><span>Un interval activ nu poate fi rezervat simultan de două persoane.</span></div><div><b>Date private</b><span>Lista publică de disponibilitate nu expune nume, telefon sau notițe.</span></div><div><b>Tracking first-party</b><span>Conversia este măsurată în ecosistemul AstroVip pentru optimizarea fluxului.</span></div></div>
+  </section>
+</main>
+<script type="module" src="/assets/premium-v9/main.js"></script>
+<script type="module" src="/assets/premium-v9/booking.js"></script>
+</body>
+</html>

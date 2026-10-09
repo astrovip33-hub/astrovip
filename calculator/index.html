@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Calculator Hartă Natală Swiss Ephemeris · AstroVip</title>
+<meta name="description" content="Calculator interactiv AstroVip pentru poziții planetare tropicale și case Koch, calculat în browser cu Swiss Ephemeris.">
+<link rel="canonical" href="https://astrovip.ro/calculator/">
+<meta name="theme-color" content="#030604">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/assets/astrovip-design-system-v9.css">
+<style>
+body{margin:0;background:radial-gradient(circle at 15% 0,rgba(57,255,118,.09),transparent 32%),#020403;color:#fffdf5;font:15px system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.shell{width:min(1180px,calc(100% - 24px));margin:auto;padding:24px 0 70px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{color:#ffeaa0;font-weight:950}.back{color:#39ff76;text-decoration:none;font-weight:850}.hero{padding:28px 0 18px}.hero h1{font-size:clamp(31px,6vw,62px);line-height:1.02;margin:6px 0 10px}.hero p{color:#aab7af;line-height:1.65;max-width:780px}.badge{display:inline-flex;border:1px solid #2d7045;border-radius:999px;padding:5px 9px;color:#39ff76;font-size:11px;font-weight:900}.layout{display:grid;grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr);gap:14px}.panel{border:1px solid rgba(231,201,99,.32);background:linear-gradient(180deg,rgba(9,20,12,.96),rgba(4,8,5,.98));border-radius:20px;box-shadow:0 24px 72px #0008;padding:17px}.panel h2{margin:0 0 12px;color:#ffeaa0}.form{display:grid;gap:9px}.form label{display:grid;gap:5px;color:#b8c3bb;font-size:12px}.form input,.form select{border:1px solid #315d40;background:#030805;color:#fff;border-radius:11px;padding:11px 12px;font:inherit}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.form button{border:1px solid #39ff76;background:#0a1a10;color:#39ff76;border-radius:11px;padding:12px;font-weight:950;cursor:pointer}.note{color:#87968d;font-size:11px;line-height:1.5}.result{min-height:440px}.empty{display:grid;place-items:center;min-height:390px;text-align:center;color:#84928a;border:1px dashed #244733;border-radius:16px;padding:20px}.chart-wrap{display:grid;grid-template-columns:minmax(270px,.85fr) minmax(260px,1.15fr);gap:14px;align-items:start}.wheel{width:100%;aspect-ratio:1;border-radius:50%;filter:drop-shadow(0 18px 34px #0009)}.planet-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}.planet{display:flex;justify-content:space-between;gap:8px;border:1px solid rgba(231,201,99,.2);border-radius:10px;padding:8px 9px;background:rgba(255,255,255,.016);font-size:12px}.planet strong{color:#ffeaa0}.meta{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 12px}.meta span{border:1px solid #284c35;border-radius:999px;padding:4px 7px;color:#aeb9b2;font-size:10px}.status{margin-top:10px;color:#93a298;font-size:12px;min-height:18px}.reportbar{margin-top:14px;border-top:1px solid rgba(231,201,99,.18);padding-top:12px;display:flex;justify-content:flex-end}.reportbar a{border:1px solid #e7c963;border-radius:11px;padding:10px 13px;color:#ffeaa0;text-decoration:none;font-weight:900;background:#100d05}@media(max-width:850px){.layout,.chart-wrap{grid-template-columns:1fr}.result{min-height:auto}.planet-list{grid-template-columns:1fr}.row{grid-template-columns:1fr}.reportbar a{width:100%;text-align:center}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="top"><div class="brand">ASTROVIP · INTERACTIVE ENGINE</div><a class="back" href="/">← Site</a></div>
+  <section class="hero"><span class="badge">SWISS EPHEMERIS · KOCH · TROPICAL</span><h1>Hartă natală interactivă</h1><p>Calculează pozițiile planetelor și cuspidele caselor direct în browser. Motorul rulează separat într-un Web Worker, pentru ca interfața să rămână fluidă.</p></section>
+  <div class="layout">
+    <section class="panel">
+      <h2>Datele nașterii</h2>
+      <form id="chart-form" class="form">
+        <div class="row"><label>Data<input type="date" name="date" required></label><label>Ora locală<input type="time" name="time" step="60" required></label></div>
+        <label>Offset UTC<select name="utcOffset" required><option value="+02:00">UTC+02:00</option><option value="+03:00" selected>UTC+03:00</option><option value="+01:00">UTC+01:00</option><option value="+00:00">UTC+00:00</option><option value="-05:00">UTC-05:00</option><option value="-08:00">UTC-08:00</option></select></label>
+        <label>Localitate<input name="place" placeholder="București, România" maxlength="120"></label>
+        <div class="row"><label>Latitudine<input type="number" step="any" min="-90" max="90" name="lat" value="44.4268" required></label><label>Longitudine<input type="number" step="any" min="-180" max="180" name="lon" value="26.1025" required></label></div>
+        <button type="submit">Calculează harta</button>
+        <div class="note">Pentru precizie, selectează offsetul UTC valabil la data nașterii. Case: Koch. Zodiac: tropical.</div>
+        <div id="chart-status" class="status" aria-live="polite"></div>
+      </form>
+    </section>
+    <section class="panel result" id="chart-result"><div class="empty"><div><strong style="color:#ffeaa0">Motor pregătit</strong><p>Completează datele pentru generarea hărții.</p></div></div></section>
+  </div>
+</main>
+<script type="module" src="/assets/premium-v9/main.js"></script>
+<script type="module">
+const form=document.querySelector('#chart-form');const result=document.querySelector('#chart-result');const status=document.querySelector('#chart-status');
+const worker=new Worker('/assets/premium-v9/astro-worker.js',{type:'module'});let pending=new Map();
+worker.onmessage=e=>{const p=pending.get(e.data.id);if(!p)return;pending.delete(e.data.id);e.data.ok?p.resolve(e.data.chart):p.reject(new Error(e.data.error||'Calcul nereușit'));};
+function calculate(payload){return new Promise((resolve,reject)=>{const id=crypto.randomUUID();pending.set(id,{resolve,reject});worker.postMessage({id,...payload});});}
+const signs=['Berbec','Taur','Gemeni','Rac','Leu','Fecioară','Balanță','Scorpion','Săgetător','Capricorn','Vărsător','Pești'];
+function deg(v){const n=((Number(v)%360)+360)%360;const sign=Math.floor(n/30);const d=Math.floor(n%30);const m=Math.floor(((n%30)-d)*60);return `${d}°${String(m).padStart(2,'0')}′ ${signs[sign]}`}
+function wheel(chart){const size=420,c=210,r=184;let svg=`<svg class="wheel" viewBox="0 0 ${size} ${size}" role="img" aria-label="Hartă natală"><defs><radialGradient id="bg"><stop stop-color="#0b1710"/><stop offset="1" stop-color="#020403"/></radialGradient></defs><circle cx="${c}" cy="${c}" r="${r+12}" fill="url(#bg)" stroke="#e7c963" stroke-opacity=".65"/><circle cx="${c}" cy="${c}" r="${r-34}" fill="none" stroke="#39ff76" stroke-opacity=".18"/>`;
+for(let i=0;i<12;i++){const a=(i*30-90)*Math.PI/180;const x=c+Math.cos(a)*r,y=c+Math.sin(a)*r;const x2=c+Math.cos(a)*(r-34),y2=c+Math.sin(a)*(r-34);svg+=`<line x1="${x}" y1="${y}" x2="${x2}" y2="${y2}" stroke="#e7c963" stroke-opacity=".35"/><text x="${c+Math.cos(a+Math.PI/12)*(r-16)}" y="${c+Math.sin(a+Math.PI/12)*(r-16)}" fill="#cfc6a0" font-size="9" text-anchor="middle" dominant-baseline="middle">${signs[i].slice(0,3)}</text>`}
+for(const p of chart.planets){const a=(Number(p.longitude)-90)*Math.PI/180;const rr=r-63;svg+=`<circle cx="${c+Math.cos(a)*rr}" cy="${c+Math.sin(a)*rr}" r="11" fill="#07110b" stroke="#39ff76" stroke-opacity=".65"/><text x="${c+Math.cos(a)*rr}" y="${c+Math.sin(a)*rr+1}" fill="#ffeaa0" font-size="13" text-anchor="middle" dominant-baseline="middle">${p.glyph||'•'}</text>`}return svg+'</svg>'}
+function render(chart,place){result.innerHTML=`<div class="meta"><span>${chart.houseSystem==='K'?'Koch':chart.houseSystem}</span><span>${chart.zodiac}</span><span>${chart.ephemerisSource}</span>${place?`<span>${place.replace(/[<>]/g,'')}</span>`:''}</div><div class="chart-wrap"><div>${wheel(chart)}</div><div><h2>Poziții planetare</h2><div class="planet-list">${chart.planets.map(p=>`<div class="planet"><strong>${p.glyph||''} ${p.label}</strong><span>${deg(p.longitude)}${p.retrograde?' ℞':''}</span></div>`).join('')}</div><h2 style="margin-top:14px">Cuspide Koch</h2><div class="planet-list">${chart.cusps.map((v,i)=>`<div class="planet"><strong>Casa ${i+1}</strong><span>${deg(v)}</span></div>`).join('')}</div></div></div><div class="reportbar"><a href="/report/" data-av-track="report_start">Generează raport PDF →</a></div>`}
+form.addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(form);const input={date:String(fd.get('date')||''),time:String(fd.get('time')||''),utcOffset:String(fd.get('utcOffset')||''),place:String(fd.get('place')||''),lat:String(fd.get('lat')||''),lon:String(fd.get('lon')||'')};status.textContent='Calculez cu Swiss Ephemeris…';result.innerHTML='<div class="empty">Calculez harta…</div>';try{const chart=await calculate(input);sessionStorage.setItem('av_report_payload',JSON.stringify({chart,input,createdAt:new Date().toISOString()}));render(chart,input.place);status.textContent='Calcul finalizat. Raportul PDF este pregătit.';}catch(err){result.innerHTML='<div class="empty">Calculul nu a putut fi finalizat.</div>';status.textContent=String(err.message||err)}});
+</script>
+</body>
+</html>

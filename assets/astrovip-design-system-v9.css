@@ -1,0 +1,35 @@
+:root{
+  --av-black:#020403;--av-panel:#07110b;--av-panel-2:#0b1710;--av-gold:#e7c963;--av-gold-soft:#ffeaa0;
+  --av-pearl:#fffdf5;--av-neon:#39ff76;--av-muted:#9eaaa2;--av-line:rgba(231,201,99,.32);
+  --av-radius:18px;--av-shadow:0 24px 72px rgba(0,0,0,.48);--av-glow:0 0 28px rgba(57,255,118,.12)
+}
+html.av-premium-v9{color-scheme:dark;background:var(--av-black)}
+html.av-premium-v9 body{background-color:var(--av-black)}
+html.av-premium-v9 ::selection{background:rgba(57,255,118,.28);color:#fff}
+html.av-premium-v9 :focus-visible{outline:2px solid var(--av-neon);outline-offset:3px}
+#av-v9-webgl{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;opacity:.74;filter:saturate(1.08)}
+.av-premium-v9 .av-card,.av-premium-v9 .card,.av-premium-v9 .service-card,.av-premium-v9 .case-card{
+  border-color:var(--av-line);box-shadow:var(--av-shadow),inset 0 1px rgba(255,255,255,.025);backdrop-filter:blur(10px)
+}
+.av-premium-v9 a,.av-premium-v9 button{-webkit-tap-highlight-color:transparent}
+.av-premium-v9 button,.av-premium-v9 .btn{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease}
+.av-premium-v9 button:hover,.av-premium-v9 .btn:hover{transform:translateY(-1px)}
+.av-premium-v9 button:active,.av-premium-v9 .btn:active{transform:translateY(0) scale(.985)}
+.av-concierge{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(15px,env(safe-area-inset-bottom));z-index:2147482000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--av-pearl)}
+.av-concierge-toggle{border:1px solid rgba(57,255,118,.55);background:linear-gradient(135deg,rgba(5,16,9,.97),rgba(18,25,14,.97));color:var(--av-pearl);border-radius:999px;padding:12px 16px;font-weight:900;letter-spacing:.2px;box-shadow:0 12px 40px #000b,var(--av-glow);cursor:pointer}
+.av-concierge-toggle::first-letter{color:var(--av-gold)}
+.av-concierge-panel{position:absolute;right:0;bottom:58px;width:min(390px,calc(100vw - 24px));max-height:min(650px,72vh);overflow:auto;border:1px solid rgba(231,201,99,.45);border-radius:20px;background:linear-gradient(180deg,rgba(8,18,11,.985),rgba(2,6,4,.99));box-shadow:0 30px 90px #000d,var(--av-glow);padding:14px;backdrop-filter:blur(20px)}
+.av-concierge-panel header{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--av-gold-soft);font-size:15px}
+.av-concierge-close{border:0;background:transparent;color:#fff;font-size:25px;line-height:1;cursor:pointer}
+.av-concierge-lead{color:#c7d1ca;font-size:12px;line-height:1.55;margin:10px 0 12px}
+.av-concierge-form{display:grid;grid-template-columns:1fr auto;gap:7px}
+.av-concierge-form input{min-width:0;border:1px solid #315e40;border-radius:12px;background:#030805;color:#fff;padding:11px 12px;font:inherit}
+.av-concierge-form button{border:1px solid var(--av-neon);border-radius:12px;background:#0a1a10;color:var(--av-neon);font-weight:900;padding:10px 12px;cursor:pointer}
+.av-concierge-results{display:grid;gap:8px;margin:12px 0 8px}
+.av-ai-result{border:1px solid rgba(231,201,99,.22);border-radius:13px;padding:10px;background:rgba(255,255,255,.018)}
+.av-ai-result strong{color:var(--av-gold-soft)}.av-ai-result p{font-size:12px;line-height:1.5;color:#d7ded9;margin:6px 0}.av-ai-result a{color:var(--av-neon);font-size:12px;font-weight:800;text-decoration:none}
+.av-loading,.av-empty{padding:12px;border:1px dashed #315e40;border-radius:12px;color:#bdc8c0;font-size:12px}
+.av-concierge-panel small{display:block;color:#718078;font-size:10px;line-height:1.4}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.22s}
+@media(max-width:640px){.av-concierge{right:10px;bottom:10px}.av-concierge-toggle span{display:none}.av-concierge-toggle{width:48px;height:48px;padding:0}.av-concierge-panel{right:0;bottom:56px;max-height:75vh}.av-concierge-form{grid-template-columns:1fr}.av-concierge-form button{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}#av-v9-webgl{display:none!important}}

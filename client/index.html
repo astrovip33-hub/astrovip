@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#030604">
+<title>Contul meu · AstroVip Premium</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/assets/astrovip-design-system-v9.css">
+<style>
+body{margin:0;background:radial-gradient(circle at 15% 0,rgba(57,255,118,.09),transparent 32%),#020403;color:#fffdf5;font:15px system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.shell{width:min(1040px,calc(100% - 24px));margin:auto;padding:24px 0 70px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.brand{font-weight:950;letter-spacing:.4px;color:#ffeaa0}.back{color:#39ff76;text-decoration:none;font-weight:800}.hero,.panel{border:1px solid rgba(231,201,99,.32);background:linear-gradient(180deg,rgba(9,20,12,.96),rgba(4,8,5,.98));border-radius:20px;box-shadow:0 24px 72px #0008;padding:18px}.hero h1{margin:4px 0 6px;font-size:clamp(26px,5vw,44px)}.hero p{margin:0;color:#aebbb3;line-height:1.6}.grid{display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-top:14px}.panel h2{margin:0 0 12px;color:#ffeaa0}.form{display:grid;gap:9px}.form label{display:grid;gap:5px;color:#b8c3bb;font-size:12px}.form input{border:1px solid #315d40;background:#030805;color:#fff;border-radius:11px;padding:11px 12px;font:inherit}.form button,.action{border:1px solid #39ff76;background:#0a1a10;color:#39ff76;border-radius:11px;padding:11px 13px;font-weight:900;cursor:pointer}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.account-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.subtle{color:#839188;font-size:12px}.profiles{display:grid;gap:8px}.av-profile-item{display:grid;gap:3px;border:1px solid rgba(231,201,99,.22);border-radius:13px;padding:11px;background:rgba(255,255,255,.018)}.av-profile-item strong{color:#ffeaa0}.av-profile-item span,.av-profile-item small{color:#b8c3bb}.status{margin:12px 0 0;border-radius:11px;padding:10px 12px;background:#07110b;color:#b8c3bb;min-height:20px}.status[data-tone="error"]{border:1px solid #7b303d;color:#ff9aa5}.status[data-tone="ok"]{border:1px solid #245f39}.trust{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;color:#91a197;font-size:11px}.trust span{border:1px solid #244733;border-radius:999px;padding:5px 8px}@media(max-width:760px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="top"><div class="brand">ASTROVIP · CLIENT PORTAL</div><a class="back" href="/">← Site</a></div>
+  <section class="hero"><small>SPAȚIU PERSONAL SECURIZAT</small><h1>Contul meu AstroVip</h1><p>Salvează datele natale, păstrează hărțile și pregătește analizele într-un singur spațiu. Autentificarea folosește link securizat pe email.</p><div class="trust"><span>PKCE</span><span>Row Level Security</span><span>Koch</span><span>Tropical</span></div></section>
+
+  <div class="grid">
+    <section class="panel" id="av-login">
+      <h2>Intră în cont</h2>
+      <p class="subtle">Nu ai nevoie de parolă clasică. Primești un link securizat pe email.</p>
+      <form id="av-login-form" class="form"><label>Email<input type="email" name="email" autocomplete="email" required placeholder="nume@email.ro"></label><button type="submit">Trimite link securizat</button></form>
+    </section>
+
+    <section class="panel" id="av-account" hidden>
+      <div class="account-head"><div><div class="subtle">AUTENTIFICAT</div><strong id="av-user-email">Cont AstroVip</strong></div><button id="av-signout" class="action" type="button">Ieșire</button></div>
+      <h2>Hărțile mele</h2><div id="av-profile-list" class="profiles"></div>
+      <hr style="border:0;border-top:1px solid rgba(231,201,99,.2);margin:18px 0">
+      <h2>Adaugă hartă</h2>
+      <form id="av-profile-form" class="form">
+        <label>Denumire<input name="label" maxlength="80" value="Harta mea" required></label>
+        <div class="row"><label>Data nașterii<input type="date" name="birth_date" required></label><label>Ora nașterii<input type="time" name="birth_time"></label></div>
+        <label>Fus orar IANA<input name="timezone" placeholder="Europe/Bucharest"></label>
+        <label>Locul nașterii<input name="location_label" placeholder="București, România"></label>
+        <div class="row"><label>Latitudine<input type="number" step="any" name="latitude" min="-90" max="90"></label><label>Longitudine<input type="number" step="any" name="longitude" min="-180" max="180"></label></div>
+        <button type="submit">Salvează harta</button>
+      </form>
+    </section>
+  </div>
+  <div id="av-client-status" class="status" data-tone="ok" aria-live="polite"></div>
+</main>
+<script type="module" src="/assets/premium-v9/main.js"></script>
+<script type="module" src="/assets/premium-v9/client.js"></script>
+</body>
+</html>
