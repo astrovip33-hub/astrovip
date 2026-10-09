@@ -1,4 +1,5 @@
 import { searchKnowledge, track } from './data';
+import { language, t } from './i18n';
 
 function escapeHtml(value: string) {
   return value.replace(/[&<>'"]/g, ch => ({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;' }[ch] || ch));
@@ -10,16 +11,16 @@ export function initConcierge() {
   root.id = 'av-concierge';
   root.className = 'av-concierge';
   root.innerHTML = `
-    <button class="av-concierge-toggle" type="button" aria-expanded="false" aria-controls="av-concierge-panel">✦ <span>AstroVip AI</span></button>
+    <button class="av-concierge-toggle" type="button" aria-expanded="false" aria-controls="av-concierge-panel">✦ <span>${escapeHtml(t('aiLabel'))}</span></button>
     <section id="av-concierge-panel" class="av-concierge-panel" hidden aria-label="AstroVip AI Concierge">
-      <header><strong>AstroVip Concierge</strong><button type="button" class="av-concierge-close" aria-label="Închide">×</button></header>
-      <p class="av-concierge-lead">Caută instant în baza AstroVip: servicii, tehnici, relocare, hartă natală, Solar Arcs și studii de caz.</p>
+      <header><strong>${escapeHtml(t('conciergeTitle'))}</strong><button type="button" class="av-concierge-close" aria-label="${escapeHtml(t('close'))}">×</button></header>
+      <p class="av-concierge-lead">${escapeHtml(t('conciergeLead'))}</p>
       <form class="av-concierge-form">
-        <input name="q" autocomplete="off" maxlength="180" placeholder="Ex: Cum mă ajută astrologia relocării?" required>
-        <button type="submit">Caută</button>
+        <input name="q" autocomplete="off" maxlength="180" placeholder="${escapeHtml(t('searchPlaceholder'))}" required>
+        <button type="submit">${escapeHtml(t('search'))}</button>
       </form>
       <div class="av-concierge-results" aria-live="polite"></div>
-      <small>Răspunsurile afișate sunt extrase din conținutul public AstroVip.</small>
+      <small>${escapeHtml(t('sourceNote'))}</small>
     </section>`;
   document.body.append(root);
 
@@ -41,22 +42,22 @@ export function initConcierge() {
     event.preventDefault();
     const q = String(new FormData(form).get('q') || '').trim();
     if (q.length < 2) return;
-    results.innerHTML = '<div class="av-loading">Caut în baza AstroVip…</div>';
-    track('concierge_search', { qLength: q.length });
+    results.innerHTML = `<div class="av-loading">${escapeHtml(t('searching'))}</div>`;
+    track('concierge_search', { qLength: q.length, lang: language() });
     try {
-      const rows = await searchKnowledge(q);
+      const rows = await searchKnowledge(q, language());
       if (!rows.length) {
-        results.innerHTML = '<div class="av-empty">Nu am găsit încă un fragment suficient de relevant. Încearcă o formulare mai scurtă.</div>';
+        results.innerHTML = `<div class="av-empty">${escapeHtml(t('noResult'))}</div>`;
         return;
       }
       results.innerHTML = rows.map((row: any) => `
         <article class="av-ai-result">
           <strong>${escapeHtml(String(row.title || 'AstroVip'))}</strong>
           <p>${escapeHtml(String(row.content || '').slice(0, 430))}</p>
-          ${row.url ? `<a href="${escapeHtml(String(row.url))}">Deschide sursa →</a>` : ''}
+          ${row.url ? `<a href="${escapeHtml(String(row.url))}">${escapeHtml(t('source'))}</a>` : ''}
         </article>`).join('');
     } catch {
-      results.innerHTML = '<div class="av-empty">Serviciul de căutare este momentan indisponibil.</div>';
+      results.innerHTML = `<div class="av-empty">${escapeHtml(t('unavailable'))}</div>`;
     }
   });
 }
