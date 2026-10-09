@@ -1,0 +1,120 @@
+name: AstroVip Production Restore
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: "Commit SHA to restore to production"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "cloudflare-production"
+  cancel-in-progress: true
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: 1997683abefc1f33c4a391c0e09e63dd
+    steps:
+      - name: Validate restore ref
+        shell: bash
+        run: |
+          set -euo pipefail
+          REF='${{ inputs.target_ref }}'
+          if ! printf '%s' "$REF" | grep -Eq '^[0-9a-fA-F]{7,40}$'; then
+            echo "::error::Restore ref must be a Git commit SHA."
+            exit 2
+          fi
+
+      - name: Checkout restore point
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+          fetch-depth: 1
+
+      - name: Record restore target
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Requested: ${{ inputs.target_ref }}"
+          echo "Resolved: $(git rev-parse HEAD)"
+          git log -1 --pretty='format:%h %ci %s'
+
+      - name: Build Swiss Ephemeris Koch browser bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --ignore-scripts
+          npm run build:swiss
+          test -s assets/vendor/astrovip-swiss-koch.js
+          test -s assets/vendor/swisseph.wasm
+
+      - name: Normalize Cloudflare token
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOKEN=$(printf '%s' "$CLOUDFLARE_API_TOKEN" | tr -d '\r\n')
+          TOKEN=$(printf '%s' "$TOKEN" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')
+          TOKEN="${TOKEN#Bearer }"
+          TOKEN="${TOKEN#bearer }"
+          TOKEN="${TOKEN#\"}"
+          TOKEN="${TOKEN%\"}"
+          if [ -z "$TOKEN" ]; then
+            echo "::error::Missing CLOUDFLARE_API_TOKEN"
+            exit 3
+          fi
+          echo "::add-mask::$TOKEN"
+          echo "CLOUDFLARE_API_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Verify production Worker secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest secret list --name astrovip --format json > /tmp/astrovip-secrets.json
+          python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/astrovip-secrets.json'))
+          names={x.get('name','') for x in data if isinstance(x,dict)}
+          missing=sorted({'COMMAND_CENTER_TOKEN','GITHUB_ADMIN_TOKEN'}-names)
+          if missing:
+              raise SystemExit('Missing production Worker secrets: ' + ', '.join(missing))
+          print('Required Worker secrets present.')
+          PY
+
+      - name: Deploy restored AstroVip to Cloudflare
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f wrangler.http-redirect.jsonc ]; then npx --yes wrangler@latest deploy --config wrangler.http-redirect.jsonc; fi
+          npx --yes wrangler@latest deploy
+          if [ -f wrangler.www-redirect.jsonc ]; then npx --yes wrangler@latest deploy --config wrangler.www-redirect.jsonc; fi
+
+      - name: Verify restored production
+        shell: bash
+        run: |
+          set -euo pipefail
+          for ATTEMPT in $(seq 1 12); do
+            CODE=$(curl -sS -o /tmp/home.html -w '%{http_code}' "https://astrovip.ro/?restore_verify=${GITHUB_RUN_ID}-${ATTEMPT}" || true)
+            echo "Production verification $ATTEMPT/12: HTTP $CODE"
+            if [ "$CODE" = "200" ] && grep -qi '<html' /tmp/home.html; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::Restored production did not verify successfully."
+          exit 10
+
+      - name: Restore summary
+        if: always()
+        shell: bash
+        run: |
+          echo "## AstroVip Production Restore" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Requested commit: ${{ inputs.target_ref }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Main branch: unchanged" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Safety: restore deploys a historical commit without rewriting Git history" >> "$GITHUB_STEP_SUMMARY"
