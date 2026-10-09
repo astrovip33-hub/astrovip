@@ -1,0 +1,40 @@
+name: Temp Drive Init Fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/temp-drive-init-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Remove proxy parameters from Drive resumable init
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('command-center-api.js')
+          s = p.read_text(encoding='utf-8')
+          old = """    parameters: [{ name: 'Content-Type', value: 'application/json', in: 'header' }, { name: 'X-Upload-Content-Type', value: 'application/zip', in: 'header' }],\n    body: { name, parents: [String(env.DRIVE_BACKUP_FOLDER_ID).trim()] },"""
+          new = """    body: { name, mimeType: 'application/zip', parents: [String(env.DRIVE_BACKUP_FOLDER_ID).trim()] },"""
+          if old not in s:
+              raise SystemExit('target block not found')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit patch
+        shell: bash
+        run: |
+          git config user.name 'astrovip33-hub'
+          git config user.email 'astrovip33@gmail.com'
+          git add command-center-api.js
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Fix Google Drive resumable upload init validation'
+          git push origin HEAD:main
