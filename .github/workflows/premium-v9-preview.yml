@@ -60,11 +60,17 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://astrovip-v9-preview.astrovip33.workers.dev"
+          HOME_HTML=""
           for i in 1 2 3 4 5; do
-            if curl -fsS "$BASE/?v=${GITHUB_SHA}" | grep -q "/assets/premium-v9/main.js"; then break; fi
+            HOME_HTML="$(curl -fsS "$BASE/?v=${GITHUB_SHA}" || true)"
+            if grep -Fq "/assets/premium-v9/main.js" <<<"$HOME_HTML"; then break; fi
             sleep 5
           done
-          curl -fsS "$BASE/assets/premium-v9/main.js?v=${GITHUB_SHA}" | grep -q "AstroVip"
-          curl -fsS "$BASE/calculator/?v=${GITHUB_SHA}" | grep -q "Hartă natală interactivă"
-          curl -fsS "$BASE/client/?v=${GITHUB_SHA}" | grep -q "Contul meu AstroVip"
+          grep -Fq "/assets/premium-v9/main.js" <<<"$HOME_HTML"
+          MAIN_JS="$(curl -fsS "$BASE/assets/premium-v9/main.js?v=${GITHUB_SHA}")"
+          CALCULATOR_HTML="$(curl -fsS "$BASE/calculator/?v=${GITHUB_SHA}")"
+          CLIENT_HTML="$(curl -fsS "$BASE/client/?v=${GITHUB_SHA}")"
+          grep -Fq "AstroVip" <<<"$MAIN_JS"
+          grep -Fq "Hartă natală interactivă" <<<"$CALCULATOR_HTML"
+          grep -Fq "Contul meu AstroVip" <<<"$CLIENT_HTML"
           echo "Premium V9 preview verified."
