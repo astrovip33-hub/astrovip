@@ -34,7 +34,7 @@ jobs:
           s = p.read_text(encoding='utf-8')
           before = len(s.encode('utf-8'))
 
-          # 1) Remove stale inline preview layers confirmed unused on current
+          # Remove stale inline preview layers confirmed unused on current
           # mobile + desktop homepage via CSS rule-usage tracing.
           stale_style_ids = [
               'av-google-review-ticker-preview-20261004',
@@ -61,7 +61,7 @@ jobs:
               s, n = pattern.subn('', s, count=1)
               removed_styles += n
 
-          # 2) Remove obsolete external CSS bundles confirmed at 0% rule usage
+          # Remove obsolete external CSS bundles confirmed at 0% rule usage
           # on both current mobile and desktop render paths.
           obsolete_css = [
               'homepage-trust-lux.css?v=20260923-recognition-cards1',
@@ -82,9 +82,6 @@ jobs:
               s, n = pattern.subn('', s)
               removed_links += n
 
-          # 3) Collapse duplicated stylesheet links. Keep async copies for
-          # below-the-fold sections; keep blocking copies for above-the-fold
-          # visual-critical styles.
           def drop_link(text, frag, must_contain=None, must_not_contain=None):
               pattern = re.compile(
                   r'\s*<link\b[^>]*href=["\']/assets/' + re.escape(frag) + r'["\'][^>]*?/?>',
@@ -103,7 +100,7 @@ jobs:
                   return ''
               return pattern.sub(repl, text), dropped
 
-          # Keep async (media=print/onload) copy, remove blocking twin.
+          # Keep async copy, remove its render-blocking duplicate.
           for frag in [
               'studiu-caz-scoala.css?v=20260920-no-green-override',
               'footer-credentials-premium.css?v=20260927-goldframes1',
@@ -119,7 +116,8 @@ jobs:
           s, n = drop_link(s, 'free-question.css?v=20260922-separation1')
           removed_links += n
 
-          # Keep normal blocking copy, remove redundant async twin.
+          # Keep normal blocking copy for above-the-fold visual-critical CSS,
+          # remove its redundant async twin.
           for frag in [
               'homepage-neon-gloss.css?v=20260919-lcp4',
               'desktop-final-20260922.css?v=20260922-menu-final3',
@@ -129,7 +127,7 @@ jobs:
               s, n = drop_link(s, frag, must_contain='media="print"')
               removed_links += n
 
-          # 4) Lazy images must not compete with the hero/LCP image.
+          # Lazy images must not compete with the hero/LCP image.
           def low_priority_lazy(m):
               attrs = m.group(1)
               if 'fetchpriority=' in attrs.lower():
@@ -142,7 +140,7 @@ jobs:
               flags=re.I,
           )
 
-          # Safety checks: preserve critical production functionality and SEO.
+          # Safety checks preserve current production SEO/functionality.
           required = [
               '<link href="https://astrovip.ro/" rel="canonical"',
               'id="hamb"',
@@ -152,7 +150,6 @@ jobs:
               '/assets/homepage.js?v=20260930-payment-cta1',
               '/assets/ux-refresh-20261008.js?v=20261008-1',
               '/assets/site-editor-runtime.js?v=1',
-              '/assets/page-editor-runtime.js?v=20261007-1728-fresh',
           ]
           missing = [x for x in required if x not in s]
           if missing:
@@ -164,10 +161,11 @@ jobs:
 
           p.write_text(s, encoding='utf-8')
           after = len(s.encode('utf-8'))
+          remaining_css = len(re.findall(r'<link\b[^>]*rel=["\']stylesheet["\']', s, re.I))
           print(f'HTML bytes: {before} -> {after} (saved {before-after})')
           print(f'Removed stale inline style blocks: {removed_styles}')
           print(f'Removed obsolete/duplicate stylesheet links: {removed_links}')
-          print(f'Remaining stylesheet links: {len(re.findall(r"<link\\b[^>]*rel=[\\\"\\\']stylesheet[\\\"\\\']", s, re.I))}')
+          print(f'Remaining stylesheet links: {remaining_css}')
           PY
 
       - name: Stamp release header
