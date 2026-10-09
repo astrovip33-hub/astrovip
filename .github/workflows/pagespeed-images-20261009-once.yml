@@ -1,0 +1,125 @@
+name: PageSpeed responsive images 2026-10-09 once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/pagespeed-images-20261009-once.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "astrovip-pagespeed-images-20261009"
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install WebP tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y webp
+
+      - name: Generate 320px and 640px responsive variants
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astrovip-img
+          for name in interes-cariera-20261007 interes-dragoste-20261007 interes-afaceri-bani-20261007 interes-destin-20261007; do
+            src="assets/${name}-960.webp"
+            test -f "$src"
+            png="/tmp/astrovip-img/${name}.png"
+            dwebp "$src" -quiet -o "$png"
+            cwebp -quiet -mt -m 6 -q 84 -metadata none -resize 320 0 "$png" -o "assets/${name}-320.webp"
+            cwebp -quiet -mt -m 6 -q 84 -metadata none -resize 640 0 "$png" -o "assets/${name}-640.webp"
+            echo "$name: 320=$(stat -c%s "assets/${name}-320.webp") 480=$(stat -c%s "assets/${name}-480.webp") 640=$(stat -c%s "assets/${name}-640.webp") 960=$(stat -c%s "$src")"
+          done
+
+      - name: Wire responsive image candidates
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          names = [
+              'interes-cariera-20261007',
+              'interes-dragoste-20261007',
+              'interes-afaceri-bani-20261007',
+              'interes-destin-20261007',
+          ]
+          changed = 0
+          for name in names:
+              old = f'/assets/{name}-480.webp 480w, /assets/{name}-960.webp 960w'
+              new = (
+                  f'/assets/{name}-320.webp 320w, '
+                  f'/assets/{name}-480.webp 480w, '
+                  f'/assets/{name}-640.webp 640w, '
+                  f'/assets/{name}-960.webp 960w'
+              )
+              if old not in s:
+                  raise SystemExit(f'Expected srcset not found for {name}')
+              s = s.replace(old, new, 1)
+              changed += 1
+
+          # The identity/expert photo renders at ~342 CSS px on a 390px mobile
+          # viewport and ~496 CSS px on desktop. Let the browser select 640px
+          # at DPR 1 and retain 960px for high-DPR displays.
+          pat = re.compile(
+              r'<img\b[^>]*src=["\']/assets/astrovip-hero-lux-clean-20260922-960\.webp\?v=20260930-trust1["\'][^>]*>',
+              re.I,
+          )
+          m = pat.search(s)
+          if not m:
+              raise SystemExit('Expected identity image tag not found')
+          tag = m.group(0)
+          if 'srcset=' not in tag.lower():
+              src_attr = 'src="/assets/astrovip-hero-lux-clean-20260922-960.webp?v=20260930-trust1"'
+              addition = (
+                  src_attr
+                  + ' srcset="/assets/astrovip-hero-lux-clean-20260922-640.webp?v=20260930-trust1 640w, '
+                  + '/assets/astrovip-hero-lux-clean-20260922-960.webp?v=20260930-trust1 960w"'
+                  + ' sizes="(max-width:820px) calc(100vw - 48px), 500px"'
+              )
+              if src_attr not in tag:
+                  raise SystemExit('Identity image src attribute changed unexpectedly')
+              tag2 = tag.replace(src_attr, addition, 1)
+              s = s[:m.start()] + tag2 + s[m.end():]
+
+          # Safety: responsive card dimensions stay unchanged; only candidate
+          # selection changes.
+          for name in names:
+              if f'/assets/{name}-320.webp 320w' not in s or f'/assets/{name}-640.webp 640w' not in s:
+                  raise SystemExit(f'Responsive candidates missing after patch: {name}')
+          if 'sizes="(max-width:820px) calc(100vw - 48px), 500px"' not in s:
+              raise SystemExit('Identity image sizes safety check failed')
+
+          p.write_text(s, encoding='utf-8')
+          print(f'Updated responsive srcsets for {changed} interest images + identity image')
+          PY
+
+      - name: Commit responsive images
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add index.html assets/interes-*-20261007-320.webp assets/interes-*-20261007-640.webp
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git diff --cached --stat
+          git commit -m "Serve responsive images for faster mobile rendering"
+          git push origin HEAD:main
