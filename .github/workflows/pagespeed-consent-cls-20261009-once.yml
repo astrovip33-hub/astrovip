@@ -1,0 +1,62 @@
+name: PageSpeed consent CLS 2026-10-09 once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/pagespeed-consent-cls-20261009-once.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "astrovip-pagespeed-consent-cls-20261009"
+  cancel-in-progress: false
+
+jobs:
+  stabilize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Stabilize consent layout before external CSS arrives
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          marker = 'id="astrovip-consent-cls-stable"'
+          if marker in s:
+              print('Consent CLS stabilization already present.')
+          else:
+              anchor = '<script defer src="/assets/consent-v2.js?v=9"></script>'
+              if anchor not in s:
+                  raise SystemExit('Consent script anchor not found; refusing unsafe patch.')
+              css = '''<style id="astrovip-consent-cls-stable">\n@media (min-width:821px){\nhtml body.av-ux-refresh.av-ux-refresh #av-consent.av-consent{left:50%!important;right:auto!important;bottom:12px!important;width:min(760px,calc(100% - 24px))!important;max-width:calc(100% - 24px)!important;max-height:calc(100dvh - 24px)!important;overflow:auto!important;margin:0!important;transform:translateX(-50%)!important}\nhtml body.av-ux-refresh.av-ux-refresh #av-consent .av-consent__inner{padding:16px!important}\n}\n</style>'''
+              s = s.replace(anchor, css + anchor, 1)
+              if s.count(marker) != 1:
+                  raise SystemExit('Consent CLS patch did not insert exactly once.')
+              p.write_text(s, encoding='utf-8')
+              print('Inserted desktop consent CLS stabilization.')
+          PY
+
+      - name: Commit stabilization
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git diff --cached --stat
+          git commit -m "Stabilize cookie consent layout for PageSpeed CLS"
+          git push origin HEAD:main
