@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="theme-color" content="#040705">
-<title>AstroVip Command Center V4</title>
+<title>AstroVip Command Center V6</title>
 <style>
 :root{--g:#39ff76;--gold:#e8c75f;--bg:#020402;--panel:#071009;--panel2:#0a140d;--mut:#91a197;--line:#1c6337;--red:#ff7684;--amber:#ffd166;--white:#fbfaf5}
 *{box-sizing:border-box}
@@ -35,7 +35,7 @@ table{width:100%;border-collapse:collapse;font-size:10px;margin-top:8px}th,td{te
 <body>
 <div id="lock" class="overlay">
   <div class="login">
-    <div class="brand"><div class="logo">AV</div><div><div class="ey">Acces securizat</div><div class="title">COMMAND CENTER V4</div></div></div>
+    <div class="brand"><div class="logo">AV</div><div><div class="ey">Acces securizat</div><div class="title">COMMAND CENTER V6</div></div></div>
     <p class="mut">Tokenul administrativ rămâne doar în sesiunea browserului. Cheile API nu sunt expuse în interfață.</p>
     <input id="tok" class="inp" type="password" placeholder="Token administrare">
     <button class="btn primary" onclick="login()">Intră în Command Center</button>
@@ -45,10 +45,11 @@ table{width:100%;border-collapse:collapse;font-size:10px;margin-top:8px}th,td{te
 
 <div class="wrap">
 <header class="top">
-  <div class="brand"><div class="logo">AV</div><div><div class="title">ASTROVIP COMMAND CENTER</div><div class="mut">V4 · deploy · SEO · analytics · business integrations · backup</div></div></div>
+  <div class="brand"><div class="logo">AV</div><div><div class="title">ASTROVIP COMMAND CENTER</div><div class="mut">V6 · site · SEO · trafic · conexiuni · backup</div></div></div>
   <div class="actions">
-    <a class="btn" href="https://astrovip.ro" target="_blank">Site</a>
-    <a class="btn" href="https://astrovip-preview.astrovip33.workers.dev/" target="_blank">Preview</a>
+    <a class="btn" href="https://astrovip.ro" target="_blank" rel="noopener noreferrer">Site</a>
+    <a class="btn" href="https://astrovip-preview.astrovip33.workers.dev/" target="_blank" rel="noopener noreferrer">Preview</a>
+    <a class="btn gold" href="/command-center/connections/">Conectează serviciile</a>
     <button class="btn primary" onclick="refreshAll(true)">Actualizează tot</button>
     <button class="btn danger" onclick="logout()">Ieșire</button>
   </div>
@@ -67,27 +68,27 @@ table{width:100%;border-collapse:collapse;font-size:10px;margin-top:8px}th,td{te
       <span class="pill">Actualizat <b id="time">—</b></span>
     </div>
   </div>
-  <div class="count"><strong id="connectedCount">—</strong><span>INTEGRĂRI ACTIVE</span></div>
+  <div class="count"><strong id="connectedCount">—</strong><span id="connectionCountLabel">CONFIGURATE / TOTAL</span></div>
 </section>
 
 <section class="card s8">
   <div class="sec"><b>Operațiuni principale</b><span class="badge">CONTROL</span></div>
   <div class="ops">
     <a class="op" href="/command-center/editor/"><i>01</i><b>EDITOR VIZUAL</b><span>Selectezi → modifici → publici</span></a>
-    <a class="op" href="https://astrovip-preview.astrovip33.workers.dev/" target="_blank"><i>02</i><b>PREVIEW</b><span>Verificare înainte de producție</span></a>
+    <a class="op" href="https://astrovip-preview.astrovip33.workers.dev/" target="_blank" rel="noopener noreferrer"><i>02</i><b>PREVIEW</b><span>Verificare înainte de producție</span></a>
     <button class="op" onclick="deployNow()"><i>03</i><b>PUBLICĂ</b><span>GitHub Actions → Cloudflare</span></button>
     <button class="op" onclick="backupLocal()"><i>04</i><b>BACKUP ZIP</b><span>Descarcă main local</span></button>
     <button class="op" onclick="backupDrive()"><i>05</i><b>BACKUP DRIVE</b><span>Arhivă automată în Google Drive</span></button>
     <button class="op" onclick="gsc(true)"><i>06</i><b>SEO LIVE</b><span>Google Search Console</span></button>
     <button class="op" onclick="seranking(true)"><i>07</i><b>SE RANKING</b><span>Proiect, keywords, frecvență</span></button>
     <button class="op" onclick="ga4(true)"><i>08</i><b>TRAFIC LIVE</b><span>Google Analytics 4</span></button>
-    <a class="op" href="https://business.google.com/locations" target="_blank"><i>09</i><b>GOOGLE BUSINESS</b><span>Profil, recenzii, locație</span></a>
-    <a class="op" href="https://ads.google.com/" target="_blank"><i>10</i><b>GOOGLE ADS</b><span>Campanii și conversii</span></a>
-    <a class="op" href="https://dashboard.stripe.com/" target="_blank"><i>11</i><b>STRIPE</b><span>Plăți și webhook</span></a>
-    <a class="op" href="https://app.metricool.com/" target="_blank"><i>12</i><b>METRICOOL</b><span>Social și programări</span></a>
-    <a class="op" href="https://online.seranking.com/" target="_blank"><i>13</i><b>SE RANKING APP</b><span>Dashboard complet</span></a>
-    <a class="op" href="https://github.com/astrovip33-hub/astrovip/actions" target="_blank"><i>14</i><b>GITHUB ACTIONS</b><span>Workflow-uri și loguri</span></a>
-    <a class="op" href="https://dash.cloudflare.com/" target="_blank"><i>15</i><b>CLOUDFLARE</b><span>Worker, DNS, cache</span></a>
+    <a class="op" href="https://business.google.com/locations" target="_blank" rel="noopener noreferrer"><i>09</i><b>GOOGLE BUSINESS</b><span>Profil, recenzii, locație</span></a>
+    <a class="op" href="https://ads.google.com/" target="_blank" rel="noopener noreferrer"><i>10</i><b>GOOGLE ADS</b><span>Campanii și conversii</span></a>
+    <a class="op" href="https://dashboard.stripe.com/" target="_blank" rel="noopener noreferrer"><i>11</i><b>STRIPE</b><span>Plăți și webhook</span></a>
+    <a class="op" href="https://app.metricool.com/" target="_blank" rel="noopener noreferrer"><i>12</i><b>METRICOOL</b><span>Social și programări</span></a>
+    <a class="op" href="https://online.seranking.com/" target="_blank" rel="noopener noreferrer"><i>13</i><b>SE RANKING APP</b><span>Dashboard complet</span></a>
+    <a class="op" href="https://github.com/astrovip33-hub/astrovip/actions" target="_blank" rel="noopener noreferrer"><i>14</i><b>GITHUB ACTIONS</b><span>Workflow-uri și loguri</span></a>
+    <a class="op" href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer"><i>15</i><b>CLOUDFLARE</b><span>Worker, DNS, cache</span></a>
   </div>
 </section>
 
@@ -98,6 +99,7 @@ table{width:100%;border-collapse:collapse;font-size:10px;margin-top:8px}th,td{te
 
 <section class="card full">
   <div class="sec"><b>Integration Hub</b><span id="ib" class="badge warn">STATUS</span></div>
+  <p class="mut">Configurat = date de acces prezente. Autorizat = cont OAuth activ. Verificat = cerere API reușită. <a href="/command-center/connections/" style="color:var(--g)">Conectează și testează toate serviciile →</a></p>
   <div id="ints" class="integrations"></div>
 </section>
 
@@ -144,28 +146,34 @@ table{width:100%;border-collapse:collapse;font-size:10px;margin-top:8px}th,td{te
     <div><b>2 · SEO Stack</b><p>SERANKING_API_KEY aduce proiectul SE Ranking direct în panou. GSC rămâne sursa Google de adevăr.</p></div>
     <div><b>3 · Revenue Stack</b><p>Stripe + GA4_API_SECRET + META_CAPI_ACCESS_TOKEN închid circuitul plăți → conversii → ads.</p></div>
     <div><b>4 · Local Growth</b><p>Google Business OAuth + Account ID + Location ID pentru recenzii și profil.</p></div>
-    <div><b>5 · Ads</b><p>GOOGLE_ADS_CUSTOMER_ID + autentificare Google. Command Center V4 nu mai cere developer token ca dependență internă.</p></div>
-    <div><b>6 · Social</b><p>METRICOOL_API_TOKEN pentru date și acțiuni sociale din același centru.</p></div>
+    <div><b>5 · Ads</b><p>Autorizare Google Ads în hub. Pentru acces API direct sunt necesare contul, autentificarea Google și developer token.</p></div>
+    <div><b>6 · Social</b><p>Metricool: token API, user ID și brand ID. Hub-ul verifică accesul la brand înainte de a marca integrarea verificată.</p></div>
   </div>
 </section>
 
 <section class="card full">
   <div class="sec"><b>Acces rapid</b><span class="badge">TOOLS</span></div>
   <div class="actions">
-    <a class="btn" href="https://search.google.com/search-console/" target="_blank">Search Console</a>
-    <a class="btn" href="https://analytics.google.com/" target="_blank">GA4</a>
-    <a class="btn" href="https://pagespeed.web.dev/analysis?url=https://astrovip.ro" target="_blank">PageSpeed</a>
-    <a class="btn" href="https://drive.google.com/" target="_blank">Drive</a>
-    <a class="btn" href="https://online.seranking.com/" target="_blank">SE Ranking</a>
-    <a class="btn" href="https://github.com/astrovip33-hub/astrovip" target="_blank">GitHub</a>
-    <a class="btn" href="https://dash.cloudflare.com/" target="_blank">Cloudflare</a>
-    <a class="btn" href="https://dashboard.stripe.com/" target="_blank">Stripe</a>
+    <a class="btn" href="https://search.google.com/search-console/" target="_blank" rel="noopener noreferrer">Search Console</a>
+    <a class="btn" href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">GA4</a>
+    <a class="btn" href="https://pagespeed.web.dev/analysis?url=https://astrovip.ro" target="_blank" rel="noopener noreferrer">PageSpeed</a>
+    <a class="btn" href="https://drive.google.com/" target="_blank" rel="noopener noreferrer">Drive</a>
+    <a class="btn" href="https://online.seranking.com/" target="_blank" rel="noopener noreferrer">SE Ranking</a>
+    <a class="btn" href="https://github.com/astrovip33-hub/astrovip" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a class="btn" href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare</a>
+    <a class="btn" href="https://dashboard.stripe.com/" target="_blank" rel="noopener noreferrer">Stripe</a>
+    <a class="btn" href="/command-center/google/">Conectare Google</a>
+    <a class="btn" href="/chat-admin/">AstroVip Chat</a>
+    <a class="btn" href="/toate-paginile/">Toate paginile</a>
+    <a class="btn" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva</a>
+    <a class="btn" href="https://www.figma.com/" target="_blank" rel="noopener noreferrer">Figma</a>
+    <a class="btn" href="https://mcp.desktopcommander.app/" target="_blank" rel="noopener noreferrer">Desktop Commander</a>
   </div>
 </section>
 </main>
 
 <div class="footer">
-  <span>AstroVip Command Center V4 · secretele rămân server-side.</span>
+  <span>AstroVip Command Center V6 · secretele rămân server-side.</span>
   <span>Fallback stabil: <a href="/command-center/v3/">V3</a></span>
 </div>
 </div>
@@ -214,11 +222,11 @@ function renderIntegrations(x={},details={}){
   const active=integrationOrder.filter(([,k])=>!!x[k]).length;
   $('connectedCount').textContent=active+'/'+integrationOrder.length;
   $('ib').className='badge '+(active===integrationOrder.length?'':'warn');
-  $('ib').textContent=active===integrationOrder.length?'TOT CONECTAT':active+' ACTIVE';
+  $('ib').textContent=active===integrationOrder.length?'TOATE CONFIGURATE':active+' CONFIGURATE';
   $('ints').innerHTML=integrationOrder.map(([name,key])=>{
     const ok=!!x[key],miss=details?.[key]?.missing||[];
     const detail=miss.length?miss.join(' · '):(details?.[key]?.note||'Configurat');
-    return `<div class="int ${ok?'ok':'warn'}"><b>${esc(name)}</b><span class="state">${ok?'● CONECTAT':'○ DE CONECTAT'}</span><small>${esc(detail)}</small></div>`;
+    return `<div class="int ${ok?'ok':'warn'}"><b>${esc(name)}</b><span class="state">${ok?'● CONFIGURAT':'○ DE CONECTAT'}</span><small>${esc(detail)}</small><a class="mut" href="/command-center/connections/?focus=${encodeURIComponent(key)}" style="display:block;margin-top:8px;color:var(--g)">Conectează / testează →</a></div>`;
   }).join('');
 }
 async function overview(){
@@ -229,6 +237,17 @@ async function overview(){
   $('deploy').textContent=(d.github?.deploy?.conclusion||d.github?.deploy?.status||'—').toUpperCase();
   renderIntegrations(d.integrations,d.integrationDetails);
   return d;
+}
+async function connectionStatus(){
+  try{
+    const d=await api('/api/command/connections');
+    const labels={verified:'● VERIFICAT',authorized:'● AUTORIZAT',configured:'● CONFIGURAT',pending:'○ DE CONECTAT'};
+    const ready=d.sources.filter(x=>x.configured||x.authorized).length;
+    $('connectedCount').textContent=ready+'/'+d.sources.length;
+    $('connectionCountLabel').textContent='CONFIGURATE / AUTORIZATE';
+    $('ib').textContent=ready+' DISPONIBILE · TESTEAZĂ ÎN HUB';
+    $('ints').innerHTML=d.sources.map(x=>`<div class="int ${x.configured||x.authorized?'ok':'warn'}"><b>${esc(x.name)}</b><span class="state">${labels[x.state]||labels.pending}</span><small>${esc(x.error?'Verificarea necesită atenție.':x.missing.length?'Configurare incompletă.':'Disponibil pentru test API.')}</small><a class="mut" href="/command-center/connections/?focus=${encodeURIComponent(x.key)}" style="display:block;margin-top:8px;color:var(--g)">Conectează / testează →</a></div>`).join('');
+  }catch(e){$('ib').textContent='VERIFICĂ ÎN HUB'}
 }
 async function gsc(loud=false){
   $('gb').textContent='ÎNCĂRCARE';
@@ -253,7 +272,7 @@ async function seranking(loud=false){
   try{
     const d=await api('/api/command/seranking'),p=d.project||{};
     $('sp').textContent=p.title||p.name||'—';$('sk').textContent=fmt(p.keywordCount);$('sf').textContent=esc(p.checkFreq||'—');$('sn').textContent=fmt(d.projectsCount);
-    $('sguest').innerHTML=p.guestLink?`Guest link disponibil · <a href="${esc(p.guestLink)}" target="_blank" style="color:#ffe69c">deschide</a>`:'Proiect SE Ranking conectat.';
+    $('sguest').innerHTML=p.guestLink?`Guest link disponibil · <a href="${esc(p.guestLink)}" target="_blank" rel="noopener noreferrer" style="color:#ffe69c">deschide</a>`:'Proiect SE Ranking conectat.';
     $('sb').className='badge';$('sb').textContent='LIVE';if(loud)toast('SE Ranking actualizat');
   }catch(e){$('sb').className='badge red';$('sb').textContent='DE CONECTAT';$('sguest').textContent=e.message;if(loud)toast(e.message)}
 }
@@ -268,7 +287,7 @@ async function health(loud=false){
 async function refreshAll(loud=false){
   try{
     await overview();
-    await Promise.all([gsc(false),ga4(false),seranking(false),health(false)]);
+    await Promise.all([gsc(false),ga4(false),seranking(false),health(false),connectionStatus()]);
     if(loud)toast('Command Center actualizat');
   }catch(e){$('bdot').className='dot bad';$('btxt').textContent='Backend EROARE';toast(e.message)}
 }

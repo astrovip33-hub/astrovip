@@ -6,6 +6,31 @@ const COMPOSIO_API = 'https://backend.composio.dev/api/v3.1';
 const COMPOSIO_USER = 'astrovip-admin';
 const GSC_TOOLKIT = 'google_search_console';
 const GA4_TOOLKIT = 'google_analytics';
+const DRIVE_TOOLKIT = 'googledrive';
+const CONNECTIONS = [
+  { key: 'githubDeploy', name: 'GitHub · publicare', url: 'https://github.com/astrovip33-hub/astrovip/actions', needs: ['GITHUB_ADMIN_TOKEN'], test: '/api/command/github' },
+  { key: 'cloudflareRuntime', name: 'Cloudflare · site', url: 'https://dash.cloudflare.com/1997683abefc1f33c4a391c0e09e63dd/workers/services/view/astrovip/production', needs: [], test: '/api/command/site-health' },
+  { key: 'composio', name: 'Composio · autorizări', url: 'https://platform.composio.dev/', needs: ['COMPOSIO_API_KEY'] },
+  { key: 'gsc', name: 'Google Search Console', toolkit: GSC_TOOLKIT, url: 'https://search.google.com/search-console?resource_id=sc-domain%3Aastrovip.ro', needs: ['Google OAuth sau service account'], test: '/api/command/gsc' },
+  { key: 'ga4', name: 'Google Analytics 4', toolkit: GA4_TOOLKIT, url: 'https://analytics.google.com/analytics/web/#/p555065363', needs: ['GA4_PROPERTY_ID', 'Google OAuth sau service account'], test: '/api/command/ga4' },
+  { key: 'driveAutoBackup', name: 'Google Drive · backup', toolkit: DRIVE_TOOLKIT, url: 'https://drive.google.com/drive/folders/1XajM-Z4H4Hyc-LM2pbXh6ZYeFjeo7Q5B', needs: ['DRIVE_BACKUP_FOLDER_ID', 'Google OAuth sau service account'] },
+  { key: 'seranking', name: 'SE Ranking', url: 'https://online.seranking.com/', needs: ['SERANKING_API_KEY'], test: '/api/command/seranking' },
+  { key: 'googleAds', name: 'Google Ads', toolkit: 'googleads', url: 'https://ads.google.com/', needs: ['Google OAuth sau service account', 'GOOGLE_ADS_DEVELOPER_TOKEN', 'GOOGLE_ADS_CUSTOMER_ID'] },
+  { key: 'googleBusiness', name: 'Google Business Profile', url: 'https://business.google.com/locations', needs: ['Google OAuth sau service account', 'GOOGLE_BUSINESS_LOCATION_ID'] },
+  { key: 'metricool', name: 'Metricool · social', url: 'https://app.metricool.com/', needs: ['METRICOOL_API_TOKEN', 'METRICOOL_USER_ID', 'METRICOOL_BLOG_ID'] },
+  { key: 'stripe', name: 'Stripe · plăți', url: 'https://dashboard.stripe.com/', needs: ['STRIPE_SECRET_KEY'] },
+  { key: 'ga4Purchase', name: 'GA4 · conversii plăți', url: 'https://analytics.google.com/analytics/web/#/p555065363', needs: ['GA4_API_SECRET'] },
+  { key: 'meta', name: 'Meta · conversii', url: 'https://business.facebook.com/events_manager2/', needs: ['META_CAPI_ACCESS_TOKEN'] },
+];
+const SETTINGS_URL = 'https://dash.cloudflare.com/1997683abefc1f33c4a391c0e09e63dd/workers/services/view/astrovip/production/settings';
+
+function selectAccount(accounts, toolkit, env) {
+  const candidates = accounts.filter(x => accountToolkitSlug(x) === toolkit && !x.is_disabled && x.status === 'ACTIVE');
+  const chosenId = String(env[`COMPOSIO_${toolkit.toUpperCase()}_ACCOUNT_ID`] || '').trim();
+  if (chosenId) return candidates.find(x => x.id === chosenId) || null;
+  if (candidates.length > 1) throw new Error(`multiple_accounts_${toolkit}`);
+  return candidates[0] || null;
+}
 
 function json(data, status = 200, headers = {}) {
   return new Response(JSON.stringify(data, null, 2), {
@@ -55,8 +80,11 @@ async function composioFetch(env, path, { method = 'GET', body } = {}) {
       ...(body ? { 'content-type': 'application/json' } : {}),
     },
     body: body ? JSON.stringify(body) : undefined,
+    signal: AbortSignal.timeout(20000),
   });
-  const data = await res.json().catch(async () => ({ message: (await res.text().catch(() => '')).slice(0, 500) }));
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); } catch { data = { error: `composio_http_${res.status}` }; }
   return { ok: res.ok, status: res.status, data };
 }
 
@@ -99,8 +127,8 @@ async function composioGoogleStatus(env) {
     };
   }
   const accounts = await composioConnectedAccounts(env);
-  const gsc = accounts.find(x => accountToolkitSlug(x) === GSC_TOOLKIT) || null;
-  const ga4 = accounts.find(x => accountToolkitSlug(x) === GA4_TOOLKIT) || null;
+  const gsc = selectAccount(accounts, GSC_TOOLKIT, env);
+  const ga4 = selectAccount(accounts, GA4_TOOLKIT, env);
   return {
     configured: true,
     userId: composioUser(env),
@@ -113,7 +141,7 @@ async function composioAuthConfig(env, toolkit) {
   const q = new URLSearchParams({ toolkit_slug: toolkit, is_composio_managed: 'true', limit: '100' });
   let r = await composioFetch(env, `/auth_configs?${q}`);
   if (!r.ok) throw new Error(r.data?.message || r.data?.error || `composio_auth_configs_http_${r.status}`);
-  let config = (r.data?.items || []).find(x => String(x?.status || 'ENABLED') === 'ENABLED') || r.data?.items?.[0] || null;
+  let config = (r.data?.items || []).find(x => !x.is_disabled && String(x?.status || 'ENABLED') === 'ENABLED') || null;
   if (config?.id) return config;
 
   r = await composioFetch(env, '/auth_configs', {
@@ -126,7 +154,7 @@ async function composioAuthConfig(env, toolkit) {
 
 async function composioConnectLink(env, toolkit, callbackUrl) {
   const current = await composioConnectedAccounts(env, [toolkit]);
-  const active = current.find(x => accountToolkitSlug(x) === toolkit) || null;
+  const active = selectAccount(current, toolkit, env);
   if (active) return { toolkit, connected: true, account: accountSummary(active), redirectUrl: null };
 
   const cfg = await composioAuthConfig(env, toolkit);
@@ -173,22 +201,26 @@ function gscRange() {
   return { startDate: isoDate(start), endDate: isoDate(end) };
 }
 
+async function googleReportRequest(env, toolkit, scopes, endpoint, body) {
+  if (googleOauthReady(env)) {
+    return providerJson(endpoint, { authorization: `Bearer ${await googleUserToken(env, scopes)}`, 'content-type': 'application/json' }, { method: body ? 'POST' : 'GET', body: body ? JSON.stringify(body) : undefined });
+  }
+  return connectedProxy(env, toolkit, endpoint, body ? 'POST' : 'GET', body);
+}
+
 async function gscViaComposio(env) {
-  const status = await composioGoogleStatus(env);
-  const ca = status.gsc.account;
-  if (!ca?.id) throw new Error('composio_gsc_not_connected');
   const siteUrl = String(env.GSC_SITE_URL || 'sc-domain:astrovip.ro');
   const range = gscRange();
   const endpoint = `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`;
   const [summaryJson, queriesJson] = await Promise.all([
-    composioProxy(env, ca.id, endpoint, 'POST', { ...range, rowLimit: 1 }),
-    composioProxy(env, ca.id, endpoint, 'POST', { ...range, dimensions: ['query'], rowLimit: 50, dataState: 'final' }),
+    googleReportRequest(env, GSC_TOOLKIT, ['https://www.googleapis.com/auth/webmasters.readonly'], endpoint, { ...range, rowLimit: 1 }),
+    googleReportRequest(env, GSC_TOOLKIT, ['https://www.googleapis.com/auth/webmasters.readonly'], endpoint, { ...range, dimensions: ['query'], rowLimit: 50, dataState: 'final' }),
   ]);
   const s = summaryJson?.rows?.[0] || {};
   return {
     siteUrl,
     range,
-    auth: 'composio',
+    auth: googleOauthReady(env) ? 'google-oauth' : 'composio',
     summary: {
       clicks: s.clicks ?? 0,
       impressions: s.impressions ?? 0,
@@ -237,12 +269,12 @@ async function discoverGa4Property(env, connectedAccountId) {
 }
 
 async function ga4ViaComposio(env) {
-  const status = await composioGoogleStatus(env);
-  const ca = status.ga4.account;
-  if (!ca?.id) throw new Error('composio_ga4_not_connected');
-  const propertyId = await discoverGa4Property(env, ca.id);
+  const ca = googleOauthReady(env) ? null : selectAccount(await composioConnectedAccounts(env, [GA4_TOOLKIT]), GA4_TOOLKIT, env);
+  if (!googleOauthReady(env) && !ca?.id) throw new Error('composio_ga4_not_connected');
+  if (googleOauthReady(env) && !has(env, 'GA4_PROPERTY_ID')) throw new Error('ga4_property_id_not_configured');
+  const propertyId = googleOauthReady(env) ? String(env.GA4_PROPERTY_ID).replace(/^properties\//, '') : await discoverGa4Property(env, ca.id);
   const [report, realtime] = await Promise.all([
-    composioProxy(env, ca.id, `https://analyticsdata.googleapis.com/v1beta/properties/${encodeURIComponent(propertyId)}:runReport`, 'POST', {
+    googleReportRequest(env, GA4_TOOLKIT, ['https://www.googleapis.com/auth/analytics.readonly'], `https://analyticsdata.googleapis.com/v1beta/properties/${encodeURIComponent(propertyId)}:runReport`, {
       dateRanges: [{ startDate: '28daysAgo', endDate: 'yesterday' }],
       metrics: [
         { name: 'activeUsers' },
@@ -252,14 +284,14 @@ async function ga4ViaComposio(env) {
         { name: 'totalRevenue' },
       ],
     }),
-    composioProxy(env, ca.id, `https://analyticsdata.googleapis.com/v1beta/properties/${encodeURIComponent(propertyId)}:runRealtimeReport`, 'POST', {
+    googleReportRequest(env, GA4_TOOLKIT, ['https://www.googleapis.com/auth/analytics.readonly'], `https://analyticsdata.googleapis.com/v1beta/properties/${encodeURIComponent(propertyId)}:runRealtimeReport`, {
       metrics: [{ name: 'activeUsers' }],
     }),
   ]);
   return {
     propertyId,
     period: '28daysAgo..yesterday',
-    auth: 'composio',
+    auth: googleOauthReady(env) ? 'google-oauth' : 'composio',
     metrics: metricMap(report),
     realtime: { activeUsers: metricMap(realtime).activeUsers || 0 },
   };
@@ -278,7 +310,8 @@ function extendedIntegrations(env, base = {}, google = null) {
     seranking: has(env, 'SERANKING_API_KEY'),
     gsc: Boolean(base.gsc || google?.gsc?.connected),
     ga4: Boolean(base.ga4 || google?.ga4?.connected),
-    googleAds: Boolean(base.googleAds || (googleAuth && has(env, 'GOOGLE_ADS_CUSTOMER_ID'))),
+    googleAds: Boolean(googleAuth && has(env, 'GOOGLE_ADS_DEVELOPER_TOKEN') && has(env, 'GOOGLE_ADS_CUSTOMER_ID')),
+    metricool: ['METRICOOL_API_TOKEN', 'METRICOOL_USER_ID', 'METRICOOL_BLOG_ID'].every(name => has(env, name)),
     driveAutoBackup: Boolean(
       base.driveAutoBackup ||
       (has(env, 'DRIVE_BACKUP_FOLDER_ID') && (googleOauthReady(env) || googleServiceReady(env)))
@@ -320,8 +353,13 @@ function extendedDetails(env, base = {}, google = null) {
     },
     googleAds: {
       connected: status.googleAds,
-      required: ['GOOGLE_ADS_CUSTOMER_ID', 'Google service account/OAuth'],
-      missing: [...missing('GOOGLE_ADS_CUSTOMER_ID'), ...googleAuthMissing],
+      required: ['GOOGLE_ADS_CUSTOMER_ID', 'GOOGLE_ADS_DEVELOPER_TOKEN', 'Google service account/OAuth'],
+      missing: [...missing('GOOGLE_ADS_CUSTOMER_ID', 'GOOGLE_ADS_DEVELOPER_TOKEN'), ...((googleServiceReady(env) || googleOauthReady(env)) ? [] : ['Google OAuth sau service account'])],
+    },
+    metricool: {
+      connected: status.metricool,
+      required: ['METRICOOL_API_TOKEN', 'METRICOOL_USER_ID', 'METRICOOL_BLOG_ID'],
+      missing: missing('METRICOOL_API_TOKEN', 'METRICOOL_USER_ID', 'METRICOOL_BLOG_ID'),
     },
     driveAutoBackup: {
       connected: status.driveAutoBackup,
@@ -449,9 +487,161 @@ async function googleUserToken(env, scopes) {
   throw new Error('google_auth_not_configured');
 }
 
+function safeConnectionError(error, env) {
+  let message = String(error?.message || error || 'connection_failed');
+  for (const [key, value] of Object.entries(env)) {
+    if (/TOKEN|SECRET|API_KEY|ACCOUNT_JSON/.test(key) && typeof value === 'string' && value.length > 5) message = message.replaceAll(value, '[redacted]');
+  }
+  return message.slice(0, 220);
+}
+
+async function connectionAccounts(env) {
+  return composioConnectedAccounts(env, CONNECTIONS.filter(x => x.toolkit).map(x => x.toolkit));
+}
+
+async function connectionState(env) {
+  let accounts = [], discoveryError = null;
+  try { accounts = await connectionAccounts(env); } catch (e) { discoveryError = safeConnectionError(e, env); }
+  const sources = CONNECTIONS.map(spec => {
+    let account = null, accountError = null;
+    if (spec.toolkit) try { account = selectAccount(accounts, spec.toolkit, env); } catch (e) { accountError = safeConnectionError(e, env); }
+    const googleReady = googleOauthReady(env) || googleServiceReady(env);
+    let missing = spec.needs.filter(name => name === 'Google OAuth sau service account' ? !googleReady : !has(env, name));
+    if (account) missing = missing.filter(name => !['Google OAuth sau service account', 'GOOGLE_ADS_DEVELOPER_TOKEN', 'GOOGLE_ADS_CUSTOMER_ID'].includes(name));
+    if (spec.key === 'gsc' && account) missing = [];
+    if (spec.key === 'ga4' && account) missing = missing.filter(name => name !== 'GA4_PROPERTY_ID');
+    if (spec.key === 'stripe' && has(env, 'STRIPE_WEBHOOK_SECRET') && !has(env, 'STRIPE_SECRET_KEY')) missing = ['STRIPE_SECRET_KEY · necesar pentru testul contului'];
+    const configured = spec.key === 'cloudflareRuntime' ? Boolean(env.ASSETS) : missing.length === 0;
+    return {
+      key: spec.key, name: spec.name, url: spec.url, test: spec.test || null,
+      configured, authorized: Boolean(account), verified: spec.key === 'cloudflareRuntime' && configured,
+      state: spec.key === 'cloudflareRuntime' && configured ? 'verified' : account ? 'authorized' : configured ? 'configured' : 'pending',
+      account: account ? accountSummary(account) : null, missing,
+      canAuthorize: Boolean(spec.toolkit && has(env, 'COMPOSIO_API_KEY') && !account && !accountError),
+      settingsUrl: SETTINGS_URL,
+      error: accountError || (spec.toolkit ? discoveryError : null),
+    };
+  });
+  return { ok: true, version: 6, checkedAt: new Date().toISOString(), sources, discoveryError };
+}
+
+async function providerJson(endpoint, headers, options = {}) {
+  const response = await fetch(endpoint, { ...options, headers, signal: AbortSignal.timeout(20000) });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || data.message || `provider_http_${response.status}`);
+  return data;
+}
+
+async function connectedProxy(env, toolkit, endpoint, method = 'GET', body) {
+  const account = selectAccount(await composioConnectedAccounts(env, [toolkit]), toolkit, env);
+  if (!account) throw new Error(`authorize_${toolkit}`);
+  return composioProxy(env, account.id, endpoint, method, body);
+}
+
+async function driveFolder(env) {
+  if (!has(env, 'DRIVE_BACKUP_FOLDER_ID')) throw new Error('drive_backup_folder_not_configured');
+  const endpoint = `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(env.DRIVE_BACKUP_FOLDER_ID)}?fields=id,name,mimeType,capabilities(canAddChildren)&supportsAllDrives=true`;
+  const data = googleOauthReady(env) || googleServiceReady(env)
+    ? await providerJson(endpoint, { authorization: `Bearer ${await googleUserToken(env, ['https://www.googleapis.com/auth/drive'])}` })
+    : await connectedProxy(env, DRIVE_TOOLKIT, endpoint);
+  if (data.mimeType !== 'application/vnd.google-apps.folder' || data.capabilities?.canAddChildren !== true) throw new Error('drive_folder_write_access_required');
+  return { name: data.name || 'Backup AstroVip', canAddChildren: true };
+}
+
+async function testConnection(request, env, key) {
+  const spec = CONNECTIONS.find(x => x.key === key);
+  if (!spec) return json({ ok: false, error: 'unknown_connection' }, 400);
+  const checkedAt = new Date().toISOString();
+  try {
+    let data = {}, verified = true, note = 'Conexiune verificată printr-o cerere de citire.';
+    if (spec.test) {
+      const target = new URL(spec.test, request.url);
+      const response = await handleCommandCenter(new Request(target, { headers: request.headers }), env);
+      data = await response.json();
+      if (!response.ok || data.ok === false || (key === 'githubDeploy' && !data.apiOk)) throw new Error(data.error || 'provider_check_failed');
+      if (key === 'githubDeploy') data = { repo: data.repo, commit: data.commit?.shortSha, deploy: data.deploy?.conclusion || data.deploy?.status };
+      if (key === 'gsc') data = { siteUrl: data.data?.siteUrl, ...data.data?.summary };
+      if (key === 'ga4') data = { propertyId: data.data?.propertyId, ...data.data?.metrics };
+      if (key === 'seranking') data = { project: data.project?.title, keywords: data.project?.keywordCount, projects: data.projectsCount };
+    } else if (key === 'composio') {
+      const accounts = await connectionAccounts(env);
+      if (!has(env, 'COMPOSIO_API_KEY')) throw new Error('composio_api_key_not_configured');
+      data = { authorizedAccounts: accounts.length };
+    } else if (key === 'driveAutoBackup') {
+      data = await driveFolder(env);
+    } else if (key === 'googleAds') {
+      if (googleOauthReady(env) || googleServiceReady(env)) {
+        if (!has(env, 'GOOGLE_ADS_DEVELOPER_TOKEN') || !has(env, 'GOOGLE_ADS_CUSTOMER_ID')) throw new Error('google_ads_configuration_required');
+        const accessToken = await googleUserToken(env, ['https://www.googleapis.com/auth/adwords']);
+        const headers = { authorization: `Bearer ${accessToken}`, 'developer-token': env.GOOGLE_ADS_DEVELOPER_TOKEN, 'content-type': 'application/json' };
+        if (has(env, 'GOOGLE_ADS_LOGIN_CUSTOMER_ID')) headers['login-customer-id'] = String(env.GOOGLE_ADS_LOGIN_CUSTOMER_ID).replace(/\D/g, '');
+        const customer = String(env.GOOGLE_ADS_CUSTOMER_ID).replace(/\D/g, '');
+        const result = await providerJson(`https://googleads.googleapis.com/v24/customers/${customer}/googleAds:search`, headers, { method: 'POST', body: JSON.stringify({ query: 'SELECT customer.id, customer.descriptive_name, customer.currency_code FROM customer LIMIT 1' }) });
+        data = result.results?.[0]?.customer || {};
+      } else {
+        const account = selectAccount(await composioConnectedAccounts(env, ['googleads']), 'googleads', env);
+        if (!account) throw new Error('authorize_googleads');
+        const result = await composioFetch(env, '/tools/execute/GOOGLEADS_LIST_ACCESSIBLE_CUSTOMERS', { method: 'POST', body: { connected_account_id: account.id, user_id: composioUser(env), arguments: {} } });
+        if (!result.ok || result.data?.successful === false || result.data?.error) throw new Error('google_ads_account_check_failed');
+        const names = result.data?.data?.resourceNames || result.data?.data?.resource_names || [];
+        if (!names.length) throw new Error('google_ads_no_accessible_accounts');
+        data = { accessibleAccounts: names };
+        note = 'Acces Google Ads verificat. Selectează contul AstroVip în aplicația Google Ads.';
+      }
+    } else if (key === 'googleBusiness') {
+      if (!has(env, 'GOOGLE_BUSINESS_LOCATION_ID')) throw new Error('google_business_location_required');
+      const accessToken = await googleUserToken(env, ['https://www.googleapis.com/auth/business.manage']);
+      const location = String(env.GOOGLE_BUSINESS_LOCATION_ID).replace(/^.*locations\//, '');
+      const result = await providerJson(`https://mybusinessbusinessinformation.googleapis.com/v1/locations/${encodeURIComponent(location)}?readMask=name,title,websiteUri`, { authorization: `Bearer ${accessToken}` });
+      data = { title: result.title, website: result.websiteUri };
+      if (!/astrovip/i.test(result.title || '') && !/astrovip\.ro/i.test(result.websiteUri || '')) throw new Error('google_business_astrovip_location_required');
+    } else if (key === 'metricool') {
+      if (!spec.needs.every(name => has(env, name))) throw new Error('metricool_configuration_required');
+      const query = new URLSearchParams({ userId: env.METRICOOL_USER_ID, blogId: env.METRICOOL_BLOG_ID });
+      const profiles = await providerJson(`https://app.metricool.com/api/admin/simpleProfiles?${query}`, { 'X-Mc-Auth': env.METRICOOL_API_TOKEN });
+      const list = Array.isArray(profiles) ? profiles : profiles.data || [];
+      const profile = list.find(x => String(x.id ?? x.blogId) === String(env.METRICOOL_BLOG_ID));
+      if (!profile) throw new Error('metricool_brand_not_accessible');
+      data = { brand: profile.label || profile.name || 'AstroVip', blogId: env.METRICOOL_BLOG_ID };
+    } else if (key === 'stripe') {
+      if (!has(env, 'STRIPE_SECRET_KEY')) throw new Error('stripe_api_key_required');
+      const result = await providerJson('https://api.stripe.com/v1/balance', { authorization: `Bearer ${env.STRIPE_SECRET_KEY}` });
+      data = { liveMode: result.livemode, currencies: [...new Set((result.available || []).map(x => x.currency))] };
+    } else {
+      if (!spec.needs.every(name => has(env, name))) throw new Error('conversion_configuration_required');
+      verified = false; note = 'Configurarea este prezentă. Validarea conversiilor necesită un eveniment de test în serviciul oficial.';
+    }
+    return json({ ok: true, key, verified, configured: true, checkedAt, note, data });
+  } catch (e) {
+    return json({ ok: false, key, verified: false, checkedAt, error: safeConnectionError(e, env) }, 502);
+  }
+}
+
+async function driveBackupViaComposio(env) {
+  await driveFolder(env);
+  const account = selectAccount(await composioConnectedAccounts(env, [DRIVE_TOOLKIT]), DRIVE_TOOLKIT, env);
+  if (!account) throw new Error('authorize_googledrive');
+  const name = `astrovip-backup-${new Date().toISOString().replace(/[:.]/g, '-')}.zip`;
+  const init = await composioFetch(env, '/tools/execute/proxy', { method: 'POST', body: {
+    connected_account_id: account.id,
+    endpoint: 'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&supportsAllDrives=true&fields=id,name,webViewLink,size,createdTime', method: 'POST',
+    parameters: [{ name: 'Content-Type', value: 'application/json', in: 'header' }, { name: 'X-Upload-Content-Type', value: 'application/zip', in: 'header' }],
+    body: { name, parents: [String(env.DRIVE_BACKUP_FOLDER_ID).trim()] },
+  } });
+  if (!init.ok || Number(init.data?.status || 200) >= 400) throw new Error('drive_upload_init_failed');
+  const uploadUrl = Object.entries(init.data?.headers || {}).find(([key]) => key.toLowerCase() === 'location')?.[1];
+  if (!uploadUrl || new URL(uploadUrl).hostname !== 'www.googleapis.com') throw new Error('drive_upload_location_missing');
+  const upload = await composioFetch(env, '/tools/execute/proxy', { method: 'POST', body: {
+    connected_account_id: account.id, endpoint: uploadUrl, method: 'PUT',
+    binary_body: { url: `https://codeload.github.com/${REPO}/zip/refs/heads/main`, content_type: 'application/zip' },
+  } });
+  if (!upload.ok || Number(upload.data?.status || 200) >= 400) throw new Error('drive_upload_failed');
+  return { ok: true, file: upload.data?.data || {}, auth: 'composio' };
+}
+
 async function driveBackup(env) {
   if (!has(env, 'DRIVE_BACKUP_FOLDER_ID')) return { ok: false, status: 503, error: 'drive_backup_folder_not_configured' };
-  if (!googleOauthReady(env) && !googleServiceReady(env)) return { ok: false, status: 503, error: 'google_auth_not_configured' };
+  if (!googleOauthReady(env) && !googleServiceReady(env)) return driveBackupViaComposio(env);
   const token = await googleUserToken(env, ['https://www.googleapis.com/auth/drive']);
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const name = `astrovip-backup-${stamp}.zip`;
@@ -498,6 +688,27 @@ async function siteHealth() {
 export async function handleCommandCenter(request, env) {
   const url = new URL(request.url);
   if (!url.pathname.startsWith('/api/command/')) return null;
+
+  if (['/api/command/connections', '/api/command/connect', '/api/command/connection-test'].includes(url.pathname)) {
+    const gate = await authGate(request, env);
+    if (!gate?.ok) return gate;
+    if (url.pathname === '/api/command/connections') {
+      if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
+      return json(await connectionState(env));
+    }
+    if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST' });
+    if (Number(request.headers.get('content-length') || 0) > 4096) return json({ ok: false, error: 'payload_too_large' }, 413);
+    const body = await request.json().catch(() => null);
+    const spec = CONNECTIONS.find(x => x.key === body?.key);
+    if (!spec) return json({ ok: false, error: 'unknown_connection' }, 400);
+    if (url.pathname === '/api/command/connection-test') return testConnection(request, env, spec.key);
+    if (!spec.toolkit) return json({ ok: true, manual: true, redirectUrl: SETTINGS_URL, missing: spec.needs });
+    try {
+      const result = await composioConnectLink(env, spec.toolkit, 'https://astrovip.ro/command-center/connections/');
+      if (result.redirectUrl && new URL(result.redirectUrl).protocol !== 'https:') throw new Error('invalid_authorization_url');
+      return json({ ok: true, ...result }, result.connected ? 200 : 201);
+    } catch (e) { return json({ ok: false, error: safeConnectionError(e, env) }, 502); }
+  }
 
   if (url.pathname === '/api/command/overview') {
     return augmentLegacy(await handleV3(request, env), env, 'overview');
