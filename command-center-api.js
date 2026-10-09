@@ -659,8 +659,7 @@ async function driveBackupViaComposio(env) {
   const init = await composioFetch(env, '/tools/execute/proxy', { method: 'POST', body: {
     connected_account_id: account.id,
     endpoint: 'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&supportsAllDrives=true&fields=id,name,webViewLink,size,createdTime', method: 'POST',
-    parameters: [{ name: 'Content-Type', value: 'application/json', in: 'header' }, { name: 'X-Upload-Content-Type', value: 'application/zip', in: 'header' }],
-    body: { name, parents: [String(env.DRIVE_BACKUP_FOLDER_ID).trim()] },
+    body: { name, mimeType: 'application/zip', parents: [String(env.DRIVE_BACKUP_FOLDER_ID).trim()] },
   } });
   if (!init.ok) throw new Error(`drive_upload_init_failed: ${composioError(init, 'drive_upload_init')}`);
   if (Number(init.data?.status || 200) >= 400) throw new Error(`drive_upload_init_failed: ${init.data?.data?.error?.message || init.data?.data?.message || `provider_http_${init.data?.status}`}`);
