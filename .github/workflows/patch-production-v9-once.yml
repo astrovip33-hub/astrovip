@@ -1,0 +1,47 @@
+name: Patch Premium V9 production workflow once
+
+on:
+  push:
+    branches: ["feature/premium-platform-v9"]
+    paths:
+      - ".github/workflows/patch-production-v9-once.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V9 branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/premium-platform-v9
+          fetch-depth: 2
+
+      - name: Patch production workflow
+        run: python3 scripts/patch-production-v9.py
+
+      - name: Validate workflow patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Fq "Build Swiss Ephemeris and Premium V9 bundles" .github/workflows/deploy-cloudflare-worker.yml
+          grep -Fq "npm run build" .github/workflows/deploy-cloudflare-worker.yml
+          grep -Fq "Inject Premium V9 runtime" .github/workflows/deploy-cloudflare-worker.yml
+          grep -Fq "Verify Premium V9 runtime in production" .github/workflows/deploy-cloudflare-worker.yml
+
+      - name: Commit patched production workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- .github/workflows/deploy-cloudflare-worker.yml; then
+            echo "No production workflow changes required."
+            exit 0
+          fi
+          git config user.name "AstroVip Premium V9 Bot"
+          git config user.email "astrovip33@gmail.com"
+          git add .github/workflows/deploy-cloudflare-worker.yml
+          git commit -m "Prepare production deploy for Premium V9"
+          git push origin HEAD:feature/premium-platform-v9
