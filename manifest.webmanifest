@@ -1,0 +1,22 @@
+{
+  "id": "/",
+  "name": "AstroVip Premium",
+  "short_name": "AstroVip",
+  "description": "Astrologie premium, instrumente interactive și portal client AstroVip.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#020403",
+  "theme_color": "#030604",
+  "lang": "ro",
+  "orientation": "any",
+  "categories": ["lifestyle", "education", "productivity"],
+  "icons": [
+    {"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ],
+  "shortcuts": [
+    {"name":"Harta natală","url":"/calculator/","icons":[{"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Contul meu","url":"/client/","icons":[{"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Programare","url":"/?booking=1","icons":[{"src":"/assets/premium-v9/icon.svg","sizes":"any","type":"image/svg+xml"}]}
+  ]
+}
