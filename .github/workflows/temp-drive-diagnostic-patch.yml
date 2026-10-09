@@ -1,0 +1,41 @@
+name: Temp Drive Diagnostic Patch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/temp-drive-diagnostic-patch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Patch Drive upload error details
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('command-center-api.js')
+          s = p.read_text(encoding='utf-8')
+          old = "  if (!init.ok || Number(init.data?.status || 200) >= 400) throw new Error('drive_upload_init_failed');"
+          new = """  if (!init.ok) throw new Error(`drive_upload_init_failed: ${composioError(init, 'drive_upload_init')}`);
+            if (Number(init.data?.status || 200) >= 400) throw new Error(`drive_upload_init_failed: ${init.data?.data?.error?.message || init.data?.data?.message || `provider_http_${init.data?.status}`}`);"""
+          if old not in s:
+              raise SystemExit('target line not found')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit patch
+        shell: bash
+        run: |
+          git config user.name 'astrovip33-hub'
+          git config user.email 'astrovip33@gmail.com'
+          git add command-center-api.js
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Expose Google Drive upload initialization error'
+          git push origin HEAD:main
