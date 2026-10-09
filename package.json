@@ -3,7 +3,14 @@
   "type": "module",
   "scripts": {
     "test:swiss": "node scripts/test-swiss-koch.mjs",
-    "build:swiss": "node scripts/build-swiss-browser.mjs"
+    "build:swiss": "node scripts/build-swiss-browser.mjs",
+    "build:premium": "node scripts/build-premium-v9.mjs",
+    "build": "npm run build:swiss && npm run build:premium"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.76.1",
+    "gsap": "^3.13.0",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@kuntay/swisseph": "0.2.2",
