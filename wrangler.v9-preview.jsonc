@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "astrovip-v9-preview",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-15",
+  "workers_dev": true,
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none",
+    "run_worker_first": true
+  },
+  "vars": {
+    "GSC_SITE_URL": "sc-domain:astrovip.ro",
+    "GA4_PROPERTY_ID": "555065363",
+    "DRIVE_BACKUP_FOLDER_ID": "1XajM-Z4H4Hyc-LM2pbXh6ZYeFjeo7Q5B"
+  }
+}
