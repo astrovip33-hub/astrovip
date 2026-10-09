@@ -1,0 +1,197 @@
+name: PageSpeed cleanup 2026-10-09 once
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/pagespeed-cleanup-20261009-once.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "astrovip-pagespeed-cleanup-20261009"
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Clean homepage render path
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          before = len(s.encode('utf-8'))
+
+          # 1) Remove stale inline preview layers confirmed unused on current
+          # mobile + desktop homepage via CSS rule-usage tracing.
+          stale_style_ids = [
+              'av-google-review-ticker-preview-20261004',
+              'astrovip-mobile-hero-critical',
+              'astrovip-hero-planets-preview',
+              'astrovip-premium-ribbon-preview-20260927',
+              'astrovip-ribbon-chat-bg-moving-lines-preview-20260927',
+              'astrovip-hero-mobile-premium-20261001',
+              'av-hero-image-service-cards-20261004',
+              'astrovip-chat-ribbon-premium-boost-preview-20260927',
+              'astrovip-mobile-hero-premium-20261001',
+              'av-hero-lux-labels-20261004',
+              'astrovip-mobile-hero-end-final',
+              'astrovip-ribbon-text-contrast-preview-20260927',
+              'preview-hero-complete-card-20260927',
+              'astrovip-hero-title-center-final',
+          ]
+          removed_styles = 0
+          for ident in stale_style_ids:
+              pattern = re.compile(
+                  r'\s*<style\b[^>]*\bid=["\']' + re.escape(ident) + r'["\'][^>]*>[\s\S]*?</style>',
+                  re.I,
+              )
+              s, n = pattern.subn('', s, count=1)
+              removed_styles += n
+
+          # 2) Remove obsolete external CSS bundles confirmed at 0% rule usage
+          # on both current mobile and desktop render paths.
+          obsolete_css = [
+              'homepage-trust-lux.css?v=20260923-recognition-cards1',
+              'homepage-knowledge-hubs.css?v=20260922-derived1',
+              'hero-html-i18n.css?v=20260922-natural-ratio1',
+              'credentials-flow-lock-20260921-v1.css',
+              'final-card-polish-20260923.css?v=20260923-preview1',
+              'mobile-hero-cards-responsive-preview-20260924.css?v=20260924-preview1',
+              'mobile-hero-premium-frame-20260924.css?v=20260924-premium5',
+              'mobile-layout-polish-20261007.css?v=20261007',
+          ]
+          removed_links = 0
+          for frag in obsolete_css:
+              pattern = re.compile(
+                  r'\s*<link\b[^>]*href=["\']/assets/' + re.escape(frag) + r'["\'][^>]*?/?>',
+                  re.I,
+              )
+              s, n = pattern.subn('', s)
+              removed_links += n
+
+          # 3) Collapse duplicated stylesheet links. Keep async copies for
+          # below-the-fold sections; keep blocking copies for above-the-fold
+          # visual-critical styles.
+          def drop_link(text, frag, must_contain=None, must_not_contain=None):
+              pattern = re.compile(
+                  r'\s*<link\b[^>]*href=["\']/assets/' + re.escape(frag) + r'["\'][^>]*?/?>',
+                  re.I,
+              )
+              dropped = 0
+              def repl(m):
+                  nonlocal dropped
+                  tag = m.group(0)
+                  low = tag.lower()
+                  if must_contain and must_contain.lower() not in low:
+                      return tag
+                  if must_not_contain and must_not_contain.lower() in low:
+                      return tag
+                  dropped += 1
+                  return ''
+              return pattern.sub(repl, text), dropped
+
+          # Keep async (media=print/onload) copy, remove blocking twin.
+          for frag in [
+              'studiu-caz-scoala.css?v=20260920-no-green-override',
+              'footer-credentials-premium.css?v=20260927-goldframes1',
+              'astrovip-chat.css?v=20260922-chat-bold-text3',
+              'case-showcase-20260923.css?v=20260923-clean1',
+              'footer-premium-runtime-20260923.css?v=20261001-cards1',
+              'mobile-freeq-card-separate-20260924.css?v=20260924-5',
+          ]:
+              s, n = drop_link(s, frag, must_not_contain='media="print"')
+              removed_links += n
+
+          # Duplicate generations: retain only latest async free-question CSS.
+          s, n = drop_link(s, 'free-question.css?v=20260922-separation1')
+          removed_links += n
+
+          # Keep normal blocking copy, remove redundant async twin.
+          for frag in [
+              'homepage-neon-gloss.css?v=20260919-lcp4',
+              'desktop-final-20260922.css?v=20260922-menu-final3',
+              'desktop-visual-polish-20260922.css?v=20260922-polish1',
+              'home-luxury-all-sections-preview-20260924.css?v=20260927-green-frame2',
+          ]:
+              s, n = drop_link(s, frag, must_contain='media="print"')
+              removed_links += n
+
+          # 4) Lazy images must not compete with the hero/LCP image.
+          def low_priority_lazy(m):
+              attrs = m.group(1)
+              if 'fetchpriority=' in attrs.lower():
+                  return '<img' + attrs + '>'
+              return '<img' + attrs + ' fetchpriority="low">'
+          s = re.sub(
+              r'<img\b([^>]*\bloading=["\']lazy["\'][^>]*)>',
+              low_priority_lazy,
+              s,
+              flags=re.I,
+          )
+
+          # Safety checks: preserve critical production functionality and SEO.
+          required = [
+              '<link href="https://astrovip.ro/" rel="canonical"',
+              'id="hamb"',
+              'id="menu"',
+              'astrovip-hero-desktop-final-20261002.avif',
+              'astrovip-hero-premium-mobile-20261001.webp',
+              '/assets/homepage.js?v=20260930-payment-cta1',
+              '/assets/ux-refresh-20261008.js?v=20261008-1',
+              '/assets/site-editor-runtime.js?v=1',
+              '/assets/page-editor-runtime.js?v=20261007-1728-fresh',
+          ]
+          missing = [x for x in required if x not in s]
+          if missing:
+              raise SystemExit('Safety check failed; missing: ' + repr(missing))
+          if removed_styles < 10:
+              raise SystemExit(f'Unexpected stale-style removal count: {removed_styles}')
+          if removed_links < 12:
+              raise SystemExit(f'Unexpected stylesheet-link removal count: {removed_links}')
+
+          p.write_text(s, encoding='utf-8')
+          after = len(s.encode('utf-8'))
+          print(f'HTML bytes: {before} -> {after} (saved {before-after})')
+          print(f'Removed stale inline style blocks: {removed_styles}')
+          print(f'Removed obsolete/duplicate stylesheet links: {removed_links}')
+          print(f'Remaining stylesheet links: {len(re.findall(r"<link\\b[^>]*rel=[\\\"\\\']stylesheet[\\\"\\\']", s, re.I))}')
+          PY
+
+      - name: Stamp release header
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('_headers')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('X-AstroVip-Release: 20261008-ux-refresh1', 'X-AstroVip-Release: 20261009-pagespeed1')
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit PageSpeed cleanup
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add index.html _headers
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git diff --cached --stat
+          git commit -m "Optimize homepage render path for PageSpeed"
+          git push origin HEAD:main
