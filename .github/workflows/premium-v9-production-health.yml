@@ -1,0 +1,41 @@
+name: Premium V9 production health
+
+on:
+  workflow_run:
+    workflows: ["Deploy AstroVip to Cloudflare Worker"]
+    types: [completed]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Premium V9 production surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://astrovip.ro"
+          TMP=$(mktemp -d)
+          curl -fsS --retry 4 --retry-delay 3 "$BASE/" -o "$TMP/home"
+          curl -fsS --retry 4 --retry-delay 3 "$BASE/assets/premium-v9/main.js" -o "$TMP/main.js"
+          curl -fsS --retry 4 --retry-delay 3 "$BASE/assets/premium-v9/astro-worker.js" -o "$TMP/worker.js"
+          curl -fsS --retry 4 --retry-delay 3 "$BASE/manifest.webmanifest" -o "$TMP/manifest"
+          curl -fsS --retry 4 --retry-delay 3 "$BASE/sw.js" -o "$TMP/sw"
+          curl -fsS --retry 4 --retry-delay 3 "$BASE/calculator/" -o "$TMP/calculator"
+          curl -fsS --retry 4 --retry-delay 3 "$BASE/client/" -o "$TMP/client"
+          curl -fsS --retry 4 --retry-delay 3 "$BASE/command-center/" -o "$TMP/command"
+          grep -Fq "/assets/premium-v9/main.js" "$TMP/home"
+          grep -Fq "Hartă natală interactivă" "$TMP/calculator"
+          grep -Fq "Contul meu AstroVip" "$TMP/client"
+          grep -Fq "/command-center/v9-extension.js" "$TMP/command"
+          grep -Fq '"name": "AstroVip Premium"' "$TMP/manifest"
+          grep -Fq "astrovip-v9-shell" "$TMP/sw"
+          test -s "$TMP/main.js"
+          test -s "$TMP/worker.js"
+          echo "Premium V9 production health: OK"
