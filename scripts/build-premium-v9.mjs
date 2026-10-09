@@ -1,12 +1,18 @@
 import { build } from 'esbuild';
 import { mkdir } from 'node:fs/promises';
 
-await mkdir('assets/premium-v9', { recursive: true });
+await mkdir('assets/premium-v9/chunks', { recursive: true });
 
 await build({
-  entryPoints: ['src/premium-v9/main.ts'],
-  outfile: 'assets/premium-v9/main.js',
+  entryPoints: {
+    main: 'src/premium-v9/main.ts',
+    client: 'src/premium-v9/client.ts'
+  },
+  outdir: 'assets/premium-v9',
+  entryNames: '[name]',
+  chunkNames: 'chunks/[name]-[hash]',
   bundle: true,
+  splitting: true,
   minify: true,
   format: 'esm',
   target: ['es2022'],
@@ -18,4 +24,4 @@ await build({
   }
 });
 
-console.log('Premium V9 bundle built.');
+console.log('Premium V9 main/client bundles built.');
