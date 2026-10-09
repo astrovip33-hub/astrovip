@@ -7,7 +7,8 @@ await build({
   entryPoints: {
     main: 'src/premium-v9/main.ts',
     client: 'src/premium-v9/client.ts',
-    report: 'src/premium-v9/report.ts'
+    report: 'src/premium-v9/report.ts',
+    booking: 'src/premium-v9/booking.ts'
   },
   outdir: 'assets/premium-v9',
   entryNames: '[name]',
@@ -25,4 +26,4 @@ await build({
   }
 });
 
-console.log('Premium V9 main/client/report bundles built.');
+console.log('Premium V9 main/client/report/booking bundles built.');
