@@ -1,0 +1,190 @@
+name: AstroVip Composio Preview
+
+on:
+  push:
+    branches: ["feature/composio-autopilot"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "astrovip-composio-preview"
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Cloudflare credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::Missing CLOUDFLARE_API_TOKEN"; exit 2; }
+          test -n "${CLOUDFLARE_ACCOUNT_ID:-}" || { echo "::error::Missing CLOUDFLARE_ACCOUNT_ID"; exit 3; }
+
+      - name: Syntax check preview Worker
+        run: node --check composio-autopilot-preview-worker.js
+
+      - name: Deploy isolated Composio preview Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@4.137.0 deploy --config wrangler.composio-preview.jsonc
+
+      - name: Verify Composio secret is attached to preview Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@4.137.0 secret list --name astrovip-composio-preview --format json > /tmp/composio-secrets.json
+          python3 - <<'PY'
+          import json
+          data = json.load(open('/tmp/composio-secrets.json'))
+          names = {x.get('name') for x in data if isinstance(x, dict)}
+          if 'COMPOSIO_API_KEY' not in names:
+              raise SystemExit('Missing COMPOSIO_API_KEY on astrovip-composio-preview')
+          print('COMPOSIO_API_KEY is attached to the isolated preview Worker.')
+          PY
+
+      - name: Verify isolated preview health
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-composio-preview.astrovip33.workers.dev/health"
+          STATUS=$(curl -sS -o /tmp/composio-preview.json -w '%{http_code}' --retry 5 --retry-delay 2 "$URL" || true)
+          test "$STATUS" = "200" || { echo "::error::Preview health HTTP $STATUS"; cat /tmp/composio-preview.json || true; exit 10; }
+          grep -q 'AstroVip Composio Auto-Pilot Preview' /tmp/composio-preview.json || { echo "::error::Unexpected preview response"; cat /tmp/composio-preview.json; exit 11; }
+          echo "Preview health OK: $URL"
+
+      - name: Verify Composio project authentication and toolkit catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-composio-preview.astrovip33.workers.dev/status"
+          STATUS=$(curl -sS -o /tmp/composio-status.json -w '%{http_code}' --retry 5 --retry-delay 2 "$URL" || true)
+          cat /tmp/composio-status.json
+          test "$STATUS" = "200" || { echo "::error::Composio status HTTP $STATUS"; exit 20; }
+          python3 - <<'PY'
+          import json
+          data = json.load(open('/tmp/composio-status.json'))
+          if not data.get('configured'):
+              raise SystemExit('Composio key is not configured')
+          if not data.get('authenticated'):
+              raise SystemExit('Composio project key did not authenticate')
+          missing = [x.get('slug') for x in data.get('toolkits', []) if not x.get('available')]
+          if missing:
+              raise SystemExit('Unavailable Composio toolkits: ' + ', '.join(missing))
+          print('Composio project authentication OK; requested toolkit catalog is available.')
+          PY
+
+      - name: Bootstrap read-only session and generate OAuth links
+        shell: bash
+        run: |
+          set -euo pipefail
+          BOOTSTRAP_TOKEN=$(python3 - <<'PY'
+          import secrets
+          print(secrets.token_urlsafe(48))
+          PY
+          )
+          echo "::add-mask::$BOOTSTRAP_TOKEN"
+          printf '%s' "$BOOTSTRAP_TOKEN" | npx --yes wrangler@4.137.0 secret put BOOTSTRAP_TOKEN --name astrovip-composio-preview
+
+          URL="https://astrovip-composio-preview.astrovip33.workers.dev/bootstrap/session"
+          STATUS=""
+          for attempt in $(seq 1 12); do
+            STATUS=$(curl -sS -X POST -H "x-bootstrap-token: $BOOTSTRAP_TOKEN" -o /tmp/composio-session.json -w '%{http_code}' "$URL" || true)
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "201" ]; then
+              break
+            fi
+            if [ "$STATUS" = "403" ]; then
+              echo "Waiting for Cloudflare BOOTSTRAP_TOKEN propagation (attempt $attempt/12)..."
+              sleep 2
+              continue
+            fi
+            break
+          done
+          cat /tmp/composio-session.json
+          if [ "$STATUS" != "200" ] && [ "$STATUS" != "201" ]; then
+            echo "::error::Composio session/bootstrap-link HTTP $STATUS"
+            exit 30
+          fi
+
+          SESSION_ID=$(python3 - <<'PY'
+          import json
+          data = json.load(open('/tmp/composio-session.json'))
+          sid = data.get('session_id')
+          if not data.get('ok') or not sid:
+              raise SystemExit('Session bootstrap did not return a valid session_id and OAuth links')
+          print(sid)
+          PY
+          )
+          echo "::add-mask::$SESSION_ID"
+          printf '%s' "$SESSION_ID" | npx --yes wrangler@4.137.0 secret put COMPOSIO_SESSION_ID --name astrovip-composio-preview
+
+          python3 - <<'PY'
+          import json, os
+          data = json.load(open('/tmp/composio-session.json'))
+          labels = {
+              'github': 'GitHub',
+              'google_search_console': 'Google Search Console',
+              'googlesheets': 'Google Sheets',
+          }
+          links = data.get('links', {})
+          summary = os.environ['GITHUB_STEP_SUMMARY']
+          with open(summary, 'a', encoding='utf-8') as f:
+              f.write('## AstroVip Composio connection links\n\n')
+              f.write('Open each link and authorize the AstroVip account. These links are generated from the isolated read-only preview session.\n\n')
+              for slug, label in labels.items():
+                  item = links.get(slug, {})
+                  url = item.get('redirect_url')
+                  if not item.get('ok') or not url:
+                      raise SystemExit(f'No OAuth link generated for {slug}: {item}')
+                  f.write(f'- [{label}]({url})\n')
+              f.write('\nCloudflare connection is intentionally deferred until the OAuth connections above are verified.\n')
+          print('OAuth connection links written to the workflow summary.')
+          PY
+
+          ROTATED_TOKEN=$(python3 - <<'PY'
+          import secrets
+          print(secrets.token_urlsafe(48))
+          PY
+          )
+          echo "::add-mask::$ROTATED_TOKEN"
+          printf '%s' "$ROTATED_TOKEN" | npx --yes wrangler@4.137.0 secret put BOOTSTRAP_TOKEN --name astrovip-composio-preview
+          echo "Read-only Composio session is persisted; bootstrap token rotated."
+
+      - name: Verify persisted read-only session policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-composio-preview.astrovip33.workers.dev/session-state"
+          STATUS=""
+          for attempt in $(seq 1 12); do
+            STATUS=$(curl -sS -o /tmp/composio-session-state.json -w '%{http_code}' "$URL" || true)
+            if [ "$STATUS" = "200" ]; then
+              break
+            fi
+            echo "Waiting for COMPOSIO_SESSION_ID propagation (attempt $attempt/12, HTTP $STATUS)..."
+            sleep 2
+          done
+          cat /tmp/composio-session-state.json
+          test "$STATUS" = "200" || { echo "::error::Session-state HTTP $STATUS"; exit 40; }
+          python3 - <<'PY'
+          import json
+          data = json.load(open('/tmp/composio-session-state.json'))
+          if not data.get('sessionPresent'):
+              raise SystemExit('Persisted Composio session is unavailable')
+          policy = data.get('policy', {})
+          required = ['readOnlyTagsOnly','destructiveToolsDisabled','connectionMetaToolsDisabled','sandboxDisabled','instantUsageDisabled']
+          missing = [k for k in required if not policy.get(k)]
+          if missing:
+              raise SystemExit('Read-only session policy check failed: ' + ', '.join(missing))
+          if policy.get('productionTouched'):
+              raise SystemExit('Preview session unexpectedly reports production touched')
+          print('Persistent Composio session verified: read-only, no destructive tools, no sandbox, no premium usage.')
+          PY
