@@ -39,6 +39,23 @@ jobs:
       - name: Validate SEO links, metadata and canonical URLs
         run: python3 scripts/audit_seo_graph.py
 
+      - name: Validate site builder JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('command-center/site-builder/index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script>(.*?)</script>', html, re.S)
+          if not scripts:
+              raise SystemExit('No inline Site Builder script found')
+          for i, script in enumerate(scripts):
+              Path(f'/tmp/astrovip-site-builder-{i}.js').write_text(script, encoding='utf-8')
+          print(f'Extracted {len(scripts)} Site Builder script(s)')
+          PY
+          for JS in /tmp/astrovip-site-builder-*.js; do node --check "$JS"; done
+
       - name: Enrich structured data at deploy time
         shell: bash
         run: |
@@ -57,7 +74,7 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$CLOUDFLARE_API_TOKEN"
-          STATUS=$(curl -sS -o /tmp/cf-token.json -w '%{http_code}'             -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"             "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify")
+          STATUS=$(curl -sS -o /tmp/cf-token.json -w '%{http_code}' -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify")
           test "$STATUS" = "200"
 
       - name: Deploy preview to Cloudflare Workers
@@ -88,21 +105,36 @@ jobs:
           test "$READY" = "1"
           echo "Preview live: $URL"
 
-      - name: Verify visual editor
+      - name: Verify premium site builder
         shell: bash
         run: |
           set -euo pipefail
           BASE="https://astrovip-preview-ux-compact.astrovip33.workers.dev"
+
           EDITOR_STATUS=$(curl -sSL -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
           echo "EDITOR_STATUS=$EDITOR_STATUS"
           test "$EDITOR_STATUS" = "200"
-          grep -q 'Editor Vizual AstroVip' /tmp/editor.html
+          grep -Fq 'AstroVip Site Builder' /tmp/editor.html
+
+          BUILDER_STATUS=$(curl -sS -o /tmp/site-builder.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/site-builder/")
+          echo "BUILDER_STATUS=$BUILDER_STATUS"
+          test "$BUILDER_STATUS" = "200"
+          grep -Fq 'ASTROVIP SITE BUILDER' /tmp/site-builder.html
+          grep -Fq 'SECTION LIBRARY' /tmp/site-builder.html
+          grep -Fq 'PREFLIGHT' /tmp/site-builder.html
+          grep -Fq '/command-center/editor-original/' /tmp/site-builder.html
+
+          ENGINE_STATUS=$(curl -sS -o /tmp/editor-original.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor-original/")
+          echo "ENGINE_STATUS=$ENGINE_STATUS"
+          test "$ENGINE_STATUS" = "200"
+          grep -Fq 'Editor Vizual AstroVip' /tmp/editor-original.html
+
           API_STATUS=$(curl -sS -o /tmp/command-api.json -w '%{http_code}' "$BASE/api/command/ping")
           echo "API_STATUS=$API_STATUS"
           if [ "$API_STATUS" = "401" ]; then
-            echo "Visual editor route OK; preview command API has auth configured."
+            echo "Premium builder routes OK; preview command API has auth configured."
           elif [ "$API_STATUS" = "503" ] && grep -q 'command_center_token_not_configured' /tmp/command-api.json; then
-            echo "Visual editor route OK; preview command secret is intentionally not configured."
+            echo "Premium builder routes OK; preview command secret is intentionally not configured."
           else
             cat /tmp/command-api.json
             exit 1
