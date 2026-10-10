@@ -158,89 +158,38 @@ export default {
     const commandResponse=await handleCommandCenter(request,env);
     if(commandResponse)return commandResponse;
     if(url.pathname==='/api/stripe-webhook'||url.pathname==='/api/stripe-webhook/')return stripeWebhook(request,env);
-    if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WÑP’ÓÒ×ÔÑPÔ‘UÕTÕ	Ë\İ[ÙNY_JNÂˆÛÛœİ\ÜÙ]™\ÜÛœÙOX]ØZ][‹TÔÑUË™™]Ú
-™\]Y\İ
-NÂˆÛÛœİİX\ÜÙ]™\ÜÛœÙKšXY\œË™Ù]
-	ØÛÛ[]\IÊ_	ÉÎÂˆYŠ\ÜÙ]™\ÜÛœÙK›ÚÉ‰˜İš[˜ÛY\Ê	İ^Ú[	ÊI‰ˆ]\›œ]˜[YKœİ\ÕÚ]
-	ËØÛÛ[X[™XÙ[\‰ÊJ^ÂˆÛÛœİ\ÒÛY\YÙO]\›œ]˜[YOOOIËß\›œ]˜[YOOOIÉÎÂˆÛÛœİ\›Ô™[ØYÏZ\ÒÛY\YÙOØ[šÈ™[Hœ™[ØYˆ\ÏHš[XYÙHˆ™YH‹Ø\ÜÙ]ËØ\İ›İš\Z\›Ë\™[Z][K[[Øš[KLŒŒLKÙXœİLŒŒL]^Hˆ\OHš[XYÙKİÙXœˆYYXOHŠX^]ÚYÍŒ
-Hˆ™]Úš[Üš]OHšYÚ[šÈ™[Hœ™[ØYˆ\ÏHš[XYÙHˆ™YH‹Ø\ÜÙ]ËØ\İ›İš\Z\›ËY\ÚİÜYš[˜[LŒŒL‹˜]šYİLŒŒL]^Hˆ\OHš[XYÙKØ]šYˆˆYYXOHŠZ[‹]ÚYÍŒ\
-Hˆ™]Úš[Üš]OHšYÚ˜‰ÉÎÂˆÛÛœİÛY\YÙTšX˜›ÛÛX[\Z\ÒÛY\YÙOØİ[HYH˜\İ›İš\ZYK\ÙXÛÛ™\K\[™]\šX˜›Ûˆš[›ÙHÜ[™]\İš\\ÙXÛÛ™\K[›ÙHœ[™]\İš\\ÙXÛÛ™\^Ù\Ü^N››Û™HZ[\Ü[İš\ÚXš[]NšY[ˆZ[\Ü[ÚZYÚŒZ[\Ü[ÛZ[‹ZZYÚŒZ[\Ü[ÛX^ZZYÚŒZ[\Ü[ÛX\™Ú[ŒZ[\Ü[ÜY[™ÎŒZ[\Ü[Ø›Ü™\ŒZ[\Ü[Ûİ™\™›İÎšY[ˆZ[\Ü[OÜİ[OØÜš\YH˜\İ›İš\\™[[İ™K\ÙXÛÛ™\K\[™]\šX˜›ÛˆŠ
-
-OOØÛÛœİÚ[J
-OOÙØİ[Y[œ]Y\TÙ[XİÜ[
-	ÈÜ[™]\İš\\ÙXÛÛ™\Kœ[™]\İš\\ÙXÛÛ™\IÊK™›Ü‘XXÚ
-[O™[œ™[[İ™J
-JNØÛÛœİİYY\ÏYØİ[Y[œ]Y\TÙ[XİÜŠ	ÈÜİYZKYKXØ^‹ZÛYIÊNÚYŠİYY\Ê^ØÛÛœİ™]\İYY\Ëœ™]š[İ\Ñ[[Y[ÚX›[™ÎÚYŠ™]‰‰œ™]‹›X]Ú\Ê	Ëœ[™]\İš\ÚY
-Hœ[™]\İš\—KØÛ\ÜÊHœ[™]\İš\—IÊJ\™]‹œ™[[İ™J
-Nß_NØÛÛœİ[J
-OOÚÚ[
-
-NÜÙ][Y[İ]
-Ú[ÍL
-NÜÙ][Y[İ]
-Ú[LŒ
-_NÚYŠØİ[Y[œ™XYTİ]OOOIÛØY[™ÉÊYØİ[Y[˜Y]™[\İ[™\Š	ÑÓPÛÛ[ØYY	Ë[‹ÛÛ˜ÙNY_JNÙ[ÙH[Š
-_JJ
-NÏÜØÜš\˜‰ÉÎÂˆÛÛœİÛY\YÙSY[Qš^Z\ÒÛY\YÙOØİ[HYH˜\İ›İš\\›Ë[Y[K^LŒŒLÈYYXJX^]ÚYN
-^Ú[›ÙN››İ
-™İZYK\YÙJHÚ[Xˆš[X‹[[™\ŞÜÜÚ][Ûœ™[]]™HZ[\Ü[Ù\Ü^N˜›ØÚÈZ[\Ü[İÚYŒÌZ[\Ü[ÚZYÚŒN\Z[\Ü[Z[›ÙN››İ
-™İZYK\YÙJHÚ[Xˆš[X‹[[™^ÜÜÚ][Û˜XœÛÛ]HZ[\Ü[ÛYŒZ[\Ü[İÚYŒÌZ[\Ü[ÚZYÚŒÜZ[\Ü[Ø›Ü™\‹\˜Y]\ÎŒÜZ[\Ü[Ø˜XÚÙÜ›İ[™˜İ\œ™[ÛÛÜˆZ[\Ü[İ˜[œÚ][Û˜[œÙ›Ü›HŒNÈX\ÙKÜXÚ]HŒMÈX\ÙKÜŒNÈX\ÙHZ[\Ü[İ˜[œÙ›Ü›K[ÜšYÚ[˜Ù[\ˆZ[\Ü[Z[›ÙN››İ
-™İZYK\YÙJHÚ[Xˆš[X‹[[™N›XÚ[
-J^İÜŒZ[\Ü[Z[›ÙN››İ
-™İZYK\YÙJHÚ[Xˆš[X‹[[™N›XÚ[
-Š^İÜZ[\Ü[Z[›ÙN››İ
-™İZYK\YÙJHÚ[Xˆš[X‹[[™N›XÚ[
-Ê^İÜŒMœZ[\Ü[Z[›ÙN››İ
-™İZYK\YÙJHÚ[X–Ø\šXKY^[™YHYH—^ØÛÛÜˆÙ™ŒYˆZ[\Ü[Z[›ÙN››İ
-™İZYK\YÙJHÚ[X–Ø\šXKY^[™YHYH—Hš[X‹[[™N›XÚ[
-J^İÜZ[\Ü[İ˜[œÙ›Ü›Nœ›İ]JYYÊHZ[\Ü[Z[›ÙN››İ
-™İZYK\YÙJHÚ[X–Ø\šXKY^[™YHYH—Hš[X‹[[™N›XÚ[
-Š^ÛÜXÚ]NŒZ[\Ü[İ˜[œÙ›Ü›NœØØ[V
-ŒJHZ[\Ü[Z[›ÙN››İ
-™İZYK\YÙJHÚ[X–Ø\šXKY^[™YHYH—Hš[X‹[[™N›XÚ[
-Ê^İÜZ[\Ü[İ˜[œÙ›Ü›Nœ›İ]JMYYÊHZ[\Ü[_OÜİ[O˜‰ÉÎÂˆÛÛœİÛY\YÙU[˜PÜš]XØ[Z\ÒÛY\YÙOØİ[HYH˜\İ›İš\][˜KXÜš]XØ[LŒŒLLš[›ÙN››İ
-™İZYK\YÙJHÚ[™X˜\™KYÜ˜]Z]K[›ÙN››İ
-™İZYK\YÙJHØÚ[™KX[˜[^™X^˜KZ\K[›ÙN››İ
-™İZYK\YÙJHÜÙ\šXÚZK[›ÙN››İ
-™İZYK\YÙJHÜİYZKYKXØ^‹ZÛYK[›ÙN››İ
-™İZYK\YÙJHÜ™XÙ[šZKYÛÛÙÛK[›ÙN››İ
-™İZYK\YÙJHÛÙ™\K[›ÙN››İ
-™İZYK\YÙJHÜ›ÙÜ˜[X\šK[›ÙN››İ
-™İZYK\YÙJHÚ[™X˜\šKYœ™Xİ™[K[›ÙN››İ
-™İZYK\YÙJHØÛÛXİ[›ÙN››İ
-™İZYK\YÙJH\İ\™YœË[›ÙN››İ
-™İZYK\YÙJH˜]‹Y\™XİÜ^Ù\Ü^N››Û™HZ[\Ü[OÜİ[O˜‰ÉÎÂˆÛÛœİ[[YOZ\›Ô™[ØYÊÚÛY\YÙTšX˜›ÛÛX[\
-ÚÛY\YÙSY[Qš^
-ÚÛY\YÙU[˜PÜš]XØ[
-ØØÜš\Ü˜ÏH‹Ø\ÜÙ]ËØ›ÛÚÚ[™ËXœšYÙKLŒŒLËšœÏİLŒŒLL][˜MˆY™\ÜØÜš\ØÜš\Ü˜ÏH‹Ø\ÜÙ]ËÜYÙKYY]Ü‹\[[YKšœÏİLŒŒLËLMÌYœ™\ÚˆY™\ÜØÜš\˜Âˆ]™]Üš]\[™]ÈS™]Üš]\Š
-K›ÛŠ	ÚXY	ËÙ[[Y[
-[
-^Ù[˜\[™
-[[YKÚ[Y_J__JNÂˆYŠ\ÒÛY\YÙJ^ÂˆÛÛœİ\ÚİÜ\›ÏXXİ\™HÛ\ÜÏHŒÙZ\›Ë\Xİ\™HÛİ\˜ÙHYYXOHŠZ[‹]ÚYŒ\
-HˆÜ˜ÜÙ]H‹Ø\ÜÙ]ËØ\İ›İš\Z\›ËY\ÚİÜYš[˜[LŒŒL‹˜]šYİLŒŒLËLMÌYœ™\Úˆ\OHš[XYÙKØ]šYˆ[YÈÜ˜ÏH‰ÕS”ÔT‘S•ÔVSHˆÚYHŒLˆZYÚHÌŒˆ[H\İ›Õš\8 %\İ›ÛÙÚYH™[Z][HˆØY[™ÏH™XYÙ\ˆˆ™]Úš[Üš]OHšYÚˆXÛÙ[™ÏH˜\Ş[˜ÈÜXİ\™O˜ÂˆÛÛœİ[Øš[R\›ÏXXİ\™HÛ\ÜÏHŒËZ\›Ë\Xİ\™Hˆİ[OH™\Ü^N˜›ØÚÎİÚYŒL	HÛİ\˜ÙHYYXOHŠX^]ÚYŒ
-HˆÜ˜ÜÙ]H‹Ø\ÜÙ]ËØ\İ›İš\Z\›Ë\™[Z][K[[Øš[KLŒŒLKÙXœİLŒŒLËLMÌYœ™\Úˆ\OHš[XYÙKİÙXœ[YÈÜ˜ÏH‰ÕS”ÔT‘S•ÔVSHˆÚYHMHˆZYÚHŒMÌˆˆØY[™ÏH™XYÙ\ˆˆ™]Úš[Üš]OHšYÚˆXÛÙ[™ÏH˜\Ş[˜Èˆ[Hñ İ1 Û[ˆÛX\˜[™H8 %\İ›Õš\\İ›ÛÙÚYH™[Z][HÜXİ\™O˜Âˆ™]Üš]\\™]Üš]\‚ˆ›ÛŠ	ÈİŒË[[Øš[K\›ÙXÜÜÉËÙ[[Y[
-[
-^Ù[œ™[[İ™J
-__JBˆ›ÛŠ	ÈİŒËY\ÚİÜ\›ÙXÜÜÉËÙ[[Y[
-[
-^Ù[œ™[[İ™J
-__JBˆ›ÛŠ	Û[šÖÜ™[Hœ™[ØY—VØ\ÏHš[XYÙH—IËÙ[[Y[
-[
-^ØÛÛœİÜ˜ÜÙ]Y[™Ù]]šX]J	Ú[XYÙ\Ü˜ÜÙ]	Ê_	ÉÎØÛÛœİ™YY[™Ù]]šX]J	Ú™Y‰Ê_	ÉÎÚYŠÜ˜ÜÙ]š[˜ÛY\Ê	Ø\İ›İš\Z\›Ë[[Øš[KXÛX[‹XØ\™ËIÊ_Ü˜ÜÙ]š[˜ÛY\Ê	Ø\İ›İš\Z\›Ë[^XÛX[‹LŒŒLŒ‰Ê_™Y‹š[˜ÛY\Ê	Ø\İ›İš\Z\›Ë[[Øš[KXÛX[‹XØ\™ËIÊ_™Y‹š[˜ÛY\Ê	Ø\İ›İš\Z\›Ë[^XÛX[‹LŒŒLŒ‰ÊJY[œ™[[İ™J
-Nß_JBˆ›ÛŠ	ÜÙXİ[Û‹š\›Ëš\›Ë\Ü]˜]‹Z\›Ë]Œ‹˜]‹Z\›Ë[[Øš[K\™\İÜ™H˜]‹Z\›Ë]Œ‹]š\İX[Xİ\™HÛİ\˜ÙVÛYYXOHŠX^]ÚYŒ
-H—IËÙ[[Y[
-[
-^Ù[œÙ]]šX]J	ÜÜ˜ÜÙ]	Ë	ËØ\ÜÙ]ËØ\İ›İš\Z\›Ë\™[Z][K[[Øš[KLŒŒLKÙXœİLŒŒLË]ÛÜšÙ\‹Yš[˜[	ÊNÙ[œÙ]]šX]J	İ\IË	Ú[XYÙKİÙXœ	ÊNÙ[œ™[[İ™P]šX]J	ÜÚ^™\ÉÊ__JBˆ›ÛŠ	ÜÙXİ[Û‹š\›Ëš\›Ë\Ü]˜]‹Z\›Ë]Œ‹˜]‹Z\›Ë[[Øš[K\™\İÜ™H˜]‹Z\›Ë]Œ‹]š\İX[Xİ\™H[YÉËÙ[[Y[
-[
-^Ù[œÙ]]šX]J	ÜÜ˜ÉË	ËØ\ÜÙ]ËØ\İ›İš\Z\›Ë\™[Z][K[[Øš[KLŒŒLKÙXœİLŒŒLË]ÛÜšÙ\‹Yš[˜[	ÊNÙ[œÙ]]šX]J	İÚY	Ë	ÍŒ	ÊNÙ[œÙ]]šX]J	ÚZYÚ	Ë	ÍM‰Ê__JBˆ›ÛŠ	ÈİŒËY\ÚİÜ\›ÙŒÙZ\›Ë]š\İX[ˆ[YÉËÙ[[Y[
-[
-^Ù[œ™\XÙJ\ÚİÜ\›ËÚ[Y_J__JBˆ›ÛŠ	ÈİŒË[[Øš[K\›ÙŒË]š\İX[ˆ[YÉËÙ[[Y[
-[
-^Ù[œ™\XÙJ[Øš[R\›ËÚ[Y_J__JBˆ›ÛŠ	ÜØÜš\Ø\İ›İš\\[™]\K\ÜİØY	ËÙ[[Y[
-[
-^Ù[œ™[[İ™J
-__JNÂˆBˆ™]\›ˆ™]Üš]\‹˜[œÙ›Ü›J\ÜÙ]™\ÜÛœÙJNÂˆBˆYŠ\›œ]˜[YKœİ\ÕÚ]
-	ËØÛÛ[X[™XÙ[\‰ÊJ^ÂˆÛÛœİXY\œÏ[™]ÈXY\œÊ\ÜÙ]™\ÜÛœÙKšXY\œÊNÂˆXY\œËœÙ]
-	ÖT›Ø›İËUYÉË	Û›Ú[™^›Ù›ÛİË›Ø\˜Ú]™IÊNÂˆXY\œËœÙ]
-	Ô™Y™\œ™\‹TÛXŞIË	Û›Ë\™Y™\œ™\‰ÊNÂˆXY\œËœÙ]
-	ÖPÛÛ[U\KSÜ[ÛœÉË	Û›ÜÛšY™‰ÊNÂˆ™]\›ˆ™]È™\ÜÛœÙJ\ÜÙ]™\ÜÛœÙK˜›ÙKÜİ]\Î˜\ÜÙ]™\ÜÛœÙKœİ]\Ëİ]\Õ^˜\ÜÙ]™\ÜÛœÙKœİ]\Õ^XY\œßJNÂˆBˆ™]\›ˆ\ÜÙ]™\ÜÛœÙNÂˆBŸNÂ
+    if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WEBHOOK_SECRET_TEST',testMode:true});
+    const assetResponse=await env.ASSETS.fetch(request);
+    const ct=assetResponse.headers.get('content-type')||'';
+    if(assetResponse.ok&&ct.includes('text/html')&&!url.pathname.startsWith('/command-center')){
+      const isHomepage=url.pathname==='/'||url.pathname==='';
+      const heroPreloads=isHomepage?`<link rel="preload" as="image" href="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261008-ux1" type="image/webp" media="(max-width:760px)" fetchpriority="high"><link rel="preload" as="image" href="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261008-ux1" type="image/avif" media="(min-width:761px)" fetchpriority="high">`:'';
+      const homepageRibbonCleanup=isHomepage?`<style id="astrovip-hide-secondary-planet-ribbon">html body #planet-strip-secondary,html body .planet-strip-secondary{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}</style><script id="astrovip-remove-secondary-planet-ribbon">(()=>{const kill=()=>{document.querySelectorAll('#planet-strip-secondary,.planet-strip-secondary').forEach(el=>el.remove());const studies=document.querySelector('#studii-de-caz-home');if(studies){const prev=studies.previousElementSibling;if(prev&&prev.matches('.planet-strip,[id*="planet-strip"],[class*="planet-strip"]'))prev.remove();}};const run=()=>{kill();setTimeout(kill,350);setTimeout(kill,1200)};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run()})();</script>`:'';
+      const homepageMenuFix=isHomepage?`<style id="astrovip-ro-menu-x-20261007">@media(max-width:980px){html body:not(.guide-page) #hamb .hamb-lines{position:relative!important;display:block!important;width:30px!important;height:19px!important}html body:not(.guide-page) #hamb .hamb-line{position:absolute!important;left:0!important;width:30px!important;height:3px!important;border-radius:3px!important;background:currentColor!important;transition:transform .18s ease,opacity .14s ease,top .18s ease!important;transform-origin:center!important}html body:not(.guide-page) #hamb .hamb-line:nth-child(1){top:0!important}html body:not(.guide-page) #hamb .hamb-line:nth-child(2){top:8px!important}html body:not(.guide-page) #hamb .hamb-line:nth-child(3){top:16px!important}html body:not(.guide-page) #hamb[aria-expanded="true"]{color:#ff241f!important}html body:not(.guide-page) #hamb[aria-expanded="true"] .hamb-line:nth-child(1){top:8px!important;transform:rotate(45deg)!important}html body:not(.guide-page) #hamb[aria-expanded="true"] .hamb-line:nth-child(2){opacity:0!important;transform:scaleX(.25)!important}html body:not(.guide-page) #hamb[aria-expanded="true"] .hamb-line:nth-child(3){top:8px!important;transform:rotate(-45deg)!important}}</style>`:'';
+      const runtime=heroPreloads+homepageRibbonCleanup+homepageMenuFix+`<script src="/assets/booking-bridge-20261007.js" defer></script><script src="/assets/page-editor-runtime.js?v=20261007-1728-fresh" defer></script>`;
+      let rewriter=new HTMLRewriter().on('head',{element(el){el.append(runtime,{html:true})}});
+      if(isHomepage){
+        const desktopHero=`<picture class="v63d-hero-picture"><source media="(min-width:821px)" srcset="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261007-1728-fresh" type="image/avif"><img src="${TRANSPARENT_PIXEL}" width="1280" height="720" alt="AstroVip â€” astrologie premium" loading="eager" fetchpriority="high" decoding="async"></picture>`;
+        const mobileHero=`<picture class="v63-hero-picture" style="display:block;width:100%"><source media="(max-width:820px)" srcset="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-1728-fresh" type="image/webp"><img src="${TRANSPARENT_PIXEL}" width="941" height="1672" loading="eager" fetchpriority="high" decoding="async" alt="CÄƒtÄƒlin Smaranda â€” AstroVip, astrologie premium"></picture>`;
+        rewriter=rewriter
+          .on('#v63-mobile-prod-css',{element(el){el.remove()}})
+          .on('#v63-desktop-prod-css',{element(el){el.remove()}})
+          .on('link[rel="preload"][as="image"]',{element(el){const srcset=el.getAttribute('imagesrcset')||'';const href=el.getAttribute('href')||'';if(srcset.includes('astrovip-hero-mobile-clean-cards-')||srcset.includes('astrovip-hero-lux-clean-20260922')||href.includes('astrovip-hero-mobile-clean-cards-')||href.includes('astrovip-hero-lux-clean-20260922'))el.remove();}})
+          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture source[media="(max-width:820px)"]',{element(el){el.setAttribute('srcset','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-worker-final');el.setAttribute('type','image/webp');el.removeAttribute('sizes')}})
+          .on('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore .av-hero-v2-visual picture img',{element(el){el.setAttribute('src','/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261007-worker-final');el.setAttribute('width','600');el.setAttribute('height','496')}})
+          .on('#v63-desktop-prod .v63d-hero-visual > img',{element(el){el.replace(desktopHero,{html:true})}})
+          .on('#v63-mobile-prod .v63-visual > img',{element(el){el.replace(mobileHero,{html:true})}})
+          .on('script#astrovip-planetary-postload',{element(el){el.remove()}});
+      }
+      return rewriter.transform(assetResponse);
+    }
+    if(url.pathname.startsWith('/command-center')){
+      const headers=new Headers(assetResponse.headers);
+      headers.set('X-Robots-Tag','noindex, nofollow, noarchive');
+      headers.set('Referrer-Policy','no-referrer');
+      headers.set('X-Content-Type-Options','nosniff');
+      return new Response(assetResponse.body,{status:assetResponse.status,statusText:assetResponse.statusText,headers});
+    }
+    return assetResponse;
+  }
+};
