@@ -39,6 +39,23 @@ jobs:
       - name: Validate SEO links, metadata and canonical URLs
         run: python3 scripts/audit_seo_graph.py
 
+      - name: Validate site builder JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('command-center/site-builder/index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script>(.*?)</script>', html, re.S)
+          if not scripts:
+              raise SystemExit('No inline Site Builder script found')
+          for i, script in enumerate(scripts):
+              Path(f'/tmp/astrovip-site-builder-{i}.js').write_text(script, encoding='utf-8')
+          print(f'Extracted {len(scripts)} Site Builder script(s)')
+          PY
+          for JS in /tmp/astrovip-site-builder-*.js; do node --check "$JS"; done
+
       - name: Enrich structured data at deploy time
         shell: bash
         run: |
