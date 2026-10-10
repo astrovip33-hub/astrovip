@@ -61,6 +61,20 @@ jobs:
         run: |
           set -euo pipefail
           python3 scripts/enrich_structured_data.py
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+          tag = '<script src="/assets/preview-home-minimal-20261010.js?v=20261010-cardless1" defer></script>'
+          if tag not in html:
+              marker = '</body>'
+              pos = html.lower().rfind(marker)
+              if pos == -1:
+                  raise SystemExit('Homepage body close tag not found')
+              html = html[:pos] + tag + '\n' + html[pos:]
+              path.write_text(html, encoding='utf-8')
+          print('Cardless premium homepage preview runtime injected')
+          PY
 
       - name: Prepare clean mobile Hero image
         shell: bash
@@ -95,7 +109,8 @@ jobs:
             if [ "$STATUS" = "200" ] &&
                grep -Fq 'id="av-pro-title"' /tmp/preview.html &&
                grep -Fq 'ux-refresh-20261008.css?v=20261008-header1' /tmp/preview.html &&
-               grep -Fq 'site-editor-runtime.js' /tmp/preview.html; then
+               grep -Fq 'site-editor-runtime.js' /tmp/preview.html &&
+               grep -Fq 'preview-home-minimal-20261010.js?v=20261010-cardless1' /tmp/preview.html; then
               READY=1
               break
             fi
