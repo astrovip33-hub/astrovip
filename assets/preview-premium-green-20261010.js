@@ -70,45 +70,58 @@ html.av-ultra-home-production body:not(.guide-page) .av-ultra-secondary{
   border-bottom-color:rgba(143,209,106,.44)!important;
 }
 
-/* Preview menu: light premium green + light Ferrari red controls */
-html body:not(.guide-page) #menu{
+/* Preview menu: light premium green + Ferrari-red controls */
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu.open{
   background:linear-gradient(180deg,#CBEEC0 0%,#B5E0A8 52%,#A7D598 100%)!important;
   color:#09170F!important;
   border-color:rgba(9,23,15,.14)!important;
   box-shadow:0 24px 64px rgba(0,0,0,.28)!important;
 }
-html body:not(.guide-page) #menu a,
-html body:not(.guide-page) #menu summary,
-html body:not(.guide-page) #menu button{
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu > a,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu summary,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu.open > a,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu.open summary{
   color:#09170F!important;
   -webkit-text-fill-color:#09170F!important;
   text-shadow:none!important;
 }
-html body:not(.guide-page) #menu details,
-html body:not(.guide-page) #menu .av-menu-group,
-html body:not(.guide-page) #menu .av-menu-more{
-  border-color:rgba(9,23,15,.12)!important;
-}
-html body:not(.guide-page) #menu details[open],
-html body:not(.guide-page) #menu details[open] > div,
-html body:not(.guide-page) #menu details[open] > ul{
-  background:rgba(255,255,255,.10)!important;
-}
-html body:not(.guide-page) #menu summary::after{
-  color:#FF4B32!important;
-  -webkit-text-fill-color:#FF4B32!important;
-  text-shadow:none!important;
-}
-html body:not(.guide-page) #menu > a::after,
-html body:not(.guide-page) #menu .av-menu-booking::after{
-  color:#FF4B32!important;
-  -webkit-text-fill-color:#FF4B32!important;
-  border-color:#FF4B32!important;
-  text-shadow:none!important;
-}
-html body:not(.guide-page) #menu a:hover,
-html body:not(.guide-page) #menu summary:hover{
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-group-links,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-more-links{
   background:rgba(255,255,255,.16)!important;
+  border-color:rgba(9,23,15,.12)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.26)!important;
+}
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-group-links a,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-more-links a,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-group-links a:first-child{
+  color:#102118!important;
+  -webkit-text-fill-color:#102118!important;
+  text-shadow:none!important;
+}
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-group > summary::after,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-more > summary::after,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-group[open] > summary::after,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-more[open] > summary::after{
+  background:#FF4B32!important;
+  border-color:#FF4B32!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  text-shadow:none!important;
+  box-shadow:0 5px 14px rgba(255,75,50,.24)!important;
+}
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu > a::after,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu.open > a::after{
+  background:#FF4B32!important;
+  border-color:#FF4B32!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  text-shadow:none!important;
+  box-shadow:0 5px 14px rgba(255,75,50,.24)!important;
+}
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu > a:hover,
+html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh:not(.guide-page) header.top nav#menu.menu summary:hover{
+  background:rgba(255,255,255,.18)!important;
 }
 `;
   document.head.appendChild(style);
