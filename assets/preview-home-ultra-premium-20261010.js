@@ -174,6 +174,15 @@ html.av-ultra-home-preview body:not(.guide-page) #av-ultra-home:before{
   padding-right:6px;
 }
 .av-ultra-primary:hover,.av-ultra-secondary:hover{transform:translateY(-2px)}
+.av-ultra-payment-note{
+  margin:12px 0 0;
+  color:#9eaaa2;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.av-ultra-payment-note strong{color:#d9c98f}
 .av-ultra-signature{
   margin:38px 0 0;
   color:#d9c98f;
@@ -213,6 +222,7 @@ html.av-ultra-home-preview body:not(.guide-page) footer [class*="card"]{
   .av-ultra-proof{gap:9px 18px;font-size:11px;line-height:1.4}
   .av-ultra-actions{flex-direction:column;gap:17px;margin-top:30px}
   .av-ultra-primary{width:min(100%,330px);min-height:54px}
+  .av-ultra-payment-note{font-size:10px;line-height:1.4}
   .av-ultra-signature{margin-top:30px;font-size:14px}
   html.av-ultra-home-preview body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-copy{padding-bottom:20px!important}
 }
@@ -234,9 +244,10 @@ html.av-ultra-home-preview body:not(.guide-page) footer [class*="card"]{
           </div>
           <div class="av-ultra-proof"><span><strong>33+ ani</strong> experiență</span><span><strong>5★</strong> Google</span><span>Consultații <strong>1-la-1</strong></span></div>
           <div class="av-ultra-actions">
-            <a class="av-ultra-primary" href="https://wa.me/40722128220?text=Bun%C4%83%2C%20doresc%20o%20consulta%C8%9Bie%20AstroVip.">Programează o consultație</a>
-            <a class="av-ultra-secondary" href="https://wa.me/40722128220?text=Bun%C4%83%2C%20am%20o%20%C3%AEntrebare%20pentru%20AstroVip.">Pune o întrebare →</a>
+            <a class="av-ultra-primary" href="#programari">Plătește cu cardul · Stripe · 500 lei</a>
+            <a class="av-ultra-secondary" href="https://wa.me/40722128220?text=Bun%C4%83%2C%20doresc%20o%20consulta%C8%9Bie%20AstroVip.">Programează pe WhatsApp →</a>
           </div>
+          <p class="av-ultra-payment-note">Plată securizată prin <strong>Stripe</strong></p>
           <p class="av-ultra-signature">Viitorul favorizează oamenii pregătiți.</p>
         </div>`;
       firstOld.parentNode.insertBefore(section,firstOld);
