@@ -65,15 +65,19 @@ jobs:
           from pathlib import Path
           path = Path('index.html')
           html = path.read_text(encoding='utf-8')
-          tag = '<script src="/assets/preview-home-ultra-premium-20261010.js?v=20261010-ultra1" defer></script>'
-          if tag not in html:
-              marker = '</body>'
-              pos = html.lower().rfind(marker)
-              if pos == -1:
-                  raise SystemExit('Homepage body close tag not found')
-              html = html[:pos] + tag + '\n' + html[pos:]
-              path.write_text(html, encoding='utf-8')
-          print('Ultra premium short homepage preview runtime injected')
+          tags = [
+            '<script src="/assets/preview-home-ultra-premium-20261010.js?v=20261010-ultra1" defer></script>',
+            '<script src="/assets/preview-home-ultra-cta-footer-fix-20261010.js?v=20261010-fix1" defer></script>'
+          ]
+          marker = '</body>'
+          for tag in tags:
+              if tag not in html:
+                  pos = html.lower().rfind(marker)
+                  if pos == -1:
+                      raise SystemExit('Homepage body close tag not found')
+                  html = html[:pos] + tag + '\n' + html[pos:]
+          path.write_text(html, encoding='utf-8')
+          print('Ultra premium short homepage preview runtimes injected')
           PY
 
       - name: Prepare clean mobile Hero image
@@ -109,7 +113,8 @@ jobs:
                grep -Fq 'id="av-pro-title"' /tmp/preview.html &&
                grep -Fq 'ux-refresh-20261008.css?v=20261008-header1' /tmp/preview.html &&
                grep -Fq 'site-editor-runtime.js' /tmp/preview.html &&
-               grep -Fq 'preview-home-ultra-premium-20261010.js?v=20261010-ultra1' /tmp/preview.html; then
+               grep -Fq 'preview-home-ultra-premium-20261010.js?v=20261010-ultra1' /tmp/preview.html &&
+               grep -Fq 'preview-home-ultra-cta-footer-fix-20261010.js?v=20261010-fix1' /tmp/preview.html; then
               READY=1
               break
             fi
