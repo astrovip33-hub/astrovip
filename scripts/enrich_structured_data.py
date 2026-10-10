@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json, re
+import json, re, os
 
 ROOT = Path(".")
 FALLBACK_IMAGE = "https://astrovip.ro/assets/1000043152.png"
@@ -46,6 +46,71 @@ DESKTOP_TRUST_RIBBON_STYLE = """
 </style>
 """.strip()
 
+BORDERLESS_MOBILE_PREVIEW_STYLE = """
+<style id="astrovip-borderless-mobile-preview-20261010">
+@media (max-width:820px){
+  html body:not(.guide-page) header,
+  html body:not(.guide-page) nav,
+  html body:not(.guide-page) section,
+  html body:not(.guide-page) article,
+  html body:not(.guide-page) aside,
+  html body:not(.guide-page) footer,
+  html body:not(.guide-page) div[class*="card"],
+  html body:not(.guide-page) div[class*="Card"],
+  html body:not(.guide-page) a[class*="case"],
+  html body:not(.guide-page) a[class*="Case"],
+  html body:not(.guide-page) [class*="panel"],
+  html body:not(.guide-page) [class*="Panel"],
+  html body:not(.guide-page) [class*="frame"],
+  html body:not(.guide-page) [class*="Frame"],
+  html body:not(.guide-page) [class*="ribbon"],
+  html body:not(.guide-page) [class*="Ribbon"]{
+    border-color:transparent!important;
+    border-top-color:transparent!important;
+    border-right-color:transparent!important;
+    border-bottom-color:transparent!important;
+    border-left-color:transparent!important;
+    outline:none!important;
+  }
+  html body:not(.guide-page) .v63-case,
+  html body:not(.guide-page) .v63-interest,
+  html body:not(.guide-page) .v63-card,
+  html body:not(.guide-page) .freeq-home-card,
+  html body:not(.guide-page) .av-premium-trust-ribbon,
+  html body:not(.guide-page) .av-hero-image-service-cards,
+  html body:not(.guide-page) .interest-card,
+  html body:not(.guide-page) .case-card,
+  html body:not(.guide-page) .service-card,
+  html body:not(.guide-page) .trust-card{
+    border:none!important;
+    outline:none!important;
+    box-shadow:0 12px 30px rgba(0,0,0,.14)!important;
+  }
+  html body:not(.guide-page) .top,
+  html body:not(.guide-page) .planet-strip,
+  html body:not(.guide-page) .av-langbar,
+  html body:not(.guide-page) section.hero.av-hero-v2 + section.freeq-home{
+    border-top:none!important;
+    border-bottom:none!important;
+  }
+  html body:not(.guide-page) .av-lang-switch,
+  html body:not(.guide-page) .av-lang-switch>a,
+  html body:not(.guide-page) .language-switcher,
+  html body:not(.guide-page) .language-picker,
+  html body:not(.guide-page) [class*="chat"]{
+    outline:none!important;
+  }
+  html body:not(.guide-page) .language-switcher,
+  html body:not(.guide-page) .language-picker,
+  html body:not(.guide-page) [class*="language"][role="button"],
+  html body:not(.guide-page) [class*="chat"][role="button"]{
+    border:none!important;
+    box-shadow:none!important;
+  }
+}
+</style>
+""".strip()
+
 def page_image(html: str) -> str:
     m = OG_RE.search(html)
     if not m:
@@ -79,9 +144,6 @@ def ensure_author(person: dict, image_url: str) -> bool:
     if person.get("@type") != "Person" or person.get("name") != "Cătălin Smaranda":
         return False
     changed = False
-    # Do not infer an author's portrait from the article/OG image.
-    # Person.image is added only when a verified author portrait is explicitly
-    # present in source markup.
     defaults = {
         "@id": AUTHOR_ID,
         "url": AUTHOR_URL,
@@ -177,26 +239,38 @@ def normalize_home_reviews(html: str) -> str:
         html = html.replace(old, new)
     return html
 
+def inject_before_head_close(html: str, block: str) -> str:
+    marker = "</head>"
+    low = html.lower()
+    if marker in low:
+        pos = low.rfind(marker)
+        return html[:pos] + block + "\n" + html[pos:]
+    return block + "\n" + html
+
 def force_desktop_hide_trust_ribbon(html: str) -> str:
-    # Inject a late, inline production rule so browser/CDN caches of external CSS
-    # cannot keep the Hero trust ribbon visible on desktop.
     html = re.sub(
         r'\s*<style\s+id=["\']astrovip-desktop-hide-hero-trust-ribbon-20261006["\'][\s\S]*?</style>\s*',
         "\n",
         html,
         flags=re.I,
     )
-    marker = "</head>"
-    if marker in html.lower():
-        pos = html.lower().rfind(marker)
-        return html[:pos] + DESKTOP_TRUST_RIBBON_STYLE + "\n" + html[pos:]
-    return DESKTOP_TRUST_RIBBON_STYLE + "\n" + html
+    return inject_before_head_close(html, DESKTOP_TRUST_RIBBON_STYLE)
+
+def inject_borderless_mobile_preview(html: str) -> str:
+    html = re.sub(
+        r'\s*<style\s+id=["\']astrovip-borderless-mobile-preview-20261010["\'][\s\S]*?</style>\s*',
+        "\n",
+        html,
+        flags=re.I,
+    )
+    return inject_before_head_close(html, BORDERLESS_MOBILE_PREVIEW_STYLE)
 
 files_scanned = 0
 files_changed = 0
 blocks_changed = 0
 author_boxes_added = 0
 invalid_blocks = 0
+borderless_preview = os.environ.get("GITHUB_REF_NAME") == "preview/borderless-mobile-20261010-v2"
 
 for path in ROOT.rglob("index.html"):
     if any(part in {".git","node_modules"} for part in path.parts):
@@ -229,14 +303,12 @@ for path in ROOT.rglob("index.html"):
 
     updated = SCRIPT_RE.sub(repl, html)
 
-    # Keep the public Google Reviews count consistent in the production homepage
-    # before Cloudflare deploys the static HTML, so crawlers and browsers see 33.
     if path == ROOT / "index.html":
         updated = normalize_home_reviews(updated)
         updated = force_desktop_hide_trust_ribbon(updated)
+        if borderless_preview:
+            updated = inject_borderless_mobile_preview(updated)
 
-    # Visible E-E-A-T signal: add a consistent author box only to article pages
-    # that use the editorial guide layout and do not already have one.
     if (
         page_flags["article"]
         and "guide-content" in updated
@@ -253,5 +325,6 @@ for path in ROOT.rglob("index.html"):
 
 print(
     f"Structured-data enrichment: scanned={files_scanned} files, changed={files_changed}, "
-    f"blocks={blocks_changed}, author_boxes={author_boxes_added}, invalid_skipped={invalid_blocks}"
+    f"blocks={blocks_changed}, author_boxes={author_boxes_added}, invalid_skipped={invalid_blocks}, "
+    f"borderless_preview={borderless_preview}"
 )
