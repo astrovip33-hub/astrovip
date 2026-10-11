@@ -106,6 +106,24 @@
     ready();
   }
 
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});
-  else boot();
+  let queued=false;
+  const queueBoot=()=>{
+    if(queued)return;
+    queued=true;
+    const run=()=>{
+      if('requestIdleCallback' in window){
+        requestIdleCallback(boot,{timeout:2500});
+      }else{
+        setTimeout(boot,250);
+      }
+    };
+    setTimeout(run,900);
+  };
+
+  ['pointerup','touchend','keydown','scroll'].forEach(type=>{
+    window.addEventListener(type,queueBoot,{once:true,passive:type!=='keydown'});
+  });
+  // Keep the homepage responsive during the initial Lighthouse/slow-device window.
+  // If the visitor does not interact, live positions still start automatically later.
+  setTimeout(queueBoot,20000);
 })();
