@@ -4,6 +4,12 @@ function runWhenIdle(task: () => void | Promise<void>, timeout = 2200) {
   else window.setTimeout(() => { void task(); }, Math.min(timeout, 900));
 }
 
+function runAfterLoad(task: () => void | Promise<void>, timeout = 1800) {
+  const schedule = () => runWhenIdle(task, timeout);
+  if (document.readyState === 'complete') schedule();
+  else addEventListener('load', schedule, { once: true });
+}
+
 function trackDeferred(eventName: string, properties: Record<string, unknown> = {}) {
   runWhenIdle(async () => {
     try {
@@ -30,9 +36,7 @@ function instrumentClicks() {
 
 function registerPwa() {
   if (!('serviceWorker' in navigator) || location.protocol !== 'https:') return;
-  addEventListener('load', () => {
-    runWhenIdle(() => navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {}), 3000);
-  }, { once: true });
+  runWhenIdle(() => navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {}), 3000);
 }
 
 function addRuntimeBadge() {
@@ -62,12 +66,16 @@ async function bootDeferredEnhancements() {
     // Remote flags and first-party analytics must never block the page.
   }
 
+  if (flags.pwa !== false) registerPwa();
+
   void import('./observability').then(({ initObservability }) => initObservability()).catch(() => {});
 
-  if (flags.view_transitions !== false || flags.webgl_hero !== false) {
-    void import('./visual').then(({ initViewTransitions, initWebGLHero }) => {
+  const allowRichVisuals = richVisualsAllowed();
+  if (flags.view_transitions !== false || flags.webgl_hero !== false || allowRichVisuals) {
+    void import('./visual').then(({ initMotion, initViewTransitions, initWebGLHero }) => {
       if (flags.view_transitions !== false) initViewTransitions();
-      if (flags.webgl_hero !== false && richVisualsAllowed()) void initWebGLHero();
+      if (allowRichVisuals) void initMotion();
+      if (flags.webgl_hero !== false && allowRichVisuals) void initWebGLHero();
     }).catch(() => {});
   }
 
@@ -83,10 +91,9 @@ async function bootDeferredEnhancements() {
 function boot() {
   addRuntimeBadge();
   instrumentClicks();
-  registerPwa();
 
   // Keep the first paint/LCP path free of Supabase, experiments, AI and visual engines.
-  addEventListener('load', () => runWhenIdle(bootDeferredEnhancements, 1800), { once: true });
+  runAfterLoad(bootDeferredEnhancements, 1800);
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
