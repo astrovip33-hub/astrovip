@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-labelledby="title desc">
+  <title id="title">AstroVip — logo premium mobil</title>
+  <desc id="desc">Emblemă astrologică AV aurie și alb perlat cu orbită verde smarald și wordmark AstroVip.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff9d8"/><stop offset="0.18" stop-color="#ffe98a"/><stop offset="0.46" stop-color="#d8ad42"/><stop offset="0.72" stop-color="#fff0a0"/><stop offset="1" stop-color="#a7791b"/>
+    </linearGradient>
+    <linearGradient id="pearl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="0.5" stop-color="#f4f0df"/><stop offset="1" stop-color="#cbbf9a"/>
+    </linearGradient>
+    <linearGradient id="emerald" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#dfff52"/><stop offset="0.48" stop-color="#39ff88"/><stop offset="1" stop-color="#a6ff22"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="goldGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <g transform="translate(4 4)">
+    <circle cx="56" cy="56" r="47" fill="#030503" stroke="url(#gold)" stroke-width="2.5"/>
+    <circle cx="56" cy="56" r="41" fill="none" stroke="url(#emerald)" stroke-width="1.4" opacity=".8" filter="url(#glow)"/>
+    <path d="M30 78 L53 27 Q56 20 60 27 L83 78 L72 78 L64 61 L47 61 L40 78 Z M51 51 L60 51 L56 40 Z" fill="url(#gold)" stroke="#fff2b0" stroke-width=".7"/>
+    <path d="M48 78 L62 47 L70 62 L83 78 L70 78 L62 68 L58 78 Z" fill="url(#pearl)" opacity=".94"/>
+    <ellipse cx="56" cy="56" rx="49" ry="18" fill="none" stroke="url(#gold)" stroke-width="2" transform="rotate(-12 56 56)"/>
+    <path d="M9 65 C26 48 74 38 103 46" fill="none" stroke="url(#emerald)" stroke-width="1.35" opacity=".95" filter="url(#glow)"/>
+    <circle cx="101" cy="46" r="4.1" fill="url(#gold)" stroke="#fff6c9" stroke-width="1"/>
+    <path d="M56 44 L58.7 53.3 L68 56 L58.7 58.7 L56 68 L53.3 58.7 L44 56 L53.3 53.3 Z" fill="#fff9cf" stroke="#d8ad42" stroke-width=".8" filter="url(#goldGlow)"/>
+    <circle cx="56" cy="56" r="2.2" fill="#39ff88"/>
+  </g>
+  <g transform="translate(124 20)">
+    <text x="0" y="55" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700" letter-spacing="1.2" fill="url(#pearl)" stroke="#b98b2a" stroke-width=".8" paint-order="stroke">ASTRO<tspan fill="url(#gold)">VIP</tspan></text>
+    <path d="M3 70 H361" stroke="url(#gold)" stroke-width="1" opacity=".75"/>
+    <circle cx="181" cy="70" r="2.2" fill="#39ff88" filter="url(#glow)"/>
+    <text x="181" y="91" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="700" letter-spacing="5.2" fill="#e7ca75">ASTROLOGIE PREMIUM</text>
+  </g>
+</svg>
