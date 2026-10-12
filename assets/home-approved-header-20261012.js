@@ -56,7 +56,10 @@
         hamb.setAttribute('aria-expanded',String(open));
         hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');
       };
-      hamb.addEventListener('click',()=>{
+      hamb.addEventListener('click',event=>{
+        // The original outside-click handler only recognizes #hamb. Forward
+        // the click there without also treating this visible button as outside.
+        event.stopPropagation();
         if(oldHamb){oldHamb.click();syncMenu();return;}
         if(!menu)return;
         const open=!menu.classList.contains('open');
