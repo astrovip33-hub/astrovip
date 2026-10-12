@@ -6,8 +6,9 @@
     "build:swiss-only": "node scripts/build-swiss-browser.mjs",
     "build:premium": "node scripts/build-premium-v9.mjs",
     "inject:premium": "python3 scripts/inject-premium-v9.py",
+    "fix:profilepage-datetime": "node scripts/fix-profilepage-datetime.mjs",
     "build:swiss": "npm run build:swiss-only && npm run build:premium && npm run inject:premium",
-    "build": "npm run build:swiss"
+    "build": "npm run fix:profilepage-datetime && npm run build:swiss"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.76.1",
