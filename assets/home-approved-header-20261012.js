@@ -1,0 +1,81 @@
+(()=>{
+  'use strict';
+  if(location.pathname!=='/'&&location.pathname!=='')return;
+
+  const mobile=()=>window.matchMedia('(max-width:820px)').matches;
+
+  const installMobileApproved=()=>{
+    if(!mobile()||document.getElementById('av-mobile-approved-header'))return;
+
+    const header=document.querySelector('header.top');
+    const oldBrand=header?.querySelector('.brand.av-brand-premium');
+    const oldLogo=oldBrand?.querySelector('.av-brand-logo');
+    const oldFlags=[...(header?.querySelectorAll('.av-lang-switch>a')||[])];
+    const oldChat=header?.querySelector('.avchat-launcher.avchat-header-slot');
+    const oldHamb=header?.querySelector('#hamb');
+    const menu=header?.querySelector('#menu');
+    const backdrop=header?.querySelector('.av-pro-backdrop');
+
+    if(header&&!document.getElementById('av-mobile-approved-header')){
+      const approvedHeader=document.createElement('div');
+      approvedHeader.id='av-mobile-approved-header';
+      approvedHeader.setAttribute('aria-label','Header AstroVip mobil');
+
+      const logoLink=document.createElement('a');
+      logoLink.className='avm-logo';
+      logoLink.href='/';
+      logoLink.setAttribute('aria-label','AstroVip - Acasă');
+      if(oldLogo)logoLink.appendChild(oldLogo.cloneNode(true));
+      else logoLink.textContent='ASTROVIP';
+
+      const flags=document.createElement('nav');
+      flags.className='avm-flags';
+      flags.setAttribute('aria-label','Alege limba');
+      oldFlags.slice(0,7).forEach(a=>{
+        const c=a.cloneNode(true);
+        c.className='';
+        c.removeAttribute('style');
+        flags.appendChild(c);
+      });
+
+      const chat=document.createElement('button');
+      chat.className='avm-chat';
+      chat.type='button';
+      chat.innerHTML='<span aria-hidden="true"></span><b>CHAT</b>';
+      chat.setAttribute('aria-label','Deschide AstroVip Chat');
+      chat.addEventListener('click',()=>header.querySelector('.avchat-launcher.avchat-header-slot')?.click());
+
+      const hamb=document.createElement('button');
+      hamb.className='avm-hamb';
+      hamb.type='button';
+      hamb.setAttribute('aria-label','Deschide meniul');
+      hamb.setAttribute('aria-expanded','false');
+      hamb.innerHTML='<i></i><i></i><i></i>';
+      const syncMenu=()=>{
+        const open=menu?.classList.contains('open')||false;
+        hamb.setAttribute('aria-expanded',String(open));
+        hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');
+      };
+      hamb.addEventListener('click',event=>{
+        // The original outside-click handler only recognizes #hamb. Forward
+        // the click there without also treating this visible button as outside.
+        event.stopPropagation();
+        if(oldHamb){oldHamb.click();syncMenu();return;}
+        if(!menu)return;
+        const open=!menu.classList.contains('open');
+        menu.classList.toggle('open',open);
+        if(open)menu.removeAttribute('inert'); else menu.setAttribute('inert','');
+        if(backdrop)backdrop.hidden=!open;
+        syncMenu();
+      });
+      if(menu)new MutationObserver(syncMenu).observe(menu,{attributes:true,attributeFilter:['class']});
+
+      approvedHeader.append(logoLink,flags,chat,hamb);
+      header.appendChild(approvedHeader);
+      document.documentElement.classList.add('av-mobile-approved');
+    }
+
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installMobileApproved,{once:true});
+  else installMobileApproved();
+})();

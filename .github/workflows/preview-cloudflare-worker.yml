@@ -105,6 +105,20 @@ jobs:
           test "$READY" = "1"
           echo "Preview live: $URL"
 
+      - name: Verify approved homepage before production
+        if: startsWith(github.ref, 'refs/heads/fix/home-render-20261012')
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.56.0
+          npx playwright install --with-deps chromium
+          node scripts/verify-approved-home.mjs https://astrovip-preview-ux-compact.astrovip33.workers.dev/
+
+      - name: Upload approved homepage verification
+        if: always() && startsWith(github.ref, 'refs/heads/fix/home-render-20261012')
+        uses: actions/upload-artifact@v4
+        with:
+          name: approved-home-verification
+          path: /tmp/approved-home-checks/
+
       - name: Verify premium site builder
         shell: bash
         run: |
