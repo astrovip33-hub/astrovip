@@ -4,6 +4,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 
 const candidate = process.argv[2];
 assert(candidate?.startsWith('https://'), 'Pass the deployed preview URL');
+const verificationUrl = new URL(candidate);
+verificationUrl.searchParams.set('verify_home', process.env.GITHUB_SHA || '20261012-ssr4');
 await mkdir('/tmp/approved-home-checks', { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const results = [];
@@ -28,9 +30,10 @@ try {
     });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    const response = await page.goto(candidate, { waitUntil: 'load', timeout: 90000 });
+    const response = await page.goto(verificationUrl.href, { waitUntil: 'load', timeout: 90000 });
     const html = await response.text();
     assert(html.includes('astrovip-ultra-critical-v9-20261012'), 'Wrong Worker served');
+    assert(html.includes('name="astrovip-home-render" content="20261012-ssr4"'), 'Stale Worker served');
     assert.equal((html.match(/id="av-mobile-approved-home"/g) || []).length, 1);
     assert.equal((html.match(/id="av-ultra-home"/g) || []).length, 1);
     assert(!html.includes('src="/assets/home-ultra-production-20261010-v4.js'), 'Old layout runtime remains');
@@ -71,7 +74,7 @@ try {
 
     const noJsContext = await browser.newContext({ viewport: { width, height: 900 }, javaScriptEnabled: false });
     const noJsPage = await noJsContext.newPage();
-    await noJsPage.goto(candidate, { waitUntil: 'load', timeout: 90000 });
+    await noJsPage.goto(verificationUrl.href, { waitUntil: 'load', timeout: 90000 });
     assert(await noJsPage.locator(mobile ? '#av-mobile-approved-home' : '#av-ultra-home').isVisible(), 'Approved layout still depends on JavaScript');
     await noJsContext.close();
   }
