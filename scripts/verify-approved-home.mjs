@@ -11,6 +11,21 @@ try {
   for (const width of [390, 820, 1363]) {
     const context = await browser.newContext({ viewport: { width, height: 900 } });
     const page = await context.newPage();
+    await page.addInitScript(() => {
+      window.__approvedLayoutShifts = [];
+      new PerformanceObserver(list => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) window.__approvedLayoutShifts.push({
+            value: entry.value,
+            sources: entry.sources.map(source => ({
+              tag: source.node?.tagName, id: source.node?.id,
+              className: String(source.node?.className || '').slice(0, 160),
+              before: source.previousRect, after: source.currentRect
+            }))
+          });
+        }
+      }).observe({ type: 'layout-shift', buffered: true });
+    });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     const response = await page.goto(candidate, { waitUntil: 'load', timeout: 90000 });
@@ -19,6 +34,9 @@ try {
     assert.equal((html.match(/id="av-mobile-approved-home"/g) || []).length, 1);
     assert.equal((html.match(/id="av-ultra-home"/g) || []).length, 1);
     assert(!html.includes('src="/assets/home-ultra-production-20261010-v4.js'), 'Old layout runtime remains');
+    await page.waitForTimeout(2200);
+    const shifts = await page.evaluate(() => window.__approvedLayoutShifts);
+    console.log('INITIAL_LAYOUT_SHIFTS', width, JSON.stringify(shifts));
     const reject = page.getByRole('button', { name: 'Respinge opționale', exact: true });
     if (await reject.isVisible()) await reject.click();
     const mobile = width <= 820;
