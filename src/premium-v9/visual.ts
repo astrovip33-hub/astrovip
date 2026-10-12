@@ -1,16 +1,16 @@
-import gsap from 'gsap';
-import * as THREE from 'three';
-
-export function initMotion() {
+export async function initMotion() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const nodes = Array.from(document.querySelectorAll<HTMLElement>('.card,.service-card,.case-card,.hero-card,.av-card'));
+  const hero = document.querySelector<HTMLElement>('h1');
+  if (!nodes.length && !hero) return;
+
+  const { default: gsap } = await import('gsap');
   if (nodes.length) {
     gsap.fromTo(nodes.slice(0, 24),
       { opacity: 0, y: 18 },
       { opacity: 1, y: 0, duration: .65, stagger: .045, ease: 'power2.out', clearProps: 'transform' }
     );
   }
-  const hero = document.querySelector<HTMLElement>('h1');
   if (hero) gsap.fromTo(hero, { opacity: .55, y: 8 }, { opacity: 1, y: 0, duration: .8, ease: 'power3.out' });
 }
 
@@ -27,16 +27,22 @@ export function initViewTransitions() {
   }, { capture: true });
 }
 
-export function initWebGLHero() {
+export async function initWebGLHero() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (document.getElementById('av-v9-webgl')) return;
 
+  const connection = (navigator as any).connection;
+  const memory = Number((navigator as any).deviceMemory || 0);
+  const cores = Number(navigator.hardwareConcurrency || 0);
+  if (innerWidth < 821 || connection?.saveData || (memory && memory < 4) || (cores && cores < 4)) return;
+
+  const THREE = await import('three');
   const canvas = document.createElement('canvas');
   canvas.id = 'av-v9-webgl';
   canvas.setAttribute('aria-hidden', 'true');
   document.body.prepend(canvas);
 
-  let renderer: THREE.WebGLRenderer;
+  let renderer: InstanceType<typeof THREE.WebGLRenderer>;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
   } catch {
@@ -59,7 +65,7 @@ export function initWebGLHero() {
     group.add(ring);
   }
 
-  const starCount = innerWidth < 700 ? 90 : 180;
+  const starCount = 180;
   const positions = new Float32Array(starCount * 3);
   for (let i = 0; i < starCount * 3; i += 3) {
     positions[i] = (Math.random() - .5) * 11;
@@ -102,5 +108,6 @@ export function initWebGLHero() {
     observer.disconnect();
     renderer.dispose();
     geometry.dispose();
+    ringMaterial.dispose();
   }, { once: true });
 }

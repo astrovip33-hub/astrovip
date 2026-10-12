@@ -1,8 +1,25 @@
-import { loadFeatureFlags, track } from './data';
-import { initExperiments } from './experiments';
-import { initConcierge } from './concierge';
-import { initMotion, initViewTransitions, initWebGLHero } from './visual';
-import { initObservability } from './observability';
+function runWhenIdle(task: () => void | Promise<void>, timeout = 2200) {
+  const idle = (window as any).requestIdleCallback as ((cb: () => void, options?: { timeout: number }) => number) | undefined;
+  if (typeof idle === 'function') idle(() => { void task(); }, { timeout });
+  else window.setTimeout(() => { void task(); }, Math.min(timeout, 900));
+}
+
+function runAfterLoad(task: () => void | Promise<void>, timeout = 1800) {
+  const schedule = () => runWhenIdle(task, timeout);
+  if (document.readyState === 'complete') schedule();
+  else addEventListener('load', schedule, { once: true });
+}
+
+function trackDeferred(eventName: string, properties: Record<string, unknown> = {}) {
+  runWhenIdle(async () => {
+    try {
+      const { track } = await import('./data');
+      await track(eventName, properties);
+    } catch {
+      // Tracking is progressive enhancement and must never delay interaction.
+    }
+  }, 1200);
+}
 
 function instrumentClicks() {
   document.addEventListener('click', (event) => {
@@ -10,16 +27,16 @@ function instrumentClicks() {
     if (!element) return;
     const href = element instanceof HTMLAnchorElement ? element.href : '';
     const text = (element.textContent || '').trim().slice(0, 80);
-    if (/wa\.me|whatsapp/i.test(href)) track('whatsapp_click', { href });
-    else if (/stripe|checkout|plată|plateste|plătește/i.test(`${href} ${text}`)) track('checkout_start', { href, text });
-    else if (/program|rezerv|booking/i.test(`${href} ${text}`)) track('booking_start', { href, text });
-    else if (element.matches('[data-av-track]')) track(element.getAttribute('data-av-track') || 'ui_click', { text });
-  }, { capture: true });
+    if (/wa\.me|whatsapp/i.test(href)) trackDeferred('whatsapp_click', { href });
+    else if (/stripe|checkout|plată|plateste|plătește/i.test(`${href} ${text}`)) trackDeferred('checkout_start', { href, text });
+    else if (/program|rezerv|booking/i.test(`${href} ${text}`)) trackDeferred('booking_start', { href, text });
+    else if (element.matches('[data-av-track]')) trackDeferred(element.getAttribute('data-av-track') || 'ui_click', { text });
+  }, { capture: true, passive: true });
 }
 
 function registerPwa() {
   if (!('serviceWorker' in navigator) || location.protocol !== 'https:') return;
-  addEventListener('load', () => navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {}), { once: true });
+  runWhenIdle(() => navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {}), 3000);
 }
 
 function addRuntimeBadge() {
@@ -27,19 +44,56 @@ function addRuntimeBadge() {
   document.documentElement.dataset.avRuntime = '9';
 }
 
-async function boot() {
-  addRuntimeBadge();
-  const flags = await loadFeatureFlags();
-  instrumentClicks();
-  initObservability();
-  track('page_view_v9', { title: document.title, lang: document.documentElement.lang || 'ro' });
+function richVisualsAllowed() {
+  const connection = (navigator as any).connection;
+  const memory = Number((navigator as any).deviceMemory || 0);
+  const cores = Number(navigator.hardwareConcurrency || 0);
+  return innerWidth >= 821
+    && !matchMedia('(prefers-reduced-motion: reduce)').matches
+    && !connection?.saveData
+    && (!memory || memory >= 4)
+    && (!cores || cores >= 4);
+}
 
-  if (flags.view_transitions !== false) initViewTransitions();
-  initMotion();
-  if (flags.webgl_hero !== false) initWebGLHero();
-  if (flags.ab_testing !== false) initExperiments();
-  if (flags.ai_concierge !== false) initConcierge();
+async function bootDeferredEnhancements() {
+  let flags: Record<string, boolean> = {};
+
+  try {
+    const data = await import('./data');
+    flags = await data.loadFeatureFlags().catch(() => ({}));
+    void data.track('page_view_v9', { title: document.title, lang: document.documentElement.lang || 'ro' });
+  } catch {
+    // Remote flags and first-party analytics must never block the page.
+  }
+
   if (flags.pwa !== false) registerPwa();
+
+  void import('./observability').then(({ initObservability }) => initObservability()).catch(() => {});
+
+  const allowRichVisuals = richVisualsAllowed();
+  if (flags.view_transitions !== false || flags.webgl_hero !== false || allowRichVisuals) {
+    void import('./visual').then(({ initMotion, initViewTransitions, initWebGLHero }) => {
+      if (flags.view_transitions !== false) initViewTransitions();
+      if (allowRichVisuals) void initMotion();
+      if (flags.webgl_hero !== false && allowRichVisuals) void initWebGLHero();
+    }).catch(() => {});
+  }
+
+  if (flags.ab_testing !== false) {
+    void import('./experiments').then(({ initExperiments }) => initExperiments()).catch(() => {});
+  }
+
+  if (flags.ai_concierge !== false) {
+    void import('./concierge').then(({ initConcierge }) => initConcierge()).catch(() => {});
+  }
+}
+
+function boot() {
+  addRuntimeBadge();
+  instrumentClicks();
+
+  // Keep the first paint/LCP path free of Supabase, experiments, AI and visual engines.
+  runAfterLoad(bootDeferredEnhancements, 1800);
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
