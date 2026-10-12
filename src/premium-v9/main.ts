@@ -74,8 +74,9 @@ async function bootDeferredEnhancements() {
   if (flags.view_transitions !== false || flags.webgl_hero !== false || allowRichVisuals) {
     void import('./visual').then(({ initMotion, initViewTransitions, initWebGLHero }) => {
       if (flags.view_transitions !== false) initViewTransitions();
-      if (allowRichVisuals) void initMotion();
-      if (flags.webgl_hero !== false && allowRichVisuals) void initWebGLHero();
+      // The homepage is already painted; replaying entry motion moves visible content.
+      if (allowRichVisuals && location.pathname !== '/') void initMotion().catch(() => {});
+      if (flags.webgl_hero !== false && allowRichVisuals) void initWebGLHero().catch(() => {});
     }).catch(() => {});
   }
 
