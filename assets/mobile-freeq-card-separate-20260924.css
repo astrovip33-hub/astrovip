@@ -9,3 +9,6 @@ html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh 
 html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh footer .av-footer-card-actions .av-footer-cta--gold>span,
 html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh footer .av-footer-card--contact .av-footer-whatsapp>span{display:none!important}
 @media(max-width:600px){html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh footer .av-footer-card-actions .av-footer-cta--gold{max-width:160px!important}html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh footer .av-footer-card--contact .av-footer-whatsapp{max-width:120px!important}}
+
+/* Premium compact free-question CTA — 2026-10-13 */
+@media(max-width:600px){html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh footer .av-footer-card-actions .av-footer-mini-link{width:min(78%,320px)!important;min-width:0!important;max-width:320px!important;min-height:42px!important;padding:9px 24px!important;margin-left:auto!important;margin-right:auto!important;justify-content:center!important;border-radius:999px!important;white-space:nowrap!important;flex:0 0 auto!important;box-shadow:0 0 16px rgba(57,255,20,.10)!important}}
