@@ -1,0 +1,42 @@
+name: Preview Homepage Dedupe Check
+
+on:
+  push:
+    branches:
+      - preview/homepage-hard-dedupe-20261013
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify preview homepage has no duplicate hero
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-preview-ux-compact.astrovip33.workers.dev/?dedupe-check=${GITHUB_SHA}"
+          curl -fsSL --retry 12 --retry-delay 3 "$URL" -o /tmp/home.html
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('/tmp/home.html').read_text(encoding='utf-8', errors='ignore')
+          checks = {
+              'mobile_home': html.count('id="av-mobile-approved-home"'),
+              'desktop_hero': len(re.findall(r'<section\s+class="av-pro-hero"', html)),
+              'desktop_title': html.count('id="av-pro-title"'),
+              'preview_marker': html.count('20261013-hard-dedupe-preview'),
+          }
+          print(checks)
+          if checks['mobile_home'] != 1:
+              raise SystemExit(f"Expected exactly 1 mobile homepage block, found {checks['mobile_home']}")
+          if checks['desktop_hero'] != 1:
+              raise SystemExit(f"Expected exactly 1 desktop hero, found {checks['desktop_hero']}")
+          if checks['desktop_title'] != 1:
+              raise SystemExit(f"Expected exactly 1 desktop hero title, found {checks['desktop_title']}")
+          if checks['preview_marker'] < 1:
+              raise SystemExit('Preview marker not found; stale preview may be served')
+          print('Homepage dedupe preview verified: exactly one desktop hero and one mobile homepage block.')
+          PY
