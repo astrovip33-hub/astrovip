@@ -13,6 +13,8 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Install Chromium
         run: |
           npm install --no-save playwright@1.56.0
@@ -21,7 +23,7 @@ jobs:
       - name: Audit rendered mobile homepage
         shell: bash
         run: |
-          cat > /tmp/audit-preview.mjs <<'JS'
+          cat > .audit-preview.mjs <<'JS'
           import { chromium } from 'playwright';
           const url='https://astrovip-preview-ux-compact.astrovip33.workers.dev/?visual-audit='+Date.now();
           const browser=await chromium.launch({headless:true});
@@ -39,15 +41,16 @@ jobs:
             }).filter(x=>x.display!=='none'&&x.visibility!=='hidden'&&x.h>1);
           });
           console.log('VISIBLE_MAIN_CHILDREN='+JSON.stringify(rows,null,2));
-          const candidates=await page.evaluate(()=>[...document.querySelectorAll('section,div')].map(el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);return {tag:el.tagName.toLowerCase(),id:el.id||'',cls:String(el.className||''),display:s.display,visibility:s.visibility,y:+r.y.toFixed(1),h:+r.height.toFixed(1),text:(el.innerText||'').replace(/\s+/g,' ').trim().slice(0,140)}}).filter(x=>x.display!=='none'&&x.visibility!=='hidden'&&x.h>80&&(/hero|home|v63|banner|premium/i.test(x.id+' '+x.cls)||/ASTROLOGIE PREMIUM|CUNOȘTI MOMENTUL|TRĂIEȘTI VIITORUL/i.test(x.text))).slice(0,40));
+          const candidates=await page.evaluate(()=>[...document.querySelectorAll('section,div')].map(el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);return {tag:el.tagName.toLowerCase(),id:el.id||'',cls:String(el.className||''),display:s.display,visibility:s.visibility,y:+r.y.toFixed(1),h:+r.height.toFixed(1),text:(el.innerText||'').replace(/\s+/g,' ').trim().slice(0,140)}}).filter(x=>x.display!=='none'&&x.visibility!=='hidden'&&x.h>80&&(/hero|home|v63|banner|premium/i.test(x.id+' '+x.cls)||/ASTROLOGIE PREMIUM|CUNOȘTI MOMENTUL|TRĂIEȘTI VIITORUL/i.test(x.text))).slice(0,50));
           console.log('VISIBLE_HERO_LIKE='+JSON.stringify(candidates,null,2));
-          await page.screenshot({path:'/tmp/preview-mobile.png',fullPage:true});
+          await page.screenshot({path:'preview-mobile.png',fullPage:true});
           await browser.close();
           JS
-          node /tmp/audit-preview.mjs
+          node .audit-preview.mjs
 
       - name: Upload screenshot
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: preview-mobile-visual-audit
-          path: /tmp/preview-mobile.png
+          path: preview-mobile.png
