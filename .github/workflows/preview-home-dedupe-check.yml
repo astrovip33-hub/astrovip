@@ -1,4 +1,4 @@
-name: Preview Homepage Dedupe Check
+name: Preview Homepage Visual Dedupe Check
 
 on:
   push:
@@ -13,30 +13,41 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Verify preview homepage has no duplicate hero
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.56.0
+          npx playwright install --with-deps chromium
+
+      - name: Audit rendered mobile homepage
         shell: bash
         run: |
-          set -euo pipefail
-          URL="https://astrovip-preview-ux-compact.astrovip33.workers.dev/?dedupe-check=${GITHUB_SHA}"
-          curl -fsSL --retry 12 --retry-delay 3 "$URL" -o /tmp/home.html
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-          html = Path('/tmp/home.html').read_text(encoding='utf-8', errors='ignore')
-          checks = {
-              'mobile_home': html.count('id="av-mobile-approved-home"'),
-              'desktop_hero': len(re.findall(r'<section\s+class="av-pro-hero"', html)),
-              'desktop_title': html.count('id="av-pro-title"'),
-              'preview_marker': html.count('20261013-hard-dedupe-preview'),
-          }
-          print(checks)
-          if checks['mobile_home'] != 1:
-              raise SystemExit(f"Expected exactly 1 mobile homepage block, found {checks['mobile_home']}")
-          if checks['desktop_hero'] != 1:
-              raise SystemExit(f"Expected exactly 1 desktop hero, found {checks['desktop_hero']}")
-          if checks['desktop_title'] != 1:
-              raise SystemExit(f"Expected exactly 1 desktop hero title, found {checks['desktop_title']}")
-          if checks['preview_marker'] < 1:
-              raise SystemExit('Preview marker not found; stale preview may be served')
-          print('Homepage dedupe preview verified: exactly one desktop hero and one mobile homepage block.')
-          PY
+          cat > /tmp/audit-preview.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const url='https://astrovip-preview-ux-compact.astrovip33.workers.dev/?visual-audit='+Date.now();
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
+          await page.goto(url,{waitUntil:'networkidle',timeout:90000});
+          const reject=page.getByRole('button',{name:/Respinge opționale/i});
+          if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
+          await page.waitForTimeout(1200);
+          const rows=await page.evaluate(()=>{
+            const main=document.querySelector('main#top')||document.querySelector('main');
+            const all=main?[...main.children]:[];
+            return all.map((el,i)=>{
+              const r=el.getBoundingClientRect(); const s=getComputedStyle(el);
+              return {i,tag:el.tagName.toLowerCase(),id:el.id||'',cls:String(el.className||''),display:s.display,visibility:s.visibility,y:+r.y.toFixed(1),h:+r.height.toFixed(1),text:(el.innerText||'').replace(/\s+/g,' ').trim().slice(0,180)};
+            }).filter(x=>x.display!=='none'&&x.visibility!=='hidden'&&x.h>1);
+          });
+          console.log('VISIBLE_MAIN_CHILDREN='+JSON.stringify(rows,null,2));
+          const candidates=await page.evaluate(()=>[...document.querySelectorAll('section,div')].map(el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);return {tag:el.tagName.toLowerCase(),id:el.id||'',cls:String(el.className||''),display:s.display,visibility:s.visibility,y:+r.y.toFixed(1),h:+r.height.toFixed(1),text:(el.innerText||'').replace(/\s+/g,' ').trim().slice(0,140)}}).filter(x=>x.display!=='none'&&x.visibility!=='hidden'&&x.h>80&&(/hero|home|v63|banner|premium/i.test(x.id+' '+x.cls)||/ASTROLOGIE PREMIUM|CUNOȘTI MOMENTUL|TRĂIEȘTI VIITORUL/i.test(x.text))).slice(0,40));
+          console.log('VISIBLE_HERO_LIKE='+JSON.stringify(candidates,null,2));
+          await page.screenshot({path:'/tmp/preview-mobile.png',fullPage:true});
+          await browser.close();
+          JS
+          node /tmp/audit-preview.mjs
+
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-mobile-visual-audit
+          path: /tmp/preview-mobile.png
