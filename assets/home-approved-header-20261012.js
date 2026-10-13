@@ -4,6 +4,14 @@
 
   const mobile=()=>window.matchMedia('(max-width:820px)').matches;
 
+  const installCheckoutPayLabel=()=>{
+    const pay=document.getElementById('bookingSubmit');
+    if(!pay)return;
+    pay.textContent='PLĂTEȘTE CU CARDUL · 500 LEI →';
+    pay.setAttribute('aria-label','Plătește cu cardul 500 lei prin Stripe');
+    pay.setAttribute('title','Plată securizată prin Stripe');
+  };
+
   const installMobileApproved=()=>{
     if(!mobile()||document.getElementById('av-mobile-approved-header'))return;
 
@@ -76,6 +84,12 @@
     }
 
   };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installMobileApproved,{once:true});
-  else installMobileApproved();
+
+  const install=()=>{
+    installCheckoutPayLabel();
+    installMobileApproved();
+  };
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});
+  else install();
 })();
