@@ -1,10 +1,16 @@
 import baseWorker from './worker.js';
 import { mobileHome, mobileStyles, cardlessStyles } from './homepage-approved-layout.js';
 
-const HOMEPAGE_CRITICAL=`<meta name="astrovip-home-render" content="20261013-hard-dedupe-preview"><link rel="stylesheet" href="/assets/ux-refresh-20261008.css?v=20261008-header1"><style id="astrovip-cardless-premium-home-20261010">${cardlessStyles}</style><style id="astrovip-ultra-critical-v9-20261012">
+const HOMEPAGE_CRITICAL=`<meta name="astrovip-home-render" content="20261013-hard-mobile-main-only-preview2"><link rel="stylesheet" href="/assets/ux-refresh-20261008.css?v=20261008-header1"><style id="astrovip-cardless-premium-home-20261010">${cardlessStyles}</style><style id="astrovip-ultra-critical-v9-20261012">
 html body:not(.guide-page) #intrebare-gratuita,html body:not(.guide-page) #cine-analizeaza-harta,html body:not(.guide-page) #servicii,html body:not(.guide-page) #studii-de-caz-home,html body:not(.guide-page) #recenzii-google,html body:not(.guide-page) #oferte,html body:not(.guide-page) #programari,html body:not(.guide-page) #intrebari-frecvente,html body:not(.guide-page) #contact,html body:not(.guide-page) .trust-refs,html body:not(.guide-page) .av-directory,html body:not(.guide-page) .av-v9-tools{display:none!important}
 html body:not(.guide-page) footer .av-footer-card--services{display:none!important}
-${mobileStyles}</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=ssr-20261012"><script src="/assets/home-approved-header-20261012.js?v=4" defer></script>`;
+${mobileStyles}
+@media(max-width:820px){
+html.av-ultra-home-production body:not(.guide-page) main#top{display:block!important;width:100%!important;max-width:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:visible!important}
+html.av-ultra-home-production body:not(.guide-page) main#top>*:not(#av-mobile-approved-home):not(style):not(script){display:none!important;margin:0!important;padding:0!important;min-height:0!important;height:0!important;overflow:hidden!important}
+html.av-ultra-home-production body:not(.guide-page) main#top>#av-mobile-approved-home{display:block!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important}
+}
+</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=ssr-20261012"><script src="/assets/home-approved-header-20261012.js?v=4" defer></script>`;
 
 export default {
   async fetch(request,env,ctx){
