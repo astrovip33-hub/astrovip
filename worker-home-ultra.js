@@ -24,7 +24,7 @@ ${mobileStyles}
 #av-mobile-approved-header .avm-logo img{display:block!important;width:100%!important;height:auto!important;aspect-ratio:3/1!important;object-fit:cover!important;object-position:center!important;margin:0!important;padding:0!important;border:0!important}
 #av-mobile-approved-header .avm-logo svg{display:none!important}
 #av-mobile-approved-header .avm-chat,#av-mobile-approved-header .avm-flags{display:none!important}
-#av-mobile-approved-header .avm-hamb{position:absolute!important;right:4.5%!important;top:50%!important;transform:translateY(-50%)!important;width:52px!important;height:52px!important;z-index:10!important;opacity:0!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important}
+#av-mobile-approved-header .avm-hamb{position:absolute!important;right:3.5%!important;top:50%!important;transform:translateY(-50%)!important;width:58px!important;height:58px!important;z-index:999!important;opacity:.01!important;margin:0!important;padding:0!important;border:0!important;background:#fff!important;pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important}
 #av-mobile-approved-header .avm-flags{position:relative!important;display:flex!important;width:38px!important;height:38px!important;overflow:visible!important}
 #av-mobile-approved-header .avm-flags a{display:none!important}
 #av-mobile-approved-header .avm-flags a:first-child{display:block!important;flex:0 0 38px!important;width:38px!important;height:38px!important;padding:5px!important;border:1px solid rgba(231,198,106,.48)!important;border-radius:50%!important;background:#070b08!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 14px rgba(231,198,106,.06)!important;box-sizing:border-box!important}
@@ -74,7 +74,7 @@ html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-count-v7{display:block!important;min-width:38px!important;color:#f5dfa0!important;font:900 11px/1 Inter,system-ui,sans-serif!important;letter-spacing:.08em!important;text-align:center!important;white-space:nowrap!important}
 }
 @media(min-width:821px){#studii-de-caz-home .av-case-mobile-nav-v7{display:none!important}}
-</style><script src="/assets/home-approved-header-20261012.js?v=10" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
+</style><script src="/assets/home-approved-header-20261012.js?v=11" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
 
 export default {
   async fetch(request,env,ctx){
