@@ -20,7 +20,7 @@ html.av-ultra-home-production body:not(.guide-page) main#top>*:not(#av-mobile-ap
 html.av-ultra-home-production body:not(.guide-page) main#top>#av-mobile-approved-home{display:block!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important}
 }
 @media(min-width:821px) and (max-width:980px){.av-home-paybar-inner{align-items:flex-start;flex-direction:column}.av-home-paybar-inner>a{width:100%}}
-</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=ssr-20261012"><script src="/assets/home-approved-header-20261012.js?v=4" defer></script>`;
+</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=ssr-20261012"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=1"><script src="/assets/home-approved-header-20261012.js?v=4" defer></script>`;
 
 export default {
   async fetch(request,env,ctx){
