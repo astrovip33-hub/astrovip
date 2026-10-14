@@ -41,11 +41,7 @@
       logoLink.className='avm-logo';
       logoLink.href='/';
       logoLink.setAttribute('aria-label','AstroVip - Acasă');
-      const premiumLogo=document.createElement('img');
-      premiumLogo.src='/assets/astrovip-header-final.png';
-      premiumLogo.alt='AstroVip — Timing-ul contează!';
-      premiumLogo.width=1536; premiumLogo.height=512; premiumLogo.decoding='async'; premiumLogo.fetchPriority='high';
-      logoLink.appendChild(premiumLogo);
+      logoLink.innerHTML='<span class="av-clean-wordmark"><b>AV</b><span><strong>ASTROVIP</strong><small>TIMING-UL CONTEAZA!</small></span></span>';
 
       const flags=document.createElement('nav');
       flags.className='avm-flags';
