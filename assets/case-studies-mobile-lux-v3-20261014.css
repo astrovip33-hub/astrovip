@@ -1,0 +1,39 @@
+@media (max-width:820px){
+  body:not(.guide-page) #studii-de-caz-home{position:relative}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame{position:relative;overflow:hidden!important;padding:20px 0 16px!important;border:1px solid rgba(225,196,92,.32)!important;border-radius:28px!important;background:radial-gradient(circle at 50% -10%,rgba(216,245,0,.11),transparent 34%),radial-gradient(circle at 92% 10%,rgba(57,255,20,.07),transparent 24%),linear-gradient(180deg,#06110f 0%,#040b09 100%)!important;box-shadow:0 28px 70px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(57,255,20,.06)!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame:before{content:"";position:absolute;inset:0 14% auto;height:1px;background:linear-gradient(90deg,transparent,rgba(241,213,112,.95),rgba(57,255,20,.8),rgba(241,213,112,.95),transparent);box-shadow:0 0 14px rgba(216,245,0,.18);pointer-events:none}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame:after{content:"GLISEAZĂ  •  3 STUDII";display:block;margin:9px auto 0;width:max-content;max-width:88%;font-size:9px;font-weight:900;letter-spacing:.18em;color:rgba(244,239,205,.64);text-transform:uppercase}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-head{padding:0 18px!important;margin-bottom:15px!important;text-align:center!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-head h2{margin-bottom:7px!important;line-height:1.04!important;color:#fffdf1!important;text-shadow:0 0 18px rgba(216,245,0,.14)!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-head p{max-width:34rem;margin-inline:auto!important;color:rgba(238,246,239,.74)!important}
+
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{display:flex!important;grid-template-columns:none!important;gap:14px!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:6%!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important;padding:4px 6% 16px!important;margin:0!important;scrollbar-width:none!important;touch-action:pan-x pan-y!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid::-webkit-scrollbar{display:none!important}
+
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{position:relative;flex:0 0 88%!important;min-width:0!important;max-width:390px!important;scroll-snap-align:center!important;scroll-snap-stop:always!important;border:1px solid rgba(226,195,84,.52)!important;border-radius:24px!important;overflow:hidden!important;background:linear-gradient(180deg,rgba(11,24,20,.995),rgba(5,12,10,.995))!important;box-shadow:0 22px 44px rgba(0,0,0,.54),0 0 0 1px rgba(57,255,20,.11),0 0 28px rgba(216,245,0,.08)!important;transform:translateZ(0)!important;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card:before{content:"";position:absolute;z-index:3;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent 3%,#e8c95e 30%,#39ff14 50%,#e8c95e 70%,transparent 97%);opacity:.9;pointer-events:none}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card:after{content:"ASTROVIP • CASE STUDY";position:absolute;z-index:4;top:12px;left:12px;padding:6px 9px;border:1px solid rgba(232,201,94,.38);border-radius:999px;background:rgba(3,10,8,.74);backdrop-filter:blur(8px);font-size:8px;font-weight:950;letter-spacing:.13em;color:#f6e7a7;text-transform:uppercase;box-shadow:0 8px 18px rgba(0,0,0,.34)}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card:active{transform:scale(.992)!important}
+
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual{position:relative;aspect-ratio:16/10!important;overflow:hidden!important;background:#07110e!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 52%,rgba(3,8,7,.12) 72%,rgba(3,8,7,.72) 100%);pointer-events:none}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual img{width:100%!important;height:100%!important;object-fit:cover!important;transform:scale(1.015);filter:saturate(1.06) contrast(1.04) brightness(.98)!important}
+
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy{padding:17px 16px 18px!important;background:linear-gradient(180deg,rgba(9,22,18,.86),rgba(5,12,10,.99))!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy h3{margin:0 0 8px!important;font-size:clamp(18px,5vw,22px)!important;line-height:1.14!important;color:#fffdf0!important;letter-spacing:-.01em!important;text-shadow:0 0 14px rgba(216,245,0,.08)!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy p{margin-bottom:0!important;color:rgba(241,247,242,.83)!important;line-height:1.55!important;font-size:14px!important}
+
+  body:not(.guide-page) #studii-de-caz-home .av-case-slider-nav{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;margin:0!important;padding:1px 0 2px!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-slider-dot{appearance:none!important;width:7px!important;height:7px!important;padding:0!important;border:1px solid rgba(232,201,94,.34)!important;border-radius:999px!important;background:rgba(255,255,255,.22)!important;box-shadow:none!important;transition:width .2s ease,background .2s ease,box-shadow .2s ease,border-color .2s ease!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-slider-dot.is-active{width:34px!important;background:linear-gradient(90deg,#e8c95e 0%,#d8f500 46%,#39ff14 100%)!important;border-color:rgba(244,224,135,.88)!important;box-shadow:0 0 12px rgba(57,255,20,.30),0 0 20px rgba(216,245,0,.14)!important}
+}
+
+@media (max-width:430px){
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{gap:12px!important;scroll-padding-inline:5%!important;padding-left:5%!important;padding-right:5%!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{flex-basis:90%!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{scroll-behavior:auto!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{transition:none!important}
+}
