@@ -78,7 +78,17 @@
       });
       if(menu)new MutationObserver(syncMenu).observe(menu,{attributes:true,attributeFilter:['class']});
 
-      approvedHeader.append(logoLink,flags,chat,hamb);
+      approvedHeader.append(logoLink,chat,hamb);
+      const footer=document.querySelector('footer');
+      if(footer&&!document.getElementById('av-footer-languages')){
+        const lang=document.createElement('section');
+        lang.id='av-footer-languages';
+        lang.setAttribute('aria-label','Limba / Language');
+        lang.innerHTML='<strong>LIMBA <span>/ LANGUAGE</span></strong><nav aria-label="Alege limba"></nav>';
+        const nav=lang.querySelector('nav');
+        oldFlags.slice(0,7).forEach(a=>{const c=a.cloneNode(true);c.className='';c.removeAttribute('style');nav.appendChild(c)});
+        footer.appendChild(lang);
+      }
       header.appendChild(approvedHeader);
       document.documentElement.classList.add('av-mobile-approved');
     }
