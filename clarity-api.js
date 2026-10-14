@@ -1,5 +1,6 @@
 const CLARITY_EXPORT_API = 'https://www.clarity.ms/export-data/api/v1/project-live-insights';
 const CLARITY_DIMENSIONS = new Set(['Browser','Device','Country/Region','OS','Source','Medium','Campaign','Channel','URL']);
+const CLARITY_SNAPSHOT_INGEST_URL = 'https://hhzsecdtqacyroxiywpm.supabase.co/functions/v1/clarity-snapshot-ingest';
 
 function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data, null, 2), {
@@ -58,6 +59,39 @@ function summarize(payload) {
     metricBlocks: Array.isArray(payload) ? payload.length : 0,
   };
 }
+
+async function persistSnapshot(env, { projectId, numOfDays, summary, metrics }) {
+  const secret = String(env.CLARITY_SNAPSHOT_INGEST_SECRET || '').trim();
+  if (!secret || !projectId) return { stored: false, reason: 'snapshot_ingest_not_configured' };
+  const capturedAt = new Date().toISOString();
+  const periodHours = numOfDays * 24;
+  const snapshotKey = `${projectId}:${periodHours}:${capturedAt.slice(0, 13)}`;
+  try {
+    const response = await fetch(CLARITY_SNAPSHOT_INGEST_URL, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-astrovip-ingest-secret': secret,
+      },
+      body: JSON.stringify({
+        projectId,
+        periodHours,
+        capturedAt,
+        snapshotKey,
+        source: 'microsoft_clarity_data_export_api',
+        summary,
+        metrics,
+      }),
+      signal: AbortSignal.timeout(12000),
+    });
+    const result = await response.json().catch(() => null);
+    if (!response.ok) return { stored: false, reason: result?.error || `snapshot_http_${response.status}` };
+    return { stored: true, snapshotKey };
+  } catch (e) {
+    return { stored: false, reason: String(e?.message || e).slice(0, 120) };
+  }
+}
+
 export async function handleClarity(request, env) {
   const incoming = new URL(request.url);
   if (incoming.pathname !== '/api/command/clarity') return null;
@@ -85,15 +119,20 @@ export async function handleClarity(request, env) {
       if (response.status === 401 || response.status === 403) return json({ ok: false, configured: false, error: 'clarity_api_token_invalid_or_unauthorized' }, 503);
       return json({ ok: false, configured: true, error: `clarity_http_${response.status}` }, 502);
     }
+    const summary = summarize(payload);
+    const projectId = String(env.CLARITY_PROJECT_ID || '').trim() || null;
+    const snapshot = await persistSnapshot(env, { projectId, numOfDays, summary, metrics: payload });
     return json({
       ok: true,
       configured: true,
+      snapshotStored: snapshot.stored,
+      snapshotStatus: snapshot.stored ? 'stored' : snapshot.reason,
       data: {
-        projectId: String(env.CLARITY_PROJECT_ID || '').trim() || null,
+        projectId,
         numOfDays,
         dimensions,
         timezone: 'UTC',
-        summary: summarize(payload),
+        summary,
         metrics: payload,
       },
     });
