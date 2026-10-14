@@ -51,14 +51,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat > /tmp/check-case-slider.cjs <<'NODE'
+          node <<'NODE'
           const puppeteer = require('puppeteer-core');
           const fs = require('fs');
 
           (async () => {
             const executablePath = ['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'].find(p => fs.existsSync(p));
             if (!executablePath) throw new Error('Chrome/Chromium executable not found');
-
             const browser = await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
             const page = await browser.newPage();
             await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
@@ -79,18 +78,12 @@ jobs:
               const nav=s.querySelector('.av-case-mobile-nav-v7');
               const tr=t.getBoundingClientRect(), cr=cards[0].getBoundingClientRect(), nr=nav?.getBoundingClientRect();
               return {
-                marker:s.dataset.avSliderShell,
-                initialized:s.dataset.avSliderV7,
+                marker:s.dataset.avSliderShell, initialized:s.dataset.avSliderV7,
                 sectionHeight:Math.round(s.getBoundingClientRect().height),
-                trackDisplay:getComputedStyle(t).display,
-                overflowX:getComputedStyle(t).overflowX,
-                clientWidth:t.clientWidth,
-                scrollWidth:t.scrollWidth,
-                scrollLeft:Math.round(t.scrollLeft),
-                cards:cards.length,
-                cardRatio:+(cr.width/tr.width).toFixed(3),
-                navDisplay:nav?getComputedStyle(nav).display:'missing',
-                navHeight:nr?Math.round(nr.height):0,
+                trackDisplay:getComputedStyle(t).display, overflowX:getComputedStyle(t).overflowX,
+                clientWidth:t.clientWidth, scrollWidth:t.scrollWidth, scrollLeft:Math.round(t.scrollLeft),
+                cards:cards.length, cardRatio:+(cr.width/tr.width).toFixed(3),
+                navDisplay:nav?getComputedStyle(nav).display:'missing', navHeight:nr?Math.round(nr.height):0,
                 dots:s.querySelectorAll('.av-case-dot-v7').length,
                 activeDots:s.querySelectorAll('.av-case-dot-v7.is-active').length,
                 count:s.querySelector('[data-case-count]')?.textContent?.trim()||''
@@ -116,16 +109,9 @@ jobs:
             await section.screenshot({path:'/tmp/case-slider-mobile-before.png'});
             await page.click('#studii-de-caz-home [data-case-next]');
             await new Promise(r=>setTimeout(r,1200));
-
             const after=await page.evaluate(() => {
-              const s=document.querySelector('#studii-de-caz-home');
-              const t=s.querySelector('.av-case-showcase-grid');
-              return {
-                scrollLeft:Math.round(t.scrollLeft),
-                count:s.querySelector('[data-case-count]')?.textContent?.trim()||'',
-                activeDots:s.querySelectorAll('.av-case-dot-v7.is-active').length,
-                activeIndex:[...s.querySelectorAll('.av-case-dot-v7')].findIndex(x=>x.classList.contains('is-active'))
-              };
+              const s=document.querySelector('#studii-de-caz-home'), t=s.querySelector('.av-case-showcase-grid');
+              return {scrollLeft:Math.round(t.scrollLeft),count:s.querySelector('[data-case-count]')?.textContent?.trim()||'',activeDots:s.querySelectorAll('.av-case-dot-v7.is-active').length,activeIndex:[...s.querySelectorAll('.av-case-dot-v7')].findIndex(x=>x.classList.contains('is-active'))};
             });
             console.log('SLIDER AFTER NEXT',JSON.stringify(after));
             if(after.scrollLeft<=before.scrollLeft+30) errors.push(`NEXT movement=${before.scrollLeft}->${after.scrollLeft}`);
@@ -133,12 +119,10 @@ jobs:
             if(after.activeDots!==1||after.activeIndex!==1) errors.push(`NEXT active=${after.activeDots}/${after.activeIndex}`);
             await section.screenshot({path:'/tmp/case-slider-mobile-after-next.png'});
             await browser.close();
-
             if(errors.length){console.error('LIVE MOBILE SLIDER FAILED:',errors.join(' | '));process.exit(1);}
             console.log(`LIVE MOBILE SLIDER OK: ${before.cards} cards; ratio=${before.cardRatio}; horizontal=${before.clientWidth}->${before.scrollWidth}; NEXT=${before.scrollLeft}->${after.scrollLeft}; count=${after.count}`);
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
-          node /tmp/check-case-slider.cjs
 
       - name: Upload live mobile screenshots
         if: always()
