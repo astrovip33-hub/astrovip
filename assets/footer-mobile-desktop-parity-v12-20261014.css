@@ -1,0 +1,48 @@
+/* AstroVip footer v12 — mobile parity with approved desktop signature */
+@media (max-width:900px){
+  html body:not(.guide-page) footer.foot.av-footer-premium{overflow:hidden!important;padding:20px 0 calc(88px + env(safe-area-inset-bottom))!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium::before{display:none!important;content:none!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .wrap{width:calc(100% - 24px)!important;max-width:520px!important;margin-inline:auto!important;overflow:visible!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-premium-single.av-footer-premium-v2.av-footer-cards-v9{padding:58px 8px 10px!important;overflow:visible!important}
+
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-grid--cards{display:grid!important;grid-template-columns:1fr!important;gap:0!important;padding:6px 0 8px!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-grid--cards>.av-footer-card{width:min(100%,380px)!important;margin-inline:auto!important;padding:16px 0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-grid--cards>.av-footer-card::before,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-grid--cards>.av-footer-card::after,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services::before,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services::after,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact::before,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact::after{content:none!important;display:none!important;width:0!important;height:0!important;border:0!important;background:none!important;box-shadow:none!important}
+
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--brand{align-items:center!important;text-align:center!important;padding-top:10px!important;padding-bottom:20px!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-eyebrow{margin:0 0 6px!important;text-align:center!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-logo{font-size:40px!important;line-height:.96!important;text-align:center!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card-title{margin:12px 0 5px!important;font-size:15px!important;text-align:center!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-experience{margin:0 0 10px!important;text-align:center!important;font-size:11.5px!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-price{margin:2px 0 13px!important;padding:7px 11px!important;font-size:19px!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card-actions{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:8px!important;width:100%!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card-actions .av-footer-cta,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-mini-link{width:auto!important;min-height:40px!important;padding:8px 14px!important}
+
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact{position:relative!important;text-align:left!important;border-top:1px solid rgba(232,199,95,.18)!important;border-left:0!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card-kicker{margin:0 0 6px!important;text-align:left!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-grid--cards .av-footer-column h2{margin:0 0 8px!important;text-align:left!important;font-size:12px!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services>a{min-height:34px!important;padding:5px 0!important;font-size:12px!important;border-bottom:1px solid rgba(255,255,255,.045)!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services>a:last-child{border-bottom:0!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-static,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact>a{justify-content:flex-start!important;min-height:26px!important;margin:0 0 5px!important;font-size:12px!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-whatsapp{display:inline-flex!important;width:auto!important;min-height:38px!important;margin:7px 0 0!important;padding:8px 15px!important;justify-content:flex-start!important;font-size:10px!important}
+
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:7px!important;min-height:116px!important;margin-top:4px!important;padding:64px 0 10px!important;border-top:1px solid rgba(232,199,95,.16)!important;text-align:center!important;overflow:visible!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom::before{content:"Viitorul favorizează oamenii pregătiți."!important;display:block!important;position:absolute!important;top:16px!important;left:0!important;right:0!important;width:auto!important;height:auto!important;color:#f3efe4!important;font:italic 700 17px/1.25 Georgia,"Times New Roman",serif!important;letter-spacing:.025em!important;text-align:center!important;white-space:normal!important;text-shadow:0 0 14px rgba(232,199,95,.12)!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom nav{display:flex!important;justify-content:center!important;gap:8px!important;flex-wrap:wrap!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-disclaimer{max-width:360px!important;margin:6px auto 0!important;font-size:8.5px!important;line-height:1.4!important;text-align:center!important}
+}
+@media (max-width:420px){
+  html body:not(.guide-page) footer.foot.av-footer-premium .wrap{width:calc(100% - 18px)!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-grid--cards>.av-footer-card{width:min(100%,350px)!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-logo{font-size:38px!important}
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card-actions .av-footer-cta,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-mini-link{padding-left:12px!important;padding-right:12px!important;font-size:9.5px!important}
+}
