@@ -36,8 +36,8 @@ ${mobileStyles}
 #av-mobile-approved-header .avm-flags.is-open a img{display:block!important;width:100%!important;height:100%!important;border-radius:50%!important;object-fit:cover!important}
 #av-mobile-approved-header .avm-chat{width:72px!important;height:38px!important;border:1px solid rgba(231,198,106,.56)!important;outline:0!important;border-radius:999px!important;background:linear-gradient(180deg,#11150f,#050806)!important;color:#f8f3e7!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 15px rgba(231,198,106,.06)!important;letter-spacing:.08em!important}
 #av-mobile-approved-header .avm-chat span{background:#39ff14!important;box-shadow:0 0 9px rgba(57,255,20,.75)!important}
-#av-mobile-approved-header .avm-hamb{width:38px!important;height:38px!important;gap:5px!important}
-#av-mobile-approved-header .avm-hamb i{width:25px!important;height:2px!important;background:linear-gradient(90deg,#f0cf67,#39ff14)!important;box-shadow:0 0 7px rgba(57,255,20,.10)!important}
+
+
 @media(max-width:820px){
 #av-footer-languages{display:none}
 @media(max-width:820px){#av-footer-languages{display:block!important;width:calc(100% - 28px)!important;margin:16px auto 78px!important;padding:14px 10px 13px!important;border:1px solid rgba(231,198,106,.48)!important;border-radius:16px!important;background:linear-gradient(145deg,#0b130d,#030604)!important;text-align:center!important}#av-footer-languages>strong{display:block!important;margin:0 0 10px!important;color:#f1d477!important;font:900 10px/1.2 Inter,system-ui,sans-serif!important;letter-spacing:.13em!important}#av-footer-languages nav{display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important}#av-footer-languages nav a{display:block!important;flex:0 0 34px!important;width:34px!important;height:34px!important;padding:4px!important;border:1px solid rgba(231,198,106,.42)!important;border-radius:50%!important;background:#060a07!important;overflow:hidden!important;box-sizing:border-box!important}#av-footer-languages nav img{display:block!important;width:24px!important;height:24px!important;border-radius:50%!important;object-fit:cover!important}#av-footer-languages nav span{display:none!important}
@@ -76,7 +76,7 @@ html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-count-v7{display:block!important;min-width:38px!important;color:#f5dfa0!important;font:900 11px/1 Inter,system-ui,sans-serif!important;letter-spacing:.08em!important;text-align:center!important;white-space:nowrap!important}
 }
 @media(min-width:821px){#studii-de-caz-home .av-case-mobile-nav-v7{display:none!important}}
-</style><script src="/assets/home-approved-header-20261012.js?v=16" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
+</style><script src="/assets/home-approved-header-20261012.js?v=17" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
 
 export default {
   async fetch(request,env,ctx){
