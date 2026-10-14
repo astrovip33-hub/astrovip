@@ -25,8 +25,10 @@
     const backdrop=header?.querySelector('.av-pro-backdrop');
 
     if(header){
+      if(menu)header.appendChild(menu);
+      if(backdrop)header.appendChild(backdrop);
       [...header.children].forEach(el=>{
-        if(el.id!=='av-mobile-approved-header')el.style.setProperty('display','none','important');
+        if(el.id!=='av-mobile-approved-header'&&el!==menu&&el!==backdrop)el.style.setProperty('display','none','important');
       });
     }
 
@@ -74,13 +76,12 @@
         hamb.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul');
       };
       hamb.addEventListener('click',event=>{
-        // The original outside-click handler only recognizes #hamb. Forward
-        // the click there without also treating this visible button as outside.
+        event.preventDefault();
         event.stopPropagation();
-        if(oldHamb){oldHamb.click();syncMenu();return;}
         if(!menu)return;
         const open=!menu.classList.contains('open');
         menu.classList.toggle('open',open);
+        menu.style.setProperty('display',open?'flex':'none','important');
         if(open)menu.removeAttribute('inert'); else menu.setAttribute('inert','');
         if(backdrop)backdrop.hidden=!open;
         syncMenu();
