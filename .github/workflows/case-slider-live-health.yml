@@ -1,0 +1,176 @@
+name: Case studies slider live health
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "worker-home-ultra.js"
+      - "assets/case-studies-slider-v7-20261014.js"
+      - "assets/case-studies-mobile-premium-v6-20261014.css"
+      - "assets/case-studies-slider-lux-v5-20261014.css"
+      - ".github/workflows/case-slider-live-health.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: case-slider-live-health
+  cancel-in-progress: true
+
+jobs:
+  mobile-browser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for V7 live HTML
+        shell: bash
+        run: |
+          set -euo pipefail
+          OK=0
+          for ATTEMPT in $(seq 1 18); do
+            URL="https://astrovip.ro/?case-slider-health=${GITHUB_SHA}&attempt=${ATTEMPT}"
+            HTML=$(curl -fsSL --retry 2 --retry-delay 2 "$URL" || true)
+            if printf '%s' "$HTML" | grep -q 'data-av-slider-shell="v7"' && \
+               printf '%s' "$HTML" | grep -q 'case-studies-slider-v7-20261014.js'; then
+              echo "V7 live HTML detected on attempt ${ATTEMPT}."
+              OK=1
+              break
+            fi
+            echo "V7 not visible yet (${ATTEMPT}/18)."
+            sleep 5
+          done
+          test "$OK" = "1"
+
+      - name: Install browser driver
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
+          npm install --no-save --ignore-scripts puppeteer-core@24.26.1
+
+      - name: Verify live mobile slider interaction
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/check-case-slider.cjs <<'NODE'
+          const puppeteer = require('puppeteer-core');
+          const fs = require('fs');
+
+          (async () => {
+            const executablePath = [
+              '/usr/bin/google-chrome',
+              '/usr/bin/google-chrome-stable',
+              '/usr/bin/chromium',
+              '/usr/bin/chromium-browser'
+            ].find(p => fs.existsSync(p));
+            if (!executablePath) throw new Error('Chrome/Chromium executable not found');
+
+            const browser = await puppeteer.launch({
+              executablePath,
+              headless: true,
+              args: ['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']
+            });
+            const page = await browser.newPage();
+            await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+            await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipSliderHealth/1.0');
+
+            const url = `https://astrovip.ro/?case-slider-browser=${Date.now()}`;
+            await page.goto(url,{waitUntil:'networkidle2',timeout:90000});
+            await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
+            await page.waitForFunction(() => {
+              const section=document.querySelector('#studii-de-caz-home');
+              const cards=section?.querySelectorAll('.av-case-showcase-card')||[];
+              const dots=section?.querySelectorAll('.av-case-dot-v7')||[];
+              return section?.dataset.avSliderShell==='v7' && cards.length>=3 && dots.length===cards.length;
+            },{timeout:30000});
+
+            const before = await page.evaluate(() => {
+              const section=document.querySelector('#studii-de-caz-home');
+              const track=section.querySelector('.av-case-showcase-grid');
+              const cards=[...track.querySelectorAll('.av-case-showcase-card')];
+              const nav=section.querySelector('.av-case-mobile-nav-v7');
+              const count=section.querySelector('[data-case-count]');
+              const s=section.getBoundingClientRect();
+              const t=track.getBoundingClientRect();
+              const c=cards[0].getBoundingClientRect();
+              const n=nav?.getBoundingClientRect();
+              return {
+                marker:section.dataset.avSliderShell,
+                initialized:section.dataset.avSliderV7,
+                sectionHeight:Math.round(s.height),
+                trackDisplay:getComputedStyle(track).display,
+                trackOverflowX:getComputedStyle(track).overflowX,
+                trackClientWidth:track.clientWidth,
+                trackScrollWidth:track.scrollWidth,
+                scrollLeft:track.scrollLeft,
+                cardCount:cards.length,
+                firstCardWidth:Math.round(c.width),
+                firstCardRatio:+(c.width/t.width).toFixed(3),
+                navDisplay:nav?getComputedStyle(nav).display:'missing',
+                navHeight:n?Math.round(n.height):0,
+                dots:section.querySelectorAll('.av-case-dot-v7').length,
+                activeDots:section.querySelectorAll('.av-case-dot-v7.is-active').length,
+                count:count?.textContent?.trim()||''
+              };
+            });
+
+            console.log('SLIDER BEFORE', JSON.stringify(before));
+
+            const errors=[];
+            if(before.marker!=='v7') errors.push(`marker=${before.marker}`);
+            if(before.initialized!=='1') errors.push(`initialized=${before.initialized}`);
+            if(before.sectionHeight<300) errors.push(`sectionHeight=${before.sectionHeight}`);
+            if(before.trackDisplay!=='flex') errors.push(`trackDisplay=${before.trackDisplay}`);
+            if(!['auto','scroll'].includes(before.trackOverflowX)) errors.push(`overflowX=${before.trackOverflowX}`);
+            if(before.trackScrollWidth<=before.trackClientWidth+80) errors.push(`not horizontally scrollable: ${before.trackScrollWidth}/${before.trackClientWidth}`);
+            if(before.cardCount<3) errors.push(`cardCount=${before.cardCount}`);
+            if(before.firstCardRatio<0.70||before.firstCardRatio>0.92) errors.push(`firstCardRatio=${before.firstCardRatio}`);
+            if(before.navDisplay==='none'||before.navDisplay==='missing'||before.navHeight<30) errors.push(`nav=${before.navDisplay}/${before.navHeight}`);
+            if(before.dots!==before.cardCount) errors.push(`dots=${before.dots}, cards=${before.cardCount}`);
+            if(before.activeDots!==1) errors.push(`activeDots=${before.activeDots}`);
+            if(before.count!==`1 / ${before.cardCount}`) errors.push(`count=${before.count}`);
+
+            const sectionHandle=await page.$('#studii-de-caz-home');
+            await sectionHandle.screenshot({path:'/tmp/case-slider-mobile-before.png'});
+
+            await page.click('#studii-de-caz-home [data-case-next]');
+            await new Promise(r=>setTimeout(r,1100));
+
+            const after = await page.evaluate(() => {
+              const section=document.querySelector('#studii-de-caz-home');
+              const track=section.querySelector('.av-case-showcase-grid');
+              return {
+                scrollLeft:Math.round(track.scrollLeft),
+                count:section.querySelector('[data-case-count]')?.textContent?.trim()||'',
+                activeDots:section.querySelectorAll('.av-case-dot-v7.is-active').length,
+                activeIndex:[...section.querySelectorAll('.av-case-dot-v7')].findIndex(x=>x.classList.contains('is-active'))
+              };
+            });
+            console.log('SLIDER AFTER NEXT', JSON.stringify(after));
+
+            if(after.scrollLeft<=before.scrollLeft+30) errors.push(`next did not move track: ${before.scrollLeft}->${after.scrollLeft}`);
+            if(after.count!==`2 / ${before.cardCount}`) errors.push(`next count=${after.count}`);
+            if(after.activeDots!==1||after.activeIndex!==1) errors.push(`next active dot count/index=${after.activeDots}/${after.activeIndex}`);
+
+            await sectionHandle.screenshot({path:'/tmp/case-slider-mobile-after-next.png'});
+            await browser.close();
+
+            if(errors.length){
+              console.error('LIVE MOBILE SLIDER FAILED:', errors.join(' | '));
+              process.exit(1);
+            }
+            console.log(`LIVE MOBILE SLIDER OK: ${before.cardCount} cards, ${before.firstCardRatio} card/track ratio, horizontal ${before.trackClientWidth}->${before.trackScrollWidth}, NEXT ${before.scrollLeft}->${after.scrollLeft}, ${after.count}.`);
+          })().catch(err=>{console.error(err);process.exit(1)});
+          NODE
+          node /tmp/check-case-slider.cjs
+
+      - name: Upload live mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case-slider-live-mobile
+          path: |
+            /tmp/case-slider-mobile-before.png
+            /tmp/case-slider-mobile-after-next.png
+          if-no-files-found: warn
+          retention-days: 7
