@@ -69,7 +69,7 @@
       hamb.type='button';
       hamb.setAttribute('aria-label','Deschide meniul');
       hamb.setAttribute('aria-expanded','false');
-      hamb.innerHTML='<i></i><i></i><i></i>';
+      hamb.innerHTML='<span class="avm-hamb-glow" aria-hidden="true"><i></i><i></i><i></i></span>';
       const syncMenu=()=>{
         const open=menu?.classList.contains('open')||false;
         hamb.setAttribute('aria-expanded',String(open));
