@@ -14,9 +14,11 @@ html body:not(.guide-page) footer .av-footer-card--services{display:none!importa
 .av-home-paybar-inner{width:min(1080px,94%);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 22px;border:1px solid rgba(231,198,106,.48);border-radius:18px;background:linear-gradient(145deg,#0b130d,#040605);box-shadow:0 18px 42px rgba(0,0,0,.34),0 0 25px rgba(46,255,119,.05)}
 .av-home-paybar-inner>div{display:flex;flex-direction:column;gap:3px}.av-home-paybar-inner span{color:#b8ffd4;font:900 11px/1.2 Inter,system-ui,sans-serif;letter-spacing:.09em}.av-home-paybar-inner strong{color:#f6e5aa;font:900 clamp(21px,2.4vw,30px)/1.12 Georgia,'Times New Roman',serif}.av-home-paybar-inner small{color:#c7cec8;font:700 13px/1.35 Inter,system-ui,sans-serif}.av-home-paybar-inner>a{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:13px 22px;border:1px solid #f7dc80;border-radius:999px;background:linear-gradient(180deg,#fff2ac,#e3c35f 52%,#b5852c);color:#171006!important;text-decoration:none;font:950 13px/1.15 Inter,system-ui,sans-serif;letter-spacing:.02em;white-space:nowrap;box-shadow:0 10px 30px rgba(216,174,72,.18),0 0 16px rgba(57,255,20,.08)}
 ${mobileStyles}
+@media(max-width:820px){html.av-mobile-approved body:not(.guide-page) header.top>.wrap,html.av-mobile-approved body:not(.guide-page) header.top>.av-header-language,html.av-mobile-approved body:not(.guide-page) header.top>.av-pro-backdrop,html.av-mobile-approved body:not(.guide-page) header.top>.nav-actions{display:none!important}}
 #av-mobile-approved-header{grid-template-columns:minmax(0,1fr) 42px!important;gap:10px!important;padding:5px 10px!important;background:linear-gradient(180deg,rgba(3,8,5,.98),rgba(2,5,3,.96))!important;border-bottom:1px solid rgba(231,198,106,.48)!important;box-shadow:0 8px 26px rgba(0,0,0,.34),0 1px 0 rgba(57,255,20,.06)!important}
 #av-mobile-approved-header .avm-logo{width:clamp(128px,39vw,158px)!important;height:50px!important}
 #av-mobile-approved-header .avm-logo svg{width:clamp(128px,39vw,158px)!important;max-width:158px!important;filter:drop-shadow(0 0 8px rgba(231,198,106,.10))!important}
+@media(max-width:820px){html.av-mobile-approved body:not(.guide-page) header.top>.wrap,html.av-mobile-approved body:not(.guide-page) header.top>.av-header-language,html.av-mobile-approved body:not(.guide-page) header.top>.av-pro-backdrop,html.av-mobile-approved body:not(.guide-page) header.top>.nav-actions{display:none!important}}
 #av-mobile-approved-header{position:relative!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;padding:0!important;overflow:hidden!important;background:#020503!important}
 #av-mobile-approved-header .avm-logo{display:block!important;width:100%!important;height:auto!important;min-width:0!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important}
 #av-mobile-approved-header .avm-logo img{display:block!important;width:100%!important;height:auto!important;aspect-ratio:3/1!important;object-fit:cover!important;object-position:center!important;margin:0!important;padding:0!important;border:0!important}
@@ -72,7 +74,7 @@ html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-count-v7{display:block!important;min-width:38px!important;color:#f5dfa0!important;font:900 11px/1 Inter,system-ui,sans-serif!important;letter-spacing:.08em!important;text-align:center!important;white-space:nowrap!important}
 }
 @media(min-width:821px){#studii-de-caz-home .av-case-mobile-nav-v7{display:none!important}}
-</style><script src="/assets/home-approved-header-20261012.js?v=9" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
+</style><script src="/assets/home-approved-header-20261012.js?v=10" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
 
 export default {
   async fetch(request,env,ctx){

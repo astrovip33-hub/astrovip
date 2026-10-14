@@ -24,6 +24,12 @@
     const menu=header?.querySelector('#menu');
     const backdrop=header?.querySelector('.av-pro-backdrop');
 
+    if(header){
+      [...header.children].forEach(el=>{
+        if(el.id!=='av-mobile-approved-header')el.style.setProperty('display','none','important');
+      });
+    }
+
     if(header&&!document.getElementById('av-mobile-approved-header')){
       const approvedHeader=document.createElement('div');
       approvedHeader.id='av-mobile-approved-header';
