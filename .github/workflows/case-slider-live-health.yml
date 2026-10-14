@@ -8,6 +8,7 @@ on:
       - "assets/case-studies-slider-v7-20261014.js"
       - "assets/case-studies-mobile-premium-v6-20261014.css"
       - "assets/case-studies-slider-lux-v5-20261014.css"
+      - "assets/home-case-studies-premium-20261014.js"
       - ".github/workflows/case-slider-live-health.yml"
   workflow_dispatch:
 
@@ -22,20 +23,24 @@ jobs:
   mobile-browser:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for V8 live HTML
+      - name: Wait for live slider fix and V8 HTML
         shell: bash
         run: |
           set -euo pipefail
           OK=0
-          for ATTEMPT in $(seq 1 24); do
-            URL="https://astrovip.ro/?case-slider-health=${GITHUB_SHA}&attempt=${ATTEMPT}"
-            HTML=$(curl -fsSL --retry 2 --retry-delay 2 "$URL" || true)
-            if grep -q 'data-av-slider-shell="v8"' <<< "$HTML" && grep -q 'av-case-slider-v8-inline' <<< "$HTML"; then
-              echo "V8 live HTML detected on attempt ${ATTEMPT}."
+          for ATTEMPT in $(seq 1 30); do
+            PAGE_URL="https://astrovip.ro/?case-slider-health=${GITHUB_SHA}&attempt=${ATTEMPT}"
+            ASSET_URL="https://astrovip.ro/assets/home-case-studies-premium-20261014.js?health=${GITHUB_SHA}&attempt=${ATTEMPT}"
+            HTML=$(curl -fsSL --retry 2 --retry-delay 2 "$PAGE_URL" || true)
+            ASSET=$(curl -fsSL --retry 2 --retry-delay 2 "$ASSET_URL" || true)
+            if grep -q 'data-av-slider-shell="v8"' <<< "$HTML" && \
+               grep -q 'av-case-slider-v8-inline' <<< "$HTML" && \
+               grep -q 'Mobile owns a real scalable slider' <<< "$ASSET"; then
+              echo "V8 HTML and mobile-preservation fix are live on attempt ${ATTEMPT}."
               OK=1
               break
             fi
-            echo "V8 not visible yet (${ATTEMPT}/24)."
+            echo "Waiting for V8 + preservation asset (${ATTEMPT}/30)."
             sleep 5
           done
           test "$OK" = "1"
@@ -63,10 +68,9 @@ jobs:
             await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipSliderHealth/1.0');
             page.on('console',msg=>console.log('BROWSER CONSOLE',msg.type(),msg.text()));
             page.on('pageerror',err=>console.log('BROWSER PAGEERROR',err.message));
-            page.on('requestfailed',req=>{if(req.url().includes('case-stud'))console.log('BROWSER REQUEST FAILED',req.url(),req.failure()?.errorText||'')});
             await page.goto(`https://astrovip.ro/?case-slider-browser=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:90000});
             await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
-            await new Promise(r=>setTimeout(r,1800));
+            await new Promise(r=>setTimeout(r,2000));
 
             const read=()=>page.evaluate(() => {
               const s=document.querySelector('#studii-de-caz-home');
@@ -83,7 +87,8 @@ jobs:
                 navDisplay:nav?getComputedStyle(nav).display:'missing', navHeight:nr?Math.round(nr.height):0,
                 dots:s?.querySelectorAll('.av-case-dot-v7').length||0,
                 activeDots:s?.querySelectorAll('.av-case-dot-v7.is-active').length||0,
-                count:s?.querySelector('[data-case-count]')?.textContent?.trim()||''
+                count:s?.querySelector('[data-case-count]')?.textContent?.trim()||'',
+                legacyStatic:s?.querySelectorAll('.av-case-lux-grid').length||0
               };
             });
             const before=await read();
@@ -101,12 +106,13 @@ jobs:
             if(before.dots!==before.cards) errors.push(`dots=${before.dots}/${before.cards}`);
             if(before.activeDots!==1) errors.push(`activeDots=${before.activeDots}`);
             if(before.count!==`1 / ${before.cards}`) errors.push(`count=${before.count}`);
+            if(before.legacyStatic!==0) errors.push(`legacyStatic=${before.legacyStatic}`);
 
             const section=await page.$('#studii-de-caz-home');
             await section.screenshot({path:'/tmp/case-slider-mobile-before.png'});
             if(before.initialized==='1'){
               await page.click('#studii-de-caz-home [data-case-next]');
-              await new Promise(r=>setTimeout(r,1200));
+              await new Promise(r=>setTimeout(r,1400));
             }
             const after=await read();
             console.log('SLIDER AFTER NEXT',JSON.stringify(after));
