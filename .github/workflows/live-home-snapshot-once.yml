@@ -1,4 +1,4 @@
-# trigger 2026-10-07T17:23+03:00
+# trigger 2026-10-14 footer-v13-live
 name: Live homepage snapshot once
 
 on:
@@ -19,7 +19,7 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.0
           npx playwright install --with-deps chromium
-      - name: Capture live homepage
+      - name: Capture live footer
         run: |
           cat > .live-snapshot.mjs <<'JS'
           import { chromium } from 'playwright';
@@ -27,12 +27,30 @@ jobs:
           for (const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:900}]]) {
             const context=await browser.newContext({viewport});
             const page=await context.newPage();
-            await page.goto('https://astrovip.ro/?snapshot='+Date.now()+'-'+name,{waitUntil:'networkidle',timeout:90000});
-            await page.waitForTimeout(1500);
+            await page.goto('https://astrovip.ro/?footer-snapshot='+Date.now()+'-'+name,{waitUntil:'networkidle',timeout:90000});
+            await page.waitForTimeout(1800);
             const reject=page.getByRole('button',{name:/Respinge opționale/i});
             if(await reject.count() && await reject.isVisible().catch(()=>false)) await reject.click({force:true}).catch(()=>{});
-            await page.screenshot({path:`live-${name}.png`,fullPage:true});
-            console.log('LIVE_SNAPSHOT',name,JSON.stringify(await page.evaluate(()=>({title:document.title,bodyClass:document.body.className,hasV63Mobile:!!document.querySelector('#v63-mobile-prod'),hasV63Desktop:!!document.querySelector('#v63-desktop-prod'),v63MobileDisplay:document.querySelector('#v63-mobile-prod')?getComputedStyle(document.querySelector('#v63-mobile-prod')).display:null,v63DesktopDisplay:document.querySelector('#v63-desktop-prod')?getComputedStyle(document.querySelector('#v63-desktop-prod')).display:null,hasLegacyHero:!!document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore'),legacyHeroDisplay:document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore')?getComputedStyle(document.querySelector('section.hero.hero-split.av-hero-v2.av-hero-mobile-restore')).display:null,hasPremiumCss:!!document.querySelector('#astrovip-premium-home-preview-css'),hasWowCss:!!document.querySelector('#astrovip-premium-home-wow-css'),text:document.body.innerText.slice(0,800)}))));
+            const footer=page.locator('footer.foot.av-footer-premium');
+            await footer.scrollIntoViewIfNeeded();
+            await page.waitForTimeout(400);
+            const state=await page.evaluate(()=>{
+              const q=s=>document.querySelector(s), rect=e=>e?e.getBoundingClientRect():null;
+              const f=q('footer.foot.av-footer-premium'), services=q('.av-footer-card--services'), contact=q('.av-footer-card--contact'), bottom=q('.av-footer-bottom'), sticky=q('.av-mobile-sticky');
+              const fr=rect(f), sr=rect(services), cr=rect(contact), br=rect(bottom), tr=rect(sticky);
+              const before=bottom?getComputedStyle(bottom,'::before'):null;
+              return {
+                viewport:[innerWidth,innerHeight],
+                footerHeight:fr?Math.round(fr.height):0,
+                services:{display:services?getComputedStyle(services).display:'missing',w:sr?Math.round(sr.width):0,h:sr?Math.round(sr.height):0,border:services?getComputedStyle(services).borderTopWidth:'missing',radius:services?getComputedStyle(services).borderRadius:'missing'},
+                contact:{display:contact?getComputedStyle(contact).display:'missing',w:cr?Math.round(cr.width):0,h:cr?Math.round(cr.height):0,border:contact?getComputedStyle(contact).borderTopWidth:'missing',radius:contact?getComputedStyle(contact).borderRadius:'missing'},
+                bottom:{h:br?Math.round(br.height):0,padding:bottom?getComputedStyle(bottom).padding:'missing',beforeContent:before?.content,beforePosition:before?.position},
+                sticky:{display:sticky?getComputedStyle(sticky).display:'missing',top:tr?Math.round(tr.top):null,h:tr?Math.round(tr.height):0},
+                scrollHeight:document.documentElement.scrollHeight
+              };
+            });
+            console.log('FOOTER_LIVE',name,JSON.stringify(state));
+            await footer.screenshot({path:`live-footer-${name}.png`});
             await context.close();
           }
           await browser.close();
@@ -40,7 +58,7 @@ jobs:
           node .live-snapshot.mjs
       - uses: actions/upload-artifact@v4
         with:
-          name: live-home-snapshot
+          name: live-footer-snapshot
           path: |
-            live-mobile.png
-            live-desktop.png
+            live-footer-mobile.png
+            live-footer-desktop.png
