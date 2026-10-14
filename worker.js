@@ -1,4 +1,5 @@
 import { handleCommandCenter } from './command-center-api.js';
+import { handleClarity } from './clarity-api.js';
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 const GA4_MEASUREMENT_ID='G-Y59ZJ7L3WR';
@@ -155,18 +156,32 @@ export default {
       const lang=['en','es','it','zh','ar','ru'].includes(url.searchParams.get('lang'))?url.searchParams.get('lang'):'';
       return new Response(`<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AstroVip responsive QA</title><style>body{margin:0;background:#242424;color:#fff;font:14px Arial}p{text-align:center;margin:12px}iframe{display:block;width:${width}px;height:844px;margin:0 auto;border:1px solid #555;background:#050706}</style></head><body><p>AstroVip · ${width}px · ${lang||'ro'}</p><iframe title="AstroVip phone viewport" src="/${lang?lang+'/':''}"></iframe></body></html>`,{headers:{'Content-Type':'text/html; charset=utf-8','X-Robots-Tag':'noindex, nofollow','Cache-Control':'no-store'}});
     }
+    const clarityResponse=await handleClarity(request,env);
+    if(clarityResponse)return clarityResponse;
     const commandResponse=await handleCommandCenter(request,env);
     if(commandResponse)return commandResponse;
     if(url.pathname==='/api/stripe-webhook'||url.pathname==='/api/stripe-webhook/')return stripeWebhook(request,env);
     if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WEBHOOK_SECRET_TEST',testMode:true});
     const assetResponse=await env.ASSETS.fetch(request);
     const ct=assetResponse.headers.get('content-type')||'';
+    const isCommandCenterHome=url.pathname==='/command-center'||url.pathname==='/command-center/';
+    if(assetResponse.ok&&ct.includes('text/html')&&isCommandCenterHome){
+      const ccRuntime='<script src="/assets/clarity-command-center.js?v=20261014-clarity1" defer></script>';
+      const transformed=new HTMLRewriter().on('head',{element(el){el.append(ccRuntime,{html:true})}}).transform(assetResponse);
+      const headers=new Headers(transformed.headers);
+      headers.set('X-Robots-Tag','noindex, nofollow, noarchive');
+      headers.set('Referrer-Policy','no-referrer');
+      headers.set('X-Content-Type-Options','nosniff');
+      return new Response(transformed.body,{status:transformed.status,statusText:transformed.statusText,headers});
+    }
     if(assetResponse.ok&&ct.includes('text/html')&&!url.pathname.startsWith('/command-center')){
       const isHomepage=url.pathname==='/'||url.pathname==='';
+      const clarityProjectId=String(env.CLARITY_PROJECT_ID||'').trim().replace(/[^A-Za-z0-9_-]/g,'');
+      const clarityConfig=clarityProjectId?`<script id="astrovip-clarity-config">window.__ASTROVIP_CLARITY_PROJECT_ID=${JSON.stringify(clarityProjectId)};</script>`:'';
       const heroPreloads=isHomepage?`<link rel="preload" as="image" href="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261008-ux1" type="image/webp" media="(max-width:760px)" fetchpriority="high"><link rel="preload" as="image" href="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261008-ux1" type="image/avif" media="(min-width:761px)" fetchpriority="high">`:'';
       const homepageRibbonCleanup=isHomepage?`<style id="astrovip-hide-secondary-planet-ribbon">html body #planet-strip-secondary,html body .planet-strip-secondary{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}</style><script id="astrovip-remove-secondary-planet-ribbon">(()=>{const kill=()=>{document.querySelectorAll('#planet-strip-secondary,.planet-strip-secondary').forEach(el=>el.remove());const studies=document.querySelector('#studii-de-caz-home');if(studies){const prev=studies.previousElementSibling;if(prev&&prev.matches('.planet-strip,[id*="planet-strip"],[class*="planet-strip"]'))prev.remove();}};const run=()=>{kill();setTimeout(kill,350);setTimeout(kill,1200)};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run()})();</script>`:'';
       const homepageMenuFix=isHomepage?`<style id="astrovip-ro-menu-x-20261007">@media(max-width:980px){html body:not(.guide-page) #hamb .hamb-lines{position:relative!important;display:block!important;width:30px!important;height:19px!important}html body:not(.guide-page) #hamb .hamb-line{position:absolute!important;left:0!important;width:30px!important;height:3px!important;border-radius:3px!important;background:currentColor!important;transition:transform .18s ease,opacity .14s ease,top .18s ease!important;transform-origin:center!important}html body:not(.guide-page) #hamb .hamb-line:nth-child(1){top:0!important}html body:not(.guide-page) #hamb .hamb-line:nth-child(2){top:8px!important}html body:not(.guide-page) #hamb .hamb-line:nth-child(3){top:16px!important}html body:not(.guide-page) #hamb[aria-expanded="true"]{color:#ff241f!important}html body:not(.guide-page) #hamb[aria-expanded="true"] .hamb-line:nth-child(1){top:8px!important;transform:rotate(45deg)!important}html body:not(.guide-page) #hamb[aria-expanded="true"] .hamb-line:nth-child(2){opacity:0!important;transform:scaleX(.25)!important}html body:not(.guide-page) #hamb[aria-expanded="true"] .hamb-line:nth-child(3){top:8px!important;transform:rotate(-45deg)!important}}</style>`:'';
-      const runtime=heroPreloads+homepageRibbonCleanup+homepageMenuFix+`<script src="/assets/booking-bridge-20261007.js" defer></script><script src="/assets/page-editor-runtime.js?v=20261007-1728-fresh" defer></script>`;
+      const runtime=clarityConfig+heroPreloads+homepageRibbonCleanup+homepageMenuFix+`<script src="/assets/booking-bridge-20261007.js" defer></script><script src="/assets/page-editor-runtime.js?v=20261007-1728-fresh" defer></script>`;
       let rewriter=new HTMLRewriter().on('head',{element(el){el.append(runtime,{html:true})}});
       if(isHomepage){
         const desktopHero=`<picture class="v63d-hero-picture"><source media="(min-width:821px)" srcset="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261007-1728-fresh" type="image/avif"><img src="${TRANSPARENT_PIXEL}" width="1280" height="720" alt="AstroVip — astrologie premium" loading="eager" fetchpriority="high" decoding="async"></picture>`;
