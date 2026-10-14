@@ -21,7 +21,7 @@ jobs:
           command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
           npm install --no-save --ignore-scripts puppeteer-core@24.26.1
 
-      - name: Diagnose live DOM over time
+      - name: Trace live replacement
         shell: bash
         run: |
           set -euo pipefail
@@ -33,69 +33,56 @@ jobs:
             const browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
             const page=await browser.newPage();
             await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
-            await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipDOMDiagnostic/1.0');
+            await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipDOMTrace/1.0');
             page.on('console',m=>console.log('CONSOLE',m.type(),m.text()));
-            page.on('pageerror',e=>console.log('PAGEERROR',e.message));
-            page.on('requestfailed',r=>console.log('REQUEST_FAILED',r.url(),r.failure()?.errorText||''));
+            page.on('pageerror',e=>console.log('PAGEERROR',e.stack||e.message));
 
             await page.evaluateOnNewDocument(()=>{
-              window.__avMutations=[];
-              const start=()=>{
-                const obs=new MutationObserver(list=>{
-                  for(const m of list){
-                    const relevant=[];
-                    for(const n of [...m.addedNodes,...m.removedNodes]){
-                      if(n.nodeType!==1) continue;
-                      const el=n;
-                      if(el.id==='studii-de-caz-home'||el.matches?.('.av-case-showcase-grid,.av-case-showcase-card,.av-case-mobile-nav-v7')||el.querySelector?.('#studii-de-caz-home,.av-case-showcase-grid,.av-case-showcase-card,.av-case-mobile-nav-v7')){
-                        relevant.push({kind:[...m.addedNodes].includes(n)?'added':'removed',tag:el.tagName,id:el.id||'',cls:typeof el.className==='string'?el.className:'',text:(el.textContent||'').trim().slice(0,90)});
-                      }
-                    }
-                    if(relevant.length) window.__avMutations.push({t:Math.round(performance.now()),target:m.target?.tagName+'#'+(m.target?.id||'')+'.'+(m.target?.className||''),relevant});
-                  }
+              window.__avWrites=[];
+              const hit=el=>el&&el.nodeType===1&&(el.id==='studii-de-caz-home'||el.closest?.('#studii-de-caz-home'));
+              const record=(kind,el,value)=>{
+                if(!hit(el)) return;
+                window.__avWrites.push({
+                  t:Math.round(performance.now()),kind,
+                  target:el.tagName+'#'+(el.id||'')+'.'+(typeof el.className==='string'?el.className:''),
+                  value:String(value||'').replace(/\s+/g,' ').slice(0,240),
+                  stack:(new Error('case-study mutation')).stack||''
                 });
-                obs.observe(document.documentElement,{subtree:true,childList:true});
               };
-              if(document.documentElement) start(); else document.addEventListener('readystatechange',()=>{if(document.documentElement)start()},{once:true});
+
+              const desc=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');
+              if(desc&&desc.get&&desc.set){
+                Object.defineProperty(Element.prototype,'innerHTML',{
+                  configurable:desc.configurable,enumerable:desc.enumerable,
+                  get(){return desc.get.call(this)},
+                  set(v){record('innerHTML',this,v);return desc.set.call(this,v)}
+                });
+              }
+              const origReplace=Element.prototype.replaceChildren;
+              Element.prototype.replaceChildren=function(...nodes){record('replaceChildren',this,nodes.map(n=>n?.outerHTML||n?.textContent||n).join(' '));return origReplace.apply(this,nodes)};
+              const origInsert=Element.prototype.insertAdjacentHTML;
+              Element.prototype.insertAdjacentHTML=function(pos,html){record('insertAdjacentHTML:'+pos,this,html);return origInsert.call(this,pos,html)};
+              const origRemove=Element.prototype.remove;
+              Element.prototype.remove=function(){record('remove',this,this.outerHTML);return origRemove.call(this)};
             });
 
-            await page.goto(`https://astrovip.ro/?domdiag=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:90000});
-
-            async function snap(label){
-              const state=await page.evaluate((label)=>{
-                const sections=[...document.querySelectorAll('[id="studii-de-caz-home"]')].map((s,i)=>{
-                  const r=s.getBoundingClientRect();
-                  return {i,display:getComputedStyle(s).display,visibility:getComputedStyle(s).visibility,rect:{x:Math.round(r.x),y:Math.round(r.y),w:Math.round(r.width),h:Math.round(r.height)},children:s.children.length,htmlLen:s.innerHTML.length,grids:s.querySelectorAll('.av-case-showcase-grid').length,cards:s.querySelectorAll('.av-case-showcase-card').length,navs:s.querySelectorAll('.av-case-mobile-nav-v7').length,marker:s.dataset.avSliderShell||'',v8:s.dataset.avSliderV8||'',text:(s.textContent||'').trim().slice(0,220),parent:s.parentElement?`${s.parentElement.tagName}#${s.parentElement.id||''}.${typeof s.parentElement.className==='string'?s.parentElement.className:''}`:''};
-                });
-                const grids=[...document.querySelectorAll('.av-case-showcase-grid')].map((g,i)=>{const r=g.getBoundingClientRect();return {i,rect:{x:Math.round(r.x),y:Math.round(r.y),w:Math.round(r.width),h:Math.round(r.height)},cards:g.querySelectorAll('.av-case-showcase-card').length,parent:g.parentElement?`${g.parentElement.tagName}#${g.parentElement.id||''}.${typeof g.parentElement.className==='string'?g.parentElement.className:''}`:'',section:g.closest('section')?.id||''};});
-                const cards=[...document.querySelectorAll('.av-case-showcase-card')].map((c,i)=>({i,title:c.querySelector('h3')?.textContent?.trim()||'',section:c.closest('section')?.id||'',parent:c.parentElement?.className||''}));
-                return {label,ready:document.readyState,now:Math.round(performance.now()),sections,grids,cards,totalNavs:document.querySelectorAll('.av-case-mobile-nav-v7').length,bodyTextMatch:(document.body?.innerText||'').includes('STUDII DE CAZ ASTROVIP'),mutations:(window.__avMutations||[]).slice(-40)};
-              },label);
-              console.log('SNAPSHOT '+label+' '+JSON.stringify(state));
-              return state;
-            }
-
-            await snap('domcontentloaded');
-            await new Promise(r=>setTimeout(r,100));
-            await snap('100ms');
-            await new Promise(r=>setTimeout(r,400));
-            await snap('500ms');
-            await new Promise(r=>setTimeout(r,1000));
-            await snap('1500ms');
-            await new Promise(r=>setTimeout(r,2500));
-            const final=await snap('4000ms');
-            await page.screenshot({path:'/tmp/astrovip-mobile-domdiag.png',fullPage:true});
-            console.log('FINAL MUTATIONS '+JSON.stringify(await page.evaluate(()=>window.__avMutations||[])));
+            await page.goto(`https://astrovip.ro/?domtrace=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:90000});
+            await new Promise(r=>setTimeout(r,1800));
+            const state=await page.evaluate(()=>({
+              writes:window.__avWrites||[],
+              sections:[...document.querySelectorAll('[id="studii-de-caz-home"]')].map(s=>({html:s.innerHTML.slice(0,800),cards:s.querySelectorAll('.av-case-showcase-card').length,grids:s.querySelectorAll('.av-case-showcase-grid').length,text:(s.textContent||'').trim().slice(0,260)}))
+            }));
+            console.log('TRACE_RESULT '+JSON.stringify(state));
+            await page.screenshot({path:'/tmp/astrovip-mobile-domtrace.png',fullPage:true});
             await browser.close();
-            if(final.sections.length===0) process.exit(2);
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
 
-      - name: Upload diagnostic screenshot
+      - name: Upload trace screenshot
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: astrovip-case-slider-dom-diagnostic
-          path: /tmp/astrovip-mobile-domdiag.png
+          name: astrovip-case-slider-dom-trace
+          path: /tmp/astrovip-mobile-domtrace.png
           if-no-files-found: warn
           retention-days: 7
