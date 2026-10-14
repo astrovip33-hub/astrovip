@@ -66,7 +66,7 @@ html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-count-v7{display:block!important;min-width:38px!important;color:#f5dfa0!important;font:900 11px/1 Inter,system-ui,sans-serif!important;letter-spacing:.08em!important;text-align:center!important;white-space:nowrap!important}
 }
 @media(min-width:821px){#studii-de-caz-home .av-case-mobile-nav-v7{display:none!important}}
-</style><script src="/assets/home-approved-header-20261012.js?v=7" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
+</style><script src="/assets/home-approved-header-20261012.js?v=8" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
 
 export default {
   async fetch(request,env,ctx){
