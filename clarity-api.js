@@ -26,9 +26,12 @@ function isAuthorized(request, env) {
   const received = m ? m[1].trim() : '';
   return Boolean(expected) && safeEqual(received, expected);
 }
+function metricKey(value) { return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function metricBlock(payload, name) {
-  return Array.isArray(payload) ? payload.find(x => String(x?.metricName || '').toLowerCase() === name.toLowerCase()) : null;
+  const wanted = metricKey(name);
+  return Array.isArray(payload) ? payload.find(x => metricKey(x?.metricName) === wanted) : null;
 }
+
 function sum(rows, keys) {
   return (Array.isArray(rows) ? rows : []).reduce((total, row) => {
     for (const key of keys) {
@@ -49,9 +52,9 @@ function summarize(payload) {
     sessions: sum(traffic, ['totalSessionCount','sessionCount']),
     botSessions: sum(traffic, ['totalBotSessionCount','botSessionCount']),
     users: sum(traffic, ['distinctUserCount','distantUserCount','totalUserCount','userCount']),
-    deadClicks: sum(dead, ['deadClickCount','DeadClickCount','count']),
-    rageClicks: sum(rage, ['rageClickCount','RageClickCount','count']),
-    scriptErrors: sum(errors, ['scriptErrorCount','ScriptErrorCount','count']),
+    deadClicks: sum(dead, ['subTotal','deadClickCount','DeadClickCount','count']),
+    rageClicks: sum(rage, ['subTotal','rageClickCount','RageClickCount','count']),
+    scriptErrors: sum(errors, ['subTotal','scriptErrorCount','ScriptErrorCount','count']),
     metricBlocks: Array.isArray(payload) ? payload.length : 0,
   };
 }
