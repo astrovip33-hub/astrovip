@@ -1,0 +1,51 @@
+name: Case slider pseudo diagnostic
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/case-slider-pseudo-diagnostic.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Puppeteer
+        run: |
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
+          npm install --no-save --ignore-scripts puppeteer-core@24.26.1
+      - name: Inspect pseudo content live
+        run: |
+          node <<'NODE'
+          const puppeteer=require('puppeteer-core');
+          const fs=require('fs');
+          (async()=>{
+            const executablePath=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'].find(p=>fs.existsSync(p));
+            const browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
+            const page=await browser.newPage();
+            await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+            await page.goto(`https://astrovip.ro/?pseudo=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:90000});
+            await page.waitForSelector('#studii-de-caz-home',{timeout:30000});
+            await new Promise(r=>setTimeout(r,2200));
+            const result=await page.evaluate(()=>{
+              const root=document.querySelector('#studii-de-caz-home');
+              const rows=[];
+              for(const el of [root,...root.querySelectorAll('*')]){
+                for(const pseudo of ['::before','::after']){
+                  const cs=getComputedStyle(el,pseudo);
+                  const content=cs.content;
+                  if(content && content!=='none' && content!=='normal' && content!=='""'){
+                    rows.push({tag:el.tagName,id:el.id||'',cls:typeof el.className==='string'?el.className:'',pseudo,content,display:cs.display,position:cs.position,top:cs.top,left:cs.left,right:cs.right,zIndex:cs.zIndex});
+                  }
+                }
+              }
+              return {rows,innerText:(root.innerText||'').slice(0,500)};
+            });
+            console.log('PSEUDO_RESULT '+JSON.stringify(result));
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
