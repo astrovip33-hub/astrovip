@@ -145,6 +145,24 @@
           "boxShadow": "none",
           "display": ""
         }
+      },
+      {
+        "selector": "section:nth-of-type(1) > div.avm-hero-copy:nth-of-type(1) > div.avm-actions:nth-of-type(2) > a.avm-secondary:nth-of-type(2)",
+        "text": "DESCOPERĂ ASTROVIP",
+        "style": {
+          "color": "#ffffff",
+          "backgroundColor": "#071009",
+          "borderColor": "#e8ff38",
+          "borderWidth": "1px",
+          "borderStyle": "solid",
+          "borderRadius": "14px",
+          "opacity": "1",
+          "fontSize": "10px",
+          "fontWeight": "900",
+          "padding": "12px 18px",
+          "boxShadow": "0 0 18px rgba(57,255,118,.32),0 0 32px rgba(232,199,95,.18)",
+          "display": ""
+        }
       }
     ]
   }
