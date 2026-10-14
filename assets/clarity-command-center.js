@@ -37,7 +37,7 @@
     if(!token){setBadge('NEAUTENTIFICAT','bad');return;}
     setBadge('ÎNCĂRCARE','warn');
     try{
-      const r=await fetch('/api/command/clarity?days=1&dimension1=Device',{headers:{authorization:'Bearer '+token}});
+      const r=await fetch('/api/command/clarity?days=1',{headers:{authorization:'Bearer '+token}});
       const d=await r.json().catch(()=>({}));
       if(!r.ok)throw Error(d.error||('HTTP '+r.status));
       const m=d.data?.summary||{};
