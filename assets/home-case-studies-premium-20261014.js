@@ -4,6 +4,11 @@
   const install = () => {
     const section = document.getElementById('studii-de-caz-home');
     if (!section || section.dataset.avCaseLux === '1') return;
+
+    // Mobile owns a real scalable slider. Never replace its card track with
+    // the legacy three-column premium block after DOMContentLoaded.
+    if (window.matchMedia('(max-width:820px)').matches && section.querySelector('.av-case-showcase-grid')) return;
+
     section.dataset.avCaseLux = '1';
     section.classList.add('av-case-home-lux');
 
