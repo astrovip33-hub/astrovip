@@ -1,4 +1,4 @@
-const CACHE='astrovip-v9-shell-2';
+const CACHE='astrovip-v9-shell-3';
 const SHELL=['/','/assets/astrovip-design-system-v9.css','/assets/premium-v9/main.js','/assets/premium-v9/icon.svg','/manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
