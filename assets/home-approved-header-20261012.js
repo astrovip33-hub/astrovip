@@ -78,7 +78,7 @@
       });
       if(menu)new MutationObserver(syncMenu).observe(menu,{attributes:true,attributeFilter:['class']});
 
-      approvedHeader.append(logoLink,chat,hamb);
+      approvedHeader.append(logoLink,hamb);
       const footer=document.querySelector('footer');
       if(footer&&!document.getElementById('av-footer-languages')){
         const lang=document.createElement('section');
@@ -88,6 +88,13 @@
         const nav=lang.querySelector('nav');
         oldFlags.slice(0,7).forEach(a=>{const c=a.cloneNode(true);c.className='';c.removeAttribute('style');nav.appendChild(c)});
         footer.appendChild(lang);
+        const footerChat=document.createElement('button');
+        footerChat.id='av-footer-chat-premium';
+        footerChat.type='button';
+        footerChat.setAttribute('aria-label','Deschide AstroVip Chat');
+        footerChat.innerHTML='<span class="avfc-live" aria-hidden="true"></span><span><strong>CHAT ASTROVIP</strong><small>ONLINE · RĂSPUNS RAPID</small></span><b aria-hidden="true">→</b>';
+        footerChat.addEventListener('click',()=>header.querySelector('.avchat-launcher.avchat-header-slot')?.click());
+        footer.appendChild(footerChat);
       }
       header.appendChild(approvedHeader);
       document.documentElement.classList.add('av-mobile-approved');
