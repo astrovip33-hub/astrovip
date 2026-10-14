@@ -4,8 +4,9 @@ import { mobileHome, mobileStyles, cardlessStyles } from './homepage-approved-la
 const PAYMENT_URL='https://buy.stripe.com/4gMeVcbz75J207y6fefjG00';
 const mobileHomePayment=mobileHome.replace('href="#programari">PROGRAMEAZĂ CONSULTAȚIA →','href="'+PAYMENT_URL+'">PLĂTEȘTE CU CARDUL · 500 LEI →');
 const PAYMENT_CTA=`<section id="av-home-payment-cta" class="av-home-paybar" aria-label="Plată consultație AstroVip"><div class="av-home-paybar-inner"><div><span>CONSULTAȚIE PREMIUM · 60 MIN</span><strong>Plată securizată cu cardul</strong><small>500 lei · procesare securizată prin Stripe</small></div><a href="${PAYMENT_URL}" aria-label="Plătește consultația AstroVip cu cardul, 500 lei">PLĂTEȘTE CU CARDUL · 500 LEI →</a></div></section>`;
+const CASE_NAV_V7=`<nav class="av-case-mobile-nav-v7" aria-label="Navigare studii de caz" data-av-case-nav="v7"><button type="button" class="av-case-arrow-v7" data-case-prev aria-label="Studiul anterior">‹</button><div class="av-case-dots-v7" data-case-dots aria-label="Alege studiul"></div><span class="av-case-count-v7" data-case-count aria-live="polite">1 / …</span><button type="button" class="av-case-arrow-v7" data-case-next aria-label="Studiul următor">›</button></nav>`;
 
-const HOMEPAGE_CRITICAL=`<meta name="astrovip-home-render" content="20261014-case-studies-mobile-v6"><link rel="stylesheet" href="/assets/ux-refresh-20261008.css?v=20261008-header1"><style id="astrovip-cardless-premium-home-20261010">${cardlessStyles}</style><style id="astrovip-ultra-critical-v9-20261012">
+const HOMEPAGE_CRITICAL=`<meta name="astrovip-home-render" content="20261014-case-studies-mobile-v7-live"><link rel="stylesheet" href="/assets/ux-refresh-20261008.css?v=20261008-header1"><style id="astrovip-cardless-premium-home-20261010">${cardlessStyles}</style><style id="astrovip-ultra-critical-v9-20261012">
 html body:not(.guide-page) #intrebare-gratuita,html body:not(.guide-page) #cine-analizeaza-harta,html body:not(.guide-page) #servicii,html body:not(.guide-page) #recenzii-google,html body:not(.guide-page) #oferte,html body:not(.guide-page) #programari,html body:not(.guide-page) #intrebari-frecvente,html body:not(.guide-page) #contact,html body:not(.guide-page) .trust-refs,html body:not(.guide-page) .av-directory,html body:not(.guide-page) .av-v9-tools{display:none!important}
 html body:not(.guide-page) footer .av-footer-card--services{display:none!important}
 .av-home-paybar{display:block;width:100%;padding:18px 18px 22px;background:#020302;border-top:1px solid rgba(231,198,106,.22);border-bottom:1px solid rgba(231,198,106,.18)}
@@ -20,7 +21,25 @@ html.av-ultra-home-production body:not(.guide-page) main#top>*:not(#av-mobile-ap
 html.av-ultra-home-production body:not(.guide-page) main#top>#av-mobile-approved-home{display:block!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important}
 }
 @media(min-width:821px) and (max-width:980px){.av-home-paybar-inner{align-items:flex-start;flex-direction:column}.av-home-paybar-inner>a{width:100%}}
-</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=ssr-20261012"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-1"><style id="av-case-force-visible-v6">html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important}</style><script src="/assets/home-approved-header-20261012.js?v=4" defer></script>`;
+</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=ssr-20261012"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-1"><style id="av-case-slider-v7-critical">
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important}
+@media(max-width:820px){
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{overflow:hidden!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame{overflow:hidden!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{display:flex!important;grid-template-columns:none!important;gap:14px!important;width:100%!important;max-width:none!important;margin:0!important;padding:5px 8% 18px!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:8%!important;scrollbar-width:none!important;-ms-overflow-style:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important;touch-action:pan-x pan-y!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid::-webkit-scrollbar{display:none!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{display:block!important;flex:0 0 84%!important;width:84%!important;min-width:84%!important;max-width:390px!important;margin:0!important;scroll-snap-align:center!important;scroll-snap-stop:always!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-mobile-nav-v7{display:grid!important;grid-template-columns:46px minmax(0,1fr) auto 46px!important;align-items:center!important;gap:9px!important;width:calc(100% - 32px)!important;max-width:430px!important;margin:2px auto 0!important;padding:9px 10px!important;border:1px solid rgba(235,201,93,.44)!important;border-radius:999px!important;background:linear-gradient(180deg,rgba(10,22,17,.97),rgba(3,8,6,.98))!important;box-shadow:0 12px 34px rgba(0,0,0,.45),0 0 20px rgba(57,255,20,.055)!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-arrow-v7{display:flex!important;align-items:center!important;justify-content:center!important;width:42px!important;height:42px!important;margin:0!important;padding:0!important;border:1px solid rgba(241,207,99,.62)!important;border-radius:50%!important;background:radial-gradient(circle at 35% 25%,#253c24,#07110d 68%)!important;color:#f8e7a4!important;font:900 28px/1 Georgia,serif!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 14px rgba(216,245,0,.08)!important;cursor:pointer!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-arrow-v7:disabled{opacity:.34!important;cursor:default!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-dots-v7{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:7px!important;min-width:0!important;overflow-x:auto!important;scrollbar-width:none!important;padding:7px 2px!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-dots-v7::-webkit-scrollbar{display:none!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-dot-v7{flex:0 0 8px!important;width:8px!important;height:8px!important;min-width:8px!important;min-height:8px!important;margin:0!important;padding:0!important;border:0!important;border-radius:999px!important;background:rgba(244,231,178,.30)!important;box-shadow:none!important;transition:width .2s ease,background .2s ease,box-shadow .2s ease!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-dot-v7.is-active{flex-basis:27px!important;width:27px!important;background:linear-gradient(90deg,#e5c458,#39ff14)!important;box-shadow:0 0 12px rgba(57,255,20,.26)!important}
+html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-count-v7{display:block!important;min-width:38px!important;color:#f5dfa0!important;font:900 11px/1 Inter,system-ui,sans-serif!important;letter-spacing:.08em!important;text-align:center!important;white-space:nowrap!important}
+}
+@media(min-width:821px){#studii-de-caz-home .av-case-mobile-nav-v7{display:none!important}}
+</style><script src="/assets/home-approved-header-20261012.js?v=4" defer></script><script src="/assets/case-studies-slider-v7-20261014.js?v=1" defer></script>`;
 
 export default {
   async fetch(request,env,ctx){
@@ -45,6 +64,10 @@ export default {
             mobileHomeSeen=true;
           }
           el.after(PAYMENT_CTA,{html:true});
+        }})
+        .on('#studii-de-caz-home',{element(el){
+          el.setAttribute('data-av-slider-shell','v7');
+          el.append(CASE_NAV_V7,{html:true});
         }})
         .on('head',{element(el){el.append(HOMEPAGE_CRITICAL,{html:true})}})
         .on('link[rel="stylesheet"][href^="/assets/ux-refresh-20261008.css"]',{element(el){el.remove()}})
