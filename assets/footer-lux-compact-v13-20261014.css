@@ -1,0 +1,290 @@
+/* AstroVip Footer v13 — compact luxury from EXPLOREAZĂ to legal end */
+
+/* Desktop refinement: preserve the brand block, compact everything after it. */
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services,
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact{
+  padding-top:10px!important;
+  padding-bottom:10px!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card-kicker{
+  margin:0 0 5px!important;
+  color:#8fa397!important;
+  font-size:7.5px!important;
+  letter-spacing:.18em!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-grid--cards .av-footer-column h2{
+  margin:0 0 8px!important;
+  color:#f1d477!important;
+  font-size:10px!important;
+  letter-spacing:.13em!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services>a{
+  min-height:30px!important;
+  padding:4px 0!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-static,
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact>a{
+  min-height:25px!important;
+  margin:0 0 4px!important;
+  font-size:11px!important;
+  line-height:1.25!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-whatsapp{
+  min-height:35px!important;
+  margin-top:6px!important;
+  padding:7px 13px!important;
+  font-size:9px!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact::after{
+  margin-top:9px!important;
+  padding-top:8px!important;
+  font-size:7.5px!important;
+  letter-spacing:.12em!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom{
+  min-height:0!important;
+  padding-top:45px!important;
+  gap:10px!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom::before{
+  top:12px!important;
+  font-size:16px!important;
+}
+html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-disclaimer{
+  margin-top:5px!important;
+  font-size:8px!important;
+}
+
+@media(max-width:900px){
+  html body:not(.guide-page) footer.foot.av-footer-premium{
+    padding-bottom:calc(76px + env(safe-area-inset-bottom))!important;
+  }
+
+  /* EXPLOREAZĂ — compact two-column luxury menu. */
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+    width:min(100%,380px)!important;
+    margin:6px auto 0!important;
+    padding:13px!important;
+    border:1px solid rgba(232,199,95,.28)!important;
+    border-radius:18px!important;
+    background:radial-gradient(circle at 12% 0,rgba(57,255,20,.045),transparent 32%),linear-gradient(145deg,rgba(10,16,12,.96),rgba(3,6,4,.985))!important;
+    box-shadow:0 12px 32px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.035)!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services::before,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services::after{
+    content:none!important;
+    display:none!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services .av-footer-card-kicker,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services h2{
+    grid-column:1/-1!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services .av-footer-card-kicker{
+    margin:0!important;
+    color:#9df0af!important;
+    text-align:center!important;
+    font-size:7px!important;
+    letter-spacing:.2em!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services h2{
+    margin:0 0 2px!important;
+    text-align:center!important;
+    color:#f3d878!important;
+    font-size:10px!important;
+    letter-spacing:.14em!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services>a{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    min-height:34px!important;
+    margin:0!important;
+    padding:7px 9px!important;
+    border:1px solid rgba(232,199,95,.16)!important;
+    border-radius:11px!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01))!important;
+    color:#edf3ef!important;
+    font-size:10.5px!important;
+    font-weight:760!important;
+    line-height:1.15!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services>a:last-of-type{
+    grid-column:1/-1!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services>a b{
+    color:#e8ca69!important;
+    font-size:10px!important;
+  }
+
+  /* CONTACT — one compact premium utility card. */
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+    width:min(100%,380px)!important;
+    margin:9px auto 0!important;
+    padding:13px!important;
+    border:1px solid rgba(232,199,95,.22)!important;
+    border-radius:18px!important;
+    background:linear-gradient(145deg,rgba(8,14,10,.97),rgba(2,5,3,.99))!important;
+    box-shadow:0 12px 32px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.03)!important;
+    text-align:left!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact::before{
+    content:none!important;
+    display:none!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-card-kicker,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact h2{
+    grid-column:1/-1!important;
+    text-align:center!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-card-kicker{
+    margin:0!important;
+    color:#9df0af!important;
+    font-size:7px!important;
+    letter-spacing:.2em!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact h2{
+    margin:0 0 2px!important;
+    color:#f3d878!important;
+    font-size:10px!important;
+    letter-spacing:.14em!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact>a:not(.av-footer-whatsapp),
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-static{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    min-width:0!important;
+    min-height:33px!important;
+    margin:0!important;
+    padding:7px 9px!important;
+    border:1px solid rgba(255,255,255,.065)!important;
+    border-radius:11px!important;
+    background:rgba(255,255,255,.018)!important;
+    color:#eaf1ec!important;
+    font-size:9.5px!important;
+    line-height:1.12!important;
+    overflow:hidden!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact>a:not(.av-footer-whatsapp) span,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-static span{
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-whatsapp{
+    grid-column:1/-1!important;
+    display:flex!important;
+    width:100%!important;
+    min-height:38px!important;
+    margin:1px 0 0!important;
+    padding:8px 14px!important;
+    justify-content:center!important;
+    border:1px solid rgba(57,255,20,.50)!important;
+    border-radius:999px!important;
+    background:linear-gradient(180deg,rgba(57,255,20,.10),rgba(57,255,20,.025))!important;
+    color:#f3fff5!important;
+    font-size:9px!important;
+    letter-spacing:.06em!important;
+    box-shadow:0 0 14px rgba(57,255,20,.065)!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact::after{
+    content:"PLATĂ SECURIZATĂ · STRIPE"!important;
+    display:block!important;
+    grid-column:1/-1!important;
+    position:static!important;
+    width:100%!important;
+    margin:1px 0 0!important;
+    padding:7px 0 0!important;
+    border:0!important;
+    border-top:1px solid rgba(232,199,95,.11)!important;
+    background:none!important;
+    color:#75857b!important;
+    text-align:center!important;
+    font-size:6.5px!important;
+    font-weight:900!important;
+    letter-spacing:.16em!important;
+    box-shadow:none!important;
+  }
+
+  /* Final signature — no oversized empty zone. */
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom{
+    position:relative!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    min-height:0!important;
+    margin:11px auto 0!important;
+    padding:13px 5px 0!important;
+    gap:6px!important;
+    border-top:1px solid rgba(232,199,95,.17)!important;
+    text-align:center!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom::before{
+    content:"Viitorul favorizează oamenii pregătiți."!important;
+    display:block!important;
+    position:static!important;
+    width:100%!important;
+    margin:0 0 3px!important;
+    color:#f4efe1!important;
+    font:italic 700 14px/1.25 Georgia,"Times New Roman",serif!important;
+    letter-spacing:.018em!important;
+    text-align:center!important;
+    text-shadow:0 0 12px rgba(232,199,95,.11)!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom p{
+    margin:0!important;
+    color:#829087!important;
+    font-size:8.5px!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom nav{
+    display:flex!important;
+    justify-content:center!important;
+    gap:6px!important;
+    flex-wrap:wrap!important;
+    font-size:8.5px!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-bottom nav a{
+    color:#d9e1db!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-cards-v9 .av-footer-disclaimer{
+    max-width:350px!important;
+    margin:6px auto 0!important;
+    color:#627168!important;
+    font-size:7.5px!important;
+    line-height:1.35!important;
+    text-align:center!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-premium-v2 .av-consent__manage{
+    min-height:30px!important;
+    margin:7px auto 0!important;
+    padding:6px 10px!important;
+    font-size:8px!important;
+  }
+}
+
+@media(max-width:360px){
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services,
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact{
+    width:100%!important;
+    padding:11px!important;
+    gap:6px!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--services>a{
+    min-height:32px!important;
+    padding:6px 8px!important;
+    font-size:9.5px!important;
+  }
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact>a:not(.av-footer-whatsapp),
+  html body:not(.guide-page) footer.foot.av-footer-premium .av-footer-card--contact .av-footer-static{
+    font-size:8.8px!important;
+  }
+}
