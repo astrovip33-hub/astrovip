@@ -8,6 +8,7 @@
     const header=document.querySelector('header.top');
     const oldFlags=[...(header?.querySelectorAll('.av-lang-switch>a')||[])];
     const menu=header?.querySelector('#menu');const backdrop=header?.querySelector('.av-pro-backdrop');
+    if(menu){[...menu.querySelectorAll('a,button')].forEach(el=>{const t=(el.textContent||'').trim().toLocaleUpperCase('ro-RO').replace(/\s+/g,' ');if(/^PROGRAMEAZ[ĂA]-?TE(?:\b|\s|→)/.test(t)){el.style.setProperty('display','none','important');el.setAttribute('aria-hidden','true');el.setAttribute('tabindex','-1');}});}
     if(header){if(menu)header.appendChild(menu);if(backdrop)header.appendChild(backdrop);[...header.children].forEach(el=>{if(el.id!=='av-mobile-approved-header'&&el!==menu&&el!==backdrop)el.style.setProperty('display','none','important');});}
     if(header&&!document.getElementById('av-mobile-approved-header')){
       const approvedHeader=document.createElement('div');approvedHeader.id='av-mobile-approved-header';approvedHeader.setAttribute('aria-label','Header AstroVip mobil');header.style.setProperty('border-bottom','0','important');header.style.setProperty('box-shadow','none','important');approvedHeader.style.setProperty('border-bottom','0','important');approvedHeader.style.setProperty('box-shadow','none','important');
