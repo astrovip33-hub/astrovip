@@ -45,7 +45,7 @@
       logoLink.className='avm-logo';
       logoLink.href='/';
       logoLink.setAttribute('aria-label','AstroVip - Acasă');
-      logoLink.innerHTML='<img src="/assets/astrovip-header-premium-v3.jpg?v=20261015-3" alt="AstroVip - Timing-ul contează!" width="600" height="200" decoding="async" fetchpriority="high">';
+      logoLink.innerHTML='<img src="/assets/astrovip-header-premium-20261015.png?v=20261015-1" alt="AstroVip - Timing-ul conteaza!" width="2171" height="724" decoding="async" fetchpriority="high">';
 
       const flags=document.createElement('nav');
       flags.className='avm-flags';
