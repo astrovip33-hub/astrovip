@@ -36,12 +36,16 @@
       const approvedHeader=document.createElement('div');
       approvedHeader.id='av-mobile-approved-header';
       approvedHeader.setAttribute('aria-label','Header AstroVip mobil');
+      header.style.setProperty('border-bottom','0','important');
+      header.style.setProperty('box-shadow','none','important');
+      approvedHeader.style.setProperty('border-bottom','0','important');
+      approvedHeader.style.setProperty('box-shadow','none','important');
 
       const logoLink=document.createElement('a');
       logoLink.className='avm-logo';
       logoLink.href='/';
       logoLink.setAttribute('aria-label','AstroVip - Acasă');
-      logoLink.innerHTML='<img src="/assets/astrovip-header-premium-v3.jpg?v=20261015-2" alt="AstroVip - Timing-ul contează!" width="600" height="200" decoding="async" fetchpriority="high">';
+      logoLink.innerHTML='<img src="/assets/astrovip-header-premium-v3.jpg?v=20261015-3" alt="AstroVip - Timing-ul contează!" width="600" height="200" decoding="async" fetchpriority="high">';
 
       const flags=document.createElement('nav');
       flags.className='avm-flags';
