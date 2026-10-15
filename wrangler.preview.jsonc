@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "astrovip-preview-ux-compact",
-  "main": "worker-home-ultra.js",
+  "main": "worker-preview-repair.js",
   "compatibility_date": "2026-09-15",
   "workers_dev": true,
   "assets": {
