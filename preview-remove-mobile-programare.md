@@ -1,1 +1,0 @@
-Preview-only change: remove the long PROGRAMEAZĂ-TE CTA from the opened mobile menu. No production publication until explicit approval.
