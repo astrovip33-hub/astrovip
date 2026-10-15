@@ -2,6 +2,7 @@
   'use strict';
   if(location.pathname!=='/'&&location.pathname!=='')return;
   const mobile=()=>window.matchMedia('(max-width:820px)').matches;
+  const repairPayment=()=>{const bar=document.getElementById('av-home-payment-cta');if(!bar)return;bar.setAttribute('aria-label','Plată consultație AstroVip');const inner=bar.querySelector('.av-home-paybar-inner');const info=inner?.querySelector('div');const pay=inner?.querySelector('a');if(info){const s=info.querySelector('span'),strong=info.querySelector('strong'),small=info.querySelector('small');if(s)s.textContent='CONSULTAȚIE PREMIUM · 60 MIN';if(strong)strong.textContent='Plată securizată cu cardul';if(small)small.textContent='500 lei · procesare securizată prin Stripe';}if(pay){pay.textContent='PLĂTEȘTE CU CARDUL · 500 LEI →';pay.setAttribute('aria-label','Plătește consultația AstroVip cu cardul, 500 lei');pay.style.setProperty('box-sizing','border-box');pay.style.setProperty('max-width','100%');}if(inner){inner.style.setProperty('box-sizing','border-box');inner.style.setProperty('max-width','100%');inner.style.setProperty('overflow','hidden');if(mobile()){inner.style.setProperty('flex-direction','column');inner.style.setProperty('align-items','stretch');if(pay){pay.style.setProperty('width','100%');pay.style.setProperty('white-space','normal');pay.style.setProperty('text-align','center');}}}};
   const installCheckoutPayLabel=()=>{const pay=document.getElementById('bookingSubmit');if(!pay)return;pay.textContent='PLĂTEȘTE CU CARDUL · 500 LEI →';pay.setAttribute('aria-label','Plătește cu cardul 500 lei prin Stripe');pay.setAttribute('title','Plată securizată prin Stripe');};
   const installMobileApproved=()=>{
     if(!mobile()||document.getElementById('av-mobile-approved-header'))return;
@@ -19,5 +20,5 @@
       header.appendChild(approvedHeader);document.documentElement.classList.add('av-mobile-approved');
     }
   };
-  const install=()=>{installCheckoutPayLabel();installMobileApproved();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
+  const install=()=>{repairPayment();installCheckoutPayLabel();installMobileApproved();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
 })();
