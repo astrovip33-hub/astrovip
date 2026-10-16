@@ -1,0 +1,33 @@
+@media (max-width:820px){
+  html.av-ultra-home-production body:not(.guide-page) #av-home-payment-cta{
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:14px 12px 18px!important;
+    box-sizing:border-box!important;
+  }
+  html.av-ultra-home-production body:not(.guide-page) #av-home-payment-cta .av-home-paybar-inner{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:16px!important;
+    gap:12px!important;
+    box-sizing:border-box!important;
+    text-align:center!important;
+  }
+  html.av-ultra-home-production body:not(.guide-page) #av-home-payment-cta .av-home-paybar-inner>div{
+    display:flex!important;
+    align-items:center!important;
+  }
+  html.av-ultra-home-production body:not(.guide-page) #av-home-payment-cta .av-home-paybar-inner>a{
+    display:flex!important;
+    width:100%!important;
+    min-height:56px!important;
+    padding:13px 12px!important;
+    box-sizing:border-box!important;
+    white-space:normal!important;
+    text-align:center!important;
+  }
+}
