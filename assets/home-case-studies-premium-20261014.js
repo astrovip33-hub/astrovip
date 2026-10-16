@@ -91,7 +91,7 @@
           <div class="av-case-lux-grid">
             <a class="av-case-lux-card" href="/studii-de-caz/intalnire-dragoste-arce-solare-2001/" aria-label="Vezi studiul de caz Întâlnire în dragoste">
               <figure class="av-case-lux-visual">
-                <img src="/images/studii-de-caz/intalnire-dragoste-2001-astrovip.jpg" width="1536" height="1536" loading="lazy" decoding="async" alt="Întâlnire în dragoste — studiu de caz AstroVip">
+                <img width="1672" height="941" srcset="/images/studii-de-caz/fundal-dragoste-premium-20261016-720.webp 720w, /images/studii-de-caz/fundal-dragoste-premium-20261016.webp 1672w" sizes="(max-width: 820px) 90vw, 560px" src="/images/studii-de-caz/fundal-dragoste-premium-20261016.webp" loading="lazy" decoding="async" alt="Ilustrație de atmosferă: seară romantică în București, în albastru și auriu.">
                 <span class="av-case-lux-index">01</span>
               </figure>
               <div class="av-case-lux-copy">
@@ -104,7 +104,7 @@
 
             <a class="av-case-lux-card" href="/studii-de-caz/relocare-geografica-spania-2003/" aria-label="Vezi studiul de caz Relocare geografică">
               <figure class="av-case-lux-visual">
-                <img src="/images/studii-de-caz/relocare-geografica-spania-2003-astrovip.webp" width="720" height="540" loading="lazy" decoding="async" alt="Relocare geografică — studiu de caz AstroVip">
+                <img width="1672" height="941" srcset="/images/studii-de-caz/fundal-relocare-premium-20261016-720.webp 720w, /images/studii-de-caz/fundal-relocare-premium-20261016.webp 1672w" sizes="(max-width: 820px) 90vw, 560px" src="/images/studii-de-caz/fundal-relocare-premium-20261016.webp" loading="lazy" decoding="async" alt="Ilustrație de atmosferă: oraș spaniol la malul Mediteranei, la apus.">
                 <span class="av-case-lux-index">02</span>
               </figure>
               <div class="av-case-lux-copy">
@@ -117,7 +117,7 @@
 
             <a class="av-case-lux-card" href="/studii-de-caz/castig-loto-roma-2020/" aria-label="Vezi studiul de caz Câștig la LOTO">
               <figure class="av-case-lux-visual">
-                <img src="/assets/studiu-caz-castig-loto-roma-2020.svg" width="1200" height="675" loading="lazy" decoding="async" alt="Câștig la LOTO — studiu de caz AstroVip">
+                <img width="1672" height="941" srcset="/images/studii-de-caz/fundal-loto-premium-20261016-720.webp 720w, /images/studii-de-caz/fundal-loto-premium-20261016.webp 1672w" sizes="(max-width: 820px) 90vw, 560px" src="/images/studii-de-caz/fundal-loto-premium-20261016.webp" loading="lazy" decoding="async" alt="Ilustrație de atmosferă: Roma la apus și simboluri discrete ale loteriei.">
                 <span class="av-case-lux-index">03</span>
               </figure>
               <div class="av-case-lux-copy">
