@@ -125,7 +125,7 @@ try {
     await page.click(width <= 820 ? '#av-mobile-approved-header .avm-hamb' : '#hamb');
     assert(await page.$eval('#menu', menu => menu.getBoundingClientRect().height > 0 && !menu.inert), `${width}: menu did not open`);
     await page.keyboard.press('Escape');
-    assert(await page.$eval('#menu', menu => !menu.classList.contains('open')), `${width}: menu did not close`);
+    assert(await page.$eval('#menu', menu => !menu.classList.contains('open') && menu.getBoundingClientRect().height === 0), `${width}: menu did not close visually`);
     if (width <= 820) {
       await page.$eval('[data-case-dots] button:last-child', button => button.click());
       await new Promise(resolve => setTimeout(resolve, 600));
