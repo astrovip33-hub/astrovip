@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs';
 import puppeteer from 'puppeteer-core';
 
 const base = 'https://astrovip.ro';
+const headers = { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 AstroVipAudit/1.0' };
 const output = '/tmp/astrovip-production-audit';
 await mkdir(output, { recursive: true });
 const stamp = process.env.GITHUB_SHA || Date.now();
@@ -11,7 +12,7 @@ const report = { pages: [], browsers: [], errors: [] };
 const get = async path => {
   const url = new URL(path, base);
   url.searchParams.set('audit', stamp);
-  const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+  const response = await fetch(url, { headers, signal: AbortSignal.timeout(30000) });
   assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
   return response;
 };
@@ -52,11 +53,11 @@ for (const path of ['/robots.txt', '/llms.txt', '/assets/ux-refresh-20261008.css
   await get(path);
 }
 for (const path of ['/api/command/ping', '/api/command/connections']) {
-  const response = await fetch(base + path);
+  const response = await fetch(base + path, { headers });
   assert.equal(response.status, 401, `${path}: administrative API must require authentication`);
 }
 for (const path of ['/package.json', '/worker-home-ultra.js', '/scripts/audit_site_assets.py']) {
-  const response = await fetch(base + path);
+  const response = await fetch(base + path, { headers });
   assert.equal(response.status, 404, `${path}: internal source must not be served`);
 }
 
@@ -66,6 +67,7 @@ const browser = await puppeteer.launch({ executablePath, headless: true, args: [
 try {
   for (const width of [360, 390, 820, 1366]) {
     const page = await browser.newPage();
+    await page.setUserAgent(headers['user-agent']);
     await page.setViewport({ width, height: 900 });
     await page.evaluateOnNewDocument(() => {
       window.__auditCLS = 0;
