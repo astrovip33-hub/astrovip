@@ -65,7 +65,7 @@ const executablePath = ['/usr/bin/google-chrome', '/usr/bin/google-chrome-stable
 assert(executablePath, 'Chrome executable missing');
 const browser = await puppeteer.launch({ executablePath, headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage'] });
 try {
-  for (const width of [360, 390, 820, 1366]) {
+  for (const width of [1366, 360, 390, 820]) {
     const page = await browser.newPage();
     await page.setUserAgent(headers['user-agent']);
     await page.setViewport({ width, height: 900 });
@@ -75,7 +75,7 @@ try {
       new PerformanceObserver(list => {
         for (const entry of list.getEntries()) if (!entry.hadRecentInput) {
           window.__auditCLS += entry.value;
-          window.__auditShifts.push({ value: entry.value, nodes: entry.sources.map(s => s.node?.id || String(s.node?.className || '').slice(0, 80)) });
+          window.__auditShifts.push({ value: entry.value, time: entry.startTime, nodes: entry.sources.map(s => ({node: s.node?.id || String(s.node?.className || '').slice(0, 80), before: s.previousRect, after: s.currentRect})) });
         }
       }).observe({ type: 'layout-shift', buffered: true });
     });
