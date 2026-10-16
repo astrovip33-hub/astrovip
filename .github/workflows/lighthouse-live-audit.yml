@@ -1,8 +1,9 @@
 name: Lighthouse live audit
 
 on:
-  push:
-    branches: ["main"]
+  workflow_run:
+    workflows: ["Deploy AstroVip to Cloudflare Worker"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -14,6 +15,7 @@ concurrency:
 
 jobs:
   audit:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Audit mobile

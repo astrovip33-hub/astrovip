@@ -35,7 +35,23 @@ jobs:
           grep -Fq "Contul meu AstroVip" "$TMP/client"
           grep -Fq "/command-center/v9-extension.js" "$TMP/command"
           grep -Fq '"name": "AstroVip Premium"' "$TMP/manifest"
-          grep -Fq "astrovip-v9-shell" "$TMP/sw"
+          grep -Fq "astrovip-clean-v1" "$TMP/sw"
           test -s "$TMP/main.js"
           test -s "$TMP/worker.js"
           echo "Premium V9 production health: OK"
+
+      - name: Checkout production audit
+        uses: actions/checkout@v4
+
+      - name: Install production browser audit driver
+        run: npm install --no-save --ignore-scripts puppeteer-core@24.26.1
+
+      - name: Audit production pages and mobile and desktop interactions
+        run: node scripts/audit_production.mjs
+
+      - name: Upload production audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: astrovip-production-audit
+          path: /tmp/astrovip-production-audit/

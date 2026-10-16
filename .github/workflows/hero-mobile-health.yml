@@ -1,8 +1,9 @@
 name: Mobile Hero asset health
 
 on:
-  push:
-    branches: ["main"]
+  workflow_run:
+    workflows: ["Deploy AstroVip to Cloudflare Worker"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -10,6 +11,7 @@ permissions:
 
 jobs:
   verify-mobile-hero:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Verify mobile Hero WebP and AVIF are live

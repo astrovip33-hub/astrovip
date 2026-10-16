@@ -6,3 +6,17 @@ wrangler.www-redirect.jsonc
 www-redirect-worker.js
 .assetsignore
 README.md
+
+node_modules
+scripts
+src
+supabase
+package.json
+package-lock.json
+wrangler.*
+worker*.js
+command-center-api.js
+clarity-api.js
+homepage-approved-layout.js
+*.md
+*.zip

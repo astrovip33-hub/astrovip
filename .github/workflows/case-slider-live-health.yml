@@ -1,15 +1,9 @@
 name: Case studies slider live health
 
 on:
-  push:
-    branches: ["main"]
-    paths:
-      - "worker-home-ultra.js"
-      - "assets/case-studies-slider-v7-20261014.js"
-      - "assets/case-studies-mobile-premium-v6-20261014.css"
-      - "assets/case-studies-slider-lux-v5-20261014.css"
-      - "assets/home-case-studies-premium-20261014.js"
-      - ".github/workflows/case-slider-live-health.yml"
+  workflow_run:
+    workflows: ["Deploy AstroVip to Cloudflare Worker"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -21,6 +15,7 @@ concurrency:
 
 jobs:
   mobile-browser:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Wait for live slider fix and V8 HTML

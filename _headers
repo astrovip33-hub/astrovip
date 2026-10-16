@@ -79,3 +79,10 @@ https://astrovip-preview.astrovip33.workers.dev/*
 
 https://astrovip.astrovip33.workers.dev/*
   X-Robots-Tag: noindex, nofollow
+
+# Runtime files are updated in place; revalidate instead of retaining an old UI for a year.
+/assets/*.js
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/assets/*.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
