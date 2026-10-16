@@ -24,6 +24,16 @@ function safeEqual(a = '', b = '') {
   return x === 0;
 }
 
+function safeError(error, env) {
+  let message = String(error?.message || error || 'request_failed');
+  for (const [key, value] of Object.entries(env)) {
+    if (/TOKEN|SECRET|API_KEY|ACCOUNT_JSON/.test(key) && typeof value === 'string' && value.length > 5) {
+      message = message.replaceAll(value, '[redacted]');
+    }
+  }
+  return message.slice(0, 220);
+}
+
 function authToken(request) {
   const h = request.headers.get('authorization') || '';
   const m = /^Bearer\s+(.+)$/i.exec(h);
@@ -61,6 +71,7 @@ async function githubJson(path, { token, method = 'GET', body } = {}) {
       ...(body ? { 'content-type': 'application/json' } : {}),
     },
     body: body ? JSON.stringify(body) : undefined,
+    signal: AbortSignal.timeout(20000),
   });
   if (res.status === 204) return { ok: true, status: 204, data: null };
   const text = await res.text();
@@ -73,7 +84,7 @@ async function githubStatus(env) {
   const token = env.GITHUB_ADMIN_TOKEN || '';
   const [commitRes, runRes] = await Promise.all([
     githubJson(`/repos/${REPO}/commits/main`, { token }),
-    githubJson(`/repos/${REPO}/actions/workflows/${DEPLOY_WORKFLOW}/runs?per_page=1`, { token }),
+    githubJson(`/repos/${REPO}/actions/workflows/${DEPLOY_WORKFLOW}/runs?branch=main&per_page=1`, { token }),
   ]);
   const c = commitRes.data || {};
   const run = runRes.data?.workflow_runs?.[0] || null;
@@ -550,7 +561,7 @@ export async function handleCommandCenter(request, env) {
     }
 
     if (url.pathname === '/api/command/overview') {
-      const github = await githubStatus(env).catch(e => ({ apiOk: false, error: String(e?.message || e) }));
+      const github = await githubStatus(env).catch(e => ({ apiOk: false, error: safeError(e, env) }));
       return json({
         ok: true,
         version: 3,
@@ -629,6 +640,6 @@ export async function handleCommandCenter(request, env) {
 
     return json({ ok: false, error: 'not_found' }, 404);
   } catch (e) {
-    return json({ ok: false, error: String(e?.message || e) }, 500);
+    return json({ ok: false, error: safeError(e, env) }, 500);
   }
 }

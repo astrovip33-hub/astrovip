@@ -166,12 +166,13 @@ export default {
     const ct=assetResponse.headers.get('content-type')||'';
     const isCommandCenterHome=url.pathname==='/command-center'||url.pathname==='/command-center/';
     if(assetResponse.ok&&ct.includes('text/html')&&isCommandCenterHome){
-      const ccRuntime='<script src="/assets/clarity-command-center.js?v=20261014-clarity1" defer></script>';
+      const ccRuntime='<script src="/assets/clarity-command-center.js?v=20261016-cc-maintenance1" defer></script>';
       const transformed=new HTMLRewriter().on('head',{element(el){el.append(ccRuntime,{html:true})}}).transform(assetResponse);
       const headers=new Headers(transformed.headers);
       headers.set('X-Robots-Tag','noindex, nofollow, noarchive');
       headers.set('Referrer-Policy','no-referrer');
       headers.set('X-Content-Type-Options','nosniff');
+      headers.set('Cache-Control','no-store');
       return new Response(transformed.body,{status:transformed.status,statusText:transformed.statusText,headers});
     }
     if(assetResponse.ok&&ct.includes('text/html')&&!url.pathname.startsWith('/command-center')){
@@ -203,6 +204,7 @@ export default {
       headers.set('X-Robots-Tag','noindex, nofollow, noarchive');
       headers.set('Referrer-Policy','no-referrer');
       headers.set('X-Content-Type-Options','nosniff');
+      headers.set('Cache-Control','no-store');
       return new Response(assetResponse.body,{status:assetResponse.status,statusText:assetResponse.statusText,headers});
     }
     return assetResponse;

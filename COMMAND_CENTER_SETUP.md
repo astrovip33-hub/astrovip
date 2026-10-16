@@ -1,4 +1,4 @@
-# AstroVip Command Center V6
+# AstroVip Command Center V9
 
 ## Entry points
 
@@ -57,7 +57,18 @@ Toate cer `Authorization: Bearer <COMMAND_CENTER_TOKEN>` și răspund cu `Cache-
 
 ```sh
 node --check command-center-api.js
-node --test scripts/test-command-center.mjs
+node --test scripts/test-command-center.mjs scripts/test-command-center-ui.mjs
+python3 -m unittest discover -s scripts -p 'test_operations_health.py'
 ```
 
 Testele acoperă autentificarea, conturile multiple/expirate, redacția secretelor, dependențele Ads/Metricool, OAuth, verificarea Stripe/Drive, OAuth Google direct și validitatea scripturilor HTML. Datele providerilor sunt simulate în testele locale; verificarea conturilor reale se face autentificat în hub.
+
+## Întreținere V9 · 16 octombrie 2026
+
+- Modulele se actualizează independent; o eroare nu blochează celelalte carduri. Refresh-urile simultane sunt reunite, iar rezultatele vechi se șterg la eșec.
+- Cloudflare este „Configurat” când binding-ul există. „Verificat” cere testul efectiv al rutelor. Cardul Premium verifică disponibilitatea paginilor și asset-urilor; nu confirmă autentificarea sau API-urile.
+- Scorul de sănătate folosește backend (20%), rute (40%), deploy (20%) și ultima verificare Auto-Pilot activă (20%). Configurarea unei chei nu adaugă puncte.
+- Auto-Pilot citește starea reală a workflow-ului și pasul eșuat. Verificarea canonică folosește un parser HTML, indiferent de ordinea atributelor. Monitorizarea rulează și după un deploy reușit.
+- Clarity păstrează actualizarea manuală pentru limita API zilnică; apăsările repetate nu trimit cereri concurente. Tokenurile administrative și ale providerilor nu sunt înregistrate în jurnal.
+- Testul sliderului așteaptă poziția finală și numărătoarea corectă, inclusiv la 820 px, în locul unei pauze fixe de 600 ms.
+- Deploy-ul rulează testele Command Center și verificarea parserului înainte de build/publicare.

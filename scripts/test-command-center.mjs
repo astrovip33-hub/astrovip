@@ -24,7 +24,8 @@ test('missing secrets remain pending and cannot leak into responses',async()=>{
   assert.equal(data.sources.find(x=>x.key==='gsc').state,'pending');
   assert.equal(data.sources.find(x=>x.key==='githubDeploy').state,'configured');
   assert.equal(data.sources.find(x=>x.key==='githubDeploy').verified,false);
-  assert.equal(data.sources.find(x=>x.key==='cloudflareRuntime').state,'verified');
+  assert.equal(data.sources.find(x=>x.key==='cloudflareRuntime').state,'configured');
+  assert.equal(data.sources.find(x=>x.key==='cloudflareRuntime').verified,false);
   assert(!JSON.stringify(data).includes('private-value'));
 });
 test('active OAuth is authorized, and still needs a provider test',async()=>{
@@ -173,4 +174,46 @@ test('new and edited pages have valid scripts and no duplicate element IDs',()=>
     const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);assert.equal(ids.length,new Set(ids).size,name);
     assert.match(html,/noindex/);
   }
+});
+
+test('operations routes require authentication before reading providers',async()=>{
+  globalThis.fetch=()=>{throw Error('provider must not be called')};
+  for(const path of ['site-health','autopilot-status','recovery-points','overview','gsc','ga4','seranking']) {
+    const response=await handleCommandCenter(request(path,null,'wrong'),env);
+    assert.equal(response.status,401,path);
+    assert.equal(response.headers.get('cache-control'),'no-store');
+  }
+});
+test('Auto-Pilot reports disabled workflows and the failed check without claiming active status',async()=>{
+  globalThis.fetch=async(url)=>{
+    if(url.includes('/runs?')){assert.match(url,/branch=main/);return reply({workflow_runs:[{id:42,status:'completed',conclusion:'failure',html_url:'https://github.com/run/42'}]})}
+    if(url.includes('/jobs?'))return reply({jobs:[{name:'monitor',html_url:'https://github.com/job/42',steps:[{name:'Checkout',conclusion:'success'},{name:'Run production guard checks',conclusion:'failure'}]}]});
+    return reply({state:'disabled_manually'});
+  };
+  const {status,data}=await run('autopilot-status',null,{GITHUB_ADMIN_TOKEN:'private-token'});
+  assert.equal(status,200);assert.equal(data.enabled,false);
+  assert.equal(data.failedSteps.length,1);assert.equal(data.failedSteps[0].step,'Run production guard checks');
+  assert(!JSON.stringify(data).includes('private-token'));
+});
+test('provider exceptions become redacted JSON errors instead of uncaught Worker exceptions',async()=>{
+  globalThis.fetch=async()=>{throw Error('upstream rejected private-github-token')};
+  for(const path of ['autopilot-status','recovery-points']) {
+    const {status,data}=await run(path,null,{GITHUB_ADMIN_TOKEN:'private-github-token'});
+    assert.equal(status,502);assert.equal(data.ok,false);assert(!data.error.includes('private-github-token'));
+  }
+  const overview=await run('overview',null,{GITHUB_ADMIN_TOKEN:'private-github-token'});
+  assert.equal(overview.data.github.apiOk,false);
+  assert(!overview.data.github.error.includes('private-github-token'));
+});
+test('site health bounds requests, closes unused bodies and retains failed checks',async()=>{
+  const responses=[];
+  globalThis.fetch=async(url,options)=>{
+    assert(options.signal instanceof AbortSignal);
+    if(url.includes('robots.txt'))throw new DOMException('request expired','TimeoutError');
+    const response=new Response('OK');responses.push(response);return response;
+  };
+  const {status,data}=await run('site-health');
+  assert.equal(status,200);assert.equal(data.ok,false);assert.equal(data.results.length,4);
+  assert.equal(data.results.find(x=>x.key==='robots').error,'health_check_timeout');
+  for(const response of responses)assert.equal(response.bodyUsed,true);
 });

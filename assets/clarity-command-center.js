@@ -32,13 +32,18 @@
       };
     }
   }
+  let refreshing=false;
   async function refresh(loud=false){
+    if(refreshing)return;
     const token=sessionStorage.getItem(K)||'';
     if(!token){setBadge('NEAUTENTIFICAT','bad');return;}
+    refreshing=true;
+    const button=document.getElementById('av-clarity-refresh');if(button)button.disabled=true;
     setBadge('ÎNCĂRCARE','warn');
     try{
-      const r=await fetch('/api/command/clarity?days=1',{headers:{authorization:'Bearer '+token}});
+      const r=await fetch('/api/command/clarity?days=1',{cache:'no-store',signal:AbortSignal.timeout(25000),headers:{authorization:'Bearer '+token}});
       const d=await r.json().catch(()=>({}));
+      if(r.status===401){sessionStorage.removeItem(K);document.getElementById('lock')?.classList.remove('hide');dispatchEvent(new Event('avcc:session-ended'));}
       if(!r.ok)throw Error(d.error||('HTTP '+r.status));
       const m=d.data?.summary||{};
       document.getElementById('av-clarity-sessions').textContent=fmt(m.sessions);
@@ -53,10 +58,11 @@
       if(loud&&typeof window.toast==='function')window.toast('Clarity UX actualizat');
     }catch(e){
       const map={clarity_api_token_not_configured:'Lipsește CLARITY_API_TOKEN.',clarity_api_token_invalid_or_unauthorized:'Tokenul Clarity nu este valid sau autorizat.',clarity_daily_quota_exceeded:'Limita zilnică Clarity a fost atinsă.'};
+      ['sessions','users','rage','dead','errors','bots'].forEach(key=>{const node=document.getElementById('av-clarity-'+key);if(node)node.textContent='—'});
       setBadge('ATENȚIE','bad');
       const msg=map[e.message]||e.message||'Eroare Clarity';
       if(loud&&typeof window.toast==='function')window.toast(msg);
-    }
+    }finally{refreshing=false;if(button)button.disabled=false;}
   }
   window.avClarityRefresh=refresh;
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();

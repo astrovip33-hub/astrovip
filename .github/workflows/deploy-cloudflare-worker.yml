@@ -26,6 +26,11 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Validate Command Center and operations checks
+        run: |
+          node --test scripts/test-command-center.mjs scripts/test-command-center-ui.mjs
+          python3 -m unittest discover -s scripts -p 'test_operations_health.py'
+
       - name: Build Swiss Ephemeris Koch browser bundle
         shell: bash
         run: |

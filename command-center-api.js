@@ -407,7 +407,7 @@ async function augmentLegacy(response, env, type) {
     try { google = await composioGoogleStatus(env); } catch {}
   }
   if (type === 'overview') {
-    data.version = 5;
+    data.version = 9;
     data.integrations = extendedIntegrations(env, data.integrations || {}, google);
     data.integrationDetails = extendedDetails(env, data.integrationDetails || {}, google);
     data.capabilities = {
@@ -436,8 +436,8 @@ async function seRankingData(env) {
     accept: 'application/json',
   };
   const [profileRes, sitesRes] = await Promise.all([
-    fetch(`${SERANKING_API}/v1/project-management/users/me`, { headers }),
-    fetch(`${SERANKING_API}/v1/project-management/sites`, { headers }),
+    fetch(`${SERANKING_API}/v1/project-management/users/me`, { headers, signal: AbortSignal.timeout(20000) }),
+    fetch(`${SERANKING_API}/v1/project-management/sites`, { headers, signal: AbortSignal.timeout(20000) }),
   ]);
   const profile = await profileRes.json().catch(() => ({}));
   const sitesJson = await sitesRes.json().catch(() => ([]));
@@ -539,15 +539,15 @@ async function connectionState(env) {
     const configured = spec.key === 'cloudflareRuntime' ? Boolean(env.ASSETS) : missing.length === 0;
     return {
       key: spec.key, name: spec.name, url: spec.url, test: spec.test || null,
-      configured, authorized: Boolean(account), verified: spec.key === 'cloudflareRuntime' && configured,
-      state: spec.key === 'cloudflareRuntime' && configured ? 'verified' : account ? 'authorized' : configured ? 'configured' : 'pending',
+      configured, authorized: Boolean(account), verified: false,
+      state: account ? 'authorized' : configured ? 'configured' : 'pending',
       account: account ? accountSummary(account) : null, missing,
       canAuthorize: Boolean(spec.toolkit && has(env, 'COMPOSIO_API_KEY') && !account && !accountError),
       settingsUrl: SETTINGS_URL,
       error: accountError || (spec.toolkit ? discoveryError : null),
     };
   });
-  return { ok: true, version: 6, checkedAt: new Date().toISOString(), sources, discoveryError };
+  return { ok: true, version: 9, checkedAt: new Date().toISOString(), sources, discoveryError };
 }
 
 async function providerJson(endpoint, headers, options = {}) {
@@ -740,10 +740,23 @@ async function recoveryPoints(env) {
 }
 
 async function autopilotStatus(env) {
-  const result = await githubControl(env, `/repos/${REPO}/actions/workflows/operations-autopilot.yml/runs?per_page=1`);
+  const workflowPath = `/repos/${REPO}/actions/workflows/operations-autopilot.yml`;
+  const [result, workflow] = await Promise.all([
+    githubControl(env, `${workflowPath}/runs?branch=main&per_page=1`),
+    githubControl(env, workflowPath),
+  ]);
   if (!result.ok) return { ok: false, status: result.status, error: result.data?.message || result.data?.error || 'autopilot_status_failed' };
+  if (!workflow.ok) return { ok: false, status: workflow.status, error: workflow.data?.message || 'autopilot_workflow_status_failed' };
   const run = result.data?.workflow_runs?.[0] || null;
-  return { ok: true, enabled: true, cadence: 'la fiecare 4 ore', run: run ? {
+  let failedSteps = [], diagnosticsError = null;
+  if (run?.conclusion === 'failure') {
+    const jobs = await githubControl(env, `/repos/${REPO}/actions/runs/${run.id}/jobs?per_page=100`);
+    if (jobs.ok) failedSteps = (jobs.data?.jobs || []).flatMap(job => (job.steps || [])
+      .filter(step => step.conclusion === 'failure').map(step => ({ job: job.name, step: step.name, url: job.html_url })));
+    else diagnosticsError = 'Detaliile verificării nu sunt disponibile.';
+  }
+  return { ok: true, enabled: workflow.data?.state === 'active', workflowState: workflow.data?.state || 'unknown',
+    checkedAt: new Date().toISOString(), failedSteps, diagnosticsError, cadence: 'la fiecare 4 ore', run: run ? {
     id: run.id || null, status: run.status || null, conclusion: run.conclusion || null,
     event: run.event || null, createdAt: run.created_at || null, updatedAt: run.updated_at || null,
     url: run.html_url || null,
@@ -776,16 +789,19 @@ async function siteHealth() {
   const results = await Promise.all(targets.map(async ([key, url]) => {
     const started = Date.now();
     try {
-      const res = await fetch(`${url}${url.includes('?') ? '&' : '?'}cc_health=${Date.now()}`, { method: 'GET', headers: { 'user-agent': 'AstroVip-Command-Center/5.0' } });
+      const res = await fetch(`${url}${url.includes('?') ? '&' : '?'}cc_health=${Date.now()}`, {
+        method: 'GET', headers: { 'user-agent': 'AstroVip-Command-Center/9.0' }, signal: AbortSignal.timeout(12000),
+      });
+      if (res.body) await res.body.cancel();
       return { key, url, ok: res.ok, status: res.status, ms: Date.now() - started, release: res.headers.get('x-astrovip-release') || null };
     } catch (e) {
-      return { key, url, ok: false, status: 0, ms: Date.now() - started, error: String(e?.message || e) };
+      return { key, url, ok: false, status: 0, ms: Date.now() - started, error: /Timeout|Abort/.test(e?.name || '') ? 'health_check_timeout' : 'health_check_failed' };
     }
   }));
   return { ok: results.every(x => x.ok), checkedAt: new Date().toISOString(), results };
 }
 
-export async function handleCommandCenter(request, env) {
+async function routeCommandCenter(request, env) {
   const url = new URL(request.url);
   if (!url.pathname.startsWith('/api/command/')) return null;
 
@@ -822,7 +838,7 @@ export async function handleCommandCenter(request, env) {
     if (!gate?.ok) return gate;
     if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
     try { return json({ ok: true, ...(await composioGoogleStatus(env)) }); }
-    catch (e) { return json({ ok: false, error: String(e?.message || e) }, 502); }
+    catch (e) { return json({ ok: false, error: safeConnectionError(e, env) }, 502); }
   }
 
   if (url.pathname === '/api/command/google-connect') {
@@ -838,7 +854,7 @@ export async function handleCommandCenter(request, env) {
       const result = await composioConnectLink(env, toolkit, callbackUrl);
       return json({ ok: true, ...result }, result.connected ? 200 : 201);
     } catch (e) {
-      return json({ ok: false, error: String(e?.message || e) }, 502);
+      return json({ ok: false, error: safeConnectionError(e, env) }, 502);
     }
   }
 
@@ -848,7 +864,7 @@ export async function handleCommandCenter(request, env) {
     if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
     if (googleServiceReady(env)) return handleV3(request, env);
     try { return json({ ok: true, configured: true, data: await gscViaComposio(env) }); }
-    catch (e) { return json({ ok: false, configured: false, error: String(e?.message || e) }, 503); }
+    catch (e) { return json({ ok: false, configured: false, error: safeConnectionError(e, env) }, 503); }
   }
 
   if (url.pathname === '/api/command/ga4') {
@@ -857,7 +873,7 @@ export async function handleCommandCenter(request, env) {
     if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
     if (googleServiceReady(env) && has(env, 'GA4_PROPERTY_ID')) return handleV3(request, env);
     try { return json({ ok: true, configured: true, data: await ga4ViaComposio(env) }); }
-    catch (e) { return json({ ok: false, configured: false, error: String(e?.message || e) }, 503); }
+    catch (e) { return json({ ok: false, configured: false, error: safeConnectionError(e, env) }, 503); }
   }
 
   if (url.pathname === '/api/command/seranking') {
@@ -865,6 +881,7 @@ export async function handleCommandCenter(request, env) {
     if (!gate?.ok) return gate;
     if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
     const result = await seRankingData(env);
+    if (!result.ok) result.error = safeConnectionError(result.error, env);
     return json(result, result.ok ? 200 : (result.status || 500));
   }
 
@@ -876,7 +893,7 @@ export async function handleCommandCenter(request, env) {
       const result = await driveBackup(env);
       return json(result, result.ok ? 201 : (result.status || 500));
     } catch (e) {
-      return json({ ok: false, error: String(e?.message || e) }, 500);
+      return json({ ok: false, error: safeConnectionError(e, env) }, 500);
     }
   }
 
@@ -915,4 +932,12 @@ export async function handleCommandCenter(request, env) {
   }
 
   return handleV3(request, env);
+}
+
+export async function handleCommandCenter(request, env) {
+  try {
+    return await routeCommandCenter(request, env);
+  } catch (error) {
+    return json({ ok: false, error: safeConnectionError(error, env) }, 502);
+  }
 }

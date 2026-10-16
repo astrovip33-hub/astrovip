@@ -24,7 +24,15 @@
     } finally { clearTimeout(timer); }
   }
 
+  let refreshing = null;
   async function refreshV9() {
+    if (!sessionStorage.getItem('avcc_v3_token')) return;
+    if (refreshing) return refreshing;
+    refreshing = runChecks().finally(() => { refreshing = null; });
+    return refreshing;
+  }
+
+  async function runChecks() {
     const badge = document.querySelector('#avV9Badge');
     const target = document.querySelector('#avV9Health');
     if (!target) return;
@@ -69,22 +77,21 @@
         <a class="btn" href="/client/" target="_blank" rel="noopener">Client Portal</a>
         <a class="btn" href="https://astrovip-v9-preview.astrovip33.workers.dev/" target="_blank" rel="noopener">Preview V9</a>
       </div>
-      <div class="pills">
-        <span class="pill"><i class="dot ok"></i>Feature Flags</span>
-        <span class="pill"><i class="dot ok"></i>A/B Testing</span>
-        <span class="pill"><i class="dot ok"></i>First-party Analytics</span>
-        <span class="pill"><i class="dot ok"></i>Core Web Vitals</span>
-        <span class="pill"><i class="dot ok"></i>Semantic Knowledge</span>
-        <span class="pill"><i class="dot ok"></i>Passwordless PKCE</span>
-      </div>`;
+      <p class="mut" style="margin:12px 0 0">Aceste verificări confirmă disponibilitatea fișierelor și paginilor. Autentificarea, calculele și API-urile se verifică separat în Conexiuni și în testele funcționale.</p>`;
 
     const hero = grid.querySelector('.hero');
     if (hero?.nextSibling) grid.insertBefore(card, hero.nextSibling.nextSibling || hero.nextSibling);
     else grid.prepend(card);
     document.querySelector('#avV9Refresh')?.addEventListener('click', refreshV9);
-    refreshV9();
+    if (sessionStorage.getItem('avcc_v3_token')) refreshV9();
   }
 
+  window.avV9Refresh = refreshV9;
+  addEventListener('avcc:refresh', refreshV9);
+  addEventListener('avcc:session-ended', () => {
+    const badge = document.getElementById('avV9Badge');
+    if (badge) { badge.textContent = 'NEAUTENTIFICAT'; badge.className = 'badge warn'; }
+  });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
   else boot();
 })();

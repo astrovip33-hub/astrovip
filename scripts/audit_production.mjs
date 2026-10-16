@@ -128,7 +128,17 @@ try {
     assert(await page.$eval('#menu', menu => !menu.classList.contains('open') && menu.getBoundingClientRect().height === 0), `${width}: menu did not close visually`);
     if (width <= 820) {
       await page.$eval('[data-case-dots] button:last-child', button => button.click());
-      await new Promise(resolve => setTimeout(resolve, 600));
+      await page.waitForFunction(() => {
+        const section = document.querySelector('#studii-de-caz-home');
+        const track = section?.querySelector('.av-case-showcase-grid');
+        const cards = track?.querySelectorAll('.av-case-showcase-card');
+        const last = cards?.[cards.length - 1];
+        if (!track || !last) return false;
+        const t = track.getBoundingClientRect(), c = last.getBoundingClientRect();
+        const centered = Math.abs((c.left + c.right - t.left - t.right) / 2) < 3;
+        const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+        return (centered || atEnd) && section.querySelector('[data-case-count]')?.textContent === `${cards.length} / ${cards.length}`;
+      }, { timeout: 5000 });
       const count = await page.$eval('[data-case-count]', node => node.textContent);
       assert.equal(count, `${state.cards} / ${state.cards}`, 'Last case study is unreachable');
     }
