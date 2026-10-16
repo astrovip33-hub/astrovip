@@ -15,8 +15,9 @@ package.json
 package-lock.json
 wrangler.*
 worker*.js
-command-center-api.js
+command-center-api*.js
 clarity-api.js
 homepage-approved-layout.js
 *.md
 *.zip
+http-redirect-worker.js

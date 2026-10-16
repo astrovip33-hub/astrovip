@@ -440,28 +440,17 @@ jobs:
             exit 36
           fi
           echo "Medical astrology page and internal links verified."
-          if ! grep -q '/assets/header-layout-unified-20260923.css' "$LIVE_HTML"; then
-            echo "::error::Homepage does not load the unified desktop header stylesheet."
+          if ! grep -Fq '/assets/ux-refresh-20261008.css' "$LIVE_HTML"; then
+            echo "::error::Homepage does not load the current responsive header stylesheet."
             exit 38
           fi
-          HEADER_CSS_STATUS=$(curl -sS -o /tmp/header-layout-unified.css -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/header-layout-unified-20260923.css?v=$EXPECTED_RELEASE")
-          if [ "$HEADER_CSS_STATUS" != "200" ]; then
-            echo "::error::Unified desktop header stylesheet returned HTTP $HEADER_CSS_STATUS."
+          HEADER_CSS_STATUS=$(curl -sS -o /tmp/header-current.css -w '%{http_code}' --retry 8 --retry-delay 4 "https://astrovip.ro/assets/ux-refresh-20261008.css?v=$EXPECTED_RELEASE")
+          if [ "$HEADER_CSS_STATUS" != "200" ] || ! grep -Fq 'header.top' /tmp/header-current.css || ! grep -Fq '#menu' /tmp/header-current.css; then
+            echo "::error::Current responsive header stylesheet is missing or invalid (HTTP $HEADER_CSS_STATUS)."
             exit 39
           fi
-          if ! grep -q '@media (min-width:981px)' /tmp/header-layout-unified.css || \
-             ! grep -q 'header.top .av-lang-switch' /tmp/header-layout-unified.css || \
-             ! grep -q 'header.top .nav-actions .avchat-launcher.avchat-header-slot' /tmp/header-layout-unified.css || \
-             ! grep -q 'header.top .menu' /tmp/header-layout-unified.css; then
-            echo "::error::Unified desktop header stylesheet is missing required layout rules."
-            exit 40
-          fi
-          if ! grep -q 'media="(min-width:981px)"' "$LIVE_HTML"; then
-            echo "::error::Unified desktop header stylesheet is not scoped to desktop."
-            exit 41
-          fi
-          for RETIRED in desktop-languages-inline-20260923.css desktop-header-structural-fix-20260923.css desktop-chat-under-logo-20260923.css; do
-            if grep -q "$RETIRED" "$LIVE_HTML"; then
+          for RETIRED in header-layout-unified-20260923.css desktop-languages-inline-20260923.css desktop-header-structural-fix-20260923.css desktop-chat-under-logo-20260923.css; do
+            if grep -Fq "$RETIRED" "$LIVE_HTML"; then
               echo "::error::Retired conflicting header stylesheet is still linked live: $RETIRED"
               exit 42
             fi
@@ -508,7 +497,7 @@ jobs:
             echo "::error::Live chat script does not implement desktop-nav/mobile-language-bar placement."
             exit 45
           fi
-          echo "Unified desktop header verified: one stylesheet, one chat launcher, desktop scope only."
+          echo "Current responsive header verified; legacy stylesheets absent."
 
 
 
