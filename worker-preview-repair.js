@@ -14,8 +14,11 @@ const replacements = [
   ['urm─âtor','următor']
 ];
 
+const MOBILE_PAYMENT = `<style id="av-mobile-payment-preview">@media(max-width:820px){#av-home-payment-cta{display:block!important;padding:12px 12px 16px!important}.av-home-paybar-inner{width:100%!important;display:grid!important;grid-template-columns:1fr!important;gap:12px!important;padding:16px!important;text-align:center!important}.av-home-paybar-inner>a{display:flex!important;width:100%!important;min-height:54px!important;padding:13px 14px!important;white-space:normal!important;text-align:center!important;font-size:13px!important}.av-home-paybar-inner>div{align-items:center!important}}</style>`;
+
 function repair(text){
   for (const [bad, good] of replacements) text = text.split(bad).join(good);
+  if (!text.includes('id="av-mobile-payment-preview"')) text = text.replace('</head>', MOBILE_PAYMENT + '</head>');
   return text;
 }
 
