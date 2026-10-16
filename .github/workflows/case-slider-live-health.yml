@@ -66,6 +66,10 @@ jobs:
             await page.goto(`https://astrovip.ro/?case-slider-browser=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:90000});
             await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
             await new Promise(r=>setTimeout(r,2000));
+            // Dismiss optional tracking before clicking the navigation; the consent
+            // dialog can cover the slider controls at a phone viewport.
+            await page.evaluate(()=>document.getElementById('av-consent-reject')?.click());
+            await page.waitForFunction(()=>document.getElementById('av-consent')?.hidden!==false,{timeout:10000});
 
             const read=()=>page.evaluate(() => {
               const s=document.querySelector('#studii-de-caz-home');
@@ -107,7 +111,12 @@ jobs:
             await section.screenshot({path:'/tmp/case-slider-mobile-before.png'});
             if(before.initialized==='1'){
               await page.click('#studii-de-caz-home [data-case-next]');
-              await new Promise(r=>setTimeout(r,1400));
+              await page.waitForFunction(()=>{
+                const section=document.querySelector('#studii-de-caz-home');
+                const track=section?.querySelector('.av-case-showcase-grid');
+                const total=track?.querySelectorAll('.av-case-showcase-card').length;
+                return track?.scrollLeft>30&&section?.querySelector('[data-case-count]')?.textContent===`2 / ${total}`;
+              },{timeout:5000}).catch(()=>errors.push('NEXT did not reach the second card'));
             }
             const after=await read();
             console.log('SLIDER AFTER NEXT',JSON.stringify(after));
