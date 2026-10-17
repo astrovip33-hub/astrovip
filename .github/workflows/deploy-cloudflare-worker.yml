@@ -630,3 +630,29 @@ jobs:
               exit 23
             fi
           done
+
+      - name: Verify Marketing OS V10 in production
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://astrovip.ro"
+          READY=0
+          for ATTEMPT in $(seq 1 12); do
+            STATUS=$(curl -sS -D /tmp/marketing-os-headers.txt -o /tmp/marketing-os-live.html -w '%{http_code}' "$BASE/command-center/v10/?release=$GITHUB_SHA")
+            if [ "$STATUS" = "200" ] && grep -Fq 'v10-visual-preview-20261017' /tmp/marketing-os-live.html; then
+              READY=1
+              break
+            fi
+            sleep 3
+          done
+          test "$READY" = "1"
+          grep -Fq 'noindex,nofollow,noarchive' /tmp/marketing-os-live.html
+          curl -fsS "$BASE/command-center/v10/os.css?release=$GITHUB_SHA" -o /tmp/marketing-os-live.css
+          grep -Fq -- '--bg:#293646' /tmp/marketing-os-live.css
+          curl -fsS "$BASE/command-center/v10/app.js?release=$GITHUB_SHA" -o /tmp/marketing-os-live.js
+          grep -Fq 'const previewOnly=isVisualPreview(location)' /tmp/marketing-os-live.js
+          curl -fsS "$BASE/command-center/v10/sources.js?release=$GITHUB_SHA" -o /tmp/marketing-os-live-sources.js
+          grep -Fq "avcc_v3_token" /tmp/marketing-os-live-sources.js
+          API_STATUS=$(curl -sS -o /tmp/marketing-os-auth.json -w '%{http_code}' "$BASE/api/command/ping")
+          test "$API_STATUS" = "401"
+          echo "Marketing OS V10 live: $BASE/command-center/v10/; graphite theme and admin authentication verified"
