@@ -65,7 +65,7 @@ def main():
     sitemap = set()
     errors = []
     # Traverse the submitted index, rather than accepting unreferenced XML files.
-    pending = [Path("sitemap-index.xml")]
+    pending = [Path("sitemap.xml")]
     visited = set()
     while pending:
         file = pending.pop()
