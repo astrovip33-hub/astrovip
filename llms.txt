@@ -39,7 +39,6 @@
 - [Calculator Local Space](https://astrovip.ro/local-space/)
 - [Calculator astrocartografie](https://astrovip.ro/astrocartografie/)
 
-
 ## Numerologie — pagini canonice și instrumente
 
 - [Numerologie + calculator profil](https://astrovip.ro/numerologie/) — hub și calculator local pentru Calea Vieții, Expresie, Suflet și Personalitate
@@ -71,7 +70,7 @@ AstroVip declară metoda înaintea interpretării. Calculatorul de profil folose
 - Limbă principală: română
 - Arie de servicii: București și online
 - Contact: contact@astrovip.ro
-- Sitemap: https://astrovip.ro/sitemap-index.xml
+- Sitemap: https://astrovip.ro/sitemap.xml
 
 ## Principii editoriale
 
