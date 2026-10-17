@@ -1,0 +1,45 @@
+name: SEO and GEO validation
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Preserve publication dates during enrichment
+        run: python3 -m unittest discover -s scripts -p 'test_structured_data_enrichment.py'
+      - name: Build production browser bundles
+        run: |
+          npm install --ignore-scripts
+          npm run build:swiss
+      - name: Validate production content pipeline
+        run: |
+          python3 scripts/enrich_structured_data.py
+          python3 scripts/audit_geo.py
+          python3 scripts/audit_seo_graph.py
+          python3 scripts/audit_site_assets.py
+      - name: Install browser validation runtime
+        run: |
+          npm install --no-save --ignore-scripts --package-lock=false playwright@1.62.1
+          npx playwright install --with-deps chromium --only-shell
+      - name: Check static content on mobile and desktop
+        run: node scripts/test-geo-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: geo-responsive-checks
+          path: test-results/geo/
+          if-no-files-found: ignore

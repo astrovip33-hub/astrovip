@@ -22,11 +22,11 @@ OG_RE = re.compile(
 )
 
 AUTHOR_BOX = """
-<div class="guide-author av-author-trust">
+<aside class="guide-author av-author-trust" aria-label="Despre autor">
   <strong>Autor: Cătălin Smaranda · AstroVip</strong>
   <p>Astrolog cu peste 33 de ani de experiență declarată în astrologie și numerologie și licențiat în Psihologie. Materialele AstroVip folosesc o metodologie explicită și, unde este relevant, studii de caz și surse verificabile.</p>
   <a href="/despre-astrovip/">Despre autor și metodologie →</a> · <a href="/presa/">Profil pentru presă →</a>
-</div>
+</aside>
 """.strip()
 
 DESKTOP_TRUST_RIBBON_STYLE = """
@@ -124,9 +124,8 @@ def enrich(node, image_url: str) -> bool:
             node["image"] = image_url
             changed = True
 
-        if not node.get("datePublished") and node.get("dateModified"):
-            node["datePublished"] = node["dateModified"]
-            changed = True
+        # A revision date is not evidence of the original publication date.
+        # Preserve dates explicitly supplied by the editorial source.
 
         author = node.get("author")
         if not author:
