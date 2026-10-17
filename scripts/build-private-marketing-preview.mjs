@@ -19,6 +19,7 @@ const bundled=await esbuild.build({entryPoints:[new URL('app.js',root).pathname]
       .replace('if(previewOnly){authenticated=true;',"if(previewOnly){store.importSnapshot(parseSnapshot(JSON.stringify(globalThis.__ASTROVIP_PRIVATE_RESEARCH__)));authenticated=true;")
       .replaceAll('PREVIEW · FĂRĂ DATE','PREVIEW PRIVAT · EXPORT DATAT')
       .replaceAll('Datele private nu sunt încărcate','Export SE Ranking datat · alte surse neconectate')
+      .replace('const requested=location.hash.slice(1);',"const requested=location.hash.slice(1)||'intelligence';")
       .replace("location.assign('/command-center/v10/')","location.assign('https://astrovip.ro/command-center/v10/')");
     return {contents,loader:'js'};
   });
