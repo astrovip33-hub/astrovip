@@ -1,6 +1,6 @@
 // Shared, deterministic decision model. No API writes, revenue forecasts or AI fees.
 export const WORKSTREAMS=Object.freeze([
-  {id:'intelligence',number:'02',label:'Intelligence',modules:['seo','competitors','geo','local','content','authority'],sources:['intelligence','gsc']},
+  {id:'intelligence',number:'02',label:'Intelligence',modules:['intelligence','seo','competitors','geo','local','content','authority'],sources:['intelligence','gsc']},
   {id:'operations',number:'03',label:'Operations',modules:['health','operations'],sources:['health','autopilot','recovery']},
   {id:'revenue',number:'04',label:'Money',modules:['revenue'],sources:['ga4','money']},
   {id:'operator',number:'05',label:'AI Operator',modules:['operator'],sources:['intelligence','gsc','ga4','money','local','health','autopilot']},

@@ -7,7 +7,8 @@ import {parseSnapshot} from '../command-center/v10/snapshot.js';
 import {Sources} from '../command-center/v10/sources.js';
 import {moneyReport,localReport,MONEY_EVENTS} from '../command-marketing-api.js';
 import {keywordCandidates,moneySummary,rankedActions,qaSignals} from '../command-center/v10/workflows.js';
-import {renderRoom} from '../command-center/v10/rooms.js';
+import {renderRoom,workflowNavigation} from '../command-center/v10/rooms.js';
+import {MODULES} from '../command-center/v10/intelligence.js';
 
 test('new data routes enforce auth and GET before any provider or snapshot access',async()=>{
   for(const path of ['intelligence','money','local']){
@@ -46,6 +47,10 @@ test('keyword filters handle diacritics, missing difficulty and gaps independent
   assert.equal(keywordCandidates(data,{query:'inexistent'}).length,0);
 });
 const ga=(dimensions,metrics,values,extra={})=>({dimensionHeaders:dimensions.map(name=>({name})),metricHeaders:metrics.map(name=>({name})),rows:values.map(([d,m])=>({dimensionValues:d.map(value=>({value})),metricValues:m.map(value=>({value:String(value)}))})),rowCount:values.length,metadata:{currencyCode:'RON'},...extra});
+test('every workstream module has exactly one navigation destination',()=>{
+  const html=workflowNavigation(MODULES);
+  for(const m of MODULES)assert.equal(html.split('href="#'+m.id+'"').length-1,1,m.id);
+});
 test('Money keeps event, channel and item grains separate and reports sampling/row limits',async()=>{
   const bodies=[];
   const money=await moneyReport(async body=>{
