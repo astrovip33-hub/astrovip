@@ -72,3 +72,18 @@ Testele acoperă autentificarea, conturile multiple/expirate, redacția secretel
 - Clarity păstrează actualizarea manuală pentru limita API zilnică; apăsările repetate nu trimit cereri concurente. Tokenurile administrative și ale providerilor nu sunt înregistrate în jurnal.
 - Testul sliderului așteaptă poziția finală și numărătoarea corectă, inclusiv la 820 px, în locul unei pauze fixe de 600 ms.
 - Deploy-ul rulează testele Command Center și verificarea parserului înainte de build/publicare.
+
+## Marketing OS V10 · versiune inițială, 17 octombrie 2026
+
+- Rută separată: `/command-center/v10/`; V9 rămâne disponibil la ruta existentă.
+- Interfață obsidian/auriu, navigare pentru mobil, Executive Cockpit și acces direct la Premium Studio.
+- Straturi independente: `sources.js` (citire/cache/sesiune), `intelligence.js` (reguli bazate pe date), `app.js` (interfață/acțiuni de navigare).
+- Refolosește tokenul de sesiune V9 și numai endpoint-uri de citire. Logout-ul/401 anulează cererile și elimină răspunsurile târzii.
+- Datele se încarcă la deschiderea modulului; rezultatele se păstrează în memorie 5 minute. Nu există polling automat. Cererile simultane pentru aceeași sursă sunt reunite.
+- GSC și GA4 păstrează perioadele proprii. Poziția medie GSC nu este prezentată drept clasament SERP punctual. SE Ranking returnează în prezent metadatele proiectului, nu pozițiile concurenților.
+- Modulele AI/GEO, Maps/recenzii, autoritate, leaduri confirmate și Dominance Score afișează explicit sursele sau definițiile lipsă. Nu există indicatori inventați. Conexiunea Google Business se gestionează în hub; locația vizată este Bulevardul Unirii 33, București.
+- Operatorul este ghidat, pe comenzi cunoscute. Nu apelează un model AI și nu execută publicări. Publicare/backup/recovery se deschid în V9.
+- Studio: câmpurile aflate în editare nu sunt suprascrise de sincronizare; setările avansate sunt grupate; pașii 1/2/3 ajută navigarea pe mobil. Undo/Redo se referă la elementul selectat și se resetează la schimbarea acestuia. Salvează/Publică aplică întâi câmpurile modificate.
+- Codul nu este publicat automat în producție prin crearea branch-ului. Integrarea în `main` declanșează fluxul Cloudflare existent.
+
+Validare suplimentară: `node --test scripts/test-marketing-os.mjs`. Suita verifică cache-ul, expirarea sesiunii, răspunsurile întârziate, sursele independente, stările conexiunilor, oportunitățile și păstrarea textului în inspector.
