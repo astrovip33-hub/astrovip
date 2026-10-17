@@ -5,6 +5,22 @@ import vm from 'node:vm';
 import {Sources,SESSION_KEY} from '../command-center/v10/sources.js';
 import {MODULES,connectionState,opportunities,priorities,operatorIntent,number,isVisualPreview} from '../command-center/v10/intelligence.js';
 
+test('browser fetch retains its global receiver for authentication and module requests',async()=>{
+  const original=globalThis.fetch;
+  let calls=0;
+  globalThis.fetch=function(){
+    if(this!==globalThis)throw new TypeError('Illegal invocation');
+    calls++;return Promise.resolve(Response.json({ok:true}));
+  };
+  try{
+    const source=new Sources({token:()=> 'test-session'});
+    await source.ping();
+    await source.load('overview');
+    assert.equal(source.records.get('overview').status,'ready');
+    assert.equal(calls,2);
+  }finally{globalThis.fetch=original;}
+});
+
 test('navigation shares requests and reuses data only within the five-minute cache',async()=>{
   let clock=1000,calls=0,release;
   const gate=new Promise(resolve=>{release=resolve});
