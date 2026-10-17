@@ -55,3 +55,8 @@ export function operatorIntent(raw) {
   const found=mappings.find(([,re])=>re.test(q));
   return found?{module:found[0]}:null;
 }
+
+// A visual preview never unlocks the administrative APIs or copies a session.
+export function isVisualPreview(location) {
+  return location.protocol==='https:'&&location.hostname==='astrovip-preview-ux-compact.astrovip33.workers.dev'&&new URLSearchParams(location.search).get('preview')==='1';
+}

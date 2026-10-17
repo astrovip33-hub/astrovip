@@ -28,6 +28,8 @@ function repair(text){
 export default {
   async fetch(request, env, ctx){
     const response = await app.fetch(request, env, ctx);
+    const path = new URL(request.url).pathname;
+    if (path !== '/' && path !== '/index.html') return response;
     const type = response.headers.get('content-type') || '';
     if (!type.includes('text/html')) return response;
     const headers = new Headers(response.headers);

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {Sources,SESSION_KEY} from '../command-center/v10/sources.js';
-import {MODULES,connectionState,opportunities,priorities,operatorIntent,number} from '../command-center/v10/intelligence.js';
+import {MODULES,connectionState,opportunities,priorities,operatorIntent,number,isVisualPreview} from '../command-center/v10/intelligence.js';
 
 test('navigation shares requests and reuses data only within the five-minute cache',async()=>{
   let clock=1000,calls=0,release;
@@ -109,7 +109,7 @@ test('switching identical-looking elements syncs the new selection and clears un
   assert.equal(b.node('selectedText').value,'A doua');assert.equal(b.eval('history.length'),0);
 });
 
-function marketingApp(connected=true){
+function marketingApp(connected=true,visual=false){
   const nodes=new Map(),events=new Map(),storage=new Map(),calls=[];
   const node=id=>{
     if(!nodes.has(id))nodes.set(id,{value:'',hidden:false,textContent:'',innerHTML:'',className:'',disabled:false,setAttribute(){},focus(){},addEventListener:(type,callback)=>events.set(id+':'+type,callback)});
@@ -128,8 +128,8 @@ function marketingApp(connected=true){
       return Response.json({ok:true});
     }});}
   }
-  const location={hash:'#cockpit',assign(){}};
-  const ctx=vm.createContext({MODULES,number,connectionState,opportunities,priorities,operatorIntent,Sources:AppSources,SESSION_KEY,Date,document:{getElementById:node,querySelectorAll:()=>[]},location,sessionStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},addEventListener:(type,callback)=>events.set(type,callback)});
+  const location={hash:'#cockpit',assign(){},protocol:'https:',hostname:visual?'astrovip-preview-ux-compact.astrovip33.workers.dev':'astrovip.ro',search:visual?'?preview=1':''};
+  const ctx=vm.createContext({MODULES,number,connectionState,opportunities,priorities,operatorIntent,Sources:AppSources,SESSION_KEY,Date,URLSearchParams,isVisualPreview,document:{getElementById:node,querySelectorAll:()=>[]},location,sessionStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},addEventListener:(type,callback)=>events.set(type,callback)});
   const js=fs.readFileSync(new URL('../command-center/v10/app.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
   vm.runInContext(js,ctx);
   return {node,calls,location,events,eval:code=>vm.runInContext(code,ctx),login:async()=>{node('token').value='session-test';await events.get('login-form:submit')({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));}};
@@ -146,4 +146,24 @@ test('the app does not request provider reports until their connections are conf
   const app=marketingApp(false);await app.login();
   assert(!app.calls.some(x=>/\/(gsc|ga4|seranking)$/.test(x)));
   assert.match(app.node('content').innerHTML,/Neconectat/);assert(!app.node('content').innerHTML.includes('100%'));
+});
+
+test('visual preview is limited to the explicit preview host and query flag',()=>{
+  const base={protocol:'https:',hostname:'astrovip-preview-ux-compact.astrovip33.workers.dev',search:'?preview=1'};
+  assert(isVisualPreview(base));
+  assert(!isVisualPreview({...base,hostname:'astrovip.ro'}));
+  assert(!isVisualPreview({...base,hostname:'astrovip-preview-ux-compact.astrovip33.workers.dev.example.com'}));
+  assert(!isVisualPreview({...base,protocol:'http:'}));
+  assert(!isVisualPreview({...base,search:''}));
+});
+test('visual preview renders every module without login, provider calls or refresh requests',async()=>{
+  const app=marketingApp(true,true);
+  assert.equal(app.node('app').hidden,false);assert.equal(app.node('lock').hidden,true);
+  assert.match(app.node('session-status').textContent,/PREVIEW/);
+  assert.equal(app.node('preview-notice').hidden,false);
+  for(const module of MODULES){app.location.hash='#'+module.id;app.events.get('hashchange')();await new Promise(resolve=>setImmediate(resolve));assert.equal(app.node('module-caption').textContent,module.label);}
+  app.events.get('refresh:click')();await new Promise(resolve=>setImmediate(resolve));
+  assert.deepEqual(app.calls,[]);
+  assert.equal(app.node('refresh').disabled,true);
+  assert(!app.node('content').innerHTML.includes('Autentificat'));
 });

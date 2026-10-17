@@ -1,4 +1,4 @@
-import {MODULES,number,connectionState,opportunities,priorities,operatorIntent} from './intelligence.js';
+import {MODULES,number,connectionState,opportunities,priorities,operatorIntent,isVisualPreview} from './intelligence.js';
 import {Sources,SESSION_KEY} from './sources.js';
 
 const $=id=>document.getElementById(id);
@@ -14,6 +14,7 @@ const paths=[
   '<path d="M3 20h18M5 16l5-5 4 2 6-8m-5 0h5v5"/>',
   '<path d="M3 12h4l3-7 4 14 3-7h4"/>',
 ];
+const previewOnly=isVisualPreview(location);
 let authenticated=false,active='cockpit',navigationEpoch=0,loginEpoch=0;
 const getToken=()=>{try{return sessionStorage.getItem(SESSION_KEY)||'';}catch{return '';}};
 const store=new Sources({token:getToken,onUnauthorized:()=>lock('Sesiunea a expirat. Autentifică-te din nou.')});
@@ -30,6 +31,7 @@ function lock(message=''){
   if(message)$('token').focus();
 }
 function stateNote(key){
+  if(previewOnly)return 'Date neîncărcate în preview';
   const record=store.records.get(key);
   if(record?.status==='loading')return 'Se încarcă…';
   if(record?.status==='error')return 'Sursă indisponibilă · verifică accesul';
@@ -117,13 +119,14 @@ function render(){
   document.title=module.label+' · AstroVip Marketing OS V10';
   document.querySelectorAll('#navigation a').forEach(a=>{if(a.hash==='#'+active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   const busy=[...store.records.values()].some(r=>r.status==='loading');
-  $('content').setAttribute('aria-busy',String(busy));$('refresh').disabled=busy;
-  $('refresh').textContent=busy?'Se încarcă…':'↻ Actualizează';
+  $('content').setAttribute('aria-busy',String(busy));$('refresh').disabled=busy||previewOnly;
+  $('refresh').textContent=previewOnly?'Preview vizual':busy?'Se încarcă…':'↻ Actualizează';
   const times=[...store.records.values()].filter(r=>r.status==='ready').map(r=>r.at);
   $('fetch-time').textContent=times.length?'Ultima preluare '+date(Math.max(...times)):'Date neverificate';
   const bad=[...store.records.values()].filter(r=>r.status==='error').length;
   $('session-status').className='badge '+(bad?'warn':'good');
   $('session-status').textContent=bad?bad+' surse indisponibile':'Autentificat';
+  if(previewOnly){$('session-status').className='badge warn';$('session-status').textContent='PREVIEW · FĂRĂ DATE';$('fetch-time').textContent='Datele private nu sunt încărcate';}
   $('content').innerHTML=renderModule();
 }
 function eligible(key){
@@ -131,6 +134,7 @@ function eligible(key){
   const s=source(key);return Boolean(s&&(s.configured||s.authorized||s.state==='verified'));
 }
 async function loadActive(force=false){
+  if(previewOnly||!authenticated)return;
   const epoch=++navigationEpoch,session=loginEpoch;
   const core=['overview','connections'].map(key=>store.load(key,{force}));render();
   await Promise.allSettled(core);
@@ -159,7 +163,7 @@ $('login-form').addEventListener('submit',async event=>{
   catch(e){lock(e.message==='Acces respins. Verifică tokenul.'?e.message:'Accesul nu a putut fi verificat. Încearcă din nou.');}
   finally{$('login-button').disabled=false;}
 });
-$('logout').addEventListener('click',()=>lock());
+$('logout').addEventListener('click',()=>{if(previewOnly)location.assign('/command-center/v10/');else lock();});
 $('refresh').addEventListener('click',()=>{if(authenticated)void loadActive(true);});
 $('operator-form').addEventListener('submit',event=>{
   event.preventDefault();const intent=operatorIntent($('command').value);
@@ -168,4 +172,5 @@ $('operator-form').addEventListener('submit',event=>{
   if(intent.href)location.assign(intent.href);else if(location.hash==='#'+intent.module)selectModule();else location.hash=intent.module;
 });
 addEventListener('hashchange',selectModule);
-if(getToken())unlock().catch(()=>lock('Autentifică-te pentru a continua.'));
+if(previewOnly){authenticated=true;$('lock').hidden=true;$('app').hidden=false;$('preview-notice').hidden=false;$('logout').textContent='Autentificare';selectModule();}
+else if(getToken())unlock().catch(()=>lock('Autentifică-te pentru a continua.'));
