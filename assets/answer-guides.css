@@ -4,6 +4,8 @@
 .av-answer-table caption{text-align:left;padding:16px;color:#f0cf68;font-weight:700}
 .av-answer-table th,.av-answer-table td{padding:14px;text-align:left;vertical-align:top;border-bottom:1px solid #493d2b;overflow-wrap:anywhere}
 .av-answer-table thead th{background:#1c1912;color:#f0cf68}
+.av-answer-table thead th:first-child{width:32%}
+.av-answer-table thead th:nth-child(2),.av-answer-table thead th:nth-child(3){width:34%}
 .av-answer-table tbody th{font-weight:700}
 .av-answer-table tr:last-child>*{border-bottom:0}
 .av-answer-table a{color:#f5d978;text-decoration:underline;text-underline-offset:3px}
