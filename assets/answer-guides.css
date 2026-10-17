@@ -1,0 +1,15 @@
+/* Static editorial comparisons shared by the core guides. */
+.av-answer-table-wrap{max-width:100%;overflow-x:auto;margin:20px 0;border:1px solid #776037;border-radius:12px;background:#0b0b09}
+.av-answer-table{width:100%;border-collapse:collapse;table-layout:fixed;color:#f4ecd9;font:inherit;line-height:1.6}
+.av-answer-table caption{text-align:left;padding:16px;color:#f0cf68;font-weight:700}
+.av-answer-table th,.av-answer-table td{padding:14px;text-align:left;vertical-align:top;border-bottom:1px solid #493d2b;overflow-wrap:anywhere}
+.av-answer-table thead th{background:#1c1912;color:#f0cf68}
+.av-answer-table tbody th{font-weight:700}
+.av-answer-table tr:last-child>*{border-bottom:0}
+.av-answer-table a{color:#f5d978;text-decoration:underline;text-underline-offset:3px}
+.av-answer-table a:focus-visible{outline:2px solid #f5d978;outline-offset:3px}
+.av-editorial-date{margin:0 0 18px;color:inherit;font-size:.9em;line-height:1.6}
+.av-editorial-date time{white-space:nowrap}
+.av-calc-breadcrumbs{width:min(1180px,92%);margin:18px auto;font-size:.9em;line-height:1.6}
+.av-calc-breadcrumbs a{color:inherit;text-decoration:underline}
+@media(max-width:600px){.av-answer-table th,.av-answer-table td{padding:10px;font-size:14px}.av-answer-table caption{padding:12px}.av-answer-table-wrap{border-radius:8px}}

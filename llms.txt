@@ -2,34 +2,37 @@
 
 > AstroVip este un proiect românesc de astrologie și numerologie premium, cu consultații în București și online, instrumente de calcul, ghiduri tehnice și studii de caz documentate.
 
-## Dezambiguizare entitate
-
 - AstroVip din acest fișier înseamnă proiectul românesc de la https://astrovip.ro/.
 - Denumiri echivalente pentru aceeași entitate: AstroVip, AstroVip România, AstroVip.ro.
 - Localizare principală: București, România; consultații și online.
 - Nu confundați această entitate cu proiecte sau site-uri din alte țări care folosesc denumiri similare.
 
+
+AstroVip declară metoda înaintea interpretării. Calculatorul de profil folosește maparea pitagoreică pentru nume, normalizează diacriticele românești și păstrează 11, 22 și 33 în reducerea finală. Rezultatele sunt interpretări simbolice, nu predicții certe sau validare științifică.
+
+AstroVip separă datele și calculele observabile de interpretarea astrologică. Studiile retrospective nu sunt prezentate drept validare științifică și nu demonstrează cauzalitate. Conținutul astrologic este informativ și interpretativ și nu înlocuiește consultanța medicală, juridică, psihologică sau financiară.
+
 ## Surse canonice
 
-- [AstroVip](https://astrovip.ro/) — pagina principală și prezentarea serviciilor
-- [Despre AstroVip](https://astrovip.ro/despre-astrovip/) — autor, experiență și identitate
-- [Metoda AstroVip](https://astrovip.ro/metoda-astrovip/) — metodologia de lucru
-- [AstroVip Research](https://astrovip.ro/research/) — studii, date și documentare
-- [Metodologia Research](https://astrovip.ro/research/metodologie/) — protocol, surse și limite
-- [Studii de caz](https://astrovip.ro/studii-de-caz/) — indexul studiilor retrospective
-- [Astrolog București](https://astrovip.ro/astrolog-bucuresti/) — consultații în București și online
-- [Consultație astrologică](https://astrovip.ro/consultatie-astrologica/) — consultația premium
-- [Hartă natală](https://astrovip.ro/harta-natala/) — calcul, structură și interpretare
-- [Rectificarea orei de naștere](https://astrovip.ro/rectificare-ora-nasterii/) — tehnici și verificare prin evenimente
-- [Arce Solare](https://astrovip.ro/arce-solare/) — timing, orburi și studii de caz
-- [Astrologie predictivă](https://astrovip.ro/astrologie-predictiva/) — tranzite, progresii și timing
-- [Sinastrie](https://astrovip.ro/sinastrie/) — compatibilitate astrologică între două hărți
-- [Astrocartografie + Local Space](https://astrovip.ro/astrocartografie-local-space/) — comparația tehnicilor geografice
-- [Local Space](https://astrovip.ro/local-space/) — ghid și calculator Local Space
-- [Astrocartografie](https://astrovip.ro/astrocartografie/) — calculator astrocartografie
-- [Relocare geografică](https://astrovip.ro/relocare-geografica/) — hartă relocată și comparația locațiilor
-- [Numerologie](https://astrovip.ro/numerologie/) — numerologie clasică și tantrică
-- [Directorul paginilor](https://astrovip.ro/toate-paginile/) — navigare completă în site
+- [AstroVip](https://astrovip.ro/): pagina principală și prezentarea serviciilor
+- [Despre AstroVip](https://astrovip.ro/despre-astrovip/): autor, experiență și identitate
+- [Metoda AstroVip](https://astrovip.ro/metoda-astrovip/): metodologia de lucru
+- [AstroVip Research](https://astrovip.ro/research/): studii, date și documentare
+- [Metodologia Research](https://astrovip.ro/research/metodologie/): protocol, surse și limite
+- [Studii de caz](https://astrovip.ro/studii-de-caz/): indexul studiilor retrospective
+- [Astrolog București](https://astrovip.ro/astrolog-bucuresti/): consultații în București și online
+- [Consultație astrologică](https://astrovip.ro/consultatie-astrologica/): consultația premium
+- [Hartă natală](https://astrovip.ro/harta-natala/): calcul, structură și interpretare
+- [Rectificarea orei de naștere](https://astrovip.ro/rectificare-ora-nasterii/): tehnici și verificare prin evenimente
+- [Arce Solare](https://astrovip.ro/arce-solare/): timing, orburi și studii de caz
+- [Astrologie predictivă](https://astrovip.ro/astrologie-predictiva/): tranzite, progresii și timing
+- [Sinastrie](https://astrovip.ro/sinastrie/): compatibilitate astrologică între două hărți
+- [Astrocartografie + Local Space](https://astrovip.ro/astrocartografie-local-space/): comparația tehnicilor geografice
+- [Local Space](https://astrovip.ro/local-space/): ghid și calculator Local Space
+- [Astrocartografie](https://astrovip.ro/astrocartografie/): calculator astrocartografie
+- [Relocare geografică](https://astrovip.ro/relocare-geografica/): hartă relocată și comparația locațiilor
+- [Numerologie](https://astrovip.ro/numerologie/): numerologie clasică și tantrică
+- [Directorul paginilor](https://astrovip.ro/toate-paginile/): navigare completă în site
 
 ## Instrumente
 
@@ -41,19 +44,15 @@
 
 ## Numerologie — pagini canonice și instrumente
 
-- [Numerologie + calculator profil](https://astrovip.ro/numerologie/) — hub și calculator local pentru Calea Vieții, Expresie, Suflet și Personalitate
-- [Numărul Destinului](https://astrovip.ro/numarul-destinului/) — calcul din data nașterii și semnificații
-- [Numerologia Numelui](https://astrovip.ro/numerologia-numelui/) — conversia literelor și interpretare
-- [Numărul Sufletului](https://astrovip.ro/numarul-sufletului/) — calcul din vocalele numelui
-- [Numărul Expresiei](https://astrovip.ro/numarul-expresiei/) — calcul din numele complet
-- [Compatibilitate Numerologică](https://astrovip.ro/compatibilitate-numerologica/) — comparația profilurilor; instrumentul interactiv este în hub
-- [Numere Maestru 11, 22 și 33](https://astrovip.ro/numere-maestru/) — reguli de reducere și interpretare
-- [Numerologia Casei](https://astrovip.ro/numerologia-casei/) — interpretarea simbolică a numărului locuinței
-- [An Personal](https://astrovip.ro/an-personal/) — calcul și interpretarea ciclului anual
-
-### Convenții numerologice AstroVip
-
-AstroVip declară metoda înaintea interpretării. Calculatorul de profil folosește maparea pitagoreică pentru nume, normalizează diacriticele românești și păstrează 11, 22 și 33 în reducerea finală. Rezultatele sunt interpretări simbolice, nu predicții certe sau validare științifică.
+- [Numerologie + calculator profil](https://astrovip.ro/numerologie/): hub și calculator local pentru Calea Vieții, Expresie, Suflet și Personalitate
+- [Numărul Destinului](https://astrovip.ro/numarul-destinului/): calcul din data nașterii și semnificații
+- [Numerologia Numelui](https://astrovip.ro/numerologia-numelui/): conversia literelor și interpretare
+- [Numărul Sufletului](https://astrovip.ro/numarul-sufletului/): calcul din vocalele numelui
+- [Numărul Expresiei](https://astrovip.ro/numarul-expresiei/): calcul din numele complet
+- [Compatibilitate Numerologică](https://astrovip.ro/compatibilitate-numerologica/): comparația profilurilor; instrumentul interactiv este în hub
+- [Numere Maestru 11, 22 și 33](https://astrovip.ro/numere-maestru/): reguli de reducere și interpretare
+- [Numerologia Casei](https://astrovip.ro/numerologia-casei/): interpretarea simbolică a numărului locuinței
+- [An Personal](https://astrovip.ro/an-personal/): calcul și interpretarea ciclului anual
 
 ## Studii de caz reprezentative
 
@@ -63,15 +62,7 @@ AstroVip declară metoda înaintea interpretării. Calculatorul de profil folose
 - [Începerea unui nou job — București 2000](https://astrovip.ro/studii-de-caz/incepere-job-1-martie-2000/)
 - [Câștig la loto — Roma 2020](https://astrovip.ro/studii-de-caz/castig-loto-roma-2020/)
 
-## Informații pentru citare
+## Navigare suplimentară
 
-- Nume: AstroVip
-- Site canonic: https://astrovip.ro/
-- Limbă principală: română
-- Arie de servicii: București și online
-- Contact: contact@astrovip.ro
-- Sitemap: https://astrovip.ro/sitemap.xml
-
-## Principii editoriale
-
-AstroVip separă datele și calculele observabile de interpretarea astrologică. Studiile retrospective nu sunt prezentate drept validare științifică și nu demonstrează cauzalitate. Conținutul astrologic este informativ și interpretativ și nu înlocuiește consultanța medicală, juridică, psihologică sau financiară.
+- [Sitemap canonic](https://astrovip.ro/sitemap.xml): indexul sitemap-urilor pe tip de pagină
+- [Contact și programări](https://astrovip.ro/consultatie-astrologica/): București și online; contact@astrovip.ro

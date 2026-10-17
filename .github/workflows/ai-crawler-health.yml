@@ -26,7 +26,7 @@ jobs:
           printf '%s\n' "$ROBOTS" | grep -F "User-agent: OAI-SearchBot"
           printf '%s\n' "$ROBOTS" | grep -F "User-agent: PerplexityBot"
           printf '%s\n' "$ROBOTS" | grep -F "User-agent: Google-Extended"
-          printf '%s\n' "$ROBOTS" | grep -F "Sitemap: https://astrovip.ro/sitemap-index.xml"
+          printf '%s\n' "$ROBOTS" | grep -Fx "Sitemap: https://astrovip.ro/sitemap.xml"
 
           curl -fsSL --retry 3 --max-time 20 "$BASE/llms.txt" >/tmp/llms.txt
           grep -F "https://astrovip.ro/research/" /tmp/llms.txt
