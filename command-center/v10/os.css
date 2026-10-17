@@ -9,3 +9,4 @@
 @media(max-width:960px){nav{align-items:center}nav .work-label{margin:0 8px;white-space:nowrap;font-size:9px}}
 @media(max-width:680px){.filters{gap:10px}.filters>label:not(.check-label){width:100%}.filters input:not([type=checkbox]),.filters select{width:100%}.filters .button{width:100%}.action-title h3{min-width:130px}.provenance{max-width:240px}.baseline{gap:20px}.table-wrap table{min-width:480px}}
 .import-file{display:grid;gap:10px;max-width:100%;font-size:12px;color:var(--gold)}.import-file input{display:block;max-width:100%;min-height:44px;font:inherit;color:var(--white)}input::file-selector-button{min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:9px;background:#293a4e;color:var(--white);cursor:pointer;margin-right:10px}
+@media(max-width:960px){.shell{grid-template-columns:minmax(0,1fr)}.sidebar{min-width:0;max-width:100%}nav{min-width:0}}

@@ -59,15 +59,13 @@ try{
   const origin='http://127.0.0.1:'+server.address().port;
   for(const width of report.widths){
     await page.setViewportSize({width,height:950});
+    await page.goto(origin+'/command-center/v10/#intelligence');
+    await page.locator('#intelligence-file').waitFor();
+    await page.locator('#intelligence-file').setInputFiles({name:'qa-research.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(snapshot))});
+    await page.waitForFunction(()=>document.querySelector('#content table')!==null);
     for(const module of MODULES){
-      await page.goto(origin+'/command-center/v10/#'+module.id);
-      await page.waitForFunction(()=>!document.getElementById('app').hidden&&document.getElementById('content').getAttribute('aria-busy')==='false'&&document.getElementById('content').innerHTML.length>100);
-      // The production application receives no customer data from the repository.
-      // Explicitly import synthetic fixture data through the real file control.
-      if(['intelligence','seo','content'].includes(module.id)){
-        await page.locator('#intelligence-file').setInputFiles({name:'qa-research.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(snapshot))});
-        await page.waitForFunction(()=>document.querySelector('#content table')!==null);
-      }
+      await page.evaluate(id=>{location.hash='#'+id},module.id);
+      await page.waitForFunction(label=>!document.getElementById('app').hidden&&document.getElementById('module-caption').textContent===label&&document.getElementById('content').getAttribute('aria-busy')==='false'&&document.getElementById('content').innerHTML.length>100,module.label);
       assert.equal(await page.locator('#module-caption').textContent(),module.label);
       const overflow=await page.evaluate(()=>({viewport:innerWidth,page:document.documentElement.scrollWidth}));
       assert(overflow.page<=overflow.viewport+1,`${module.id} at ${width}px overflows: ${JSON.stringify(overflow)}`);
