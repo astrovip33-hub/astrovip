@@ -1,14 +1,18 @@
 // Pure intelligence layer. A configured connector is never treated as a ranking result.
 export const MODULES = [
   {id:'cockpit',label:'Executive Cockpit',eyebrow:'PRIVIRE DE ANSAMBLU',title:'Tot ce contează.',accent:'Într-o singură privire.',description:'Vizibilitate, rezultate și următoarea mișcare pentru AstroVip.',sources:['gsc','ga4','health']},
-  {id:'seo',label:'Google & SEO',eyebrow:'GOOGLE INTELLIGENCE',title:'De la căutări',accent:'la oportunități.',description:'Search Console pentru performanță. SE Ranking pentru proiectul urmărit.',sources:['gsc','seranking']},
-  {id:'competitors',label:'Concurență',eyebrow:'COMPETITOR WAR ROOM',title:'Concurența,',accent:'cu dovezi.',description:'Punctul de acces către proiectul SE Ranking. Comparațiile cer date SERP și exporturi de clasamente.',sources:['seranking']},
-  {id:'geo',label:'Vizibilitate AI / GEO',eyebrow:'AI INTELLIGENCE',title:'AstroVip în',accent:'răspunsurile AI.',description:'Modul pregătit pentru rapoarte de vizibilitate, citări și surse AI.',sources:[]},
-  {id:'local',label:'Maps & Recenzii',eyebrow:'LOCAL INTELLIGENCE',title:'Prezența locală.',accent:'Un singur profil real.',description:'Google Business Profile pentru Bulevardul Unirii 33, București.',sources:[]},
-  {id:'content',label:'Conținut & Editor',eyebrow:'CONTENT STUDIO',title:'Idei susținute de date.',accent:'Control vizual simplu.',description:'Oportunități din căutări și acces direct la editorul AstroVip.',sources:['gsc']},
-  {id:'authority',label:'Autoritate',eyebrow:'AUTHORITY INTELLIGENCE',title:'Încredere care',accent:'se poate verifica.',description:'Modul pregătit pentru domenii de referință, linkuri și mențiuni.',sources:[]},
-  {id:'revenue',label:'Leaduri & Venituri',eyebrow:'BUSINESS INTELLIGENCE',title:'De la vizibilitate',accent:'la rezultate.',description:'Date GA4 pentru trafic, evenimente cheie, tranzacții și venit măsurat.',sources:['ga4']},
+  {id:'intelligence',label:'Intelligence · sinteză',eyebrow:'WORK 02 · INTELLIGENCE',title:'Cererea reală.',accent:'Direcția potrivită.',description:'SEO, competitori, AI/GEO, Local, conținut și autoritate, cu surse și dată.',sources:['intelligence','gsc']},
+  {id:'seo',label:'Google & SEO',eyebrow:'WORK 02 · GOOGLE INTELLIGENCE',title:'De la căutări',accent:'la oportunități.',description:'Search Console pentru performanță. SE Ranking pentru research și benchmark datat.',sources:['gsc','seranking','intelligence']},
+  {id:'competitors',label:'Concurență',eyebrow:'COMPETITOR WAR ROOM',title:'Concurența,',accent:'cu dovezi.',description:'Benchmark și rezultate SERP din exporturile SE Ranking, cu contextul fiecărui raport.',sources:['intelligence']},
+  {id:'geo',label:'Vizibilitate AI / GEO',eyebrow:'AI INTELLIGENCE',title:'AstroVip în',accent:'răspunsurile AI.',description:'Baseline Peec datat, separat de măsurătorile live.',sources:['intelligence']},
+  {id:'local',label:'Maps & Recenzii',eyebrow:'LOCAL INTELLIGENCE',title:'Prezența locală.',accent:'Un singur profil real.',description:'Google Business Profile pentru Bulevardul Unirii 33, București.',sources:['local']},
+  {id:'content',label:'Conținut & Editor',eyebrow:'CONTENT STUDIO',title:'Idei susținute de date.',accent:'Control vizual simplu.',description:'Oportunități din căutări și acces direct la editorul AstroVip.',sources:['gsc','intelligence']},
+  {id:'authority',label:'Autoritate',eyebrow:'AUTHORITY INTELLIGENCE',title:'Încredere care',accent:'se poate verifica.',description:'Domenii din backlink gap, pentru verificare editorială și selecție.',sources:['intelligence']},
+  {id:'revenue',label:'Money · Leaduri & Venituri',eyebrow:'WORK 04 · MONEY',title:'De la vizibilitate',accent:'la rezultate.',description:'Clickuri, solicitări, programări și achiziții, cu atribuirea sursei și servicii vândute în GA4.',sources:['ga4','money']},
   {id:'health',label:'Sănătate & Alerte',eyebrow:'OPERATIONS INTELLIGENCE',title:'Controlul tehnic.',accent:'Cu semnale clare.',description:'Disponibilitatea rutelor, ultimul deploy și ultima verificare Auto-Pilot.',sources:['health','autopilot']},
+  {id:'operations',label:'Operations',eyebrow:'WORK 03 · OPERATIONS',title:'Publicare și recuperare.',accent:'Control în fiecare pas.',description:'GitHub, Cloudflare, puncte de recuperare și conexiuni din infrastructura existentă.',sources:['health','autopilot','recovery']},
+  {id:'operator',label:'AI Operator',eyebrow:'WORK 05 · AI OPERATOR',title:'Ce facem mai întâi.',accent:'Și pe ce ne bazăm.',description:'Priorități explicabile din motoarele de date. Impact estimat calitativ, fără venituri inventate.',sources:['intelligence','gsc','ga4','money','local','health','autopilot']},
+  {id:'qa',label:'QA & Preview',eyebrow:'WORK 06 · QUALITY ASSURANCE',title:'Verificare completă.',accent:'Preview înainte de lansare.',description:'Securitate, performanță, responsive, encoding și regresii: fiecare control cu dovada lui.',sources:['health','autopilot']},
 ];
 export function number(value, digits=0) {
   if(value===null||value===undefined||value===''||typeof value==='boolean'||!Number.isFinite(Number(value)))return '—';
@@ -51,6 +55,8 @@ export function operatorIntent(raw) {
   if(/editor|studio|modific.*(text|culo|pagina)|schimb.*(text|culo)/.test(q))return {href:'/command-center/site-builder/?from=v10'};
   if(/public|deploy|backup|restaur|recovery/.test(q))return {href:'/command-center/'};
   if(/conex|conect|autoriz/.test(q))return {href:'/command-center/connections/'};
+  if(/priorit|recomand|impact|operator|ce facem/.test(q))return {module:'operator'};
+  if(/\bqa\b|responsive|regres|secur|preview|performanta/.test(q))return {module:'qa'};
   const mappings=[['competitors',/concur|competit/],['geo',/\bai\b|geo|citari|chatgpt|peec/],['local',/maps|recenzi|review|local|google business/],['authority',/backlink|autoritate|mentiun/],['health',/sanatate|health|alert|pilot|eroare/],['revenue',/venit|lead|trafic|convers|ga4|vanzar/],['content',/continut|articol|content/],['seo',/seo|cuvinte|oportunitat|ranking|google|gsc/],['cockpit',/cockpit|panou|general/]];
   const found=mappings.find(([,re])=>re.test(q));
   return found?{module:found[0]}:null;

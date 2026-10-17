@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 2
 
       - name: Validate Marketing OS and preview boundaries
-        run: node --test scripts/test-command-center.mjs scripts/test-command-center-ui.mjs scripts/test-marketing-os.mjs scripts/test-preview-boundaries.mjs
+        run: node --test scripts/test-command-center.mjs scripts/test-command-center-ui.mjs scripts/test-marketing-os.mjs scripts/test-marketing-workflows.mjs scripts/test-preview-boundaries.mjs
 
       - name: Build Swiss Ephemeris Koch browser bundle
         shell: bash

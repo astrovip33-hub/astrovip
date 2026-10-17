@@ -4,6 +4,8 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import {Sources,SESSION_KEY} from '../command-center/v10/sources.js';
 import {MODULES,connectionState,opportunities,priorities,operatorIntent,number,isVisualPreview} from '../command-center/v10/intelligence.js';
+import {renderRoom,workflowNavigation} from '../command-center/v10/rooms.js';
+import {parseSnapshot} from '../command-center/v10/snapshot.js';
 
 test('browser fetch retains its global receiver for authentication and module requests',async()=>{
   const original=globalThis.fetch;
@@ -145,7 +147,7 @@ function marketingApp(connected=true,visual=false){
     }});}
   }
   const location={hash:'#cockpit',assign(){},protocol:'https:',hostname:visual?'astrovip-preview-ux-compact.astrovip33.workers.dev':'astrovip.ro',search:visual?'?preview=1':''};
-  const ctx=vm.createContext({MODULES,number,connectionState,opportunities,priorities,operatorIntent,Sources:AppSources,SESSION_KEY,Date,URLSearchParams,isVisualPreview,document:{getElementById:node,querySelectorAll:()=>[]},location,sessionStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},addEventListener:(type,callback)=>events.set(type,callback)});
+  const ctx=vm.createContext({MODULES,number,connectionState,opportunities,priorities,operatorIntent,Sources:AppSources,SESSION_KEY,Date,URLSearchParams,isVisualPreview,renderRoom,workflowNavigation,parseSnapshot,document:{getElementById:node,querySelectorAll:()=>[]},location,sessionStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},addEventListener:(type,callback)=>events.set(type,callback)});
   const js=fs.readFileSync(new URL('../command-center/v10/app.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
   vm.runInContext(js,ctx);
   return {node,calls,location,events,eval:code=>vm.runInContext(code,ctx),login:async()=>{node('token').value='session-test';await events.get('login-form:submit')({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));}};
