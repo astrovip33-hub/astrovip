@@ -163,6 +163,24 @@
           "boxShadow": "0 0 18px rgba(57,255,118,.32),0 0 32px rgba(232,199,95,.18)",
           "display": ""
         }
+      },
+      {
+        "selector": "div:nth-of-type(2) > a.avm-logo > span.av-premium-title",
+        "text": "ASTROLOGIE PREMIUM",
+        "style": {
+          "color": "#ffff00",
+          "backgroundColor": "#000000",
+          "borderColor": "#f5cc62",
+          "borderWidth": "0px",
+          "borderStyle": "solid",
+          "borderRadius": "0px",
+          "opacity": "1",
+          "fontSize": "21px",
+          "fontWeight": "900",
+          "padding": "0px 0px",
+          "boxShadow": "none",
+          "display": ""
+        }
       }
     ]
   }
