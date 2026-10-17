@@ -41,10 +41,11 @@ try {
         return { h1: document.querySelectorAll('h1').length,
           visible: rect.width > 0 && rect.height > 0,
           fits: rect.left >= 0 && rect.right <= innerWidth + 1 && rect.width <= wrap.width + 1,
-          cells: [...table.querySelectorAll('th,td')].every(cell => cell.scrollWidth <= cell.clientWidth + 1),
-          readableLabelColumn: table.querySelector('thead th').getBoundingClientRect().width >= rect.width * .29 };
+          cells: [...table.querySelectorAll('tbody th,td')].every(cell => cell.scrollWidth <= cell.clientWidth + 1),
+          labeledCells: [...table.querySelectorAll('td')].every(cell => Boolean(cell.dataset.label)),
+          readableLabelColumn: table.querySelector('tbody th').getBoundingClientRect().width >= rect.width * .29 };
       });
-      assert.deepEqual(result, { h1: 1, visible: true, fits: true, cells: true, readableLabelColumn: true }, `${route} at ${width}px`);
+      assert.deepEqual(result, { h1: 1, visible: true, fits: true, cells: true, labeledCells: true, readableLabelColumn: true }, `${route} at ${width}px`);
       await page.locator('.av-answer-table').scrollIntoViewIfNeeded();
       await page.screenshot({ path: `test-results/geo/${route}-${width}.png` });
       checked++;

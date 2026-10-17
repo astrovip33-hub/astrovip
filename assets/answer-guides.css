@@ -14,4 +14,15 @@
 .av-editorial-date time{white-space:nowrap}
 .av-calc-breadcrumbs{width:min(1180px,92%);margin:18px auto;font-size:.9em;line-height:1.6}
 .av-calc-breadcrumbs a{color:inherit;text-decoration:underline}
-@media(max-width:600px){.av-answer-table th,.av-answer-table td{padding:10px;font-size:14px}.av-answer-table caption{padding:12px}.av-answer-table-wrap{border-radius:8px}}
+@media(max-width:600px){
+  .av-answer-table,.av-answer-table caption,.av-answer-table tbody,.av-answer-table tbody tr,.av-answer-table tbody th,.av-answer-table td{display:block;width:100%;box-sizing:border-box}
+  .av-answer-table thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .av-answer-table caption{padding:16px;font-size:16px;border-bottom:1px solid #493d2b}
+  .av-answer-table tbody tr{padding:16px;border-bottom:1px solid #493d2b}
+  .av-answer-table tbody tr:last-child{border-bottom:0}
+  .av-answer-table tbody th,.av-answer-table td{padding:0;border:0;overflow-wrap:break-word;font-size:15px}
+  .av-answer-table tbody th{color:#f0cf68;font-size:17px}
+  .av-answer-table td{margin-top:12px}
+  .av-answer-table td::before{content:attr(data-label);display:block;margin-bottom:3px;color:#d5c49b;font-size:12px;font-weight:700}
+  .av-answer-table-wrap{border-radius:10px}
+}
