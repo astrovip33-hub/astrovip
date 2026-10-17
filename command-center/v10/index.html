@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#08090b">
+  <title>AstroVip Marketing OS V10</title>
+  <link rel="stylesheet" href="./os.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">Sari la conținut</a>
+  <div id="lock" class="lock">
+    <form id="login-form" class="login panel">
+      <span class="monogram" aria-hidden="true">AV</span>
+      <p class="eyebrow">ASTROVIP · MARKETING OS V10</p>
+      <h1>Agenția ta, într-un singur loc.</h1>
+      <p>Intră cu accesul existent pentru Command Center.</p>
+      <label for="token">Token de administrare</label>
+      <input id="token" type="password" autocomplete="current-password" required>
+      <button id="login-button" class="button gold" type="submit">Deschide centrul de comandă <span aria-hidden="true">↗</span></button>
+      <p id="login-error" class="error" role="alert"></p>
+      <a class="subtle" href="/command-center/">Operations Center V9</a>
+    </form>
+  </div>
+  <div id="app" class="shell" hidden>
+    <aside class="sidebar">
+      <a class="brand" href="#cockpit" aria-label="AstroVip Marketing OS, panoul principal"><span class="monogram" aria-hidden="true">AV</span><span><strong>ASTROVIP</strong><small>MARKETING OS <b>V10</b></small></span></a>
+      <p class="nav-label">CENTRUL TĂU DE CONTROL</p>
+      <nav id="navigation" aria-label="Module Marketing OS"></nav>
+      <div class="sidebar-bottom">
+        <a class="studio-link" href="/command-center/site-builder/?from=v10"><span class="studio-icon" aria-hidden="true">✦</span><strong>Editor vizual<small>Deschide Premium Studio</small></strong><span aria-hidden="true">↗</span></a>
+        <a class="subtle" href="/command-center/connections/">Conexiuni și acces <span aria-hidden="true">↗</span></a>
+        <a class="subtle" href="/command-center/">Operațiuni V9 <span aria-hidden="true">↗</span></a>
+        <p class="economy"><span class="status-dot"></span>Actualizare la cerere · cache 5 min</p>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <div><span class="eyebrow">ASTROVIP / COMMAND CENTER</span><p id="module-caption">Executive Cockpit</p></div>
+        <div class="top-actions"><a class="button" href="https://astrovip.ro/" target="_blank" rel="noopener noreferrer">Vezi site-ul ↗</a><button id="refresh" class="button" type="button">↻ Actualizează</button><button id="logout" class="button quiet" type="button">Ieșire</button></div>
+      </header>
+      <main id="workspace" tabindex="-1">
+        <div class="page-heading"><div><p class="eyebrow" id="module-eyebrow">PRIVIRE DE ANSAMBLU</p><h1 id="module-title">Tot ce contează.<br><span>Într-o singură privire.</span></h1><p id="module-description">Vizibilitate, rezultate și următoarea mișcare pentru AstroVip.</p></div><div class="session-meta"><span class="badge" id="session-status">Autentificat</span><p id="fetch-time">Datele se încarcă…</p></div></div>
+        <section class="operator panel" aria-label="Operator ghidat"><span class="operator-mark" aria-hidden="true">✦</span><form id="operator-form"><label for="command">Ce vrei să faci acum?</label><div class="command-row"><input id="command" placeholder="Ex: arată oportunitățile SEO sau deschide editorul" autocomplete="off"><button class="button gold" type="submit">Deschide <span aria-hidden="true">↗</span></button></div></form><p>Operator ghidat<br><span>Comenzi rapide, fără apel AI</span></p></section>
+        <div id="operator-result" class="notice" role="status" hidden></div>
+        <div id="content" aria-busy="false"></div>
+        <footer class="page-footer"><span>ASTROVIP <b>MARKETING OS V10</b></span><span>Surse reale · module independente · Cloudflare</span></footer>
+      </main>
+    </div>
+  </div>
+  <noscript><p class="notice">Activează JavaScript pentru centrul de comandă. <a href="/command-center/">Deschide V9</a>.</p></noscript>
+</body>
+</html>
