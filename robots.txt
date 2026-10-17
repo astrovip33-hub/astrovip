@@ -11,5 +11,6 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://astrovip.ro/sitemap-index.xml
-# SEO sitemap authority updated 2026-09-24
+# Canonical sitemap index (split by page type)
+Sitemap: https://astrovip.ro/sitemap.xml
+# AI/SEO sitemap authority updated 2026-10-17
