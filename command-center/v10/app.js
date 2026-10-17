@@ -1,5 +1,7 @@
 import {MODULES,number,connectionState,opportunities,priorities,operatorIntent,isVisualPreview} from './intelligence.js';
 import {Sources,SESSION_KEY} from './sources.js';
+import {renderRoom,workflowNavigation} from './rooms.js';
+import {parseSnapshot} from './snapshot.js';
 
 const $=id=>document.getElementById(id);
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -16,6 +18,7 @@ const paths=[
 ];
 const previewOnly=isVisualPreview(location);
 let authenticated=false,active='cockpit',navigationEpoch=0,loginEpoch=0;
+const filters={query:'',maxDifficulty:100,gapsOnly:false,serp:''};
 const getToken=()=>{try{return sessionStorage.getItem(SESSION_KEY)||'';}catch{return '';}};
 const store=new Sources({token:getToken,onUnauthorized:()=>lock('Sesiunea a expirat. Autentifică-te din nou.')});
 const data=key=>store.records.get(key)?.status==='ready'?store.records.get(key).data:null;
@@ -31,6 +34,7 @@ function lock(message=''){
   if(message)$('token').focus();
 }
 function stateNote(key){
+  if(store.records.get(key)?.local)return 'Import local · '+date(store.records.get(key).at);
   if(previewOnly)return 'Date neîncărcate în preview';
   const record=store.records.get(key);
   if(record?.status==='loading')return 'Se încarcă…';
@@ -82,10 +86,6 @@ function seo(){
   const g=report('gsc')?.summary;
   return `<div class="metrics">${metric('Clickuri',number(g?.clicks),'gsc')}${metric('Impresii',number(g?.impressions),'gsc')}${metric('CTR',g?.ctr==null?'—':number(g.ctr*100,2)+'%','gsc')}${metric('Poziție medie',g&&g.impressions>0&&g.position>0?number(g.position,2):'—','gsc')}</div><div class="columns">${card('Opportunity Engine',opportunityList(),badge('POZIȚII MEDII 4–15','warn'))}${rankingCard()}</div>${connectionCard(['gsc','seranking'])}`;
 }
-function revenue(){
-  const a=report('ga4')?.metrics;
-  return `<div class="metrics">${metric('Utilizatori activi',number(a?.activeUsers),'ga4')}${metric('Sesiuni',number(a?.sessions),'ga4')}${metric('Evenimente cheie',number(a?.keyEvents),'ga4')}${metric('Tranzacții',number(a?.transactions),'ga4')}</div><div class="columns">${card('Venit măsurat în GA4',`<p class="lead">${a?.totalRevenue==null?'—':number(a.totalRevenue,2)}</p><p>${escape(period('ga4'))} · ${escape(stateNote('ga4'))}</p><p>Venitul este exprimat în moneda proprietății GA4. Evenimentele cheie pot include mai multe tipuri de conversii. Numărul de leaduri, apeluri și programări necesită maparea evenimentelor dedicate.</p>`,badge('GA4','warn'))}${card('Leaduri confirmate',empty('Maparea conversiilor este necesară.','Acest modul nu transformă automat toate evenimentele cheie în clienți sau apeluri.')+`<div class="card-actions">${link('https://analytics.google.com/','Deschide Analytics')}</div>`,badge('NEDEFINIT','warn'))}</div>${connectionCard(['ga4','stripe','ga4Purchase'])}`;
-}
 function health(){
   const h=data('health'),o=data('overview'),pilot=data('autopilot');
   const routes=Array.isArray(h?.results)?h.results:[];
@@ -93,20 +93,15 @@ function health(){
   return `<div class="columns">${card('Disponibilitatea rutelor',routes.length?`<div class="list">${routes.map(x=>`<div class="item"><div class="item-body"><strong>${escape(x.key)}</strong><small>HTTP ${escape(x.status)} · ${number(x.ms)} ms</small></div>${badge(x.ok?'Accesibil':'Eroare',x.ok?'good':'bad')}</div>`).join('')}</div><p class="small">Verificare HTTP; nu confirmă funcționarea tuturor acțiunilor sau autentificarea în pagini.</p>`:empty('Verificarea nu este disponibilă.',stateNote('health')),badge(stateNote('health')))}${card('Deploy & Auto-Pilot',`<div class="list"><div class="item"><div class="item-body"><strong>Commit main</strong><small>${escape(o?.github?.commit?.shortSha||'—')}</small></div></div><div class="item"><div class="item-body"><strong>Ultimul deploy</strong><small>${escape(deploy?.conclusion||deploy?.status||'Neverificat')}</small></div></div><div class="item"><div class="item-body"><strong>Auto-Pilot</strong><small>${pilot?escape(pilot.enabled?(pilot.run?.conclusion||pilot.run?.status||'Neverificat'):'Dezactivat'):escape(stateNote('autopilot'))}</small></div></div></div><div class="card-actions">${link('/command-center/','Deschide operațiunile V9')}</div>`,badge('OPERAȚIUNI'))}</div>${priorityCard()}`;
 }
 function content(){return `<div class="columns">${card('Editor vizual · Premium Studio',`<p class="lead">Site-ul tău, editat direct.</p><div class="list"><div class="item"><span class="item-number">01</span><div class="item-body"><strong>Alege pagina și elementul</strong><small>Texte, titluri, carduri sau butoane din preview.</small></div></div><div class="item"><span class="item-number">02</span><div class="item-body"><strong>Modifică textul și aspectul</strong><small>Culori, font, spațiere și preseturi AstroVip.</small></div></div><div class="item"><span class="item-number">03</span><div class="item-body"><strong>Verifică și salvează</strong><small>Vezi mobilul, salvează draftul și folosește publicarea din Studio.</small></div></div></div><div class="card-actions">${link('/command-center/site-builder/?from=v10','Editează site-ul',true)}</div>`,badge('PREMIUM STUDIO','good'))}${card('Idei din căutările reale',opportunityList(),badge('SEARCH CONSOLE','warn'))}</div>`;}
-function unconnected(title,detail,action=''){
-  return card(title,empty('Sursa de măsurare nu este conectată.',detail)+action,badge('NECONECTAT','warn'));
-}
 function renderModule(){
+  const room=()=>renderRoom(active,{data,report,number,badge,link,card,empty,escape,records:store.records,filters});
+  if(['intelligence','competitors','geo','local','authority','operations','operator','qa'].includes(active))return room();
   switch(active){
     case 'cockpit':return cockpit();
-    case 'seo':return seo();
-    case 'revenue':return revenue();
+    case 'seo':return seo()+room();
+    case 'revenue':return room();
     case 'health':return health();
-    case 'content':return content();
-    case 'competitors':return `<div class="columns">${rankingCard()}${unconnected('Comparații cu concurenții','Clasamentele, volumele și diferențele față de concurenți nu sunt expuse de API-ul actual al panoului. Următorul pas este integrarea unui raport SE Ranking. Datele nu sunt estimate.')}</div>`;
-    case 'geo':return `<div class="columns">${unconnected('Vizibilitate & citări AI','Este necesară o sursă Peec sau un raport datat. Panoul nu prezintă un scor istoric drept măsurătoare curentă.')} ${dominanceCard()}</div>`;
-    case 'local':return `${card('Profilul AstroVip',`<p class="lead">Bulevardul Unirii 33, București</p><p>Acesta este profilul stabilit pentru activitatea AstroVip. Selecția locației și accesul se verifică în Conexiuni înaintea integrării rezultatelor.</p>`,badge('PROFIL REAL','warn'))}<div style="height:20px"></div>${unconnected('Poziții Maps & recenzii','Conexiunea Google Business și testarea accesului sunt disponibile în hub. Clasamentul Maps și numărul actual de recenzii cer un raport dedicat.')}<div style="height:20px"></div>${connectionCard(['googleBusiness'])}`;
-    case 'authority':return unconnected('Linkuri & mențiuni','Adaugă o sursă verificabilă pentru domenii de referință, linkuri și mențiuni. Până atunci, totalurile și scorurile de autoritate rămân indisponibile.');
+    case 'content':return content()+room();
     default:return cockpit();
   }
 }
@@ -130,6 +125,10 @@ function render(){
   $('content').innerHTML=renderModule();
 }
 function eligible(key){
+  if(key==='money')return eligible('ga4');
+  if(key==='local'){
+    const s=source('googleBusiness');return Boolean(s&&(s.configured||s.authorized||s.state==='verified'));
+  }
   if(!['gsc','ga4','seranking'].includes(key))return true;
   const s=source(key);return Boolean(s&&(s.configured||s.authorized||s.state==='verified'));
 }
@@ -155,7 +154,32 @@ async function unlock(){
   authenticated=true;$('token').value='';$('login-error').textContent='';$('lock').hidden=true;$('app').hidden=false;
   selectModule();$('workspace').focus({preventScroll:true});
 }
-$('navigation').innerHTML=MODULES.map((m,i)=>`<a href="#${m.id}"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24">${paths[i]}</svg></span>${m.label}</a>`).join('');
+$('navigation').innerHTML=workflowNavigation(MODULES,m=>`<svg viewBox="0 0 24 24">${paths[MODULES.indexOf(m)%paths.length]}</svg>`,escape);
+$('content').addEventListener('submit',event=>{
+  if(event.target.id!=='research-filters')return;
+  event.preventDefault();const form=new FormData(event.target);
+  filters.query=String(form.get('query')||'').trim().slice(0,100);
+  filters.maxDifficulty=Number(form.get('difficulty'))||100;filters.gapsOnly=form.has('gaps');render();
+});
+$('content').addEventListener('change',event=>{
+  if(event.target.id==='serp-query'){filters.serp=event.target.value;render();$('serp-query')?.focus();}
+});
+$('content').addEventListener('change',async event=>{
+  if(event.target.id!=='intelligence-file'||!authenticated)return;
+  const file=event.target.files?.[0];if(!file)return;
+  const epoch=loginEpoch;
+  try{
+    if(file.size>512000)throw Error('Fișierul depășește limita de 500 KB.');
+    const snapshot=parseSnapshot(await file.text());
+    if(epoch!==loginEpoch||!authenticated)return;
+    store.importSnapshot(snapshot);render();
+    $('operator-result').hidden=false;$('operator-result').textContent='Raport importat în memoria sesiunii. Fișierul nu a fost transmis unui server și se elimină la ieșire.';
+    if(!previewOnly)void loadActive();
+  }catch(error){
+    if(epoch!==loginEpoch||!authenticated)return;
+    $('operator-result').hidden=false;$('operator-result').textContent=error.message;
+  }
+});
 $('login-form').addEventListener('submit',async event=>{
   event.preventDefault();const value=$('token').value.trim();if(!value)return;
   $('login-button').disabled=true;$('login-error').textContent='';

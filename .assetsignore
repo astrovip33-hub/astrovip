@@ -16,6 +16,8 @@ package-lock.json
 wrangler.*
 worker*.js
 command-center-api*.js
+command-marketing-api.js
+command-intelligence-snapshot.js
 clarity-api.js
 homepage-approved-layout.js
 *.md

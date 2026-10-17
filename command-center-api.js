@@ -1,4 +1,5 @@
 import { handleCommandCenter as handleV3 } from './command-center-api-v3.js';
+import {moneyReport,localReport} from './command-marketing-api.js';
 
 const REPO = 'astrovip33-hub/astrovip';
 const SERANKING_API = 'https://api.seranking.com';
@@ -48,6 +49,7 @@ function json(data, status = 200, headers = {}) {
       'content-type': 'application/json; charset=utf-8',
       'cache-control': 'no-store',
       'x-content-type-options': 'nosniff',
+      'x-robots-tag': 'noindex, noarchive',
       ...headers,
     },
   });
@@ -227,6 +229,9 @@ function gscRange() {
 }
 
 async function googleReportRequest(env, toolkit, scopes, endpoint, body) {
+  if (googleServiceReady(env)) {
+    return providerJson(endpoint, { authorization: `Bearer ${await serviceAccountToken(env, scopes)}`, 'content-type': 'application/json' }, { method: body ? 'POST' : 'GET', body: body ? JSON.stringify(body) : undefined });
+  }
   if (googleOauthReady(env)) {
     return providerJson(endpoint, { authorization: `Bearer ${await googleUserToken(env, scopes)}`, 'content-type': 'application/json' }, { method: body ? 'POST' : 'GET', body: body ? JSON.stringify(body) : undefined });
   }
@@ -804,6 +809,27 @@ async function siteHealth() {
 async function routeCommandCenter(request, env) {
   const url = new URL(request.url);
   if (!url.pathname.startsWith('/api/command/')) return null;
+
+  if (['/api/command/intelligence','/api/command/money','/api/command/local'].includes(url.pathname)) {
+    const gate = await authGate(request, env);
+    if (!gate?.ok) return gate;
+    if (request.method !== 'GET') return json({ok:false,error:'method_not_allowed'},405,{allow:'GET'});
+    // Private research exports are imported into the administrator's browser
+    // session. They are never embedded in the public repository or asset tree.
+    if (url.pathname === '/api/command/intelligence') return json({ok:true,data:null,importRequired:true});
+    if (url.pathname === '/api/command/local') {
+      const token=await googleUserToken(env,['https://www.googleapis.com/auth/business.manage']);
+      return json(await localReport(env.GOOGLE_BUSINESS_LOCATION_ID,{authorization:`Bearer ${token}`},providerJson));
+    }
+    // Only the configured AstroVip property is used. No automatic fallback to
+    // another property and no personal lead records are exposed by this API.
+    if (!has(env,'GA4_PROPERTY_ID')) return json({ok:false,error:'ga4_property_id_not_configured'},503);
+    const propertyId=String(env.GA4_PROPERTY_ID).replace(/^properties\//,'');
+    if (!/^\d+$/.test(propertyId)) return json({ok:false,error:'invalid_ga4_property_id'},503);
+    const endpoint=`https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`;
+    const result=await moneyReport(body=>googleReportRequest(env,GA4_TOOLKIT,['https://www.googleapis.com/auth/analytics.readonly'],endpoint,body),propertyId);
+    return json(result,result.ok?200:503);
+  }
 
   if (['/api/command/connections', '/api/command/connect', '/api/command/connection-test'].includes(url.pathname)) {
     const gate = await authGate(request, env);
