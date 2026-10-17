@@ -18,7 +18,7 @@ const get = async path => {
 };
 
 // Traverse the submitted sitemap, including all its curated public pages.
-const pending = ['/sitemap-index.xml'];
+const pending = ['/sitemap.xml'];
 const seen = new Set();
 const pages = new Set();
 while (pending.length) {
