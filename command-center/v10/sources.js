@@ -3,7 +3,8 @@ export const SESSION_KEY='avcc_v3_token';
 // All state stays in memory. No provider response or admin token is persisted here.
 export class Sources {
   constructor({fetcher=fetch,token,onUnauthorized=()=>{},now=Date.now,ttl=300000}={}){
-    this.fetcher=fetcher;this.token=token;this.onUnauthorized=onUnauthorized;this.now=now;this.ttl=ttl;this.records=new Map();this.pending=new Map();this.controllers=new Set();this.epoch=0;
+    // Window.fetch requires its native receiver even when stored on this client.
+    this.fetcher=fetcher.bind(globalThis);this.token=token;this.onUnauthorized=onUnauthorized;this.now=now;this.ttl=ttl;this.records=new Map();this.pending=new Map();this.controllers=new Set();this.epoch=0;
   }
   clear(){this.epoch++;for(const c of this.controllers)c.abort();this.controllers.clear();this.records.clear();this.pending.clear();}
   async ping(){const r=await this.fetcher('/api/command/ping',{cache:'no-store',headers:{authorization:'Bearer '+this.token()},signal:AbortSignal.timeout(30000)});if(!r.ok)throw Error(r.status===401?'Acces respins. Verifică tokenul.':'Serverul nu a confirmat accesul. Încearcă din nou.');}
