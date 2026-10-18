@@ -10,7 +10,7 @@ const root=fileURLToPath(new URL('..',import.meta.url));
 const output=path.join(process.env.QA_OUTPUT||'/tmp/astrovip-marketing-qa','editor');
 await fs.mkdir(output,{recursive:true});
 let published={version:1,pages:{}},writes=[],fail=false;
-const home={version:1,hero:{labels:['A','B','C','D'],titleMain:'AstroVip',titlePremium:'Premium',buttonUrl:'/consultatie-astrologica/'},ribbon:{items:[]},sections:{}};
+const home={version:1,hero:{labels:['A','B','C','D'],titleMain:'AstroVip',titlePremium:'Premium',subtitle:'',buttonText:'Consultație',buttonUrl:'/consultatie-astrologica/',sideLeft:'',sideRight:'',bottomText:'',image:'',frameAccent:'#f0cf67',frameWidth:1},ribbon:{visible:true,cap:'AstroVip',items:['A','B','C','D'].map(title=>({title,subtitle:''}))},sections:{planets:true,freeQuestion:true,opportunities:true}};
 const routes=new Set(['/command-center/site-builder/','/command-center/editor-original/','/assets/page-overrides-runtime.js']);
 const server=http.createServer(async(req,res)=>{
   try{
