@@ -253,6 +253,7 @@ function sanitizePageOverrides(input) {
     const items = Array.isArray(rawItems) ? rawItems : [];
     pages[path] = items.slice(0, 250).map(x => ({
       selector: cleanString(x?.selector, 500),
+      ...(x?.editorVersion === 2 ? { editorVersion: 2 } : {}),
       text: cleanMultiline(x?.text, 4000),
       style: {
         color: /^#[0-9a-f]{6}$/i.test(String(x?.style?.color||'')) ? x.style.color : '',

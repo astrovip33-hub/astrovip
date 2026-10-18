@@ -107,6 +107,7 @@ export default {
           el.append(CASE_NAV_V8,{html:true});
         }})
         .on('head',{element(el){el.append(HOMEPAGE_CRITICAL,{html:true})}})
+        .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261018-editor2" defer></script>',{html:true})}})
         .on('link[rel="stylesheet"][href^="/assets/ux-refresh-20261008.css"]',{element(el){el.remove()}})
         .on('section.av-pro-hero .av-pro-visual picture source[media="(max-width:760px)"]',{element(el){el.remove()}})
         .on('section.av-pro-hero .av-pro-visual picture source[media="(min-width:761px)"]',{element(el){el.setAttribute('media','(min-width:821px)')}})
