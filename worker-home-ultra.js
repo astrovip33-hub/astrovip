@@ -88,7 +88,7 @@ export default {
       let desktopHeroSeen=false;
 
       return new HTMLRewriter()
-        .on('html',{element(el){el.setAttribute('class',`${el.getAttribute('class')||''} av-ultra-home-production av-cardless-home av-mobile-approved av-premium-v9`)}})
+        .on('html',{element(el){el.setAttribute('class',`${el.getAttribute('class')||''} av-ultra-home-production av-cardless-home av-premium-v9`)}})
         .on('#av-mobile-approved-home',{element(el){
           if(mobileHomeSeen){el.remove();return;}
           mobileHomeSeen=true;
