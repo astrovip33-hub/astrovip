@@ -38,3 +38,28 @@ html body.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-group
 html body.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-menu-more-links a{box-sizing:border-box!important;min-width:0!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important}
 html body.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-pro-menu-close:focus-visible{outline:2px solid #cda2af!important;outline-offset:3px!important}
 }
+
+/* Own the mobile menu geometry ahead of legacy unlayered important rules. */
+@layer astrovip-menu-fit{
+@media(max-width:1100px){
+body.av-ux-refresh #menu.menu{--av-menu-row:clamp(44px,6.2dvh,54px);position:fixed!important;inset:72px 12px auto auto!important;width:min(360px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - 84px - env(safe-area-inset-bottom,0px))!important;min-height:0!important;margin:0!important;padding:10px!important;gap:clamp(2px,.5dvh,5px)!important;overflow-x:hidden!important;overflow-y:auto!important;transform:none!important;box-sizing:border-box!important}
+body.av-ux-refresh #menu.menu>*{min-width:0!important;flex-shrink:0!important;box-sizing:border-box!important}
+body.av-ux-refresh #menu.menu .av-pro-menu-head{min-height:52px!important;margin:0!important;padding:0 0 8px!important;gap:10px!important;align-items:center!important}
+body.av-ux-refresh #menu.menu .av-pro-menu-head strong{font-size:clamp(17px,4.8vw,21px)!important;line-height:1.15!important;min-width:0!important}
+body.av-ux-refresh #menu.menu .av-pro-menu-close{flex:0 0 44px!important;width:44px!important;min-width:44px!important;height:44px!important;font-size:28px!important}
+body.av-ux-refresh #menu.menu>details{min-height:0!important;margin:0!important;padding:0!important}
+body.av-ux-refresh #menu.menu>a,
+body.av-ux-refresh #menu.menu>details>summary{display:grid!important;grid-template-columns:minmax(0,1fr) 32px!important;align-items:center!important;gap:10px!important;min-height:var(--av-menu-row)!important;height:auto!important;margin:0!important;padding:5px 10px!important;font-size:clamp(15px,4.4vw,17px)!important;line-height:1.25!important;white-space:normal!important;overflow-wrap:anywhere!important;box-sizing:border-box!important}
+body.av-ux-refresh #menu.menu>a::after,
+body.av-ux-refresh #menu.menu>details>summary::after{position:static!important;inset:auto!important;transform:none!important;width:32px!important;height:32px!important;margin:0!important;align-self:center!important;justify-self:end!important;font-size:22px!important;box-sizing:border-box!important}
+}
+@media(max-width:1100px) and (max-height:520px){
+body.av-ux-refresh #menu.menu.open{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:4px!important;align-items:start!important}
+body.av-ux-refresh #menu.menu .av-pro-menu-head,
+body.av-ux-refresh #menu.menu>details[open]{grid-column:1/-1!important}
+body.av-ux-refresh #menu.menu>a,
+body.av-ux-refresh #menu.menu>details>summary{grid-template-columns:minmax(0,1fr) 26px!important;gap:6px!important;padding:6px 8px!important;min-height:44px!important;font-size:14px!important}
+body.av-ux-refresh #menu.menu>a::after,
+body.av-ux-refresh #menu.menu>details>summary::after{width:26px!important;height:26px!important;font-size:20px!important}
+}
+}
