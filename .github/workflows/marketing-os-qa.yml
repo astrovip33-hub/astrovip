@@ -3,6 +3,11 @@ on:
   push:
     paths:
       - 'command-center/v10/**'
+      - 'command-center/site-builder/**'
+      - 'command-center/editor-original/**'
+      - 'assets/page-overrides-runtime.js'
+      - 'worker-home-ultra.js'
+      - 'scripts/test-editor*'
       - 'command*api*.js'
       - 'command-intelligence-snapshot.js'
       - 'scripts/test-marketing*'
@@ -21,7 +26,7 @@ jobs:
           node-version: '22'
       - name: Security, data and regression tests
         run: |
-          node --test scripts/test-command-center.mjs scripts/test-command-center-ui.mjs scripts/test-marketing-os.mjs scripts/test-marketing-workflows.mjs scripts/test-preview-boundaries.mjs
+          node --test scripts/test-command-center.mjs scripts/test-command-center-ui.mjs scripts/test-editor-publishing.mjs scripts/test-marketing-os.mjs scripts/test-marketing-workflows.mjs scripts/test-preview-boundaries.mjs
           python3 -m unittest discover -s scripts -p 'test_marketing_import.py'
           python3 -m unittest discover -s scripts -p 'test_operations_health.py'
       - name: Install browser validation runtime
@@ -31,7 +36,9 @@ jobs:
       - name: Mobile, desktop, encoding and UI regression checks
         env:
           QA_OUTPUT: marketing-os-qa
-        run: node scripts/test-marketing-browser.mjs
+        run: |
+          node scripts/test-marketing-browser.mjs
+          node scripts/test-editor-browser.mjs
       - name: Attach exact-commit QA report and screenshots
         if: always()
         uses: actions/upload-artifact@v4
