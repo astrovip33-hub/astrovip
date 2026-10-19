@@ -463,7 +463,7 @@ jobs:
           HEADER_AR_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
           import re,sys
           html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
-          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          m=re.search(r'<header\b[^>]*\bclass="[^"]*\btop\b[^"]*"[^>]*>(.*?)</header>',html,re.S)
           section=m.group(1) if m else ""
           print(len(re.findall(r'href="/ar/"',section)))
           PY
@@ -471,7 +471,7 @@ jobs:
           HEADER_RU_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
           import re,sys
           html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
-          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          m=re.search(r'<header\b[^>]*\bclass="[^"]*\btop\b[^"]*"[^>]*>(.*?)</header>',html,re.S)
           section=m.group(1) if m else ""
           print(len(re.findall(r'href="/ru/"',section)))
           PY
@@ -488,7 +488,7 @@ jobs:
           HEADER_CHAT_COUNT=$(python3 - "$LIVE_HTML" <<'PY'
           import re,sys
           html=open(sys.argv[1],encoding="utf-8",errors="ignore").read()
-          m=re.search(r'<header class="top">(.*?)</header>',html,re.S)
+          m=re.search(r'<header\b[^>]*\bclass="[^"]*\btop\b[^"]*"[^>]*>(.*?)</header>',html,re.S)
           section=m.group(1) if m else ""
           print(len(re.findall(r'<button class="avchat-launcher',section)))
           PY
