@@ -2,24 +2,111 @@
   "schemaVersion": 1,
   "provider": "Mangools MCP",
   "mode": "chatgpt_mcp_snapshot",
-  "syncedAt": "2026-10-19T16:55:00+03:00",
+  "syncedAt": "2026-10-19T17:27:00+03:00",
   "plan": "trial",
   "platformPlan": "mangools",
   "quota": {
-    "keywordLookups": { "limit": 5, "remaining": 5 },
-    "serpLookups": { "limit": 5, "remaining": 5 },
-    "permanentKeywordCredits": { "limit": 100, "remaining": 88 },
-    "permanentSerpCredits": { "limit": 100, "remaining": 94 },
-    "trackedKeywordCapacity": { "limit": 50, "remainingApiPool": 56 },
-    "checkedKeywordRanks": { "limit": 56, "remaining": 56 },
-    "linkRows": { "limit": 2000, "remaining": 1976 },
-    "siteProfilerOverview": { "limit": 5, "remaining": 3 },
-    "aiPresence": { "limit": 15, "remaining": 15 },
-    "aiWatcherPrompts": { "limit": 5, "remaining": 5 },
-    "aiWatcherMonitors": { "limit": 1, "remaining": 1 },
-    "onDemandRankScans": { "limit": 50, "remaining": 50 }
+    "keywordLookups": {
+      "limit": 5,
+      "remaining": 5
+    },
+    "serpLookups": {
+      "limit": 5,
+      "remaining": 5
+    },
+    "permanentKeywordCredits": {
+      "limit": 100,
+      "remaining": 88
+    },
+    "permanentSerpCredits": {
+      "limit": 100,
+      "remaining": 94
+    },
+    "trackedKeywordCapacity": {
+      "limit": 50,
+      "remainingApiPool": 51
+    },
+    "checkedKeywordRanks": {
+      "limit": 56,
+      "remaining": 51
+    },
+    "linkRows": {
+      "limit": 2000,
+      "remaining": 1976
+    },
+    "siteProfilerOverview": {
+      "limit": 5,
+      "remaining": 3
+    },
+    "aiPresence": {
+      "limit": 15,
+      "remaining": 15
+    },
+    "aiWatcherPrompts": {
+      "limit": 5,
+      "remaining": 5
+    },
+    "aiWatcherMonitors": {
+      "limit": 1,
+      "remaining": 1
+    },
+    "onDemandRankScans": {
+      "limit": 50,
+      "remaining": 50
+    }
   },
-  "capabilities": ["KWFinder", "SERPWatcher", "LinkMiner", "SiteProfiler", "AI Presence"],
+  "capabilities": [
+    "KWFinder",
+    "SERPWatcher",
+    "LinkMiner",
+    "SiteProfiler",
+    "AI Presence"
+  ],
   "paidLookupsConsumedDuringSync": false,
-  "note": "Snapshot sincronizat din Mangools MCP. Citirea din Commander Center nu consuma credite Mangools."
+  "note": "Snapshot V11 sincronizat din Mangools MCP. SERPWatcher mobil Romania activ pentru 5 tinte. Citirea din Commander Center nu consuma credite Mangools.",
+  "tracking": {
+    "id": "6ad623fb5a101bd3c0b7949f",
+    "domain": "astrovip.ro",
+    "location": "Romania",
+    "platform": "mobile",
+    "status": "processing",
+    "estimatedSeconds": 900,
+    "keywords": [
+      {
+        "keyword": "compatibilitate zodii",
+        "volume": 4700,
+        "kd": null,
+        "position": null,
+        "priority": 1
+      },
+      {
+        "keyword": "harta natala",
+        "volume": 1700,
+        "kd": 10,
+        "position": null,
+        "priority": 2
+      },
+      {
+        "keyword": "numerologie",
+        "volume": 2100,
+        "kd": 14,
+        "position": null,
+        "priority": 3
+      },
+      {
+        "keyword": "pozitia planetelor astazi",
+        "volume": 640,
+        "kd": 14,
+        "position": 5,
+        "priority": 4
+      },
+      {
+        "keyword": "calendar chinezesc",
+        "volume": 3400,
+        "kd": 18,
+        "position": 17,
+        "priority": 5
+      }
+    ]
+  }
 }
