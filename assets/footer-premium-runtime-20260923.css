@@ -132,7 +132,7 @@
   #astrovip-footer .av-footer-eyebrow{margin:0 0 4px!important;font-size:12px!important;letter-spacing:.06em!important}
   #astrovip-footer .av-footer-logo{font-size:clamp(30px,8.4vw,38px)!important}
   #astrovip-footer .av-footer-card-title{margin:2px 0 4px!important;font-size:20px!important}
-  #astrovip-footer .av-footer-price{grid-column:2!important;grid-row:2/4!important;display:flex!important;flex-direction:column!important;align-items:flex-end!important;gap:2px!important;margin:0!important;font-size:25px!important}
+  #astrovip-footer .av-footer-card--brand>.av-footer-price{grid-column:2!important;grid-row:2/4!important;display:flex!important;flex-direction:column!important;align-items:flex-end!important;gap:2px!important;margin:0!important;font-size:25px!important}
   #astrovip-footer .av-footer-price span{font-size:14px!important}
   #astrovip-footer .av-footer-experience{font-size:15px!important;line-height:1.5!important}
   #astrovip-footer .av-footer-card-actions{margin-top:7px!important}
