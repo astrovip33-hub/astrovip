@@ -1,10 +1,10 @@
 /
   Cache-Control: no-store, max-age=0
-  X-AstroVip-Release: 20261008-ux-refresh1
+  X-AstroVip-Release: 20261019-header-footer-premium
 
 /index.html
   Cache-Control: no-store, max-age=0
-  X-AstroVip-Release: 20261008-ux-refresh1
+  X-AstroVip-Release: 20261019-header-footer-premium
 
 /*
   X-Content-Type-Options: nosniff

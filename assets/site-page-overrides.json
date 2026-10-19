@@ -185,7 +185,7 @@
       {
         "selector": "#av-mobile-approved-header > a.avm-logo > span.av-premium-title",
         "editorVersion": 2,
-        "text": "ASTROVIP",
+        "text": "ASTROLOGIE PREMIUM",
         "style": {
           "color": "#f2eb07",
           "backgroundColor": "#000000",
@@ -194,7 +194,7 @@
           "borderStyle": "solid",
           "borderRadius": "0px",
           "opacity": "1",
-          "fontSize": "31px",
+          "fontSize": "clamp(20px,6.1vw,31px)",
           "fontWeight": "900",
           "padding": "0px 0px",
           "boxShadow": "none",
