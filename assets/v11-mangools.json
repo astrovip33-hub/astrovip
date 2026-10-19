@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "provider": "Mangools MCP",
+  "mode": "chatgpt_mcp_snapshot",
+  "syncedAt": "2026-10-19T16:55:00+03:00",
+  "plan": "trial",
+  "platformPlan": "mangools",
+  "quota": {
+    "keywordLookups": { "limit": 5, "remaining": 5 },
+    "serpLookups": { "limit": 5, "remaining": 5 },
+    "permanentKeywordCredits": { "limit": 100, "remaining": 88 },
+    "permanentSerpCredits": { "limit": 100, "remaining": 94 },
+    "trackedKeywordCapacity": { "limit": 50, "remainingApiPool": 56 },
+    "checkedKeywordRanks": { "limit": 56, "remaining": 56 },
+    "linkRows": { "limit": 2000, "remaining": 1976 },
+    "siteProfilerOverview": { "limit": 5, "remaining": 3 },
+    "aiPresence": { "limit": 15, "remaining": 15 },
+    "aiWatcherPrompts": { "limit": 5, "remaining": 5 },
+    "aiWatcherMonitors": { "limit": 1, "remaining": 1 },
+    "onDemandRankScans": { "limit": 50, "remaining": 50 }
+  },
+  "capabilities": ["KWFinder", "SERPWatcher", "LinkMiner", "SiteProfiler", "AI Presence"],
+  "paidLookupsConsumedDuringSync": false,
+  "note": "Snapshot sincronizat din Mangools MCP. Citirea din Commander Center nu consuma credite Mangools."
+}
