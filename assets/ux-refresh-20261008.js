@@ -105,8 +105,9 @@
         title: 'Instrumente',
         links: [
           ['Toate instrumentele', '/instrumente-astrologie/'], ['Calculator Ascendent', '/calculator-ascendent/'],
-          ['Pozițiile planetelor live', '/pozitii-planete-live/'], ['Efemeride astrologice', '/efemeride-astrologice/'],
-          ['Harta mea', '/harta-mea/'], ['Calculator numerologie', '/calculator-numerologie/']
+          ['Pozițiile planetelor live', '/pozitii-planete-live/'], ['Ore planetare', '/ore-planetare/'],
+          ['Efemeride astrologice', '/efemeride-astrologice/'], ['Harta mea', '/harta-mea/'],
+          ['Calculator numerologie', '/calculator-numerologie/']
         ]
       },
       {
