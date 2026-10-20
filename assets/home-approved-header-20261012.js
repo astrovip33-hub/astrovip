@@ -11,6 +11,9 @@
     header.id='av-site-header';
     const oldFlags=[...header.querySelectorAll('.av-lang-switch>a')];
     const menu=header.querySelector('#menu'),backdrop=header.querySelector('.av-pro-backdrop');
+    // Elimină structural brandul legacy pe mobil: păstrăm o singură identitate în header.
+    const legacyBrand=header.querySelector('.wrap.nav>.brand');
+    if(legacyBrand)legacyBrand.remove();
     if(menu){
       [...menu.querySelectorAll('a,button')].forEach(el=>{
         const t=(el.textContent||'').trim().toLocaleUpperCase('ro-RO').replace(/\s+/g,' ');

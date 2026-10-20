@@ -14,6 +14,12 @@
 @media(max-width:360px){
   #av-site-header #av-mobile-approved-header .av-premium-title{font-size:clamp(17px,5.7vw,20px)!important}
 }
+@media(max-width:820px){
+  #av-site-header>.wrap.nav>.brand,
+  #av-site-header .av-brand-logo,
+  #av-site-header .av-brand-tagline,
+  #av-site-header .av-brand-copy{display:none!important}
+}
 html body:not(.guide-page) header.top .brand.av-brand-premium:has(>.av-premium-title){
   display:flex!important;align-items:center!important;flex:0 1 300px!important;
   width:300px!important;max-width:48vw!important;min-width:0!important;
