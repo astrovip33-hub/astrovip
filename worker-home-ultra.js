@@ -53,7 +53,7 @@ html.av-ultra-home-production body:not(.guide-page) main#top>*:not(#av-mobile-ap
 html.av-ultra-home-production body:not(.guide-page) main#top>#av-mobile-approved-home{display:block!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important}
 }
 @media(min-width:821px) and (max-width:980px){.av-home-paybar-inner{align-items:flex-start;flex-direction:column}.av-home-paybar-inner>a{width:100%}}
-</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=ssr-20261012"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
+</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261020-payment-nowrap"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important}
 @media(max-width:820px){
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{overflow:hidden!important}
@@ -108,6 +108,7 @@ export default {
         }})
         .on('head',{element(el){el.append(HOMEPAGE_CRITICAL,{html:true})}})
         .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261019-ssr3" defer></script>',{html:true})}})
+        .on('script[src^="/assets/ux-refresh-20261008.js"]',{element(el){el.setAttribute('src','/assets/ux-refresh-20261008.js?v=20261020-menu-colors2')}})
         .on('link[rel="stylesheet"][href^="/assets/ux-refresh-20261008.css"]',{element(el){el.remove()}})
         .on('section.av-pro-hero .av-pro-visual picture source[media="(max-width:760px)"]',{element(el){el.remove()}})
         .on('section.av-pro-hero .av-pro-visual picture source[media="(min-width:761px)"]',{element(el){el.setAttribute('media','(min-width:821px)')}})
