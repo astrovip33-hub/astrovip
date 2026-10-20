@@ -51,6 +51,15 @@
     `;
     document.head.appendChild(style);
 
+    let numerologyAnchor = [...menu.children].find(el => el.matches?.('a[href="/numerologie/"]'));
+    if (!numerologyAnchor) {
+      numerologyAnchor = document.createElement('a');
+      numerologyAnchor.href = '/numerologie/';
+      numerologyAnchor.textContent = 'Numerologie';
+      const instrumenteAnchor = [...menu.children].find(el => el.matches?.('a[href="/instrumente-astrologie/"]'));
+      menu.insertBefore(numerologyAnchor, instrumenteAnchor || menu.querySelector('.av-menu-more') || null);
+    }
+
     const groups = [
       {
         selector: 'a[href="#servicii"]',
@@ -58,8 +67,7 @@
         links: [
           ['Toate serviciile', '#servicii'], ['Oferte și tarife', '#oferte'],
           ['Hartă natală', '/harta-natala/'], ['Previziuni & Timing', '/astrologie-predictiva/'],
-          ['Dragoste & Sinastrie', '/sinastrie/'], ['Relocare & Local Space', '/astrocartografie-local-space/'],
-          ['Numerologie', '/numerologie/']
+          ['Dragoste & Sinastrie', '/sinastrie/'], ['Relocare & Local Space', '/astrocartografie-local-space/']
         ]
       },
       {
@@ -69,6 +77,27 @@
           ['Astrologie — ghid principal', '/astrologie/'], ['Arce Solare', '/arce-solare/'],
           ['Tranzite astrologice', '/tranzite-astrologice/'], ['Progresii secundare', '/progresii-secundare/'],
           ['Puncte Mijlocii', '/puncte-mijlocii/'], ['Astrologie Orară', '/astrologie-orara/']
+        ]
+      },
+      {
+        selector: 'a[href="/numerologie/"]',
+        title: 'Numerologie',
+        links: [
+          ['Numerologie — ghid principal', '/numerologie/'],
+          ['Calculator numerologie', '/calculator-numerologie/'],
+          ['Numerologie după data nașterii', '/numerologie-data-nasterii/'],
+          ['Calea vieții', '/calea-vietii/'],
+          ['Numărul destinului', '/numarul-destinului/'],
+          ['Numerologia numelui', '/numerologia-numelui/'],
+          ['Numărul expresiei', '/numarul-expresiei/'],
+          ['Numărul sufletului', '/numarul-sufletului/'],
+          ['Vibrația numelui', '/vibratia-numelui/'],
+          ['Anul personal', '/an-personal/'],
+          ['Compatibilitate numerologică', '/compatibilitate-numerologica/'],
+          ['Matrice numerologică', '/matrice-numerologica/'],
+          ['Numere maestru', '/numere-maestru/'],
+          ['Numerologia casei', '/numerologia-casei/'],
+          ['Numerologie tantrică', '/numerologie-tantrica/']
         ]
       },
       {

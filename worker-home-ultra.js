@@ -108,7 +108,7 @@ export default {
         }})
         .on('head',{element(el){el.append(HOMEPAGE_CRITICAL,{html:true})}})
         .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261019-ssr3" defer></script>',{html:true})}})
-        .on('script[src^="/assets/ux-refresh-20261008.js"]',{element(el){el.setAttribute('src','/assets/ux-refresh-20261008.js?v=20261020-menu-colors2')}})
+        .on('script[src^="/assets/ux-refresh-20261008.js"]',{element(el){el.setAttribute('src','/assets/ux-refresh-20261008.js?v=20261020-numerologie-menu1')}})
         .on('link[rel="stylesheet"][href^="/assets/ux-refresh-20261008.css"]',{element(el){el.remove()}})
         .on('section.av-pro-hero .av-pro-visual picture source[media="(max-width:760px)"]',{element(el){el.remove()}})
         .on('section.av-pro-hero .av-pro-visual picture source[media="(min-width:761px)"]',{element(el){el.setAttribute('media','(min-width:821px)')}})
