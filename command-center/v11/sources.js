@@ -1,4 +1,4 @@
-export const ENDPOINTS=Object.freeze({overview:'overview',connections:'connections',gsc:'gsc',ga4:'ga4',seranking:'seranking',health:'site-health',autopilot:'autopilot-status',intelligence:'intelligence',money:'money',local:'local',recovery:'recovery-points'});
+export const ENDPOINTS=Object.freeze({mangools:'/assets/v11-mangools.json',overview:'overview',connections:'connections',gsc:'gsc',ga4:'ga4',seranking:'seranking',health:'site-health',autopilot:'autopilot-status',intelligence:'intelligence',money:'money',local:'local',recovery:'recovery-points'});
 export const SESSION_KEY='avcc_v3_token';
 // All state stays in memory. No provider response or admin token is persisted here.
 export class Sources {
@@ -22,7 +22,7 @@ export class Sources {
       try{
         await Promise.resolve();
         if(epoch!==this.epoch)return null;
-        const response=await this.fetcher('/api/command/'+ENDPOINTS[key],{cache:'no-store',headers:{authorization:'Bearer '+this.token()},signal:controller.signal});
+        const response=await this.fetcher((ENDPOINTS[key].startsWith('/')?ENDPOINTS[key]:'/api/command/'+ENDPOINTS[key]),{cache:'no-store',headers:{authorization:'Bearer '+this.token()},signal:controller.signal});
         if(epoch!==this.epoch)return null;
         if(response.status===401){this.clear();this.onUnauthorized();return null;}
         if(!response.ok)throw Error('source_unavailable');

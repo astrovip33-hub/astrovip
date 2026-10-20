@@ -1,8 +1,11 @@
 // Pure intelligence layer. A configured connector is never treated as a ranking result.
-export const MODULES = [
+const MODULE_DEFINITIONS = [
+  {id:'studio',label:'Site Studio',eyebrow:'SITE STUDIO V11',title:'Editezi direct.',accent:'Vezi imediat.',description:'Texte, culori, mobil, draft și publicare în același V11.',sources:[]},
+  {id:'connections',label:'Conexiuni și acces',eyebrow:'CONEXIUNI V11',title:'Serviciile AstroVip.',accent:'Acces verificabil.',description:'Configurare, autorizare și teste API pentru fiecare serviciu.',sources:[]},
+  {id:'google',label:'Acces Google',eyebrow:'GOOGLE V11',title:'Search Console și GA4.',accent:'Autorizare și acces.',description:'Gestionează accesul Google din V11.',sources:[]},
   {id:'cockpit',label:'Executive Cockpit',eyebrow:'PRIVIRE DE ANSAMBLU',title:'Tot ce contează.',accent:'Într-o singură privire.',description:'Vizibilitate, rezultate și următoarea mișcare pentru AstroVip.',sources:['gsc','ga4','health']},
   {id:'intelligence',label:'Intelligence · sinteză',eyebrow:'WORK 02 · INTELLIGENCE',title:'Cererea reală.',accent:'Direcția potrivită.',description:'SEO, competitori, AI/GEO, Local, conținut și autoritate, cu surse și dată.',sources:['intelligence','gsc']},
-  {id:'seo',label:'Google & SEO',eyebrow:'WORK 02 · GOOGLE INTELLIGENCE',title:'De la căutări',accent:'la oportunități.',description:'Search Console pentru performanță. SE Ranking pentru research și benchmark datat.',sources:['gsc','seranking','intelligence']},
+  {id:'seo',label:'Google & SEO',eyebrow:'WORK 02 · GOOGLE INTELLIGENCE',title:'De la căutări',accent:'la oportunități.',description:'Search Console pentru performanță. SE Ranking pentru research și benchmark datat.',sources:['gsc','seranking','intelligence','mangools']},
   {id:'competitors',label:'Concurență',eyebrow:'COMPETITOR WAR ROOM',title:'Concurența,',accent:'cu dovezi.',description:'Benchmark și rezultate SERP din exporturile SE Ranking, cu contextul fiecărui raport.',sources:['intelligence']},
   {id:'geo',label:'Vizibilitate AI / GEO',eyebrow:'AI INTELLIGENCE',title:'AstroVip în',accent:'răspunsurile AI.',description:'Baseline Peec datat, separat de măsurătorile live.',sources:['intelligence']},
   {id:'local',label:'Maps & Recenzii',eyebrow:'LOCAL INTELLIGENCE',title:'Prezența locală.',accent:'Un singur profil real.',description:'Google Business Profile pentru Bulevardul Unirii 33, București.',sources:['local']},
@@ -14,6 +17,7 @@ export const MODULES = [
   {id:'operator',label:'AI Operator',eyebrow:'WORK 05 · AI OPERATOR',title:'Ce facem mai întâi.',accent:'Și pe ce ne bazăm.',description:'Priorități explicabile din motoarele de date. Impact estimat calitativ, fără venituri inventate.',sources:['intelligence','gsc','ga4','money','local','health','autopilot']},
   {id:'qa',label:'QA & Preview',eyebrow:'WORK 06 · QUALITY ASSURANCE',title:'Verificare completă.',accent:'Preview înainte de lansare.',description:'Securitate, performanță, responsive, encoding și regresii: fiecare control cu dovada lui.',sources:['health','autopilot']},
 ];
+export const MODULES=[MODULE_DEFINITIONS.find(m=>m.id==='cockpit'),...MODULE_DEFINITIONS.filter(m=>m.id!=='cockpit')];
 export function number(value, digits=0) {
   if(value===null||value===undefined||value===''||typeof value==='boolean'||!Number.isFinite(Number(value)))return '—';
   return new Intl.NumberFormat('ro-RO',{maximumFractionDigits:digits}).format(Number(value));
@@ -34,7 +38,7 @@ export function opportunities(report) {
 export function priorities(records) {
   const out=[],value=key=>records.get(key)?.data;
   const deploy=value('overview')?.github?.deploy;
-  if(deploy?.status==='completed'&&deploy.conclusion==='failure')out.push({kind:'bad',title:'Verifică ultimul deploy',detail:'GitHub raportează o publicare eșuată. Vezi pasul care a oprit fluxul.',href:'/command-center/'});
+  if(deploy?.status==='completed'&&deploy.conclusion==='failure')out.push({kind:'bad',title:'Verifică ultimul deploy',detail:'GitHub raportează o publicare eșuată. Vezi pasul care a oprit fluxul.',href:'/command-center/#operations'});
   const health=value('health');
   if(health?.results?.some(r=>!r.ok))out.push({kind:'bad',title:'Verifică rutele cu eroare',detail:'Cel puțin una dintre rutele testate nu a trecut verificarea HTTP.',module:'health'});
   const pilot=value('autopilot');
@@ -52,9 +56,9 @@ export function priorities(records) {
 }
 export function operatorIntent(raw) {
   const q=String(raw).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-  if(/editor|studio|modific.*(text|culo|pagina)|schimb.*(text|culo)/.test(q))return {href:'/command-center/site-builder/?from=v10'};
-  if(/public|deploy|backup|restaur|recovery/.test(q))return {href:'/command-center/'};
-  if(/conex|conect|autoriz/.test(q))return {href:'/command-center/connections/'};
+  if(/editor|studio|modific.*(text|culo|pagina)|schimb.*(text|culo)/.test(q))return {module:'studio'};
+  if(/public|deploy|backup|restaur|recovery/.test(q))return {module:'operations'};
+  if(/conex|conect|autoriz/.test(q))return {module:'connections'};
   if(/priorit|recomand|impact|operator|ce facem/.test(q))return {module:'operator'};
   if(/\bqa\b|responsive|regres|secur|preview|performanta/.test(q))return {module:'qa'};
   const mappings=[['competitors',/concur|competit/],['geo',/\bai\b|geo|citari|chatgpt|peec/],['local',/maps|recenzi|review|local|google business/],['authority',/backlink|autoritate|mentiun/],['health',/sanatate|health|alert|pilot|eroare/],['revenue',/venit|lead|trafic|convers|ga4|vanzar/],['content',/continut|articol|content/],['seo',/seo|cuvinte|oportunitat|ranking|google|gsc/],['cockpit',/cockpit|panou|general/]];

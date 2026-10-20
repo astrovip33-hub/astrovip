@@ -2,6 +2,7 @@ import {MODULES,number,connectionState,opportunities,priorities,operatorIntent,i
 import {Sources,SESSION_KEY} from './sources.js';
 import {renderRoom,workflowNavigation} from './rooms.js';
 import {parseSnapshot} from './snapshot.js';
+import {TOOLS,toolTarget,toolUrl} from './tools.js';
 
 const $=id=>document.getElementById(id);
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -18,6 +19,24 @@ const paths=[
 ];
 const previewOnly=isVisualPreview(location);
 let authenticated=false,active='cockpit',navigationEpoch=0,loginEpoch=0;
+const toolFrames=new Map(),toolQueries=new Map();
+function openTool(id){
+  const workspace=$('tool-workspace');
+  $('content').hidden=true;workspace.hidden=false;
+  for(const [key,frame] of toolFrames)frame.hidden=key!==id;
+  let frame=toolFrames.get(id);
+  const src=toolUrl(id,toolQueries.get(id)||location.search);
+  if(!frame){
+    frame=document.createElement('iframe');frame.title=TOOLS[id].title;frame.className='tool-frame';
+    frame.setAttribute('referrerpolicy','same-origin');workspace.appendChild(frame);toolFrames.set(id,frame);
+  }
+  if(frame.getAttribute('src')!==src)frame.src=src;
+  frame.hidden=false;
+}
+function navigateTool(target){
+  if(Object.hasOwn(TOOLS,target.module))toolQueries.set(target.module,target.search||'');
+  if(location.hash==='#'+target.module)selectModule();else location.hash=target.module;
+}
 const filters={query:'',maxDifficulty:100,gapsOnly:false,serp:''};
 const getToken=()=>{try{return sessionStorage.getItem(SESSION_KEY)||'';}catch{return '';}};
 const store=new Sources({token:getToken,onUnauthorized:()=>lock('Sesiunea a expirat. Autentifică-te din nou.')});
@@ -29,6 +48,7 @@ const badge=(text,kind='')=>`<span class="badge ${kind}">${escape(text)}</span>`
 const link=(href,label,gold=false)=>`<a class="button${gold?' gold':''}" href="${escape(href)}">${escape(label)} <span aria-hidden="true">↗</span></a>`;
 function lock(message=''){
   authenticated=false;navigationEpoch++;loginEpoch++;store.clear();
+  $('tool-workspace').replaceChildren();$('tool-workspace').hidden=true;toolFrames.clear();toolQueries.clear();$('content').hidden=false;
   try{sessionStorage.removeItem(SESSION_KEY);}catch{}
   $('app').hidden=true;$('lock').hidden=false;$('content').innerHTML='';$('login-error').textContent=message;$('token').value='';
   if(message)$('token').focus();
@@ -76,11 +96,17 @@ function connectionCard(keys=null){
 function cockpit(){
   const g=report('gsc')?.summary,a=report('ga4')?.metrics;
   const position=g&&Number(g.impressions)>0&&Number(g.position)>0?number(g.position,1):'—';
-  return `<div class="metrics">${metric('Clickuri din Google',number(g?.clicks),'gsc')}${metric('Poziție medie Google',position,'gsc')}${metric('Sesiuni pe site',number(a?.sessions),'ga4')}${metric('Venit măsurat în GA4',a?.totalRevenue==null?'—':number(a.totalRevenue,2),'ga4')}</div><div class="columns">${priorityCard()}${dominanceCard()}</div><div class="columns">${card('Căutări cu potențial',opportunityList(),badge('SEARCH CONSOLE','warn'))}${card('Premium Studio',`<p class="lead">Selectezi. Modifici. Verifici.</p><p>Texte, culori, butoane și secțiuni, direct în pagina ta. Desktop, tabletă și mobil din aceeași interfață.</p><div class="card-actions">${link('/command-center/site-builder/?from=v10','Deschide editorul vizual',true)}</div><p class="small">Draftul și publicarea se controlează din Studio.</p>`,badge('EDITOR VIZUAL','good'))}</div>${connectionCard(['gsc','ga4','seranking'])}`;
+  return `<div class="metrics">${metric('Clickuri din Google',number(g?.clicks),'gsc')}${metric('Poziție medie Google',position,'gsc')}${metric('Sesiuni pe site',number(a?.sessions),'ga4')}${metric('Venit măsurat în GA4',a?.totalRevenue==null?'—':number(a.totalRevenue,2),'ga4')}</div><div class="columns">${priorityCard()}${dominanceCard()}</div><div class="columns">${card('Căutări cu potențial',opportunityList(),badge('SEARCH CONSOLE','warn'))}${card('Premium Studio',`<p class="lead">Selectezi. Modifici. Verifici.</p><p>Texte, culori, butoane și secțiuni, direct în pagina ta. Desktop, tabletă și mobil din aceeași interfață.</p><div class="card-actions">${link('/command-center/#studio','Deschide editorul vizual',true)}</div><p class="small">Draftul și publicarea se controlează din Studio.</p>`,badge('EDITOR VIZUAL','good'))}</div>${connectionCard(['gsc','ga4','seranking'])}`;
 }
 function rankingCard(){
   const d=data('seranking'),p=d?.project;
   return card('Proiect SE Ranking',p?`<p class="lead">${escape(p.title||p.name||'AstroVip')}</p><div class="list"><div class="item"><span class="item-body">Cuvinte cheie urmărite</span><span class="item-value">${number(p.keywordCount)}</span></div><div class="item"><span class="item-body">Frecvența verificării</span><span class="item-value">${escape(p.checkFreq||'—')}</span></div></div><p class="small">${escape(stateNote('seranking'))}. Conectorul actual returnează date despre proiect; pozițiile și concurenții se deschid în SE Ranking.</p><div class="card-actions">${link('https://online.seranking.com/','Deschide SE Ranking')}</div>`:empty('Proiectul nu a fost încărcat.',stateNote('seranking')),badge(d?'DATE PROIECT':'FĂRĂ DATE',d?'good':'warn'));
+}
+function mangoolsCard(){
+  const d=data('mangools'),q=d?.quota;
+  if(!q)return card('Mangools',empty('Snapshot indisponibil.',stateNote('mangools')),badge('NEVERIFICAT','warn'));
+  const pair=x=>x?number(x.remaining)+' / '+number(x.limit):'—';
+  return card('Mangools · snapshot MCP',`<p>Plan ${escape(d.plan||'—')} · ${escape(date(d.syncedAt))}</p><div class="list"><div class="item">Keyword lookups <strong>${pair(q.keywordLookups)}</strong></div><div class="item">SERP lookups <strong>${pair(q.serpLookups)}</strong></div></div><p class="small">Date la momentul sincronizării. Actualizarea panoului recitește fișierul; nu execută căutări Mangools și nu confirmă soldul live.</p>`,badge('SNAPSHOT DATAT','warn'));
 }
 function seo(){
   const g=report('gsc')?.summary;
@@ -90,15 +116,15 @@ function health(){
   const h=data('health'),o=data('overview'),pilot=data('autopilot');
   const routes=Array.isArray(h?.results)?h.results:[];
   const deploy=o?.github?.deploy;
-  return `<div class="columns">${card('Disponibilitatea rutelor',routes.length?`<div class="list">${routes.map(x=>`<div class="item"><div class="item-body"><strong>${escape(x.key)}</strong><small>HTTP ${escape(x.status)} · ${number(x.ms)} ms</small></div>${badge(x.ok?'Accesibil':'Eroare',x.ok?'good':'bad')}</div>`).join('')}</div><p class="small">Verificare HTTP; nu confirmă funcționarea tuturor acțiunilor sau autentificarea în pagini.</p>`:empty('Verificarea nu este disponibilă.',stateNote('health')),badge(stateNote('health')))}${card('Deploy & Auto-Pilot',`<div class="list"><div class="item"><div class="item-body"><strong>Commit main</strong><small>${escape(o?.github?.commit?.shortSha||'—')}</small></div></div><div class="item"><div class="item-body"><strong>Ultimul deploy</strong><small>${escape(deploy?.conclusion||deploy?.status||'Neverificat')}</small></div></div><div class="item"><div class="item-body"><strong>Auto-Pilot</strong><small>${pilot?escape(pilot.enabled?(pilot.run?.conclusion||pilot.run?.status||'Neverificat'):'Dezactivat'):escape(stateNote('autopilot'))}</small></div></div></div><div class="card-actions">${link('/command-center/','Deschide operațiunile V9')}</div>`,badge('OPERAȚIUNI'))}</div>${priorityCard()}`;
+  return `<div class="columns">${card('Disponibilitatea rutelor',routes.length?`<div class="list">${routes.map(x=>`<div class="item"><div class="item-body"><strong>${escape(x.key)}</strong><small>HTTP ${escape(x.status)} · ${number(x.ms)} ms</small></div>${badge(x.ok?'Accesibil':'Eroare',x.ok?'good':'bad')}</div>`).join('')}</div><p class="small">Verificare HTTP; nu confirmă funcționarea tuturor acțiunilor sau autentificarea în pagini.</p>`:empty('Verificarea nu este disponibilă.',stateNote('health')),badge(stateNote('health')))}${card('Deploy & Auto-Pilot',`<div class="list"><div class="item"><div class="item-body"><strong>Commit main</strong><small>${escape(o?.github?.commit?.shortSha||'—')}</small></div></div><div class="item"><div class="item-body"><strong>Ultimul deploy</strong><small>${escape(deploy?.conclusion||deploy?.status||'Neverificat')}</small></div></div><div class="item"><div class="item-body"><strong>Auto-Pilot</strong><small>${pilot?escape(pilot.enabled?(pilot.run?.conclusion||pilot.run?.status||'Neverificat'):'Dezactivat'):escape(stateNote('autopilot'))}</small></div></div></div><div class="card-actions">${link('/command-center/','Deschide publicarea și backupul')}</div>`,badge('OPERAȚIUNI'))}</div>${priorityCard()}`;
 }
-function content(){return `<div class="columns">${card('Editor vizual · Premium Studio',`<p class="lead">Site-ul tău, editat direct.</p><div class="list"><div class="item"><span class="item-number">01</span><div class="item-body"><strong>Alege pagina și elementul</strong><small>Texte, titluri, carduri sau butoane din preview.</small></div></div><div class="item"><span class="item-number">02</span><div class="item-body"><strong>Modifică textul și aspectul</strong><small>Culori, font, spațiere și preseturi AstroVip.</small></div></div><div class="item"><span class="item-number">03</span><div class="item-body"><strong>Verifică și salvează</strong><small>Vezi mobilul, salvează draftul și folosește publicarea din Studio.</small></div></div></div><div class="card-actions">${link('/command-center/site-builder/?from=v10','Editează site-ul',true)}</div>`,badge('PREMIUM STUDIO','good'))}${card('Idei din căutările reale',opportunityList(),badge('SEARCH CONSOLE','warn'))}</div>`;}
+function content(){return `<div class="columns">${card('Editor vizual · Premium Studio',`<p class="lead">Site-ul tău, editat direct.</p><div class="list"><div class="item"><span class="item-number">01</span><div class="item-body"><strong>Alege pagina și elementul</strong><small>Texte, titluri, carduri sau butoane din preview.</small></div></div><div class="item"><span class="item-number">02</span><div class="item-body"><strong>Modifică textul și aspectul</strong><small>Culori, font, spațiere și preseturi AstroVip.</small></div></div><div class="item"><span class="item-number">03</span><div class="item-body"><strong>Verifică și salvează</strong><small>Vezi mobilul, salvează draftul și folosește publicarea din Studio.</small></div></div></div><div class="card-actions">${link('/command-center/#studio','Editează site-ul',true)}</div>`,badge('PREMIUM STUDIO','good'))}${card('Idei din căutările reale',opportunityList(),badge('SEARCH CONSOLE','warn'))}</div>`;}
 function renderModule(){
   const room=()=>renderRoom(active,{data,report,number,badge,link,card,empty,escape,records:store.records,filters});
   if(['intelligence','competitors','geo','local','authority','operations','operator','qa'].includes(active))return room();
   switch(active){
     case 'cockpit':return cockpit();
-    case 'seo':return seo()+room();
+    case 'seo':return seo()+mangoolsCard()+room();
     case 'revenue':return room();
     case 'health':return health();
     case 'content':return content()+room();
@@ -111,7 +137,7 @@ function render(){
   $('module-caption').textContent=module.label;$('module-eyebrow').textContent=module.eyebrow;
   $('module-title').innerHTML=escape(module.title)+'<br><span>'+escape(module.accent)+'</span>';
   $('module-description').textContent=module.description;
-  document.title=module.label+' · AstroVip Marketing OS V10';
+  document.title=module.label+' · AstroVip Command Center V11';
   document.querySelectorAll('#navigation a').forEach(a=>{if(a.hash==='#'+active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   const busy=[...store.records.values()].some(r=>r.status==='loading');
   $('content').setAttribute('aria-busy',String(busy));$('refresh').disabled=busy||previewOnly;
@@ -122,6 +148,13 @@ function render(){
   $('session-status').className='badge '+(bad?'warn':'good');
   $('session-status').textContent=bad?bad+' surse indisponibile':'Autentificat';
   if(previewOnly){$('session-status').className='badge warn';$('session-status').textContent='PREVIEW · FĂRĂ DATE';$('fetch-time').textContent='Datele private nu sunt încărcate';}
+  if(Object.hasOwn(TOOLS,active)&&!previewOnly){
+    $('refresh').disabled=false;$('refresh').textContent=active==='studio'?'Verifică pagina':'↻ Actualizează';
+    openTool(active);return;
+  }
+  $('tool-workspace').hidden=true;$('content').hidden=false;
+  for(const frame of toolFrames.values())frame.hidden=true;
+  if(Object.hasOwn(TOOLS,active)){$('content').innerHTML=empty('Instrument disponibil după autentificare.','Intră în V11 pentru editare, conexiuni și operațiuni.');return;}
   $('content').innerHTML=renderModule();
 }
 function eligible(key){
@@ -134,6 +167,7 @@ function eligible(key){
 }
 async function loadActive(force=false){
   if(previewOnly||!authenticated)return;
+  if(Object.hasOwn(TOOLS,active))return;
   const epoch=++navigationEpoch,session=loginEpoch;
   const core=['overview','connections'].map(key=>store.load(key,{force}));render();
   await Promise.allSettled(core);
@@ -187,8 +221,13 @@ $('login-form').addEventListener('submit',async event=>{
   catch(e){lock(e.message==='Acces respins. Verifică tokenul.'?e.message:'Accesul nu a putut fi verificat. Încearcă din nou.');}
   finally{$('login-button').disabled=false;}
 });
-$('logout').addEventListener('click',()=>{if(previewOnly)location.assign('/command-center/v10/');else lock();});
-$('refresh').addEventListener('click',()=>{if(authenticated)void loadActive(true);});
+$('logout').addEventListener('click',()=>{if(previewOnly)location.assign('/command-center/');else lock();});
+$('refresh').addEventListener('click',()=>{
+  if(!authenticated)return;
+  const frame=toolFrames.get(active);
+  if(frame)frame.contentWindow.postMessage({type:'avcc:refresh'},location.origin);
+  else void loadActive(true);
+});
 $('operator-form').addEventListener('submit',event=>{
   event.preventDefault();const intent=operatorIntent($('command').value);
   if(!intent){$('operator-result').hidden=false;$('operator-result').textContent='Încearcă: SEO, concurență, AI, Maps, conținut, venituri, alerte, editor, conexiuni sau backup.';return;}
@@ -196,5 +235,22 @@ $('operator-form').addEventListener('submit',event=>{
   if(intent.href)location.assign(intent.href);else if(location.hash==='#'+intent.module)selectModule();else location.hash=intent.module;
 });
 addEventListener('hashchange',selectModule);
+document.addEventListener('click',event=>{
+  const anchor=event.target.closest('a[href]');if(!anchor||anchor.target==='_blank'||event.ctrlKey||event.metaKey)return;
+  const target=toolTarget(anchor.href,location.origin);if(!target)return;
+  event.preventDefault();navigateTool(target);
+});
+addEventListener('message',event=>{
+  if(event.origin!==location.origin||!event.source)return;
+  const source=[...toolFrames.values()].some(frame=>{
+    if(frame.contentWindow===event.source)return true;
+    try{return frame.contentWindow.frames[0]===event.source;}catch{return false;}
+  });
+  if(!source)return;
+  if(event.data?.type==='avcc:session-ended')lock('Sesiunea s-a încheiat. Autentifică-te din nou.');
+  if(event.data?.type==='avcc:navigate'){
+    const target=toolTarget(event.data.href,location.origin);if(target)navigateTool(target);
+  }
+});
 if(previewOnly){authenticated=true;$('lock').hidden=true;$('app').hidden=false;$('preview-notice').hidden=false;$('logout').textContent='Autentificare';selectModule();}
 else if(getToken())unlock().catch(()=>lock('Autentifică-te pentru a continua.'));

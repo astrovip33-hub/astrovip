@@ -11,7 +11,7 @@ function dashboard(fetcher) {
   };
   const storage=()=>{const data=new Map();return {getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,String(v)),removeItem:k=>data.delete(k)}};
   const ctx=vm.createContext({document:{getElementById:node},sessionStorage:storage(),localStorage:storage(),location:{reload(){}},fetch:fetcher,AbortSignal,Event,Date,Intl,console,setTimeout:()=>0,addEventListener(){},dispatchEvent(){}});
-  const html=fs.readFileSync(new URL('../command-center/index.html',import.meta.url),'utf8');
+  const html=fs.readFileSync(new URL('../command-center/operations/index.html',import.meta.url),'utf8');
   const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
   vm.runInContext(script,ctx);
   return {ctx,node,eval:code=>vm.runInContext(code,ctx)};

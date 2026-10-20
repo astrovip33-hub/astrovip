@@ -83,5 +83,5 @@ jobs:
           grep -Fq "Contul meu AstroVip" <<<"$CLIENT_HTML"
           grep -Fq "Programare AstroVip Premium" <<<"$BOOKING_HTML"
           grep -Fq "Raport personal" <<<"$REPORT_HTML"
-          grep -Fq "/command-center/v9-extension.js" <<<"$COMMAND_HTML"
+          grep -Fq "/command-center/v11/app.js" <<<"$COMMAND_HTML"
           echo "Premium V9 preview verified."

@@ -1,4 +1,5 @@
 import { handleCommandCenter } from './command-center-api.js';
+import { commandCenterRedirect } from './command-center-routing.js';
 import { handleClarity } from './clarity-api.js';
 const enc = new TextEncoder();
 const dec = new TextDecoder();
@@ -150,6 +151,8 @@ async function stripeWebhook(request,env,{secretName='STRIPE_WEBHOOK_SECRET',tes
 export default {
   async fetch(request,env){
     const url=new URL(request.url);
+    const commandRedirect=commandCenterRedirect(url);
+    if(commandRedirect)return new Response(null,{status:308,headers:{Location:commandRedirect,'Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow, noarchive','Referrer-Policy':'no-referrer'}});
     // Same-origin responsive QA is available only on the existing preview host.
     if(['astrovip-preview.astrovip33.workers.dev','astrovip-preview-ux-compact.astrovip33.workers.dev'].includes(url.hostname)&&url.pathname==='/__ux-responsive-preview'){
       const width=[320,360,390,430,768].includes(Number(url.searchParams.get('width')))?Number(url.searchParams.get('width')):390;
@@ -164,17 +167,6 @@ export default {
     if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WEBHOOK_SECRET_TEST',testMode:true});
     const assetResponse=await env.ASSETS.fetch(request);
     const ct=assetResponse.headers.get('content-type')||'';
-    const isCommandCenterHome=url.pathname==='/command-center'||url.pathname==='/command-center/';
-    if(assetResponse.ok&&ct.includes('text/html')&&isCommandCenterHome){
-      const ccRuntime='<script src="/assets/clarity-command-center.js?v=20261016-cc-maintenance1" defer></script>';
-      const transformed=new HTMLRewriter().on('head',{element(el){el.append(ccRuntime,{html:true})}}).transform(assetResponse);
-      const headers=new Headers(transformed.headers);
-      headers.set('X-Robots-Tag','noindex, nofollow, noarchive');
-      headers.set('Referrer-Policy','no-referrer');
-      headers.set('X-Content-Type-Options','nosniff');
-      headers.set('Cache-Control','no-store');
-      return new Response(transformed.body,{status:transformed.status,statusText:transformed.statusText,headers});
-    }
     if(assetResponse.ok&&ct.includes('text/html')&&!url.pathname.startsWith('/command-center')){
       const isHomepage=url.pathname==='/'||url.pathname==='';
       const clarityProjectId=String(env.CLARITY_PROJECT_ID||'').trim().replace(/[^A-Za-z0-9_-]/g,'');

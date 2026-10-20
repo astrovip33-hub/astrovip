@@ -157,22 +157,22 @@ jobs:
             exit 1
           fi
 
-      - name: Verify Marketing OS V10 preview assets
+      - name: Verify Command Center V11 preview assets
         shell: bash
         run: |
           set -euo pipefail
           BASE="https://astrovip-preview-ux-compact.astrovip33.workers.dev"
-          curl -fsS --retry 6 --retry-delay 2 "$BASE/command-center/v10/?preview=1&v=$GITHUB_SHA" -o /tmp/marketing-os.html
-          grep -Fq 'v10-visual-preview-20261017' /tmp/marketing-os.html
+          curl -fsS --retry 6 --retry-delay 2 "$BASE/command-center/?preview=1&v=$GITHUB_SHA" -o /tmp/marketing-os.html
+          grep -Fq 'v11-unified-20261020' /tmp/marketing-os.html
           grep -Fq 'id="preview-notice"' /tmp/marketing-os.html
           if grep -Fq 'id="av-mobile-pay-direct"' /tmp/marketing-os.html; then
             echo "Homepage payment markup leaked into the admin preview"
             exit 1
           fi
-          curl -fsS "$BASE/command-center/v10/app.js?v=$GITHUB_SHA" -o /tmp/marketing-os.js
+          curl -fsS "$BASE/command-center/v11/app.js?v=$GITHUB_SHA" -o /tmp/marketing-os.js
           grep -Fq 'const previewOnly=isVisualPreview(location)' /tmp/marketing-os.js
-          curl -fsS "$BASE/command-center/v10/intelligence.js?v=$GITHUB_SHA" -o /tmp/marketing-intelligence.js
+          curl -fsS "$BASE/command-center/v11/intelligence.js?v=$GITHUB_SHA" -o /tmp/marketing-intelligence.js
           grep -Fq 'export function isVisualPreview' /tmp/marketing-intelligence.js
-          curl -fsS "$BASE/command-center/v10/os.css?v=$GITHUB_SHA" -o /tmp/marketing-os.css
+          curl -fsS "$BASE/command-center/v11/os.css?v=$GITHUB_SHA" -o /tmp/marketing-os.css
           test -s /tmp/marketing-os.css
-          echo "Marketing OS visual preview verified: $BASE/command-center/v10/?preview=1"
+          echo "Marketing OS visual preview verified: $BASE/command-center/?preview=1"

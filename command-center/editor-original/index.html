@@ -95,7 +95,7 @@ body{background:radial-gradient(circle at 12% 0%,rgba(57,255,118,.08),transparen
 const K='avcc_v3_token',D='av_visual_editor_draft_v1',$=x=>document.getElementById(x),token=()=>sessionStorage.getItem(K)||'',headers=()=>({'authorization':'Bearer '+token(),'content-type':'application/json'});
 let published=null,publishedPageOverrides={version:1,pages:{}},state=null,ready=false,timer=null,currentPage='/',selectedEl=null,pageDrafts={},pageOverrides={version:1,pages:{}},publishing=false;
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),3200)}
-async function api(path,opt={}){const r=await fetch(path,{...opt,headers:{...headers(),...(opt.headers||{})}});const d=await r.json().catch(()=>({}));if(r.status===401){sessionStorage.removeItem(K);$('lock').classList.remove('hide');throw Error('Acces respins')}if(!r.ok||d.ok===false)throw Error(d.error||('HTTP '+r.status));return d}
+async function api(path,opt={}){const r=await fetch(path,{...opt,headers:{...headers(),...(opt.headers||{})}});const d=await r.json().catch(()=>({}));if(r.status===401){dispatchEvent(new Event('avcc:session-ended'));sessionStorage.removeItem(K);$('lock').classList.remove('hide');throw Error('Acces respins')}if(!r.ok||d.ok===false)throw Error(d.error||('HTTP '+r.status));return d}
 function clone(x){return JSON.parse(JSON.stringify(x))}
 function getPath(obj,path){return path.split('.').reduce((a,k)=>a?.[k],obj)}
 function setPath(obj,path,val){const a=path.split('.');let o=obj;for(let i=0;i<a.length-1;i++){const k=a[i],n=a[i+1];if(o[k]==null)o[k]=/^\d+$/.test(n)?[]:{};o=o[k]}o[a.at(-1)]=val}
@@ -145,4 +145,4 @@ async function publish({confirmed=false}={}){
 }
 addEventListener('load',async()=>{if(token())try{await api('/api/command/ping');$('lock').classList.add('hide');start()}catch{}});
 </script>
-</body></html>
+<script src="/command-center/v11/embedded.js?v=20261020-unified1" defer></script></body></html>

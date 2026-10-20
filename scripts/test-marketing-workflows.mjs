@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {handleCommandCenter} from '../command-center-api.js';
 import snapshot from './marketing-fixture.mjs';
-import {parseSnapshot} from '../command-center/v10/snapshot.js';
-import {Sources} from '../command-center/v10/sources.js';
+import {parseSnapshot} from '../command-center/v11/snapshot.js';
+import {Sources} from '../command-center/v11/sources.js';
 import {moneyReport,localReport,MONEY_EVENTS} from '../command-marketing-api.js';
-import {keywordCandidates,moneySummary,rankedActions,qaSignals} from '../command-center/v10/workflows.js';
-import {renderRoom,workflowNavigation} from '../command-center/v10/rooms.js';
-import {MODULES} from '../command-center/v10/intelligence.js';
+import {keywordCandidates,moneySummary,rankedActions,qaSignals} from '../command-center/v11/workflows.js';
+import {renderRoom,workflowNavigation} from '../command-center/v11/rooms.js';
+import {MODULES} from '../command-center/v11/intelligence.js';
 
 test('new data routes enforce auth and GET before any provider or snapshot access',async()=>{
   for(const path of ['intelligence','money','local']){

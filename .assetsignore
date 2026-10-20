@@ -23,3 +23,5 @@ homepage-approved-layout.js
 *.md
 *.zip
 http-redirect-worker.js
+
+command-center-routing.js

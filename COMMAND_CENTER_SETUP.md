@@ -1,89 +1,32 @@
-# AstroVip Command Center V9
+# AstroVip Command Center V11
 
-## Entry points
+Un singur punct de acces: `/command-center/`. Adresele V3, V9, V10 și V11 redirecționează aici. Codul aplicației curente este în `command-center/v11/`; V10 nu mai este publicat ca panou separat.
 
-- `/command-center/`: publicare, editor, GSC, GA4, SE Ranking, backup, sănătatea site-ului.
-- `/command-center/connections/`: cele 13 integrări, conectare OAuth, configurare și teste de acces.
-- `/command-center/google/`: accesul existent pentru GSC și GA4; include link către toate conexiunile.
-- `/command-center/editor/`: editorul vizual existent.
+## Module
 
-Se păstrează tokenul administrativ existent. Login-ul folosește `COMMAND_CENTER_TOKEN`, iar sesiunea browserului este comună pentru panou, editor și conexiuni.
+- Cockpit, Intelligence, SEO, concurență, AI/GEO, Local, conținut și autoritate.
+- Site Studio: editorul existent, draft, undo/redo, preflight și publicare cu rezultat verificabil.
+- Money: evenimente, canale și venituri GA4 cu definițiile și limitele sursei.
+- Operations: publicare main, backup Drive/ZIP, recovery, Auto-Pilot și Clarity manual.
+- Conexiuni și acces Google: autorizare și teste API în același panou.
+- AI Operator ghidat și QA: priorități și verificări bazate pe date disponibile.
 
-## Starea unei conexiuni
+## Sesiune și navigare
 
-- **De conectat**: lipsesc date de acces sau autorizarea.
-- **Configurat**: există câmpurile necesare; acest lucru nu confirmă permisiunile sau validitatea lor.
-- **Autorizat**: Composio raportează un cont OAuth activ pentru utilizatorul AstroVip.
-- **Verificat**: o cerere API de citire a reușit în sesiunea curentă.
+Tokenul existent `COMMAND_CENTER_TOKEN` și cheia de sesiune comună sunt păstrate. Tokenul nu este transmis în URL. Instrumentele integrate se încarcă numai după autentificare și rămân montate la schimbarea modulului pentru a păstra editările nesalvate. Ieșirea sau expirarea sesiunii anulează cererile și descarcă instrumentele.
 
-„Verifică tot” testează serviciile configurate sau autorizate. Un eșec nu blochează celelalte servicii. Verificarea nu trimite conversii, nu publică postări și nu modifică reclame. Testul Drive verifică folderul și dreptul de a adăuga fișiere, fără a crea un backup.
+Editorul, conexiunile și operațiunile sunt module interne `?embedded=1`. Deschise direct, adresele lor trimit la modulul din V11. Autorizarea OAuth se deschide în pagina principală și revine în V11.
 
-## Configurare server-side
+## Date și configurare
 
-Valorile sensibile se introduc exclusiv în Cloudflare Worker Settings / Variables and Secrets. Nu se salvează în repository, URL-uri sau în interfața AstroVip.
+Endpoint-urile `/api/command/*` și configurația Cloudflare existentă sunt păstrate. Cheile providerilor rămân în secretele Worker-ului. Conectarea în ChatGPT nu configurează automat accesul Worker-ului. O conexiune configurată, autorizată și un test API reușit sunt stări distincte.
 
-| Serviciu | Configurare |
-| --- | --- |
-| Acces panou | `COMMAND_CENTER_TOKEN` |
-| GitHub Deploy / editor | `GITHUB_ADMIN_TOKEN`, limitat la repository cu Actions și Contents read/write |
-| Composio | `COMPOSIO_API_KEY`; opțional `COMPOSIO_USER_ID`, implicit `astrovip-admin` |
-| GSC | Service account `GOOGLE_SERVICE_ACCOUNT_JSON`, Google OAuth direct sau OAuth Composio |
-| GA4 | `GA4_PROPERTY_ID` și autentificare Google; Composio poate detecta proprietatea |
-| Drive Backup | `DRIVE_BACKUP_FOLDER_ID` și autentificare Google directă sau Composio `googledrive` |
-| SE Ranking | `SERANKING_API_KEY`; OAuth-ul MCP de pe PC este o conexiune separată |
-| Google Ads | Composio `googleads`, sau Google OAuth/service account + `GOOGLE_ADS_DEVELOPER_TOKEN` + `GOOGLE_ADS_CUSTOMER_ID`; opțional `GOOGLE_ADS_LOGIN_CUSTOMER_ID` |
-| Google Business | Google OAuth/service account cu `business.manage` + `GOOGLE_BUSINESS_LOCATION_ID` |
-| Metricool | `METRICOOL_API_TOKEN`, `METRICOOL_USER_ID`, `METRICOOL_BLOG_ID`; plan compatibil cu API-ul |
-| Stripe API | `STRIPE_SECRET_KEY`; webhook-ul folosește separat `STRIPE_WEBHOOK_SECRET` |
-| GA4 Purchase | `GA4_API_SECRET`; se validează separat cu un eveniment de test în Analytics |
-| Meta CAPI | `META_CAPI_ACCESS_TOKEN`; se validează separat în Events Manager |
+Rapoartele se încarcă la cerere, cu cache în memorie de 5 minute și fără polling al providerilor. Raportul SE Ranking poate fi importat în memoria sesiunii. Mangools afișează snapshotul MCP cu data sincronizării; recitirea fișierului nu confirmă soldul live și nu consumă căutări. Lipsa datelor sau a autorizării este afișată explicit.
 
-Google OAuth direct folosește `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`, `GOOGLE_OAUTH_REFRESH_TOKEN`. Contul trebuie să aibă permisiunile providerului pentru resursa AstroVip.
+## Verificare
 
-Când există mai multe conturi Composio active pentru același toolkit, aplicația cere selecția explicită prin `COMPOSIO_<TOOLKIT_SLUG_UPPERCASE>_ACCOUNT_ID`. Nu alege automat un cont arbitrar. De exemplu: `COMPOSIO_GOOGLE_SEARCH_CONSOLE_ACCOUNT_ID`.
+`node --test scripts/test-command-center.mjs scripts/test-command-center-ui.mjs scripts/test-editor-publishing.mjs scripts/test-marketing-os.mjs scripts/test-marketing-workflows.mjs`
 
-Autorizarea unui cont în pluginul ChatGPT/Windsor sau în MCP-ul de pe PC nu acordă automat acces Worker-ului AstroVip. Conexiunile de mai sus aparțin site-ului și se verifică separat.
+`python3 -m unittest discover -s scripts -p 'test_operations_health.py'`
 
-## Endpoints
-
-Toate cer `Authorization: Bearer <COMMAND_CENTER_TOKEN>` și răspund cu `Cache-Control: no-store`.
-
-- `GET /api/command/connections`: starea configurației și a conturilor OAuth, fără tokenurile providerilor.
-- `POST /api/command/connect` cu `{ "key": "gsc" }`: link temporar de autorizare pentru serviciile acceptate. Callback-ul este fix către hub-ul AstroVip. Pentru servicii cu configurare manuală, returnează pagina Worker Settings.
-- `POST /api/command/connection-test` cu `{ "key": "gsc" }`: verificare API de citire pentru serviciul selectat.
-- Endpoint-urile existente de publicare, editor, GSC, GA4 și backup sunt păstrate.
-
-## Validare
-
-```sh
-node --check command-center-api.js
-node --test scripts/test-command-center.mjs scripts/test-command-center-ui.mjs
-python3 -m unittest discover -s scripts -p 'test_operations_health.py'
-```
-
-Testele acoperă autentificarea, conturile multiple/expirate, redacția secretelor, dependențele Ads/Metricool, OAuth, verificarea Stripe/Drive, OAuth Google direct și validitatea scripturilor HTML. Datele providerilor sunt simulate în testele locale; verificarea conturilor reale se face autentificat în hub.
-
-## Întreținere V9 · 16 octombrie 2026
-
-- Modulele se actualizează independent; o eroare nu blochează celelalte carduri. Refresh-urile simultane sunt reunite, iar rezultatele vechi se șterg la eșec.
-- Cloudflare este „Configurat” când binding-ul există. „Verificat” cere testul efectiv al rutelor. Cardul Premium verifică disponibilitatea paginilor și asset-urilor; nu confirmă autentificarea sau API-urile.
-- Scorul de sănătate folosește backend (20%), rute (40%), deploy (20%) și ultima verificare Auto-Pilot activă (20%). Configurarea unei chei nu adaugă puncte.
-- Auto-Pilot citește starea reală a workflow-ului și pasul eșuat. Verificarea canonică folosește un parser HTML, indiferent de ordinea atributelor. Monitorizarea rulează și după un deploy reușit.
-- Clarity păstrează actualizarea manuală pentru limita API zilnică; apăsările repetate nu trimit cereri concurente. Tokenurile administrative și ale providerilor nu sunt înregistrate în jurnal.
-- Testul sliderului așteaptă poziția finală și numărătoarea corectă, inclusiv la 820 px, în locul unei pauze fixe de 600 ms.
-- Deploy-ul rulează testele Command Center și verificarea parserului înainte de build/publicare.
-
-## Marketing OS V10 · versiune inițială, 17 octombrie 2026
-
-- Rută separată: `/command-center/v10/`; V9 rămâne disponibil la ruta existentă.
-- Interfață obsidian/auriu, navigare pentru mobil, Executive Cockpit și acces direct la Premium Studio.
-- Straturi independente: `sources.js` (citire/cache/sesiune), `intelligence.js` (reguli bazate pe date), `app.js` (interfață/acțiuni de navigare).
-- Refolosește tokenul de sesiune V9 și numai endpoint-uri de citire. Logout-ul/401 anulează cererile și elimină răspunsurile târzii.
-- Datele se încarcă la deschiderea modulului; rezultatele se păstrează în memorie 5 minute. Nu există polling automat. Cererile simultane pentru aceeași sursă sunt reunite.
-- GSC și GA4 păstrează perioadele proprii. Poziția medie GSC nu este prezentată drept clasament SERP punctual. SE Ranking returnează în prezent metadatele proiectului, nu pozițiile concurenților.
-- Modulele AI/GEO, Maps/recenzii, autoritate, leaduri confirmate și Dominance Score afișează explicit sursele sau definițiile lipsă. Nu există indicatori inventați. Conexiunea Google Business se gestionează în hub; locația vizată este Bulevardul Unirii 33, București.
-- Operatorul este ghidat, pe comenzi cunoscute. Nu apelează un model AI și nu execută publicări. Publicare/backup/recovery se deschid în V9.
-- Studio: câmpurile aflate în editare nu sunt suprascrise de sincronizare; setările avansate sunt grupate; pașii 1/2/3 ajută navigarea pe mobil. Undo/Redo se referă la elementul selectat și se resetează la schimbarea acestuia. Salvează/Publică aplică întâi câmpurile modificate.
-- Codul nu este publicat automat în producție prin crearea branch-ului. Integrarea în `main` declanșează fluxul Cloudflare existent.
-
-Validare suplimentară: `node --test scripts/test-marketing-os.mjs`. Suita verifică cache-ul, expirarea sesiunii, răspunsurile întârziate, sursele independente, stările conexiunilor, oportunitățile și păstrarea textului în inspector.
+Sunt verificate autentificarea, izolarea surselor, păstrarea drafturilor, publicarea cu rezultat, redirecționările fără bucle, navigarea unică și închiderea sesiunii în instrumentele integrate. Testele providerilor folosesc răspunsuri simulate; accesul real se verifică autentificat în Conexiuni.

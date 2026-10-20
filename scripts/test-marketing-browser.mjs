@@ -5,7 +5,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import snapshot from './marketing-fixture.mjs';
-import {MODULES} from '../command-center/v10/intelligence.js';
+import {MODULES} from '../command-center/v11/intelligence.js';
 import {MONEY_EVENTS} from '../command-marketing-api.js';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE||'playwright');
 const root=fileURLToPath(new URL('..',import.meta.url));
@@ -39,11 +39,12 @@ const server=http.createServer(async(req,res)=>{
       if(key==='money'&&failMoney){res.writeHead(503);res.end('{}');return;}
       res.end(JSON.stringify(fixture[key]||{ok:true}));return;
     }
-    if(!url.pathname.startsWith('/command-center/v10/')){res.writeHead(404);res.end();return;}
+    if(/^\/command-center\/(site-builder|connections|google|operations)\/$/.test(url.pathname)){res.setHeader('content-type','text/html');res.end('<!doctype html><title>V11 tool fixture</title><p>Mounted tool session fixture</p>');return;}
+    if(!url.pathname.startsWith('/command-center/')){res.writeHead(404);res.end();return;}
     let relative=decodeURIComponent(url.pathname).replace(/^\//,'');
     if(relative.endsWith('/'))relative+='index.html';
     const file=path.resolve(root,relative);
-    if(!file.startsWith(path.join(root,'command-center','v10')+path.sep)){res.writeHead(403);res.end();return;}
+    if(!file.startsWith(path.join(root,'command-center')+path.sep)){res.writeHead(403);res.end();return;}
     res.setHeader('content-type',file.endsWith('.js')?'text/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8');
     res.end(await fs.readFile(file));
   }catch{res.writeHead(500);res.end();}
@@ -59,7 +60,7 @@ try{
   const origin='http://127.0.0.1:'+server.address().port;
   for(const width of report.widths){
     await page.setViewportSize({width,height:950});
-    await page.goto(origin+'/command-center/v10/#intelligence');
+    await page.goto(origin+'/command-center/#intelligence');
     await page.locator('#intelligence-file').waitFor();
     await page.locator('#intelligence-file').setInputFiles({name:'qa-research.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(snapshot))});
     await page.waitForFunction(()=>document.querySelector('#content table')!==null);
@@ -77,7 +78,7 @@ try{
       }
     }
   }
-  await page.goto(origin+'/command-center/v10/#intelligence');
+  await page.goto(origin+'/command-center/#intelligence');
   await page.locator('#intelligence-file').setInputFiles({name:'qa-research.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(snapshot))});
   await page.locator('#research-filters').waitFor();
   await page.locator('[name=query]').fill('numerologie');
@@ -90,14 +91,14 @@ try{
   assert((await page.locator('#content').textContent()).includes('Niciun rezultat'));
   await page.evaluate(()=>{location.hash='#competitors'});await page.locator('#serp-query').waitFor();
   await page.locator('#serp-query').selectOption('numerologie');assert((await page.locator('#content').textContent()).includes('SERP exportat — numerologie'));
-  failMoney=true;await page.goto(origin+'/command-center/v10/#revenue');await page.waitForFunction(()=>document.querySelector('#content').getAttribute('aria-busy')==='false');
+  failMoney=true;await page.goto(origin+'/command-center/#revenue');await page.waitForFunction(()=>document.querySelector('#content').getAttribute('aria-busy')==='false');
   assert((await page.locator('#content').textContent()).includes('Raportul de evenimente este indisponibil'));
   await page.locator('#logout').click();assert(await page.locator('#lock').isVisible());
   assert.equal(await page.locator('#content').innerHTML(),'');assert.equal(await page.evaluate(()=>sessionStorage.getItem('avcc_v3_token')),null);
   assert.equal(report.errors.length,0,report.errors.join('\n'));
-  // Static delivery budget for all first-party V10 assets (uncompressed).
-  let bytes=0;for(const file of ['app.js','sources.js','intelligence.js','workflows.js','rooms.js','snapshot.js','os.css'])bytes+=(await fs.stat(path.join(root,'command-center','v10',file))).size;
-  report.assetBytes=bytes;assert(bytes<100000,`V10 static assets grew to ${bytes} bytes`);
+  // Static delivery budget for all first-party V11 assets (uncompressed).
+  let bytes=0;for(const file of ['app.js','sources.js','intelligence.js','workflows.js','rooms.js','snapshot.js','os.css','tools.js','embedded.js'])bytes+=(await fs.stat(path.join(root,'command-center','v11',file))).size;
+  report.assetBytes=bytes;assert(bytes<100000,`V11 static assets grew to ${bytes} bytes`);
   report.apiRequests=apiCalls.length;report.status='passed';
   console.log(JSON.stringify(report,null,2));
 }catch(error){report.status='failed';report.failure=error.message;throw error;}

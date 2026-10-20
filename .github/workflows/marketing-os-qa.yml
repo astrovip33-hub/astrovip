@@ -2,7 +2,10 @@ name: Marketing OS QA
 on:
   push:
     paths:
-      - 'command-center/v10/**'
+      - 'command-center/v11/**'
+      - 'command-center/index.html'
+      - 'command-center/operations/**'
+      - 'command-center-routing.js'
       - 'command-center/site-builder/**'
       - 'command-center/editor-original/**'
       - 'assets/page-overrides-runtime.js'

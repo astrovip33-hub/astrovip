@@ -2,10 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import {Sources,SESSION_KEY} from '../command-center/v10/sources.js';
-import {MODULES,connectionState,opportunities,priorities,operatorIntent,number,isVisualPreview} from '../command-center/v10/intelligence.js';
-import {renderRoom,workflowNavigation} from '../command-center/v10/rooms.js';
-import {parseSnapshot} from '../command-center/v10/snapshot.js';
+import os from 'node:os';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {TOOLS,toolTarget,toolUrl} from '../command-center/v11/tools.js';
+import {commandCenterRedirect} from '../command-center-routing.js';
+import {Sources,SESSION_KEY} from '../command-center/v11/sources.js';
+import {MODULES,connectionState,opportunities,priorities,operatorIntent,number,isVisualPreview} from '../command-center/v11/intelligence.js';
+import {renderRoom,workflowNavigation} from '../command-center/v11/rooms.js';
+import {parseSnapshot} from '../command-center/v11/snapshot.js';
 
 test('browser fetch retains its global receiver for authentication and module requests',async()=>{
   const original=globalThis.fetch;
@@ -88,11 +93,11 @@ test('priorities use failed operations and observed search demand, not invented 
   assert.deepEqual(priorities(new Map()),[]);
 });
 test('guided Romanian commands open known destinations without executing an AI call',()=>{
-  assert.equal(operatorIntent('deschide editorul').href,'/command-center/site-builder/?from=v10');
+  assert.equal(operatorIntent('deschide editorul').module,'studio');
   assert.equal(operatorIntent('Arată oportunitățile SEO').module,'seo');
   assert.equal(operatorIntent('Verifică concurența').module,'competitors');
   assert.equal(operatorIntent('vreau vizibilitate AI').module,'geo');
-  assert.equal(operatorIntent('publică site-ul').href,'/command-center/');
+  assert.equal(operatorIntent('publică site-ul').module,'operations');
   assert.equal(operatorIntent('comandă neacceptată'),null);
 });
 
@@ -130,7 +135,7 @@ test('switching identical-looking elements syncs the new selection and clears un
 function marketingApp(connected=true,visual=false){
   const nodes=new Map(),events=new Map(),storage=new Map(),calls=[];
   const node=id=>{
-    if(!nodes.has(id))nodes.set(id,{value:'',hidden:false,textContent:'',innerHTML:'',className:'',disabled:false,setAttribute(){},focus(){},addEventListener:(type,callback)=>events.set(id+':'+type,callback)});
+    if(!nodes.has(id))nodes.set(id,{value:'',hidden:false,textContent:'',innerHTML:'',className:'',disabled:false,children:[],attributes:{},setAttribute(key,value){this.attributes[key]=value},getAttribute(key){return this.attributes[key]||this[key]||null},appendChild(child){this.children.push(child)},replaceChildren(){this.children=[]},contentWindow:{postMessage(){}},focus(){},addEventListener:(type,callback)=>events.set(id+':'+type,callback)});
     return nodes.get(id);
   };
   class AppSources extends Sources {
@@ -146,9 +151,9 @@ function marketingApp(connected=true,visual=false){
       return Response.json({ok:true});
     }});}
   }
-  const location={hash:'#cockpit',assign(){},protocol:'https:',hostname:visual?'astrovip-preview-ux-compact.astrovip33.workers.dev':'astrovip.ro',search:visual?'?preview=1':''};
-  const ctx=vm.createContext({MODULES,number,connectionState,opportunities,priorities,operatorIntent,Sources:AppSources,SESSION_KEY,Date,URLSearchParams,isVisualPreview,renderRoom,workflowNavigation,parseSnapshot,document:{getElementById:node,querySelectorAll:()=>[]},location,sessionStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},addEventListener:(type,callback)=>events.set(type,callback)});
-  const js=fs.readFileSync(new URL('../command-center/v10/app.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
+  const location={origin:'https://astrovip.ro',hash:'#cockpit',assign(){},protocol:'https:',hostname:visual?'astrovip-preview-ux-compact.astrovip33.workers.dev':'astrovip.ro',search:visual?'?preview=1':''};
+  const ctx=vm.createContext({TOOLS,toolTarget,toolUrl,URL,MODULES,number,connectionState,opportunities,priorities,operatorIntent,Sources:AppSources,SESSION_KEY,Date,URLSearchParams,isVisualPreview,renderRoom,workflowNavigation,parseSnapshot,document:{getElementById:node,querySelectorAll:()=>[],addEventListener:(type,callback)=>events.set('document:'+type,callback),createElement:()=>node('frame-'+nodes.size)},location,sessionStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},addEventListener:(type,callback)=>events.set(type,callback)});
+  const js=fs.readFileSync(new URL('../command-center/v11/app.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
   vm.runInContext(js,ctx);
   return {node,calls,location,events,eval:code=>vm.runInContext(code,ctx),login:async()=>{node('token').value='session-test';await events.get('login-form:submit')({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));}};
 }
@@ -156,7 +161,7 @@ test('the actual app renders every module through the existing authenticated rea
   const app=marketingApp();await app.login();
   assert.equal(app.node('app').hidden,false);assert.equal(app.node('lock').hidden,true);assert.equal(app.node('token').value,'');
   assert.match(app.node('content').innerHTML,/333/);assert.match(app.node('content').innerHTML,/Benchmark necesar/);
-  for(const module of MODULES){app.location.hash='#'+module.id;app.events.get('hashchange')();await new Promise(resolve=>setImmediate(resolve));assert.equal(app.node('module-caption').textContent,module.label);assert(app.node('content').innerHTML.length>100,module.id);}
+  for(const module of MODULES){app.location.hash='#'+module.id;app.events.get('hashchange')();await new Promise(resolve=>setImmediate(resolve));assert.equal(app.node('module-caption').textContent,module.label);if(TOOLS[module.id]){assert.equal(app.node('tool-workspace').hidden,false);assert(app.node('tool-workspace').children.some(frame=>frame.src===toolUrl(module.id)&&!frame.hidden));}else assert(app.node('content').innerHTML.length>100,module.id);}
   assert.equal(app.calls.filter(x=>x.endsWith('/gsc')).length,1);
   app.events.get('logout:click')();assert.equal(app.node('app').hidden,true);assert.equal(app.node('content').innerHTML,'');
 });
@@ -184,4 +189,47 @@ test('visual preview renders every module without login, provider calls or refre
   assert.deepEqual(app.calls,[]);
   assert.equal(app.node('refresh').disabled,true);
   assert(!app.node('content').innerHTML.includes('Autentificat'));
+});
+
+
+test('V11 bookmarks converge on one shell and embedded tools cannot redirect in a loop',()=>{
+  for(const version of ['v3','v9','v10','v11'])for(const suffix of ['','/','/index.html'])assert.equal(commandCenterRedirect(new URL('https://astrovip.ro/command-center/'+version+suffix)),'/command-center/');
+  for(const [path,id] of [['site-builder','studio'],['editor','studio'],['editor-original','studio'],['connections','connections'],['operations','operations'],['google','google']]){
+    assert.equal(commandCenterRedirect(new URL('https://astrovip.ro/command-center/'+path+'/')),'/command-center/#'+id);
+    assert.equal(commandCenterRedirect(new URL('https://astrovip.ro/command-center/'+path+'/?embedded=1')),null);
+  }
+  assert.equal(commandCenterRedirect(new URL('https://astrovip.ro/command-center/')),null);
+  assert.equal(commandCenterRedirect(new URL('https://astrovip.ro/command-center/v11/app.js')),null);
+  assert.equal(commandCenterRedirect(new URL('https://astrovip.ro/command-center/v10/app.js')),'/command-center/v11/app.js');
+  assert.equal(commandCenterRedirect(new URL('https://astrovip.ro/command-center/connections/?focus=gsc&token=private')),'/command-center/?focus=gsc#connections');
+  assert(!toolUrl('studio','?token=private').includes('private'));
+  assert.equal(toolTarget('https://other.example/command-center/','https://astrovip.ro'),null);
+});
+test('Studio survives renders and navigation; logout unloads all authenticated tools',async()=>{
+  const app=marketingApp();await app.login();
+  app.location.hash='#studio';app.events.get('hashchange')();
+  const frame=app.node('tool-workspace').children[0];
+  app.eval('render();render()');assert.equal(app.node('tool-workspace').children.length,1);
+  app.location.hash='#seo';app.events.get('hashchange')();await new Promise(resolve=>setImmediate(resolve));
+  app.location.hash='#studio';app.events.get('hashchange')();assert.equal(app.node('tool-workspace').children[0],frame);
+  app.events.get('logout:click')();assert.equal(app.node('tool-workspace').children.length,0);assert.equal(app.node('app').hidden,true);
+});
+test('only a mounted same-origin tool can end the shell session',async()=>{
+  const app=marketingApp();await app.login();app.location.hash='#connections';app.events.get('hashchange')();
+  const frame=app.node('tool-workspace').children[0],receive=app.events.get('message');
+  receive({origin:'https://other.example',source:frame.contentWindow,data:{type:'avcc:session-ended'}});assert.equal(app.node('app').hidden,false);
+  receive({origin:'https://astrovip.ro',source:frame.contentWindow,data:{type:'avcc:session-ended'}});assert.equal(app.node('app').hidden,true);assert.equal(app.node('tool-workspace').children.length,0);
+});
+
+test('the production premium build cannot reinject the retired V9 command panel',()=>{
+  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'astrovip-v11-inject-'));
+  try{
+    fs.mkdirSync(path.join(dir,'command-center'));
+    const original='<!doctype html><html><head><title>V11</title></head><body><main>One V11 shell</main></body></html>';
+    fs.writeFileSync(path.join(dir,'command-center/index.html'),original);
+    fs.writeFileSync(path.join(dir,'index.html'),'<!doctype html><html><head></head><body><main></main></body></html>');
+    const result=spawnSync('python3',[new URL('./inject-premium-v9.py',import.meta.url).pathname],{cwd:dir,encoding:'utf8'});
+    assert.equal(result.status,0,result.stderr);
+    assert.equal(fs.readFileSync(path.join(dir,'command-center/index.html'),'utf8'),original);
+  }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
