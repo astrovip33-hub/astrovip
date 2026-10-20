@@ -1,0 +1,10 @@
+.av-num-lead{margin:28px 0;padding:22px;border:1px solid rgba(231,198,106,.48);border-radius:20px;background:radial-gradient(circle at 88% 10%,rgba(106,198,93,.08),transparent 30%),linear-gradient(145deg,#0b130d,#050706);box-shadow:0 16px 38px rgba(0,0,0,.24)}
+.av-num-lead__kicker{display:block;margin:0 0 6px;color:#7ee79a;font:900 10px/1.2 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.av-num-lead h2{margin:0 0 8px!important;color:#f2d783!important;font:800 clamp(25px,3vw,34px)/1.08 Georgia,"Times New Roman",serif!important}
+.av-num-lead p{margin:0;color:#edf2ed!important;font-size:15.5px!important;line-height:1.55!important}
+.av-num-lead__actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.av-num-lead__actions a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 18px;border-radius:12px;text-decoration:none!important;font-weight:900!important;font-size:13px!important;line-height:1.2!important}
+.av-num-lead__primary{border:1px solid #f7dc80;background:linear-gradient(180deg,#fff0a8,#e4bd55 56%,#b78329);color:#151006!important;box-shadow:0 10px 24px rgba(216,174,72,.14)}
+.av-num-lead__secondary{border:1px solid rgba(106,198,93,.48);background:#07120b;color:#caffd8!important}
+.av-num-lead__proof{display:block;margin-top:10px;color:#aebdb4;font-size:11px;line-height:1.4}
+@media(max-width:680px){.av-num-lead{margin:22px 0;padding:17px;border-radius:17px}.av-num-lead__actions{display:grid;grid-template-columns:1fr}.av-num-lead__actions a{width:100%;padding:13px 12px}.av-num-lead h2{font-size:26px!important}}
