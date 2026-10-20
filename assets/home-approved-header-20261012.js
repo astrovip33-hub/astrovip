@@ -38,7 +38,27 @@
       if(menu){header.querySelector('#hamb')?.click();syncMenu();}
     });
     if(menu)new MutationObserver(syncMenu).observe(menu,{attributes:true,attributeFilter:['class']});
-    const footer=document.querySelector('footer');const footerShell=footer?.querySelector('.av-footer-premium-single')||footer;if(footer&&!document.getElementById('av-footer-languages')){const lang=document.createElement('section');lang.id='av-footer-languages';lang.setAttribute('aria-label','Limba / Language');lang.innerHTML='<strong>LIMBA <span>/ LANGUAGE</span></strong><nav aria-label="Alege limba"></nav>';const nav=lang.querySelector('nav');oldFlags.slice(0,7).forEach(a=>{const c=a.cloneNode(true);c.className='';c.removeAttribute('style');nav.appendChild(c)});footerShell.appendChild(lang);const footerChat=document.createElement('button');footerChat.id='av-footer-chat-premium';footerChat.type='button';footerChat.setAttribute('aria-label','Deschide AstroVip Chat');footerChat.innerHTML='<span class="avfc-live" aria-hidden="true"></span><span><strong>CHAT ASTROVIP</strong><small>ONLINE · RĂSPUNS RAPID</small></span><b aria-hidden="true">→</b>';footerChat.addEventListener('click',()=>header.querySelector('.avchat-launcher.avchat-header-slot')?.click());footerShell.appendChild(footerChat);if('IntersectionObserver' in window)new IntersectionObserver(entries=>{document.body.classList.toggle('av-footer-visible',entries.some(entry=>entry.isIntersecting));},{threshold:0}).observe(footer);}
+    const footer=document.querySelector('#astrovip-footer');
+    const footerShell=footer?.querySelector('.av-footer-premium-single');
+    if(footerShell&&!document.getElementById('av-footer-languages')){
+      const tools=document.createElement('div');tools.className='av-footer-tools';
+      const lang=document.createElement('nav');lang.id='av-footer-languages';lang.setAttribute('aria-label','Alege limba');
+      const languages=new Set();
+      oldFlags.forEach(a=>{
+        const href=a.getAttribute('href');if(!href||languages.has(href))return;languages.add(href);
+        const c=a.cloneNode(true);c.className='';c.removeAttribute('style');lang.appendChild(c);
+      });
+      if(lang.children.length)tools.appendChild(lang);
+      const footerChat=document.createElement('button');footerChat.id='av-footer-chat-premium';footerChat.type='button';
+      footerChat.setAttribute('aria-label','Deschide AstroVip Chat');
+      footerChat.innerHTML='<span class="avfc-live" aria-hidden="true"></span><strong>Chat</strong><span aria-hidden="true">↗</span>';
+      footerChat.addEventListener('click',()=>header.querySelector('.avchat-launcher.avchat-header-slot')?.click());
+      tools.appendChild(footerChat);
+      footerShell.insertBefore(tools,footerShell.querySelector('.av-footer-bottom'));
+      if('IntersectionObserver' in window)new IntersectionObserver(entries=>{
+        document.body.classList.toggle('av-footer-visible',entries.some(entry=>entry.isIntersecting));
+      },{threshold:0}).observe(footer);
+    }
     header.dataset.avMobileHeaderBound='1';
     document.documentElement.classList.add('av-mobile-approved');
   };
