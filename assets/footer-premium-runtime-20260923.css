@@ -41,6 +41,11 @@
 #astrovip-footer .av-footer-contact-list svg{flex:0 0 19px!important;width:19px!important;height:19px!important;fill:none!important;stroke:#c6ad6e!important;stroke-width:1.6!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 #astrovip-footer .av-footer-contact-list>.av-footer-location{color:var(--footer-muted)!important;font-size:15px!important}
 #astrovip-footer .av-footer-whatsapp{width:100%!important;max-width:none!important;margin-top:10px!important;border-color:rgba(128,206,146,.45)!important;background:rgba(98,188,118,.06)!important;color:#d0f6d7!important;font-size:16px!important}
+#astrovip-footer .av-footer-credential{display:grid!important;justify-items:center!important;gap:8px!important;width:100%!important;margin:20px 0 0!important;padding:18px 0 0!important;border-top:1px solid var(--footer-line)!important;text-align:center!important}
+#astrovip-footer .av-footer-credential-link{display:block!important;width:min(720px,100%)!important;margin:0 auto!important;padding:0!important;border:1px solid rgba(237,211,142,.54)!important;border-radius:18px!important;background:#020402!important;box-shadow:0 14px 34px rgba(0,0,0,.34),0 0 22px rgba(229,197,119,.06)!important;overflow:hidden!important;line-height:0!important}
+#astrovip-footer .av-footer-credential-link img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;object-fit:contain!important}
+#astrovip-footer .av-footer-credential p{margin:0!important;color:#cdbf94!important;font:650 13px/1.4 Inter,system-ui,sans-serif!important;letter-spacing:.02em!important;text-align:center!important}
+#astrovip-footer .av-footer-credential p strong{color:var(--footer-gold)!important;font-weight:800!important}
 #astrovip-footer .av-footer-tools{display:flex!important;align-items:center!important;justify-content:space-between!important;flex-wrap:wrap!important;gap:8px 12px!important;margin:16px 0 0!important;padding:12px 0 0!important;border-top:1px solid var(--footer-line)!important}
 #astrovip-footer #av-footer-languages{display:flex!important;align-items:center!important;justify-content:flex-start!important;flex-wrap:wrap!important;gap:3px!important;width:auto!important;max-width:100%!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
 #astrovip-footer #av-footer-languages>a{display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 30px!important;width:30px!important;height:36px!important;margin:0!important;padding:5px!important;border:1px solid rgba(229,197,119,.24)!important;border-radius:8px!important;background:rgba(255,255,255,.025)!important;box-shadow:none!important}
@@ -78,6 +83,9 @@
   #astrovip-footer .av-footer-card-title{margin:8px 0 4px!important;font-size:24px!important}
   #astrovip-footer .av-footer-experience{font-size:16px!important}
   #astrovip-footer .av-footer-card-actions{margin-top:12px!important}
+  #astrovip-footer .av-footer-credential{margin-top:14px!important;padding-top:14px!important;gap:7px!important}
+  #astrovip-footer .av-footer-credential-link{width:min(100%,520px)!important;border-radius:14px!important}
+  #astrovip-footer .av-footer-credential p{font-size:12px!important}
   #astrovip-footer .av-footer-card h2{margin-bottom:7px!important;font-size:24px!important}
   #astrovip-footer .av-footer-services-links{column-gap:16px!important}
   #astrovip-footer .av-footer-services-links>a{font-size:16px!important}
