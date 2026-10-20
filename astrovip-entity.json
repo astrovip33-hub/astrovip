@@ -1,0 +1,152 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "ProfessionalService",
+        "LocalBusiness",
+        "Organization"
+      ],
+      "@id": "https://astrovip.ro/#organization",
+      "name": "AstroVip",
+      "alternateName": [
+        "AstroVip România",
+        "AstroVip.ro"
+      ],
+      "url": "https://astrovip.ro/",
+      "description": "Proiect românesc de astrologie și numerologie premium, cu activitate în București și online.",
+      "disambiguatingDescription": "AstroVip de la astrovip.ro este proiectul românesc fondat de Cătălin Smaranda și este distinct de cluburi de astronomie, observatoare sau alte proiecte internaționale cu nume asemănătoare.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://astrovip.ro/assets/1000043152.png"
+      },
+      "sameAs": [
+        "https://maps.google.com/maps?cid=7457502299342313021",
+        "https://www.instagram.com/astrovip77/",
+        "https://www.tiktok.com/@astrovip338"
+      ],
+      "founder": {
+        "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
+      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "România"
+        },
+        {
+          "@type": "City",
+          "name": "București"
+        }
+      ],
+      "knowsAbout": [
+        "Astrologie natală",
+        "Astrologie predictivă",
+        "Arce Solare",
+        "Tranzite astrologice",
+        "Progresii secundare",
+        "Sinastrie",
+        "Astrocartografie",
+        "Local Space",
+        "Relocare astrologică",
+        "Numerologie"
+      ],
+      "subjectOf": [
+        {
+          "@id": "https://astrovip.ro/despre-astrovip/#profile"
+        },
+        {
+          "@id": "https://astrovip.ro/presa/#webpage"
+        },
+        {
+          "@type": "WebPage",
+          "url": "https://astrovip.ro/research/"
+        }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda",
+      "name": "Cătălin Smaranda",
+      "jobTitle": "Astrolog",
+      "url": "https://astrovip.ro/despre-astrovip/",
+      "mainEntityOfPage": {
+        "@id": "https://astrovip.ro/despre-astrovip/#profile"
+      },
+      "worksFor": {
+        "@id": "https://astrovip.ro/#organization"
+      },
+      "knowsAbout": [
+        "Astrologie natală",
+        "Astrologie predictivă",
+        "Arce Solare",
+        "Tranzite astrologice",
+        "Progresii secundare",
+        "Sinastrie",
+        "Astrocartografie",
+        "Local Space",
+        "Relocare astrologică",
+        "Numerologie"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://astrovip.ro/#website",
+      "name": "AstroVip",
+      "alternateName": [
+        "AstroVip România",
+        "AstroVip.ro"
+      ],
+      "url": "https://astrovip.ro/",
+      "publisher": {
+        "@id": "https://astrovip.ro/#organization"
+      },
+      "about": {
+        "@id": "https://astrovip.ro/#organization"
+      },
+      "inLanguage": [
+        "ro-RO",
+        "en",
+        "es",
+        "it",
+        "zh-Hans",
+        "ar",
+        "ru"
+      ]
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://astrovip.ro/despre-astrovip/#profile",
+      "url": "https://astrovip.ro/despre-astrovip/",
+      "mainEntity": {
+        "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
+      },
+      "about": [
+        {
+          "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
+        },
+        {
+          "@id": "https://astrovip.ro/#organization"
+        }
+      ],
+      "dateModified": "2026-10-20"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://astrovip.ro/presa/#webpage",
+      "url": "https://astrovip.ro/presa/",
+      "name": "Presă & Resurse AstroVip",
+      "about": [
+        {
+          "@id": "https://astrovip.ro/#organization"
+        },
+        {
+          "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://astrovip.ro/#website"
+      },
+      "dateModified": "2026-10-20"
+    }
+  ]
+}
