@@ -50,18 +50,3 @@ html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.
  html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh #av-consent button{min-height:41px!important;padding:7px 9px!important;font-size:12.5px!important}
 }
 @media(max-width:359px){html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh .av-pro-actions{grid-template-columns:1fr!important}html body.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh.av-ux-refresh .av-pro-interest-grid{grid-template-columns:1fr!important}}
-
-
-/* ASTROVIP CASE SLIDER 20261021 */
-#studii-de-caz-home .av-case-showcase-grid{display:flex!important;grid-template-columns:none!important;gap:16px!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory!important;scroll-behavior:smooth!important;overscroll-behavior-inline:contain!important;scrollbar-width:none!important;padding:2px 2px 10px!important}
-#studii-de-caz-home .av-case-showcase-grid::-webkit-scrollbar{display:none!important}
-#studii-de-caz-home .av-case-showcase-card{flex:0 0 calc((100% - 32px)/3)!important;min-width:0!important;scroll-snap-align:start!important;scroll-snap-stop:always!important}
-#studii-de-caz-home .av-case-showcase-card-featured{border-color:rgba(244,211,106,.72)!important;box-shadow:0 22px 54px rgba(0,0,0,.32),0 0 0 1px rgba(88,255,142,.14),0 0 28px rgba(244,211,106,.08)!important}
-#studii-de-caz-home .av-case-slider-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin:15px 0 0}
-#studii-de-caz-home .av-case-slider-prev,#studii-de-caz-home .av-case-slider-next{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid rgba(244,211,106,.58);border-radius:999px;background:linear-gradient(180deg,#17140a,#080806);color:#f4d36a;font:800 30px/1 Georgia,serif;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.28)}
-#studii-de-caz-home .av-case-slider-prev:disabled,#studii-de-caz-home .av-case-slider-next:disabled{opacity:.32;cursor:default}
-#studii-de-caz-home .av-case-slider-dots{display:flex;align-items:center;justify-content:center;gap:7px;min-width:70px}
-#studii-de-caz-home .av-case-slider-dot{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(244,211,106,.28);box-shadow:none;cursor:pointer}
-#studii-de-caz-home .av-case-slider-dot.is-active{width:22px;border-radius:999px;background:#f4d36a;box-shadow:0 0 10px rgba(244,211,106,.32)}
-@media(max-width:1050px){#studii-de-caz-home .av-case-showcase-card{flex-basis:calc((100% - 16px)/2)!important}}
-@media(max-width:680px){#studii-de-caz-home .av-case-showcase-grid{gap:12px!important;padding-bottom:7px!important}#studii-de-caz-home .av-case-showcase-card{flex-basis:100%!important}#studii-de-caz-home .av-case-slider-controls{margin-top:11px}#studii-de-caz-home .av-case-slider-prev,#studii-de-caz-home .av-case-slider-next{width:42px;height:42px}}
