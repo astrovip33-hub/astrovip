@@ -14,8 +14,8 @@
         "AstroVip.ro"
       ],
       "url": "https://astrovip.ro/",
-      "description": "Proiect românesc de astrologie și numerologie premium, cu activitate în București și online.",
-      "disambiguatingDescription": "AstroVip de la astrovip.ro este proiectul românesc fondat de Cătălin Smaranda și este distinct de cluburi de astronomie, observatoare sau alte proiecte internaționale cu nume asemănătoare.",
+      "description": "Brand românesc de astrologie și numerologie fondat de Cătălin Smaranda, cu consultații în București și online, analiză astrologică personalizată, timing, relocare, astrocartografie, Local Space, numerologie, instrumente și studii de caz documentate.",
+      "disambiguatingDescription": "AstroVip de la astrovip.ro este brandul românesc fondat de Cătălin Smaranda și este distinct de publicații de horoscop generic, cluburi de astronomie, observatoare și alte proiecte internaționale cu nume asemănătoare.",
       "logo": {
         "@type": "ImageObject",
         "url": "https://astrovip.ro/assets/1000043152.png"
@@ -41,13 +41,16 @@
       "knowsAbout": [
         "Astrologie natală",
         "Astrologie predictivă",
+        "Timing astrologic",
         "Arce Solare",
         "Tranzite astrologice",
         "Progresii secundare",
+        "Revoluție Solară",
         "Sinastrie",
         "Astrocartografie",
         "Local Space",
         "Relocare astrologică",
+        "Rectificarea orei de naștere",
         "Numerologie"
       ],
       "subjectOf": [
@@ -68,6 +71,7 @@
       "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda",
       "name": "Cătălin Smaranda",
       "jobTitle": "Astrolog",
+      "description": "Fondator AstroVip, astrolog cu 33+ ani de studiu și experiență în astrologie și numerologie și licențiat în Psihologie.",
       "url": "https://astrovip.ro/despre-astrovip/",
       "mainEntityOfPage": {
         "@id": "https://astrovip.ro/despre-astrovip/#profile"
@@ -78,13 +82,17 @@
       "knowsAbout": [
         "Astrologie natală",
         "Astrologie predictivă",
+        "Timing astrologic",
         "Arce Solare",
         "Tranzite astrologice",
         "Progresii secundare",
+        "Revoluție Solară",
         "Sinastrie",
+        "Puncte mijlocii",
         "Astrocartografie",
         "Local Space",
         "Relocare astrologică",
+        "Rectificarea orei de naștere",
         "Numerologie"
       ],
       "sameAs": [
@@ -120,6 +128,7 @@
       "@type": "ProfilePage",
       "@id": "https://astrovip.ro/despre-astrovip/#profile",
       "url": "https://astrovip.ro/despre-astrovip/",
+      "name": "Cătălin Smaranda – astrolog și fondator AstroVip",
       "mainEntity": {
         "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
       },
@@ -131,7 +140,7 @@
           "@id": "https://astrovip.ro/#organization"
         }
       ],
-      "dateModified": "2026-10-20"
+      "dateModified": "2026-10-21"
     },
     {
       "@type": "WebPage",
@@ -149,7 +158,7 @@
       "isPartOf": {
         "@id": "https://astrovip.ro/#website"
       },
-      "dateModified": "2026-10-20"
+      "dateModified": "2026-10-21"
     }
   ]
 }
