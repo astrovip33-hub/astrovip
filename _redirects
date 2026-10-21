@@ -1,7 +1,5 @@
 # AstroVip redirects — SEO cleanup
-# Canonical consolidation for the national "astrolog" landing page.
-/astrolog-online/ /astrolog/ 301
-/astrolog-online /astrolog/ 301
+# /astrolog-online/ is a dedicated indexable landing page and must not redirect.
 
 # Legacy WordPress archives/posts: consolidate obsolete /index.php/ URLs to canonical site.
 # Specific rules first, fallback last.
