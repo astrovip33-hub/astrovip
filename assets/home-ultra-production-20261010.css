@@ -48,8 +48,8 @@ html body:not(.guide-page) footer .av-footer-disclaimer{margin:8px 0 0!important
 @media(max-width:820px){
 html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home .avm-hero-copy{padding:18px 18px 14px!important}
 html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home .avm-kicker{margin-bottom:8px!important;padding:5px 9px!important;font-size:9px!important}
-html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home h1{max-width:335px!important;font-size:clamp(29px,8.1vw,36px)!important;line-height:.94!important;letter-spacing:-.042em!important}
-html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home h1 span{font-size:1.08em!important}
+html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home h2{max-width:335px!important;font-size:clamp(29px,8.1vw,36px)!important;line-height:.94!important;letter-spacing:-.042em!important}
+html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home h2 span{font-size:1.08em!important}
 html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home .avm-hero-copy>p{max-width:350px!important;margin-top:11px!important;font-size:12.5px!important;line-height:1.42!important}
 html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home .avm-actions{margin-top:13px!important;gap:8px!important}
 html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home .avm-actions a{min-height:44px!important;border-radius:12px!important;font-size:9.5px!important}
