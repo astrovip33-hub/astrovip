@@ -166,7 +166,7 @@ export default {
     if(url.pathname==='/api/stripe-webhook'||url.pathname==='/api/stripe-webhook/')return stripeWebhook(request,env);
     if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WEBHOOK_SECRET_TEST',testMode:true});
     const assetResponse=await env.ASSETS.fetch(request);
-    if(assetResponse.ok&&url.pathname==='/widget-planete.html'){
+    if(assetResponse.ok&&['/widget-planete.html','/widget-planete','/widget-planete/'].includes(url.pathname)){
       const headers=new Headers(assetResponse.headers);
       headers.delete('X-Frame-Options');
       headers.set('X-Robots-Tag','noindex, follow');
