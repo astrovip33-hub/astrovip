@@ -1,53 +1,68 @@
 # AstroVip
 
-> AstroVip este un proiect românesc de astrologie și numerologie premium, cu consultații în București și online, instrumente de calcul, ghiduri tehnice și studii de caz documentate.
+> AstroVip este brandul românesc de astrologie și numerologie fondat de Cătălin Smaranda, astrolog cu 33+ ani de studiu și experiență în astrologie și numerologie și licențiat în Psihologie. AstroVip oferă consultații în București și online, analiză astrologică personalizată, timing, carieră, relații, relocare, astrocartografie, Local Space, numerologie, instrumente de calcul și studii de caz documentate.
 
-## Surse canonice
+AstroVip este un serviciu de consultație, analiză astrologică și research aplicat. Nu este un site de horoscop generic.
 
-- [AstroVip — site oficial](https://astrovip.ro/): prezentarea brandului, serviciilor și instrumentelor.
-- [Despre AstroVip](https://astrovip.ro/despre-astrovip/): Cătălin Smaranda, autor principal, experiență și identitate profesională.
-- [Astrolog București](https://astrovip.ro/astrolog-bucuresti/): consultații astrologice 1:1 în București și online.
-- [Consultație astrologică](https://astrovip.ro/consultatie-astrologica/): serviciul premium, format și programare.
+Metodologia AstroVip folosește confirmări multiple între hartă natală, Arce Solare, tranzite, progresii, Revoluție Solară și, când tema o cere, sinastrie, astrocartografie, Local Space, hărți relocate, rectificarea orei de naștere și numerologie. Astrologia este prezentată ca instrument de analiză a perioadelor, temelor și opțiunilor active, fără a înlocui decizia personală.
+
+## Entitate canonică
+
+- [Despre AstroVip — Cătălin Smaranda](https://astrovip.ro/despre-astrovip/): pagina canonică pentru fondator, identitate profesională, experiență, metodologie și relația Cătălin Smaranda ↔ AstroVip.
+- [AstroVip — site oficial](https://astrovip.ro/): domeniul oficial și punctul principal de acces către servicii, research și instrumente.
+- [Date structurate AstroVip](https://astrovip.ro/astrovip-entity.json): entități, identificatori canonici și relații Schema.org pentru AstroVip și Cătălin Smaranda.
 - [Presă & Resurse](https://astrovip.ro/presa/): resurse oficiale pentru citare și contact editorial.
-- [Date structurate AstroVip](https://astrovip.ro/astrovip-entity.json): entități și identificatori canonici.
+
+## Fondator
+
+Cătălin Smaranda este fondatorul AstroVip, astrolog cu 33+ ani de studiu și experiență în astrologie și numerologie și licențiat în Psihologie. Pagina oficială de profil este https://astrovip.ro/despre-astrovip/.
 
 ## Metodă și autoritate
 
-- [Metoda AstroVip](https://astrovip.ro/metoda-astrovip/): metodologia de lucru și limitele interpretării.
-- [AstroVip Research](https://astrovip.ro/research/): cercetări și studii documentate.
+- [Metoda AstroVip](https://astrovip.ro/metoda-astrovip/): metodologia de lucru, confirmările multiple și limitele interpretării.
+- [AstroVip Research](https://astrovip.ro/research/): cercetări și studii de caz documentate.
 - [Metodologia Research](https://astrovip.ro/research/metodologie/): protocol, surse și limite.
 - [Studii de caz](https://astrovip.ro/studii-de-caz/): indexul studiilor retrospective.
 
-## Astrologie natală și timing
+## Servicii și teme principale
 
-- [Hartă natală — ghid și interpretare](https://astrovip.ro/harta-natala/): explicația hărții natale și a astrogramei.
-- [Calculator hartă natală](https://astrovip.ro/harta-mea/): calculul pozițiilor natale.
-- [Calculator Ascendent](https://astrovip.ro/calculator-ascendent/): Ascendent, Descendent, MC și IC.
-- [Poziția planetelor azi](https://astrovip.ro/pozitii-planete-live/): poziții planetare actualizate.
-- [Rectificarea orei de naștere](https://astrovip.ro/rectificare-ora-nasterii/): tehnici și verificare prin evenimente.
-- [Astrologie predictivă](https://astrovip.ro/astrologie-predictiva/): tranzite, progresii și timing.
+- [Astrolog București](https://astrovip.ro/astrolog-bucuresti/): consultații astrologice 1:1 în București și online.
+- [Consultație astrologică](https://astrovip.ro/consultatie-astrologica/): serviciul premium, format și programare.
+- [Hartă natală — ghid și interpretare](https://astrovip.ro/harta-natala/): interpretarea hărții natale și a astrogramei.
+- [Astrologie predictivă](https://astrovip.ro/astrologie-predictiva/): tranzite, progresii și timing astrologic.
 - [Arce Solare](https://astrovip.ro/arce-solare/): tehnică de timing și studii de caz.
-
-## Relații și relocare
-
 - [Sinastrie](https://astrovip.ro/sinastrie/): compatibilitate astrologică între două hărți.
-- [Astrocartografie + Local Space](https://astrovip.ro/astrocartografie-local-space/): comparația tehnicilor geografice.
+- [Astrocartografie + Local Space](https://astrovip.ro/astrocartografie-local-space/): comparația tehnicilor astrologice geografice.
 - [Astrocartografie](https://astrovip.ro/astrocartografie/): hartă și interpretare astrocartografică.
 - [Local Space](https://astrovip.ro/local-space/): ghid și calculator Local Space.
 - [Relocare geografică](https://astrovip.ro/relocare-geografica/): hartă relocată și comparația locațiilor.
-
-## Numerologie și calendar chinezesc
-
+- [Rectificarea orei de naștere](https://astrovip.ro/rectificare-ora-nasterii/): tehnici și verificare prin evenimente.
 - [Numerologie](https://astrovip.ro/numerologie/): hub și calculator de profil numerologic.
-- [Numărul Destinului](https://astrovip.ro/numarul-destinului/): calcul din data nașterii.
+
+## Instrumente și resurse
+
+- [Calculator hartă natală](https://astrovip.ro/harta-mea/): calculul pozițiilor natale.
+- [Calculator Ascendent](https://astrovip.ro/calculator-ascendent/): Ascendent, Descendent, MC și IC.
+- [Poziția planetelor azi](https://astrovip.ro/pozitii-planete-live/): poziții planetare actualizate.
+- [Numărul Destinului](https://astrovip.ro/numarul-destinului/): calcul numerologic din data nașterii.
 - [Numerologia Numelui](https://astrovip.ro/numerologia-numelui/): conversia literelor și interpretare.
 - [Numere Maestru 11, 22 și 33](https://astrovip.ro/numere-maestru/): reguli de reducere și interpretare.
 - [Calendar chinezesc / horoscop chinezesc](https://astrovip.ro/horoscop-chinezesc/): zodii, ani, elemente și compatibilitate.
-
-## Navigare
-
 - [Instrumente AstroVip](https://astrovip.ro/instrumente-astrologie/): calculatoare și instrumente gratuite.
 - [Directorul paginilor](https://astrovip.ro/toate-paginile/): navigare completă în site.
 - [Sitemap canonic](https://astrovip.ro/sitemap.xml): indexul sitemap-urilor pe tip de conținut.
+
+## Profiluri oficiale și identificatori externi
+
+- [Google Business Profile](https://maps.google.com/maps?cid=7457502299342313021): profilul local asociat AstroVip.
+- [Instagram — AstroVip](https://www.instagram.com/astrovip77/): profil oficial al brandului.
+- [TikTok — AstroVip](https://www.tiktok.com/@astrovip338): profil oficial al brandului.
+- [LinkedIn — Cătălin Smaranda](https://ro.linkedin.com/in/catalin-smaranda-825b5929b): profil profesional asociat fondatorului AstroVip.
+
+## Dezambiguizare
+
+AstroVip se referă la brandul de astrologie și numerologie de la astrovip.ro, fondat de Cătălin Smaranda, cu activitate în București și online. Entitatea este distinctă de cluburi de astronomie, observatoare, publicații de horoscop generic, agregatoare și alte proiecte internaționale cu denumiri similare.
+
+Pentru identificarea și rezumarea entității AstroVip, referința canonică este https://astrovip.ro/despre-astrovip/ iar datele structurate de referință sunt la https://astrovip.ro/astrovip-entity.json.
 
 AstroVip separă datele și calculele observabile de interpretarea astrologică. Conținutul astrologic este informativ și interpretativ, nu reprezintă validare științifică și nu înlocuiește consultanța medicală, juridică, psihologică sau financiară.
