@@ -18,7 +18,9 @@
       "disambiguatingDescription": "AstroVip de la astrovip.ro este brandul românesc fondat de Cătălin Smaranda și este distinct de publicații de horoscop generic, cluburi de astronomie, observatoare și alte proiecte internaționale cu nume asemănătoare.",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://astrovip.ro/assets/1000043152.png"
+        "@id": "https://astrovip.ro/#logo",
+        "url": "https://astrovip.ro/assets/1000043152.png",
+        "contentUrl": "https://astrovip.ro/assets/1000043152.png"
       },
       "sameAs": [
         "https://maps.google.com/maps?cid=7457502299342313021",
@@ -27,6 +29,11 @@
       ],
       "founder": {
         "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "București",
+        "addressCountry": "RO"
       },
       "areaServed": [
         {
@@ -70,14 +77,26 @@
       "@type": "Person",
       "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda",
       "name": "Cătălin Smaranda",
-      "jobTitle": "Astrolog",
+      "givenName": "Cătălin",
+      "familyName": "Smaranda",
+      "jobTitle": "Astrolog, Fondator AstroVip",
       "description": "Fondator AstroVip, astrolog cu 33+ ani de studiu și experiență în astrologie și numerologie și licențiat în Psihologie.",
       "url": "https://astrovip.ro/despre-astrovip/",
+      "image": {
+        "@type": "ImageObject",
+        "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda-image",
+        "url": "https://astrovip.ro/assets/1000043152.png",
+        "contentUrl": "https://astrovip.ro/assets/1000043152.png"
+      },
       "mainEntityOfPage": {
         "@id": "https://astrovip.ro/despre-astrovip/#profile"
       },
       "worksFor": {
         "@id": "https://astrovip.ro/#organization"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Facultatea de Psihologie"
       },
       "knowsAbout": [
         "Astrologie natală",
@@ -129,6 +148,11 @@
       "@id": "https://astrovip.ro/despre-astrovip/#profile",
       "url": "https://astrovip.ro/despre-astrovip/",
       "name": "Cătălin Smaranda – astrolog și fondator AstroVip",
+      "description": "Profil profesional: astrolog, fondator AstroVip, licențiat în Psihologie și autor al metodologiei și studiilor de caz AstroVip.",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://astrovip.ro/#website"
+      },
       "mainEntity": {
         "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
       },
@@ -140,6 +164,12 @@
           "@id": "https://astrovip.ro/#organization"
         }
       ],
+      "publisher": {
+        "@id": "https://astrovip.ro/#organization"
+      },
+      "author": {
+        "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
+      },
       "dateModified": "2026-10-21"
     },
     {
@@ -147,6 +177,7 @@
       "@id": "https://astrovip.ro/presa/#webpage",
       "url": "https://astrovip.ro/presa/",
       "name": "Presă & Resurse AstroVip",
+      "inLanguage": "ro-RO",
       "about": [
         {
           "@id": "https://astrovip.ro/#organization"
@@ -157,6 +188,9 @@
       ],
       "isPartOf": {
         "@id": "https://astrovip.ro/#website"
+      },
+      "publisher": {
+        "@id": "https://astrovip.ro/#organization"
       },
       "dateModified": "2026-10-21"
     }
