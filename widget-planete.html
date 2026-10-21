@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow">
+<title>Poziția planetelor acum · AstroVip</title>
+<style>
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:#020503;color:#f6f2e5;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.av-widget{width:100%;min-height:100%;padding:14px;border:1px solid rgba(232,199,107,.42);border-radius:18px;background:radial-gradient(circle at 8% 0,rgba(57,255,20,.07),transparent 32%),linear-gradient(145deg,#07110b,#020503 72%);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.av-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.av-kicker{display:block;color:#70f5a0;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+h1{margin:4px 0 0;color:#f2d67d;font:800 21px/1.1 Georgia,"Times New Roman",serif}
+.av-updated{color:#aebbb3;font-size:10px;white-space:nowrap;padding-top:4px}
+.planet-track{width:100%}
+.planet-track>.planet-sequence[aria-hidden="true"]{display:none!important}
+.planet-sequence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.planet-item{display:flex;align-items:center;gap:5px;min-width:0;padding:8px 9px;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.025);font-size:10px;line-height:1.25;overflow:hidden}
+.planet-item strong{color:#fff;font-size:10px;white-space:nowrap}
+.planet-glyph{color:#f0ce68;font-size:17px;line-height:1}
+.planet-sign{color:#80ffae}
+.planet-house,.planet-retro{display:none}
+.av-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:11px;padding-top:10px;border-top:1px solid rgba(232,199,107,.18);color:#aebbb3;font-size:9px;line-height:1.35}
+.av-foot a{color:#f0d579;font-weight:900;text-decoration:none}
+.av-foot a:hover{text-decoration:underline}
+@media(max-width:460px){.av-widget{padding:11px;border-radius:14px}.planet-sequence{grid-template-columns:1fr}.planet-item:nth-child(n+7){display:none}h1{font-size:19px}.av-foot{align-items:flex-start;flex-direction:column}}
+</style>
+<script defer src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script>
+<script defer src="/assets/planetary-ticker-core.js?v=20261021-publisher-widget1"></script>
+</head>
+<body>
+<section class="av-widget" aria-label="Poziția planetelor acum, oferite de AstroVip">
+  <header class="av-head">
+    <div><span class="av-kicker">ASTROVIP · CERUL ACUM</span><h1>Poziția planetelor acum</h1></div>
+    <span class="av-updated" data-planet-updated>se actualizează…</span>
+  </header>
+  <div class="planet-ticker" data-planet-ticker>Se calculează pozițiile planetelor…</div>
+  <footer class="av-foot">
+    <span>Date tropicale geocentrice · actualizare automată</span>
+    <a href="https://astrovip.ro/pozitii-planete-live/" target="_blank" rel="noopener noreferrer">Sursă: AstroVip.ro ↗</a>
+  </footer>
+</section>
+</body>
+</html>

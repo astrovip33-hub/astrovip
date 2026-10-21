@@ -12,6 +12,12 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-Frame-Options: SAMEORIGIN
 
+/widget-planete.html
+  ! X-Frame-Options
+  X-Robots-Tag: noindex, follow
+  Content-Security-Policy: frame-ancestors *
+  Cache-Control: public, max-age=300, must-revalidate
+
 /assets/*
   Cache-Control: public, max-age=3600, must-revalidate
 
