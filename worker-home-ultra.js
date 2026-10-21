@@ -1,4 +1,5 @@
-﻿import baseWorker from './worker.js';
+import { horoscopeRoute, horoscopeResponse } from './horoscop-renderer.js';
+import baseWorker from './worker.js';
 import { mobileHome, mobileStyles, cardlessStyles } from './homepage-approved-layout.js';
 
 const PAYMENT_URL='https://buy.stripe.com/4gMeVcbz75J207y6fefjG00';
@@ -82,8 +83,18 @@ html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case
 
 export default {
   async fetch(request,env,ctx){
-    const response=await baseWorker.fetch(request,env,ctx);
     const url=new URL(request.url);
+    const dailyRoute=horoscopeRoute(url.pathname)||url.pathname==='/sitemap-core.xml';
+    let sourceRequest=request;
+    if(dailyRoute&&(request.method==='GET'||request.method==='HEAD')){
+      const headers=new Headers(request.headers);
+      headers.delete('if-none-match'); headers.delete('if-modified-since');
+      sourceRequest=new Request(request,{headers});
+    }
+    const response=await baseWorker.fetch(sourceRequest,env,ctx);
+    if(dailyRoute&&request.method==='GET'&&response.status===200){
+      return horoscopeResponse(response,url.pathname);
+    }
     const type=response.headers.get('content-type')||'';
     if(response.ok&&type.includes('text/html')&&(url.pathname==='/'||url.pathname==='')){
       let mobileHomeSeen=false;

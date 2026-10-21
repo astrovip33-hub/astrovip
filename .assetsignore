@@ -25,3 +25,5 @@ homepage-approved-layout.js
 http-redirect-worker.js
 
 command-center-routing.js
+
+horoscop-renderer.js
