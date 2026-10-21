@@ -166,6 +166,14 @@ export default {
     if(url.pathname==='/api/stripe-webhook'||url.pathname==='/api/stripe-webhook/')return stripeWebhook(request,env);
     if(url.pathname==='/api/stripe-webhook-test'||url.pathname==='/api/stripe-webhook-test/')return stripeWebhook(request,env,{secretName:'STRIPE_WEBHOOK_SECRET_TEST',testMode:true});
     const assetResponse=await env.ASSETS.fetch(request);
+    if(assetResponse.ok&&url.pathname==='/widget-planete.html'){
+      const headers=new Headers(assetResponse.headers);
+      headers.delete('X-Frame-Options');
+      headers.set('X-Robots-Tag','noindex, follow');
+      headers.set('Content-Security-Policy','frame-ancestors *');
+      headers.set('Cache-Control','public, max-age=300, must-revalidate');
+      return new Response(assetResponse.body,{status:assetResponse.status,statusText:assetResponse.statusText,headers});
+    }
     const ct=assetResponse.headers.get('content-type')||'';
     if(assetResponse.ok&&ct.includes('text/html')&&!url.pathname.startsWith('/command-center')){
       const isHomepage=url.pathname==='/'||url.pathname==='';
