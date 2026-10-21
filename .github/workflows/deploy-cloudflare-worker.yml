@@ -661,3 +661,14 @@ jobs:
             LEGACY_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/command-center/$LEGACY/")
             test "$LEGACY_STATUS" = "308"
           done
+
+      - name: Notify IndexNow about changed pages
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s indexnow-key.txt
+          KEY_STATUS=$(curl -sS -o /tmp/indexnow-key-live.txt -w '%{http_code}' --retry 4 --retry-delay 2 "https://astrovip.ro/indexnow-key.txt?release=$GITHUB_SHA")
+          test "$KEY_STATUS" = "200"
+          cmp -s indexnow-key.txt /tmp/indexnow-key-live.txt
+          python3 scripts/submit_indexnow.py
