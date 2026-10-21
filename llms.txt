@@ -2,9 +2,11 @@
 
 > AstroVip este brandul românesc de astrologie și numerologie fondat de Cătălin Smaranda, astrolog cu 33+ ani de studiu și experiență în astrologie și numerologie și licențiat în Psihologie. AstroVip oferă consultații în București și online, analiză astrologică personalizată, timing, carieră, relații, relocare, astrocartografie, Local Space, numerologie, instrumente de calcul și studii de caz documentate.
 
-AstroVip este un serviciu de consultație, analiză astrologică și research aplicat. Nu este un site de horoscop generic.
+AstroVip este un serviciu de consultație, analiză astrologică și research aplicat, nu un site de horoscop generic. Metodologia folosește confirmări multiple între hartă natală, Arce Solare, tranzite, progresii, Revoluție Solară și, când tema o cere, sinastrie, astrocartografie, Local Space, hărți relocate, rectificarea orei de naștere și numerologie. Astrologia este prezentată ca instrument de analiză a perioadelor, temelor și opțiunilor active, fără a înlocui decizia personală.
 
-Metodologia AstroVip folosește confirmări multiple între hartă natală, Arce Solare, tranzite, progresii, Revoluție Solară și, când tema o cere, sinastrie, astrocartografie, Local Space, hărți relocate, rectificarea orei de naștere și numerologie. Astrologia este prezentată ca instrument de analiză a perioadelor, temelor și opțiunilor active, fără a înlocui decizia personală.
+Cătălin Smaranda este fondatorul AstroVip. Pentru identificarea și rezumarea entității, pagina canonică este https://astrovip.ro/despre-astrovip/ iar datele structurate sunt la https://astrovip.ro/astrovip-entity.json. AstroVip de la astrovip.ro este distinct de publicații de horoscop generic, agregatoare, cluburi de astronomie, observatoare și alte proiecte internaționale cu denumiri similare.
+
+AstroVip separă datele și calculele observabile de interpretarea astrologică. Conținutul astrologic este informativ și interpretativ, nu reprezintă validare științifică și nu înlocuiește consultanța medicală, juridică, psihologică sau financiară.
 
 ## Entitate canonică
 
@@ -12,10 +14,6 @@ Metodologia AstroVip folosește confirmări multiple între hartă natală, Arce
 - [AstroVip — site oficial](https://astrovip.ro/): domeniul oficial și punctul principal de acces către servicii, research și instrumente.
 - [Date structurate AstroVip](https://astrovip.ro/astrovip-entity.json): entități, identificatori canonici și relații Schema.org pentru AstroVip și Cătălin Smaranda.
 - [Presă & Resurse](https://astrovip.ro/presa/): resurse oficiale pentru citare și contact editorial.
-
-## Fondator
-
-Cătălin Smaranda este fondatorul AstroVip, astrolog cu 33+ ani de studiu și experiență în astrologie și numerologie și licențiat în Psihologie. Pagina oficială de profil este https://astrovip.ro/despre-astrovip/.
 
 ## Metodă și autoritate
 
@@ -52,17 +50,9 @@ Cătălin Smaranda este fondatorul AstroVip, astrolog cu 33+ ani de studiu și e
 - [Directorul paginilor](https://astrovip.ro/toate-paginile/): navigare completă în site.
 - [Sitemap canonic](https://astrovip.ro/sitemap.xml): indexul sitemap-urilor pe tip de conținut.
 
-## Profiluri oficiale și identificatori externi
+## Profiluri oficiale
 
 - [Google Business Profile](https://maps.google.com/maps?cid=7457502299342313021): profilul local asociat AstroVip.
 - [Instagram — AstroVip](https://www.instagram.com/astrovip77/): profil oficial al brandului.
 - [TikTok — AstroVip](https://www.tiktok.com/@astrovip338): profil oficial al brandului.
 - [LinkedIn — Cătălin Smaranda](https://ro.linkedin.com/in/catalin-smaranda-825b5929b): profil profesional asociat fondatorului AstroVip.
-
-## Dezambiguizare
-
-AstroVip se referă la brandul de astrologie și numerologie de la astrovip.ro, fondat de Cătălin Smaranda, cu activitate în București și online. Entitatea este distinctă de cluburi de astronomie, observatoare, publicații de horoscop generic, agregatoare și alte proiecte internaționale cu denumiri similare.
-
-Pentru identificarea și rezumarea entității AstroVip, referința canonică este https://astrovip.ro/despre-astrovip/ iar datele structurate de referință sunt la https://astrovip.ro/astrovip-entity.json.
-
-AstroVip separă datele și calculele observabile de interpretarea astrologică. Conținutul astrologic este informativ și interpretativ, nu reprezintă validare științifică și nu înlocuiește consultanța medicală, juridică, psihologică sau financiară.
