@@ -9,6 +9,8 @@
   <meta name="theme-color" content="#08090b">
   <title>AstroVip Command Center V11</title>
   <link rel="stylesheet" href="/command-center/v11/os.css?v=20261020-unified1">
+  <link rel="stylesheet" href="/command-center/v11/persistent-auth.css?v=20261023-remember1">
+  <script src="/command-center/v11/persistent-auth.js?v=20261023-remember1"></script>
   <script type="module" src="/command-center/v11/app.js?v=20261020-unified1"></script>
 </head>
 <body>
@@ -21,6 +23,10 @@
       <p>Intră cu accesul existent pentru Command Center.</p>
       <label for="token">Token de administrare</label>
       <input id="token" type="password" autocomplete="current-password" required>
+      <label class="remember-access" for="remember-access">
+        <input id="remember-access" type="checkbox">
+        <span>Ține-mă conectat pe acest dispozitiv <small>90 de zile</small></span>
+      </label>
       <button id="login-button" class="button gold" type="submit">Deschide centrul de comandă <span aria-hidden="true">↗</span></button>
       <p id="login-error" class="error" role="alert"></p>
       <p class="small">Un singur acces pentru toate modulele V11.</p>
