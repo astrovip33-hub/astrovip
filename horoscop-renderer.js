@@ -22,7 +22,7 @@ export function renderHoroscopeHTML(html,path,now=new Date()) {
     .replace(/(<meta property="og:description" content=")[^"]*(")/,'$1'+escapeHTML(description)+'$2')
     .replace(/<h1>[\s\S]*?<\/h1>/,'<h1>'+escapeHTML(isHub?'Horoscop azi, '+data.label:'Horoscop '+reading.sign+' azi')+'</h1>')
     .replace(/<(?:div|time) class="date" data-today(?: datetime="[^"]*")?>[\s\S]*?<\/(?:div|time)>/,'<time class="date" data-today datetime="'+data.day+'">'+escapeHTML(data.fullLabel)+'</time>')
-    .replace('<html lang="ro">','<html lang="ro" data-horoscop-render="daily-20261021">');
+    .replace(/<html lang="ro"(?: data-horoscop-render="daily-\d{8}")?>/,'<html lang="ro" data-horoscop-render="daily-'+data.day.replace(/-/g,'')+'">');
   const sky=BODIES.map(([body,label,symbol])=>'<div class="planet"><b>'+escapeHTML(symbol+' '+label)+'</b>'+escapeHTML(positionLabel(data.positions[body]))+'</div>').join('');
   html=html.replace(/<div class="sky-grid" data-live-sky><div class="planet">[\s\S]*?<\/div><\/div>/,'<div class="sky-grid" data-live-sky>'+sky+'</div>');
   if(isHub) {

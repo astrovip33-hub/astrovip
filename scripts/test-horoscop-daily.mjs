@@ -30,6 +30,7 @@ test('hub contains 12 visible readings and keeps links, canonical and schema ali
  for(const slug of SLUGS)assert.ok(html.includes('href="/horoscop-azi/'+slug+'/"'));
  assert.match(html,/<h1>Horoscop azi, 21 octombrie 2026<\/h1>/);
  assert.match(html,/datetime="2026-10-21"/);
+ assert.match(html,/data-horoscop-render="daily-20261021"/);
  assert.match(html,/<link rel="canonical" href="https:\/\/astrovip.ro\/horoscop-azi\/">/);
  assert.doesNotMatch(html,/Se calculeaz|Se actualizeaz/);
  const schema=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
@@ -39,6 +40,7 @@ test('hub contains 12 visible readings and keeps links, canonical and schema ali
  assert.match(tomorrow,/<h1>Horoscop azi, 22 octombrie 2026<\/h1>/);
  assert.equal((tomorrow.match(/Citește horoscopul complet/g)||[]).length,12);
  assert.match(tomorrow,/datetime="2026-10-22"/);
+ assert.match(tomorrow,/data-horoscop-render="daily-20261022"/);
 });
 test('every sign page has visible content before JavaScript and correct next-day refresh',()=>{
  for(const slug of SLUGS){
