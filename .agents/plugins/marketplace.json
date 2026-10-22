@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    {
+      "source": {
+        "path": "../../plugins/astrovip-seo-autopilot"
+      },
+      "interface": {
+        "displayName": "AstroVip SEO Autopilot"
+      }
+    }
+  ]
+}
