@@ -1,12 +1,23 @@
 {
+  "name": "astrovip-local",
+  "interface": {
+    "displayName": "AstroVip Local"
+  },
   "plugins": [
     {
+      "name": "astrovip-seo-autopilot",
       "source": {
-        "path": "../../plugins/astrovip-seo-autopilot"
+        "source": "local",
+        "path": "./plugins/astrovip-seo-autopilot"
       },
-      "interface": {
-        "displayName": "AstroVip SEO Autopilot"
-      }
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "category": "Developer Tools"
     }
   ]
 }
