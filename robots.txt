@@ -1,6 +1,6 @@
 # AstroVip — AI search, assistants and search engines
 # Discovery/reference is allowed. Model-training crawlers are opted out.
-Content-Signal: search=yes,ai-train=no,use=reference
+Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
 
 # OpenAI Search / user-requested retrieval
 User-agent: OAI-SearchBot
@@ -48,4 +48,4 @@ Allow: /
 
 # Canonical sitemap index
 Sitemap: https://astrovip.ro/sitemap.xml
-# AI/SEO discovery policy updated 2026-10-20
+# AI/SEO discovery policy updated 2026-10-22

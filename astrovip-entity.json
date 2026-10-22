@@ -25,13 +25,16 @@
       "sameAs": [
         "https://maps.google.com/maps?cid=7457502299342313021",
         "https://www.instagram.com/astrovip77/",
-        "https://www.tiktok.com/@astrovip338"
+        "https://www.tiktok.com/@astrovip338",
+        "https://www.facebook.com/profile.php?id=61563353587395&locale=ro_RO"
       ],
       "founder": {
         "@id": "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
       },
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "Bulevardul Unirii 33",
+        "postalCode": "030822",
         "addressLocality": "București",
         "addressCountry": "RO"
       },
@@ -71,7 +74,39 @@
           "@type": "WebPage",
           "url": "https://astrovip.ro/research/"
         }
-      ]
+      ],
+      "hasMap": "https://maps.google.com/maps?cid=7457502299342313021",
+      "telephone": "+40722128220",
+      "email": "contact@astrovip.ro",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+40722128220",
+        "email": "contact@astrovip.ro",
+        "contactType": "customer service",
+        "areaServed": "RO",
+        "availableLanguage": [
+          "Romanian",
+          "English",
+          "Spanish",
+          "Italian",
+          "Chinese",
+          "Arabic",
+          "Russian"
+        ]
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "10:00",
+        "closes": "17:00"
+      },
+      "foundingDate": "1994-07-01"
     },
     {
       "@type": "Person",
