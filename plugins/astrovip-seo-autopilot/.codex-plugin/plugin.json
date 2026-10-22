@@ -1,0 +1,21 @@
+{
+  "name": "astrovip-seo-autopilot",
+  "version": "0.1.0",
+  "description": "AstroVip SEO/GEO workflows for indexation, internal linking, AI visibility, Core Web Vitals and JavaScript SEO.",
+  "repository": "https://github.com/astrovip33-hub/astrovip",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AstroVip SEO Autopilot",
+    "shortDescription": "SEO, GEO, indexation and technical search workflows for AstroVip",
+    "longDescription": "Project-scoped AstroVip workflows for Google/Bing indexation diagnostics, internal link architecture, SEO/GEO prioritization, Core Web Vitals and JavaScript rendering checks.",
+    "developerName": "AstroVip",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Audit AstroVip SEO and AI visibility, prioritize the highest-impact fixes, and validate changes before deployment."
+    ]
+  }
+}
