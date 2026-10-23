@@ -56,7 +56,7 @@ html.av-ultra-home-production body:not(.guide-page) main#top>*:not(#av-mobile-ap
 html.av-ultra-home-production body:not(.guide-page) main#top>#av-mobile-approved-home{display:block!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important}
 }
 @media(min-width:821px) and (max-width:980px){.av-home-paybar-inner{align-items:flex-start;flex-direction:column}.av-home-paybar-inner>a{width:100%}}
-</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261020-payment-nowrap"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
+</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261023-polish-v1"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important}
 @media(max-width:820px){
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{overflow:hidden!important}
