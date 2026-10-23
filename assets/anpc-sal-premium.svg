@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="512" viewBox="0 0 1536 512" role="img" aria-labelledby="t d">
+<title id="t">ANPC — Soluționarea Alternativă a Litigiilor</title><desc id="d">Banner premium AstroVip cu trimitere către platforma SAL ANPC.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#03120e"/><stop offset=".48" stop-color="#020b08"/><stop offset="1" stop-color="#061811"/></linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#b88a35"/><stop offset=".35" stop-color="#f8e4a0"/><stop offset=".55" stop-color="#d8ac4f"/><stop offset=".8" stop-color="#fff0b2"/><stop offset="1" stop-color="#b7832c"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#19ff8a" stop-opacity=".22"/><stop offset="1" stop-color="#19ff8a" stop-opacity="0"/></radialGradient>
+  <filter id="soft"><feGaussianBlur stdDeviation="10"/></filter>
+</defs>
+<rect width="1536" height="512" rx="40" fill="url(#bg)"/>
+<ellipse cx="250" cy="245" rx="260" ry="210" fill="url(#glow)"/>
+<path d="M920 470C1130 388 1320 408 1536 300" fill="none" stroke="#0f5b37" stroke-opacity=".45" stroke-width="2"/>
+<path d="M860 492C1110 425 1325 455 1510 340" fill="none" stroke="#1d8f58" stroke-opacity=".2" stroke-width="1"/>
+<rect x="18" y="18" width="1500" height="476" rx="34" fill="none" stroke="url(#gold)" stroke-width="3"/>
+<rect x="34" y="34" width="1468" height="444" rx="28" fill="none" stroke="#6b5729" stroke-opacity=".32"/>
+<image href="/assets/anpc.webp" x="62" y="135" width="360" height="154" preserveAspectRatio="xMidYMid meet"/>
+<text x="474" y="190" fill="url(#gold)" font-family="Georgia,Times New Roman,serif" font-size="98" font-weight="700" letter-spacing="5">ANPC</text>
+<line x1="480" y1="224" x2="1125" y2="224" stroke="url(#gold)" stroke-width="2"/>
+<circle cx="750" cy="224" r="5" fill="#ffe7a0"/><circle cx="790" cy="224" r="3" fill="#f1c865"/>
+<text x="474" y="300" fill="#f9e8b7" font-family="Georgia,Times New Roman,serif" font-size="48">Soluționarea Alternativă a Litigiilor</text>
+<text x="478" y="360" fill="#e3bc64" font-family="Arial,sans-serif" font-size="34" font-weight="700" letter-spacing="15">SAL</text>
+<rect x="1195" y="178" width="260" height="112" rx="56" fill="#071a13" stroke="url(#gold)" stroke-width="2"/>
+<text x="1254" y="246" fill="#f7e1a0" font-family="Georgia,Times New Roman,serif" font-size="40">Detalii</text>
+<path d="M1405 218l18 16-18 16" fill="none" stroke="#f7d37a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1435" cy="177" r="60" fill="#19ff8a" opacity=".07" filter="url(#soft)"/>
+</svg>
