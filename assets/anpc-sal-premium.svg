@@ -32,10 +32,10 @@
 <text x="474" y="190" fill="url(#gold)" font-family="Georgia,Times New Roman,serif" font-size="98" font-weight="700" letter-spacing="5">ANPC</text>
 <line x1="480" y1="224" x2="1125" y2="224" stroke="url(#gold)" stroke-width="2"/>
 <circle cx="750" cy="224" r="5" fill="#ffe7a0"/><circle cx="790" cy="224" r="3" fill="#f1c865"/>
-<text x="474" y="300" fill="#f9e8b7" font-family="Georgia,Times New Roman,serif" font-size="48">Soluționarea Alternativă a Litigiilor</text>
+<text x="474" y="300" fill="#f9e8b7" font-family="Georgia,Times New Roman,serif" font-size="44" textLength="675" lengthAdjust="spacingAndGlyphs">Soluționarea Alternativă a Litigiilor</text>
 <text x="478" y="360" fill="#e3bc64" font-family="Arial,sans-serif" font-size="34" font-weight="700" letter-spacing="15">SAL</text>
-<rect x="1195" y="178" width="260" height="112" rx="56" fill="#071a13" stroke="url(#gold)" stroke-width="2"/>
-<text x="1254" y="246" fill="#f7e1a0" font-family="Georgia,Times New Roman,serif" font-size="40">Detalii</text>
-<path d="M1405 218l18 16-18 16" fill="none" stroke="#f7d37a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1215" y="178" width="260" height="112" rx="56" fill="#071a13" stroke="url(#gold)" stroke-width="2"/>
+<text x="1272" y="246" fill="#f7e1a0" font-family="Georgia,Times New Roman,serif" font-size="40">Detalii</text>
+<path d="M1425 218l18 16-18 16" fill="none" stroke="#f7d37a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="1435" cy="177" r="60" fill="#19ff8a" opacity=".07" filter="url(#soft)"/>
 </svg>

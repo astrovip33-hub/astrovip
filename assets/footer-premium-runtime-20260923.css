@@ -121,5 +121,5 @@
   #astrovip-footer #av-footer-chat-premium{width:100%!important}
 }
 
-/* Mobile polish: lift the SAL/ANPC artwork slightly without moving the card. */
-@media(max-width:600px){#astrovip-footer .av-footer-sal-badge{transform:translateY(-4px)!important;}}
+/* Mobile polish: lift the complete premium ANPC/SAL card slightly. */
+@media(max-width:600px){#astrovip-footer .av-footer-consumer.av-footer-consumer--premium{margin-top:3px!important;}}
