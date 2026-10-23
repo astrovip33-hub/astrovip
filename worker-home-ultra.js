@@ -56,6 +56,20 @@ html.av-ultra-home-production body:not(.guide-page) main#top>*:not(#av-mobile-ap
 html.av-ultra-home-production body:not(.guide-page) main#top>#av-mobile-approved-home{display:block!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important}
 }
 @media(min-width:821px) and (max-width:980px){.av-home-paybar-inner{align-items:flex-start;flex-direction:column}.av-home-paybar-inner>a{width:100%}}
+
+/* av-header-polish-worker-20261023 */
+@media(max-width:820px){
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header{height:60px!important;min-height:60px!important;background:radial-gradient(180px 46px at 18% 25%,rgba(63,133,65,.10),transparent 72%),linear-gradient(180deg,#030705 0%,#010302 100%)!important;border-bottom:1px solid rgba(236,205,112,.18)!important;box-shadow:0 8px 22px rgba(0,0,0,.34),inset 0 -1px 0 rgba(70,145,76,.08)!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header:after{content:''!important;position:absolute!important;left:9%!important;right:9%!important;bottom:0!important;height:1px!important;background:linear-gradient(90deg,transparent,rgba(75,158,80,.28),rgba(236,205,112,.22),rgba(75,158,80,.28),transparent)!important;pointer-events:none!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header .avm-logo{height:60px!important;width:calc(100% - 52px)!important;padding-left:9px!important;gap:7px!important;background:transparent!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header .avm-logo img.avm-mark{width:46px!important;max-width:46px!important;max-height:40px!important;filter:drop-shadow(0 0 3px rgba(70,170,77,.42)) drop-shadow(0 0 2px rgba(236,205,112,.18))!important;transform:translateY(-.5px)!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header .av-premium-title{font:900 clamp(15px,4.35vw,18px)/1 Georgia,"Times New Roman",serif!important;letter-spacing:.018em!important;color:#f0d77f!important;text-shadow:0 1px 0 rgba(255,246,196,.55),0 0 7px rgba(235,196,91,.22)!important;transform:translateY(-1px)!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header .av-premium-title::after{left:12%!important;right:12%!important;bottom:-8px!important;height:1px!important;background:linear-gradient(90deg,transparent 0%,#9e7628 14%,#f0d77f 48%,#f6df91 52%,#9e7628 86%,transparent 100%)!important;box-shadow:0 0 4px rgba(236,205,112,.24)!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header .av-premium-title::before{bottom:-14px!important;padding:0 5px!important;background:#020403!important;color:#e8cb68!important;font-size:10px!important;text-shadow:0 0 4px rgba(236,205,112,.4)!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header .avm-hamb{right:1.6%!important;top:50%!important;transform:translateY(-50%)!important;width:48px!important;height:48px!important;padding:0!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header .avm-hamb-glow{width:38px!important;height:38px!important;gap:4px!important}
+html.av-mobile-approved body:not(.guide-page) #av-mobile-approved-header .avm-hamb-glow i{width:27px!important;height:3px!important;border-radius:999px!important}
+}
 </style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261023-polish-v2"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important}
 @media(max-width:820px){
