@@ -8,10 +8,16 @@ function reportGoogleAdsLeadConversion() {
   if (googleAdsLeadReported) return;
   const gtag = (window as any).gtag;
   if (typeof gtag !== 'function') return;
+  try {
+    const consent = JSON.parse(localStorage.getItem('astrovip_consent_v2') || 'null');
+    if (!consent?.ads) return;
+  } catch {
+    return;
+  }
   googleAdsLeadReported = true;
   try {
     gtag('event', 'conversion', {
-      send_to: 'AW-18530600314/gBPbCKSoracdEPqKioRF',
+      send_to: 'AW-18530600314/0fyCCPOhs6cdEPqKioRF',
       value: 1.0,
       currency: 'RON'
     });
