@@ -1,0 +1,60 @@
+/* PREVIEW ONLY — AstroVip Lux Future 2027 */
+:root{--av-obs:#020503;--av-obs2:#07110c;--av-gold:#f1cf72;--av-gold2:#b8862d;--av-pearl:#f7f4ea;--av-emerald:#35ef8f;--av-line:rgba(241,207,114,.27);--av-glass:rgba(5,13,9,.78);--av-shadow:0 24px 70px rgba(0,0,0,.52)}
+html body:not(.guide-page){background:radial-gradient(circle at 50% -10%,rgba(53,239,143,.065),transparent 30%),linear-gradient(180deg,#010302 0%,#030604 38%,#010201 100%)!important;color:var(--av-pearl)!important}
+html body:not(.guide-page)::before{content:""!important;display:block!important;position:fixed!important;inset:0!important;pointer-events:none!important;z-index:-1!important;opacity:.23!important;background-image:linear-gradient(rgba(241,207,114,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(241,207,114,.025) 1px,transparent 1px),radial-gradient(circle at 18% 18%,rgba(53,239,143,.17) 0 1px,transparent 1.8px),radial-gradient(circle at 77% 36%,rgba(241,207,114,.18) 0 1px,transparent 1.8px)!important;background-size:64px 64px,64px 64px,220px 220px,280px 280px!important}
+html body #av-consent.av-consent{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+body:not(.guide-page) section{position:relative;content-visibility:visible!important;contain:none!important;contain-intrinsic-size:auto!important}
+body:not(.guide-page) .reveal{opacity:1!important;transform:none!important;transition:none!important}
+body:not(.guide-page) img{content-visibility:visible!important}
+body:not(.guide-page) section:not(.hero):not(.av-pro-hero){border-top:1px solid rgba(241,207,114,.06)}
+body:not(.guide-page) section:not(.hero):not(.av-pro-hero)::after{content:"";position:absolute;left:7%;right:7%;top:0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(53,239,143,.12),rgba(241,207,114,.35),rgba(53,239,143,.1),transparent)}
+/* HEADER */
+body:not(.guide-page) #av-site-header.top{background:linear-gradient(180deg,rgba(5,10,7,.97),rgba(1,3,2,.965))!important;border-bottom:1px solid rgba(241,207,114,.42)!important;box-shadow:0 12px 38px rgba(0,0,0,.62),0 1px 0 rgba(53,239,143,.08),inset 0 -1px 0 rgba(255,244,190,.045)!important}
+body:not(.guide-page) #av-site-header.top::after{content:"";position:absolute;left:4%;right:4%;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(53,239,143,.45) 18%,#f2d175 50%,rgba(53,239,143,.38) 82%,transparent);box-shadow:0 0 11px rgba(241,207,114,.28);pointer-events:none}
+body:not(.guide-page) .av-premium-title{background:linear-gradient(180deg,#fff8d9 0%,#f4d777 42%,#b77f24 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important;text-shadow:0 0 12px rgba(241,207,114,.16)!important}
+/* HERO */
+body:not(.guide-page) .av-pro-hero{background:radial-gradient(circle at 76% 38%,rgba(53,239,143,.09),transparent 27%),radial-gradient(circle at 28% 18%,rgba(241,207,114,.075),transparent 30%),linear-gradient(155deg,#020403 0%,#06100b 46%,#010201 100%)!important;border-bottom:1px solid rgba(241,207,114,.18)!important;overflow:hidden!important}
+body:not(.guide-page) .av-pro-hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 18%,rgba(255,255,255,.018) 44%,transparent 62%),radial-gradient(circle at 72% 44%,transparent 0 21%,rgba(241,207,114,.06) 22%,transparent 22.6%,transparent 29%,rgba(53,239,143,.045) 29.5%,transparent 30%)}
+body:not(.guide-page) .av-pro-copy{position:relative;z-index:2}
+body:not(.guide-page) .av-pro-kicker{color:#77f6ad!important;letter-spacing:.15em!important;text-transform:uppercase!important}
+body:not(.guide-page) .av-pro-copy h1,body:not(.guide-page) .av-pro-heading h2,body:not(.guide-page) .av-offers-head h2,body:not(.guide-page) .av-case-showcase-head h2,body:not(.guide-page) .av-expert-copy h2,body:not(.guide-page) .freeq-home-card h2{color:#f0d078!important;text-shadow:0 1px 0 rgba(255,250,220,.18),0 0 22px rgba(241,207,114,.12)!important}
+body:not(.guide-page) .av-pro-copy h1 span{background:linear-gradient(90deg,#dcae45,#fff1a9,#c8922d)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important}
+body:not(.guide-page) .av-pro-primary,body:not(.guide-page) .cta{border:1px solid rgba(255,234,151,.86)!important;background:linear-gradient(180deg,#fff0a7 0%,#e8bd55 46%,#b67d21 100%)!important;color:#100b03!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 32px rgba(184,134,45,.25),0 0 18px rgba(241,207,114,.12)!important}
+body:not(.guide-page) .av-pro-secondary,body:not(.guide-page) .btn2{border:1px solid rgba(53,239,143,.38)!important;background:linear-gradient(180deg,rgba(9,28,18,.78),rgba(3,12,8,.9))!important;color:#f4fff8!important;box-shadow:inset 0 0 0 1px rgba(241,207,114,.045)!important}
+body:not(.guide-page) .av-pro-primary:hover,body:not(.guide-page) .cta:hover,body:not(.guide-page) .av-pro-secondary:hover,body:not(.guide-page) .btn2:hover{transform:translateY(-2px)!important;filter:brightness(1.04)!important}
+body:not(.guide-page) .av-pro-visual{filter:drop-shadow(0 24px 42px rgba(0,0,0,.52))}
+body:not(.guide-page) .av-pro-visual img{filter:contrast(1.045) saturate(.92) brightness(.98)!important}
+/* HOROSCOPE + FREE QUESTION */
+body:not(.guide-page) .av-horoscop-teaser,body:not(.guide-page) .av-horoscop-mobile-entry,body:not(.guide-page) .freeq-home{background:linear-gradient(180deg,#030704,#06110b)!important}
+body:not(.guide-page) .av-horoscop-teaser__in,body:not(.guide-page) .av-horoscop-mobile-entry,body:not(.guide-page) .freeq-home-card{border:1px solid rgba(241,207,114,.36)!important;background:radial-gradient(circle at 88% 10%,rgba(53,239,143,.07),transparent 28%),linear-gradient(145deg,rgba(7,18,12,.96),rgba(3,8,5,.98))!important;box-shadow:0 20px 55px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,245,195,.035)!important}
+body:not(.guide-page) .av-horoscop-teaser h2,body:not(.guide-page) .av-horoscop-mobile-entry h2{color:#efd47f!important}
+/* CARD SYSTEM */
+body:not(.guide-page) .av-pro-interest,body:not(.guide-page) .av-offer,body:not(.guide-page) .av-case-showcase-card,body:not(.guide-page) .av-expert-shell,body:not(.guide-page) .av-booking-checkout>*,body:not(.guide-page) .av-google-reviews .av-pro-wrap{border:1px solid rgba(241,207,114,.23)!important;background:linear-gradient(155deg,rgba(9,22,14,.92),rgba(3,8,5,.965))!important;box-shadow:0 18px 48px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,245,195,.035)!important}
+body:not(.guide-page) .av-pro-interest,body:not(.guide-page) .av-offer,body:not(.guide-page) .av-case-showcase-card{transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease!important}
+body:not(.guide-page) .av-pro-interest:hover,body:not(.guide-page) .av-offer:hover,body:not(.guide-page) .av-case-showcase-card:hover{transform:translateY(-4px)!important;border-color:rgba(241,207,114,.48)!important;box-shadow:0 24px 64px rgba(0,0,0,.5),0 0 26px rgba(53,239,143,.055)!important}
+body:not(.guide-page) .av-pro-interest img,body:not(.guide-page) .av-case-showcase-visual img{filter:saturate(.82) contrast(1.06) brightness(.91)!important;transition:filter .25s ease,transform .3s ease!important}
+body:not(.guide-page) .av-pro-interest:hover img,body:not(.guide-page) .av-case-showcase-card:hover img{filter:saturate(.95) contrast(1.07) brightness(.98)!important;transform:scale(1.012)!important}
+body:not(.guide-page) .av-pro-interest h3,body:not(.guide-page) .av-offer h3,body:not(.guide-page) .av-case-showcase-card h3,body:not(.guide-page) .av-offer-price{color:#edd17b!important}
+body:not(.guide-page) .av-pro-interest span,body:not(.guide-page) .av-case-showcase-eyebrow,body:not(.guide-page) .av-expert-kicker{color:#6cf3a5!important;letter-spacing:.09em!important}
+body:not(.guide-page) .av-offer--featured{border-color:rgba(241,207,114,.55)!important;box-shadow:0 24px 65px rgba(0,0,0,.5),0 0 34px rgba(241,207,114,.075)!important}
+/* EXPERT / REVIEWS */
+body:not(.guide-page) .av-expert-trust,body:not(.guide-page) .av-google-reviews{background:radial-gradient(circle at 12% 40%,rgba(53,239,143,.055),transparent 28%),linear-gradient(180deg,#020503,#050b07)!important}
+body:not(.guide-page) .av-expert-badge{border-color:rgba(53,239,143,.24)!important;background:rgba(7,23,14,.72)!important;color:#edf9f1!important}
+body:not(.guide-page) .av-expert-badge--gold{border-color:rgba(241,207,114,.35)!important;color:#f1d783!important}
+/* CASE STUDIES */
+body:not(.guide-page) .av-case-showcase{background:radial-gradient(circle at 50% 0,rgba(241,207,114,.055),transparent 26%),linear-gradient(180deg,#030603,#010201)!important}
+body:not(.guide-page) .av-case-showcase-frame{border:1px solid rgba(241,207,114,.18)!important;background:rgba(2,7,4,.72)!important;box-shadow:0 30px 90px rgba(0,0,0,.44)!important}
+/* BOOKING / FOOTER */
+body:not(.guide-page) #programari{background:radial-gradient(circle at 50% 0,rgba(53,239,143,.06),transparent 34%),linear-gradient(180deg,#020503,#040805)!important}
+body:not(.guide-page) footer,body:not(.guide-page) .foot{background:linear-gradient(180deg,#030604 0%,#010201 100%)!important;border-top:1px solid rgba(241,207,114,.28)!important;box-shadow:0 -18px 60px rgba(0,0,0,.36)!important}
+/* FUTURISTIC LIGHT RAILS */
+body:not(.guide-page) .av-pro-heading::before,body:not(.guide-page) .av-offers-head::before,body:not(.guide-page) .av-case-showcase-head::before{content:"";display:block;width:78px;height:1px;margin:0 auto 13px;background:linear-gradient(90deg,transparent,#47ed95,#f1cf72,#47ed95,transparent);box-shadow:0 0 9px rgba(53,239,143,.16)}
+@media(max-width:820px){
+ html body:not(.guide-page)::before{opacity:.13!important;background-size:52px 52px,52px 52px,180px 180px,230px 230px!important}
+ body:not(.guide-page) #av-site-header.top{box-shadow:0 8px 24px rgba(0,0,0,.52),0 1px 0 rgba(53,239,143,.07)!important}
+ body:not(.guide-page) .av-pro-hero{background:radial-gradient(circle at 50% 24%,rgba(53,239,143,.055),transparent 30%),linear-gradient(180deg,#020403,#030604 72%,#010201)!important}
+ body:not(.guide-page) .av-pro-copy{padding-left:3px!important;padding-right:3px!important}
+ body:not(.guide-page) .av-pro-primary,body:not(.guide-page) .av-pro-secondary,body:not(.guide-page) .cta,body:not(.guide-page) .btn2{border-radius:13px!important}
+ body:not(.guide-page) .av-pro-interest,body:not(.guide-page) .av-offer,body:not(.guide-page) .av-case-showcase-card,body:not(.guide-page) .freeq-home-card{border-radius:18px!important}
+ body:not(.guide-page) section:not(.hero):not(.av-pro-hero)::after{left:5%;right:5%}
+}
