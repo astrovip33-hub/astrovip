@@ -2,7 +2,7 @@
 export const WORKSTREAMS=Object.freeze([
   {id:'intelligence',number:'02',label:'Intelligence',modules:['intelligence','seo','competitors','geo','local','content','authority'],sources:['intelligence','gsc']},
   {id:'operations',number:'03',label:'Operations',modules:['health','operations','connections','google'],sources:['health','autopilot','recovery']},
-  {id:'revenue',number:'04',label:'Money',modules:['revenue'],sources:['ga4','money']},
+  {id:'revenue',number:'04',label:'Money',modules:['googleAds','revenue'],sources:['googleAds','ga4','money']},
   {id:'operator',number:'05',label:'AI Operator',modules:['operator'],sources:['intelligence','gsc','ga4','money','local','health','autopilot']},
   {id:'qa',number:'06',label:'QA & Preview',modules:['qa'],sources:['health','autopilot']},
 ]);

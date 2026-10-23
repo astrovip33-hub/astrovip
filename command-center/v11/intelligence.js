@@ -11,6 +11,7 @@ const MODULE_DEFINITIONS = [
   {id:'local',label:'Maps & Recenzii',eyebrow:'LOCAL INTELLIGENCE',title:'Prezența locală.',accent:'Un singur profil real.',description:'Google Business Profile pentru Bulevardul Unirii 33, București.',sources:['local']},
   {id:'content',label:'Conținut & Editor',eyebrow:'CONTENT STUDIO',title:'Idei susținute de date.',accent:'Control vizual simplu.',description:'Oportunități din căutări și acces direct la editorul AstroVip.',sources:['gsc','intelligence']},
   {id:'authority',label:'Autoritate',eyebrow:'AUTHORITY INTELLIGENCE',title:'Încredere care',accent:'se poate verifica.',description:'Domenii din backlink gap, pentru verificare editorială și selecție.',sources:['intelligence']},
+  {id:'googleAds',label:'Google Ads',eyebrow:'WORK 04 · PAID SEARCH',title:'Trafic plătit.',accent:'Control cu confirmare.',description:'Campanii, costuri, bugete și cuvinte cheie Google Ads, cu modificări explicite și confirmare înainte de scriere.',sources:['googleAds']},
   {id:'revenue',label:'Money · Leaduri & Venituri',eyebrow:'WORK 04 · MONEY',title:'De la vizibilitate',accent:'la rezultate.',description:'Clickuri, solicitări, programări și achiziții, cu atribuirea sursei și servicii vândute în GA4.',sources:['ga4','money']},
   {id:'health',label:'Sănătate & Alerte',eyebrow:'OPERATIONS INTELLIGENCE',title:'Controlul tehnic.',accent:'Cu semnale clare.',description:'Disponibilitatea rutelor, ultimul deploy și ultima verificare Auto-Pilot.',sources:['health','autopilot']},
   {id:'operations',label:'Operations',eyebrow:'WORK 03 · OPERATIONS',title:'Publicare și recuperare.',accent:'Control în fiecare pas.',description:'GitHub, Cloudflare, puncte de recuperare și conexiuni din infrastructura existentă.',sources:['health','autopilot','recovery']},
@@ -61,7 +62,7 @@ export function operatorIntent(raw) {
   if(/conex|conect|autoriz/.test(q))return {module:'connections'};
   if(/priorit|recomand|impact|operator|ce facem/.test(q))return {module:'operator'};
   if(/\bqa\b|responsive|regres|secur|preview|performanta/.test(q))return {module:'qa'};
-  const mappings=[['competitors',/concur|competit/],['geo',/\bai\b|geo|citari|chatgpt|peec/],['local',/maps|recenzi|review|local|google business/],['authority',/backlink|autoritate|mentiun/],['health',/sanatate|health|alert|pilot|eroare/],['revenue',/venit|lead|trafic|convers|ga4|vanzar/],['content',/continut|articol|content/],['seo',/seo|cuvinte|oportunitat|ranking|google|gsc/],['cockpit',/cockpit|panou|general/]];
+  const mappings=[['googleAds',/google ads|\bads\b|reclame|campani|cpc|buget.*google/],['competitors',/concur|competit/],['geo',/\bai\b|geo|citari|chatgpt|peec/],['local',/maps|recenzi|review|local|google business/],['authority',/backlink|autoritate|mentiun/],['health',/sanatate|health|alert|pilot|eroare/],['revenue',/venit|lead|trafic|convers|ga4|vanzar/],['content',/continut|articol|content/],['seo',/seo|cuvinte|oportunitat|ranking|google|gsc/],['cockpit',/cockpit|panou|general/]];
   const found=mappings.find(([,re])=>re.test(q));
   return found?{module:found[0]}:null;
 }

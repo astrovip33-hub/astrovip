@@ -121,7 +121,7 @@ function health(){
 function content(){return `<div class="columns">${card('Editor vizual · Premium Studio',`<p class="lead">Site-ul tău, editat direct.</p><div class="list"><div class="item"><span class="item-number">01</span><div class="item-body"><strong>Alege pagina și elementul</strong><small>Texte, titluri, carduri sau butoane din preview.</small></div></div><div class="item"><span class="item-number">02</span><div class="item-body"><strong>Modifică textul și aspectul</strong><small>Culori, font, spațiere și preseturi AstroVip.</small></div></div><div class="item"><span class="item-number">03</span><div class="item-body"><strong>Verifică și salvează</strong><small>Vezi mobilul, salvează draftul și folosește publicarea din Studio.</small></div></div></div><div class="card-actions">${link('/command-center/#studio','Editează site-ul',true)}</div>`,badge('PREMIUM STUDIO','good'))}${card('Idei din căutările reale',opportunityList(),badge('SEARCH CONSOLE','warn'))}</div>`;}
 function renderModule(){
   const room=()=>renderRoom(active,{data,report,number,badge,link,card,empty,escape,records:store.records,filters});
-  if(['intelligence','competitors','geo','local','authority','operations','operator','qa'].includes(active))return room();
+  if(['intelligence','competitors','geo','local','authority','googleAds','operations','operator','qa'].includes(active))return room();
   switch(active){
     case 'cockpit':return cockpit();
     case 'seo':return seo()+mangoolsCard()+room();
@@ -189,6 +189,37 @@ async function unlock(){
   selectModule();$('workspace').focus({preventScroll:true});
 }
 $('navigation').innerHTML=workflowNavigation(MODULES,m=>`<svg viewBox="0 0 24 24">${paths[MODULES.indexOf(m)%paths.length]}</svg>`,escape);
+$('content').addEventListener('click',async event=>{
+  const button=event.target.closest('[data-ads-action]');
+  if(!button||active!=='googleAds'||!authenticated)return;
+  const action=button.dataset.adsAction,resourceName=button.dataset.resource||'',label=button.dataset.label||'element Google Ads';
+  let body={action,resourceName,confirm:true},message='';
+  if(action==='budget'){
+    const current=Number(button.dataset.budget||0),raw=prompt(`Buget zilnic pentru ${label} (RON)`,Number.isFinite(current)&&current>0?String(current):'60');
+    if(raw===null)return;
+    const amountRon=Number(String(raw).trim().replace(',','.'));
+    if(!Number.isFinite(amountRon)||amountRon<1){alert('Introdu un buget valid, de minimum 1 RON/zi.');return;}
+    if(!confirm(`Confirmi schimbarea bugetului pentru ${label} la ${amountRon.toFixed(2)} RON/zi?\n\nAceastă modificare poate schimba imediat cheltuiala campaniei.`))return;
+    body.amountRon=amountRon;message=`Buget actualizat la ${amountRon.toFixed(2)} RON/zi.`;
+  }else{
+    const status=button.dataset.status;
+    body.status=status;
+    const enabling=status==='ENABLED';
+    const noun=action==='campaign_status'?'campania':'cuvântul cheie';
+    const verb=enabling?'activezi':'pui pe pauză';
+    const warning=enabling?'\n\nActivarea poate relua cheltuirea în Google Ads.':'';
+    if(!confirm(`Confirmi că ${verb} ${noun} „${label}”?${warning}`))return;
+    message=enabling?'Activare trimisă către Google Ads.':'Pauză trimisă către Google Ads.';
+  }
+  button.disabled=true;$('operator-result').hidden=false;$('operator-result').textContent='Trimit modificarea către Google Ads…';
+  try{
+    await store.command('google-ads/action',body);
+  }catch(error){$('operator-result').textContent='Google Ads: modificarea nu a fost aplicată · '+error.message;button.disabled=false;return;}
+  try{
+    await store.load('googleAds',{force:true});
+    $('operator-result').textContent=message+' Datele au fost recitite din API.';render();
+  }catch(error){$('operator-result').textContent=message+' Modificarea a fost acceptată, dar recitirea datelor a eșuat. Actualizează modulul înainte de o nouă modificare.';}
+});
 $('content').addEventListener('submit',event=>{
   if(event.target.id!=='research-filters')return;
   event.preventDefault();const form=new FormData(event.target);
