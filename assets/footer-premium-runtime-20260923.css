@@ -121,5 +121,11 @@
   #astrovip-footer #av-footer-chat-premium{width:100%!important}
 }
 
-/* Mobile polish: lift the complete premium ANPC/SAL card slightly. */
-@media(max-width:600px){#astrovip-footer .av-footer-consumer.av-footer-consumer--premium{margin-top:3px!important;}}
+/* Premium ANPC/SAL: never crop the artwork; keep the whole card visible. */
+#astrovip-footer .av-footer-consumer-card.av-footer-consumer-card--premium{height:auto!important;min-height:0!important;overflow:visible!important;}
+#astrovip-footer .av-footer-anpc-premium{display:block!important;width:100%!important;height:auto!important;max-width:900px!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important;margin:0 auto!important;}
+@media(max-width:600px){
+  #astrovip-footer .av-footer-consumer.av-footer-consumer--premium{margin-top:3px!important;padding:0 2px 4px!important;overflow:visible!important;}
+  #astrovip-footer .av-footer-consumer-card.av-footer-consumer-card--premium{border-radius:14px!important;overflow:visible!important;}
+  #astrovip-footer .av-footer-anpc-premium{width:100%!important;height:auto!important;max-height:none!important;}
+}
