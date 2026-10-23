@@ -166,7 +166,7 @@ entity = {
             "url": "https://astrovip.ro/",
             "description": "Proiect românesc de astrologie și numerologie premium, cu activitate în București și online.",
             "disambiguatingDescription": "AstroVip de la astrovip.ro este proiectul românesc fondat de Cătălin Smaranda și este distinct de cluburi de astronomie, observatoare sau alte proiecte internaționale cu nume asemănătoare.",
-            "logo": {"@type": "ImageObject", "url": "https://astrovip.ro/assets/1000043152.png"},
+            "logo": {"@type": "ImageObject", "url": "https://astrovip.ro/assets/astrovip-logo-512.png", "width": 512, "height": 512},
             "sameAs": OFFICIAL,
             "founder": {"@id": PERSON_ID},
             "areaServed": [{"@type": "Country", "name": "România"}, {"@type": "City", "name": "București"}],

@@ -19,8 +19,8 @@
       "logo": {
         "@type": "ImageObject",
         "@id": "https://astrovip.ro/#logo",
-        "url": "https://astrovip.ro/assets/1000043152.png",
-        "contentUrl": "https://astrovip.ro/assets/1000043152.png"
+        "url": "https://astrovip.ro/assets/astrovip-logo-512.png",
+        "contentUrl": "https://astrovip.ro/assets/astrovip-logo-512.png"
       },
       "sameAs": [
         "https://www.google.com/maps?cid=15612666586801751925",
