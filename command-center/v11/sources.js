@@ -1,4 +1,4 @@
-export const ENDPOINTS=Object.freeze({mangools:'/assets/v11-mangools.json',overview:'overview',connections:'connections',gsc:'gsc',ga4:'ga4',seranking:'seranking',health:'site-health',autopilot:'autopilot-status',intelligence:'intelligence',money:'money',local:'local',recovery:'recovery-points'});
+export const ENDPOINTS=Object.freeze({mangools:'/assets/v11-mangools.json',overview:'overview',connections:'connections',gsc:'gsc',ga4:'ga4',googleAds:'google-ads',seranking:'seranking',health:'site-health',autopilot:'autopilot-status',intelligence:'intelligence',money:'money',local:'local',recovery:'recovery-points'});
 export const SESSION_KEY='avcc_v3_token';
 // All state stays in memory. No provider response or admin token is persisted here.
 export class Sources {
@@ -9,6 +9,13 @@ export class Sources {
   clear(){this.epoch++;for(const c of this.controllers)c.abort();this.controllers.clear();this.records.clear();this.pending.clear();}
   importSnapshot(snapshot){this.clear();this.records.set('intelligence',{status:'ready',data:{data:snapshot},at:this.now(),local:true});}
   async ping(){const r=await this.fetcher('/api/command/ping',{cache:'no-store',headers:{authorization:'Bearer '+this.token()},signal:AbortSignal.timeout(30000)});if(!r.ok)throw Error(r.status===401?'Acces respins. Verifică tokenul.':'Serverul nu a confirmat accesul. Încearcă din nou.');}
+  async command(path,body){
+    const response=await this.fetcher('/api/command/'+String(path).replace(/^\/+/,''),{method:'POST',cache:'no-store',headers:{authorization:'Bearer '+this.token(),'content-type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(30000)});
+    if(response.status===401){this.clear();this.onUnauthorized();throw Error('Acces respins. Verifică tokenul.');}
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw Error(data.error||'command_failed');
+    return data;
+  }
   load(key,{force=false}={}){
     if(!Object.hasOwn(ENDPOINTS,key))return Promise.reject(Error('Unknown source'));
     if(this.records.get(key)?.local)return Promise.resolve(this.records.get(key));

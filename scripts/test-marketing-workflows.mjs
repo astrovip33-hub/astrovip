@@ -11,7 +11,7 @@ import {renderRoom,workflowNavigation} from '../command-center/v11/rooms.js';
 import {MODULES} from '../command-center/v11/intelligence.js';
 
 test('new data routes enforce auth and GET before any provider or snapshot access',async()=>{
-  for(const path of ['intelligence','money','local']){
+  for(const path of ['intelligence','money','local','google-ads']){
     const unauth=await handleCommandCenter(new Request('https://astrovip.ro/api/command/'+path),{COMMAND_CENTER_TOKEN:'test-admin'});
     assert.equal(unauth.status,401);
     const post=await handleCommandCenter(new Request('https://astrovip.ro/api/command/'+path,{method:'POST',headers:{authorization:'Bearer test-admin'}}),{COMMAND_CENTER_TOKEN:'test-admin'});
@@ -95,4 +95,12 @@ test('rendered export strings are escaped and no raw HTML from source data becom
   const malicious={...snapshot,keywords:[{keyword:'<img src=x onerror=alert(1)>',volume:3,difficulty:1,sources:['<script>'],gap:true}]};
   const html=renderRoom('seo',{data:()=>({data:malicious}),number:String,badge:()=>'',link:()=>'',card:(title,body)=>body,empty:()=>'',escape,records:new Map(),filters:{query:'',maxDifficulty:100,gapsOnly:false}});
   assert(!html.includes('<img src=x'));assert(html.includes('&lt;img'));
+});
+
+test('Google Ads room exposes only confirmed control actions and hides negative keywords from quick control',()=>{
+  const escape=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const ads={period:'LAST_30_DAYS',account:{name:'AstroVip',currency:'RON'},totals:{cost:25,clicks:10,averageCpc:2.5,conversions:2},campaigns:[{name:'Search',status:'ENABLED',resourceName:'customers/1112223333/campaigns/1',budgetResourceName:'customers/1112223333/campaignBudgets/2',budget:60,cost:25,clicks:10,conversions:2,sharedBudget:false}],keywords:[{text:'astrolog online',campaignName:'Search',adGroupName:'Consultatii',matchType:'PHRASE',status:'ENABLED',resourceName:'customers/1112223333/adGroupCriteria/3~4',cost:10,clicks:5,conversions:1,negative:false},{text:'gratuit',negative:true}]};
+  const html=renderRoom('googleAds',{data:key=>key==='googleAds'?ads:null,number:(v,d=0)=>Number(v).toFixed(d),badge:(text)=>`<span>${escape(text)}</span>`,link:(href,label)=>`<a href="${escape(href)}">${escape(label)}</a>`,card:(title,body)=>`<section>${escape(title)}${body}</section>`,empty:(title,detail)=>escape(title+detail),escape,records:new Map(),filters:{}});
+  assert(html.includes('data-ads-action="campaign_status"'));assert(html.includes('data-ads-action="budget"'));assert(html.includes('data-ads-action="keyword_status"'));
+  assert(html.includes('astrolog online'));assert(!html.includes('gratuit'));assert(html.includes('25.00 RON'));
 });

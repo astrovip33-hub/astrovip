@@ -8,6 +8,8 @@ const COMPOSIO_USER = 'astrovip-admin';
 const GSC_TOOLKIT = 'google_search_console';
 const GA4_TOOLKIT = 'google_analytics';
 const DRIVE_TOOLKIT = 'googledrive';
+const GOOGLE_ADS_TOOLKIT = 'googleads';
+const GOOGLE_ADS_API_VERSION = 'v26';
 const REPORT_SCOPES = {
   [GSC_TOOLKIT]: 'https://www.googleapis.com/auth/webmasters.readonly',
   [GA4_TOOLKIT]: 'https://www.googleapis.com/auth/analytics.readonly',
@@ -568,6 +570,187 @@ async function connectedProxy(env, toolkit, endpoint, method = 'GET', body) {
   return composioProxy(env, account.id, endpoint, method, body);
 }
 
+function configuredGoogleAdsCustomerId(env) {
+  const customer = String(env.GOOGLE_ADS_CUSTOMER_ID || '').replace(/\D/g, '');
+  return /^\d{10}$/.test(customer) ? customer : null;
+}
+
+function googleAdsDirectReady(env) {
+  return (googleOauthReady(env) || googleServiceReady(env)) && has(env, 'GOOGLE_ADS_DEVELOPER_TOKEN');
+}
+
+async function googleAdsConnectedAccount(env) {
+  const account = selectAccount(await composioConnectedAccounts(env, [GOOGLE_ADS_TOOLKIT]), GOOGLE_ADS_TOOLKIT, env);
+  if (!account) throw new Error('authorize_googleads');
+  return account;
+}
+
+async function googleAdsCustomerId(env) {
+  const configured = configuredGoogleAdsCustomerId(env);
+  if (configured) return configured;
+  const account = await googleAdsConnectedAccount(env);
+  const result = await composioFetch(env, '/tools/execute/GOOGLEADS_LIST_ACCESSIBLE_CUSTOMERS', {
+    method: 'POST', body: { connected_account_id: account.id, user_id: composioUser(env), arguments: {} },
+  });
+  if (!result.ok || result.data?.successful === false || result.data?.error) throw new Error('google_ads_account_check_failed');
+  const names = result.data?.data?.resourceNames || result.data?.data?.resource_names || [];
+  const customers = [...new Set(names.map(name => String(name).match(/^customers\/(\d{10})$/)?.[1]).filter(Boolean))];
+  if (customers.length === 1) return customers[0];
+  if (!customers.length) throw new Error('google_ads_no_accessible_accounts');
+  throw new Error('google_ads_customer_selection_required');
+}
+
+async function googleAdsHeaders(env) {
+  if (!googleAdsDirectReady(env)) throw new Error('google_ads_direct_control_configuration_required');
+  const headers = {
+    authorization: `Bearer ${await googleUserToken(env, ['https://www.googleapis.com/auth/adwords'])}`,
+    'developer-token': String(env.GOOGLE_ADS_DEVELOPER_TOKEN).trim(),
+    'content-type': 'application/json',
+  };
+  if (has(env, 'GOOGLE_ADS_LOGIN_CUSTOMER_ID')) {
+    const loginCustomer = String(env.GOOGLE_ADS_LOGIN_CUSTOMER_ID).replace(/\D/g, '');
+    if (!/^\d{10}$/.test(loginCustomer)) throw new Error('google_ads_login_customer_id_invalid');
+    headers['login-customer-id'] = loginCustomer;
+  }
+  return headers;
+}
+
+async function googleAdsRequest(env, servicePath, payload, customerId = null) {
+  const customer = customerId || await googleAdsCustomerId(env);
+  const endpoint = `https://googleads.googleapis.com/${GOOGLE_ADS_API_VERSION}/customers/${customer}/${servicePath}`;
+  if (googleAdsDirectReady(env) && configuredGoogleAdsCustomerId(env)) {
+    return providerJson(endpoint, await googleAdsHeaders(env), { method: 'POST', body: JSON.stringify(payload) });
+  }
+  const account = await googleAdsConnectedAccount(env);
+  return composioProxy(env, account.id, endpoint, 'POST', payload);
+}
+
+async function googleAdsSearch(env, query, customerId = null) {
+  return googleAdsRequest(env, 'googleAds:search', { query }, customerId);
+}
+
+function microsToUnits(value) {
+  return Number(value || 0) / 1000000;
+}
+
+function googleAdsResourceForCustomer(resourceName, customer, kind) {
+  const value = String(resourceName || '');
+  const tail = kind === 'adGroupCriteria' ? '\\d+~\\d+' : '\\d+';
+  if (!(new RegExp(`^customers/${customer}/${kind}/${tail}$`)).test(value)) throw new Error('google_ads_resource_not_allowed');
+  return value;
+}
+
+async function googleAdsSnapshot(env) {
+  const customer = await googleAdsCustomerId(env);
+  const customerQuery = 'SELECT customer.id, customer.descriptive_name, customer.currency_code FROM customer LIMIT 1';
+  const campaignQuery = `SELECT campaign.id, campaign.resource_name, campaign.name, campaign.status, campaign_budget.resource_name, campaign_budget.amount_micros, campaign_budget.explicitly_shared, metrics.impressions, metrics.clicks, metrics.cost_micros, metrics.conversions FROM campaign WHERE campaign.status != 'REMOVED' AND segments.date DURING LAST_30_DAYS ORDER BY metrics.cost_micros DESC LIMIT 50`;
+  const keywordQuery = `SELECT campaign.id, campaign.name, ad_group.id, ad_group.name, ad_group_criterion.resource_name, ad_group_criterion.keyword.text, ad_group_criterion.keyword.match_type, ad_group_criterion.status, ad_group_criterion.negative, metrics.impressions, metrics.clicks, metrics.cost_micros, metrics.conversions FROM keyword_view WHERE ad_group_criterion.status != 'REMOVED' AND segments.date DURING LAST_30_DAYS ORDER BY metrics.cost_micros DESC LIMIT 200`;
+  const [customerResult, campaignResult, keywordResult] = await Promise.all([
+    googleAdsSearch(env, customerQuery, customer),
+    googleAdsSearch(env, campaignQuery, customer),
+    googleAdsSearch(env, keywordQuery, customer),
+  ]);
+  const account = customerResult.results?.[0]?.customer || {};
+  const campaigns = (campaignResult.results || []).map(row => {
+    const metrics = row.metrics || {};
+    const impressions = Number(metrics.impressions || 0);
+    const clicks = Number(metrics.clicks || 0);
+    const cost = microsToUnits(metrics.costMicros);
+    return {
+      id: String(row.campaign?.id || ''),
+      resourceName: row.campaign?.resourceName || '',
+      name: row.campaign?.name || '',
+      status: row.campaign?.status || 'UNKNOWN',
+      budgetResourceName: row.campaignBudget?.resourceName || '',
+      budget: microsToUnits(row.campaignBudget?.amountMicros),
+      sharedBudget: Boolean(row.campaignBudget?.explicitlyShared),
+      impressions, clicks, cost,
+      conversions: Number(metrics.conversions || 0),
+      ctr: impressions ? clicks / impressions : 0,
+      averageCpc: clicks ? cost / clicks : 0,
+    };
+  });
+  const keywords = (keywordResult.results || []).map(row => {
+    const metrics = row.metrics || {};
+    const impressions = Number(metrics.impressions || 0);
+    const clicks = Number(metrics.clicks || 0);
+    const cost = microsToUnits(metrics.costMicros);
+    return {
+      campaignId: String(row.campaign?.id || ''),
+      campaignName: row.campaign?.name || '',
+      adGroupId: String(row.adGroup?.id || ''),
+      adGroupName: row.adGroup?.name || '',
+      resourceName: row.adGroupCriterion?.resourceName || '',
+      text: row.adGroupCriterion?.keyword?.text || '',
+      matchType: row.adGroupCriterion?.keyword?.matchType || '',
+      status: row.adGroupCriterion?.status || 'UNKNOWN',
+      negative: Boolean(row.adGroupCriterion?.negative),
+      impressions, clicks, cost,
+      conversions: Number(metrics.conversions || 0),
+      ctr: impressions ? clicks / impressions : 0,
+      averageCpc: clicks ? cost / clicks : 0,
+    };
+  });
+  const totals = campaigns.reduce((acc, item) => {
+    acc.impressions += item.impressions;
+    acc.clicks += item.clicks;
+    acc.cost += item.cost;
+    acc.conversions += item.conversions;
+    return acc;
+  }, { impressions: 0, clicks: 0, cost: 0, conversions: 0 });
+  totals.ctr = totals.impressions ? totals.clicks / totals.impressions : 0;
+  totals.averageCpc = totals.clicks ? totals.cost / totals.clicks : 0;
+  return {
+    ok: true,
+    period: 'LAST_30_DAYS',
+    account: {
+      id: String(account.id || customer),
+      name: account.descriptiveName || 'Google Ads',
+      currency: account.currencyCode || 'RON',
+    },
+    totals,
+    campaigns,
+    keywords,
+  };
+}
+
+async function googleAdsMutateAction(env, body) {
+  if (body?.confirm !== true) throw new Error('google_ads_confirmation_required');
+  const customer = await googleAdsCustomerId(env);
+  const action = String(body?.action || '');
+  if (action === 'campaign_status') {
+    const status = String(body?.status || '').toUpperCase();
+    if (!['ENABLED', 'PAUSED'].includes(status)) throw new Error('google_ads_campaign_status_invalid');
+    const resourceName = googleAdsResourceForCustomer(body?.resourceName, customer, 'campaigns');
+    await googleAdsRequest(env, 'campaigns:mutate', {
+      operations: [{ updateMask: 'status', update: { resourceName, status } }],
+    }, customer);
+    return { ok: true, action, resourceName, status };
+  }
+  if (action === 'budget') {
+    const amountRon = Number(body?.amountRon);
+    const maxBudget = Number(env.GOOGLE_ADS_MAX_DAILY_BUDGET_RON || 1000);
+    if (!Number.isFinite(amountRon) || amountRon < 1 || amountRon > maxBudget) throw new Error('google_ads_budget_out_of_range');
+    const resourceName = googleAdsResourceForCustomer(body?.resourceName, customer, 'campaignBudgets');
+    const budgetCheck = await googleAdsSearch(env, `SELECT campaign_budget.resource_name, campaign_budget.explicitly_shared FROM campaign_budget WHERE campaign_budget.resource_name = '${resourceName}' LIMIT 1`, customer);
+    if (budgetCheck.results?.[0]?.campaignBudget?.explicitlyShared === true) throw new Error('google_ads_shared_budget_requires_google_ads_ui');
+    await googleAdsRequest(env, 'campaignBudgets:mutate', {
+      operations: [{ updateMask: 'amount_micros', update: { resourceName, amountMicros: Math.round(amountRon * 1000000) } }],
+    }, customer);
+    return { ok: true, action, resourceName, amountRon };
+  }
+  if (action === 'keyword_status') {
+    const status = String(body?.status || '').toUpperCase();
+    if (!['ENABLED', 'PAUSED'].includes(status)) throw new Error('google_ads_keyword_status_invalid');
+    const resourceName = googleAdsResourceForCustomer(body?.resourceName, customer, 'adGroupCriteria');
+    await googleAdsRequest(env, 'adGroupCriteria:mutate', {
+      operations: [{ updateMask: 'status', update: { resourceName, status } }],
+    }, customer);
+    return { ok: true, action, resourceName, status };
+  }
+  throw new Error('google_ads_action_not_supported');
+}
+
 async function driveFolder(env) {
   if (!has(env, 'DRIVE_BACKUP_FOLDER_ID')) throw new Error('drive_backup_folder_not_configured');
   const endpoint = `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(env.DRIVE_BACKUP_FOLDER_ID)}?fields=id,name,mimeType,capabilities(canAddChildren)&supportsAllDrives=true`;
@@ -609,13 +792,12 @@ async function testConnection(request, env, key) {
     } else if (key === 'driveAutoBackup') {
       data = await driveFolder(env);
     } else if (key === 'googleAds') {
-      if (googleOauthReady(env) || googleServiceReady(env)) {
-        if (!has(env, 'GOOGLE_ADS_DEVELOPER_TOKEN') || !has(env, 'GOOGLE_ADS_CUSTOMER_ID')) throw new Error('google_ads_configuration_required');
+      if (googleAdsDirectReady(env) && configuredGoogleAdsCustomerId(env)) {
         const accessToken = await googleUserToken(env, ['https://www.googleapis.com/auth/adwords']);
         const headers = { authorization: `Bearer ${accessToken}`, 'developer-token': env.GOOGLE_ADS_DEVELOPER_TOKEN, 'content-type': 'application/json' };
         if (has(env, 'GOOGLE_ADS_LOGIN_CUSTOMER_ID')) headers['login-customer-id'] = String(env.GOOGLE_ADS_LOGIN_CUSTOMER_ID).replace(/\D/g, '');
         const customer = String(env.GOOGLE_ADS_CUSTOMER_ID).replace(/\D/g, '');
-        const result = await providerJson(`https://googleads.googleapis.com/v24/customers/${customer}/googleAds:search`, headers, { method: 'POST', body: JSON.stringify({ query: 'SELECT customer.id, customer.descriptive_name, customer.currency_code FROM customer LIMIT 1' }) });
+        const result = await providerJson(`https://googleads.googleapis.com/${GOOGLE_ADS_API_VERSION}/customers/${customer}/googleAds:search`, headers, { method: 'POST', body: JSON.stringify({ query: 'SELECT customer.id, customer.descriptive_name, customer.currency_code FROM customer LIMIT 1' }) });
         data = result.results?.[0]?.customer || {};
       } else {
         const account = selectAccount(await composioConnectedAccounts(env, ['googleads']), 'googleads', env);
@@ -829,6 +1011,25 @@ async function routeCommandCenter(request, env) {
     const endpoint=`https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`;
     const result=await moneyReport(body=>googleReportRequest(env,GA4_TOOLKIT,['https://www.googleapis.com/auth/analytics.readonly'],endpoint,body),propertyId);
     return json(result,result.ok?200:503);
+  }
+
+  if (url.pathname === '/api/command/google-ads') {
+    const gate = await authGate(request, env);
+    if (!gate?.ok) return gate;
+    if (request.method !== 'GET') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'GET' });
+    try { return json(await googleAdsSnapshot(env)); }
+    catch (e) { return json({ ok: false, error: safeConnectionError(e, env) }, 503); }
+  }
+
+  if (url.pathname === '/api/command/google-ads/action') {
+    const gate = await authGate(request, env);
+    if (!gate?.ok) return gate;
+    if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST' });
+    if (Number(request.headers.get('content-length') || 0) > 4096) return json({ ok: false, error: 'payload_too_large' }, 413);
+    const body = await request.json().catch(() => null);
+    if (!body) return json({ ok: false, error: 'invalid_json' }, 400);
+    try { return json(await googleAdsMutateAction(env, body)); }
+    catch (e) { return json({ ok: false, error: safeConnectionError(e, env) }, 400); }
   }
 
   if (['/api/command/connections', '/api/command/connect', '/api/command/connection-test'].includes(url.pathname)) {
