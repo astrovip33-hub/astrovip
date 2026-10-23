@@ -71,7 +71,7 @@ html.av-mobile-approved body:not(.guide-page) #av-site-header #av-mobile-approve
 html.av-mobile-approved body:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb-glow{width:38px!important;height:38px!important;gap:4px!important}
 html.av-mobile-approved body:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb-glow i{width:27px!important;height:3px!important;border-radius:999px!important}
 }
-</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261023-polish-v2"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
+</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261023-polish-v3"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important}
 @media(max-width:820px){
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{overflow:hidden!important}
