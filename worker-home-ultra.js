@@ -56,7 +56,7 @@ html.av-ultra-home-production body:not(.guide-page) main#top>*:not(#av-mobile-ap
 html.av-ultra-home-production body:not(.guide-page) main#top>#av-mobile-approved-home{display:block!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important}
 }
 @media(min-width:821px) and (max-width:980px){.av-home-paybar-inner{align-items:flex-start;flex-direction:column}.av-home-paybar-inner>a{width:100%}}
-</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261023-polish-v1"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
+</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261023-polish-v2"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important}
 @media(max-width:820px){
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{overflow:hidden!important}
@@ -79,7 +79,7 @@ html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-count-v7{display:block!important;min-width:38px!important;color:#f5dfa0!important;font:900 11px/1 Inter,system-ui,sans-serif!important;letter-spacing:.08em!important;text-align:center!important;white-space:nowrap!important}
 }
 @media(min-width:821px){#studii-de-caz-home .av-case-mobile-nav-v7{display:none!important}}
-</style><script src="/assets/home-approved-header-20261012.js?v=20261020-entity-geo2" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
+</style><style id="av-final-lower-polish-critical">@media(max-width:820px){html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame{padding:14px 0 10px!important}html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{gap:10px!important;padding:4px 8% 8px!important}html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{flex:0 0 82%!important;width:82%!important;min-width:82%!important}html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual{height:128px!important;max-height:128px!important}html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-mobile-nav-v7{margin:7px auto 0!important;padding:6px 10px!important}html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-arrow-v7{width:30px!important;height:30px!important}}</style><script src="/assets/home-approved-header-20261012.js?v=20261020-entity-geo2" defer></script><script id="av-case-slider-v8-inline">${CASE_SLIDER_V8_JS}</script>`;
 
 export default {
   async fetch(request,env,ctx){
