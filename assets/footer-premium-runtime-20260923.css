@@ -120,3 +120,6 @@
   #astrovip-footer .av-footer-tools{justify-content:center!important}
   #astrovip-footer #av-footer-chat-premium{width:100%!important}
 }
+
+/* Mobile polish: lift the SAL/ANPC artwork slightly without moving the card. */
+@media(max-width:600px){#astrovip-footer .av-footer-sal-badge{transform:translateY(-4px)!important;}}
