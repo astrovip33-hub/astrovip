@@ -2,6 +2,23 @@ import { createBooking, loadTakenBookingSlots, track } from './data';
 
 const times = ['10:00','12:00','14:00','16:00','18:00'];
 let taken = new Set<string>();
+let googleAdsLeadReported = false;
+
+function reportGoogleAdsLeadConversion() {
+  if (googleAdsLeadReported) return;
+  const gtag = (window as any).gtag;
+  if (typeof gtag !== 'function') return;
+  googleAdsLeadReported = true;
+  try {
+    gtag('event', 'conversion', {
+      send_to: 'AW-18530600314/gBPbCKSoracdEPqKioRF',
+      value: 1.0,
+      currency: 'RON'
+    });
+  } catch {
+    googleAdsLeadReported = false;
+  }
+}
 
 function roToday() {
   return new Intl.DateTimeFormat('en-CA', { timeZone:'Europe/Bucharest', year:'numeric', month:'2-digit', day:'2-digit' }).format(new Date());
@@ -70,6 +87,7 @@ async function boot() {
         note:String(fd.get('note')||'').trim()
       });
       track('booking_completed',{service:result?.service||fd.get('service'),mode:result?.mode||fd.get('mode'),date:bookingDate,time:bookingTime});
+      reportGoogleAdsLeadConversion();
       form.reset();date.value=bookingDate;taken.add(key(bookingDate,bookingTime));renderTimes();
       status(`Programarea pentru ${bookingDate}, ora ${bookingTime}, a fost înregistrată.`, 'ok');
       document.querySelector('#booking-success')?.removeAttribute('hidden');
