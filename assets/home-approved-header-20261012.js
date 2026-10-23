@@ -27,7 +27,7 @@
     if(!approvedHeader){
       approvedHeader=document.createElement('div');approvedHeader.id='av-mobile-approved-header';
       approvedHeader.setAttribute('aria-label','Header AstroVip mobil');
-      approvedHeader.innerHTML='<a class="avm-logo" href="/" aria-label="AstroVip — Astrologie Premium — Acasă"><span class="av-premium-title">ASTROLOGIE PREMIUM</span></a><button class="avm-hamb" type="button" aria-controls="menu" aria-expanded="false" aria-label="Deschide meniul"><span class="avm-hamb-glow" aria-hidden="true"><i></i><i></i><i></i></span></button>';
+      approvedHeader.innerHTML='<a class="avm-logo" href="/" aria-label="AstroVip — Astrologie Premium — Acasă"><img class="avm-mark" src="/assets/astrovip-av-logo-header-144.webp" width="144" height="91" alt="" aria-hidden="true" decoding="async"><span class="av-premium-title"><span class="av-title-line">ASTROLOGIE</span><span class="av-title-line">PREMIUM</span></span></a><button class="avm-hamb" type="button" aria-controls="menu" aria-expanded="false" aria-label="Deschide meniul"><span class="avm-hamb-glow" aria-hidden="true"><i></i><i></i><i></i></span></button>';
       header.prepend(approvedHeader);
     }
     const hamb=approvedHeader.querySelector('.avm-hamb');
