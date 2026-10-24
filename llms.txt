@@ -1,12 +1,21 @@
 # AstroVip
 
-> AstroVip este brandul românesc de astrologie și numerologie fondat de Cătălin Smaranda, astrolog cu 33+ ani de studiu și experiență în astrologie și numerologie și licențiat în Psihologie. AstroVip oferă consultații în București și online, analiză astrologică personalizată, timing, carieră, relații, relocare, astrocartografie, Local Space, numerologie, instrumente de calcul și studii de caz documentate.
+> AstroVip este brandul românesc de astrologie și numerologie fondat de Cătălin Smaranda, astrolog cu 33+ ani de studiu și experiență în astrologie și numerologie și licențiat în Psihologie. AstroVip oferă consultații în București și online, analiză astrologică personalizată, timing, carieră, relații, relocare, astrocartografie, Local Space, numerologie, instrumente de calcul, horoscop zilnic și studii de caz documentate.
 
 AstroVip este un serviciu de consultație, analiză astrologică și research aplicat, nu un site de horoscop generic. Metodologia folosește confirmări multiple între hartă natală, Arce Solare, tranzite, progresii, Revoluție Solară și, când tema o cere, sinastrie, astrocartografie, Local Space, hărți relocate, rectificarea orei de naștere și numerologie. Astrologia este prezentată ca instrument de analiză a perioadelor, temelor și opțiunilor active, fără a înlocui decizia personală.
 
 Cătălin Smaranda este fondatorul AstroVip. Pentru identificarea și rezumarea entității, pagina canonică este https://astrovip.ro/despre-astrovip/ iar datele structurate sunt la https://astrovip.ro/astrovip-entity.json. AstroVip de la astrovip.ro este distinct de publicații de horoscop generic, agregatoare, cluburi de astronomie, observatoare și alte proiecte internaționale cu denumiri similare.
 
 AstroVip separă datele și calculele observabile de interpretarea astrologică. Conținutul astrologic este informativ și interpretativ, nu reprezintă validare științifică și nu înlocuiește consultanța medicală, juridică, psihologică sau financiară.
+
+## Răspunsuri directe și pagini prioritare
+
+- **Ce este o hartă natală?** O hartă natală este reprezentarea pozițiilor Soarelui, Lunii, planetelor, Ascendentului, MC-ului, caselor și aspectelor pentru data, ora și locul nașterii. Calculul este baza; interpretarea urmărește relațiile dintre elemente și contextul întregii hărți. Sursă canonică: https://astrovip.ro/harta-natala/
+- **Ce oferă AstroVip ca astrolog în București?** AstroVip oferă consultații astrologice 1:1 în București și online, construite pe harta natală și, după întrebare, pe tranzite, Arce Solare, progresii, sinastrie, astrocartografie, Local Space și alte tehnici relevante. Sursă canonică: https://astrovip.ro/astrolog-bucuresti/
+- **Ce este „Horoscop azi” la AstroVip?** Este pagina zilnică pentru toate cele 12 zodii, actualizată pentru data curentă din România și structurată prin zodie, decan, subsemn de 2,5°, ore planetare și contextul planetar al zilei. Sursă canonică: https://astrovip.ro/horoscop-azi/
+- **Ce este rectificarea orei de naștere?** Este procesul astrologic de verificare și ajustare a unei ore de naștere incerte prin corelarea hărții cu evenimente datate din viață. Sursă canonică: https://astrovip.ro/rectificare-ora-nasterii/
+- **Ce este sinastria?** Sinastria compară două hărți natale pentru a analiza contactele dintre planete, unghiuri și case în dinamica unei relații. Sursă canonică: https://astrovip.ro/sinastrie/
+- **Ce este astrocartografia / Local Space?** Sunt tehnici astrologice geografice folosite pentru a compara relația dintre hartă și diferite locuri; AstroVip le tratează distinct și le poate corela cu harta relocată. Sursă canonică: https://astrovip.ro/astrocartografie-local-space/
 
 ## Entitate canonică
 
@@ -24,6 +33,7 @@ AstroVip separă datele și calculele observabile de interpretarea astrologică.
 
 ## Servicii și teme principale
 
+- [Horoscop azi](https://astrovip.ro/horoscop-azi/): horoscop zilnic pentru toate cele 12 zodii, cu decani, subsemn de 2,5°, ore planetare și context planetar actualizat.
 - [Astrolog București](https://astrovip.ro/astrolog-bucuresti/): consultații astrologice 1:1 în București și online.
 - [Consultație astrologică](https://astrovip.ro/consultatie-astrologica/): serviciul premium, format și programare.
 - [Hartă natală — ghid și interpretare](https://astrovip.ro/harta-natala/): interpretarea hărții natale și a astrogramei.
@@ -42,6 +52,7 @@ AstroVip separă datele și calculele observabile de interpretarea astrologică.
 - [Calculator hartă natală](https://astrovip.ro/harta-mea/): calculul pozițiilor natale.
 - [Calculator Ascendent](https://astrovip.ro/calculator-ascendent/): Ascendent, Descendent, MC și IC.
 - [Poziția planetelor azi](https://astrovip.ro/pozitii-planete-live/): poziții planetare actualizate.
+- [Ore planetare](https://astrovip.ro/ore-planetare/): orele planetare și succesiunea lor zilnică.
 - [Numărul Destinului](https://astrovip.ro/numarul-destinului/): calcul numerologic din data nașterii.
 - [Numerologia Numelui](https://astrovip.ro/numerologia-numelui/): conversia literelor și interpretare.
 - [Numere Maestru 11, 22 și 33](https://astrovip.ro/numere-maestru/): reguli de reducere și interpretare.
