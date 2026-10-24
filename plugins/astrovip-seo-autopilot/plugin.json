@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "astrovip-seo-autopilot",
+  "version": "0.2.0",
+  "description": "AstroVip SEO/GEO, browser QA, Cloudflare deployment, CI repair, security and AI-content audit workflows."
+}

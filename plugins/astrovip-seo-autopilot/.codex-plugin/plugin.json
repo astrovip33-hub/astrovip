@@ -1,0 +1,21 @@
+{
+  "name": "astrovip-seo-autopilot",
+  "version": "0.2.0",
+  "description": "AstroVip SEO/GEO, browser QA, Cloudflare deployment, CI repair, security and AI-content audit workflows.",
+  "repository": "https://github.com/astrovip33-hub/astrovip",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AstroVip SEO Autopilot",
+    "shortDescription": "SEO, GEO, QA, deploy, security and AI visibility workflows for AstroVip",
+    "longDescription": "Project-scoped AstroVip workflows covering Google/Bing indexation, internal linking, SEO/GEO prioritization, Core Web Vitals, JavaScript rendering, browser QA, Cloudflare releases, GitHub CI repair, secure-by-default review and post-publication AI/content audits.",
+    "developerName": "AstroVip",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Audit AstroVip SEO and AI visibility, prioritize the highest-impact fixes, validate them in the browser and CI, and deploy safely when requested."
+    ]
+  }
+}
