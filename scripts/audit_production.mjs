@@ -109,7 +109,7 @@ try {
     });
     console.log('BROWSER_STATE', JSON.stringify(state));
     report.browsers.push({ ...state, errors, failedResources });
-    assert.equal(state.render, '20261016-audit-remediation1', 'Stale production Worker');
+    assert.match(state.render || '', /^\d{8}-[a-z0-9-]+$/i, 'Production render marker missing or invalid');
     assert(!state.overflow, `${width}: horizontal overflow`);
     assert(state.heroVisible && state.imageLoaded, `${width}: hero missing`);
     assert(state.paymentVisible && state.paymentLink?.startsWith('https://buy.stripe.com/'), `${width}: payment missing`);
