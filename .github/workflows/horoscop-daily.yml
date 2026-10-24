@@ -1,4 +1,4 @@
-﻿name: Refresh daily horoscope
+name: Refresh daily horoscope
 
 on:
   schedule:
@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: astrovip-horoscop-daily
@@ -34,10 +35,12 @@ jobs:
         run: node scripts/test-horoscop-daily.mjs
 
       - name: Commit daily freshness
+        id: freshness
         shell: bash
         run: |
           if git diff --quiet -- horoscop-azi sitemap-core.xml; then
             echo "Horoscope already current."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
@@ -46,3 +49,10 @@ jobs:
           git commit -m "seo(horoscop): refresh daily content"
           git pull --rebase origin main
           git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy refreshed horoscope
+        if: steps.freshness.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cloudflare-worker.yml --ref main
