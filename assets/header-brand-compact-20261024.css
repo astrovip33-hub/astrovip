@@ -1,0 +1,78 @@
+/* Visible brand name: compact, two-line lockup for the homepage header. */
+html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium {
+  gap: 10px !important;
+}
+#av-site-header .av-header-brand-mark {
+  display: block !important;
+  flex: 0 0 42px !important;
+  width: 42px !important;
+  height: 34px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 0 4px rgba(94, 193, 83, .2));
+}
+html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-premium-title,
+#av-site-header #av-mobile-approved-header .avm-logo > .av-premium-title {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  color: #f0d77f !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+#av-site-header .av-header-wordmark {
+  display: block !important;
+  font: 700 27px/1 Georgia, "Times New Roman", serif !important;
+  letter-spacing: -.025em !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  background: linear-gradient(180deg, #fff6d3 5%, #f3d47c 50%, #bd8b37 100%) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: #f0d77f !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: 0 0 14px rgba(239, 202, 109, .1) !important;
+}
+#av-site-header .av-header-descriptor {
+  display: block !important;
+  font: 600 8px/1.2 Arial, sans-serif !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  color: #d4c69f !important;
+  -webkit-text-fill-color: #d4c69f !important;
+  text-shadow: none !important;
+}
+#av-site-header #av-mobile-approved-header .avm-logo > .av-premium-title::before,
+#av-site-header #av-mobile-approved-header .avm-logo > .av-premium-title::after {
+  content: none !important;
+  display: none !important;
+}
+@media (max-width: 820px) {
+  #av-site-header #av-mobile-approved-header .avm-logo > .av-premium-title {
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  #av-site-header #av-mobile-approved-header .av-header-wordmark {
+    font-size: 26px !important;
+  }
+  #av-site-header #av-mobile-approved-header .av-header-descriptor {
+    font-size: 8px !important;
+    letter-spacing: .14em !important;
+  }
+}
+@media (max-width: 360px) {
+  #av-site-header #av-mobile-approved-header .av-header-wordmark {
+    font-size: 24px !important;
+  }
+  #av-site-header #av-mobile-approved-header .av-header-descriptor {
+    font-size: 7px !important;
+    letter-spacing: .12em !important;
+  }
+}
