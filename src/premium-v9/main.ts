@@ -10,6 +10,20 @@ function runAfterLoad(task: () => void | Promise<void>, timeout = 1800) {
   else addEventListener('load', schedule, { once: true });
 }
 
+function runAfterEngagement(task: () => void | Promise<void>, fallback = 15000) {
+  let started = false;
+  const events: Array<keyof WindowEventMap> = ['pointermove', 'touchstart', 'scroll', 'keydown'];
+  const start = () => {
+    if (started) return;
+    started = true;
+    for (const name of events) removeEventListener(name, start as EventListener);
+    clearTimeout(timer);
+    void task();
+  };
+  for (const name of events) addEventListener(name, start as EventListener, { passive: true, once: true });
+  const timer = window.setTimeout(start, fallback);
+}
+
 function trackDeferred(eventName: string, properties: Record<string, unknown> = {}) {
   runWhenIdle(async () => {
     try {
@@ -71,11 +85,17 @@ async function bootDeferredEnhancements() {
   void import('./observability').then(({ initObservability }) => initObservability()).catch(() => {});
 
   const allowRichVisuals = richVisualsAllowed();
-  if (flags.view_transitions !== false || flags.webgl_hero !== false || allowRichVisuals) {
+  if (location.pathname === '/') {
+    // The homepage already has its complete static visual treatment. Keep Three.js
+    // off the first-load path and activate the optional desktop WebGL ambience only
+    // after real user engagement. This preserves the effect without taxing LCP/TBT.
+    if (flags.webgl_hero !== false && allowRichVisuals) {
+      runAfterEngagement(() => import('./visual').then(({ initWebGLHero }) => initWebGLHero()).catch(() => {}));
+    }
+  } else if (flags.view_transitions !== false || flags.webgl_hero !== false || allowRichVisuals) {
     void import('./visual').then(({ initMotion, initViewTransitions, initWebGLHero }) => {
       if (flags.view_transitions !== false) initViewTransitions();
-      // The homepage is already painted; replaying entry motion moves visible content.
-      if (allowRichVisuals && location.pathname !== '/') void initMotion().catch(() => {});
+      if (allowRichVisuals) void initMotion().catch(() => {});
       if (flags.webgl_hero !== false && allowRichVisuals) void initWebGLHero().catch(() => {});
     }).catch(() => {});
   }
