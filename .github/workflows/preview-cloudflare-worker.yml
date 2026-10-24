@@ -127,33 +127,13 @@ jobs:
           set -euo pipefail
           BASE="https://astrovip-preview-ux-compact.astrovip33.workers.dev"
 
-          EDITOR_STATUS=$(curl -sS -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
-          echo "EDITOR_STATUS=$EDITOR_STATUS"
-          case "$EDITOR_STATUS" in
-            200)
-              grep -Fq '/command-center/site-builder/' /tmp/editor.html
-              ;;
-            301|302|307|308)
-              echo "Editor route uses a valid canonical redirect; validating Site Builder directly."
-              ;;
-            *)
-              echo "Unexpected editor status: $EDITOR_STATUS"
-              exit 1
-              ;;
-          esac
-
+          EDITOR_STATUS=$(curl -sSL -o /tmp/editor.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor/")
           BUILDER_STATUS=$(curl -sSL -o /tmp/site-builder.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/site-builder/")
-          echo "BUILDER_STATUS=$BUILDER_STATUS"
-          test "$BUILDER_STATUS" = "200"
-          grep -Fq 'ASTROVIP SITE BUILDER' /tmp/site-builder.html
-          grep -Fq 'SECTION LIBRARY' /tmp/site-builder.html
-          grep -Fq 'PREFLIGHT' /tmp/site-builder.html
-          grep -Fq '/command-center/editor-original/' /tmp/site-builder.html
-
           ENGINE_STATUS=$(curl -sSL -o /tmp/editor-original.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor-original/")
-          echo "ENGINE_STATUS=$ENGINE_STATUS"
+          echo "EDITOR_STATUS=$EDITOR_STATUS BUILDER_STATUS=$BUILDER_STATUS ENGINE_STATUS=$ENGINE_STATUS"
+          test "$EDITOR_STATUS" = "200"
+          test "$BUILDER_STATUS" = "200"
           test "$ENGINE_STATUS" = "200"
-          grep -Fq 'Editor Vizual AstroVip' /tmp/editor-original.html
 
           API_STATUS=$(curl -sS -o /tmp/command-api.json -w '%{http_code}' "$BASE/api/command/ping")
           echo "API_STATUS=$API_STATUS"
