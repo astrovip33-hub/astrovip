@@ -71,12 +71,14 @@ async function bootDeferredEnhancements() {
   void import('./observability').then(({ initObservability }) => initObservability()).catch(() => {});
 
   const allowRichVisuals = richVisualsAllowed();
+  const isHomepage = location.pathname === '/';
   if (flags.view_transitions !== false || flags.webgl_hero !== false || allowRichVisuals) {
     void import('./visual').then(({ initMotion, initViewTransitions, initWebGLHero }) => {
       if (flags.view_transitions !== false) initViewTransitions();
-      // The homepage is already painted; replaying entry motion moves visible content.
-      if (allowRichVisuals && location.pathname !== '/') void initMotion().catch(() => {});
-      if (flags.webgl_hero !== false && allowRichVisuals) void initWebGLHero().catch(() => {});
+      // The homepage is already visually rich and fully painted. Avoid replaying motion
+      // or loading the large Three.js/WebGL background there; both are progressive decoration.
+      if (allowRichVisuals && !isHomepage) void initMotion().catch(() => {});
+      if (flags.webgl_hero !== false && allowRichVisuals && !isHomepage) void initWebGLHero().catch(() => {});
     }).catch(() => {});
   }
 
