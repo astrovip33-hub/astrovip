@@ -91,7 +91,6 @@ jobs:
         run: |
           set -euo pipefail
           URL="https://astrovip-preview-ux-compact.astrovip33.workers.dev/"
-          # A successful response can still contain the preceding deployment briefly.
           READY=0
           for ATTEMPT in $(seq 1 12); do
             STATUS=$(curl -sS -o /tmp/preview.html -w '%{http_code}' "$URL")
@@ -143,7 +142,7 @@ jobs:
               ;;
           esac
 
-          BUILDER_STATUS=$(curl -sS -o /tmp/site-builder.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/site-builder/")
+          BUILDER_STATUS=$(curl -sSL -o /tmp/site-builder.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/site-builder/")
           echo "BUILDER_STATUS=$BUILDER_STATUS"
           test "$BUILDER_STATUS" = "200"
           grep -Fq 'ASTROVIP SITE BUILDER' /tmp/site-builder.html
@@ -151,7 +150,7 @@ jobs:
           grep -Fq 'PREFLIGHT' /tmp/site-builder.html
           grep -Fq '/command-center/editor-original/' /tmp/site-builder.html
 
-          ENGINE_STATUS=$(curl -sS -o /tmp/editor-original.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor-original/")
+          ENGINE_STATUS=$(curl -sSL -o /tmp/editor-original.html -w '%{http_code}' --retry 8 --retry-delay 3 "$BASE/command-center/editor-original/")
           echo "ENGINE_STATUS=$ENGINE_STATUS"
           test "$ENGINE_STATUS" = "200"
           grep -Fq 'Editor Vizual AstroVip' /tmp/editor-original.html
