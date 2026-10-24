@@ -69,7 +69,7 @@ const executablePath = ['/usr/bin/google-chrome', '/usr/bin/google-chrome-stable
 assert(executablePath, 'Chrome executable missing');
 const browser = await puppeteer.launch({ executablePath, headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage'] });
 try {
-  for (const width of [1366, 360, 390, 820]) {
+  for (const width of [1366, 820, 430, 390, 360, 320]) {
     const page = await browser.newPage();
     await page.setUserAgent(headers['user-agent']);
     await page.setViewport({ width, height: 900 });
@@ -98,6 +98,12 @@ try {
       const bar = document.getElementById('av-home-payment-cta');
       const nav = document.querySelector('#studii-de-caz-home .av-case-mobile-nav-v7');
       const cards = document.querySelectorAll('#studii-de-caz-home .av-case-showcase-grid .av-case-showcase-card');
+      const visibleHeadings = [...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(el => {
+        const style = getComputedStyle(el);
+        const rect = el.getBoundingClientRect();
+        return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity || 1) > 0 && rect.width > 0 && rect.height > 0;
+      }).map(el => (el.textContent || '').replace(/\s+/g, ' ').trim().toLocaleLowerCase('ro-RO'));
+      const countHeading = text => visibleHeadings.filter(value => value === text).length;
       return {
         width: innerWidth, overflow: document.documentElement.scrollWidth > innerWidth + 1,
         heroVisible: !!hero && hero.getBoundingClientRect().height > 100,
@@ -107,6 +113,8 @@ try {
         mobilePaymentLink: document.querySelector('#av-mobile-approved-home .avm-primary')?.href,
         cards: cards.length, dots: nav?.querySelectorAll('[data-case-dots] button').length || 0,
         count: nav?.querySelector('[data-case-count]')?.textContent,
+        visibleHoroscopeHeadings: countHeading('horoscopul tău de azi'),
+        visiblePlanetaryHeadings: countHeading('orele planetare de azi'),
         cls: window.__auditCLS, shifts: window.__auditShifts,
         render: document.querySelector('meta[name="astrovip-home-render"]')?.content
       };
@@ -121,6 +129,8 @@ try {
     assert(!state.overflow, `${width}: horizontal overflow`);
     assert(state.heroVisible && state.imageLoaded, `${width}: hero missing`);
     assert(state.paymentVisible && state.paymentLink?.startsWith('https://buy.stripe.com/'), `${width}: payment missing`);
+    assert(state.visibleHoroscopeHeadings <= 1, `${width}: duplicate visible Horoscopul tău de azi headings`);
+    assert(state.visiblePlanetaryHeadings <= 1, `${width}: duplicate visible Orele planetare de azi headings`);
     if (width <= 820) {
       assert(state.mobilePaymentLink?.startsWith('https://buy.stripe.com/'), 'Mobile primary payment link missing');
       assert.equal(state.dots, state.cards, 'Slider navigation is out of sync with cards');
