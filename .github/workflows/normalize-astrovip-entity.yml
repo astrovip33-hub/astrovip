@@ -2,16 +2,16 @@ name: Normalize AstroVip entity identity
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
-      - '.github/workflows/normalize-astrovip-entity.yml'
+      - .github/workflows/normalize-astrovip-entity.yml
 
 permissions:
   contents: write
 
 jobs:
   normalize:
-    if: github.event.head_commit.message == 'chore: normalize AstroVip entity Instagram'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,21 +19,18 @@ jobs:
         with:
           fetch-depth: 0
       - name: Replace stale Instagram identity
-        shell: bash
         run: |
-          mapfile -t files < <(git grep -Il 'https://www.instagram.com/astrovip77/' || true)
-          if [ ${#files[@]} -eq 0 ]; then
+          git grep -Il 'https://www.instagram.com/astrovip77/' > /tmp/astrovip-files.txt || true
+          if [ ! -s /tmp/astrovip-files.txt ]; then
             echo 'No stale Instagram URLs found.'
             exit 0
           fi
-          printf 'Updating %s\n' "${files[@]}"
-          for file in "${files[@]}"; do
+          while IFS= read -r file; do
             sed -i 's#https://www.instagram.com/astrovip77/#https://www.instagram.com/astrovip333/#g' "$file"
-          done
+          done < /tmp/astrovip-files.txt
           git diff --check
           git diff --stat
       - name: Commit normalized identity
-        shell: bash
         run: |
           if git diff --quiet; then
             exit 0
