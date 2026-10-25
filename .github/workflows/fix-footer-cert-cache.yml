@@ -1,0 +1,40 @@
+name: Fix footer certification cache
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-footer-cert-cache.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bump footer stylesheet cache key
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '/assets/footer-premium-runtime-20260923.css?v=20261025-social-align2'
+          new = '/assets/footer-premium-runtime-20260923.css?v=20261026-singlecert3'
+          if old not in s:
+              raise SystemExit('Expected footer stylesheet URL was not found in index.html')
+          p.write_text(s.replace(old, new), encoding='utf-8')
+          PY
+      - name: Commit cache-buster
+        shell: bash
+        run: |
+          git config user.name "astrovip33-hub"
+          git config user.email "astrovip33@gmail.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Footer: force single certification card cache refresh"
+          git push origin HEAD:main
