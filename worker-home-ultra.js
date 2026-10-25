@@ -151,7 +151,7 @@ export default {
           el.append(CASE_NAV_V8,{html:true});
         }})
         .on('head',{element(el){el.append(HOMEPAGE_CRITICAL,{html:true})}})
-        .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261019-ssr3" defer></script>'+PLANETARY_HOURS_SCRIPT,{html:true})}})
+        .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261019-ssr3" defer></script><script src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script><script src="/assets/home-planetary-strip-live.js?v=20261025-3"></script>'+PLANETARY_HOURS_SCRIPT,{html:true})}})
         .on('script[src^="/assets/ux-refresh-20261008.js"]',{element(el){el.setAttribute('src','/assets/ux-refresh-20261008.js?v=20261020-planetary-hours1')}})
         .on('link[rel="stylesheet"][href^="/assets/ux-refresh-20261008.css"]',{element(el){el.remove()}})
         .on('section.av-pro-hero .av-pro-visual picture source[media="(max-width:760px)"]',{element(el){el.remove()}})
