@@ -67,9 +67,9 @@
 
     if (section.dataset.avCaseLux === '1') return;
 
-    // Mobile owns a real scalable slider. Never replace its card track with
-    // the legacy three-column premium block after DOMContentLoaded.
-    if (window.matchMedia('(max-width:820px)').matches && section.querySelector('.av-case-showcase-grid')) return;
+    // The shared responsive slider owns its track on every viewport.
+    // Keep its navigation and the complete case list after DOMContentLoaded.
+    if (section.querySelector('.av-case-showcase-grid')) return;
 
     section.dataset.avCaseLux = '1';
     section.classList.add('av-case-home-lux');
