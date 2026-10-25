@@ -30,7 +30,7 @@ jobs:
             ASSET=$(curl -fsSL --retry 2 --retry-delay 2 "$ASSET_URL" || true)
             if grep -q 'data-av-slider-shell="v8"' <<< "$HTML" && \
                grep -q 'av-case-slider-v8-inline' <<< "$HTML" && \
-               grep -q 'Mobile owns a real scalable slider' <<< "$ASSET"; then
+               grep -Fq "if (section.querySelector('.av-case-showcase-grid')) return;" <<< "$ASSET"; then
               echo "V8 HTML and mobile-preservation fix are live on attempt ${ATTEMPT}."
               OK=1
               break
