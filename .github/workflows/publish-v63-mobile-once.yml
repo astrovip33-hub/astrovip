@@ -1,0 +1,49 @@
+name: Publish approved V6.3 mobile homepage once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-v63-mobile-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout preview source
+        uses: actions/checkout@v4
+        with:
+          ref: preview-mobile-v63-20261006
+          fetch-depth: 1
+
+      - name: Checkout latest production main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: prod
+          fetch-depth: 0
+
+      - name: Prepare preview path
+        shell: bash
+        run: ln -s . preview
+
+      - name: Integrate V6.3
+        shell: bash
+        run: python3 .github/scripts/publish_v63_mobile.py
+
+      - name: Commit and publish to main
+        working-directory: prod
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html assets/astrovip-hero-premium-mobile-20261001.webp
+          if git diff --cached --quiet; then
+            echo 'No changes to publish'
+            exit 0
+          fi
+          git commit -m 'Publish approved V6.3 mobile homepage'
+          git push origin HEAD:main
