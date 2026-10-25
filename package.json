@@ -7,7 +7,9 @@
     "build:premium": "node scripts/build-premium-v9.mjs",
     "inject:premium": "python3 scripts/inject-premium-v9.py",
     "fix:profilepage-datetime": "node scripts/fix-profilepage-datetime.mjs",
-    "build:swiss": "npm run fix:profilepage-datetime && npm run build:swiss-only && npm run build:premium && npm run inject:premium",
+    "build:daily": "node scripts/render-horoscop-static.mjs && node scripts/render-planetary-hours-static.mjs",
+    "test:seo-aeo": "node --test scripts/test-planetary-hours.mjs scripts/test-horoscop-daily.mjs && python3 scripts/validate_entity_offers.py",
+    "build:swiss": "npm run fix:profilepage-datetime && npm run build:swiss-only && npm run build:premium && npm run inject:premium && npm run build:daily",
     "build": "npm run build:swiss"
   },
   "dependencies": {

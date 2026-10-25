@@ -27,3 +27,4 @@ http-redirect-worker.js
 command-center-routing.js
 
 horoscop-renderer.js
+planetary-hours-renderer.js

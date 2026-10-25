@@ -1,4 +1,5 @@
 import { horoscopeRoute, horoscopeResponse } from './horoscop-renderer.js';
+import { planetaryHoursResponse } from './planetary-hours-renderer.js';
 import baseWorker from './worker.js';
 import { mobileHome, mobileStyles, cardlessStyles } from './homepage-approved-layout.js';
 
@@ -99,7 +100,8 @@ html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case
 export default {
   async fetch(request,env,ctx){
     const url=new URL(request.url);
-    const dailyRoute=horoscopeRoute(url.pathname)||url.pathname==='/sitemap-core.xml';
+    const planetaryRoute=url.pathname==='/ore-planetare/'||url.pathname==='/ore-planetare/index.html';
+    const dailyRoute=planetaryRoute||horoscopeRoute(url.pathname)||url.pathname==='/sitemap-core.xml';
     let sourceRequest=request;
     if(dailyRoute&&(request.method==='GET'||request.method==='HEAD')){
       const headers=new Headers(request.headers);
@@ -107,6 +109,9 @@ export default {
       sourceRequest=new Request(request,{headers});
     }
     const response=await baseWorker.fetch(sourceRequest,env,ctx);
+    if(planetaryRoute&&request.method==='GET'&&response.status===200){
+      return planetaryHoursResponse(response);
+    }
     if(dailyRoute&&request.method==='GET'&&response.status===200){
       return horoscopeResponse(response,url.pathname);
     }

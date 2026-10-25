@@ -33,16 +33,21 @@ jobs:
       - name: Test daily horoscope
         run: node scripts/test-horoscop-daily.mjs
 
+      - name: Render and test planetary hours
+        run: |
+          node scripts/render-planetary-hours-static.mjs
+          node --test scripts/test-planetary-hours.mjs
+
       - name: Commit daily freshness
         shell: bash
         run: |
-          if git diff --quiet -- horoscop-azi sitemap-core.xml; then
+          if git diff --quiet -- horoscop-azi ore-planetare sitemap-core.xml; then
             echo "Horoscope already current."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add horoscop-azi sitemap-core.xml
-          git commit -m "seo(horoscop): refresh daily content"
+          git add horoscop-azi ore-planetare sitemap-core.xml
+          git commit -m "seo: refresh daily horoscope and planetary hours"
           git pull --rebase origin main
           git push origin HEAD:main
