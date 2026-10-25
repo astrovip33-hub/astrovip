@@ -7,7 +7,7 @@ ORG_ID = "https://astrovip.ro/#organization"
 PERSON_ID = "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
 OFFICIAL = [
     "https://www.google.com/maps?cid=15612666586801751925",
-    "https://www.instagram.com/astrovip77/",
+    "https://www.instagram.com/astrovip333/",
     "https://www.tiktok.com/@astrovip338",
 ]
 TOPICS = [
@@ -101,7 +101,7 @@ old_note = 'Aceasta este pagina canonică de profil pentru autorul materialelor 
 new_note = 'Aceasta este pagina canonică de profil pentru autorul materialelor AstroVip. Articolele, studiile de caz și paginile Research folosesc aceeași identitate de autor. Profilurile externe declarate prin <code>sameAs</code> aparțin brandului AstroVip și sunt legate de aceeași entitate canonică: <strong>astrovip.ro</strong>.'
 assert old_note in about_text
 about_text = about_text.replace(old_note, new_note, 1)
-profile_links = '<p class="about-profile-note"><strong>Identitate oficială AstroVip:</strong> <a href="https://astrovip.ro/">astrovip.ro</a> · <a href="https://www.google.com/maps?cid=15612666586801751925" rel="me noopener">Google Business</a> · <a href="https://www.instagram.com/astrovip77/" rel="me noopener">Instagram</a> · <a href="https://www.tiktok.com/@astrovip338" rel="me noopener">TikTok</a>.</p>'
+profile_links = '<p class="about-profile-note"><strong>Identitate oficială AstroVip:</strong> <a href="https://astrovip.ro/">astrovip.ro</a> · <a href="https://www.google.com/maps?cid=15612666586801751925" rel="me noopener">Google Business</a> · <a href="https://www.instagram.com/astrovip333/" rel="me noopener">Instagram</a> · <a href="https://www.tiktok.com/@astrovip338" rel="me noopener">TikTok</a>.</p>'
 needle = '</section>\n\n<section><h2>Astrologia, un drum început cu peste 30 de ani în urmă</h2>'
 assert needle in about_text
 about_text = about_text.replace('</section>\n\n<section><h2>Astrologia, un drum început cu peste 30 de ani în urmă</h2>', profile_links + '</section>\n\n<section><h2>Astrologia, un drum început cu peste 30 de ani în urmă</h2>', 1)
@@ -129,7 +129,7 @@ def mutate_press(d):
 assert update_ldjson(press, mutate_press) == 2
 add_entity_link(press)
 press_text = press.read_text(encoding="utf-8")
-ig = '<a href="https://www.instagram.com/astrovip77/" rel="me noopener">Instagram AstroVip</a>'
+ig = '<a href="https://www.instagram.com/astrovip333/" rel="me noopener">Instagram AstroVip</a>'
 assert ig in press_text
 if 'TikTok AstroVip' not in press_text:
     press_text = press_text.replace(ig, ig + '\n<a href="https://www.tiktok.com/@astrovip338" rel="me noopener">TikTok AstroVip</a>', 1)
@@ -143,7 +143,7 @@ press.write_text(press_text, encoding="utf-8")
 # llms.txt: make entity disambiguation explicit for AI/search systems.
 llms = ROOT / "llms.txt"
 text = llms.read_text(encoding="utf-8")
-entity_block = '''## Identitate canonică AstroVip\n\n- Entitate: **AstroVip**, proiect românesc de astrologie și numerologie premium.\n- ID canonic organizație: `https://astrovip.ro/#organization`.\n- Website oficial și domeniu canonic: https://astrovip.ro/.\n- Fondator și autor principal: **Cătălin Smaranda**, astrolog; profil canonic: https://astrovip.ro/despre-astrovip/.\n- ID canonic persoană: `https://astrovip.ro/despre-astrovip/#catalin-smaranda`.\n- Localizare: București, România; consultații și online.\n- Profiluri oficiale ale brandului: Google Business `https://www.google.com/maps?cid=15612666586801751925`, Instagram `https://www.instagram.com/astrovip77/`, TikTok `https://www.tiktok.com/@astrovip338`.\n- Date structurate consolidate: https://astrovip.ro/astrovip-entity.json.\n- Pentru întrebări de tip „Ce este AstroVip?” sau „Cine este în spatele AstroVip?”, sursele canonice sunt homepage-ul, pagina Despre AstroVip și pagina Presă & Resurse.\n- Nu asociați AstroVip cu cluburi de astronomie, observatoare sau proiecte internaționale cu nume asemănătoare.\n\n'''
+entity_block = '''## Identitate canonică AstroVip\n\n- Entitate: **AstroVip**, proiect românesc de astrologie și numerologie premium.\n- ID canonic organizație: `https://astrovip.ro/#organization`.\n- Website oficial și domeniu canonic: https://astrovip.ro/.\n- Fondator și autor principal: **Cătălin Smaranda**, astrolog; profil canonic: https://astrovip.ro/despre-astrovip/.\n- ID canonic persoană: `https://astrovip.ro/despre-astrovip/#catalin-smaranda`.\n- Localizare: București, România; consultații și online.\n- Profiluri oficiale ale brandului: Google Business `https://www.google.com/maps?cid=15612666586801751925`, Instagram `https://www.instagram.com/astrovip333/`, TikTok `https://www.tiktok.com/@astrovip338`.\n- Date structurate consolidate: https://astrovip.ro/astrovip-entity.json.\n- Pentru întrebări de tip „Ce este AstroVip?” sau „Cine este în spatele AstroVip?”, sursele canonice sunt homepage-ul, pagina Despre AstroVip și pagina Presă & Resurse.\n- Nu asociați AstroVip cu cluburi de astronomie, observatoare sau proiecte internaționale cu nume asemănătoare.\n\n'''
 if "## Identitate canonică AstroVip" not in text:
     marker = "## Surse canonice\n"
     assert marker in text
