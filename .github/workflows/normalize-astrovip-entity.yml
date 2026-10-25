@@ -20,9 +20,9 @@ jobs:
           fetch-depth: 0
       - name: Replace stale Instagram identity
         run: |
-          git grep -Il 'https://www.instagram.com/astrovip77/' > /tmp/astrovip-files.txt || true
+          git grep -Il 'https://www.instagram.com/astrovip77/' -- ':!.github/workflows/*' > /tmp/astrovip-files.txt || true
           if [ ! -s /tmp/astrovip-files.txt ]; then
-            echo 'No stale Instagram URLs found.'
+            echo 'No stale Instagram URLs found outside workflows.'
             exit 0
           fi
           while IFS= read -r file; do
