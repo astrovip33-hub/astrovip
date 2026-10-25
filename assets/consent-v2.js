@@ -106,3 +106,20 @@
   else refresh();
   REDUCED.addEventListener?.("change",refresh);
 })();
+
+/* Mobile: neutralizează regulile vechi de swipe/snap când rulează tickerul continuu */
+(()=>{
+  "use strict";
+  const apply=()=>{
+    const section=document.getElementById("studii-de-caz-home");
+    if(!section) return;
+    section.dataset.avContinuousTicker="1";
+    if(document.getElementById("av-case-mobile-continuous-fix-20261026")) return;
+    const style=document.createElement("style");
+    style.id="av-case-mobile-continuous-fix-20261026";
+    style.textContent=`@media(max-width:680px){html body:not(.guide-page) #studii-de-caz-home[data-av-continuous-ticker="1"] .av-case-showcase-grid{overflow-x:visible!important;overflow-y:hidden!important;scroll-snap-type:none!important;-webkit-overflow-scrolling:auto!important;overscroll-behavior-inline:auto!important}html body:not(.guide-page) #studii-de-caz-home[data-av-continuous-ticker="1"] .av-case-showcase-card{flex:0 0 auto!important;scroll-snap-align:none!important;scroll-snap-stop:normal!important}html body:not(.guide-page) #studii-de-caz-home[data-av-continuous-ticker="1"] .av-case-slider-nav{display:none!important}}`;
+    document.head.appendChild(style);
+  };
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",apply,{once:true});
+  else apply();
+})();
