@@ -32,3 +32,6 @@ body .planet-strip-secondary{position:relative;top:auto;z-index:8;margin:0}
 .guide-page .av-live-top-ticker .planet-item strong{color:#73f2a3;font-weight:900}.guide-page .av-live-top-ticker .planet-glyph{font-size:20px;color:#efd77f;text-shadow:0 0 8px rgba(239,215,127,.16)}
 .guide-page .av-live-top-ticker .planet-sign{font-size:18px;color:#73f2a3}.guide-page .av-live-top-ticker .planet-house{color:#a8b8af;font-size:10px}.guide-page .av-live-top-ticker .planet-retro{color:#ff6c62;font-size:12px;font-weight:950}
 @media(max-width:820px){.guide-page .av-live-top-ticker{top:70px}.guide-page .av-live-top-ticker .planet-strip-inner{min-height:38px}.guide-page .av-live-top-ticker .planet-strip-label{padding-left:10px;padding-right:9px}.guide-page .av-live-top-ticker .planet-strip-label strong{font-size:8px}.guide-page .av-live-top-ticker .planet-updated{display:none}.guide-page .av-live-top-ticker .planet-sequence{gap:15px;padding:7px 15px 7px 0}.guide-page .av-live-top-ticker .planet-item{font-size:12px;gap:4px}.guide-page .av-live-top-ticker .planet-glyph{font-size:18px}.guide-page .av-live-top-ticker .planet-sign{font-size:16px}.guide-page .av-live-top-ticker .planet-house{font-size:9px}}
+
+/* V2 direction: left to right */
+.guide-page .av-live-top-ticker .planet-track{animation-direction:reverse}
