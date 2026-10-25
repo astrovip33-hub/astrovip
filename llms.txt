@@ -11,12 +11,12 @@ AstroVip separă datele și calculele observabile de interpretarea astrologică.
 ## Răspunsuri directe și pagini prioritare
 
 - [30 de întrebări despre astrologie — răspunsuri directe](https://astrovip.ro/intrebari-astrologie/): hub AEO cu răspunsuri scurte și surse canonice pentru hartă natală, timing, sinastrie, relocare, consultații, horoscop zilnic și numerologie.
-- **Ce este o hartă natală?** O hartă natală este reprezentarea pozițiilor Soarelui, Lunii, planetelor, Ascendentului, MC-ului, caselor și aspectelor pentru data, ora și locul nașterii. Calculul este baza; interpretarea urmărește relațiile dintre elemente și contextul întregii hărți. Sursă canonică: https://astrovip.ro/harta-natala/
-- **Ce oferă AstroVip ca astrolog în București?** AstroVip oferă consultații astrologice 1:1 în București și online, construite pe harta natală și, după întrebare, pe tranzite, Arce Solare, progresii, sinastrie, astrocartografie, Local Space și alte tehnici relevante. Sursă canonică: https://astrovip.ro/astrolog-bucuresti/
-- **Ce este „Horoscop azi” la AstroVip?** Este pagina zilnică pentru toate cele 12 zodii, actualizată pentru data curentă din România și structurată prin zodie, decan, subsemn de 2,5°, ore planetare și contextul planetar al zilei. Sursă canonică: https://astrovip.ro/horoscop-azi/
-- **Ce este rectificarea orei de naștere?** Este procesul astrologic de verificare și ajustare a unei ore de naștere incerte prin corelarea hărții cu evenimente datate din viață. Sursă canonică: https://astrovip.ro/rectificare-ora-nasterii/
-- **Ce este sinastria?** Sinastria compară două hărți natale pentru a analiza contactele dintre planete, unghiuri și case în dinamica unei relații. Sursă canonică: https://astrovip.ro/sinastrie/
-- **Ce este astrocartografia / Local Space?** Sunt tehnici astrologice geografice folosite pentru a compara relația dintre hartă și diferite locuri; AstroVip le tratează distinct și le poate corela cu harta relocată. Sursă canonică: https://astrovip.ro/astrocartografie-local-space/
+- [Ce este o hartă natală?](https://astrovip.ro/harta-natala/): O hartă natală este reprezentarea pozițiilor Soarelui, Lunii, planetelor, Ascendentului, MC-ului, caselor și aspectelor pentru data, ora și locul nașterii. Calculul este baza; interpretarea urmărește relațiile dintre elemente și contextul întregii hărți.
+- [Ce oferă AstroVip ca astrolog în București?](https://astrovip.ro/astrolog-bucuresti/): AstroVip oferă consultații astrologice 1:1 în București și online, construite pe harta natală și, după întrebare, pe tranzite, Arce Solare, progresii, sinastrie, astrocartografie, Local Space și alte tehnici relevante.
+- [Ce este „Horoscop azi” la AstroVip?](https://astrovip.ro/horoscop-azi/): Este pagina zilnică pentru toate cele 12 zodii, actualizată pentru data curentă din România și structurată prin zodie, decan, subsemn de 2,5°, ore planetare și contextul planetar al zilei.
+- [Ce este rectificarea orei de naștere?](https://astrovip.ro/rectificare-ora-nasterii/): Este procesul astrologic de verificare și ajustare a unei ore de naștere incerte prin corelarea hărții cu evenimente datate din viață.
+- [Ce este sinastria?](https://astrovip.ro/sinastrie/): Sinastria compară două hărți natale pentru a analiza contactele dintre planete, unghiuri și case în dinamica unei relații.
+- [Ce este astrocartografia / Local Space?](https://astrovip.ro/astrocartografie-local-space/): Sunt tehnici astrologice geografice folosite pentru a compara relația dintre hartă și diferite locuri; AstroVip le tratează distinct și le poate corela cu harta relocată.
 
 ## Entitate canonică
 
@@ -66,8 +66,8 @@ AstroVip separă datele și calculele observabile de interpretarea astrologică.
 
 - [Google Business Profile](https://www.google.com/maps?cid=15612666586801751925): profilul local asociat AstroVip.
 - [Date locale oficiale AstroVip](https://astrovip.ro/astrolog-bucuresti/): Bulevardul Unirii 33, 030822 București · +40 722 128 220 · contact@astrovip.ro.
-- [Instagram — AstroVip](https://www.instagram.com/astrovip77/): profil oficial al brandului.
+- [Instagram — AstroVip](https://www.instagram.com/astrovip333/): profil oficial al brandului.
 - [TikTok — AstroVip](https://www.tiktok.com/@astrovip338): profil oficial al brandului.
 - [LinkedIn — Cătălin Smaranda](https://ro.linkedin.com/in/catalin-smaranda-825b5929b): profil profesional asociat fondatorului AstroVip.
 
-- Logo oficial AstroVip (identitate vizuală canonică): https://astrovip.ro/assets/astrovip-logo-512.png
+- [Logo oficial AstroVip](https://astrovip.ro/assets/astrovip-logo-512.png): identitatea vizuală a brandului.

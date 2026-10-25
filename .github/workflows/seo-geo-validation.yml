@@ -21,6 +21,8 @@ jobs:
           node-version: 22
       - name: Preserve publication dates during enrichment
         run: python3 -m unittest discover -s scripts -p 'test_structured_data_enrichment.py'
+      - name: Validate identity, offers and daily calculations
+        run: npm run test:seo-aeo
       - name: Build production browser bundles
         run: |
           npm install --ignore-scripts

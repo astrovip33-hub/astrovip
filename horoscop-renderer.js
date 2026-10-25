@@ -23,6 +23,12 @@ export function renderHoroscopeHTML(html,path,now=new Date()) {
     .replace(/<h1>[\s\S]*?<\/h1>/,'<h1>'+escapeHTML(isHub?'Horoscop azi, '+data.label:'Horoscop '+reading.sign+' azi')+'</h1>')
     .replace(/<(?:div|time) class="date" data-today(?: datetime="[^"]*")?>[\s\S]*?<\/(?:div|time)>/,'<time class="date" data-today datetime="'+data.day+'">'+escapeHTML(data.fullLabel)+'</time>')
     .replace(/<html lang="ro"(?: data-horoscop-render="daily-\d{8}")?>/,'<html lang="ro" data-horoscop-render="daily-'+data.day.replace(/-/g,'')+'">');
+  const answer='<p id="horoscope-answer">'+escapeHTML(isHub
+    ? 'Pe '+data.label+', horoscopul AstroVip prezintă interpretări pentru cele 12 zodii despre dragoste, bani, carieră și energie. Calculul folosește zodiacul tropical și casele solare, cu poziții planetare la reperul de la ora 12:00, Europe/Bucharest.'
+    : 'Pe '+data.label+', horoscopul pentru '+reading.sign+' este interpretat în contextul pozițiilor planetare ale zilei. '+reading.lead)+'</p>';
+  html=html.includes('id="horoscope-answer"')
+    ? html.replace(/<p id="horoscope-answer">[\s\S]*?<\/p>/,answer)
+    : html.replace(/(<time class="date" data-today datetime="[^"]+">[\s\S]*?<\/time>)/,'$1'+answer);
   const sky=BODIES.map(([body,label,symbol])=>'<div class="planet"><b>'+escapeHTML(symbol+' '+label)+'</b>'+escapeHTML(positionLabel(data.positions[body]))+'</div>').join('');
   html=html.replace(/<div class="sky-grid" data-live-sky><div class="planet">[\s\S]*?<\/div><\/div>/,'<div class="sky-grid" data-live-sky>'+sky+'</div>');
   if(isHub) {
