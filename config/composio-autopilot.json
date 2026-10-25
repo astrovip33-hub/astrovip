@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "enabled": false,
+  "userId": "astrovip-admin",
+  "toolkits": [
+    "github",
+    "cloudflare",
+    "google_search_console",
+    "googlesheets"
+  ],
+  "mode": "read-only",
+  "approval": {
+    "requiredForWrites": true,
+    "requiredForDeploy": true,
+    "requiredForDelete": true
+  },
+  "production": {
+    "allowDirectMainWrites": false,
+    "allowAutomaticDeploy": false,
+    "allowDnsWrites": false,
+    "allowDeletes": false
+  },
+  "secrets": {
+    "composioApiKeyEnv": "COMPOSIO_API_KEY"
+  }
+}
