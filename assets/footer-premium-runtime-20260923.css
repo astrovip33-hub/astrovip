@@ -1,13 +1,45 @@
 @charset "UTF-8";
 @import url("/assets/footer-premium-runtime-20260923-base-singlecert-20261026.css?v=20261026-singlecert2");
 
-/* Hard de-duplication for the certification card on desktop and mobile. */
+/* Keep only the current green certification card (.av-identity-image-card).
+   Remove every legacy/extra certificate rendering on desktop and mobile. */
 #astrovip-footer .av-footer-grid::before,
 #astrovip-footer .av-footer-grid::after{
   display:none!important;
   content:none!important;
   background:none!important;
+  background-image:none!important;
+  width:0!important;
+  height:0!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  box-shadow:none!important;
 }
-#astrovip-footer .av-footer-credential ~ .av-footer-credential{
+
+#astrovip-footer .av-footer-credential,
+#astrovip-footer .av-footer-certification,
+#astrovip-footer .av-footer-diploma,
+#astrovip-footer #av-footer-certification,
+#astrovip-footer [href*="diploma-astrologie-2014"],
+#astrovip-footer img[src*="certificare-profesionala-cristian-catalin-smaranda"]{
   display:none!important;
+  visibility:hidden!important;
+  width:0!important;
+  height:0!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+
+/* The approved green card remains untouched. */
+#astrovip-footer .av-identity-image-card{
+  display:block!important;
+  visibility:visible!important;
 }
