@@ -42,7 +42,7 @@ User-agent: ClaudeBot
 Disallow: /
 
 User-agent: CCBot
-Disallow: /
+Allow: /
 
 User-agent: *
 Allow: /
