@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 430" role="img" aria-labelledby="title desc">
+<title id="title">Certificare Profesională AstroVip</title>
+<desc id="desc">Cristian Cătălin Smaranda — Astrolog certificat, COR 516101. Certificat de absolvire cu recunoaștere națională, emis în conformitate cu O.G. nr. 129/2000. Program autorizat, 50 ore, 2014.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#020504"/><stop offset=".48" stop-color="#07130d"/><stop offset="1" stop-color="#010302"/></linearGradient>
+  <radialGradient id="emerald" cx="0" cy=".5" r="1"><stop stop-color="#0b432b" stop-opacity=".72"/><stop offset=".6" stop-color="#06301f" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#8d641d"/><stop offset=".18" stop-color="#f4d978"/><stop offset=".45" stop-color="#fff0ae"/><stop offset=".72" stop-color="#d4a83d"/><stop offset="1" stop-color="#785116"/></linearGradient>
+  <filter id="goldGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="greenGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <pattern id="stars" width="110" height="82" patternUnits="userSpaceOnUse"><circle cx="13" cy="17" r="1" fill="#fff0aa" opacity=".75"/><circle cx="68" cy="55" r=".8" fill="#b9ffd0" opacity=".5"/><circle cx="102" cy="24" r="1.2" fill="#ffe09a" opacity=".48"/></pattern>
+</defs>
+<rect x="6" y="6" width="1428" height="418" rx="31" fill="url(#bg)" stroke="url(#gold)" stroke-width="3"/>
+<rect x="14" y="14" width="1412" height="402" rx="26" fill="url(#emerald)" opacity=".96"/>
+<rect x="14" y="14" width="1412" height="402" rx="26" fill="url(#stars)" opacity=".55"/>
+<path d="M24 66 H1416 M24 364 H1416" stroke="url(#gold)" stroke-width="1" opacity=".42"/>
+<!-- seal -->
+<g transform="translate(122 215)">
+ <circle r="104" fill="#03110b" stroke="url(#gold)" stroke-width="3"/>
+ <circle r="84" fill="none" stroke="#cda63d" stroke-width="1.5" opacity=".8"/>
+ <circle r="68" fill="#052217" stroke="#2a8f5b" stroke-width="1"/>
+ <path d="M-25-35 H25 Q36-35 36-24 V37 Q36 48 25 48 H-25 Q-36 48-36 37 V-24 Q-36-35-25-35Z" fill="none" stroke="#f4d978" stroke-width="5"/>
+ <path d="M-19-13 H19 M-19 2 H19 M-19 17 H12" stroke="#f4d978" stroke-width="4" stroke-linecap="round"/>
+ <circle cy="50" r="24" fill="#0a2a1c" stroke="#f4d978" stroke-width="4"/>
+ <path d="M0 34 L5 45 L17 46 L8 54 L11 66 L0 60 L-11 66 L-8 54 L-17 46 L-5 45Z" fill="#f4d978"/>
+ <path d="M-73 48 Q-93 10-74-28 M73 48 Q93 10 74-28" fill="none" stroke="#cda63d" stroke-width="3" stroke-linecap="round"/>
+ <circle cy="-112" r="4" fill="#fff0ae" filter="url(#goldGlow)"/>
+</g>
+<!-- content -->
+<text x="265" y="78" fill="#f4d978" font-family="Georgia, 'Times New Roman', serif" font-size="48" font-weight="700">Certificare Profesională</text>
+<path d="M266 98 H1030" stroke="url(#gold)" stroke-width="1.5"/>
+<circle cx="648" cy="98" r="4" fill="#fff0ae"/>
+<text x="265" y="151" fill="#fffaf0" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700">Cristian Cătălin Smaranda</text>
+<text x="265" y="199" fill="#f2cf69" font-family="Georgia, 'Times New Roman', serif" font-size="31" font-weight="700">Astrolog certificat — COR 516101</text>
+<text x="265" y="241" fill="#eff5ef" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="600">Certificat de absolvire cu recunoaștere națională</text>
+<text x="265" y="275" fill="#dbe5dd" font-family="Inter, Arial, sans-serif" font-size="21">emis în conformitate cu O.G. nr. 129/2000</text>
+<g font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">
+ <rect x="265" y="305" width="184" height="42" rx="21" fill="#0c1a12" stroke="#8c7437"/><text x="357" y="332" text-anchor="middle" fill="#f1d77f">Program autorizat</text>
+ <rect x="461" y="305" width="104" height="42" rx="21" fill="#0c1a12" stroke="#8c7437"/><text x="513" y="332" text-anchor="middle" fill="#edf3ee">50 ore</text>
+ <rect x="577" y="305" width="94" height="42" rx="21" fill="#0c1a12" stroke="#8c7437"/><text x="624" y="332" text-anchor="middle" fill="#edf3ee">2014</text>
+</g>
+<text x="265" y="384" fill="#c9d4cc" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="18">Formare profesională recunoscută oficial în România</text>
+<!-- verified badge -->
+<g transform="translate(1080 154)">
+ <rect width="276" height="86" rx="43" fill="#04140d" stroke="url(#gold)" stroke-width="2"/>
+ <circle cx="47" cy="43" r="25" fill="#07351f" stroke="#49f08c" stroke-width="2" filter="url(#greenGlow)"/>
+ <path d="M35 43 L43 52 L60 33" fill="none" stroke="#75ffad" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+ <text x="86" y="51" fill="#f2d77a" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" letter-spacing="4">VERIFICAT</text>
+</g>
+<!-- zodiac geometry -->
+<g transform="translate(1245 328)" fill="none" stroke="#cda63d" opacity=".42">
+ <circle r="92"/><circle r="68"/><circle r="42"/><path d="M-110 0 H110 M0-110 V110 M-78-78 L78 78 M78-78 L-78 78"/>
+</g>
+<text x="1206" y="345" fill="#f0cf69" font-family="Georgia, serif" font-size="28" opacity=".72">✦</text>
+</svg>
