@@ -1,0 +1,85 @@
+name: Verify AstroVip entity live
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/verify-entity-live.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Confirm repository identity is clean
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -n 'https://www.instagram.com/astrovip77/' -- ':!.github/workflows/verify-entity-live.yml'; then
+            echo '::error::Stale Instagram identity remains in repository.'
+            exit 20
+          fi
+          git grep -n 'https://www.instagram.com/astrovip333/' -- llms.txt astrovip-entity.json index.html despre-astrovip/index.html astrolog-bucuresti/index.html presa/index.html scripts/strengthen-entity-geo.py
+      - name: Purge entity URLs from Cloudflare cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOKEN=$(printf '%s' "$CLOUDFLARE_API_TOKEN" | tr -d '\r\n')
+          TOKEN="${TOKEN#Bearer }"
+          ZONE_JSON=$(curl -fsS -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' 'https://api.cloudflare.com/client/v4/zones?name=astrovip.ro&status=active')
+          ZONE_ID=$(printf '%s' "$ZONE_JSON" | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0].get("id","") if r else "")')
+          if [ -z "$ZONE_ID" ]; then
+            echo '::warning::Could not resolve zone id; continuing with cache-busting verification.'
+            exit 0
+          fi
+          PAYLOAD='{"files":["https://astrovip.ro/","https://astrovip.ro/despre-astrovip/","https://astrovip.ro/astrolog-bucuresti/","https://astrovip.ro/presa/","https://astrovip.ro/astrovip-entity.json","https://astrovip.ro/llms.txt"]}'
+          HTTP=$(curl -sS -o /tmp/purge.json -w '%{http_code}' -X POST -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' --data "$PAYLOAD" "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/purge_cache")
+          echo "Cloudflare purge HTTP $HTTP"
+          cat /tmp/purge.json
+          if [ "$HTTP" != '200' ]; then
+            echo '::warning::Cloudflare cache purge was not accepted; cache-busting verification will still run.'
+          fi
+      - name: Verify production entity identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          urls=(
+            'https://astrovip.ro/'
+            'https://astrovip.ro/despre-astrovip/'
+            'https://astrovip.ro/astrolog-bucuresti/'
+            'https://astrovip.ro/presa/'
+            'https://astrovip.ro/astrovip-entity.json'
+            'https://astrovip.ro/llms.txt'
+          )
+          failures=0
+          for base in "${urls[@]}"; do
+            sep='?'; [[ "$base" == *'?'* ]] && sep='&'
+            url="${base}${sep}entity_verify=${GITHUB_SHA}"
+            body=$(mktemp)
+            status=''
+            for attempt in $(seq 1 12); do
+              status=$(curl -sS -L -o "$body" -w '%{http_code}' -H 'Cache-Control: no-cache' "$url" || true)
+              if [ "$status" = '200' ] && grep -q 'https://www.instagram.com/astrovip333/' "$body"; then
+                break
+              fi
+              sleep 5
+            done
+            echo "$base => HTTP $status"
+            if grep -q 'https://www.instagram.com/astrovip77/' "$body"; then
+              echo "::error::OLD Instagram identity still live at $base"
+              failures=$((failures+1))
+            elif ! grep -q 'https://www.instagram.com/astrovip333/' "$body"; then
+              echo "::error::Official Instagram identity not found at $base"
+              failures=$((failures+1))
+            else
+              echo "OK: official Instagram identity is live at $base"
+            fi
+          done
+          test "$failures" -eq 0
