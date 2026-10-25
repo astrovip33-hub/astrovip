@@ -156,7 +156,5 @@
 @media(max-width:390px){#astrovip-footer .av-footer-social-links{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 
 
-/* Keep social icons and labels aligned in each mobile column. */
-@media(max-width:820px){
-  #astrovip-footer .av-footer-social-links>a{display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;justify-content:start!important;text-align:left!important}
-}
+/* Keep social icons and labels aligned at every screen width. */
+#astrovip-footer .av-footer-social-links>a{display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;justify-content:start!important;text-align:left!important}
