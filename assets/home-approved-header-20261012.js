@@ -57,7 +57,8 @@
       footerChat.innerHTML='<span class="avfc-live" aria-hidden="true"></span><strong>Chat</strong><span aria-hidden="true">↗</span>';
       footerChat.addEventListener('click',()=>header.querySelector('.avchat-launcher.avchat-header-slot')?.click());
       tools.appendChild(footerChat);
-      footerShell.insertBefore(tools,footerShell.querySelector('.av-footer-bottom'));
+      const footerBottom=footerShell.querySelector('.av-footer-bottom');
+      (footerBottom?.parentNode||footerShell).insertBefore(tools,footerBottom);
       if('IntersectionObserver' in window)new IntersectionObserver(entries=>{
         document.body.classList.toggle('av-footer-visible',entries.some(entry=>entry.isIntersecting));
       },{threshold:0}).observe(footer);
