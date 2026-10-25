@@ -69,3 +69,5 @@ jobs:
           git add index.html
           git commit -m "fix(footer): suppress extra certificate pseudo-card"
           git push origin HEAD:main
+
+# retriggered 2026-10-26 after live screenshot confirmed duplicate pseudo-card
