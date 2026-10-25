@@ -1,0 +1,71 @@
+name: Fix extra footer certificate once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-footer-extra-cert-hardkill-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Hard-disable only the extra certificate pseudo-card
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          marker = '<style id="av-footer-cert-extra-kill">'
+          rules = '''<style id="av-footer-cert-extra-kill">
+#astrovip-footer .av-footer-grid::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  background-image:none!important;
+  width:0!important;
+  height:0!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+</style>'''
+
+          if marker not in s:
+              if '</head>' not in s:
+                  raise SystemExit('Missing </head> in index.html')
+              s = s.replace('</head>', rules + '\n</head>', 1)
+
+          s = s.replace(
+              '/assets/footer-premium-runtime-20260923.css?v=20261026-singlecert3',
+              '/assets/footer-premium-runtime-20260923.css?v=20261026-singlecert4'
+          )
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit hard fix
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "fix(footer): suppress extra certificate pseudo-card"
+          git push origin HEAD:main
