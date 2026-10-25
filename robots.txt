@@ -30,14 +30,15 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-# Explicit training opt-out; does not block AI search/retrieval above.
+# Gemini / Google AI grounding and model use
+User-agent: Google-Extended
+Allow: /
+
+# Explicit training opt-out for separate training crawlers.
 User-agent: GPTBot
 Disallow: /
 
 User-agent: ClaudeBot
-Disallow: /
-
-User-agent: Google-Extended
 Disallow: /
 
 User-agent: CCBot
@@ -48,4 +49,4 @@ Allow: /
 
 # Canonical sitemap index
 Sitemap: https://astrovip.ro/sitemap.xml
-# AI/SEO discovery policy updated 2026-10-22
+# AI/SEO discovery policy updated 2026-10-25
