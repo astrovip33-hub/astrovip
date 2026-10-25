@@ -15,3 +15,43 @@
   body:not(.guide-page) #studii-de-caz-home .av-case-slider-dot{appearance:none!important;width:7px!important;height:7px!important;padding:0!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:999px!important;background:rgba(255,255,255,.28)!important;box-shadow:none!important;transition:width .2s ease,background .2s ease,box-shadow .2s ease,border-color .2s ease!important}
   body:not(.guide-page) #studii-de-caz-home .av-case-slider-dot.is-active{width:30px!important;background:linear-gradient(90deg,#d8f500,#39ff14)!important;border-color:rgba(239,255,114,.75)!important;box-shadow:0 0 12px rgba(57,255,20,.34),0 0 22px rgba(216,245,0,.16)!important}
 }
+
+/* AstroVip — premium professional certification card, desktop + mobile.
+   Kept in this already-imported stylesheet so the footer remains a zero-JS component. */
+html body #astrovip-footer .av-footer-premium-single::before{
+  content:""!important;
+  display:block!important;
+  position:relative!important;
+  width:100%!important;
+  max-width:1120px!important;
+  aspect-ratio:1440/430!important;
+  margin:0 auto 24px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:24px!important;
+  background-color:#020504!important;
+  background-image:url("/assets/certificare-profesionala-astrovip-desktop.svg?v=20261026-1")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:100% 100%!important;
+  box-shadow:0 20px 48px rgba(0,0,0,.42),0 0 28px rgba(229,197,119,.10)!important;
+  overflow:hidden!important;
+}
+@media (max-width:680px){
+  html body #astrovip-footer .av-footer-premium-single::before{
+    width:min(100%,720px)!important;
+    max-width:720px!important;
+    aspect-ratio:720/920!important;
+    margin:0 auto 20px!important;
+    border-radius:20px!important;
+    background-image:url("/assets/certificare-profesionala-astrovip-mobile.svg?v=20261026-1")!important;
+    background-size:100% 100%!important;
+    box-shadow:0 16px 36px rgba(0,0,0,.44),0 0 22px rgba(229,197,119,.09)!important;
+  }
+}
+@media (max-width:420px){
+  html body #astrovip-footer .av-footer-premium-single::before{
+    width:100%!important;
+    border-radius:16px!important;
+  }
+}
