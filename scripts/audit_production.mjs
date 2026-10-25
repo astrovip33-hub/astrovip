@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import puppeteer from 'puppeteer-core';
 
@@ -9,6 +9,9 @@ const output = '/tmp/astrovip-production-audit';
 await mkdir(output, { recursive: true });
 const stamp = process.env.GITHUB_SHA || Date.now();
 const report = { pages: [], browsers: [], errors: [] };
+const workerSource = await readFile(new URL('../worker-home-ultra.js', import.meta.url), 'utf8');
+const expectedRender = workerSource.match(/meta name="astrovip-home-render" content="([^"]+)"/)?.[1];
+assert(expectedRender, 'Current Worker render marker missing from source');
 const get = async path => {
   const url = new URL(path, base);
   url.searchParams.set('audit', stamp);
@@ -109,7 +112,7 @@ try {
     });
     console.log('BROWSER_STATE', JSON.stringify(state));
     report.browsers.push({ ...state, errors, failedResources });
-    assert.equal(state.render, '20261016-audit-remediation1', 'Stale production Worker');
+    assert.equal(state.render, expectedRender, 'Stale production Worker');
     assert(!state.overflow, `${width}: horizontal overflow`);
     assert(state.heroVisible && state.imageLoaded, `${width}: hero missing`);
     assert(state.paymentVisible && state.paymentLink?.startsWith('https://buy.stripe.com/'), `${width}: payment missing`);
