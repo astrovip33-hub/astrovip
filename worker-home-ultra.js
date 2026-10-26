@@ -3,7 +3,15 @@ import baseWorker from './worker.js';
 import { mobileHome, mobileStyles, cardlessStyles } from './homepage-approved-layout.js';
 
 const PAYMENT_URL='https://buy.stripe.com/4gMeVcbz75J207y6fefjG00';
-const mobileHomePayment=mobileHome.replace('href="#programari">PROGRAMEAZĂ CONSULTAȚIA →','href="'+PAYMENT_URL+'">PLĂTEȘTE CU CARDUL · 500 LEI →');
+// The mobile layout needs a visible level-one heading; desktop keeps
+// av-pro-title. An explicit heading role preserves the single source H1.
+const mobileHomePayment=mobileHome
+  .replace('href="#programari">PROGRAMEAZĂ CONSULTAȚIA →','href="'+PAYMENT_URL+'">PLĂTEȘTE CU CARDUL · 500 LEI →')
+  .replace('<div class="avm-kicker">TIMING-UL CONTEAZĂ !</div>', '<div class="avm-kicker">TIMING-UL CONTEAZĂ !</div><p id="av-home-brand-title" class="avm-brand-title" role="heading" aria-level="1">AstroVip · Astrologie și numerologie</p>')
+  .replace('Claritate pentru dragoste, carieră, afaceri și destin — într-o experiență astrologică premium 1:1, construită în jurul momentului potrivit.', 'Consultații AstroVip de astrologie și numerologie cu Cătălin Smaranda, în București și online. Analize personale pentru dragoste, carieră, afaceri și relocare.');
+const BRAND_HEADING_STYLE=`<style id="av-home-brand-heading-style">
+html.av-ultra-home-production #av-mobile-approved-home .avm-hero-copy .avm-brand-title{display:block!important;position:static!important;margin:10px 0 12px!important;padding:0!important;width:auto!important;height:auto!important;max-width:100%!important;overflow:visible!important;clip:auto!important;opacity:1!important;visibility:visible!important;color:#f0d58a!important;font:800 clamp(15px,1.7vw,20px)/1.35 Inter,system-ui,sans-serif!important;letter-spacing:.015em!important;text-transform:none!important;text-shadow:0 0 18px rgba(217,184,92,.12)!important}
+</style>`;
 const PAYMENT_CTA=`<section id="av-home-payment-cta" class="av-home-paybar" aria-label="Plată consultație AstroVip"><div class="av-home-paybar-inner"><div><span>CONSULTAȚIE PREMIUM · 60 MIN</span><strong>Plată securizată cu cardul</strong><small>500 lei · procesare securizată prin Stripe</small></div><a href="${PAYMENT_URL}" aria-label="Plătește consultația AstroVip cu cardul, 500 lei">PLĂTEȘTE CU CARDUL · 500 LEI →</a></div></section>`;
 
 const PLANETARY_HOURS_TEASER=`<section class="av-planetary-hours-home av-planetary-live-card" aria-label="Ora planetară activă în București"><style>
@@ -173,7 +181,7 @@ export default {
           el.setAttribute('data-av-slider-shell','v8');
           el.append(CASE_NAV_V8,{html:true});
         }})
-        .on('head',{element(el){el.append(HOMEPAGE_CRITICAL,{html:true})}})
+        .on('head',{element(el){el.append(HOMEPAGE_CRITICAL+BRAND_HEADING_STYLE,{html:true})}})
         .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261019-ssr3" defer></script><script src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script><script src="/assets/home-planetary-strip-live.js?v=20261025-7"></script>'+PLANETARY_HOURS_SCRIPT,{html:true})}})
         .on('script[src^="/assets/ux-refresh-20261008.js"]',{element(el){el.setAttribute('src','/assets/ux-refresh-20261008.js?v=20261020-planetary-hours1')}})
         .on('link[rel="stylesheet"][href^="/assets/ux-refresh-20261008.css"]',{element(el){el.remove()}})
