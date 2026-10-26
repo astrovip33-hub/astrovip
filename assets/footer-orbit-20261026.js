@@ -14,6 +14,22 @@
   }
   document.body.classList.add('av-l7x-preview');
 
+  /* Approved 2026-10-26: premium responsive certification card, desktop + mobile. */
+  if (!document.getElementById('av-cert-l7x-css')) {
+    const certCss = document.createElement('link');
+    certCss.id = 'av-cert-l7x-css';
+    certCss.rel = 'stylesheet';
+    certCss.href = '/assets/certificare-card-20261026.css?v=20261026-live1';
+    document.head.appendChild(certCss);
+  }
+  if (!document.getElementById('av-cert-l7x-js')) {
+    const certJs = document.createElement('script');
+    certJs.id = 'av-cert-l7x-js';
+    certJs.src = '/assets/certificare-card-20261026.js?v=20261026-live1';
+    certJs.defer = true;
+    document.head.appendChild(certJs);
+  }
+
   footer.querySelector('[data-avf-chat]')?.addEventListener('click', () => {
     const launcher = document.querySelector('#av-site-header .avchat-launcher, .avchat-launcher');
     if (launcher) launcher.click();
