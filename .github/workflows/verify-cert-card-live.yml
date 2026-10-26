@@ -1,0 +1,37 @@
+name: Verify certification card live
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify exact live homepage marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          OK=0
+          for ATTEMPT in $(seq 1 18); do
+            URL="https://astrovip.ro/?cert-worker1=${GITHUB_SHA}&attempt=${ATTEMPT}"
+            STATUS=$(curl -sS -L -o /tmp/home.html -w '%{http_code}' --retry 2 --retry-delay 1 -H 'Cache-Control: no-cache' "$URL" || true)
+            COUNT=$(grep -o 'id="av-cert-l7x"' /tmp/home.html 2>/dev/null | wc -l | tr -d ' ' || true)
+            SOURCE=$(grep -o 'data-av-cert-source="worker-final-v1"' /tmp/home.html 2>/dev/null | wc -l | tr -d ' ' || true)
+            CSS=$(grep -o 'certificare-card-20261026.css?v=20261026-worker1' /tmp/home.html 2>/dev/null | wc -l | tr -d ' ' || true)
+            echo "attempt=${ATTEMPT} status=${STATUS} cert_id=${COUNT} source=${SOURCE} css=${CSS}"
+            if [ "$STATUS" = "200" ] && [ "$COUNT" = "1" ] && [ "$SOURCE" = "1" ] && [ "$CSS" -ge "1" ]; then
+              OK=1
+              break
+            fi
+            sleep 5
+          done
+          if [ "$OK" != "1" ]; then
+            echo '::error::Live AstroVip homepage does not expose exactly one final-worker certification card.'
+            exit 1
+          fi
+          echo 'Certification card LIVE marker verified in final served homepage HTML.'
