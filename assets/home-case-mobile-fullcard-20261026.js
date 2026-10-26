@@ -71,7 +71,7 @@
       const elapsed = lastTime ? Math.min(now - lastTime, 64) : 0;
       lastTime = now;
       if (loopWidth && !document.hidden && !held && !hovered && now >= resumeAt && !viewport.contains(document.activeElement)) {
-        offset = (offset + 20 * elapsed / 1000) % loopWidth;
+        offset = (offset + 36 * elapsed / 1000) % loopWidth;
         viewport.scrollLeft = offset;
       }
       raf = requestAnimationFrame(tick);
