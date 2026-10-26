@@ -12,7 +12,7 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Verify exact live homepage marker
+      - name: Verify exact live homepage marker and DOM ancestry
         shell: bash
         run: |
           set -euo pipefail
@@ -34,4 +34,37 @@ jobs:
             echo '::error::Live AstroVip homepage does not expose exactly one final-worker certification card.'
             exit 1
           fi
+
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+
+          class Probe(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.stack=[]
+                  self.found=False
+              def handle_starttag(self, tag, attrs):
+                  d=dict(attrs)
+                  if d.get('id')=='av-cert-l7x':
+                      self.found=True
+                      print('CERT_ANCESTORS_BEGIN')
+                      for t,a in self.stack[-12:]:
+                          ad=dict(a)
+                          print(f"{t} id={ad.get('id','')} class={ad.get('class','')}")
+                      print('CERT_NODE', f"{tag} id={d.get('id','')} class={d.get('class','')}")
+                      print('CERT_ANCESTORS_END')
+                  if tag not in {'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}:
+                      self.stack.append((tag,attrs))
+              def handle_endtag(self, tag):
+                  for i in range(len(self.stack)-1,-1,-1):
+                      if self.stack[i][0]==tag:
+                          del self.stack[i:]
+                          return
+
+          p=Probe()
+          p.feed(open('/tmp/home.html',encoding='utf-8',errors='ignore').read())
+          if not p.found:
+              raise SystemExit('Certification node missing during DOM ancestry parse')
+          PY
+
           echo 'Certification card LIVE marker verified in final served homepage HTML.'
