@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AstroVip — Preview L7X Homepage</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020504;color:#f4f1e8;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+#av-l7x-frame{display:block;width:100%;height:100%;border:0;background:#020504}
+.av-preview-chip{position:fixed;z-index:2147483647;top:max(8px,env(safe-area-inset-top));right:9px;display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:6px 10px;border:1px solid rgba(229,196,127,.32);border-radius:999px;background:rgba(3,8,5,.84);box-shadow:0 8px 28px rgba(0,0,0,.42);backdrop-filter:blur(12px);color:#d9c28d;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}.av-preview-chip i{width:5px;height:5px;border-radius:50%;background:#b8f58f;box-shadow:0 0 10px rgba(184,245,143,.72)}
+@media(max-width:560px){.av-preview-chip{top:max(5px,env(safe-area-inset-top));right:5px;min-height:26px;padding:4px 8px;font-size:8px;opacity:.76}}
+</style>
+</head>
+<body>
+<div class="av-preview-chip"><i></i>Preview L7X</div>
+<iframe id="av-l7x-frame" src="/" title="AstroVip homepage L7X preview"></iframe>
+<script>
+(function(){
+  const frame=document.getElementById('av-l7x-frame');
+  frame.addEventListener('load',()=>{
+    try{
+      const doc=frame.contentDocument;
+      if(!doc) return;
+      doc.body.classList.add('av-l7x-preview');
+      const old=doc.getElementById('av-l7x-preview-css');
+      if(old) old.remove();
+      const link=doc.createElement('link');
+      link.id='av-l7x-preview-css';
+      link.rel='stylesheet';
+      link.href='/assets/homepage-l7x-preview.css?v=20261026-1';
+      doc.head.appendChild(link);
+      const meta=doc.createElement('meta');
+      meta.name='robots';meta.content='noindex,nofollow,noarchive';
+      doc.head.appendChild(meta);
+    }catch(e){console.error('L7X preview injection failed',e)}
+  });
+})();
+</script>
+</body>
+</html>
