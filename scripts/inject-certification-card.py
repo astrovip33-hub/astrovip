@@ -3,31 +3,37 @@ from pathlib import Path
 p = Path("index.html")
 s = p.read_text(encoding="utf-8")
 
-# Refresh the footer runtime reference, but do not depend on it for this card.
+# Keep the browser assets fresh, but do not rely on the legacy footer runtime.
 s = s.replace(
     "/assets/footer-orbit-20261026.js?v=20261026-vivid1",
     "/assets/footer-orbit-20261026.js?v=20261026-vivid2",
 )
 
-css = '<link id="av-cert-l7x-css" rel="stylesheet" href="/assets/certificare-card-20261026.css?v=20261026-live4">'
+css = '<link id="av-cert-l7x-css" rel="stylesheet" href="/assets/certificare-card-20261026.css?v=20261026-worker1">'
 if 'id="av-cert-l7x-css"' not in s:
     if "</head>" not in s:
         raise SystemExit("Missing </head> in index.html")
     s = s.replace("</head>", css + "\n</head>", 1)
 else:
-    s = s.replace(
-        '/assets/certificare-card-20261026.css?v=20261026-live3',
-        '/assets/certificare-card-20261026.css?v=20261026-live4',
+    import re
+    s = re.sub(
+        r'<link id="av-cert-l7x-css" rel="stylesheet" href="/assets/certificare-card-20261026\.css\?v=[^"]+">',
+        css,
+        s,
+        count=1,
     )
 
-# Keep the runtime loader versioned as a fallback only. The card itself is static HTML.
+# Fallback runtime only; the final production Worker owns the visible mount.
 s = s.replace(
     '/assets/certificare-card-20261026.js?v=20261026-live3',
+    '/assets/certificare-card-20261026.js?v=20261026-worker1',
+).replace(
     '/assets/certificare-card-20261026.js?v=20261026-live4',
+    '/assets/certificare-card-20261026.js?v=20261026-worker1',
 )
 
 card = '''
-<section id="av-cert-l7x" class="av-cert-l7x" aria-labelledby="av-cert-l7x-title" style="display:block!important;visibility:visible!important;opacity:1!important">
+<section id="av-cert-l7x" class="av-cert-l7x" data-av-cert-source="worker-final-v1" aria-labelledby="av-cert-l7x-title" style="display:block!important;visibility:visible!important;opacity:1!important">
   <div class="avc-card">
     <div class="avc-orbits" aria-hidden="true"></div>
     <div class="avc-copy">
@@ -51,17 +57,47 @@ card = '''
 </section>
 '''
 
+# Keep a static fallback in the deployed asset for non-ultra render paths.
 if 'id="av-cert-l7x"' not in s:
     anchor_id = 'id="cine-analizeaza-harta"'
     pos = s.find(anchor_id)
     if pos < 0:
         raise SystemExit("Missing #cine-analizeaza-harta anchor in index.html")
-    section_start = s.rfind("<section", 0, pos)
     section_end = s.find("</section>", pos)
-    if section_start < 0 or section_end < 0:
-        raise SystemExit("Could not resolve expert section boundaries")
+    if section_end < 0:
+        raise SystemExit("Could not resolve expert section boundary")
     insert_at = section_end + len("</section>")
     s = s[:insert_at] + "\n" + card + s[insert_at:]
 
 p.write_text(s, encoding="utf-8")
-print("Certification card static HTML injected after #cine-analizeaza-harta.")
+
+# Production homepage is transformed by worker-home-ultra.js after index.html is read.
+# Mount the approved card in that FINAL render path, after the visible case-study section.
+w = Path("worker-home-ultra.js")
+ws = w.read_text(encoding="utf-8")
+worker_card = '<link rel="stylesheet" href="/assets/certificare-card-20261026.css?v=20261026-worker1"><style>#av-cert-l7x{display:block!important;visibility:visible!important;opacity:1!important}</style>' + card.strip()
+worker_card_js = worker_card.replace('\\', '\\\\').replace('`', '\\`').replace('${', '\\${')
+
+if 'const CERTIFICATION_CARD_L7X=' not in ws:
+    anchor = 'const HOMEPAGE_CRITICAL='
+    if anchor not in ws:
+        raise SystemExit("Missing HOMEPAGE_CRITICAL anchor in worker-home-ultra.js")
+    ws = ws.replace(anchor, f'const CERTIFICATION_CARD_L7X=`{worker_card_js}`;\n\n{anchor}', 1)
+
+old = """        .on('#studii-de-caz-home',{element(el){
+          el.setAttribute('data-av-slider-shell','v8');
+          el.append(CASE_NAV_V8,{html:true});
+        }})"""
+new = """        .on('#av-cert-l7x',{element(el){el.remove()}})
+        .on('#studii-de-caz-home',{element(el){
+          el.setAttribute('data-av-slider-shell','v8');
+          el.append(CASE_NAV_V8,{html:true});
+          el.after(CERTIFICATION_CARD_L7X,{html:true});
+        }})"""
+if 'el.after(CERTIFICATION_CARD_L7X' not in ws:
+    if old not in ws:
+        raise SystemExit("Missing case-study mount block in worker-home-ultra.js")
+    ws = ws.replace(old, new, 1)
+
+w.write_text(ws, encoding="utf-8")
+print("Certification card mounted in FINAL production Worker after #studii-de-caz-home.")
