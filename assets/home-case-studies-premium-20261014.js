@@ -81,7 +81,7 @@
             <div>
               <p class="av-case-lux-kicker">EXEMPLE REALE · TIMING ASTROLOGIC</p>
               <h2 id="av-case-showcase-title">STUDII DE CAZ</h2>
-              <p class="av-case-lux-intro">Trei evenimente importante analizate retrospectiv prin repere astrologice concrete.</p>
+              <p class="av-case-lux-intro">Studii de caz relevante din diverse domenii ale vieții, analizate retrospectiv prin repere astrologice concrete.</p>
             </div>
             <a class="av-case-lux-all" href="/studii-de-caz/">VEZI TOATE <span aria-hidden="true">→</span></a>
           </header>
