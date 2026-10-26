@@ -40,7 +40,6 @@
     const active = () => mobile.matches && !reduced.matches;
     const measure = () => {
       if (!active() || !viewport.clientWidth) return;
-      // Fixed pixel card widths avoid percentages resolving against the entire strip.
       viewport.style.setProperty('--av-mobile-case-width', `${viewport.clientWidth}px`);
       loopWidth = track.firstElementChild?.getBoundingClientRect().width || 0;
       offset = loopWidth ? viewport.scrollLeft % loopWidth : 0;
@@ -115,3 +114,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
   else boot();
 })();
+;(()=>{if(document.getElementById('av-home-case12-vocation-loader'))return;const script=document.createElement('script');script.id='av-home-case12-vocation-loader';script.src='/assets/home-case12-vocation-20261027.js?v=20261027-case12';script.defer=true;document.head.appendChild(script)})();
