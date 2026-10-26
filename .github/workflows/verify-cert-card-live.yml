@@ -37,20 +37,16 @@ jobs:
 
           python3 - <<'PY'
           from html.parser import HTMLParser
-
           class Probe(HTMLParser):
               def __init__(self):
-                  super().__init__(convert_charrefs=True)
-                  self.stack=[]
-                  self.found=False
+                  super().__init__(convert_charrefs=True); self.stack=[]; self.found=False
               def handle_starttag(self, tag, attrs):
                   d=dict(attrs)
                   if d.get('id')=='av-cert-l7x':
                       self.found=True
                       print('CERT_ANCESTORS_BEGIN')
                       for t,a in self.stack[-12:]:
-                          ad=dict(a)
-                          print(f"{t} id={ad.get('id','')} class={ad.get('class','')}")
+                          ad=dict(a); print(f"{t} id={ad.get('id','')} class={ad.get('class','')}")
                       print('CERT_NODE', f"{tag} id={d.get('id','')} class={d.get('class','')}")
                       print('CERT_ANCESTORS_END')
                   if tag not in {'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}:
@@ -58,13 +54,68 @@ jobs:
               def handle_endtag(self, tag):
                   for i in range(len(self.stack)-1,-1,-1):
                       if self.stack[i][0]==tag:
-                          del self.stack[i:]
-                          return
+                          del self.stack[i:]; return
+          p=Probe(); p.feed(open('/tmp/home.html',encoding='utf-8',errors='ignore').read())
+          if not p.found: raise SystemExit('Certification node missing during DOM ancestry parse')
+          PY
+          echo 'Certification card LIVE marker verified in final served homepage HTML.'
 
-          p=Probe()
-          p.feed(open('/tmp/home.html',encoding='utf-8',errors='ignore').read())
-          if not p.found:
-              raise SystemExit('Certification node missing during DOM ancestry parse')
+      - name: Render live card in Chrome mobile and desktop
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet selenium
+          google-chrome --version || google-chrome-stable --version || chromium --version
+          python3 - <<'PY'
+          import os, time
+          from selenium import webdriver
+          from selenium.webdriver.common.by import By
+          from selenium.webdriver.chrome.options import Options
+          from selenium.webdriver.support.ui import WebDriverWait
+          from selenium.webdriver.support import expected_conditions as EC
+
+          sha=os.environ.get('GITHUB_SHA','')
+          url=f'https://astrovip.ro/?cert-render={sha}'
+
+          def run(label, mobile=False):
+              opt=Options()
+              opt.add_argument('--headless=new')
+              opt.add_argument('--no-sandbox')
+              opt.add_argument('--disable-dev-shm-usage')
+              opt.add_argument('--disable-gpu')
+              opt.add_argument('--hide-scrollbars')
+              if mobile:
+                  opt.add_experimental_option('mobileEmulation', {
+                      'deviceMetrics': {'width':390,'height':844,'pixelRatio':3},
+                      'userAgent':'Mozilla/5.0 (Linux; Android 16) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Mobile Safari/537.36'
+                  })
+              else:
+                  opt.add_argument('--window-size=1440,1200')
+              d=webdriver.Chrome(options=opt)
+              try:
+                  d.get(url)
+                  el=WebDriverWait(d,25).until(EC.presence_of_element_located((By.ID,'av-cert-l7x')))
+                  d.execute_script("arguments[0].scrollIntoView({block:'center',inline:'nearest'});",el)
+                  time.sleep(1)
+                  visible=el.is_displayed()
+                  rect=d.execute_script("const r=arguments[0].getBoundingClientRect(),s=getComputedStyle(arguments[0]); return {x:r.x,y:r.y,w:r.width,h:r.height,display:s.display,visibility:s.visibility,opacity:s.opacity,position:s.position};",el)
+                  print(label, 'VISIBLE=',visible, 'RECT=',rect)
+                  if not visible or rect['w'] < 100 or rect['h'] < 100 or rect['display']=='none' or rect['visibility']=='hidden' or float(rect['opacity']) <= 0:
+                      raise SystemExit(f'{label}: certification card is not visually rendered')
+                  el.screenshot(f'/tmp/cert-{label}.png')
+              finally:
+                  d.quit()
+
+          run('mobile', True)
+          run('desktop', False)
           PY
 
-          echo 'Certification card LIVE marker verified in final served homepage HTML.'
+      - name: Upload rendered proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: certification-card-live-proof
+          path: |
+            /tmp/cert-mobile.png
+            /tmp/cert-desktop.png
+          if-no-files-found: error
+          retention-days: 3
