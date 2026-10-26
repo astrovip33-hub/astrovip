@@ -2,15 +2,36 @@
 (() => {
   'use strict';
 
+  const isVisible = (el) => {
+    if (!el) return false;
+    const style = window.getComputedStyle(el);
+    return style.display !== 'none' && style.visibility !== 'hidden' && el.getClientRects().length > 0;
+  };
+
+  const resolveAnchor = () => {
+    const expert = document.getElementById('cine-analizeaza-harta');
+    if (isVisible(expert)) return expert;
+
+    const currentHero = document.querySelector('.av-pro-hero');
+    if (isVisible(currentHero)) return currentHero;
+
+    const visibleMainSection = [...document.querySelectorAll('main#top > section, main > section')].find(isVisible);
+    if (visibleMainSection) return visibleMainSection;
+
+    return expert || currentHero || document.querySelector('main#top, main');
+  };
+
   const mount = () => {
     if (document.getElementById('av-cert-l7x')) return;
-    const expert = document.getElementById('cine-analizeaza-harta');
-    if (!expert) return;
+    const anchor = resolveAnchor();
+    if (!anchor) return;
 
     const section = document.createElement('section');
     section.id = 'av-cert-l7x';
     section.className = 'av-cert-l7x';
     section.setAttribute('aria-labelledby', 'av-cert-l7x-title');
+    section.style.display = 'block';
+    section.style.visibility = 'visible';
     section.innerHTML = `
       <div class="avc-card">
         <div class="avc-orbits" aria-hidden="true"></div>
@@ -56,12 +77,25 @@
         </div>
       </div>`;
 
-    expert.insertAdjacentElement('afterend', section);
+    if (anchor.matches('main#top, main')) anchor.prepend(section);
+    else anchor.insertAdjacentElement('afterend', section);
+  };
+
+  const boot = () => {
+    mount();
+    if (!document.getElementById('av-cert-l7x')) {
+      const observer = new MutationObserver(() => {
+        mount();
+        if (document.getElementById('av-cert-l7x')) observer.disconnect();
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+      window.setTimeout(() => observer.disconnect(), 8000);
+    }
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount, { once: true });
+    document.addEventListener('DOMContentLoaded', boot, { once: true });
   } else {
-    mount();
+    boot();
   }
 })();
