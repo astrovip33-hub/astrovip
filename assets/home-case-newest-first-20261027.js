@@ -2,7 +2,7 @@
   'use strict';
   const TEACHER='/studii-de-caz/vocatie-invatator-17-mai-1972/';
   const ASTROLOG='/astrologie-cariera-vocatie/';
-  const IMAGE='/assets/case-invatator-img-20261027.txt?v=20261027-teacher-preview1';
+  const IMAGE='/assets/case-invatator-img-20261027.txt?v=20261027-teacher-preview2';
   const ORDER=[
     TEACHER,
     ASTROLOG,
