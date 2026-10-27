@@ -1,6 +1,8 @@
 import app from './worker-home-ultra.js';
 
 const LLMS_DISCOVERY_LINK = '<link rel="describedby" href="/llms.txt" type="text/plain">';
+const TEACHER_IMAGE_PATH = '/assets/vocatie-invatator-live-20261027.webp';
+const TEACHER_IMAGE_RAW = 'https://raw.githubusercontent.com/astrovip33-hub/astrovip/main/assets/vocatie-invatator-live-20261027.webp';
 const CERT_STYLE = '<link rel="stylesheet" href="/assets/certificare-card-20261026.css?v=20261026-final2"><style id="av-cert-final-visibility">#studii-de-caz-home>#av-cert-l7x{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;height:auto!important;min-height:1px!important;margin:22px 0 0!important;padding:0!important;overflow:visible!important}</style>';
 const CERT_CARD = `<section id="av-cert-l7x" class="av-cert-l7x" data-av-cert-source="worker-ai-final-v2" aria-labelledby="av-cert-l7x-title" style="display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important;overflow:visible!important">
   <div class="avc-card">
@@ -27,6 +29,32 @@ const CERT_CARD = `<section id="av-cert-l7x" class="av-cert-l7x" data-av-cert-so
 
 export default {
   async fetch(request, env, ctx) {
+    const requestUrl = new URL(request.url);
+
+    // Serve the teacher vocation artwork through the Worker instead of relying on
+    // the static asset manifest. This keeps the public AstroVip URL stable while
+    // guaranteeing a real image/webp response for the article and every slider clone.
+    if (requestUrl.pathname === TEACHER_IMAGE_PATH) {
+      const raw = await fetch(TEACHER_IMAGE_RAW, {
+        cf: { cacheEverything: true, cacheTtl: 86400 }
+      });
+      if (!raw.ok) {
+        return new Response('Teacher vocation image unavailable', {
+          status: 502,
+          headers: { 'content-type': 'text/plain; charset=utf-8' }
+        });
+      }
+      const headers = new Headers(raw.headers);
+      headers.set('content-type', 'image/webp');
+      headers.set('cache-control', 'public, max-age=86400, stale-while-revalidate=604800');
+      headers.set('x-astrovip-image-source', 'teacher-vocation-worker-proxy');
+      headers.delete('content-security-policy');
+      return new Response(request.method === 'HEAD' ? null : raw.body, {
+        status: 200,
+        headers
+      });
+    }
+
     const response = await app.fetch(request, env, ctx);
     const contentType = response.headers.get('content-type') || '';
 
@@ -38,7 +66,7 @@ export default {
       return response;
     }
 
-    const url = new URL(request.url);
+    const url = requestUrl;
     const isHome = url.pathname === '/' || url.pathname === '';
     let certMounted = false;
 
