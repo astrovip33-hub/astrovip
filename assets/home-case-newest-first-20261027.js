@@ -2,7 +2,7 @@
   'use strict';
   const TEACHER='/studii-de-caz/vocatie-invatator-17-mai-1972/';
   const ASTROLOG='/astrologie-cariera-vocatie/';
-  const IMAGE='/assets/vocatie-invatator-live-20261027.webp?v=20261027-live1';
+  const IMAGE='/assets/vocatie-invatator-original-20261027.jpg';
   const ORDER=[
     TEACHER,
     ASTROLOG,
@@ -38,7 +38,7 @@
     a.className='av-case-showcase-card av-case-local-space av-case-teacher';
     a.href=TEACHER;
     a.setAttribute('aria-label','Vezi studiul de caz Vocație profesională – Învățător');
-    a.innerHTML=`<div class="av-case-showcase-visual av-case-local-space-visual"><img src="${IMAGE}" width="600" height="338" loading="eager" fetchpriority="high" decoding="async" alt="Vocație profesională – Învățător, studiu de caz AstroVip"><span class="av-case-local-space-symbol" aria-hidden="true">♅</span><span class="av-case-local-space-index" aria-hidden="true">01</span></div><div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">STUDIU DE CAZ 01 · VOCAȚIE</p><h3>Vocație profesională – Învățător</h3><p class="av-case-showcase-meta">17 mai 1972 · București · educație</p><p class="av-case-showcase-lead">MC în Balanță, Venus și Luna în Rac, Soare în Casa 5, Uranus sub 5° de MC și orientare vestică: profil simbolic de educator empatic și inovator.</p><span class="av-case-showcase-cta">VEZI STUDIUL →</span></div>`;
+    a.innerHTML=`<div class="av-case-showcase-visual av-case-local-space-visual"><img src="${IMAGE}" width="1335" height="1536" loading="eager" fetchpriority="high" decoding="async" alt="Vocație profesională – Învățător, studiu de caz AstroVip"><span class="av-case-local-space-symbol" aria-hidden="true">♅</span><span class="av-case-local-space-index" aria-hidden="true">01</span></div><div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">STUDIU DE CAZ 01 · VOCAȚIE</p><h3>Vocație profesională – Învățător</h3><p class="av-case-showcase-meta">17 mai 1972 · București · educație</p><p class="av-case-showcase-lead">MC în Balanță, Venus și Luna în Rac, Soare în Casa 5, Uranus sub 5° de MC și orientare vestică: profil simbolic de educator empatic și inovator.</p><span class="av-case-showcase-cta">VEZI STUDIUL →</span></div>`;
     return a;
   };
   const categoryFor=(card)=>{
@@ -82,7 +82,7 @@
     let teacher=track.querySelector(`a[href="${TEACHER}"]`);
     if(!teacher){teacher=makeTeacher();track.prepend(teacher)}
     const img=teacher.querySelector('img');
-    if(img){img.setAttribute('src',IMAGE);img.setAttribute('width','600');img.setAttribute('height','338');img.removeAttribute('srcset');img.setAttribute('loading','eager');img.setAttribute('fetchpriority','high')}
+    if(img){img.setAttribute('src',IMAGE);img.setAttribute('width','1335');img.setAttribute('height','1536');img.removeAttribute('srcset');img.setAttribute('loading','eager');img.setAttribute('fetchpriority','high')}
     const map=new Map([...track.querySelectorAll(':scope > a[href]')].map(a=>[a.getAttribute('href'),a]));
     ORDER.forEach(href=>{const card=map.get(href);if(card)track.appendChild(card)});
     [...track.querySelectorAll(':scope > .av-case-showcase-card')].filter(card=>!ORDER.includes(card.getAttribute('href'))).forEach(card=>track.appendChild(card));

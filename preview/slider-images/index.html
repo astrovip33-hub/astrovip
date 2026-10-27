@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Preview imagini slider AstroVip — mobil și desktop</title>
+<meta name="description" content="Preview AstroVip pentru verificarea imaginilor din sliderul cu studii de caz la dimensiuni de mobil și desktop.">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#030806;color:#f5e7b6;font:15px/1.5 system-ui,sans-serif}header{padding:18px 22px;border-bottom:1px solid #655831}h1{margin:0;font-size:20px}p{margin:6px 0;color:#c6d5cb}a{color:#a8f2b5}.views{display:flex;gap:20px;align-items:start;padding:20px;overflow:auto}.view{flex:none}h2{font-size:15px;margin:0 0 8px}iframe{display:block;border:1px solid #806c32;border-radius:18px;background:#030806;height:760px}.desktop{padding:0 20px 24px;overflow:auto}.status{display:block;margin:8px 0 0;color:#acf0b5;font-size:12px;max-width:390px}button{border:1px solid #8f7c43;border-radius:20px;padding:8px 14px;background:#13251a;color:#f5e7b6;cursor:pointer}.desktop .status{max-width:none}
+</style>
+</head>
+<body>
+<header><h1>AstroVip · Imaginile din slider</h1><p>Preview la 390 px, 360 px și desktop. Derularea și linkurile rămân active.</p><a href="/">Deschide pagina completă →</a> <button type="button" id="restart">Revino la prima imagine</button></header>
+<main>
+<div class="views">
+<section class="view"><h2>Mobil · 390 px</h2><iframe title="AstroVip mobil 390 px" width="390" src="/?slider-images-preview=390"></iframe><output class="status">Se verifică imaginile…</output></section>
+<section class="view"><h2>Mobil · 360 px</h2><iframe title="AstroVip mobil 360 px" width="360" src="/?slider-images-preview=360"></iframe><output class="status">Se verifică imaginile…</output></section>
+</div>
+<section class="desktop"><h2>Desktop · 1280 px</h2><iframe title="AstroVip desktop 1280 px" width="1280" src="/?slider-images-preview=1280"></iframe><output class="status">Se verifică imaginile…</output></section>
+</main>
+<script>
+const frames=[...document.querySelectorAll('iframe')];
+function first(frame){
+  const doc=frame.contentDocument;
+  const section=doc?.querySelector('#studii-de-caz-home');
+  const mobile=Number(frame.width)<=820;
+  const ticker=section?.querySelector(mobile?'.av-case-mobile-ticker':'.av-case-desktop-marquee-v9');
+  if(!ticker)return;
+  ticker.scrollLeft=0;
+  if(mobile)ticker.querySelector('a')?.focus({preventScroll:true});
+  else {
+    const track=ticker.querySelector('.av-case-desktop-marquee-track-v9');
+    if(track){track.style.setProperty('animation-play-state','paused','important');track.style.setProperty('transform','none','important')}
+  }
+  ticker.scrollIntoView({block:'start'});
+  doc.documentElement.scrollTop=Math.max(0,doc.documentElement.scrollTop-82);
+}
+for(const frame of frames){
+  frame.addEventListener('load',()=>{
+    let tries=0;
+    const timer=setInterval(()=>{
+      const doc=frame.contentDocument;
+      const section=doc?.querySelector('#studii-de-caz-home');
+      const source=section?.querySelector('.av-case-showcase-grid');
+      const mobile=Number(frame.width)<=820;
+      const group=section?.querySelector(mobile?'.av-case-mobile-ticker-group':'.av-case-desktop-marquee-group-v9');
+      const cards=group?[...group.children]:[];
+      const images=cards.flatMap(card=>[...card.querySelectorAll('img')]);
+      const ready=cards.length===13&&images.length===12&&images.every(img=>img.complete&&img.naturalWidth>0);
+      if(ready||++tries>150){
+        clearInterval(timer);
+        frame.nextElementSibling.textContent=ready?'12 imagini încărcate · 13 studii · Moștenire: ilustrație CSS':'Verificarea imaginilor nu s-a încheiat.';
+        frame.dataset.imagesReady=String(ready);
+        first(frame);
+      }
+    },100);
+  });
+}
+document.getElementById('restart').addEventListener('click',()=>frames.forEach(first));
+</script>
+</body>
+</html>

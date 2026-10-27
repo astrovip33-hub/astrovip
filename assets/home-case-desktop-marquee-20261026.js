@@ -69,10 +69,7 @@
     const rebuild = () => {
       const cards = [...source.querySelectorAll(':scope > .av-case-showcase-card')];
       if (!cards.length) return;
-      const signature = cards.map((card, index) => {
-        const link = card.querySelector('a[href]');
-        return `${index}:${link ? link.getAttribute('href') : card.textContent.slice(0,80)}`;
-      }).join('|');
+      const signature = cards.map(card => card.outerHTML).join('');
       if (signature === lastSignature && track.children.length === 2) return;
       lastSignature = signature;
       track.replaceChildren();
@@ -82,6 +79,10 @@
         if (copy === 1) group.setAttribute('aria-hidden', 'true');
         cards.forEach(card => {
           const clone = card.cloneNode(true);
+          clone.querySelectorAll('img').forEach(img => {
+            img.loading = 'eager';
+            img.setAttribute('fetchpriority', 'low');
+          });
           clone.removeAttribute('id');
           clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
           if (copy === 1) neutralizeDuplicate(clone);
@@ -94,7 +95,8 @@
     rebuild();
     if (!source.dataset.avDesktopMarqueeObserved) {
       source.dataset.avDesktopMarqueeObserved = '1';
-      new MutationObserver(rebuild).observe(source, { childList: true });
+      new MutationObserver(rebuild).observe(source, { childList: true, subtree: true, attributes: true,
+        attributeFilter: ['src', 'srcset', 'sizes', 'alt', 'width', 'height'] });
       section.addEventListener('astrovip:cases-expanded', rebuild);
     }
     return true;

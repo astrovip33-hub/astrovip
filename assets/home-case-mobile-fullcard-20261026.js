@@ -45,8 +45,12 @@
       offset = loopWidth ? viewport.scrollLeft % loopWidth : 0;
       viewport.scrollLeft = offset;
     };
+    let lastSignature = '';
     const rebuild = () => {
       const cards = [...source.querySelectorAll(':scope > .av-case-showcase-card')];
+      const signature = cards.map(card => card.outerHTML).join('');
+      if (signature === lastSignature && track.children.length === 2) return;
+      lastSignature = signature;
       track.replaceChildren();
       for (let copy = 0; copy < 2; copy++) {
         const group = document.createElement('div');
@@ -54,6 +58,10 @@
         if (copy) group.setAttribute('aria-hidden', 'true');
         cards.forEach(card => {
           const clone = card.cloneNode(true);
+          clone.querySelectorAll('img').forEach(img => {
+            img.loading = 'eager';
+            img.setAttribute('fetchpriority', 'low');
+          });
           [clone, ...clone.querySelectorAll('[id],[aria-labelledby]')].forEach(el => {
             el.removeAttribute('id'); el.removeAttribute('aria-labelledby');
           });
@@ -97,7 +105,8 @@
         viewport.scrollLeft = offset;
       }
     }, { passive: true });
-    new MutationObserver(rebuild).observe(source, { childList: true });
+    new MutationObserver(rebuild).observe(source, { childList: true, subtree: true, attributes: true,
+      attributeFilter: ['src', 'srcset', 'sizes', 'alt', 'width', 'height'] });
     section.addEventListener('astrovip:cases-expanded', rebuild);
     new ResizeObserver(measure).observe(viewport);
     mobile.addEventListener('change', syncMode);
@@ -114,4 +123,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
   else boot();
 })();
-;(()=>{if(document.getElementById('av-home-case12-vocation-loader'))return;const script=document.createElement('script');script.id='av-home-case12-vocation-loader';script.src='/assets/home-case12-vocation-20261027.js?v=20261027-case12';script.defer=true;document.head.appendChild(script)})();
+;(()=>{if(document.getElementById('av-home-case12-vocation-loader'))return;const script=document.createElement('script');script.id='av-home-case12-vocation-loader';script.src='/assets/home-case12-vocation-20261027.js?v=20261027-slider-images2';script.defer=true;document.head.appendChild(script)})();
