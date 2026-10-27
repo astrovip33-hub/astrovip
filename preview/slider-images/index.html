@@ -33,8 +33,8 @@ function first(frame){
     const track=ticker.querySelector('.av-case-desktop-marquee-track-v9');
     if(track){track.style.setProperty('animation-play-state','paused','important');track.style.setProperty('transform','none','important')}
   }
-  ticker.scrollIntoView({block:'start'});
-  doc.documentElement.scrollTop=Math.max(0,doc.documentElement.scrollTop-82);
+  const view=frame.contentWindow;
+  view.scrollTo({top:Math.max(0,ticker.getBoundingClientRect().top+view.scrollY-82),behavior:'instant'});
 }
 for(const frame of frames){
   frame.addEventListener('load',()=>{
