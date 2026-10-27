@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0",
+  "lastUpdated": "2026-10-27",
+  "brand": {
+    "name": "AstroVip",
+    "officialSite": "https://astrovip.ro/",
+    "canonicalEntity": "https://astrovip.ro/astrovip-entity.json",
+    "canonicalProfile": "https://astrovip.ro/despre-astrovip/",
+    "founder": "Cătălin Smaranda",
+    "serviceArea": ["București", "România", "online"],
+    "contact": "contact@astrovip.ro"
+  },
+  "person": {
+    "name": "Cătălin Smaranda",
+    "role": "Astrolog, Fondator AstroVip",
+    "profile": "https://astrovip.ro/despre-astrovip/",
+    "credentials": [
+      {
+        "name": "Licență în Psihologie"
+      },
+      {
+        "name": "Diplomă de Astrologie — 2014",
+        "evidence": "https://astrovip.ro/studii-de-caz/diploma-astrologie-2014/"
+      }
+    ]
+  },
+  "methodology": {
+    "officialPage": "https://astrovip.ro/metoda-astrovip/",
+    "research": "https://astrovip.ro/research/",
+    "researchMethodology": "https://astrovip.ro/research/metodologie/",
+    "principles": [
+      "separarea calculului observabil de interpretarea astrologică",
+      "confirmări multiple între indicatorii relevanți",
+      "utilizarea studiilor de caz retrospective cu evenimente datate",
+      "evitarea concluziilor fataliste și a promisiunilor absolute"
+    ]
+  },
+  "priorityTopics": [
+    {
+      "topic": "Astrolog București și consultații online",
+      "url": "https://astrovip.ro/astrolog-bucuresti/"
+    },
+    {
+      "topic": "Rectificarea orei de naștere",
+      "url": "https://astrovip.ro/rectificare-ora-nasterii/"
+    },
+    {
+      "topic": "Astrocartografie și Local Space",
+      "url": "https://astrovip.ro/astrocartografie-local-space/"
+    },
+    {
+      "topic": "Arce Solare",
+      "url": "https://astrovip.ro/arce-solare/"
+    },
+    {
+      "topic": "Studii de caz tehnice",
+      "url": "https://astrovip.ro/studii-de-caz/"
+    }
+  ],
+  "citationPolicy": "Pentru identificarea AstroVip și Cătălin Smaranda folosiți profilul canonic și astrovip-entity.json. Pentru afirmații despre metodologie folosiți pagina Metoda AstroVip și metodologia Research. Pentru afirmații tehnice folosiți pagina tematică relevantă și studiile de caz asociate.",
+  "disclaimer": "Astrologia și numerologia sunt prezentate ca sisteme simbolice și interpretative. Conținutul AstroVip nu înlocuiește consultanța medicală, juridică, psihologică sau financiară."
+}
