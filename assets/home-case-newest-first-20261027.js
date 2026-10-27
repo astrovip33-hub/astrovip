@@ -40,7 +40,12 @@
     a.href=TEACHER;
     a.setAttribute('aria-label','Vezi studiul de caz Vocație profesională – Învățător');
     a.innerHTML=`<div class="av-case-showcase-visual av-case-local-space-visual"><img width="400" height="600" loading="lazy" decoding="async" alt="Vocație profesională – Învățător, studiu de caz AstroVip"><span class="av-case-local-space-symbol" aria-hidden="true">♅</span><span class="av-case-local-space-index" aria-hidden="true">01</span></div><div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">STUDIU DE CAZ 01 · VOCAȚIE</p><h3>Vocație profesională – Învățător</h3><p class="av-case-showcase-meta">17 mai 1972 · București · educație</p><p class="av-case-showcase-lead">MC în Balanță, Venus și Luna în Rac, Soare în Casa 5, Uranus sub 5° de MC și orientare vestică: profil simbolic de educator empatic și inovator.</p><span class="av-case-showcase-cta">VEZI STUDIUL →</span></div>`;
-    imageSrc().then(src=>{const img=a.querySelector('img');if(img)img.src=src}).catch(()=>{});
+    imageSrc().then(src=>{
+      const img=a.querySelector('img');
+      if(img)img.src=src;
+      const section=document.getElementById('studii-de-caz-home');
+      section?.dispatchEvent(new CustomEvent('astrovip:cases-expanded',{bubbles:true,detail:{teacherImage:true}}));
+    }).catch(()=>{});
     return a;
   };
   const categoryFor=(card)=>{
