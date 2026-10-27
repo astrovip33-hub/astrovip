@@ -1,52 +1,118 @@
-# AstroVip — AI search, assistants and search engines
-# Discovery/reference is allowed. Model-training crawlers are opted out.
+# AstroVip — AI search, assistants, search engines and social previews
+# Goal: maximize discovery, citation and user-requested retrieval.
+# Separate training-only crawlers remain opted out where a dedicated control exists.
 Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
 
-# OpenAI Search / user-requested retrieval
+# OpenAI — ChatGPT Search / user-requested retrieval / ad landing validation
 User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-# Anthropic Search / user-requested retrieval
+User-agent: OAI-AdsBot
+Allow: /
+
+# Anthropic — Claude Search / user-requested retrieval
 User-agent: Claude-SearchBot
 Allow: /
 
 User-agent: Claude-User
 Allow: /
 
-# Perplexity Search / user-requested retrieval
+# Perplexity — Search / user-requested retrieval
 User-agent: PerplexityBot
 Allow: /
 
 User-agent: Perplexity-User
 Allow: /
 
-# Google/Bing search indexing
+# Google Search + Gemini / Google AI grounding
 User-agent: Googlebot
 Allow: /
 
-User-agent: Bingbot
+User-agent: GoogleOther
 Allow: /
 
-# Gemini / Google AI grounding and model use
+User-agent: Google-InspectionTool
+Allow: /
+
+User-agent: Google-CloudVertexBot
+Allow: /
+
 User-agent: Google-Extended
 Allow: /
 
-# Explicit training opt-out for separate training crawlers.
+# Microsoft Bing / Copilot web discovery
+User-agent: Bingbot
+Allow: /
+
+User-agent: MicrosoftPreview
+Allow: /
+
+# Apple Search / Siri / Spotlight / Safari
+User-agent: Applebot
+Allow: /
+
+# Other major search engines
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: PetalBot
+Allow: /
+
+# Amazon web discovery
+User-agent: Amazonbot
+Allow: /
+
+# Social / messenger link previews
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+# Dedicated model-training controls — discovery/search remains enabled above.
 User-agent: GPTBot
 Disallow: /
 
 User-agent: ClaudeBot
 Disallow: /
 
-User-agent: CCBot
-Allow: /
+User-agent: Applebot-Extended
+Disallow: /
 
+User-agent: CCBot
+Disallow: /
+
+# Fallback: allow normal public crawling.
 User-agent: *
 Allow: /
 
 # Canonical sitemap index
 Sitemap: https://astrovip.ro/sitemap.xml
-# AI/SEO discovery policy updated 2026-10-25
+# AI/SEO discovery policy updated 2026-10-27
