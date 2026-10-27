@@ -33,9 +33,6 @@
     #studii-de-caz-home .av-case-mobile-ticker .av-case-teacher img,
     #studii-de-caz-home .av-case-desktop-marquee-v9 .av-case-teacher img{position:relative!important;z-index:2!important;display:block!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:contain!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;mix-blend-mode:normal!important;transform:none!important;background:#fffbea!important}
     html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card.av-case-teacher .av-case-showcase-visual img{object-fit:contain!important;object-position:center!important;background:#fffbea!important}
-    @media(max-width:820px){
-      html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card.av-case-teacher .av-case-showcase-visual{flex:0 0 auto!important;height:auto!important;max-height:none!important;aspect-ratio:1335/1536!important}
-    }
     #studii-de-caz-home .av-case-teacher .av-case-local-space-symbol,
     #studii-de-caz-home .av-case-teacher .av-case-local-space-index{z-index:6!important}
   `;
