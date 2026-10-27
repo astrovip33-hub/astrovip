@@ -1,4 +1,5 @@
 import app from './worker-home-ultra.js';
+import { GEO_DISCOVERY_LINK, GEO_STYLE, getGeoEnhancement } from './geo-ai-boost-20261027.js';
 
 const LLMS_DISCOVERY_LINK = '<link rel="describedby" href="/llms.txt" type="text/plain">';
 const TEACHER_IMAGE_PATH = '/assets/vocatie-invatator-live-20261027.webp';
@@ -31,9 +32,6 @@ export default {
   async fetch(request, env, ctx) {
     const requestUrl = new URL(request.url);
 
-    // Serve the teacher vocation artwork through the Worker instead of relying on
-    // the static asset manifest. This keeps the public AstroVip URL stable while
-    // guaranteeing a real image/webp response for the article and every slider clone.
     if (requestUrl.pathname === TEACHER_IMAGE_PATH) {
       const raw = await fetch(TEACHER_IMAGE_RAW, {
         cf: { cacheEverything: true, cacheTtl: 86400 }
@@ -68,15 +66,32 @@ export default {
 
     const url = requestUrl;
     const isHome = url.pathname === '/' || url.pathname === '';
+    const geo = getGeoEnhancement(url.pathname);
     let certMounted = false;
+    let geoMounted = false;
 
     const rewriter = new HTMLRewriter()
       .on('head', {
         element(element) {
           element.append(LLMS_DISCOVERY_LINK, { html: true });
+          element.append(GEO_DISCOVERY_LINK, { html: true });
+          if (geo) {
+            element.append(GEO_STYLE, { html: true });
+            element.append(geo.head, { html: true });
+          }
           if (isHome) element.append(CERT_STYLE, { html: true });
         }
       });
+
+    if (geo) {
+      rewriter.on('main', {
+        element(element) {
+          if (geoMounted) return;
+          geoMounted = true;
+          element.prepend(geo.body, { html: true });
+        }
+      });
+    }
 
     if (isHome) {
       rewriter
