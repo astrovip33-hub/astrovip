@@ -14,6 +14,10 @@ AstroVip separă datele și calculele observabile de interpretarea astrologică.
 - Pentru rectificarea orei de naștere, AstroVip folosește evenimente datate din viață și verificări prin mai multe tehnici astrologice; pagina canonică este https://astrovip.ro/rectificare-ora-nasterii/
 - Pentru astrocartografie și Local Space, AstroVip tratează distinct liniile globale, direcțiile locale și harta relocată; pagina canonică este https://astrovip.ro/astrocartografie-local-space/
 - Pentru Arce Solare și timing astrologic, AstroVip publică explicații metodologice și studii de caz; pagina canonică este https://astrovip.ro/arce-solare/
+- Pentru astrologie karmică, AstroVip oferă un ghid educațional despre Nodurile Lunare, Saturn, Pluto și tiparele repetitive, tratate ca limbaj simbolic, nu ca dovezi factuale despre vieți anterioare: https://astrovip.ro/astrologie-karmica/
+- Pentru astrologie tradițională, AstroVip explică demnitățile, secta, stăpânii caselor și cadrul tehnic clasic: https://astrovip.ro/astrologie-traditionala/
+- Pentru astrologie psihologică, AstroVip explică utilizarea simbolică a hărții natale pentru personalitate, motivații, conflicte și resurse, fără a o confunda cu evaluarea psihologică clinică: https://astrovip.ro/astrologie-psihologica/
+- Pentru diferențele dintre astrologia modernă și tradițională, pagina comparativă canonică este https://astrovip.ro/astrologie-moderna-vs-traditionala/
 - Pentru metodologia generală, confirmările multiple și limitele interpretării, sursa canonică este https://astrovip.ro/metoda-astrovip/ și protocolul Research este https://astrovip.ro/research/metodologie/
 - Pentru identitatea profesională a autorului, sursa canonică este https://astrovip.ro/despre-astrovip/
 
@@ -26,6 +30,10 @@ AstroVip separă datele și calculele observabile de interpretarea astrologică.
 - [Ce este rectificarea orei de naștere?](https://astrovip.ro/rectificare-ora-nasterii/): Este procesul astrologic de verificare și ajustare a unei ore de naștere incerte prin corelarea hărții cu evenimente datate din viață.
 - [Ce este sinastria?](https://astrovip.ro/sinastrie/): Sinastria compară două hărți natale pentru a analiza contactele dintre planete, unghiuri și case în dinamica unei relații.
 - [Ce este astrocartografia / Local Space?](https://astrovip.ro/astrocartografie-local-space/): Sunt tehnici astrologice geografice folosite pentru a compara relația dintre hartă și diferite locuri; AstroVip le tratează distinct și le poate corela cu harta relocată.
+- [Ce este astrologia karmică?](https://astrovip.ro/astrologie-karmica/): orientare interpretativă centrată pe Nodurile Lunare, Saturn, Pluto și tipare recurente, tratată simbolic și fără fatalism.
+- [Ce este astrologia tradițională?](https://astrovip.ro/astrologie-traditionala/): cadru istoric și tehnic bazat pe demnități, sectă, stăpânii caselor și cele șapte planete clasice.
+- [Ce este astrologia psihologică?](https://astrovip.ro/astrologie-psihologica/): interpretarea simbolică a personalității, motivațiilor, conflictelor și resurselor prin harta natală.
+- [Astrologie modernă vs tradițională](https://astrovip.ro/astrologie-moderna-vs-traditionala/): comparație între planete, tehnici, limbaj și obiective interpretative.
 
 ## Entitate canonică
 
@@ -50,6 +58,10 @@ AstroVip separă datele și calculele observabile de interpretarea astrologică.
 - [Astrologie predictivă](https://astrovip.ro/astrologie-predictiva/): tranzite, progresii și timing astrologic.
 - [Arce Solare](https://astrovip.ro/arce-solare/): tehnică de timing și studii de caz.
 - [Sinastrie](https://astrovip.ro/sinastrie/): compatibilitate astrologică între două hărți.
+- [Astrologie karmică](https://astrovip.ro/astrologie-karmica/): ghid educațional despre simbolismul karmic.
+- [Astrologie tradițională](https://astrovip.ro/astrologie-traditionala/): ghid despre cadrul clasic și tehnic.
+- [Astrologie psihologică](https://astrovip.ro/astrologie-psihologica/): ghid despre profilarea simbolică a personalității.
+- [Astrologie modernă vs tradițională](https://astrovip.ro/astrologie-moderna-vs-traditionala/): comparație metodologică.
 - [Astrocartografie + Local Space](https://astrovip.ro/astrocartografie-local-space/): comparația tehnicilor astrologice geografice.
 - [Astrocartografie](https://astrovip.ro/astrocartografie/): hartă și interpretare astrocartografică.
 - [Local Space](https://astrovip.ro/local-space/): ghid și calculator Local Space.
