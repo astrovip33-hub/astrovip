@@ -2,7 +2,7 @@
   'use strict';
   const TEACHER='/studii-de-caz/vocatie-invatator-17-mai-1972/';
   const ASTROLOG='/astrologie-cariera-vocatie/';
-  const IMAGE='/assets/vocatie-invatator-final-20261027.webp?v=20261027-final2';
+  const IMAGE='/assets/vocatie-invatator-live-20261027.webp?v=20261027-live1';
   const ORDER=[
     TEACHER,
     ASTROLOG,
@@ -23,10 +23,11 @@
     const s=document.createElement('style');
     s.id='av-case-newest-first-style';
     s.textContent=`
-      #studii-de-caz-home .av-case-teacher .av-case-showcase-visual{background:#fffbea!important}
+      #studii-de-caz-home .av-case-teacher .av-case-showcase-visual,
+      #studii-de-caz-home .av-case-teacher .av-case-local-space-visual{aspect-ratio:16/9!important;height:auto!important;min-height:0!important;background:#fffbea!important;overflow:hidden!important}
       #studii-de-caz-home .av-case-teacher .av-case-showcase-visual img,
       #studii-de-caz-home .av-case-mobile-ticker .av-case-teacher .av-case-showcase-visual img,
-      #studii-de-caz-home .av-case-desktop-marquee-v9 .av-case-teacher .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#fffbea!important}
+      #studii-de-caz-home .av-case-desktop-marquee-v9 .av-case-teacher .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#fffbea!important}
       #studii-de-caz-home .av-case-teacher .av-case-local-space-symbol{color:#ffe987!important;background:rgba(15,45,68,.86)!important}
       #studii-de-caz-home .av-case-local-space-index{font-size:12px!important;color:#fff2b0!important;text-shadow:0 1px 6px rgba(0,0,0,.8)!important}
     `;
@@ -37,7 +38,7 @@
     a.className='av-case-showcase-card av-case-local-space av-case-teacher';
     a.href=TEACHER;
     a.setAttribute('aria-label','Vezi studiul de caz Vocație profesională – Învățător');
-    a.innerHTML=`<div class="av-case-showcase-visual av-case-local-space-visual"><img src="${IMAGE}" width="400" height="600" loading="eager" fetchpriority="high" decoding="async" alt="Vocație profesională – Învățător, studiu de caz AstroVip"><span class="av-case-local-space-symbol" aria-hidden="true">♅</span><span class="av-case-local-space-index" aria-hidden="true">01</span></div><div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">STUDIU DE CAZ 01 · VOCAȚIE</p><h3>Vocație profesională – Învățător</h3><p class="av-case-showcase-meta">17 mai 1972 · București · educație</p><p class="av-case-showcase-lead">MC în Balanță, Venus și Luna în Rac, Soare în Casa 5, Uranus sub 5° de MC și orientare vestică: profil simbolic de educator empatic și inovator.</p><span class="av-case-showcase-cta">VEZI STUDIUL →</span></div>`;
+    a.innerHTML=`<div class="av-case-showcase-visual av-case-local-space-visual"><img src="${IMAGE}" width="600" height="338" loading="eager" fetchpriority="high" decoding="async" alt="Vocație profesională – Învățător, studiu de caz AstroVip"><span class="av-case-local-space-symbol" aria-hidden="true">♅</span><span class="av-case-local-space-index" aria-hidden="true">01</span></div><div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">STUDIU DE CAZ 01 · VOCAȚIE</p><h3>Vocație profesională – Învățător</h3><p class="av-case-showcase-meta">17 mai 1972 · București · educație</p><p class="av-case-showcase-lead">MC în Balanță, Venus și Luna în Rac, Soare în Casa 5, Uranus sub 5° de MC și orientare vestică: profil simbolic de educator empatic și inovator.</p><span class="av-case-showcase-cta">VEZI STUDIUL →</span></div>`;
     return a;
   };
   const categoryFor=(card)=>{
@@ -81,7 +82,7 @@
     let teacher=track.querySelector(`a[href="${TEACHER}"]`);
     if(!teacher){teacher=makeTeacher();track.prepend(teacher)}
     const img=teacher.querySelector('img');
-    if(img){img.setAttribute('src',IMAGE);img.removeAttribute('srcset');img.setAttribute('loading','eager');img.setAttribute('fetchpriority','high')}
+    if(img){img.setAttribute('src',IMAGE);img.setAttribute('width','600');img.setAttribute('height','338');img.removeAttribute('srcset');img.setAttribute('loading','eager');img.setAttribute('fetchpriority','high')}
     const map=new Map([...track.querySelectorAll(':scope > a[href]')].map(a=>[a.getAttribute('href'),a]));
     ORDER.forEach(href=>{const card=map.get(href);if(card)track.appendChild(card)});
     [...track.querySelectorAll(':scope > .av-case-showcase-card')].filter(card=>!ORDER.includes(card.getAttribute('href'))).forEach(card=>track.appendChild(card));
