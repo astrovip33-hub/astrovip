@@ -26,15 +26,38 @@ jobs:
           printf '%s\n' "$ROBOTS" | grep -F "User-agent: OAI-SearchBot"
           printf '%s\n' "$ROBOTS" | grep -F "User-agent: PerplexityBot"
           printf '%s\n' "$ROBOTS" | grep -F "User-agent: Google-Extended"
+          printf '%s\n' "$ROBOTS" | grep -F "User-agent: meta-webindexer"
+          printf '%s\n' "$ROBOTS" | grep -F "User-agent: meta-externalfetcher"
+          printf '%s\n' "$ROBOTS" | grep -A1 -F "User-agent: meta-externalagent" | grep -F "Disallow: /"
           printf '%s\n' "$ROBOTS" | grep -Fx "Sitemap: https://astrovip.ro/sitemap.xml"
 
           curl -fsSL --retry 3 --max-time 20 "$BASE/llms.txt" >/tmp/llms.txt
           grep -F "https://astrovip.ro/research/" /tmp/llms.txt
           grep -F "https://astrovip.ro/astrolog-bucuresti/" /tmp/llms.txt
+          grep -F "https://astrovip.ro/astrovip-entity.json" /tmp/llms.txt
+
+          curl -fsSL --retry 3 --max-time 20 "$BASE/astrovip-entity.json" >/tmp/astrovip-entity.json
+          python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/astrovip-entity.json', encoding='utf-8'))
+          graph=data.get('@graph', [])
+          ids={node.get('@id') for node in graph if isinstance(node, dict)}
+          required={
+              'https://astrovip.ro/#organization',
+              'https://astrovip.ro/#website',
+              'https://astrovip.ro/despre-astrovip/#catalin-smaranda',
+              'https://astrovip.ro/astrolog-bucuresti/#consultation',
+          }
+          missing=sorted(required-ids)
+          if missing:
+              raise SystemExit('Missing canonical AstroVip entity IDs: ' + ', '.join(missing))
+          print('Canonical AstroVip entity graph IDs verified.')
+          PY
 
           declare -a URLS=(
             "$BASE/"
             "$BASE/astrolog-bucuresti/"
+            "$BASE/despre-astrovip/"
             "$BASE/harta-natala/"
             "$BASE/rectificare-ora-nasterii/"
             "$BASE/arce-solare/"
@@ -43,12 +66,16 @@ jobs:
             "$BASE/sinastrie/"
             "$BASE/research/"
             "$BASE/local-space/studii-de-caz/"
+            "$BASE/llms.txt"
+            "$BASE/astrovip-entity.json"
           )
 
           declare -a UAS=(
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36; compatible; OAI-SearchBot/1.4; +https://openai.com/searchbot"
             "PerplexityBot"
             "Google-Extended"
+            "meta-webindexer/1.1"
+            "meta-externalfetcher/1.1"
             "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
             "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
           )
@@ -64,4 +91,4 @@ jobs:
             done
           done
 
-          echo "AI crawler health checks passed."
+          echo "AI crawler health checks passed, including Meta AI search/fetch access."
