@@ -30,6 +30,34 @@ jobs:
       - name: Build Swiss bundle
         run: npm run build:swiss
 
+      - name: Apply deploy-time structured data enrichment
+        run: python3 scripts/enrich_structured_data.py
+
+      - name: Validate SEO graph and structured data
+        run: |
+          python3 scripts/audit_seo_graph.py
+          python3 scripts/audit_site_assets.py
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('astrovip-entity.json').read_text(encoding='utf-8'))
+          ids={node.get('@id') for node in data.get('@graph',[]) if isinstance(node,dict)}
+          required={
+              'https://astrovip.ro/#organization',
+              'https://astrovip.ro/#website',
+              'https://astrovip.ro/despre-astrovip/#catalin-smaranda',
+              'https://astrovip.ro/astrolog-bucuresti/#consultation',
+          }
+          missing=required-ids
+          if missing:
+              raise SystemExit('Missing canonical entity IDs: '+', '.join(sorted(missing)))
+          robots=Path('robots.txt').read_text(encoding='utf-8').lower()
+          for token in ('user-agent: meta-webindexer','user-agent: meta-externalfetcher'):
+              if token not in robots:
+                  raise SystemExit('Missing Meta AI robots rule: '+token)
+          print('Meta AI discovery and canonical entity graph validation passed.')
+          PY
+
       - name: Deploy isolated Cloudflare preview
         shell: bash
         run: |
