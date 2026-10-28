@@ -27,6 +27,15 @@ Allow: /
 User-agent: Perplexity-User
 Allow: /
 
+# Meta — Meta AI search / user-requested retrieval
+# Meta-WebIndexer powers Meta AI search citations and links.
+User-agent: meta-webindexer
+Allow: /
+
+# Meta-ExternalFetcher retrieves links requested by users in Meta products.
+User-agent: meta-externalfetcher
+Allow: /
+
 # Google Search + Gemini / Google AI grounding
 User-agent: Googlebot
 Allow: /
@@ -106,6 +115,11 @@ Disallow: /
 User-agent: Applebot-Extended
 Disallow: /
 
+# Meta's training/product-indexing crawler is separate from Meta-WebIndexer.
+# Keep model-training opt-out consistent with Content-Signal: ai-train=no.
+User-agent: meta-externalagent
+Disallow: /
+
 User-agent: CCBot
 Disallow: /
 
@@ -115,4 +129,4 @@ Allow: /
 
 # Canonical sitemap index
 Sitemap: https://astrovip.ro/sitemap.xml
-# AI/SEO discovery policy updated 2026-10-27
+# AI/SEO discovery policy updated 2026-10-28
