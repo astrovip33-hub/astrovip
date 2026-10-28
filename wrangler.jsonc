@@ -22,5 +22,6 @@
     "GA4_PROPERTY_ID": "555065363",
     "DRIVE_BACKUP_FOLDER_ID": "1XajM-Z4H4Hyc-LM2pbXh6ZYeFjeo7Q5B"
   },
-  "keep_vars": true
+  "keep_vars": true,
+  "ratelimits": [{"name": "LEGAL_SUBMISSION_RATE_LIMITER", "namespace_id": "2026102801", "simple": {"limit": 5, "period": 60}}]
 }
