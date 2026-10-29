@@ -36,7 +36,7 @@
     ${scope} .av-case-mobile-ticker .av-case-showcase-card.av-case-teacher .av-case-showcase-visual img,
     ${scope} .av-case-desktop-marquee-v9 .av-case-showcase-card.av-case-teacher .av-case-showcase-visual img{position:relative!important;z-index:2!important;display:block!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:2/3!important;object-fit:contain!important;object-position:center!important;opacity:1!important;visibility:visible!important;filter:none!important;mix-blend-mode:normal!important;transform:none!important;background:#fffbea!important}
     #studii-de-caz-home .av-case-teacher .av-case-local-space-symbol,
-    #studii-de-caz-home .av-case-teacher .av-case-local-space-index{z-index:6!important}
+    #studii-de-caz-home .av-case-teacher .av-case-local-space-index{display:none!important}
     @media(min-width:821px){
       ${scope} .av-case-showcase-grid>.av-case-showcase-card.av-case-teacher,
       ${scope} .av-case-desktop-marquee-v9 .av-case-showcase-card.av-case-teacher{flex:0 0 320px!important;width:320px!important;max-width:100%!important;align-self:flex-start!important}
