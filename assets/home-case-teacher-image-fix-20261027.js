@@ -10,7 +10,7 @@
       img.removeAttribute('srcset');
       img.setAttribute('loading','eager');
       img.setAttribute('fetchpriority','high');
-      img.decoding='async';
+      img.setAttribute('decoding','async');
     });
   };
   const watch=()=>{
@@ -18,6 +18,8 @@
     new MutationObserver(apply).observe(root,{childList:true,subtree:true});
     document.addEventListener('astrovip:cases-expanded',apply);
     apply();
+    setTimeout(apply,250);
+    setTimeout(apply,900);
   };
   let style=document.getElementById('av-teacher-image-fix-style');
   if(!style){style=document.createElement('style');style.id='av-teacher-image-fix-style';document.head.appendChild(style)}

@@ -81,8 +81,9 @@
     ensureStyle();
     let teacher=track.querySelector(`a[href="${TEACHER}"]`);
     if(!teacher){teacher=makeTeacher();track.prepend(teacher)}
+    teacher.classList.add('av-case-teacher');
     const img=teacher.querySelector('img');
-    if(img){img.setAttribute('src',IMAGE);img.setAttribute('width','1024');img.setAttribute('height','1536');img.removeAttribute('srcset');img.setAttribute('loading','eager');img.setAttribute('fetchpriority','high')}
+    if(img){img.setAttribute('src',IMAGE);img.setAttribute('width','1024');img.setAttribute('height','1536');img.removeAttribute('srcset');img.setAttribute('loading','eager');img.setAttribute('fetchpriority','high');img.setAttribute('decoding','async')}
     const map=new Map([...track.querySelectorAll(':scope > a[href]')].map(a=>[a.getAttribute('href'),a]));
     ORDER.forEach(href=>{const card=map.get(href);if(card)track.appendChild(card)});
     [...track.querySelectorAll(':scope > .av-case-showcase-card')].filter(card=>!ORDER.includes(card.getAttribute('href'))).forEach(card=>track.appendChild(card));
