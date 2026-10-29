@@ -1,9 +1,12 @@
 (()=>{
   'use strict';
+  const CASE13='/studii-de-caz/vocatie-it-marketing-online-comunicare/';
+  const CASE13_IMAGE='/assets/vocatie-it-marketing-comunicare-20261029.svg';
   const TEACHER='/studii-de-caz/vocatie-invatator-17-mai-1972/';
   const ASTROLOG='/astrologie-cariera-vocatie/';
   const IMAGE='/assets/vocatie-invatator-20261029.jpg';
   const ORDER=[
+    CASE13,
     TEACHER,
     ASTROLOG,
     '/studii-de-caz/acte-casa-septembrie-2004/',
@@ -30,8 +33,19 @@
       #studii-de-caz-home .av-case-desktop-marquee-v9 .av-case-teacher .av-case-showcase-visual img{display:block!important;width:100%!important;height:auto!important;object-fit:contain!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#fffbea!important}
       #studii-de-caz-home .av-case-teacher .av-case-local-space-symbol{color:#ffe987!important;background:rgba(15,45,68,.86)!important}
       #studii-de-caz-home .av-case-local-space-index{font-size:12px!important;color:#fff2b0!important;text-shadow:0 1px 6px rgba(0,0,0,.8)!important}
+      #studii-de-caz-home .av-case-it-marketing .av-case-showcase-visual{background:#020405!important}
+      #studii-de-caz-home .av-case-it-marketing .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important;background:#020405!important}
+      #studii-de-caz-home .av-case-it-marketing::after{content:none!important;display:none!important}
     `;
     document.head.appendChild(s);
+  };
+  const makeCase13=()=>{
+    const a=document.createElement('a');
+    a.className='av-case-showcase-card av-case-local-space av-case-it-marketing';
+    a.href=CASE13;
+    a.setAttribute('aria-label','Vezi studiul de caz Vocație profesională – IT, Marketing Online și Comunicare');
+    a.innerHTML=`<div class="av-case-showcase-visual av-case-local-space-visual"><img src="${CASE13_IMAGE}" width="1360" height="600" loading="eager" fetchpriority="high" decoding="async" alt="Vocație profesională – IT, Marketing Online și Comunicare: Ascendent Vărsător, Luna în Gemeni și Uranus la MC"><span class="av-case-local-space-index" aria-hidden="true">01</span></div><div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">STUDIU DE CAZ 01 · VOCAȚIE</p><h3>Vocație profesională – IT · Marketing Online · Comunicare</h3><p class="av-case-showcase-meta">Ascendent Vărsător · Luna în Gemeni · Uranus la MC</p><p class="av-case-showcase-lead">Tehnologie, rețele, informație și inovație profesională: o semnătură vocațională construită pentru mediul digital și comunicare.</p><span class="av-case-showcase-cta">VEZI STUDIUL →</span></div>`;
+    return a;
   };
   const makeTeacher=()=>{
     const a=document.createElement('a');
@@ -42,7 +56,7 @@
     return a;
   };
   const categoryFor=(card)=>{
-    if(card.matches('.av-case-teacher'))return 'VOCAȚIE';
+    if(card.matches('.av-case-teacher,.av-case-it-marketing'))return 'VOCAȚIE';
     const href=card.getAttribute('href')||'';
     if(href===ASTROLOG)return 'VOCAȚIE';
     const old=(card.querySelector('.av-case-showcase-eyebrow')?.textContent||'').trim();
@@ -79,6 +93,11 @@
     if(!section||!track)return false;
     if(!track.querySelector(`a[href="${ASTROLOG}"]`))return false;
     ensureStyle();
+    let case13=track.querySelector(`a[href="${CASE13}"]`);
+    if(!case13){case13=makeCase13();track.prepend(case13)}
+    case13.classList.add('av-case-it-marketing');
+    const case13Img=case13.querySelector('img');
+    if(case13Img){case13Img.setAttribute('src',CASE13_IMAGE);case13Img.setAttribute('width','1360');case13Img.setAttribute('height','600');case13Img.removeAttribute('srcset');case13Img.setAttribute('loading','eager');case13Img.setAttribute('fetchpriority','high');case13Img.setAttribute('decoding','async')}
     let teacher=track.querySelector(`a[href="${TEACHER}"]`);
     if(!teacher){teacher=makeTeacher();track.prepend(teacher)}
     teacher.classList.add('av-case-teacher');
@@ -89,7 +108,7 @@
     [...track.querySelectorAll(':scope > .av-case-showcase-card')].filter(card=>!ORDER.includes(card.getAttribute('href'))).forEach(card=>track.appendChild(card));
     renumber(track);
     track.dataset.avNewestFirst='1';
-    section.dispatchEvent(new CustomEvent('astrovip:cases-expanded',{bubbles:true,detail:{count:track.querySelectorAll(':scope > .av-case-showcase-card').length,newestFirst:true,teacherImage:true}}));
+    section.dispatchEvent(new CustomEvent('astrovip:cases-expanded',{bubbles:true,detail:{count:track.querySelectorAll(':scope > .av-case-showcase-card').length,newestFirst:true,case13:true,teacherImage:true}}));
     return true;
   };
   const boot=()=>{
