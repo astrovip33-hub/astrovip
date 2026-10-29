@@ -1,11 +1,11 @@
 (()=>{
   'use strict';
-  const ASSET='/assets/vocatie-invatator-original-20261027.jpg';
+  const ASSET='/assets/vocatie-invatator-20261029.jpg';
   const apply=()=>{
     document.querySelectorAll('#studii-de-caz-home .av-case-teacher img').forEach(img=>{
       const set=(name,value)=>{if(img.getAttribute(name)!==value)img.setAttribute(name,value)};
       set('src',ASSET);
-      set('width','1335');
+      set('width','1024');
       set('height','1536');
       img.removeAttribute('srcset');
       img.setAttribute('loading','eager');
