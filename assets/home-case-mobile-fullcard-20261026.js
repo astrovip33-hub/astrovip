@@ -20,12 +20,14 @@
         ${prefix}[data-av-mobile-ticker="1"] .av-case-showcase-grid,${prefix}[data-av-mobile-ticker="1"] .av-case-mobile-nav-v7,${prefix}[data-av-mobile-ticker="1"] .av-case-slider-nav{display:none!important}
         ${prefix}[data-av-mobile-ticker="1"] .av-case-mobile-ticker{display:block!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;padding:4px 0 14px!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-behavior:auto!important;scroll-snap-type:none!important;scrollbar-width:none!important;overscroll-behavior-inline:contain!important;touch-action:pan-x pan-y!important;mask-image:none!important;-webkit-mask-image:none!important}
         ${prefix} .av-case-mobile-ticker::-webkit-scrollbar{display:none!important}
-        ${prefix} .av-case-mobile-ticker-track{display:flex!important;align-items:stretch!important;width:max-content!important;max-width:none!important;gap:0!important;transform:none!important;animation:none!important}
-        ${prefix} .av-case-mobile-ticker-group{display:flex!important;align-items:stretch!important;flex:0 0 auto!important;gap:12px!important;padding-right:12px!important}
-        ${prefix} .av-case-mobile-ticker .av-case-showcase-card{display:flex!important;flex-direction:column!important;align-self:stretch!important;flex:0 0 var(--av-mobile-case-width)!important;width:var(--av-mobile-case-width)!important;min-width:0!important;max-width:none!important;margin:0!important;box-sizing:border-box!important;transform:none!important;scroll-snap-align:none!important}
-        ${prefix} .av-case-mobile-ticker .av-case-showcase-copy{display:flex!important;flex-direction:column!important;flex:1!important;min-width:0!important}
-        ${prefix} .av-case-mobile-ticker .av-case-showcase-cta{margin-top:auto!important;max-width:100%!important;white-space:normal!important;box-sizing:border-box!important}
+        ${prefix} .av-case-mobile-ticker-track{display:flex!important;align-items:flex-start!important;width:max-content!important;max-width:none!important;gap:0!important;transform:none!important;animation:none!important}
+        ${prefix} .av-case-mobile-ticker-group{display:flex!important;align-items:flex-start!important;flex:0 0 auto!important;gap:12px!important;padding-right:12px!important}
+        ${prefix} .av-case-mobile-ticker .av-case-showcase-card{display:flex!important;flex-direction:column!important;align-self:flex-start!important;height:auto!important;min-height:0!important;flex:0 0 var(--av-mobile-case-width)!important;width:var(--av-mobile-case-width)!important;min-width:0!important;max-width:none!important;margin:0!important;box-sizing:border-box!important;transform:none!important;scroll-snap-align:none!important}
+        ${prefix} .av-case-mobile-ticker .av-case-showcase-copy{display:flex!important;flex-direction:column!important;flex:0 0 auto!important;min-width:0!important}
+        ${prefix} .av-case-mobile-ticker .av-case-showcase-cta{margin-top:12px!important;max-width:100%!important;white-space:normal!important;box-sizing:border-box!important}
         ${prefix} .av-case-mobile-ticker .av-case-showcase-card h3{overflow-wrap:anywhere!important}
+        ${prefix} .av-case-mobile-ticker .av-case-showcase-card .av-case-showcase-visual{flex:0 0 auto!important;width:100%!important;height:calc(var(--av-mobile-case-width,320px) * .5625)!important;min-height:0!important;max-height:none!important;aspect-ratio:16/9!important;box-sizing:border-box!important}
+        ${prefix} .av-case-mobile-ticker .av-case-showcase-card.av-case-teacher::after,${prefix} .av-case-mobile-ticker .av-case-showcase-card.av-case-vocation::after{content:none!important;display:none!important}
       }`;
     document.head.appendChild(style);
     const viewport = document.createElement('div');
@@ -45,8 +47,12 @@
       offset = loopWidth ? viewport.scrollLeft % loopWidth : 0;
       viewport.scrollLeft = offset;
     };
+    let lastSignature = '';
     const rebuild = () => {
       const cards = [...source.querySelectorAll(':scope > .av-case-showcase-card')];
+      const signature = cards.map(card => card.outerHTML).join('');
+      if (signature === lastSignature && track.children.length === 2) return;
+      lastSignature = signature;
       track.replaceChildren();
       for (let copy = 0; copy < 2; copy++) {
         const group = document.createElement('div');
@@ -54,6 +60,10 @@
         if (copy) group.setAttribute('aria-hidden', 'true');
         cards.forEach(card => {
           const clone = card.cloneNode(true);
+          clone.querySelectorAll('img').forEach(img => {
+            img.loading = 'eager';
+            img.setAttribute('fetchpriority', 'low');
+          });
           [clone, ...clone.querySelectorAll('[id],[aria-labelledby]')].forEach(el => {
             el.removeAttribute('id'); el.removeAttribute('aria-labelledby');
           });
@@ -70,7 +80,7 @@
       const elapsed = lastTime ? Math.min(now - lastTime, 64) : 0;
       lastTime = now;
       if (loopWidth && !document.hidden && !held && !hovered && now >= resumeAt && !viewport.contains(document.activeElement)) {
-        offset = (offset + 36 * elapsed / 1000) % loopWidth;
+        offset = (offset + 46.8 * elapsed / 1000) % loopWidth;
         viewport.scrollLeft = offset;
       }
       raf = requestAnimationFrame(tick);
@@ -97,7 +107,8 @@
         viewport.scrollLeft = offset;
       }
     }, { passive: true });
-    new MutationObserver(rebuild).observe(source, { childList: true });
+    new MutationObserver(rebuild).observe(source, { childList: true, subtree: true, attributes: true,
+      attributeFilter: ['src', 'srcset', 'sizes', 'alt', 'width', 'height'] });
     section.addEventListener('astrovip:cases-expanded', rebuild);
     new ResizeObserver(measure).observe(viewport);
     mobile.addEventListener('change', syncMode);
@@ -114,4 +125,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
   else boot();
 })();
-;(()=>{if(document.getElementById('av-home-case12-vocation-loader'))return;const script=document.createElement('script');script.id='av-home-case12-vocation-loader';script.src='/assets/home-case12-vocation-20261027.js?v=20261027-case12';script.defer=true;document.head.appendChild(script)})();
+;(()=>{if(document.getElementById('av-home-case12-vocation-loader'))return;const script=document.createElement('script');script.id='av-home-case12-vocation-loader';script.src='/assets/home-case12-vocation-20261027.js?v=20261027-slider-images2';script.defer=true;document.head.appendChild(script)})();

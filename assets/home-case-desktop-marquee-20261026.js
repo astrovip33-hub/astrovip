@@ -18,7 +18,7 @@
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{display:none!important}
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-mobile-nav-v7{display:none!important}
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS}{display:block!important;width:100%!important;max-width:none!important;overflow:hidden!important;padding:10px 0 24px!important;box-sizing:border-box!important;mask-image:linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%)}
-        html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-desktop-marquee-track-v9{display:flex!important;align-items:stretch!important;width:max-content!important;max-width:none!important;will-change:transform!important;animation:avCaseDesktopMarqueeV9 112s linear infinite!important;transform:translate3d(0,0,0)}
+        html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-desktop-marquee-track-v9{display:flex!important;align-items:stretch!important;width:max-content!important;max-width:none!important;will-change:transform!important;animation:avCaseDesktopMarqueeV9 86.1538461538s linear infinite!important;transform:translate3d(0,0,0)}
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-desktop-marquee-group-v9{display:flex!important;align-items:stretch!important;flex:0 0 auto!important;gap:24px!important;padding-left:24px!important;box-sizing:border-box!important}
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS} .av-case-showcase-card{display:flex!important;flex-direction:column!important;align-self:stretch!important;flex:0 0 min(62vw,680px)!important;width:min(62vw,680px)!important;min-width:0!important;max-width:none!important;height:auto!important;min-height:0!important;margin:0!important;border-radius:22px!important;scroll-snap-align:none!important;scroll-snap-stop:normal!important}
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS} .av-case-showcase-visual{flex:0 0 300px!important;width:100%!important;height:300px!important;min-height:0!important;max-height:300px!important;aspect-ratio:auto!important;overflow:hidden!important}
@@ -69,10 +69,7 @@
     const rebuild = () => {
       const cards = [...source.querySelectorAll(':scope > .av-case-showcase-card')];
       if (!cards.length) return;
-      const signature = cards.map((card, index) => {
-        const link = card.querySelector('a[href]');
-        return `${index}:${link ? link.getAttribute('href') : card.textContent.slice(0,80)}`;
-      }).join('|');
+      const signature = cards.map(card => card.outerHTML).join('');
       if (signature === lastSignature && track.children.length === 2) return;
       lastSignature = signature;
       track.replaceChildren();
@@ -82,6 +79,10 @@
         if (copy === 1) group.setAttribute('aria-hidden', 'true');
         cards.forEach(card => {
           const clone = card.cloneNode(true);
+          clone.querySelectorAll('img').forEach(img => {
+            img.loading = 'eager';
+            img.setAttribute('fetchpriority', 'low');
+          });
           clone.removeAttribute('id');
           clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
           if (copy === 1) neutralizeDuplicate(clone);
@@ -94,7 +95,8 @@
     rebuild();
     if (!source.dataset.avDesktopMarqueeObserved) {
       source.dataset.avDesktopMarqueeObserved = '1';
-      new MutationObserver(rebuild).observe(source, { childList: true });
+      new MutationObserver(rebuild).observe(source, { childList: true, subtree: true, attributes: true,
+        attributeFilter: ['src', 'srcset', 'sizes', 'alt', 'width', 'height'] });
       section.addEventListener('astrovip:cases-expanded', rebuild);
     }
     return true;
