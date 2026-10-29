@@ -23,6 +23,8 @@
   if(!style){style=document.createElement('style');style.id='av-teacher-image-fix-style';document.head.appendChild(style)}
   const scope='html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home';
   style.textContent=`
+    ${scope} .av-case-showcase-card.av-case-teacher::before,
+    ${scope} .av-case-showcase-card.av-case-teacher::after{content:none!important;display:none!important}
     #studii-de-caz-home .av-case-teacher .av-case-showcase-visual,
     ${scope} .av-case-showcase-card.av-case-teacher .av-case-showcase-visual,
     ${scope} .av-case-mobile-ticker .av-case-showcase-card.av-case-teacher .av-case-showcase-visual,
