@@ -27,23 +27,17 @@
   style.textContent=`
     ${scope} .av-case-showcase-card.av-case-teacher::before,
     ${scope} .av-case-showcase-card.av-case-teacher::after{content:none!important;display:none!important}
-    #studii-de-caz-home .av-case-teacher .av-case-showcase-visual,
-    ${scope} .av-case-showcase-card.av-case-teacher .av-case-showcase-visual,
-    ${scope} .av-case-mobile-ticker .av-case-showcase-card.av-case-teacher .av-case-showcase-visual,
-    ${scope} .av-case-desktop-marquee-v9 .av-case-showcase-card.av-case-teacher .av-case-showcase-visual{position:relative!important;flex:0 0 auto!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:2/3!important;padding:0!important;overflow:hidden!important;background:#fffbea!important;isolation:isolate!important}
-    #studii-de-caz-home .av-case-teacher .av-case-showcase-visual::before,
-    #studii-de-caz-home .av-case-teacher .av-case-showcase-visual::after,
-    #studii-de-caz-home .av-case-teacher .av-case-local-space-visual::before,
-    #studii-de-caz-home .av-case-teacher .av-case-local-space-visual::after{content:none!important;display:none!important;opacity:0!important;background:none!important;filter:none!important}
-    #studii-de-caz-home .av-case-teacher .av-case-showcase-visual img,
-    ${scope} .av-case-showcase-card.av-case-teacher .av-case-showcase-visual img,
-    ${scope} .av-case-mobile-ticker .av-case-showcase-card.av-case-teacher .av-case-showcase-visual img,
-    ${scope} .av-case-desktop-marquee-v9 .av-case-showcase-card.av-case-teacher .av-case-showcase-visual img{position:relative!important;z-index:2!important;display:block!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:2/3!important;object-fit:contain!important;object-position:center!important;opacity:1!important;visibility:visible!important;filter:none!important;mix-blend-mode:normal!important;transform:none!important;background:#fffbea!important}
-    #studii-de-caz-home .av-case-teacher .av-case-local-space-symbol,
-    #studii-de-caz-home .av-case-teacher .av-case-local-space-index{display:none!important}
+    ${scope} .av-case-showcase-card.av-case-teacher .av-case-showcase-visual{position:relative!important;width:100%!important;min-height:0!important;padding:0!important;overflow:hidden!important;background:#030705!important;isolation:isolate!important;aspect-ratio:16/9!important}
+    ${scope} .av-case-showcase-card.av-case-teacher .av-case-showcase-visual::before,
+    ${scope} .av-case-showcase-card.av-case-teacher .av-case-showcase-visual::after{content:none!important;display:none!important;opacity:0!important;background:none!important;filter:none!important}
+    ${scope} .av-case-showcase-card.av-case-teacher .av-case-showcase-visual img{position:relative!important;z-index:2!important;display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;mix-blend-mode:normal!important;transform:none!important;background:#030705!important}
+    ${scope} .av-case-showcase-card.av-case-teacher .av-case-local-space-symbol,
+    ${scope} .av-case-showcase-card.av-case-teacher .av-case-local-space-index{display:none!important}
+    @media(max-width:820px){
+      ${scope} .av-case-mobile-ticker .av-case-showcase-card.av-case-teacher .av-case-showcase-visual{flex:0 0 auto!important;height:calc(var(--av-mobile-case-width,320px) * .5625)!important;min-height:0!important;max-height:none!important;aspect-ratio:16/9!important}
+    }
     @media(min-width:821px){
-      ${scope} .av-case-showcase-grid>.av-case-showcase-card.av-case-teacher,
-      ${scope} .av-case-desktop-marquee-v9 .av-case-showcase-card.av-case-teacher{flex:0 0 320px!important;width:320px!important;max-width:100%!important;align-self:flex-start!important}
+      ${scope} .av-case-desktop-marquee-v9 .av-case-showcase-card.av-case-teacher .av-case-showcase-visual{flex:0 0 300px!important;height:300px!important;min-height:0!important;max-height:300px!important;aspect-ratio:auto!important}
     }
   `;
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch,{once:true});else watch();
