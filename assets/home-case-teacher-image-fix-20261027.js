@@ -1,12 +1,12 @@
 (()=>{
   'use strict';
-  const ASSET='/assets/vocatie-invatator-slider-20261029.webp';
+  const ASSET='/assets/vocatie-invatator-slider-20261029-fixed.webp';
   const apply=()=>{
     document.querySelectorAll('#studii-de-caz-home .av-case-teacher img').forEach(img=>{
       const set=(name,value)=>{if(img.getAttribute(name)!==value)img.setAttribute(name,value)};
       set('src',ASSET);
-      set('width','800');
-      set('height','450');
+      set('width','1024');
+      set('height','1536');
       img.removeAttribute('srcset');
       img.setAttribute('loading','eager');
       img.setAttribute('fetchpriority','high');
