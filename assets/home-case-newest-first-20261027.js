@@ -24,10 +24,10 @@
     s.id='av-case-newest-first-style';
     s.textContent=`
       #studii-de-caz-home .av-case-teacher .av-case-showcase-visual,
-      #studii-de-caz-home .av-case-teacher .av-case-local-space-visual{aspect-ratio:16/9!important;height:auto!important;min-height:0!important;background:#fffbea!important;overflow:hidden!important}
+      #studii-de-caz-home .av-case-teacher .av-case-local-space-visual{aspect-ratio:2/3!important;height:auto!important;min-height:0!important;background:#fffbea!important;overflow:hidden!important}
       #studii-de-caz-home .av-case-teacher .av-case-showcase-visual img,
       #studii-de-caz-home .av-case-mobile-ticker .av-case-teacher .av-case-showcase-visual img,
-      #studii-de-caz-home .av-case-desktop-marquee-v9 .av-case-teacher .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#fffbea!important}
+      #studii-de-caz-home .av-case-desktop-marquee-v9 .av-case-teacher .av-case-showcase-visual img{display:block!important;width:100%!important;height:auto!important;object-fit:contain!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#fffbea!important}
       #studii-de-caz-home .av-case-teacher .av-case-local-space-symbol{color:#ffe987!important;background:rgba(15,45,68,.86)!important}
       #studii-de-caz-home .av-case-local-space-index{font-size:12px!important;color:#fff2b0!important;text-shadow:0 1px 6px rgba(0,0,0,.8)!important}
     `;
