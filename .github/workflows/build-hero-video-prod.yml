@@ -1,0 +1,91 @@
+name: Build AstroVip Hero Video Prod
+
+on:
+  push:
+    branches:
+      - hero-video-prod-20261030
+    paths:
+      - .github/workflows/build-hero-video-prod.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build-hero-video:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout staging branch
+        uses: actions/checkout@v4
+        with:
+          ref: hero-video-prod-20261030
+          fetch-depth: 0
+
+      - name: Verify source clip
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s assets/astrovip-hero-optimized.mp4
+          DURATION=$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 assets/astrovip-hero-optimized.mp4)
+          python3 - "$DURATION" <<'PY'
+          import sys
+          d=float(sys.argv[1])
+          if not (49.7 <= d <= 50.8):
+              raise SystemExit(f"Unexpected source duration: {d:.3f}s")
+          print(f"Verified source duration: {d:.3f}s")
+          PY
+
+      - name: Cut 333 offer and encode production asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -y -hide_banner -loglevel error \
+            -i assets/astrovip-hero-optimized.mp4 \
+            -filter_complex "[0:v]trim=start=0:end=40.15,setpts=PTS-STARTPTS[v0];[0:a]atrim=start=0:end=40.15,asetpts=PTS-STARTPTS[a0];[0:v]trim=start=49.50,setpts=PTS-STARTPTS[v1];[0:a]atrim=start=49.50,asetpts=PTS-STARTPTS[a1];[v0][a0][v1][a1]concat=n=2:v=1:a=1[vcat][acat];[vcat]scale=480:854:force_original_aspect_ratio=decrease,pad=480:854:(ow-iw)/2:(oh-ih)/2:black,fps=24[v]" \
+            -map "[v]" -map "[acat]" \
+            -c:v libx264 -preset slow -crf 27 -profile:v high -level 4.0 -pix_fmt yuv420p \
+            -c:a aac -b:a 64k -ac 1 -ar 44100 \
+            -movflags +faststart \
+            assets/astrovip-hero-prod.mp4
+
+          ffmpeg -y -hide_banner -loglevel error \
+            -ss 1.0 -i assets/astrovip-hero-prod.mp4 -frames:v 1 \
+            -vf "scale=480:854" -c:v libwebp -quality 82 \
+            assets/astrovip-hero-poster-prod.webp
+
+      - name: Validate output
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s assets/astrovip-hero-prod.mp4
+          test -s assets/astrovip-hero-poster-prod.webp
+          SIZE=$(stat -c%s assets/astrovip-hero-prod.mp4)
+          DURATION=$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 assets/astrovip-hero-prod.mp4)
+          WIDTH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=nw=1:nk=1 assets/astrovip-hero-prod.mp4)
+          HEIGHT=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nw=1:nk=1 assets/astrovip-hero-prod.mp4)
+          python3 - "$SIZE" "$DURATION" "$WIDTH" "$HEIGHT" <<'PY'
+          import sys
+          size,dur,w,h=int(sys.argv[1]),float(sys.argv[2]),int(sys.argv[3]),int(sys.argv[4])
+          assert 35.0 <= dur <= 43.0, (size,dur,w,h)
+          assert w == 480 and h == 854, (size,dur,w,h)
+          assert size <= 4_000_000, (size,dur,w,h)
+          print(f"Output OK: {size/1024/1024:.2f} MiB, {dur:.3f}s, {w}x{h}")
+          PY
+          {
+            echo "source=assets/astrovip-hero-optimized.mp4"
+            echo "output=assets/astrovip-hero-prod.mp4"
+            echo "cut=40.15-49.50"
+            echo "duration=$DURATION"
+            echo "bytes=$SIZE"
+            echo "dimensions=${WIDTH}x${HEIGHT}"
+            sha256sum assets/astrovip-hero-prod.mp4 assets/astrovip-hero-poster-prod.webp
+          } > assets/astrovip-hero-prod-meta.txt
+
+      - name: Commit generated assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/astrovip-hero-prod.mp4 assets/astrovip-hero-poster-prod.webp assets/astrovip-hero-prod-meta.txt
+          git commit -m "[hero-asset-built] Add optimized Hero video without 333 offer"
+          git push origin HEAD:hero-video-prod-20261030
