@@ -1,6 +1,0 @@
-forms/preview
-sitemap studies
-mobile LCP
-DB duplicate index
-forum
-security/legal/backup
