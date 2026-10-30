@@ -76,6 +76,12 @@ export default {
           element.append(LLMS_DISCOVERY_LINK, { html: true });
           if (isHome) element.append(CERT_STYLE, { html: true });
         }
+      })
+      .on('#menu a[href="#contact"]', {
+        element(element) {
+          element.setAttribute('href', '/#contact');
+          element.setInnerContent('+ Contact');
+        }
       });
 
     if (isHome) {
