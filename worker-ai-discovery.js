@@ -69,6 +69,11 @@ export default {
     const url = requestUrl;
     const isHome = url.pathname === '/' || url.pathname === '';
     let certMounted = false;
+    const removeMenuItem = {
+      element(element) {
+        element.remove();
+      }
+    };
 
     const rewriter = new HTMLRewriter()
       .on('head', {
@@ -77,12 +82,13 @@ export default {
           if (isHome) element.append(CERT_STYLE, { html: true });
         }
       })
-      .on('#menu a[href="#contact"]', {
-        element(element) {
-          element.setAttribute('href', '/#contact');
-          element.setInnerContent('+ Contact');
-        }
-      });
+      .on('#menu a[href="#contact"]', removeMenuItem)
+      .on('#menu a[href="/#contact"]', removeMenuItem)
+      .on('#menu a[href="/"]', removeMenuItem)
+      .on('#menu a[href="#home"]', removeMenuItem)
+      .on('#menu a[href="/#home"]', removeMenuItem)
+      .on('#menu a[href="#acasa"]', removeMenuItem)
+      .on('#menu a[href="/#acasa"]', removeMenuItem);
 
     if (isHome) {
       rewriter
