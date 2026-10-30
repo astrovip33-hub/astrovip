@@ -5,6 +5,7 @@
   const TEACHER='/studii-de-caz/vocatie-invatator-17-mai-1972/';
   const ASTROLOG='/astrologie-cariera-vocatie/';
   const NAME_CHANGE='/studii-de-caz/schimbare-nume-1996/';
+  const NAME_CHANGE_IMAGE='/assets/schimbare-nume-slider-20261030.webp';
   const IMAGE='/assets/vocatie-invatator-slider-20261029.webp';
   const ORDER=[
     CASE13,
@@ -38,12 +39,8 @@
       #studii-de-caz-home .av-case-it-marketing .av-case-showcase-visual{background:#020405!important}
       #studii-de-caz-home .av-case-it-marketing .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important;background:#020405!important}
       #studii-de-caz-home .av-case-it-marketing::after{content:none!important;display:none!important}
-      #studii-de-caz-home .av-case-name-change .av-case-showcase-visual{position:relative!important;aspect-ratio:16/9!important;height:auto!important;min-height:0!important;overflow:hidden!important;background:radial-gradient(circle at 50% 45%,rgba(216,245,0,.18),transparent 24%),radial-gradient(circle at 50% 50%,rgba(244,211,106,.12),transparent 52%),linear-gradient(135deg,#071b0d 0%,#020604 68%,#111005 100%)!important}
-      #studii-de-caz-home .av-case-name-change-art{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden}
-      #studii-de-caz-home .av-case-name-change-art::before{content:'';position:absolute;left:50%;top:50%;width:58%;aspect-ratio:1;transform:translate(-50%,-50%);border:1px solid rgba(244,211,106,.62);border-radius:50%;box-shadow:0 0 0 18px rgba(244,211,106,.025),0 0 38px rgba(244,211,106,.10)}
-      #studii-de-caz-home .av-case-name-change-art::after{content:'';position:absolute;left:50%;top:50%;width:70%;height:1px;transform:translate(-50%,-50%) rotate(-35deg);background:linear-gradient(90deg,transparent,rgba(216,245,0,.38),transparent);box-shadow:0 0 14px rgba(216,245,0,.16)}
-      #studii-de-caz-home .av-case-name-change-year{position:relative;z-index:2;color:#fff6cf;text-align:center;font:900 clamp(31px,5vw,48px)/.9 Georgia,serif;letter-spacing:.04em;text-shadow:0 0 24px rgba(244,211,106,.28)}
-      #studii-de-caz-home .av-case-name-change-year small{display:block;margin-top:10px;color:#d8f500;font:950 10px/1 Inter,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase}
+      #studii-de-caz-home .av-case-name-change .av-case-showcase-visual{position:relative!important;aspect-ratio:16/9!important;height:auto!important;min-height:0!important;overflow:hidden!important;background:#020405!important}
+      #studii-de-caz-home .av-case-name-change .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:50% 27%!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#020405!important}
       #studii-de-caz-home .av-case-name-change-symbol{position:absolute;left:13px;bottom:11px;z-index:4;display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(241,211,110,.54);border-radius:12px;background:rgba(3,13,30,.72);color:#f1d36e;font:700 25px/1 Georgia,serif;box-shadow:0 4px 16px rgba(0,0,0,.25)}
     `;
     document.head.appendChild(s);
@@ -69,7 +66,7 @@
     a.className='av-case-showcase-card av-case-local-space av-case-name-change';
     a.href=NAME_CHANGE;
     a.setAttribute('aria-label','Vezi studiul de caz Schimbare de nume — 1996');
-    a.innerHTML=`<div class="av-case-showcase-visual av-case-local-space-visual"><div class="av-case-name-change-art" aria-hidden="true"><span class="av-case-name-change-year">1996<small>Identitate</small></span></div><span class="av-case-name-change-symbol" aria-hidden="true">◇</span><span class="av-case-local-space-index" aria-hidden="true">01</span></div><div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">STUDIU DE CAZ · IDENTITATE</p><h3>Schimbare de nume — 1996</h3><p class="av-case-showcase-meta">Identitate personală · schimbare de etapă</p><p class="av-case-showcase-lead">Schimbarea de nume analizată retrospectiv prin Ascendent, Soare, MC și guvernatorii relevanți.</p><span class="av-case-showcase-cta">VEZI STUDIUL →</span></div>`;
+    a.innerHTML=`<div class="av-case-showcase-visual av-case-local-space-visual"><img src="${NAME_CHANGE_IMAGE}" width="640" height="1138" loading="eager" fetchpriority="high" decoding="async" alt="Schimbare de nume — 11 august 1996, identitate și numerologie, studiu de caz AstroVip"><span class="av-case-name-change-symbol" aria-hidden="true">◇</span><span class="av-case-local-space-index" aria-hidden="true">01</span></div><div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">STUDIU DE CAZ · IDENTITATE</p><h3>Schimbare de nume — 1996</h3><p class="av-case-showcase-meta">Identitate personală · schimbare de etapă</p><p class="av-case-showcase-lead">Schimbarea de nume analizată retrospectiv prin Ascendent, Soare, MC și guvernatorii relevanți.</p><span class="av-case-showcase-cta">VEZI STUDIUL →</span></div>`;
     return a;
   };
   const categoryFor=(card)=>{
@@ -124,12 +121,14 @@
     let nameChange=track.querySelector(`a[href="${NAME_CHANGE}"]`);
     if(!nameChange){nameChange=makeNameChange();track.appendChild(nameChange)}
     nameChange.classList.add('av-case-name-change');
+    const nameImg=nameChange.querySelector('img');
+    if(nameImg){nameImg.setAttribute('src',NAME_CHANGE_IMAGE);nameImg.setAttribute('width','640');nameImg.setAttribute('height','1138');nameImg.removeAttribute('srcset');nameImg.setAttribute('loading','eager');nameImg.setAttribute('fetchpriority','high');nameImg.setAttribute('decoding','async')}
     const map=new Map([...track.querySelectorAll(':scope > a[href]')].map(a=>[a.getAttribute('href'),a]));
     ORDER.forEach(href=>{const card=map.get(href);if(card)track.appendChild(card)});
     [...track.querySelectorAll(':scope > .av-case-showcase-card')].filter(card=>!ORDER.includes(card.getAttribute('href'))).forEach(card=>track.appendChild(card));
     renumber(track);
     track.dataset.avNewestFirst='1';
-    section.dispatchEvent(new CustomEvent('astrovip:cases-expanded',{bubbles:true,detail:{count:track.querySelectorAll(':scope > .av-case-showcase-card').length,newestFirst:true,case13:true,teacherImage:true,nameChange:true}}));
+    section.dispatchEvent(new CustomEvent('astrovip:cases-expanded',{bubbles:true,detail:{count:track.querySelectorAll(':scope > .av-case-showcase-card').length,newestFirst:true,case13:true,teacherImage:true,nameChange:true,nameChangeImage:true}}));
     return true;
   };
   const boot=()=>{
