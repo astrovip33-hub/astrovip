@@ -179,6 +179,7 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
     justify-content: center !important;
     gap: 3px !important;
     overflow: visible !important;
+    transform: translateY(3px) !important;
   }
 
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-wordmark {
