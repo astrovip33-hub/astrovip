@@ -1,0 +1,39 @@
+name: Assemble name-change slider image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/assemble-name-change-image.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Assemble optimized WebP
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets
+          cat tmp/name-change-20261031/part*.b64 | tr -d '\r\n' | base64 --decode > assets/schimbare-nume-jupiter-mc-20261031.webp
+          test "$(stat -c%s assets/schimbare-nume-jupiter-mc-20261031.webp)" -eq 27586
+          rm -rf tmp/name-change-20261031
+
+      - name: Commit final image
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "Add Jupiter MC name-change slider image"
+          git push
