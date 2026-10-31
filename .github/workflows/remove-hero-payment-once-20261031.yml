@@ -1,0 +1,56 @@
+name: Remove hero card payment CTA once 20261031
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/remove-hero-payment-once-20261031.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove card payment CTA from hero only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('worker-home-ultra.js')
+          s = p.read_text(encoding='utf-8')
+          target = "  .replace('href=\"#programari\">PROGRAMEAZĂ CONSULTAȚIA →','href=\"'+PAYMENT_URL+'\">PLĂTEȘTE CU CARDUL · 500 LEI →')\n"
+
+          if s.count(target) != 1:
+              raise SystemExit(f'Expected exactly one mobile hero payment replacement, found {s.count(target)}')
+
+          s = s.replace(target, '', 1)
+
+          if 'const PAYMENT_CTA=' not in s or 'const PAYMENT_FOOTER_STYLE=' not in s:
+              raise SystemExit('Footer payment CTA/style guard failed; refusing to write')
+
+          if "href=\"'+PAYMENT_URL+'\">PLĂTEȘTE CU CARDUL · 500 LEI →" in s:
+              raise SystemExit('Hero payment replacement still present')
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+          git diff -- worker-home-ultra.js
+          git diff --check
+
+      - name: Commit patch
+        run: |
+          git config user.name "AstroVip Hero Fix Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add worker-home-ultra.js
+          git commit -m "Remove card payment CTA from homepage hero" || exit 0
+          git push origin HEAD:main
