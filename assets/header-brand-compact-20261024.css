@@ -99,3 +99,154 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
     letter-spacing: .12em !important;
   }
 }
+
+/* ASTROVIP NAVY METALLIC MOBILE HEADER — 2026-10-31 */
+@media (max-width: 820px) {
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) {
+    padding-top: 72px !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) header#av-site-header.top,
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header {
+    height: 72px !important;
+    min-height: 72px !important;
+    background:
+      radial-gradient(150px 64px at 18% 10%, rgba(18, 143, 255, .28), transparent 72%),
+      radial-gradient(180px 72px at 76% -8%, rgba(81, 190, 255, .20), transparent 70%),
+      linear-gradient(118deg, #020917 0%, #071b37 38%, #0b2b50 58%, #06152b 76%, #020816 100%) !important;
+    border-bottom: 1px solid rgba(80, 188, 255, .72) !important;
+    box-shadow:
+      0 9px 26px rgba(0, 0, 0, .58),
+      0 1px 0 rgba(255, 218, 127, .22),
+      0 0 22px rgba(0, 139, 255, .17),
+      inset 0 1px 0 rgba(255, 255, 255, .08),
+      inset 0 -1px 0 rgba(15, 129, 224, .22) !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header {
+    overflow: hidden !important;
+    isolation: isolate !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    z-index: 0 !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background:
+      linear-gradient(106deg, transparent 8%, rgba(255,255,255,.055) 28%, transparent 43%),
+      radial-gradient(circle at 86% 30%, rgba(55,179,255,.20), transparent 24%) !important;
+    opacity: 1 !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header::after {
+    content: "" !important;
+    position: absolute !important;
+    z-index: 1 !important;
+    left: 5% !important;
+    right: 5% !important;
+    bottom: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent 0%, #157ddd 18%, #74d5ff 38%, #f3cc6d 50%, #74d5ff 62%, #157ddd 82%, transparent 100%) !important;
+    box-shadow: 0 0 9px rgba(38, 164, 255, .58), 0 0 5px rgba(244, 201, 92, .24) !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-logo {
+    z-index: 2 !important;
+    height: 72px !important;
+    width: calc(100% - 64px) !important;
+    padding: 0 0 0 10px !important;
+    gap: 8px !important;
+    background: transparent !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-mark {
+    width: 50px !important;
+    max-height: 49px !important;
+    transform: none !important;
+    filter:
+      drop-shadow(0 0 4px rgba(255, 210, 105, .66))
+      drop-shadow(0 0 8px rgba(31, 156, 255, .62))
+      drop-shadow(0 0 15px rgba(0, 115, 225, .26)) !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-logo > .av-header-lockup {
+    min-height: 48px !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 5px !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-wordmark {
+    font: 700 clamp(28px, 8vw, 33px)/.92 Georgia, "Times New Roman", serif !important;
+    letter-spacing: -.035em !important;
+    background: linear-gradient(96deg, #fff3bd 0%, #e5ad42 39%, #f7d875 51%, #8ed9ff 72%, #2aa8ff 88%, #d9f3ff 100%) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: #f3ce70 !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0 0 12px rgba(34, 154, 255, .18) !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-descriptor {
+    font: 700 8px/1.15 Arial, sans-serif !important;
+    letter-spacing: .18em !important;
+    color: #e9f4ff !important;
+    -webkit-text-fill-color: #e9f4ff !important;
+    text-shadow: 0 0 7px rgba(65, 181, 255, .44) !important;
+    opacity: .96 !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb {
+    z-index: 4 !important;
+    right: 7px !important;
+    top: 8px !important;
+    width: 54px !important;
+    height: 54px !important;
+    border: 1px solid rgba(240, 199, 101, .78) !important;
+    border-radius: 15px !important;
+    background: linear-gradient(145deg, rgba(7, 25, 51, .95), rgba(2, 9, 22, .96)) !important;
+    box-shadow:
+      0 0 0 1px rgba(46, 153, 239, .16),
+      0 0 13px rgba(31, 151, 255, .35),
+      inset 0 0 14px rgba(16, 88, 158, .22) !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb-glow {
+    width: 42px !important;
+    height: 42px !important;
+    gap: 5px !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb-glow i {
+    width: 27px !important;
+    height: 3px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(90deg, #fff0a5 0%, #e5ac3e 42%, #62c7ff 72%, #eef9ff 100%) !important;
+    box-shadow: 0 0 5px rgba(244, 199, 91, .36), 0 0 7px rgba(47, 171, 255, .33) !important;
+  }
+
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb[aria-expanded="true"] {
+    border-color: rgba(255, 220, 128, .92) !important;
+    box-shadow: 0 0 16px rgba(34, 157, 255, .48), inset 0 0 16px rgba(18, 76, 139, .26) !important;
+  }
+}
+
+@media (max-width: 360px) {
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-logo {
+    padding-left: 7px !important;
+    gap: 5px !important;
+  }
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-mark {
+    width: 45px !important;
+  }
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-wordmark {
+    font-size: 27px !important;
+  }
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-descriptor {
+    font-size: 7px !important;
+    letter-spacing: .14em !important;
+  }
+}
