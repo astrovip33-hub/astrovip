@@ -1,10 +1,9 @@
-/* AstroVip — unify the remaining yellow card surfaces with the approved hamburger gradient.
-   Scope is intentionally limited to the card/CTA surfaces previously identified by the user. */
+/* AstroVip — unify yellow/gold card surfaces with the approved hamburger gradient. */
 :root{
   --av-card-gold-blue:linear-gradient(90deg,#f7e99a 0%,#e3b347 40%,#69c4ef 73%,#dbf7ff 100%);
 }
 
-/* Hero booking card / CTA: replaces the old solid-gold treatment. */
+/* Hero booking card / CTA. */
 html body:not(.guide-page) #av-mobile-approved-home .avm-actions .avm-primary{
   background:var(--av-card-gold-blue)!important;
   color:#071b37!important;
@@ -12,7 +11,7 @@ html body:not(.guide-page) #av-mobile-approved-home .avm-actions .avm-primary{
   box-shadow:0 10px 28px rgba(227,179,71,.15),0 0 15px rgba(105,196,239,.12)!important;
 }
 
-/* Payment card CTA in the footer: keep it on the exact same approved gradient. */
+/* Payment CTA in the footer. */
 html body:not(.guide-page) #astrovip-footer #av-home-payment-cta .av-home-paybar-inner>a{
   background:var(--av-card-gold-blue)!important;
   color:#071b37!important;
@@ -20,7 +19,14 @@ html body:not(.guide-page) #astrovip-footer #av-home-payment-cta .av-home-paybar
   box-shadow:0 10px 28px rgba(227,179,71,.15),0 0 15px rgba(105,196,239,.12)!important;
 }
 
-/* Keep the four interest cards on the exact same gold/cyan/pearl palette already approved. */
+/* Four principal interest cards. */
 html.av-ultra-home-production body:not(.guide-page) #av-mobile-approved-home .avm-interests{
   --av-menu-gradient:linear-gradient(90deg,#f7e99a 0%,#e3b347 40%,#69c4ef 73%,#dbf7ff 100%)!important;
+}
+
+/* Automatic coverage: every remaining solid/gradient yellow surface detected inside homepage cards down to the footer. */
+html body:not(.guide-page) .av-all-yellow-card-gradient{
+  background:var(--av-card-gold-blue)!important;
+  border-color:rgba(105,196,239,.82)!important;
+  box-shadow:0 10px 28px rgba(227,179,71,.12),0 0 15px rgba(105,196,239,.10)!important;
 }
