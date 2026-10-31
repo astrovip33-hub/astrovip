@@ -202,9 +202,10 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb {
     z-index: 4 !important;
     right: 7px !important;
-    top: 8px !important;
+    top: 14px !important;
+    transform: none !important;
     width: 54px !important;
-    height: 54px !important;
+    height: 50px !important;
     border: 1px solid rgba(240, 199, 101, .78) !important;
     border-radius: 15px !important;
     background: linear-gradient(145deg, rgba(7, 25, 51, .95), rgba(2, 9, 22, .96)) !important;
