@@ -1,0 +1,88 @@
+/* AstroVip preview — editorial luxury hero slogan */
+@media (max-width:820px){
+  html body:not(.guide-page) .av-slogan-lux-ready{
+    position:relative!important;
+    display:grid!important;
+    gap:2px!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0 auto!important;
+    padding:4px 8px 11px!important;
+    box-sizing:border-box!important;
+    text-align:center!important;
+  }
+
+  html body:not(.guide-page) .av-slogan-lux-ready::before{
+    content:'✦'!important;
+    display:block!important;
+    width:100%!important;
+    margin:0 auto 5px!important;
+    color:#e7c75d!important;
+    font:700 9px/1 Georgia,'Times New Roman',serif!important;
+    letter-spacing:.28em!important;
+    text-align:center!important;
+    text-shadow:0 0 8px rgba(227,179,71,.34),0 0 12px rgba(105,196,239,.10)!important;
+  }
+
+  html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line{
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    white-space:nowrap!important;
+    font-family:Georgia,'Times New Roman',serif!important;
+    font-style:normal!important;
+    text-align:center!important;
+    text-shadow:none!important;
+  }
+
+  html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:first-child{
+    font-size:clamp(9px,2.5vw,11px)!important;
+    line-height:1.2!important;
+    font-weight:700!important;
+    letter-spacing:.18em!important;
+    color:#f8e9aa!important;
+    background:linear-gradient(92deg,#fff9df 0%,#f4dda0 24%,#d6a83f 52%,#f1dd9a 74%,#eefcff 100%)!important;
+    -webkit-background-clip:text!important;
+    background-clip:text!important;
+    -webkit-text-fill-color:transparent!important;
+    filter:drop-shadow(0 2px 8px rgba(0,0,0,.42)) drop-shadow(0 0 6px rgba(227,179,71,.08))!important;
+  }
+
+  html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:last-child{
+    margin-top:3px!important;
+    font-size:clamp(31px,8.7vw,40px)!important;
+    line-height:.98!important;
+    font-weight:900!important;
+    letter-spacing:-.018em!important;
+    color:#f7e99a!important;
+    background:linear-gradient(92deg,#fffbe9 0%,#f0d16d 24%,#d6a33d 47%,#72c7ec 76%,#e8fcff 100%)!important;
+    -webkit-background-clip:text!important;
+    background-clip:text!important;
+    -webkit-text-fill-color:transparent!important;
+    filter:drop-shadow(0 4px 13px rgba(0,0,0,.50)) drop-shadow(0 0 9px rgba(105,196,239,.10))!important;
+  }
+
+  html body:not(.guide-page) .av-slogan-lux-ready::after{
+    content:''!important;
+    display:block!important;
+    width:min(178px,48vw)!important;
+    height:1px!important;
+    margin:9px auto 0!important;
+    background:linear-gradient(90deg,transparent 0%,rgba(227,179,71,.62) 23%,rgba(247,233,154,.92) 43%,rgba(105,196,239,.88) 67%,transparent 100%)!important;
+    box-shadow:0 0 7px rgba(105,196,239,.12),0 0 5px rgba(227,179,71,.10)!important;
+  }
+}
+
+@media (max-width:370px){
+  html body:not(.guide-page) .av-slogan-lux-ready{
+    padding-inline:4px!important;
+  }
+  html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:first-child{
+    font-size:9px!important;
+    letter-spacing:.16em!important;
+  }
+  html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:last-child{
+    font-size:30px!important;
+    letter-spacing:-.02em!important;
+  }
+}
