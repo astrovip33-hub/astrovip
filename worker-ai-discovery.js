@@ -27,6 +27,34 @@ const CERT_CARD = `<section id="av-cert-l7x" class="av-cert-l7x" data-av-cert-so
   </div>
 </section>`;
 
+const PFA_FOOTER_CARD = `<section id="av-pfa-footer-card" class="av-pfa-footer-card" aria-label="Date furnizor AstroVip" style="display:block!important;visibility:visible!important;opacity:1!important">
+  <style>
+    #av-pfa-footer-card{box-sizing:border-box!important;width:min(94%,860px)!important;margin:28px auto 18px!important;padding:1px!important;border-radius:22px!important;background:linear-gradient(135deg,#071a36 0%,#123f77 38%,#d7b85a 64%,#071a36 100%)!important;box-shadow:0 18px 48px rgba(0,0,0,.38),0 0 28px rgba(22,77,139,.24)!important;clear:both!important}
+    #av-pfa-footer-card *{box-sizing:border-box!important}
+    #av-pfa-footer-card .avpfa-in{display:grid!important;gap:12px!important;padding:22px 24px!important;border-radius:21px!important;background:linear-gradient(145deg,rgba(3,9,18,.98),rgba(5,18,35,.98) 62%,rgba(4,10,20,.99))!important;text-align:center!important}
+    #av-pfa-footer-card .avpfa-kicker{color:#77b7ff!important;font:800 10px/1.2 Inter,system-ui,sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase!important}
+    #av-pfa-footer-card .avpfa-name{margin:0!important;color:#fff4cf!important;font:800 clamp(18px,2.6vw,28px)/1.18 Georgia,serif!important;letter-spacing:.02em!important}
+    #av-pfa-footer-card .avpfa-role{color:#d9eaff!important;font:700 13px/1.35 Inter,system-ui,sans-serif!important}
+    #av-pfa-footer-card .avpfa-rule{width:86px!important;height:1px!important;margin:1px auto 3px!important;background:linear-gradient(90deg,transparent,#d8b85d,transparent)!important}
+    #av-pfa-footer-card .avpfa-bank{display:grid!important;gap:5px!important;padding:14px 16px!important;border:1px solid rgba(82,152,230,.42)!important;border-radius:14px!important;background:rgba(7,29,56,.56)!important}
+    #av-pfa-footer-card .avpfa-label{color:#9fc9ff!important;font:800 10px/1.25 Inter,system-ui,sans-serif!important;letter-spacing:.10em!important;text-transform:uppercase!important}
+    #av-pfa-footer-card .avpfa-holder{color:#eef6ff!important;font:700 12px/1.35 Inter,system-ui,sans-serif!important}
+    #av-pfa-footer-card .avpfa-iban{overflow-wrap:anywhere!important;color:#f6d979!important;font:900 clamp(14px,2.1vw,18px)/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;letter-spacing:.035em!important}
+    @media(max-width:640px){#av-pfa-footer-card{width:calc(100% - 24px)!important;margin:20px 12px 14px!important;border-radius:18px!important}#av-pfa-footer-card .avpfa-in{padding:18px 14px!important;border-radius:17px!important;gap:10px!important}#av-pfa-footer-card .avpfa-name{font-size:20px!important}#av-pfa-footer-card .avpfa-iban{font-size:13px!important;letter-spacing:.015em!important}}
+  </style>
+  <div class="avpfa-in">
+    <div class="avpfa-kicker">DATE FURNIZOR · ASTROVIP</div>
+    <h2 class="avpfa-name">Smaranda Cristian Catalin PFA</h2>
+    <div class="avpfa-role">Astrolog Autorizat</div>
+    <div class="avpfa-rule" aria-hidden="true"></div>
+    <div class="avpfa-bank">
+      <span class="avpfa-label">Cont bancar</span>
+      <span class="avpfa-holder">Smaranda Cristian Catalin</span>
+      <strong class="avpfa-iban">RO08BTRLRONCRT0CS6331801</strong>
+    </div>
+  </div>
+</section>`;
+
 export default {
   async fetch(request, env, ctx) {
     const requestUrl = new URL(request.url);
@@ -69,6 +97,7 @@ export default {
     const url = requestUrl;
     const isHome = url.pathname === '/' || url.pathname === '';
     let certMounted = false;
+    let pfaMounted = false;
     const removeMenuItem = {
       element(element) {
         element.remove();
@@ -102,6 +131,18 @@ export default {
             if (certMounted) return;
             certMounted = true;
             element.append(CERT_CARD, { html: true });
+          }
+        })
+        .on('#av-pfa-footer-card', {
+          element(element) {
+            element.remove();
+          }
+        })
+        .on('footer', {
+          element(element) {
+            if (pfaMounted) return;
+            pfaMounted = true;
+            element.append(PFA_FOOTER_CARD, { html: true });
           }
         });
     }
