@@ -33,18 +33,18 @@
     document.head.appendChild(yellowCardsJs);
   }
 
-  /* Preview 2026-10-31: luxury treatment on the hero variant actually rendered on mobile. */
+  /* Preview 2026-10-31: luxury treatment on the mobile hero slogan. */
   if (!document.getElementById('av-hero-slogan-lux-css')) {
     const sloganLuxCss = document.createElement('link');
     sloganLuxCss.id = 'av-hero-slogan-lux-css';
     sloganLuxCss.rel = 'stylesheet';
-    sloganLuxCss.href = '/assets/hero-slogan-lux-20261031.css?v=20261031-preview9';
+    sloganLuxCss.href = '/assets/hero-slogan-lux-20261031.css?v=20261031-preview10';
     document.head.appendChild(sloganLuxCss);
   }
   if (!document.getElementById('av-hero-slogan-lux-text-js')) {
     const sloganLuxText = document.createElement('script');
     sloganLuxText.id = 'av-hero-slogan-lux-text-js';
-    sloganLuxText.src = '/assets/hero-slogan-lux-text-20261031.js?v=20261031-preview9';
+    sloganLuxText.src = '/assets/hero-slogan-lux-text-20261031.js?v=20261031-preview10';
     sloganLuxText.defer = true;
     document.head.appendChild(sloganLuxText);
   }
@@ -61,6 +61,10 @@
     document.head.appendChild(l7x);
   }
   document.body.classList.add('av-l7x-preview');
+
+  /* Keep the approved slogan stylesheet last in the cascade, after L7X. */
+  const sloganLuxCss = document.getElementById('av-hero-slogan-lux-css');
+  if (sloganLuxCss) document.head.appendChild(sloganLuxCss);
 
   footer.querySelector('[data-avf-chat]')?.addEventListener('click', () => {
     const launcher = document.querySelector('#av-site-header .avchat-launcher, .avchat-launcher');
