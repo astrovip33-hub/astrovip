@@ -173,14 +173,16 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
   }
 
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-logo > .av-header-lockup {
-    min-height: 48px !important;
+    min-height: 0 !important;
+    max-width: calc(100% - 58px) !important;
     align-items: flex-start !important;
     justify-content: center !important;
-    gap: 5px !important;
+    gap: 3px !important;
+    overflow: visible !important;
   }
 
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-wordmark {
-    font: 700 clamp(28px, 8vw, 33px)/.92 Georgia, "Times New Roman", serif !important;
+    font: 700 clamp(26px, 7.5vw, 31px)/1.04 Georgia, "Times New Roman", serif !important;
     letter-spacing: -.035em !important;
     background: linear-gradient(96deg, #fff3bd 0%, #e5ad42 39%, #f7d875 51%, #8ed9ff 72%, #2aa8ff 88%, #d9f3ff 100%) !important;
     background-clip: text !important;
@@ -191,8 +193,8 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
   }
 
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-descriptor {
-    font: 700 8px/1.15 Arial, sans-serif !important;
-    letter-spacing: .18em !important;
+    font: 700 8px/1.2 Arial, sans-serif !important;
+    letter-spacing: .13em !important;
     color: #e9f4ff !important;
     -webkit-text-fill-color: #e9f4ff !important;
     text-shadow: 0 0 7px rgba(65, 181, 255, .44) !important;
@@ -244,7 +246,7 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
     width: 45px !important;
   }
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-wordmark {
-    font-size: 27px !important;
+    font-size: 25px !important;
   }
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-descriptor {
     font-size: 7px !important;
