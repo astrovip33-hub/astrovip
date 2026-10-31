@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const markup = '<span class="av-lux-eyebrow">ANALIZA MEA</span><span class="av-lux-main">— DECIZIILE TALE!</span>';
+  const markup = '<span class="av-lux-line">ANALIZA MEA.</span><span class="av-lux-line">DECIZIILE TALE!</span>';
   const directSelectors = [
     '#av-mobile-approved-home .avm-hero-copy h2.avm-hero-title',
     '.hero.av-hero-v2 .av-hero-v2-sidecopy:not(.right)'
@@ -25,11 +25,11 @@
 
   const decorate = (title) => {
     if (!title || title.closest('footer')) return;
-    if (!title.classList.contains('av-slogan-lux-ready') || isOldVisibleSlogan(title)) {
+    if (!title.classList.contains('av-slogan-lux-ready') || isOldVisibleSlogan(title) || !title.querySelector('.av-lux-line')) {
       title.innerHTML = markup;
       title.classList.add('av-slogan-lux-ready');
     }
-    title.setAttribute('aria-label', 'ANALIZA MEA – DECIZIILE TALE!');
+    title.setAttribute('aria-label', 'ANALIZA MEA. DECIZIILE TALE!');
   };
 
   const apply = () => {
