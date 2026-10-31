@@ -6,13 +6,20 @@ const PAYMENT_URL='https://buy.stripe.com/4gMeVcbz75J207y6fefjG00';
 // The mobile layout needs a visible level-one heading; desktop keeps
 // av-pro-title. An explicit heading role preserves the single source H1.
 const mobileHomePayment=mobileHome
-  .replace('href="#programari">PROGRAMEAZĂ CONSULTAȚIA →','href="'+PAYMENT_URL+'">PLĂTEȘTE CU CARDUL · 500 LEI →')
   .replace('<div class="avm-kicker">TIMING-UL CONTEAZĂ !</div>', '<div class="avm-kicker">TIMING-UL CONTEAZĂ !</div><p id="av-home-brand-title" class="avm-brand-title" role="heading" aria-level="1">AstroVip · Astrologie și numerologie</p>')
   .replace('Claritate pentru dragoste, carieră, afaceri și destin — într-o experiență astrologică premium 1:1, construită în jurul momentului potrivit.', 'Consultații AstroVip de astrologie și numerologie cu Cătălin Smaranda, în București și online. Analize personale pentru dragoste, carieră, afaceri și relocare.');
 const BRAND_HEADING_STYLE=`<style id="av-home-brand-heading-style">
 html.av-ultra-home-production #av-mobile-approved-home .avm-hero-copy .avm-brand-title{display:block!important;position:static!important;margin:10px 0 12px!important;padding:0!important;width:auto!important;height:auto!important;max-width:100%!important;overflow:visible!important;clip:auto!important;opacity:1!important;visibility:visible!important;color:#f0d58a!important;font:800 clamp(15px,1.7vw,20px)/1.35 Inter,system-ui,sans-serif!important;letter-spacing:.015em!important;text-transform:none!important;text-shadow:0 0 18px rgba(217,184,92,.12)!important}
 </style>`;
 const PAYMENT_CTA=`<section id="av-home-payment-cta" class="av-home-paybar" aria-label="Plată consultație AstroVip"><div class="av-home-paybar-inner"><div><span>CONSULTAȚIE PREMIUM · 60 MIN</span><strong>Plată securizată cu cardul</strong><small>500 lei · procesare securizată prin Stripe</small></div><a href="${PAYMENT_URL}" aria-label="Plătește consultația AstroVip cu cardul, 500 lei">PLĂTEȘTE CU CARDUL · 500 LEI →</a></div></section>`;
+
+
+const PAYMENT_FOOTER_STYLE=`<style id="av-payment-footer-20261031">
+html body #astrovip-footer #av-home-payment-cta{display:block!important;width:100%!important;margin:22px 0 0!important;padding:0!important;background:transparent!important}
+html body #astrovip-footer #av-home-payment-cta .av-home-paybar-inner{width:100%!important;max-width:100%!important;box-sizing:border-box!important;background:radial-gradient(circle at 78% 18%,rgba(88,178,241,.18),transparent 24%),linear-gradient(135deg,#0d203d 0%,#123154 42%,#204666 100%)!important;border-color:rgba(88,178,241,.46)!important}
+html body #astrovip-footer #av-home-payment-cta .av-home-paybar-inner>a{box-sizing:border-box!important;max-width:100%!important;white-space:normal!important;text-align:center!important;background:linear-gradient(90deg,#fff0a5 0%,#e5ac3e 42%,#62c7ff 72%,#eef9ff 100%)!important;color:#071b37!important;border-color:#9ad4ee!important}
+@media(max-width:820px){html body #astrovip-footer #av-home-payment-cta .av-home-paybar-inner{flex-direction:column!important;align-items:stretch!important;gap:16px!important;padding:18px!important}html body #astrovip-footer #av-home-payment-cta .av-home-paybar-inner>a{width:100%!important}}
+</style>`;
 
 const PLANETARY_HOURS_TEASER=`<section class="av-planetary-hours-home av-planetary-live-card" aria-label="Ora planetară activă în București"><style>
 .av-planetary-hours-home.av-planetary-live-card{padding:0 20px 18px;background:#06110d}
@@ -94,7 +101,7 @@ html.av-mobile-approved body:not(.guide-page) #av-site-header #av-mobile-approve
 html.av-mobile-approved body:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb-glow{width:38px!important;height:38px!important;gap:4px!important}
 html.av-mobile-approved body:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb-glow i{width:27px!important;height:3px!important;border-radius:999px!important}
 }
-</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261023-polish-v4"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
+</style><link rel="stylesheet" href="/assets/home-ultra-production-20261010.css?v=20261023-polish-v4"><link rel="stylesheet" href="/assets/interests-premium-final-20261031.css?v=20261031-final2"><link rel="stylesheet" href="/assets/case-studies-slider-lux-v5-20261014.css?v=2"><link rel="stylesheet" href="/assets/case-studies-mobile-premium-v6-20261014.css?v=20261014-v6-2"><style id="av-case-slider-v8-critical">
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:1px!important}
 @media(max-width:820px){
 html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{overflow:hidden!important}
@@ -174,14 +181,15 @@ export default {
             el.before(mobileHomePayment,{html:true});
             mobileHomeSeen=true;
           }
-          el.after(PAYMENT_CTA,{html:true});
+
         }})
         .on('section.av-horoscop-teaser',{element(el){el.after(PLANETARY_HOURS_TEASER+PLANETARY_MOVEMENTS_STRIP,{html:true})}})
         .on('#studii-de-caz-home',{element(el){
           el.setAttribute('data-av-slider-shell','v8');
           el.append(CASE_NAV_V8,{html:true});
         }})
-        .on('head',{element(el){el.append(HOMEPAGE_CRITICAL+BRAND_HEADING_STYLE,{html:true})}})
+        .on('#astrovip-footer .avf-shell',{element(el){el.append(PAYMENT_CTA,{html:true})}})
+        .on('head',{element(el){el.append(HOMEPAGE_CRITICAL+BRAND_HEADING_STYLE+PAYMENT_FOOTER_STYLE,{html:true})}})
         .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261019-ssr3" defer></script><script src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script><script src="/assets/home-planetary-strip-live.js?v=20261025-7"></script>'+PLANETARY_HOURS_SCRIPT,{html:true})}})
         .on('script[src^="/assets/ux-refresh-20261008.js"]',{element(el){el.setAttribute('src','/assets/ux-refresh-20261008.js?v=20261020-planetary-hours1')}})
         .on('link[rel="stylesheet"][href^="/assets/ux-refresh-20261008.css"]',{element(el){el.remove()}})

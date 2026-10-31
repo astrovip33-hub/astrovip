@@ -1,0 +1,61 @@
+# trigger 2026-10-31 premium interests publish
+name: Publish premium interests cards 20261031
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-premium-interests-20261031.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply premium interests styling
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('homepage-approved-layout.js')
+          s = p.read_text(encoding='utf-8')
+
+          replacements = {
+            r"#av-mobile-approved-home \.avm-interests\{.*?\}(?=\\n\s*#av-mobile-approved-home \.avm-interests h2)": r"#av-mobile-approved-home .avm-interests{display:block!important;width:100%!important;max-width:100%!important;margin:0!important;padding:24px 14px 30px!important;box-sizing:border-box!important;background:radial-gradient(circle at 12% 6%,rgba(25,255,128,.10),transparent 24%),radial-gradient(circle at 88% 92%,rgba(215,172,58,.10),transparent 25%),linear-gradient(145deg,#020805 0%,#06140d 48%,#020503 100%)!important;border-top:1px solid rgba(66,255,154,.20)!important;border-bottom:1px solid rgba(66,255,154,.18)!important}",
+            r"#av-mobile-approved-home \.avm-interests h2\{.*?\}(?=\\n\s*#av-mobile-approved-home \.avm-grid)": r"#av-mobile-approved-home .avm-interests h2{width:100%;margin:0 0 18px!important;padding:0 6px!important;box-sizing:border-box!important;text-align:center!important;font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(28px,8.3vw,34px)!important;line-height:1.03!important;letter-spacing:-.025em!important;font-weight:900!important;background:linear-gradient(180deg,#fff6c9 0%,#f0d67b 42%,#c59332 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:0 0 18px rgba(227,190,84,.10)!important}",
+            r"#av-mobile-approved-home \.avm-grid\{.*?\}(?=\\n\s*#av-mobile-approved-home \.avm-card\{)": r"#av-mobile-approved-home .avm-grid{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:12px!important;width:100%!important;align-items:stretch!important}",
+            r"#av-mobile-approved-home \.avm-card\{.*?\}(?=\\n\s*#av-mobile-approved-home \.avm-card b)": r"#av-mobile-approved-home .avm-card{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;min-width:0!important;min-height:184px!important;height:100%!important;padding:18px 13px 17px!important;border:1px solid rgba(71,255,156,.62)!important;border-radius:22px!important;background:radial-gradient(circle at 18% 10%,rgba(37,255,134,.18),transparent 30%),radial-gradient(circle at 82% 88%,rgba(30,188,99,.14),transparent 34%),linear-gradient(145deg,#062014 0%,#04120c 44%,#020805 100%)!important;box-shadow:inset 0 1px 0 rgba(255,246,202,.12),inset 0 0 24px rgba(34,255,132,.045),0 14px 34px rgba(0,0,0,.34),0 0 16px rgba(30,255,128,.08)!important;text-decoration:none!important;box-sizing:border-box!important;overflow:hidden!important;text-align:center!important}",
+            r"#av-mobile-approved-home \.avm-card b\{.*?\}(?=\\n\s*#av-mobile-approved-home \.avm-card p)": r"#av-mobile-approved-home .avm-card b{display:block!important;width:100%!important;margin:0 0 12px!important;padding:0!important;color:#f3d779!important;font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(22px,6.4vw,27px)!important;line-height:1.05!important;font-weight:800!important;letter-spacing:-.02em!important;text-align:center!important;white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important;text-wrap:balance!important;text-shadow:0 0 14px rgba(222,179,65,.13)!important}",
+            r"#av-mobile-approved-home \.avm-card p\{.*?\}(?=\\n\s*\})": r"#av-mobile-approved-home .avm-card p{display:block!important;width:100%!important;max-width:16ch!important;margin:auto 0 0!important;padding:0!important;color:#f5f7f3!important;font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif!important;font-size:clamp(15px,4.3vw,18px)!important;line-height:1.34!important;font-weight:650!important;letter-spacing:-.01em!important;text-align:center!important;white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important;text-wrap:balance!important}"
+          }
+
+          for pattern, repl in replacements.items():
+              s2, n = re.subn(pattern, repl, s, count=1, flags=re.S)
+              if n != 1:
+                  raise SystemExit(f'Expected one replacement for {pattern!r}, got {n}')
+              s = s2
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+          grep -q 'border-radius:22px' homepage-approved-layout.js
+          grep -q 'word-break:normal' homepage-approved-layout.js
+          grep -q 'linear-gradient(145deg,#062014' homepage-approved-layout.js
+
+      - name: Commit premium card styling
+        run: |
+          git config user.name "AstroVip Premium UI Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add homepage-approved-layout.js
+          git diff --cached --check
+          git commit -m "Polish premium interests cards and text fit" || exit 0
+          git push origin HEAD:main
