@@ -1,46 +1,41 @@
 (() => {
   'use strict';
 
-  const markup = '<span class="av-lux-line">ANALIZA MEA.</span><span class="av-lux-line">DECIZIILE TALE!</span>';
-  const directSelectors = [
-    '#av-mobile-approved-home .avm-hero-copy h2.avm-hero-title',
-    '.hero.av-hero-v2 .av-hero-v2-sidecopy:not(.right)'
-  ];
-  const candidateSelector = [
-    '.hero h1', '.hero h2',
-    '.av-pro-hero h1', '.av-pro-hero h2',
-    '[class*="hero"] h1', '[class*="hero"] h2',
-    '[class*="sidecopy"]'
-  ].join(',');
+  const selector = '#av-mobile-approved-home .avm-hero-copy h2.avm-hero-title';
+  const markup = '<span class="av-lux-line av-lux-kicker">ANALIZA MEA.</span><span class="av-lux-line av-lux-main">DECIZIILE TALE!</span>';
 
   const normalize = (value) => String(value || '').replace(/\s+/g, ' ').trim().toUpperCase();
-  const isOldVisibleSlogan = (node) => {
-    const text = normalize(node.textContent);
-    return text.includes('CÂND CUNOȘTI') && text.includes('TRĂIEȘTI VIITORUL');
-  };
-  const isDesiredSlogan = (node) => {
-    const text = normalize(node.textContent);
-    return text.includes('ANALIZA MEA') && text.includes('DECIZIILE TALE');
-  };
 
-  const decorate = (title) => {
-    if (!title || title.closest('footer')) return;
-    if (!title.classList.contains('av-slogan-lux-ready') || isOldVisibleSlogan(title) || !title.querySelector('.av-lux-line')) {
+  const decorate = () => {
+    if (!window.matchMedia('(max-width:820px)').matches) return;
+    const title = document.querySelector(selector);
+    if (!title) return;
+
+    const text = normalize(title.textContent);
+    const hasDesiredMarkup = !!title.querySelector('.av-lux-kicker') && !!title.querySelector('.av-lux-main');
+    const oldCopy = text.includes('CÂND CUNOȘTI') || text.includes('TRĂIEȘTI VIITORUL');
+
+    if (!hasDesiredMarkup || oldCopy) {
       title.innerHTML = markup;
       title.classList.add('av-slogan-lux-ready');
     }
-    title.setAttribute('aria-label', 'ANALIZA MEA. DECIZIILE TALE!');
-  };
 
-  const apply = () => {
-    const targets = new Set();
-    directSelectors.forEach((selector) => {
-      document.querySelectorAll(selector).forEach((node) => targets.add(node));
-    });
-    document.querySelectorAll(candidateSelector).forEach((node) => {
-      if (isOldVisibleSlogan(node) || isDesiredSlogan(node)) targets.add(node);
-    });
-    targets.forEach(decorate);
+    title.setAttribute('aria-label', 'ANALIZA MEA. DECIZIILE TALE!');
+
+    const kicker = title.querySelector('.av-lux-kicker');
+    const main = title.querySelector('.av-lux-main');
+
+    if (kicker) {
+      kicker.style.setProperty('font-size', '10px', 'important');
+      kicker.style.setProperty('line-height', '1.2', 'important');
+      kicker.style.setProperty('letter-spacing', '.18em', 'important');
+      kicker.style.setProperty('font-weight', '700', 'important');
+      kicker.style.setProperty('transform', 'none', 'important');
+    }
+
+    if (main) {
+      main.style.setProperty('font-size', 'clamp(31px,8.7vw,40px)', 'important');
+    }
   };
 
   let queued = false;
@@ -49,19 +44,19 @@
     queued = true;
     requestAnimationFrame(() => {
       queued = false;
-      apply();
+      decorate();
     });
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', apply, { once: true });
+    document.addEventListener('DOMContentLoaded', decorate, { once: true });
   } else {
-    apply();
+    decorate();
   }
 
-  setTimeout(apply, 100);
-  setTimeout(apply, 350);
-  setTimeout(apply, 1000);
+  setTimeout(decorate, 100);
+  setTimeout(decorate, 350);
+  setTimeout(decorate, 1000);
 
   const observer = new MutationObserver(schedule);
   observer.observe(document.documentElement, { subtree: true, childList: true });
