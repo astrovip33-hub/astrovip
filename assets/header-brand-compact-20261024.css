@@ -6,15 +6,10 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium {
   width: 230px !important;
   max-width: 48vw !important;
   min-width: 0 !important;
-  gap: 10px !important;
+  gap: 0 !important;
 }
 #av-site-header .av-header-brand-mark {
-  display: block !important;
-  flex: 0 0 42px !important;
-  width: 42px !important;
-  height: 34px !important;
-  object-fit: contain !important;
-  filter: drop-shadow(0 0 4px rgba(94, 193, 83, .2));
+  display: none !important;
 }
 html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-header-lockup,
 #av-site-header #av-mobile-approved-header .avm-logo > .av-header-lockup {
@@ -158,23 +153,17 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
     height: 72px !important;
     width: calc(100% - 64px) !important;
     padding: 0 0 0 10px !important;
-    gap: 8px !important;
+    gap: 0 !important;
     background: transparent !important;
   }
 
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-mark {
-    width: 50px !important;
-    max-height: 49px !important;
-    transform: none !important;
-    filter:
-      drop-shadow(0 0 4px rgba(255, 210, 105, .66))
-      drop-shadow(0 0 8px rgba(31, 156, 255, .62))
-      drop-shadow(0 0 15px rgba(0, 115, 225, .26)) !important;
+    display: none !important;
   }
 
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-logo > .av-header-lockup {
     min-height: 0 !important;
-    max-width: calc(100% - 58px) !important;
+    max-width: 100% !important;
     align-items: flex-start !important;
     justify-content: center !important;
     gap: 3px !important;
@@ -241,10 +230,10 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
 @media (max-width: 360px) {
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-logo {
     padding-left: 7px !important;
-    gap: 5px !important;
+    gap: 0 !important;
   }
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-mark {
-    width: 45px !important;
+    display: none !important;
   }
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .av-header-wordmark {
     font-size: 25px !important;
