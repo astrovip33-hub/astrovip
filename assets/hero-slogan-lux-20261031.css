@@ -36,10 +36,10 @@
   }
 
   html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:first-child{
-    font-size:clamp(18px,5vw,22px)!important;
-    line-height:1.12!important;
+    font-size:clamp(9px,2.5vw,11px)!important;
+    line-height:1.2!important;
     font-weight:700!important;
-    letter-spacing:.14em!important;
+    letter-spacing:.18em!important;
     color:#f8e9aa!important;
     background:linear-gradient(92deg,#fff9df 0%,#f4dda0 24%,#d6a83f 52%,#f1dd9a 74%,#eefcff 100%)!important;
     -webkit-background-clip:text!important;
@@ -78,8 +78,8 @@
     padding-inline:4px!important;
   }
   html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:first-child{
-    font-size:17px!important;
-    letter-spacing:.12em!important;
+    font-size:9px!important;
+    letter-spacing:.16em!important;
   }
   html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:last-child{
     font-size:30px!important;
