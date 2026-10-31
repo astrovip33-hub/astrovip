@@ -1,0 +1,20 @@
+name: Verify PFA footer live
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify exact PFA footer card on live homepage
+        shell: bash
+        run: |
+          set -euo pipefail
+          html="$(curl -fsSL --retry 8 --retry-delay 3 --retry-all-errors 'https://astrovip.ro/?pfa_live_check=20261031')"
+          printf '%s' "$html" | grep -Fq 'id="av-pfa-footer-card"'
+          printf '%s' "$html" | grep -Fq 'Smaranda Cristian Catalin PFA'
+          printf '%s' "$html" | grep -Fq 'RO08BTRLRONCRT0CS6331801'
+          echo 'PFA footer card verified live: id, business name and IBAN are present.'
