@@ -14,6 +14,14 @@ html.av-ultra-home-production #av-mobile-approved-home .avm-hero-copy .avm-brand
 </style>`;
 const PAYMENT_CTA=`<section id="av-home-payment-cta" class="av-home-paybar" aria-label="Plată consultație AstroVip"><div class="av-home-paybar-inner"><div><span>CONSULTAȚIE PREMIUM · 60 MIN</span><strong>Plată securizată cu cardul</strong><small>500 lei · procesare securizată prin Stripe</small></div><a href="${PAYMENT_URL}" aria-label="Plătește consultația AstroVip cu cardul, 500 lei">PLĂTEȘTE CU CARDUL · 500 LEI →</a></div></section>`;
 
+
+const PAYMENT_FOOTER_STYLE=`<style id="av-payment-footer-20261031">
+html body #astrovip-footer #av-home-payment-cta{display:block!important;width:100%!important;margin:22px 0 0!important;padding:0!important;background:transparent!important}
+html body #astrovip-footer #av-home-payment-cta .av-home-paybar-inner{width:100%!important;max-width:100%!important;box-sizing:border-box!important;background:radial-gradient(circle at 78% 18%,rgba(88,178,241,.18),transparent 24%),linear-gradient(135deg,#0d203d 0%,#123154 42%,#204666 100%)!important;border-color:rgba(88,178,241,.46)!important}
+html body #astrovip-footer #av-home-payment-cta .av-home-paybar-inner>a{box-sizing:border-box!important;max-width:100%!important;white-space:normal!important;text-align:center!important;background:linear-gradient(90deg,#fff0a5 0%,#e5ac3e 42%,#62c7ff 72%,#eef9ff 100%)!important;color:#071b37!important;border-color:#9ad4ee!important}
+@media(max-width:820px){html body #astrovip-footer #av-home-payment-cta .av-home-paybar-inner{flex-direction:column!important;align-items:stretch!important;gap:16px!important;padding:18px!important}html body #astrovip-footer #av-home-payment-cta .av-home-paybar-inner>a{width:100%!important}}
+</style>`;
+
 const PLANETARY_HOURS_TEASER=`<section class="av-planetary-hours-home av-planetary-live-card" aria-label="Ora planetară activă în București"><style>
 .av-planetary-hours-home.av-planetary-live-card{padding:0 20px 18px;background:#06110d}
 .av-planetary-live-card__in{--ph:#f4d56d;--phGlow:rgba(244,213,109,.20);position:relative;max-width:1180px;margin:auto;padding:18px;border:1px solid color-mix(in srgb,var(--ph) 48%,#39ff14 24%,transparent);border-radius:20px;background:radial-gradient(circle at 7% 50%,var(--phGlow),transparent 27%),radial-gradient(circle at 92% 14%,rgba(57,255,20,.08),transparent 24%),linear-gradient(145deg,#06150e 0%,#07110d 54%,#05090a 100%);box-shadow:0 18px 46px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04),0 0 20px rgba(57,255,20,.04);overflow:hidden}
@@ -174,14 +182,15 @@ export default {
             el.before(mobileHomePayment,{html:true});
             mobileHomeSeen=true;
           }
-          el.after(PAYMENT_CTA,{html:true});
+
         }})
         .on('section.av-horoscop-teaser',{element(el){el.after(PLANETARY_HOURS_TEASER+PLANETARY_MOVEMENTS_STRIP,{html:true})}})
         .on('#studii-de-caz-home',{element(el){
           el.setAttribute('data-av-slider-shell','v8');
           el.append(CASE_NAV_V8,{html:true});
         }})
-        .on('head',{element(el){el.append(HOMEPAGE_CRITICAL+BRAND_HEADING_STYLE,{html:true})}})
+        .on('#astrovip-footer .avf-shell',{element(el){el.append(PAYMENT_CTA,{html:true})}})
+        .on('head',{element(el){el.append(HOMEPAGE_CRITICAL+BRAND_HEADING_STYLE+PAYMENT_FOOTER_STYLE,{html:true})}})
         .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261019-ssr3" defer></script><script src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script><script src="/assets/home-planetary-strip-live.js?v=20261025-7"></script>'+PLANETARY_HOURS_SCRIPT,{html:true})}})
         .on('script[src^="/assets/ux-refresh-20261008.js"]',{element(el){el.setAttribute('src','/assets/ux-refresh-20261008.js?v=20261020-planetary-hours1')}})
         .on('link[rel="stylesheet"][href^="/assets/ux-refresh-20261008.css"]',{element(el){el.remove()}})
