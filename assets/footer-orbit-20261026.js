@@ -17,13 +17,20 @@
     document.head.appendChild(certJs);
   }
 
-  /* Preview 2026-10-31: replace the remaining approved yellow card surfaces with the hamburger gradient. */
+  /* Approved 2026-10-31: use the hamburger gold→cyan gradient on every yellow card surface down to the footer. */
   if (!document.getElementById('av-yellow-cards-gold-blue-css')) {
     const yellowCardsCss = document.createElement('link');
     yellowCardsCss.id = 'av-yellow-cards-gold-blue-css';
     yellowCardsCss.rel = 'stylesheet';
-    yellowCardsCss.href = '/assets/yellow-cards-gold-blue-20261031.css?v=20261031-preview1';
+    yellowCardsCss.href = '/assets/yellow-cards-gold-blue-20261031.css?v=20261031-live2';
     document.head.appendChild(yellowCardsCss);
+  }
+  if (!document.getElementById('av-all-yellow-card-surfaces-js')) {
+    const yellowCardsJs = document.createElement('script');
+    yellowCardsJs.id = 'av-all-yellow-card-surfaces-js';
+    yellowCardsJs.src = '/assets/all-yellow-card-surfaces-20261031.js?v=20261031-live2';
+    yellowCardsJs.defer = true;
+    document.head.appendChild(yellowCardsJs);
   }
 
   const footer = document.getElementById('astrovip-footer');
