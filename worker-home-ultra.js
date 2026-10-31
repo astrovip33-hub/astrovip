@@ -6,7 +6,6 @@ const PAYMENT_URL='https://buy.stripe.com/4gMeVcbz75J207y6fefjG00';
 // The mobile layout needs a visible level-one heading; desktop keeps
 // av-pro-title. An explicit heading role preserves the single source H1.
 const mobileHomePayment=mobileHome
-  .replace('href="#programari">PROGRAMEAZĂ CONSULTAȚIA →','href="'+PAYMENT_URL+'">PLĂTEȘTE CU CARDUL · 500 LEI →')
   .replace('<div class="avm-kicker">TIMING-UL CONTEAZĂ !</div>', '<div class="avm-kicker">TIMING-UL CONTEAZĂ !</div><p id="av-home-brand-title" class="avm-brand-title" role="heading" aria-level="1">AstroVip · Astrologie și numerologie</p>')
   .replace('Claritate pentru dragoste, carieră, afaceri și destin — într-o experiență astrologică premium 1:1, construită în jurul momentului potrivit.', 'Consultații AstroVip de astrologie și numerologie cu Cătălin Smaranda, în București și online. Analize personale pentru dragoste, carieră, afaceri și relocare.');
 const BRAND_HEADING_STYLE=`<style id="av-home-brand-heading-style">
