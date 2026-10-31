@@ -33,13 +33,20 @@
     document.head.appendChild(yellowCardsJs);
   }
 
-  /* Preview 2026-10-31: luxury editorial treatment for ANALIZA MEA. / DECIZIILE TALE! */
+  /* Preview 2026-10-31: luxury treatment for exact slogan ANALIZA MEA – DECIZIILE TALE! */
   if (!document.getElementById('av-hero-slogan-lux-css')) {
     const sloganLuxCss = document.createElement('link');
     sloganLuxCss.id = 'av-hero-slogan-lux-css';
     sloganLuxCss.rel = 'stylesheet';
-    sloganLuxCss.href = '/assets/hero-slogan-lux-20261031.css?v=20261031-preview1';
+    sloganLuxCss.href = '/assets/hero-slogan-lux-20261031.css?v=20261031-preview2';
     document.head.appendChild(sloganLuxCss);
+  }
+  if (!document.getElementById('av-hero-slogan-lux-text-js')) {
+    const sloganLuxText = document.createElement('script');
+    sloganLuxText.id = 'av-hero-slogan-lux-text-js';
+    sloganLuxText.src = '/assets/hero-slogan-lux-text-20261031.js?v=20261031-preview2';
+    sloganLuxText.defer = true;
+    document.head.appendChild(sloganLuxText);
   }
 
   const footer = document.getElementById('astrovip-footer');
