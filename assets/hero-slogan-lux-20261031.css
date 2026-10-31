@@ -1,12 +1,12 @@
-/* AstroVip preview — luxury editorial treatment for «ANALIZA MEA. / DECIZIILE TALE!» */
+/* AstroVip preview — luxury editorial treatment for exact slogan «ANALIZA MEA – DECIZIILE TALE!» */
 @media (max-width:820px){
   html body:not(.guide-page) #av-mobile-approved-home .avm-hero-copy h2.avm-hero-title{
     display:grid!important;
-    gap:5px!important;
+    gap:7px!important;
     width:100%!important;
     max-width:100%!important;
     margin:0!important;
-    padding:2px 0 5px!important;
+    padding:2px 0 6px!important;
     font-family:Georgia,'Times New Roman',serif!important;
     line-height:1!important;
     letter-spacing:0!important;
@@ -24,7 +24,7 @@
     width:100%!important;
     margin:0!important;
     font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif!important;
-    font-size:clamp(12px,3.5vw,15px)!important;
+    font-size:clamp(12px,3.45vw,15px)!important;
     line-height:1.1!important;
     font-weight:850!important;
     letter-spacing:.22em!important;
@@ -40,7 +40,7 @@
     content:'';
     display:block;
     flex:1 1 auto;
-    min-width:34px;
+    min-width:36px;
     height:1px;
     background:linear-gradient(90deg,rgba(227,179,71,.82),rgba(105,196,239,.72),transparent)!important;
     box-shadow:0 0 8px rgba(105,196,239,.18);
@@ -50,11 +50,12 @@
     display:block!important;
     width:100%!important;
     margin:0!important;
+    white-space:nowrap!important;
     font-family:Georgia,'Times New Roman',serif!important;
-    font-size:clamp(34px,9.7vw,43px)!important;
-    line-height:.93!important;
+    font-size:clamp(29px,8.35vw,37px)!important;
+    line-height:.96!important;
     font-weight:900!important;
-    letter-spacing:-.045em!important;
+    letter-spacing:-.048em!important;
     background:linear-gradient(92deg,#fff8d9 0%,#e9c35b 34%,#c99935 49%,#75c9eb 78%,#e2fbff 100%)!important;
     -webkit-background-clip:text!important;
     background-clip:text!important;
@@ -70,7 +71,7 @@
     gap:8px!important;
   }
   html body:not(.guide-page) #av-mobile-approved-home .avm-hero-copy h2.avm-hero-title>span:last-child{
-    font-size:33px!important;
-    letter-spacing:-.04em!important;
+    font-size:28px!important;
+    letter-spacing:-.045em!important;
   }
 }
