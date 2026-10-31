@@ -17,6 +17,15 @@
     document.head.appendChild(certJs);
   }
 
+  /* Preview 2026-10-31: replace the remaining approved yellow card surfaces with the hamburger gradient. */
+  if (!document.getElementById('av-yellow-cards-gold-blue-css')) {
+    const yellowCardsCss = document.createElement('link');
+    yellowCardsCss.id = 'av-yellow-cards-gold-blue-css';
+    yellowCardsCss.rel = 'stylesheet';
+    yellowCardsCss.href = '/assets/yellow-cards-gold-blue-20261031.css?v=20261031-preview1';
+    document.head.appendChild(yellowCardsCss);
+  }
+
   const footer = document.getElementById('astrovip-footer');
   if (!footer?.classList.contains('avf-footer')) return;
 
