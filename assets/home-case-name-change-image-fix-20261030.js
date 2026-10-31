@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
   const TARGET='/studii-de-caz/schimbare-nume-1996/';
-  const IMAGE='/assets/schimbare-nume-slider-20261030.webp?v=20261030-2';
+  const IMAGE='/assets/schimbare-nume-premium-20261031.webp';
   const STYLE_ID='av-name-change-image-fix-20261030';
 
   const ensureStyle=()=>{
@@ -10,7 +10,7 @@
     s.id=STYLE_ID;
     s.textContent=`
       #studii-de-caz-home .av-case-name-change .av-case-showcase-visual{position:relative!important;aspect-ratio:16/9!important;height:auto!important;min-height:0!important;overflow:hidden!important;background:#020405!important}
-      #studii-de-caz-home .av-case-name-change .av-case-showcase-visual>img.av-name-change-slider-image{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:50% 27%!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#020405!important}
+      #studii-de-caz-home .av-case-name-change .av-case-showcase-visual>img.av-name-change-slider-image{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#020405!important}
     `;
     document.head.appendChild(s);
   };

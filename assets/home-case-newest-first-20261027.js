@@ -5,7 +5,7 @@
   const TEACHER='/studii-de-caz/vocatie-invatator-17-mai-1972/';
   const ASTROLOG='/astrologie-cariera-vocatie/';
   const NAME_CHANGE='/studii-de-caz/schimbare-nume-1996/';
-  const NAME_CHANGE_IMAGE='/assets/schimbare-nume-slider-20261030.webp';
+  const NAME_CHANGE_IMAGE='/assets/schimbare-nume-premium-20261031.webp';
   const IMAGE='/assets/vocatie-invatator-slider-20261029.webp';
   const ORDER=[
     CASE13,
@@ -40,7 +40,7 @@
       #studii-de-caz-home .av-case-it-marketing .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important;background:#020405!important}
       #studii-de-caz-home .av-case-it-marketing::after{content:none!important;display:none!important}
       #studii-de-caz-home .av-case-name-change .av-case-showcase-visual{position:relative!important;aspect-ratio:16/9!important;height:auto!important;min-height:0!important;overflow:hidden!important;background:#020405!important}
-      #studii-de-caz-home .av-case-name-change .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:50% 27%!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#020405!important}
+      #studii-de-caz-home .av-case-name-change .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;opacity:1!important;visibility:visible!important;filter:none!important;background:#020405!important}
       #studii-de-caz-home .av-case-name-change-symbol{position:absolute;left:13px;bottom:11px;z-index:4;display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(241,211,110,.54);border-radius:12px;background:rgba(3,13,30,.72);color:#f1d36e;font:700 25px/1 Georgia,serif;box-shadow:0 4px 16px rgba(0,0,0,.25)}
     `;
     document.head.appendChild(s);

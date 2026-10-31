@@ -25,6 +25,7 @@
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS} .av-case-showcase-visual>a,
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS} .av-case-showcase-visual img{display:block!important;width:100%!important;height:100%!important}
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS} .av-case-showcase-visual img{object-fit:cover!important}
+        html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS} .av-case-name-change .av-case-showcase-visual img{object-fit:contain!important;object-position:center!important}
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS} .av-case-showcase-copy{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;padding:22px 26px!important}
         html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .${MARQUEE_CLASS} .av-case-showcase-cta{margin-top:auto!important}
       }
