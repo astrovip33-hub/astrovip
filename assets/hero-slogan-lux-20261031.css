@@ -3,7 +3,7 @@
   html body:not(.guide-page) .av-slogan-lux-ready{
     position:relative!important;
     display:grid!important;
-    gap:1px!important;
+    gap:2px!important;
     width:100%!important;
     max-width:100%!important;
     margin:0 auto!important;
@@ -16,9 +16,9 @@
     content:'✦'!important;
     display:block!important;
     width:100%!important;
-    margin:0 auto 4px!important;
+    margin:0 auto 5px!important;
     color:#e7c75d!important;
-    font:700 10px/1 Georgia,'Times New Roman',serif!important;
+    font:700 9px/1 Georgia,'Times New Roman',serif!important;
     letter-spacing:.28em!important;
     text-align:center!important;
     text-shadow:0 0 8px rgba(227,179,71,.34),0 0 12px rgba(105,196,239,.10)!important;
@@ -36,21 +36,21 @@
   }
 
   html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:first-child{
-    font-size:clamp(27px,7.7vw,35px)!important;
-    line-height:1.03!important;
+    font-size:clamp(18px,5vw,22px)!important;
+    line-height:1.12!important;
     font-weight:700!important;
-    letter-spacing:.055em!important;
+    letter-spacing:.14em!important;
     color:#f8e9aa!important;
     background:linear-gradient(92deg,#fff9df 0%,#f4dda0 24%,#d6a83f 52%,#f1dd9a 74%,#eefcff 100%)!important;
     -webkit-background-clip:text!important;
     background-clip:text!important;
     -webkit-text-fill-color:transparent!important;
-    filter:drop-shadow(0 3px 11px rgba(0,0,0,.48)) drop-shadow(0 0 7px rgba(227,179,71,.08))!important;
+    filter:drop-shadow(0 2px 8px rgba(0,0,0,.42)) drop-shadow(0 0 6px rgba(227,179,71,.08))!important;
   }
 
   html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:last-child{
-    margin-top:2px!important;
-    font-size:clamp(30px,8.5vw,39px)!important;
+    margin-top:3px!important;
+    font-size:clamp(31px,8.7vw,40px)!important;
     line-height:.98!important;
     font-weight:900!important;
     letter-spacing:-.018em!important;
@@ -78,11 +78,11 @@
     padding-inline:4px!important;
   }
   html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:first-child{
-    font-size:26px!important;
-    letter-spacing:.045em!important;
+    font-size:17px!important;
+    letter-spacing:.12em!important;
   }
   html body:not(.guide-page) .av-slogan-lux-ready .av-lux-line:last-child{
-    font-size:29px!important;
+    font-size:30px!important;
     letter-spacing:-.02em!important;
   }
 }
