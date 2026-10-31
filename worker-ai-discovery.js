@@ -110,7 +110,6 @@ export default {
           element(element) {
             element.remove();
           }
-        })
         });
     }
 
