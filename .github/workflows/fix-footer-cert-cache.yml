@@ -1,4 +1,4 @@
-name: Fix footer certification cache
+name: Remove homepage certification card
 
 on:
   push:
@@ -17,62 +17,35 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Force direct certification card assets into homepage
+      - name: Remove certification card loader from homepage
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
 
-          s = s.replace(
-              '/assets/footer-premium-runtime-20260923.css?v=20261026-singlecert3',
-              '/assets/footer-premium-runtime-20260923.css?v=20261026-singlecert4'
-          )
-          s = s.replace(
-              '/assets/footer-orbit-20261026.js?v=20261026-vivid1',
-              '/assets/footer-orbit-20261026.js?v=20261026-vivid2'
-          )
+          # Remove the exact CSS/JS loaders that dynamically create #av-cert-l7x.
+          s = re.sub(r'\s*<link\s+id=["\']av-cert-l7x-css["\'][^>]*>\s*', '\n', s, flags=re.I)
+          s = re.sub(r'\s*<script\s+id=["\']av-cert-l7x-js["\'][^>]*>\s*</script>\s*', '\n', s, flags=re.I)
 
-          marker = '<style id="av-footer-cert-extra-kill">'
-          rules = '''<style id="av-footer-cert-extra-kill">
-#astrovip-footer .av-footer-grid::after{
-  content:none!important;
-  display:none!important;
-  background:none!important;
-  background-image:none!important;
-  width:0!important;
-  height:0!important;
-  min-width:0!important;
-  min-height:0!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  box-shadow:none!important;
-}
-</style>'''
-          if marker not in s:
-              if '</head>' not in s:
-                  raise SystemExit('Missing </head> in index.html')
-              s = s.replace('</head>', rules + '\n</head>', 1)
-
-          direct = '''<link id="av-cert-l7x-css" rel="stylesheet" href="/assets/certificare-card-20261026.css?v=20261026-live3">
-<script id="av-cert-l7x-js" defer src="/assets/certificare-card-20261026.js?v=20261026-live3"></script>'''
-          if 'id="av-cert-l7x-js"' not in s:
-              if '</head>' not in s:
-                  raise SystemExit('Missing </head> in index.html')
-              s = s.replace('</head>', direct + '\n</head>', 1)
+          # Defensive cleanup if a static copy was ever inserted directly.
+          s = re.sub(r'\s*<section\b[^>]*\bid=["\']av-cert-l7x["\'][\s\S]*?</section>\s*', '\n', s, count=1, flags=re.I)
 
           p.write_text(s, encoding='utf-8')
           PY
 
-      - name: Commit direct homepage certification loader
+      - name: Commit removal
         shell: bash
         run: |
+          if git diff --quiet -- index.html; then
+            echo "No changes needed."
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git diff --cached --quiet && exit 0
-          git commit -m "fix(home): load certification card directly"
+          git commit -m "fix(home): remove astrolog certification card"
           git push origin HEAD:main
