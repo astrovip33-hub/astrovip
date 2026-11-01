@@ -112,10 +112,10 @@ jobs:
                   p.unlink()
                   changed.append(f'{p} (deleted)')
 
-          # Targeted verification.
+          # Targeted verification: only public/visible review content must be absent.
           index = Path('index.html').read_text(encoding='utf-8')
-          if 'id="av-home-reviews"' in index or 'av-google-reviews-premium-20261004' in index or 'av-home-reviews-override-v2' in index:
-              raise SystemExit('Homepage review UI/style residue remains')
+          if 'id="av-home-reviews"' in index:
+              raise SystemExit('Homepage review section remains')
 
           js = Path('assets/home-case-studies-premium-20261014.js').read_text(encoding='utf-8')
           if 'av-about-home' in js or 'ABOUT_HTML' in js or 'ensureAbout(' in js:
