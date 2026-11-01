@@ -1,0 +1,44 @@
+name: Remove runtime schema sync once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.remove-runtime-schema-sync-20261102'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove JSON-LD mutation from motion-lite
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('assets/motion-lite.js')
+          s=p.read_text(encoding='utf-8')
+          before=s
+          s,n=re.subn(r'\nfunction syncEntityMeta\(\)\{.*?\}\nfunction init\(\)\{', '\nfunction init(){', s, count=1, flags=re.S)
+          if n != 1:
+              raise SystemExit(f'syncEntityMeta function not found exactly once: {n}')
+          s=s.replace("document.body.classList.add('av-motion-live');syncEntityMeta();enhanceCaseStudies();", "document.body.classList.add('av-motion-live');enhanceCaseStudies();", 1)
+          if s==before:
+              raise SystemExit('No changes made')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Remove temporary workflow and trigger
+        run: git rm -f --ignore-unmatch .github/workflows/remove-runtime-schema-sync-once.yml .remove-runtime-schema-sync-20261102
+      - name: Commit cleanup
+        run: |
+          git config user.name 'astrovip33-hub'
+          git config user.email 'astrovip33@gmail.com'
+          git add -A
+          git commit -m 'Remove runtime JSON-LD mutation from motion-lite'
+          git push origin HEAD:main
