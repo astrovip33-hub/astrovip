@@ -12,3 +12,8 @@
 /index.php/2025/ / 301
 /index.php/category/fara-categorie/ / 301
 /index.php/* / 301
+
+# Daily horoscope aliases share the existing canonical content.
+/horoscop-zilnic /horoscop-azi/ 301
+/horoscop-zilnic/ /horoscop-azi/ 301
+/horoscop-zilnic/* /horoscop-azi/:splat 301
