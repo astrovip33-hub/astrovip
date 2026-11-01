@@ -68,3 +68,13 @@ body.av-ux-refresh #menu.menu>details>summary::after{width:26px!important;height
 @media(max-width:1100px){
 html body:not(.guide-page) header.top #menu.menu .av-pro-menu-close{display:none!important}
 }
+
+/* Match the hamburger bars on the mobile menu's dark outer surface. */
+@media(max-width:820px){
+html body.av-ux-refresh:not(.guide-page) header.top nav#menu.menu{
+  background:linear-gradient(90deg,#f7e99a 0%,#e3b347 40%,#69c4ef 73%,#dbf7ff 100%)!important;
+}
+html body.av-ux-refresh:not(.guide-page) header.top nav#menu.menu .av-pro-menu-head strong{
+  color:#071b30!important;text-shadow:none!important;
+}
+}
