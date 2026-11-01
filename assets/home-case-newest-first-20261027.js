@@ -8,6 +8,7 @@
   const NAME_CHANGE_IMAGE='/assets/schimbare-nume-premium-20261031.webp';
   const IMAGE='/assets/vocatie-invatator-slider-20261029.webp';
   const ORDER=[
+    '/studii-de-caz/infiintare-firma-7-decembrie-2016/',
     CASE13,
     TEACHER,
     ASTROLOG,
