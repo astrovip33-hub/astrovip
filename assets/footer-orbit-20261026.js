@@ -2,21 +2,6 @@
 (() => {
   'use strict';
 
-  /* Approved 2026-10-26: load the certification card independently of footer detection. */
-  if (!document.getElementById('av-cert-l7x-css')) {
-    const certCss = document.createElement('link');
-    certCss.id = 'av-cert-l7x-css';
-    certCss.rel = 'stylesheet';
-    certCss.href = '/assets/certificare-card-20261026.css?v=20261026-live2';
-    document.head.appendChild(certCss);
-  }
-  if (!document.getElementById('av-cert-l7x-js')) {
-    const certJs = document.createElement('script');
-    certJs.id = 'av-cert-l7x-js';
-    certJs.src = '/assets/certificare-card-20261026.js?v=20261026-live2';
-    document.head.appendChild(certJs);
-  }
-
   /* Approved 2026-10-31: use the hamburger gold→cyan gradient on every yellow card surface down to the footer. */
   if (!document.getElementById('av-yellow-cards-gold-blue-css')) {
     const yellowCardsCss = document.createElement('link');
