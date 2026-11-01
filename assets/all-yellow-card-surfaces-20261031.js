@@ -74,13 +74,88 @@
     });
   };
 
-  const start = () => {
-    apply();
-    requestAnimationFrame(apply);
-    setTimeout(apply, 350);
-    setTimeout(apply, 1200);
+  /* The visible premium mobile menu is built as accordion <details> rows.
+     Convert the static Contact link into the same native row so it cannot disappear
+     behind the accordion builder or a hidden #contact section. */
+  const installContactMenuGroup = () => {
+    const menu = document.getElementById('menu');
+    if (!menu || menu.querySelector('.av-menu-contact-group')) return;
 
-    const observer = new MutationObserver(() => requestAnimationFrame(apply));
+    const anchor = [...menu.children].find(el => el.matches?.('a[href="#contact"]'));
+    if (!anchor) return;
+
+    const details = document.createElement('details');
+    details.className = 'av-menu-group av-menu-contact-group';
+
+    const summary = document.createElement('summary');
+    summary.textContent = 'Contact';
+    summary.setAttribute('aria-label', 'Contact AstroVip');
+
+    const links = document.createElement('div');
+    links.className = 'av-menu-group-links';
+
+    [
+      ['Telefon · 0722 128 220', 'tel:+40722128220'],
+      ['WhatsApp · mesaj direct', 'https://wa.me/40722128220'],
+      ['Email · contact@astrovip.ro', 'mailto:contact@astrovip.ro'],
+      ['Adresă · Bulevardul Unirii 33', 'https://www.google.com/maps?cid=15612666586801751925']
+    ].forEach(([label, href]) => {
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = label;
+      if (/^https?:/i.test(href)) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      }
+      links.appendChild(a);
+    });
+
+    const hours = document.createElement('span');
+    hours.className = 'av-menu-contact-hours';
+    hours.textContent = 'Program · Luni–Vineri · 10:00–17:00';
+    links.appendChild(hours);
+
+    details.append(summary, links);
+    anchor.remove();
+
+    const more = [...menu.children].find(el => el.classList?.contains('av-menu-more'));
+    menu.insertBefore(details, more || null);
+
+    details.addEventListener('toggle', () => {
+      if (!details.open) return;
+      [...menu.children].forEach(node => {
+        if (node !== details && node.tagName === 'DETAILS' && node.open) node.open = false;
+      });
+    });
+
+    if (!document.getElementById('av-menu-contact-hours-css')) {
+      const style = document.createElement('style');
+      style.id = 'av-menu-contact-hours-css';
+      style.textContent = `
+        #menu .av-menu-contact-hours{
+          display:block;
+          padding:10px 14px 12px;
+          color:#26384a;
+          font:800 12px/1.35 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+          opacity:.82;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  };
+
+  const runEnhancements = () => {
+    apply();
+    installContactMenuGroup();
+  };
+
+  const start = () => {
+    runEnhancements();
+    requestAnimationFrame(runEnhancements);
+    setTimeout(runEnhancements, 350);
+    setTimeout(runEnhancements, 1200);
+
+    const observer = new MutationObserver(() => requestAnimationFrame(runEnhancements));
     observer.observe(document.body, {childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style']});
   };
 
