@@ -119,3 +119,22 @@ html body.av-ux-refresh:not(.guide-page) header.top nav#menu.menu.open .av-menu-
  opacity:1!important;text-shadow:none!important;background-image:none!important;
 }
 }
+
+/* Layered important rules take precedence over legacy menu icon skins. */
+@layer astrovip-menu-fit{
+@media(max-width:820px){
+body.av-ux-refresh #menu.menu.open>details>summary::after{
+ content:"+"!important;display:grid!important;place-items:center!important;
+ width:32px!important;height:32px!important;min-width:32px!important;
+ position:static!important;transform:none!important;opacity:1!important;visibility:visible!important;
+ color:#72ff85!important;-webkit-text-fill-color:#72ff85!important;
+ background:#03220e!important;border:2px solid #2fe658!important;border-radius:8px!important;
+ font:900 28px/1 Arial,sans-serif!important;text-indent:0!important;
+ text-shadow:none!important;box-shadow:0 1px 4px #0007!important;
+}
+body.av-ux-refresh #menu.menu.open>details[open]>summary::after{
+ content:"−"!important;color:#ff8b8b!important;-webkit-text-fill-color:#ff8b8b!important;
+ background:#390b13!important;border-color:#ef556b!important;
+}
+}
+}
