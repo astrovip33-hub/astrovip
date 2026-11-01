@@ -19,7 +19,7 @@ if old_nav in html:
 
 # 2) Keep one responsive horoscope entry instead of separate mobile + desktop copies.
 mobile_horoscope = re.compile(
-    r'<section class="av-horoscop-mobile-entry"\b[\s\S]*?</section>',
+    r'<section\s+class=["\']av-horoscop-mobile-entry["\'][^>]*>[\s\S]*?</section>',
     re.I,
 )
 html, removed = mobile_horoscope.subn('', html, count=1)
