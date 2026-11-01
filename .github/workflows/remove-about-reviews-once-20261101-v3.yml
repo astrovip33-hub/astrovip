@@ -1,4 +1,4 @@
-name: Remove About Me card and reviews once 20261101 v3
+name: Remove About Me card only 20261101 v4
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Remove About Me artwork card and public reviews
+      - name: Remove homepage About Me artwork card
         shell: bash
         run: |
           python3 - <<'PY'
@@ -26,25 +26,12 @@ jobs:
           import re
 
           changed = []
-
-          def write_if_changed(path, before, after):
-              if after != before:
-                  Path(path).write_text(after, encoding='utf-8')
-                  changed.append(str(path))
-
-          # Homepage: remove all review sections and duplicate/stale review style blocks.
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
-          original = s
-          s = re.sub(r'\s*<section id="av-home-reviews"\b.*?</section>\s*', '\n', s, flags=re.S | re.I)
-          s = re.sub(r'\s*<style id="av-google-reviews-premium-20261004">.*?</style>\s*', '\n', s, flags=re.S | re.I)
-          s = re.sub(r'\s*<style id="av-home-reviews-override-v2">.*?</style>\s*', '\n', s, flags=re.S | re.I)
-          write_if_changed(p, original, s)
-
-          # Remove only the injected About Me card/helper block, preserving the case-study slider.
           p = Path('assets/home-case-studies-premium-20261014.js')
           s = p.read_text(encoding='utf-8')
           original = s
+
+          # Remove the complete About Me HTML/style/helper block, while preserving
+          # the case-study slider code that follows it.
           s, n = re.subn(
               r'\n\s*const ABOUT_HTML\s*=.*?\n\s*const install\s*=\s*\(\)\s*=>\s*\{',
               '\n\n  const install = () => {',
@@ -54,105 +41,39 @@ jobs:
           )
           if n != 1:
               raise SystemExit(f'Expected About Me helper block once, removed {n}')
+
+          # Remove every remaining reinjection call.
           s = re.sub(r'^\s*ensureAboutStyle\(\);\s*\n?', '', s, flags=re.M)
           s = re.sub(r'^\s*ensureAbout\(section\);\s*\n?', '', s, flags=re.M)
-          write_if_changed(p, original, s)
 
-          # Remove obsolete homepage allow-list exception for reviews.
-          p = Path('assets/home-ultra-production-20261010.css')
-          if p.exists():
-              s = p.read_text(encoding='utf-8')
-              original = s
-              s = s.replace(':not(#av-home-reviews)', '')
-              write_if_changed(p, original, s)
+          if s != original:
+              p.write_text(s, encoding='utf-8')
+              changed.append(str(p))
 
-          # Remove review page from AI index.
-          p = Path('llms.txt')
-          if p.exists():
-              s = p.read_text(encoding='utf-8')
-              original = s
-              lines = [line for line in s.splitlines() if '/recenzii/' not in line and 'Recenzii Google AstroVip' not in line]
-              s = '\n'.join(lines) + ('\n' if original.endswith('\n') else '')
-              write_if_changed(p, original, s)
+          # Delete only the artwork variants used by the removed card.
+          for asset in Path('assets').glob('astrovip-despre-mine-20261101-*.webp'):
+              asset.unlink()
+              changed.append(f'{asset} (deleted)')
 
-          # Remove /recenzii/ from every sitemap.
-          for p in Path('.').rglob('sitemap*.xml'):
-              try:
-                  s = p.read_text(encoding='utf-8')
-              except UnicodeDecodeError:
-                  continue
-              original = s
-              s = re.sub(r'\s*<url>(?:(?!</url>).)*https://astrovip\.ro/recenzii/?(?:(?!</url>).)*</url>\s*', '\n', s, flags=re.S | re.I)
-              s = re.sub(r'^.*https://astrovip\.ro/recenzii/?[^\n]*\n?', '', s, flags=re.M | re.I)
-              write_if_changed(p, original, s)
-
-          # Remove direct /recenzii/ links from HTML pages.
-          anchor_re = re.compile(r'\s*<a\b[^>]*href=["\']/recenzii/?["\'][^>]*>.*?</a>', re.S | re.I)
-          for p in Path('.').rglob('*.html'):
-              if p.as_posix() == 'recenzii/index.html':
-                  continue
-              try:
-                  s = p.read_text(encoding='utf-8')
-              except UnicodeDecodeError:
-                  continue
-              original = s
-              s = anchor_re.sub('', s)
-              write_if_changed(p, original, s)
-
-          # Delete dedicated reviews page.
-          reviews_page = Path('recenzii/index.html')
-          if reviews_page.exists():
-              reviews_page.unlink()
-              changed.append('recenzii/index.html (deleted)')
-
-          # Delete image assets used only by the removed About Me card.
-          assets = Path('assets')
-          if assets.exists():
-              for p in assets.glob('astrovip-despre-mine-20261101-*.webp'):
-                  p.unlink()
-                  changed.append(f'{p} (deleted)')
-
-          # Targeted verification: only public/visible review content must be absent.
-          index = Path('index.html').read_text(encoding='utf-8')
-          if 'id="av-home-reviews"' in index:
-              raise SystemExit('Homepage review section remains')
-
-          js = Path('assets/home-case-studies-premium-20261014.js').read_text(encoding='utf-8')
-          if 'av-about-home' in js or 'ABOUT_HTML' in js or 'ensureAbout(' in js:
-              raise SystemExit('About Me card code residue remains')
-          if Path('recenzii/index.html').exists():
-              raise SystemExit('Dedicated reviews page still exists')
-
-          residual = []
-          for pattern in ('*.html', '*.xml'):
-              for p in Path('.').rglob(pattern):
-                  if '.git' in p.parts:
-                      continue
-                  try:
-                      text = p.read_text(encoding='utf-8')
-                  except UnicodeDecodeError:
-                      continue
-                  if re.search(r'href=["\']/recenzii/?["\']|https://astrovip\.ro/recenzii/?', text, re.I):
-                      residual.append(str(p))
-          p = Path('llms.txt')
-          if p.exists():
-              text = p.read_text(encoding='utf-8')
-              if '/recenzii/' in text or 'Recenzii Google AstroVip' in text:
-                  residual.append(str(p))
-          if residual:
-              raise SystemExit('Residual public review references: ' + ', '.join(sorted(set(residual))))
+          # Hard verification: no code capable of rebuilding this card may remain
+          # in the homepage case-study script.
+          final = p.read_text(encoding='utf-8')
+          forbidden = ('ABOUT_HTML', 'av-about-home', 'ensureAbout(', 'ensureAboutStyle(')
+          residue = [token for token in forbidden if token in final]
+          if residue:
+              raise SystemExit('About Me card residue remains: ' + ', '.join(residue))
 
           print('Changed files:')
           for item in changed:
               print(' -', item)
           PY
 
-      - name: Commit removal
+      - name: Commit hard removal
         shell: bash
         run: |
           git config user.name "AstroVip Site Bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
           git diff --cached --check
-          git commit -m "Remove About Me card and reviews from public site" || exit 0
+          git commit -m "Remove homepage About Me card at source" || exit 0
           git push origin HEAD:main
