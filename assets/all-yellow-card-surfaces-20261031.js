@@ -74,15 +74,15 @@
     });
   };
 
-  /* The visible premium mobile menu is built as accordion <details> rows.
-     Convert the static Contact link into the same native row so it cannot disappear
-     behind the accordion builder or a hidden #contact section. */
+  /* The premium mobile menu is rendered as accordion <details> rows.
+     Contact is created independently from any legacy #contact anchor so it is
+     guaranteed to appear in the visible accordion, before “Mai multe”. */
   const installContactMenuGroup = () => {
     const menu = document.getElementById('menu');
     if (!menu || menu.querySelector('.av-menu-contact-group')) return;
 
-    const anchor = [...menu.children].find(el => el.matches?.('a[href="#contact"]'));
-    if (!anchor) return;
+    const detailsRows = [...menu.children].filter(el => el.tagName === 'DETAILS');
+    if (!detailsRows.length) return;
 
     const details = document.createElement('details');
     details.className = 'av-menu-group av-menu-contact-group';
@@ -116,9 +116,15 @@
     links.appendChild(hours);
 
     details.append(summary, links);
-    anchor.remove();
 
-    const more = [...menu.children].find(el => el.classList?.contains('av-menu-more'));
+    const legacyContact = menu.querySelector('a[href="#contact"]');
+    if (legacyContact) legacyContact.remove();
+
+    const more = detailsRows.find(el => {
+      const s = el.querySelector(':scope > summary');
+      return /^\s*Mai multe\s*$/i.test((s?.textContent || '').trim());
+    }) || [...menu.children].find(el => /\bMai multe\b/i.test((el.textContent || '').trim()));
+
     menu.insertBefore(details, more || null);
 
     details.addEventListener('toggle', () => {
@@ -132,6 +138,7 @@
       const style = document.createElement('style');
       style.id = 'av-menu-contact-hours-css';
       style.textContent = `
+        #menu .av-menu-contact-group{display:block!important;visibility:visible!important;opacity:1!important}
         #menu .av-menu-contact-hours{
           display:block;
           padding:10px 14px 12px;
@@ -152,11 +159,13 @@
   const start = () => {
     runEnhancements();
     requestAnimationFrame(runEnhancements);
-    setTimeout(runEnhancements, 350);
+    setTimeout(runEnhancements, 150);
+    setTimeout(runEnhancements, 500);
     setTimeout(runEnhancements, 1200);
+    setTimeout(runEnhancements, 2500);
 
     const observer = new MutationObserver(() => requestAnimationFrame(runEnhancements));
-    observer.observe(document.body, {childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style']});
+    observer.observe(document.body, {childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style', 'open']});
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once: true});
