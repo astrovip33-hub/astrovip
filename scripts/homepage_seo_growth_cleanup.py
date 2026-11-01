@@ -147,12 +147,12 @@ if mobile_hide in html:
     html = html.replace(mobile_hide, mobile_show, 1)
     changes.append("responsive-single-horoscope")
 
-# 3) Add a restrained upsell from low/mid-ticket products to the 60-minute consultation.
+# 3) Keep the premium upsell on the dedicated offer cards only.
+# Do NOT inject it into .sv-card: the services slider is intentionally compact and square.
 UPSELL_STYLE = '''
 <style id="av-growth-upsell-20261101">
 .av-upsell-premium{display:block;margin:10px 0 0;padding:9px 11px;border-top:1px solid rgba(242,215,131,.20);color:#f2d783!important;font-size:12px;font-weight:850;line-height:1.4;text-decoration:none;text-align:center}
 .av-upsell-premium:hover,.av-upsell-premium:focus-visible{color:#fff3bd!important;text-decoration:underline;text-underline-offset:3px}
-.sv-card>.av-upsell-premium{margin:0 14px 14px;border:1px solid rgba(242,215,131,.24);border-radius:10px;background:rgba(242,215,131,.035)}
 </style>
 '''.strip()
 if 'id="av-growth-upsell-20261101"' not in html:
@@ -160,6 +160,15 @@ if 'id="av-growth-upsell-20261101"' not in html:
     if pos >= 0:
         html = html[:pos] + '\n' + UPSELL_STYLE + '\n' + html[pos:]
         changes.append("upsell-style")
+
+# Remove any stale upsells that may already exist inside service slider cards.
+sv_card_re = re.compile(
+    r'(<article\b[^>]*class="[^"]*\bsv-card\b[^"]*"[^>]*>[\s\S]*?)(<a class="av-upsell-premium"[^>]*data-av-upsell="premium-500"[^>]*>[\s\S]*?</a>)([\s\S]*?</article>)',
+    re.I,
+)
+html, removed_slider_upsells = sv_card_re.subn(r'\1\3', html)
+if removed_slider_upsells:
+    changes.append(f"remove-slider-upsell-{removed_slider_upsells}")
 
 PRICE_RE = re.compile(r'(?:>\s*|\b)(149|199|249|299|333)\s*(?:<small>\s*)?lei\b', re.I)
 UPSELL = '<a class="av-upsell-premium" data-av-upsell="premium-500" href="#programari">Vrei să aprofundăm analiza live 60 min? Consultație Premium — 500 lei →</a>'
@@ -170,14 +179,13 @@ def add_upsell(match):
         return card
     return card[:-10] + UPSELL + '</article>'
 
-for card_class in ('av-offer', 'sv-card'):
-    pattern = re.compile(
-        rf'<article\b[^>]*class="[^"]*\b{re.escape(card_class)}\b[^"]*"[^>]*>[\s\S]*?</article>',
-        re.I,
-    )
-    html, count = pattern.subn(add_upsell, html)
-    if count:
-        changes.append(f"scan-{card_class}-{count}")
+pattern = re.compile(
+    r'<article\b[^>]*class="[^"]*\bav-offer\b[^"]*"[^>]*>[\s\S]*?</article>',
+    re.I,
+)
+html, count = pattern.subn(add_upsell, html)
+if count:
+    changes.append(f"scan-av-offer-{count}")
 
 if html != original:
     HOME.write_text(html, encoding="utf-8")
@@ -193,7 +201,9 @@ if 'class="av-horoscop-mobile-entry"' in final:
 if '.av-horoscop-teaser{display:none!important}' in final:
     raise SystemExit("Remaining horoscope teaser is still hidden on mobile")
 if 'data-av-upsell="premium-500"' not in final:
-    raise SystemExit("Premium upsell was not added")
+    raise SystemExit("Premium upsell was not added to offer cards")
+if re.search(r'<article\b[^>]*class="[^"]*\bsv-card\b[^"]*"[^>]*>[\s\S]*?data-av-upsell="premium-500"[\s\S]*?</article>', final, re.I):
+    raise SystemExit("Premium upsell leaked into the compact services slider")
 
 # Entity schema assertions.
 if final.count(f'id="{CANONICAL_ID}"') != 1:
