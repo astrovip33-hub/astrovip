@@ -32,13 +32,13 @@ jobs:
                   Path(path).write_text(after, encoding='utf-8')
                   changed.append(str(path))
 
-          # Homepage: remove visible/stale reviews blocks.
+          # Homepage: remove all review sections and duplicate/stale review style blocks.
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
           original = s
-          s = re.sub(r'\s*<section id="av-home-reviews"\b.*?</section>\s*', '\n', s, count=1, flags=re.S | re.I)
-          s = re.sub(r'\s*<style id="av-google-reviews-premium-20261004">.*?</style>\s*', '\n', s, count=1, flags=re.S | re.I)
-          s = re.sub(r'\s*<style id="av-home-reviews-override-v2">.*?</style>\s*', '\n', s, count=1, flags=re.S | re.I)
+          s = re.sub(r'\s*<section id="av-home-reviews"\b.*?</section>\s*', '\n', s, flags=re.S | re.I)
+          s = re.sub(r'\s*<style id="av-google-reviews-premium-20261004">.*?</style>\s*', '\n', s, flags=re.S | re.I)
+          s = re.sub(r'\s*<style id="av-home-reviews-override-v2">.*?</style>\s*', '\n', s, flags=re.S | re.I)
           write_if_changed(p, original, s)
 
           # Remove only the injected About Me card/helper block, preserving the case-study slider.
@@ -66,7 +66,7 @@ jobs:
               s = s.replace(':not(#av-home-reviews)', '')
               write_if_changed(p, original, s)
 
-          # Remove review-page references from AI index.
+          # Remove review page from AI index.
           p = Path('llms.txt')
           if p.exists():
               s = p.read_text(encoding='utf-8')
@@ -75,7 +75,7 @@ jobs:
               s = '\n'.join(lines) + ('\n' if original.endswith('\n') else '')
               write_if_changed(p, original, s)
 
-          # Remove /recenzii/ from sitemaps.
+          # Remove /recenzii/ from every sitemap.
           for p in Path('.').rglob('sitemap*.xml'):
               try:
                   s = p.read_text(encoding='utf-8')
@@ -86,7 +86,7 @@ jobs:
               s = re.sub(r'^.*https://astrovip\.ro/recenzii/?[^\n]*\n?', '', s, flags=re.M | re.I)
               write_if_changed(p, original, s)
 
-          # Remove direct links to /recenzii/ from HTML pages.
+          # Remove direct /recenzii/ links from HTML pages.
           anchor_re = re.compile(r'\s*<a\b[^>]*href=["\']/recenzii/?["\'][^>]*>.*?</a>', re.S | re.I)
           for p in Path('.').rglob('*.html'):
               if p.as_posix() == 'recenzii/index.html':
@@ -112,17 +112,16 @@ jobs:
                   p.unlink()
                   changed.append(f'{p} (deleted)')
 
-          # Verification fully in Python to avoid shell quoting ambiguity.
+          # Targeted verification.
           index = Path('index.html').read_text(encoding='utf-8')
-          assert 'id="av-home-reviews"' not in index
-          assert 'av-google-reviews-premium-20261004' not in index
-          assert 'av-home-reviews-override-v2' not in index
+          if 'id="av-home-reviews"' in index or 'av-google-reviews-premium-20261004' in index or 'av-home-reviews-override-v2' in index:
+              raise SystemExit('Homepage review UI/style residue remains')
 
           js = Path('assets/home-case-studies-premium-20261014.js').read_text(encoding='utf-8')
-          assert 'av-about-home' not in js
-          assert 'ABOUT_HTML' not in js
-          assert 'ensureAbout(' not in js
-          assert not Path('recenzii/index.html').exists()
+          if 'av-about-home' in js or 'ABOUT_HTML' in js or 'ensureAbout(' in js:
+              raise SystemExit('About Me card code residue remains')
+          if Path('recenzii/index.html').exists():
+              raise SystemExit('Dedicated reviews page still exists')
 
           residual = []
           for pattern in ('*.html', '*.xml'):
@@ -135,15 +134,13 @@ jobs:
                       continue
                   if re.search(r'href=["\']/recenzii/?["\']|https://astrovip\.ro/recenzii/?', text, re.I):
                       residual.append(str(p))
-
           p = Path('llms.txt')
           if p.exists():
               text = p.read_text(encoding='utf-8')
               if '/recenzii/' in text or 'Recenzii Google AstroVip' in text:
                   residual.append(str(p))
-
           if residual:
-              raise SystemExit('Residual review references: ' + ', '.join(sorted(set(residual))))
+              raise SystemExit('Residual public review references: ' + ', '.join(sorted(set(residual))))
 
           print('Changed files:')
           for item in changed:
