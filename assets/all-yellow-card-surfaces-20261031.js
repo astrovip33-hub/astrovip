@@ -1,4 +1,4 @@
-/* AstroVip — apply the approved gold→cyan gradient to every yellow/gold surface inside homepage cards down to the footer. */
+/* AstroVip — approved gold→cyan gradient + mobile contact menu. Bounded, low-cost runtime. */
 (() => {
   'use strict';
 
@@ -38,20 +38,16 @@
   };
 
   const hasCardContext = (el, root) => {
-    let node = el;
-    while (node && node !== root.parentElement) {
+    for (let node = el; node && node !== root.parentElement; node = node.parentElement) {
       const key = `${node.id || ''} ${typeof node.className === 'string' ? node.className : ''}`;
       if (CARD_HINT.test(key)) return true;
       if (node === root) break;
-      node = node.parentElement;
     }
     return false;
   };
 
   const isYellowSurface = style => {
-    const bg = extractRgb(style.backgroundColor);
-    if (bg.some(c => isGoldRgb(...c))) return true;
-
+    if (extractRgb(style.backgroundColor).some(c => isGoldRgb(...c))) return true;
     if (style.backgroundImage && style.backgroundImage !== 'none') {
       const stops = extractRgb(style.backgroundImage);
       if (stops.length && stops.every(c => isGoldRgb(...c))) return true;
@@ -59,41 +55,33 @@
     return false;
   };
 
-  const apply = () => {
+  const applyGoldGradient = () => {
     ROOT_SELECTORS.forEach(selector => {
       document.querySelectorAll(selector).forEach(root => {
-        [root, ...root.querySelectorAll('*')].forEach(el => {
-          if (!(el instanceof HTMLElement)) return;
+        root.querySelectorAll('*').forEach(el => {
+          if (!(el instanceof HTMLElement) || el.classList.contains('av-all-yellow-card-gradient')) return;
           if (!hasCardContext(el, root)) return;
-          if (el.classList.contains('av-all-yellow-card-gradient')) return;
-          const style = getComputedStyle(el);
-          if (!isYellowSurface(style)) return;
-          el.classList.add('av-all-yellow-card-gradient');
+          if (isYellowSurface(getComputedStyle(el))) el.classList.add('av-all-yellow-card-gradient');
         });
       });
     });
   };
 
-  /* The premium mobile menu is rendered as accordion <details> rows.
-     Contact is created independently from any legacy #contact anchor so it is
-     guaranteed to appear in the visible accordion, before “Mai multe”. */
   const installContactMenuGroup = () => {
     const menu = document.getElementById('menu');
-    if (!menu || menu.querySelector('.av-menu-contact-group')) return;
+    if (!menu || menu.querySelector('.av-menu-contact-group')) return Boolean(menu);
 
     const detailsRows = [...menu.children].filter(el => el.tagName === 'DETAILS');
-    if (!detailsRows.length) return;
+    if (!detailsRows.length) return false;
 
     const details = document.createElement('details');
     details.className = 'av-menu-group av-menu-contact-group';
-
     const summary = document.createElement('summary');
     summary.textContent = 'Contact';
     summary.setAttribute('aria-label', 'Contact AstroVip');
 
     const links = document.createElement('div');
     links.className = 'av-menu-group-links';
-
     [
       ['Telefon · 0722 128 220', 'tel:+40722128220'],
       ['WhatsApp · mesaj direct', 'https://wa.me/40722128220'],
@@ -114,17 +102,10 @@
     hours.className = 'av-menu-contact-hours';
     hours.textContent = 'Program · Luni–Vineri · 10:00–17:00';
     links.appendChild(hours);
-
     details.append(summary, links);
 
-    const legacyContact = menu.querySelector('a[href="#contact"]');
-    if (legacyContact) legacyContact.remove();
-
-    const more = detailsRows.find(el => {
-      const s = el.querySelector(':scope > summary');
-      return /^\s*Mai multe\s*$/i.test((s?.textContent || '').trim());
-    }) || [...menu.children].find(el => /\bMai multe\b/i.test((el.textContent || '').trim()));
-
+    menu.querySelector('a[href="#contact"]')?.remove();
+    const more = detailsRows.find(el => /^\s*Mai multe\s*$/i.test((el.querySelector(':scope > summary')?.textContent || '').trim()));
     menu.insertBefore(details, more || null);
 
     details.addEventListener('toggle', () => {
@@ -137,35 +118,28 @@
     if (!document.getElementById('av-menu-contact-hours-css')) {
       const style = document.createElement('style');
       style.id = 'av-menu-contact-hours-css';
-      style.textContent = `
-        #menu .av-menu-contact-group{display:block!important;visibility:visible!important;opacity:1!important}
-        #menu .av-menu-contact-hours{
-          display:block;
-          padding:10px 14px 12px;
-          color:#26384a;
-          font:800 12px/1.35 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
-          opacity:.82;
-        }
-      `;
+      style.textContent = '#menu .av-menu-contact-group{display:block!important;visibility:visible!important;opacity:1!important}#menu .av-menu-contact-hours{display:block;padding:10px 14px 12px;color:#26384a;font:800 12px/1.35 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;opacity:.82}';
       document.head.appendChild(style);
     }
-  };
-
-  const runEnhancements = () => {
-    apply();
-    installContactMenuGroup();
+    return true;
   };
 
   const start = () => {
-    runEnhancements();
-    requestAnimationFrame(runEnhancements);
-    setTimeout(runEnhancements, 150);
-    setTimeout(runEnhancements, 500);
-    setTimeout(runEnhancements, 1200);
-    setTimeout(runEnhancements, 2500);
+    applyGoldGradient();
+    installContactMenuGroup();
 
-    const observer = new MutationObserver(() => requestAnimationFrame(runEnhancements));
-    observer.observe(document.body, {childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style', 'open']});
+    // Dynamic homepage cards settle shortly after DOMContentLoaded; rescan only twice.
+    setTimeout(applyGoldGradient, 700);
+    setTimeout(applyGoldGradient, 1800);
+
+    // If the mobile menu itself is injected late, watch only for it and stop immediately.
+    if (!document.getElementById('menu')) {
+      const observer = new MutationObserver(() => {
+        if (installContactMenuGroup()) observer.disconnect();
+      });
+      observer.observe(document.body, {childList: true, subtree: true});
+      setTimeout(() => observer.disconnect(), 3000);
+    }
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once: true});
