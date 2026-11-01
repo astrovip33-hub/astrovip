@@ -1,0 +1,57 @@
+name: One-time homepage cleanup
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-obsolete-home-blocks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Remove obsolete homepage blocks
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          text, reviews_removed = re.subn(
+              r'<section id="av-home-reviews"\b.*?</section>\s*',
+              '', text, count=1, flags=re.S
+          )
+          text, contact_removed = re.subn(
+              r'<section class="avf-column" id="contact" aria-labelledby="avf-contact-title">.*?</section>\s*',
+              '', text, count=1, flags=re.S
+          )
+
+          if reviews_removed != 1:
+              raise SystemExit(f'Expected 1 av-home-reviews section, removed {reviews_removed}')
+          if contact_removed != 1:
+              raise SystemExit(f'Expected 1 footer contact column, removed {contact_removed}')
+
+          path.write_text(text, encoding='utf-8')
+          print('Removed av-home-reviews and footer contact column exactly once.')
+          PY
+
+      - name: Commit cleanup
+        shell: bash
+        run: |
+          git config user.name "AstroVip Site Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git diff --cached --check
+          git commit -m "Remove obsolete reviews and contact blocks from homepage"
+          git push origin HEAD:main
