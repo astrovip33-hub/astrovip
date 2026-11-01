@@ -1,4 +1,4 @@
-name: Hard kill cached About Me card 20261101 v6
+name: Hard kill cached About Me card 20261101 v7
 
 on:
   push:
@@ -18,63 +18,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Add Worker hard-kill for stale About Me card
+      - name: Verify homepage About Me card remains removed
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          # Source card must already be gone.
-          source = Path('assets/home-case-studies-premium-20261014.js')
-          source_text = source.read_text(encoding='utf-8')
-          forbidden = ('ABOUT_HTML', 'av-about-home', 'ensureAbout(', 'ensureAboutStyle(', 'astrovip-despre-mine-20261101')
-          residue = [token for token in forbidden if token in source_text]
+          source = Path('assets/home-case-studies-premium-20261014.js').read_text(encoding='utf-8')
+          worker = Path('worker-ai-discovery.js').read_text(encoding='utf-8')
+
+          forbidden = ('ABOUT_HTML', 'ensureAbout(', 'ensureAboutStyle(', 'astrovip-despre-mine-20261101')
+          residue = [token for token in forbidden if token in source]
           if residue:
               raise SystemExit('Source About Me residue remains: ' + ', '.join(residue))
 
-          # Delete any stale artwork variants if a branch/cache refresh restored them.
-          for asset in Path('assets').glob('astrovip-despre-mine-20261101-*.webp'):
-              asset.unlink()
-              print('Deleted', asset)
-
-          p = Path('worker-ai-discovery.js')
-          s = p.read_text(encoding='utf-8')
-          original = s
-
-          hard_kill = '''const HOME_ABOUT_HARD_KILL = `<style id="av-about-hard-kill-20261101">.av-about-home{display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}</style><script id="av-about-hard-kill-script-20261101">(()=>{const k=()=>document.querySelectorAll('.av-about-home').forEach(n=>n.remove());if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',k,{once:true});else k();new MutationObserver(k).observe(document.documentElement,{childList:true,subtree:true})})();</script>`;\n'''
-
-          if 'av-about-hard-kill-20261101' not in s:
-              marker = "const TEACHER_IMAGE_PATH ="
-              if marker not in s:
-                  raise SystemExit('Worker insertion marker not found')
-              s = s.replace(marker, hard_kill + marker, 1)
-
-          old = "element.append(LLMS_DISCOVERY_LINK + CANONICAL_NAP_STYLE + (isHome ? HOME_AUTHORITY_STYLE : ''), { html: true });"
-          new = "element.append(LLMS_DISCOVERY_LINK + CANONICAL_NAP_STYLE + (isHome ? HOME_AUTHORITY_STYLE + HOME_ABOUT_HARD_KILL : ''), { html: true });"
-          if old in s:
-              s = s.replace(old, new, 1)
-          elif new not in s:
-              raise SystemExit('Worker head append marker not found')
-
-          if s != original:
-              p.write_text(s, encoding='utf-8')
-              print('Patched', p)
-          else:
-              print('Worker hard-kill already present')
-
-          final = p.read_text(encoding='utf-8')
-          required = ('av-about-hard-kill-20261101', 'HOME_ABOUT_HARD_KILL', ".av-about-home').forEach")
-          missing = [token for token in required if token not in final]
+          required = ('HOME_ABOUT_HARD_KILL', 'av-about-hard-kill-20261101', "querySelectorAll('.av-about-home')")
+          missing = [token for token in required if token not in worker]
           if missing:
-              raise SystemExit('Worker hard-kill incomplete: ' + ', '.join(missing))
-          PY
+              raise SystemExit('Worker hard-kill missing: ' + ', '.join(missing))
 
-      - name: Commit Worker hard-kill
-        shell: bash
-        run: |
-          git config user.name "AstroVip Site Bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add -A
-          git diff --cached --check
-          git commit -m "Hard-kill stale homepage About Me card in Worker" || exit 0
-          git push origin HEAD:main
+          stale_assets = list(Path('assets').glob('astrovip-despre-mine-20261101-*.webp'))
+          if stale_assets:
+              raise SystemExit('Stale About Me artwork remains: ' + ', '.join(map(str, stale_assets)))
+
+          print('About Me source removed and Worker hard-kill present.')
+          PY
