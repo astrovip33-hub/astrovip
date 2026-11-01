@@ -13,7 +13,7 @@
   if (!document.getElementById('av-all-yellow-card-surfaces-js')) {
     const yellowCardsJs = document.createElement('script');
     yellowCardsJs.id = 'av-all-yellow-card-surfaces-js';
-    yellowCardsJs.src = '/assets/all-yellow-card-surfaces-20261031.js?v=20261031-live2';
+    yellowCardsJs.src = '/assets/all-yellow-card-surfaces-20261031.js?v=20261101-contactmenu1';
     yellowCardsJs.defer = true;
     document.head.appendChild(yellowCardsJs);
   }
