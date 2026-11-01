@@ -105,3 +105,22 @@ html body #av-cert-l7x.av-cert-l7x .avc-cta{display:inline-flex;align-items:cent
   #av-cert-l7x .avc-certificate{animation:avc-float-ultra 6s ease-in-out infinite}
   @keyframes avc-float-ultra{50%{transform:translateY(-2px) rotate(.8deg)}}
 }
+
+/* 2026-11-01 — exact user request: scale the WHOLE certificate card to 50%, preserving composition. */
+#av-cert-l7x{
+  transform:scale(.5)!important;
+  transform-origin:top center!important;
+  margin-top:8px!important;
+  margin-bottom:-58px!important;
+}
+@media(max-width:830px){
+  #av-cert-l7x{
+    transform:scale(.5)!important;
+    transform-origin:top center!important;
+    margin-top:6px!important;
+    margin-bottom:-42px!important;
+  }
+}
+@media(max-width:390px){
+  #av-cert-l7x{margin-bottom:-37px!important}
+}
