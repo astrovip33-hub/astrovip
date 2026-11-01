@@ -1,6 +1,8 @@
 import { handleCommandCenter } from './command-center-api.js';
 import { commandCenterRedirect } from './command-center-routing.js';
 import { handleClarity } from './clarity-api.js';
+import { handleLegalWithdrawal } from './legal-withdrawal-api.js';
+import { addLegalFooter } from './legal-footer-runtime.js';
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 const GA4_MEASUREMENT_ID='G-Y59ZJ7L3WR';
@@ -151,6 +153,8 @@ async function stripeWebhook(request,env,{secretName='STRIPE_WEBHOOK_SECRET',tes
 export default {
   async fetch(request,env){
     const url=new URL(request.url);
+    const legalResponse=await handleLegalWithdrawal(request,env);
+    if(legalResponse)return legalResponse;
     const commandRedirect=commandCenterRedirect(url);
     if(commandRedirect)return new Response(null,{status:308,headers:{Location:commandRedirect,'Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow, noarchive','Referrer-Policy':'no-referrer'}});
     // Same-origin responsive QA is available only on the existing preview host.
@@ -197,7 +201,7 @@ export default {
           .on('#v63-mobile-prod .v63-visual > img',{element(el){el.replace(mobileHero,{html:true})}})
           .on('script#astrovip-planetary-postload',{element(el){el.remove()}});
       }
-      return rewriter.transform(assetResponse);
+      return addLegalFooter(rewriter,url.pathname).transform(assetResponse);
     }
     if(url.pathname.startsWith('/command-center')){
       const headers=new Headers(assetResponse.headers);
