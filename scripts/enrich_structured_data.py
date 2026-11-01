@@ -164,18 +164,6 @@ def enrich(node, image_url: str) -> bool:
             changed = enrich(value, image_url) or changed
     return changed
 
-def normalize_home_reviews(html: str) -> str:
-    replacements = (
-        ("25+ RECENZII", "33+ RECENZII"),
-        ("CELE 25 DE RECENZII", "CELE 33 DE RECENZII"),
-        ("25 DE RECENZII", "33 DE RECENZII"),
-        ("25 de recenzii", "33 de recenzii"),
-        ('<div class="av-gr-count"><b>25</b><span>recenzii Google</span></div>', '<div class="av-gr-count"><b>33</b><span>recenzii Google</span></div>'),
-    )
-    for old, new in replacements:
-        html = html.replace(old, new)
-    return html
-
 def force_desktop_hide_trust_ribbon(html: str) -> str:
     # Inject a late, inline production rule so browser/CDN caches of external CSS
     # cannot keep the Hero trust ribbon visible on desktop.
@@ -188,7 +176,7 @@ def force_desktop_hide_trust_ribbon(html: str) -> str:
     marker = "</head>"
     if marker in html.lower():
         pos = html.lower().rfind(marker)
-        return html[:pos] + DESKTOP_TRUST_RIBBON_STYLE + "\n" + html[pos:]
+        return html[:pos].rstrip() + "\n" + DESKTOP_TRUST_RIBBON_STYLE + "\n" + html[pos:]
     return DESKTOP_TRUST_RIBBON_STYLE + "\n" + html
 
 files_scanned = 0
@@ -228,10 +216,8 @@ for path in ROOT.rglob("index.html"):
 
     updated = SCRIPT_RE.sub(repl, html)
 
-    # Keep the public Google Reviews count consistent in the production homepage
-    # before Cloudflare deploys the static HTML, so crawlers and browsers see 33.
+    # Preserve editorial review counts and verification dates; deployment is not verification.
     if path == ROOT / "index.html":
-        updated = normalize_home_reviews(updated)
         updated = force_desktop_hide_trust_ribbon(updated)
 
     # Visible E-E-A-T signal: add a consistent author box only to article pages

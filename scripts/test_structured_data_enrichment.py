@@ -43,6 +43,19 @@ class EnrichmentTests(unittest.TestCase):
         self.assertEqual(data['@graph'][0], {'@type': 'WebApplication', 'name': 'Calculator'})
         self.assertNotIn('av-author-trust', html)
 
+    def test_homepage_preserves_review_counts_and_verification_date(self):
+        with tempfile.TemporaryDirectory() as directory:
+            page = Path(directory) / 'index.html'
+            text = '<html><head></head><body><p>25 de recenzii · verificat la 4 octombrie 2026</p><b>CELE 25 DE RECENZII</b></body></html>'
+            page.write_text(text, encoding='utf-8')
+            subprocess.run(['python3', str(SCRIPT)], cwd=directory, check=True, capture_output=True)
+            first = page.read_text(encoding='utf-8')
+            self.assertIn('25 de recenzii · verificat la 4 octombrie 2026', first)
+            self.assertIn('CELE 25 DE RECENZII', first)
+            self.assertNotIn('33', first)
+            subprocess.run(['python3', str(SCRIPT)], cwd=directory, check=True, capture_output=True)
+            self.assertEqual(first, page.read_text(encoding='utf-8'))
+
 
 if __name__ == '__main__':
     unittest.main()
