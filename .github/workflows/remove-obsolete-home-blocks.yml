@@ -29,11 +29,11 @@ jobs:
           text = path.read_text(encoding='utf-8')
 
           text, reviews_removed = re.subn(
-              r'<section id="av-home-reviews"\b.*?</section>\s*',
+              r'<section[^>]*id="av-home-reviews"[^>]*>.*?</section>\s*',
               '', text, count=1, flags=re.S
           )
           text, contact_removed = re.subn(
-              r'<section class="avf-column" id="contact" aria-labelledby="avf-contact-title">.*?</section>\s*',
+              r'<section[^>]*id="contact"[^>]*aria-labelledby="avf-contact-title"[^>]*>.*?</section>\s*',
               '', text, count=1, flags=re.S
           )
 
