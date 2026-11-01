@@ -1,77 +1,10 @@
 (() => {
   'use strict';
 
-  const ABOUT_HTML = `
-    <section class="av-about-home" aria-labelledby="av-about-home-title">
-      <div class="av-about-home-card">
-        <figure class="av-about-home-visual">
-          <img src="/assets/astrovip-despre-mine-20261101-960.webp" srcset="/assets/astrovip-despre-mine-20261101-480.webp 480w, /assets/astrovip-despre-mine-20261101-960.webp 960w, /assets/astrovip-despre-mine-20261101-1229.webp 1229w" sizes="(max-width:360px) calc(100vw - 18px), (max-width:820px) calc(100vw - 24px), 680px" width="1229" height="1536" loading="lazy" decoding="async" alt="Despre mine — Cătălin Smaranda, astrolog autorizat și licențiat în Psihologie. 33+ ani experiență: timing, relații, carieră, astrocartografie și Local Space.">
-        </figure>
-        <div class="av-about-home-copy">
-          <p class="av-about-home-kicker">DESPRE MINE</p>
-          <h2 id="av-about-home-title">Cătălin Smaranda <span>· Astrolog</span></h2>
-          <p class="av-about-home-lead">Practic astrologia de peste 33 de ani și sunt licențiat în Psihologie. Lucrez cu timing, relații, carieră și relocare, cu accent pe claritate și aplicabilitate.</p>
-          <div class="av-about-home-facts" aria-label="Experiență și specializări"><span>33+ ANI EXPERIENȚĂ</span><span>LICENȚIAT ÎN PSIHOLOGIE</span><span>TIMING · RELOCARE</span></div>
-        </div>
-      </div>
-    </section>`;
-
-  const ensureAboutStyle = () => {
-    if (document.getElementById('av-about-home-style-20261014')) return;
-    const style = document.createElement('style');
-    style.id = 'av-about-home-style-20261014';
-    style.textContent = `
-      #studii-de-caz-home .av-about-home{position:relative;z-index:2;width:min(960px,calc(100% - 40px));margin:0 auto 22px;padding:0}
-      #studii-de-caz-home .av-about-home-card{position:relative;display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);align-items:center;gap:18px;padding:18px 20px;border:1px solid rgba(231,198,106,.46);border-radius:22px;background:radial-gradient(circle at 0 0,rgba(57,255,20,.055),transparent 34%),linear-gradient(135deg,rgba(10,20,16,.985),rgba(3,7,5,.995));box-shadow:0 18px 42px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.045),0 0 0 1px rgba(57,255,20,.045);overflow:hidden}
-      #studii-de-caz-home .av-about-home-card:before{content:'';position:absolute;left:18%;right:18%;top:0;height:1px;background:linear-gradient(90deg,transparent,#e6c45d,#7cff67,#e6c45d,transparent);opacity:.8}
-      #studii-de-caz-home .av-about-home-visual{display:block;min-width:0;width:100%;margin:0;overflow:hidden;border:1px solid rgba(231,198,106,.46);border-radius:14px;background:#071321;box-shadow:0 10px 24px rgba(0,0,0,.30)}
-      #studii-de-caz-home .av-about-home-visual img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:1536/881;object-fit:contain}
-      #studii-de-caz-home .av-about-home-copy{min-width:0}
-      #studii-de-caz-home .av-about-home-kicker{margin:0 0 4px!important;color:#99ffb4!important;font:950 9px/1.2 Inter,system-ui,sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase}
-      #studii-de-caz-home .av-about-home-copy h2{margin:0!important;color:#fff4c8!important;font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(23px,3vw,31px)!important;font-weight:700!important;line-height:1.05!important;letter-spacing:-.02em!important}
-      #studii-de-caz-home .av-about-home-copy h2 span{color:#d7c47f!important;font-size:.68em!important;font-weight:600!important;letter-spacing:.01em!important;white-space:nowrap}
-      #studii-de-caz-home .av-about-home-lead{max-width:760px;margin:7px 0 0!important;color:rgba(231,237,232,.82)!important;font:650 16px/1.48 Inter,system-ui,sans-serif!important;letter-spacing:.005em!important}
-      #studii-de-caz-home .av-about-home-facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-      #studii-de-caz-home .av-about-home-facts span{display:inline-flex;align-items:center;min-height:25px;padding:5px 9px;border:1px solid rgba(231,198,106,.24);border-radius:999px;background:rgba(255,255,255,.025);color:#e7d58e;font:900 8px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;white-space:nowrap}
-      @media(max-width:820px){
-        #studii-de-caz-home .av-about-home{width:calc(100% - 24px);margin:0 auto 12px}
-        #studii-de-caz-home .av-about-home-card{grid-template-columns:minmax(0,1fr);gap:11px;padding:14px 14px 15px;border-radius:18px;box-shadow:0 12px 28px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.04),0 0 0 1px rgba(57,255,20,.035)}
-        #studii-de-caz-home .av-about-home-visual{border-radius:12px}
-        #studii-de-caz-home .av-about-home-kicker{margin-bottom:3px!important;font-size:10px!important;letter-spacing:.15em!important}
-        #studii-de-caz-home .av-about-home-copy h2{font-size:clamp(18px,5.2vw,22px)!important;line-height:1.02!important}
-        #studii-de-caz-home .av-about-home-copy h2 span{display:block;margin-top:3px;font-size:.58em!important;letter-spacing:.06em!important;text-transform:uppercase}
-        #studii-de-caz-home .av-about-home-lead{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;margin-top:6px!important;font-size:15px!important;line-height:1.46!important;font-weight:650!important;letter-spacing:.003em!important}
-        #studii-de-caz-home .av-about-home-facts{gap:4px;margin-top:8px}
-        #studii-de-caz-home .av-about-home-facts span{min-height:21px;padding:4px 7px;font-size:9px;letter-spacing:.055em}
-      }
-      @media(max-width:360px){
-        #studii-de-caz-home .av-about-home{width:calc(100% - 18px)}
-        #studii-de-caz-home .av-about-home-card{grid-template-columns:minmax(0,1fr);gap:9px;padding:11px 10px}
-        #studii-de-caz-home .av-about-home-lead{font-size:14.5px!important;line-height:1.44!important;font-weight:650!important}
-      }
-      #studii-de-caz-home .av-about-home{max-width:680px}
-      #studii-de-caz-home .av-about-home-card{display:block;padding:0;border:0;background:none;box-shadow:none}
-      #studii-de-caz-home .av-about-home-card:before{display:none}
-      #studii-de-caz-home .av-about-home-visual{border:0;border-radius:18px;background:transparent;box-shadow:none}
-      #studii-de-caz-home .av-about-home-visual img{aspect-ratio:1229/1536;object-fit:contain;height:auto}
-      #studii-de-caz-home .av-about-home-copy{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
-    `;
-    document.head.appendChild(style);
-  };
-
-  const ensureAbout = section => {
-    if (section.querySelector(':scope > .av-about-home')) return;
-    section.insertAdjacentHTML('afterbegin', ABOUT_HTML);
-  };
-
   const install = () => {
     const section = document.getElementById('studii-de-caz-home');
     if (!section) return;
-
-    ensureAboutStyle();
-    ensureAbout(section);
-
-    if (section.dataset.avCaseLux === '1') return;
+if (section.dataset.avCaseLux === '1') return;
 
     // The shared responsive slider owns its track on every viewport.
     // Keep its navigation and the complete case list after DOMContentLoaded.
@@ -134,10 +67,7 @@
           </div>
         </div>
       </div>`;
-
-    ensureAbout(section);
-
-    if (document.getElementById('av-case-lux-style-20261014')) return;
+if (document.getElementById('av-case-lux-style-20261014')) return;
     const style = document.createElement('style');
     style.id = 'av-case-lux-style-20261014';
     style.textContent = `
@@ -195,12 +125,6 @@
         #studii-de-caz-home .av-case-lux-link{font-size:6px}
       }
       @media(prefers-reduced-motion:reduce){#studii-de-caz-home .av-case-lux-card,#studii-de-caz-home .av-case-lux-visual img{transition:none!important}}
-      #studii-de-caz-home .av-about-home{max-width:680px}
-      #studii-de-caz-home .av-about-home-card{display:block;padding:0;border:0;background:none;box-shadow:none}
-      #studii-de-caz-home .av-about-home-card:before{display:none}
-      #studii-de-caz-home .av-about-home-visual{border:0;border-radius:18px;background:transparent;box-shadow:none}
-      #studii-de-caz-home .av-about-home-visual img{aspect-ratio:1229/1536;object-fit:contain;height:auto}
-      #studii-de-caz-home .av-about-home-copy{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
     `;
     document.head.appendChild(style);
   };
