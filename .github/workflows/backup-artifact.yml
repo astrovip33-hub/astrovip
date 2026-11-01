@@ -1,0 +1,29 @@
+﻿name: AstroVip Backup Artifact
+on:
+  push:
+    paths:
+      - '.github/workflows/backup-artifact.yml'
+permissions:
+  contents: read
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact live commit
+        uses: actions/checkout@v4
+        with:
+          ref: c7ee68ee
+          fetch-depth: 1
+      - name: Prepare clean site backup
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/astrovip-backup"
+          git archive c7ee68ee | tar -x -C "$RUNNER_TEMP/astrovip-backup"
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AstroVip-backup-2026-11-01-c7ee68ee
+          path: ${{ runner.temp }}/astrovip-backup/
+          retention-days: 7
+          compression-level: 6
+          if-no-files-found: error
