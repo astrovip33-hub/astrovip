@@ -8,7 +8,7 @@
     "inject:premium": "python3 scripts/inject-premium-v9.py",
     "fix:profilepage-datetime": "node scripts/fix-profilepage-datetime.mjs",
     "inject:certification-card": "python3 scripts/inject-certification-card.py",
-    "build:swiss": "npm run fix:profilepage-datetime && npm run build:swiss-only && npm run build:premium && npm run inject:premium && npm run inject:certification-card",
+    "build:swiss": "npm run fix:profilepage-datetime && npm run build:swiss-only && npm run build:premium && npm run inject:premium && npm run inject:certification-card && python3 scripts/homepage_seo_growth_cleanup.py",
     "build": "npm run build:swiss"
   },
   "dependencies": {

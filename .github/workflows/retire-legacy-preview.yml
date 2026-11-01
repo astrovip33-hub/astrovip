@@ -1,0 +1,52 @@
+name: Retire legacy AstroVip preview
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "worker-preview-retired.js"
+      - "wrangler.preview-retired.jsonc"
+      - ".github/workflows/retire-legacy-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: retire-legacy-astrovip-preview
+  cancel-in-progress: true
+
+jobs:
+  redirect:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: 1997683abefc1f33c4a391c0e09e63dd
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy 301 redirect over retired preview Worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@latest deploy --config wrangler.preview-retired.jsonc
+
+      - name: Verify retired preview redirects to production
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://astrovip-preview-premium-home.astrovip33.workers.dev/"
+          for attempt in $(seq 1 12); do
+            headers=$(mktemp)
+            code=$(curl -sS -o /dev/null -D "$headers" -w '%{http_code}' "$URL" || true)
+            location=$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$headers")
+            robots=$(awk 'BEGIN{IGNORECASE=1} /^x-robots-tag:/ {sub(/^[^:]*:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$headers")
+            echo "attempt=$attempt code=$code location=$location robots=$robots"
+            if [ "$code" = "301" ] && [ "$location" = "https://astrovip.ro/" ] && printf '%s' "$robots" | grep -qi 'noindex'; then
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::Legacy preview did not become a 301 + noindex redirect."
+          exit 1
