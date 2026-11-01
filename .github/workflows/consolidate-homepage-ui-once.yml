@@ -1,0 +1,78 @@
+name: Consolidate homepage responsive UI once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.consolidate-homepage-ui-20261102'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Consolidate horoscope block and make YouTube static
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          before = s
+
+          # Remove the mobile-only duplicate horoscope card.
+          s, n_mobile = re.subn(
+              r'\s*<section\s+class=["\']av-horoscop-mobile-entry["\'][\s\S]*?</section>',
+              '', s, count=1, flags=re.I
+          )
+
+          # Replace the desktop-only teaser with one responsive block for all devices.
+          unified = '''<section class="av-horoscop-entry" aria-labelledby="av-horoscop-entry-title"><style>
+          .av-horoscop-entry{padding:18px 20px;background:#06110d;border-top:1px solid rgba(229,196,106,.2);border-bottom:1px solid rgba(229,196,106,.2)}
+          .av-horoscop-entry__in{max-width:1180px;margin:auto;padding:18px 24px;border:1px solid rgba(229,196,106,.42);border-radius:22px;background:linear-gradient(135deg,#07170f,#091323 65%,#170b20);display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center}
+          .av-horoscop-entry h2{margin:0 0 7px;color:#e5c46a;font:750 30px/1.05 Georgia,serif}.av-horoscop-entry p{margin:0;color:#eef2ed;font-size:16px}.av-horoscop-entry__meta{margin-top:9px!important;color:#a9c8bc!important;font-size:12px!important}.av-horoscop-entry a{display:inline-flex;padding:13px 18px;border-radius:13px;background:linear-gradient(135deg,#efd57f,#d6a839);color:#111;text-decoration:none;font-weight:900;font-size:14px;white-space:nowrap}
+          @media(max-width:760px){.av-horoscop-entry{width:calc(100% - 20px);margin:14px auto 18px;padding:0;background:transparent;border:0}.av-horoscop-entry__in{padding:16px;border-radius:18px;grid-template-columns:1fr;gap:11px;text-align:left;box-shadow:0 12px 28px rgba(0,0,0,.3)}.av-horoscop-entry h2{font-size:23px;line-height:1.08;margin-bottom:1px}.av-horoscop-entry p{font-size:14px;line-height:1.45}.av-horoscop-entry__meta{font-size:11px!important;line-height:1.45!important;margin-top:0!important}.av-horoscop-entry a{width:100%;min-height:44px;align-items:center;justify-content:center;padding:12px 14px;font-size:13px;white-space:normal;text-align:center}}
+          </style><div class="av-horoscop-entry__in"><div><h2 id="av-horoscop-entry-title">Semnătura AstroVip de azi</h2><p>Horoscopul tău de azi, dincolo de simpla zodie.</p><p class="av-horoscop-entry__meta">12 zodii → 36 decani → 144 subsemne de 2,5° → ore planetare → tranzitele zilei</p></div><a href="/horoscop-azi/">DESCOPERĂ HOROSCOPUL DE AZI →</a></div></section>'''
+          s, n_teaser = re.subn(
+              r'<section\s+class=["\']av-horoscop-teaser["\'][\s\S]*?</section>',
+              unified, s, count=1, flags=re.I
+          )
+          if n_teaser != 1:
+              raise SystemExit(f'Expected one desktop horoscope teaser, found {n_teaser}')
+
+          # Make the YouTube footer link part of static HTML, not a runtime injection.
+          if 'data-network="youtube"' not in s:
+              youtube = '''<a href="https://www.youtube.com/@catalinsmaranda" target="_blank" rel="noopener noreferrer" data-network="youtube" aria-label="AstroVip pe YouTube — Cătălin Smaranda"><svg class="avf-brand-icon" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="avf-youtube-navy" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#174d79"/><stop offset="1" stop-color="#07172d"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#avf-youtube-navy)"/><path fill="#fff" d="M13 10.5 22 16l-9 5.5Z"/></svg><span>YouTube</span></a>'''
+              pat = re.compile(r'(<a\s+href=["\']https://www\.tiktok\.com/@astrovip338["\'][\s\S]*?</a>)', re.I)
+              s, n_yt = pat.subn(r'\1' + youtube, s, count=1)
+              if n_yt != 1:
+                  raise SystemExit('TikTok footer anchor not found for YouTube insertion')
+
+          if n_mobile == 0:
+              print('Mobile duplicate was already absent.')
+          if s == before:
+              print('No homepage UI changes needed.')
+          else:
+              p.write_text(s, encoding='utf-8')
+              print('Homepage responsive UI consolidated.')
+          PY
+      - name: Remove this temporary workflow and trigger
+        shell: bash
+        run: |
+          git rm -f --ignore-unmatch .github/workflows/consolidate-homepage-ui-once.yml .consolidate-homepage-ui-20261102
+      - name: Commit consolidation
+        shell: bash
+        run: |
+          git config user.name 'astrovip33-hub'
+          git config user.email 'astrovip33@gmail.com'
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m 'Consolidate responsive horoscope and static YouTube footer'
+          git push origin HEAD:main
