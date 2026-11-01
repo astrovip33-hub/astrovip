@@ -129,3 +129,30 @@
   #av-cert-l7x .avc-fact small{font-size:10.5px;line-height:1.22}
   #av-cert-l7x .avc-cta{font-size:9px;letter-spacing:.12em;padding-inline:14px}
 }
+
+/* Final shield against the global [class*="card"] ocean-theme override. */
+html body #av-cert-l7x.av-cert-l7x .avc-card{
+  border-color:transparent!important;
+  background:
+    radial-gradient(520px 300px at 86% 20%,rgba(241,207,109,.10),transparent 63%) padding-box,
+    radial-gradient(480px 300px at 12% 88%,rgba(97,216,105,.10),transparent 66%) padding-box,
+    linear-gradient(145deg,#07110c 0%,#020504 74%) padding-box,
+    linear-gradient(90deg,#39a846 0%,#61d869 23%,#f1cf6d 53%,#cf9a32 77%,#3da84a 100%) border-box!important;
+  box-shadow:0 24px 62px rgba(0,0,0,.48),0 0 26px rgba(57,168,70,.08),0 0 22px rgba(241,207,109,.07)!important;
+}
+html body #av-cert-l7x.av-cert-l7x .avc-heading{
+  color:#fffdf8!important;
+  -webkit-text-fill-color:#fffdf8!important;
+}
+html body #av-cert-l7x.av-cert-l7x .avc-heading strong{
+  background:linear-gradient(90deg,#61d869 0%,#f1cf6d 46%,#cf9a32 72%,#3da84a 100%)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+}
+html body #av-cert-l7x.av-cert-l7x .avc-cta{
+  border-color:transparent!important;
+  background:linear-gradient(145deg,#07110c,#041008) padding-box,linear-gradient(90deg,#39a846 0%,#61d869 23%,#f1cf6d 53%,#cf9a32 77%,#3da84a 100%) border-box!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.28),0 0 18px rgba(97,216,105,.07)!important;
+}
