@@ -1,0 +1,86 @@
+name: Cleanup homepage source once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.cleanup-homepage-source-20261102'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Clean homepage source
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          before = s
+
+          # Correct the visible Google-review count without touching "33+ ani".
+          s = s.replace('5,0/5 din 33 recenzii', '5,0/5 din 32 recenzii')
+          s = s.replace('5.0/5 din 33 recenzii', '5.0/5 din 32 recenzii')
+
+          # Keep only the canonical inline entity graph; the second entity graph was a legacy duplicate.
+          s = re.sub(
+              r'\s*<script\s+id=["\']astrovip-entity-graph["\'][^>]*>.*?</script>',
+              '\n', s, flags=re.I | re.S
+          )
+
+          # Update the canonical inline entity graph in static HTML.
+          pat = re.compile(r'(<script\s+id=["\']astrovip-entity-inline["\'][^>]*>)(.*?)(</script>)', re.I | re.S)
+          m = pat.search(s)
+          if not m:
+              raise SystemExit('astrovip-entity-inline not found')
+
+          data = json.loads(m.group(2))
+          graph = data.get('@graph', []) if isinstance(data, dict) else []
+          org = next((n for n in graph if isinstance(n, dict) and n.get('@id') == 'https://astrovip.ro/#organization'), None)
+          person = next((n for n in graph if isinstance(n, dict) and n.get('@id') == 'https://astrovip.ro/despre-astrovip/#catalin-smaranda'), None)
+          yt = 'https://www.youtube.com/@catalinsmaranda'
+
+          if org is not None:
+              same = org.setdefault('sameAs', [])
+              if yt not in same:
+                  same.append(yt)
+              org['aggregateRating'] = {
+                  '@type': 'AggregateRating',
+                  'ratingValue': '5.0',
+                  'bestRating': '5',
+                  'worstRating': '1',
+                  'reviewCount': '32'
+              }
+          if person is not None:
+              same = person.setdefault('sameAs', [])
+              if yt not in same:
+                  same.append(yt)
+
+          payload = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
+          s = s[:m.start()] + m.group(1) + payload + m.group(3) + s[m.end():]
+
+          if s == before:
+              print('No homepage source changes needed.')
+          else:
+              p.write_text(s, encoding='utf-8')
+              print('Homepage source cleaned.')
+          PY
+      - name: Commit cleanup
+        run: |
+          if git diff --quiet -- index.html; then
+            echo 'No changes to commit.'
+            exit 0
+          fi
+          git config user.name 'astrovip33-hub'
+          git config user.email 'astrovip33@gmail.com'
+          git add index.html
+          git commit -m 'Clean homepage duplicate entity schema and review count'
+          git push origin HEAD:main
