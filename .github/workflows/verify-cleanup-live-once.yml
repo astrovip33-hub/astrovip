@@ -1,0 +1,58 @@
+name: Verify cleanup live once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.verify-cleanup-live-20261102'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify final cleanup on public site
+        shell: bash
+        run: |
+          set -euo pipefail
+          ua='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/141 Safari/537.36'
+          ok=0
+          for i in 1 2 3 4 5 6; do
+            home="$(curl -fsSL --retry 2 -A "$ua" -H 'Cache-Control: no-cache' "https://astrovip.ro/?cleanup_verify=20261102-${i}" || true)"
+            slider="$(curl -fsSL --retry 2 -A "$ua" -H 'Cache-Control: no-cache' "https://astrovip.ro/assets/services-slider-20261101.js?cleanup_verify=20261102-${i}" || true)"
+            motion="$(curl -fsSL --retry 2 -A "$ua" -H 'Cache-Control: no-cache' "https://astrovip.ro/assets/motion-lite.js?cleanup_verify=20261102-${i}" || true)"
+
+            if [ -n "$home" ] && \
+               grep -q 'data-network="youtube"' <<<"$home" && \
+               grep -q 'https://www.youtube.com/@catalinsmaranda' <<<"$home" && \
+               grep -q '"reviewCount":"32"' <<<"$home" && \
+               grep -q 'av-horoscop-entry' <<<"$home" && \
+               ! grep -q 'av-horoscop-mobile-entry' <<<"$home" && \
+               ! grep -q 'av-horoscop-teaser' <<<"$home" && \
+               ! grep -q 'id="astrovip-entity-graph"' <<<"$home" && \
+               [ -n "$slider" ] && ! grep -q 'catalinsmaranda' <<<"$slider" && \
+               [ -n "$motion" ] && ! grep -q 'syncEntityMeta' <<<"$motion" && \
+               ! grep -q 'stripe-payment-links' <<<"$motion"; then
+              ok=1
+              break
+            fi
+            sleep 10
+          done
+          if [ "$ok" -ne 1 ]; then
+            echo 'Final cleanup markers are not yet all public.' >&2
+            exit 1
+          fi
+          echo 'All final cleanup markers are public.'
+      - name: Remove verification workflow and trigger after success
+        shell: bash
+        run: |
+          git rm -f --ignore-unmatch .github/workflows/verify-cleanup-live-once.yml .verify-cleanup-live-20261102
+          git config user.name 'astrovip33-hub'
+          git config user.email 'astrovip33@gmail.com'
+          git commit -m 'Remove completed live cleanup verification workflow'
+          git push origin HEAD:main
