@@ -91,11 +91,11 @@ html,body{background:#030604!important}
 #av-home-payment-cta{padding:8px 12px 10px!important;background:#020403!important;border-top:1px solid rgba(237,204,113,.13)!important}
 #av-home-payment-cta .av-home-paybar-inner{padding:12px!important;gap:6px!important;border-radius:14px!important;background:linear-gradient(180deg,#07120b,#040805)!important;border:1px solid rgba(237,204,113,.18)!important;box-shadow:none!important}
 #studii-de-caz-home{padding:10px 0 12px!important;background:linear-gradient(180deg,#020403,#040705 50%,#020403)!important}
-#studii-de-caz-home>.av-about-home{margin:0 12px 10px!important;padding:0!important}
+#studii-de-caz-home>.av-about-home{margin:0 auto 10px!important;padding:0!important}
 #studii-de-caz-home .av-about-home-card{overflow:hidden!important;border-radius:16px!important;border:1px solid rgba(237,204,113,.18)!important;background:linear-gradient(180deg,#0a160f,#050c08)!important;box-shadow:none!important}
-#studii-de-caz-home .av-about-home-visual{margin:0!important;max-height:168px!important;overflow:hidden!important}
-#studii-de-caz-home .av-about-home-visual img{width:100%!important;height:168px!important;object-fit:cover!important;object-position:center 24%!important;filter:brightness(1.04) contrast(1.02) saturate(.96)!important}
-#studii-de-caz-home .av-about-home-copy{padding:13px 14px 14px!important}
+#studii-de-caz-home .av-about-home-visual{margin:0!important;height:auto!important;max-height:none!important;overflow:visible!important}
+#studii-de-caz-home .av-about-home-visual img{display:block!important;width:100%!important;height:auto!important;max-height:none!important;aspect-ratio:1229/1536!important;object-fit:contain!important;object-position:center!important;filter:none!important}
+#studii-de-caz-home .av-about-home-copy{padding:0!important}
 #studii-de-caz-home .av-about-home-kicker{margin:0 0 4px!important;font-size:9px!important;letter-spacing:1px!important;color:#72c67b!important}
 #studii-de-caz-home .av-about-home-copy h2{margin:0!important;font-size:21px!important;line-height:1.03!important;color:#fff5d7!important}#studii-de-caz-home .av-about-home-copy h2 span{color:#e7c96e!important}
 #studii-de-caz-home .av-about-home-lead{margin:7px 0 9px!important;font-size:11.5px!important;line-height:1.36!important;color:#e3e6df!important}
