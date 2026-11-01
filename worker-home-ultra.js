@@ -1,3 +1,4 @@
+import { planetaryHoursSnapshot } from './planetary-hours-state.mjs';
 import { horoscopeRoute, horoscopeResponse } from './horoscop-renderer.js';
 import baseWorker from './worker.js';
 import { mobileHome, mobileStyles, cardlessStyles } from './homepage-approved-layout.js';
@@ -152,6 +153,15 @@ html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-
 export default {
   async fetch(request,env,ctx){
     const url=new URL(request.url);
+    // Consolidate daily-horoscope aliases into the established canonical pages.
+    const dailyAlias=/^\/horoscop-zilnic(?:\/([^/]+))?\/?$/.exec(url.pathname);
+    if(dailyAlias&&(request.method==='GET'||request.method==='HEAD')){
+      const target='/horoscop-azi/'+(dailyAlias[1]?dailyAlias[1]+'/':'');
+      if(horoscopeRoute(target)){
+        const location=new URL(target,url);location.search=url.search;
+        return new Response(null,{status:301,headers:{Location:location.href,'Cache-Control':'public, max-age=3600'}});
+      }
+    }
     const dailyRoute=horoscopeRoute(url.pathname)||url.pathname==='/sitemap-core.xml';
     let sourceRequest=request;
     if(dailyRoute&&(request.method==='GET'||request.method==='HEAD')){
@@ -168,7 +178,7 @@ export default {
       let mobileHomeSeen=false;
       let desktopHeroSeen=false;
 
-      return new HTMLRewriter()
+      const rewritten=new HTMLRewriter()
         .on('html',{element(el){el.setAttribute('class',`${el.getAttribute('class')||''} av-ultra-home-production av-cardless-home av-premium-v9`)}})
         .on('#av-mobile-approved-home',{element(el){
           if(mobileHomeSeen){el.remove();return;}
@@ -201,6 +211,21 @@ export default {
         .on('link[rel="preload"][as="image"]',{element(el){const href=el.getAttribute('href')||'';if(href.includes('astrovip-hero-premium-mobile-20261001.webp'))el.setAttribute('media','(max-width:820px)');if(href.includes('astrovip-hero-desktop-final-20261002.avif'))el.setAttribute('media','(min-width:821px)')}})
         .on('script[src^="/assets/home-ultra-production-20261010-v5-fix.js"]',{element(el){el.remove()}})
         .transform(response);
+      // A second pass also sees the mobile/desktop cards inserted above.
+      const snapshot=planetaryHoursSnapshot();
+      if(!snapshot)return rewritten;
+      const initial=new HTMLRewriter();
+      for(const prefix of ['avPh','avmPh']){
+        for(const [key,value] of Object.entries({Glyph:snapshot.glyph,Planet:snapshot.planet,Range:snapshot.range,Next:snapshot.next,Countdown:snapshot.count})){
+          initial.on('#'+prefix+key,{element(el){el.setInnerContent(value)}});
+        }
+      }
+      const rendered=initial.transform(rewritten);
+      const headers=new Headers(rendered.headers);
+      // Do not serve an hour from an earlier cached HTML response.
+      headers.set('Cache-Control','no-store');
+      headers.delete('ETag');headers.delete('Last-Modified');headers.delete('Content-Length');
+      return new Response(rendered.body,{status:rendered.status,headers});
     }
     return response;
   }
