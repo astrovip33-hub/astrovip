@@ -5,7 +5,7 @@
     <section class="av-about-home" aria-labelledby="av-about-home-title">
       <div class="av-about-home-card">
         <figure class="av-about-home-visual">
-          <img src="/assets/astrovip-despre-mine-20261020-960.webp" srcset="/assets/astrovip-despre-mine-20261020-480.webp 480w, /assets/astrovip-despre-mine-20261020-960.webp 960w, /assets/astrovip-despre-mine-20261020-1536.webp 1536w" sizes="(max-width:360px) calc(100vw - 40px), (max-width:820px) calc(100vw - 54px), 320px" width="1536" height="881" loading="lazy" decoding="async" alt="AstroVip — Astrologie Premium, Cătălin Smaranda, astrolog">
+          <img src="/assets/astrovip-despre-mine-20261101-960.webp" srcset="/assets/astrovip-despre-mine-20261101-480.webp 480w, /assets/astrovip-despre-mine-20261101-960.webp 960w, /assets/astrovip-despre-mine-20261101-1229.webp 1229w" sizes="(max-width:360px) calc(100vw - 18px), (max-width:820px) calc(100vw - 24px), 680px" width="1229" height="1536" loading="lazy" decoding="async" alt="Despre mine — Cătălin Smaranda, astrolog autorizat și licențiat în Psihologie. 33+ ani experiență: timing, relații, carieră, astrocartografie și Local Space.">
         </figure>
         <div class="av-about-home-copy">
           <p class="av-about-home-kicker">DESPRE MINE</p>
@@ -49,6 +49,12 @@
         #studii-de-caz-home .av-about-home-card{grid-template-columns:minmax(0,1fr);gap:9px;padding:11px 10px}
         #studii-de-caz-home .av-about-home-lead{font-size:14.5px!important;line-height:1.44!important;font-weight:650!important}
       }
+      #studii-de-caz-home .av-about-home{max-width:680px}
+      #studii-de-caz-home .av-about-home-card{display:block;padding:0;border:0;background:none;box-shadow:none}
+      #studii-de-caz-home .av-about-home-card:before{display:none}
+      #studii-de-caz-home .av-about-home-visual{border:0;border-radius:18px;background:transparent;box-shadow:none}
+      #studii-de-caz-home .av-about-home-visual img{aspect-ratio:1229/1536;object-fit:contain;height:auto}
+      #studii-de-caz-home .av-about-home-copy{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
     `;
     document.head.appendChild(style);
   };
@@ -189,6 +195,12 @@
         #studii-de-caz-home .av-case-lux-link{font-size:6px}
       }
       @media(prefers-reduced-motion:reduce){#studii-de-caz-home .av-case-lux-card,#studii-de-caz-home .av-case-lux-visual img{transition:none!important}}
+      #studii-de-caz-home .av-about-home{max-width:680px}
+      #studii-de-caz-home .av-about-home-card{display:block;padding:0;border:0;background:none;box-shadow:none}
+      #studii-de-caz-home .av-about-home-card:before{display:none}
+      #studii-de-caz-home .av-about-home-visual{border:0;border-radius:18px;background:transparent;box-shadow:none}
+      #studii-de-caz-home .av-about-home-visual img{aspect-ratio:1229/1536;object-fit:contain;height:auto}
+      #studii-de-caz-home .av-about-home-copy{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
     `;
     document.head.appendChild(style);
   };
