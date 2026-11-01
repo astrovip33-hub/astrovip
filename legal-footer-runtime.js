@@ -7,6 +7,8 @@ export function addLegalFooter(rewriter, pathname) {
   if (/^\/(?:termeni-si-conditii|retragere-din-contract)\//.test(pathname)) return rewriter;
   let appended = false;
   return rewriter
+    // Direct static Stripe Payment Links stay unavailable until checkout is tied to a booking and the contractual consents.
+    .on('a[href*="buy.stripe.com"]', {element(el) {el.remove();}})
     .on('head', {element(el) {el.append('<link rel="stylesheet" href="/assets/legal-premium-20261028.css">', {html: true});}})
     .on('.avf-legal nav', {element(el) {el.setInnerContent(LEGAL_LINKS + '<button type="button" class="av-consent__manage" id="av-consent-manage" hidden>Setări cookie</button>', {html: true});}})
     .on('footer', {element(el) {
