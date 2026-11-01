@@ -12,13 +12,13 @@ jobs:
       - name: Checkout exact live commit
         uses: actions/checkout@v4
         with:
-          ref: c7ee68ee
+          ref: c7ee68eeccfcee88e4f21b0372c9ea5c53d85cd7
           fetch-depth: 1
       - name: Prepare clean site backup
         shell: bash
         run: |
           mkdir -p "$RUNNER_TEMP/astrovip-backup"
-          git archive c7ee68ee | tar -x -C "$RUNNER_TEMP/astrovip-backup"
+          git archive c7ee68eeccfcee88e4f21b0372c9ea5c53d85cd7 | tar -x -C "$RUNNER_TEMP/astrovip-backup"
       - name: Upload backup artifact
         uses: actions/upload-artifact@v4
         with:
@@ -27,3 +27,4 @@ jobs:
           retention-days: 7
           compression-level: 6
           if-no-files-found: error
+
