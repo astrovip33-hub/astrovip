@@ -139,7 +139,7 @@
         <div class="av-midpoint-shell">
           <div class="av-midpoint-head">
             <div><p class="av-midpoint-kicker">SERIA ASTROVIP · PUNCTE MIJLOCII</p><h2 id="av-midpoint-title">Puncte Mijlocii</h2></div>
-            <span class="av-midpoint-count">02 · ANALIZE</span>
+            <span class="av-midpoint-count">03 · ANALIZE</span>
           </div>
           <div class="av-midpoint-viewport" aria-label="Slider Puncte Mijlocii">
             <div class="av-midpoint-track">
@@ -163,6 +163,17 @@
                   <p class="av-midpoint-planets">SOARE · LUNĂ · MERCUR · VENUS · MARTE · JUPITER · SATURN · NEPTUN</p>
                   <span class="av-midpoint-cta">Deschide analiza completă <span aria-hidden="true">↗</span></span>
                   <p class="av-midpoint-note">Uranus și Pluto nu sunt relistate ca planete de contact.</p>
+                </div>
+              </a>
+              <a class="av-midpoint-slide" href="/puncte-mijlocii/jupiter-pluto/" aria-label="Deschide analiza punctului mijlociu Jupiter Pluto">
+                <div class="av-midpoint-art"><img src="/assets/puncte-mijlocii-jupiter-pluto-premium.svg" alt="Jupiter, Pluto și punctul lor mijlociu" width="1080" height="1920" loading="lazy" decoding="async"></div>
+                <div class="av-midpoint-copy">
+                  <p class="av-midpoint-eyebrow">PUNCT MIJLOCIU · 03</p>
+                  <h3>JUPITER / PLUTO <span>expansiune, putere și transformare</span></h3>
+                  <p class="av-midpoint-desc">Jupiter amplifică, Pluto concentrează și transformă: un midpoint al resurselor, ambiției, influenței și schimbărilor de mare amploare.</p>
+                  <p class="av-midpoint-planets">SOARE · LUNĂ · MERCUR · VENUS · MARTE · SATURN · URANUS · NEPTUN · TRANSPLUTO · ASC/DSC · MC/IC</p>
+                  <span class="av-midpoint-cta">Deschide analiza completă <span aria-hidden="true">↗</span></span>
+                  <p class="av-midpoint-note">Jupiter și Pluto nu sunt relistate ca factori de contact.</p>
                 </div>
               </a>
             </div>
