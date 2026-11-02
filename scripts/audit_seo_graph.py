@@ -3,6 +3,7 @@
 
 from collections import defaultdict, deque
 import json
+import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
@@ -121,6 +122,18 @@ def main():
             if source in sitemap and destination.endswith("/") and not local_path(destination).exists():
                 if not urlsplit(destination).path.startswith("/api/"):
                     errors.append(f"Broken internal page link: {source} -> {destination}")
+
+    # The live homepage also injects navigation/cards from this footer script.
+    # Include its literal same-origin hrefs in the graph so the audit models the
+    # rendered homepage instead of falsely marking JS-injected pages as orphans.
+    injected_home_script = Path("assets/footer-orbit-20261026.js")
+    if injected_home_script.exists():
+        script_text = injected_home_script.read_text(encoding="utf-8", errors="replace")
+        for href in re.findall(r'href=["\'](/[^"\']+/)["\']', script_text):
+            destination = BASE + unquote(href).lstrip("/")
+            if destination != BASE:
+                incoming[destination].add(BASE)
+                outgoing[BASE].add(destination)
 
     for url in sitemap:
         if not local_path(url).exists():
