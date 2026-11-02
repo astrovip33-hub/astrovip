@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img" aria-labelledby="t d">
+<title id="t">Uranus Pluto — punct mijlociu AstroVip</title>
+<desc id="d">Compoziție cosmică premium în albastru marin, cyan, violet și auriu, cu Uranus și Pluto unite printr-un punct mijlociu central.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#01040b"/><stop offset=".46" stop-color="#07152c"/><stop offset="1" stop-color="#02040b"/></linearGradient>
+  <radialGradient id="neb1"><stop stop-color="#16c8ff" stop-opacity=".34"/><stop offset="1" stop-color="#16c8ff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="neb2"><stop stop-color="#8d52ff" stop-opacity=".33"/><stop offset="1" stop-color="#8d52ff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="core"><stop stop-color="#fff5bf"/><stop offset=".24" stop-color="#e9c45f"/><stop offset=".55" stop-color="#60ddff"/><stop offset="1" stop-color="#082341" stop-opacity="0"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0aa"/><stop offset=".45" stop-color="#d9a83d"/><stop offset="1" stop-color="#fff3be"/></linearGradient>
+  <linearGradient id="electric" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#42e7ff"/><stop offset=".5" stop-color="#c4f8ff"/><stop offset="1" stop-color="#8b55ff"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="48"/></filter>
+  <pattern id="stars" width="170" height="170" patternUnits="userSpaceOnUse"><circle cx="18" cy="30" r="1.8" fill="#fff" opacity=".7"/><circle cx="102" cy="68" r="1.1" fill="#8ee7ff" opacity=".8"/><circle cx="148" cy="122" r="1.5" fill="#f8db80" opacity=".65"/><circle cx="57" cy="143" r=".9" fill="#fff" opacity=".55"/></pattern>
+</defs>
+<rect width="1080" height="1920" fill="url(#bg)"/>
+<rect width="1080" height="1920" fill="url(#stars)" opacity=".7"/>
+<circle cx="230" cy="520" r="430" fill="url(#neb1)" filter="url(#soft)"/>
+<circle cx="865" cy="1300" r="470" fill="url(#neb2)" filter="url(#soft)"/>
+<ellipse cx="540" cy="960" rx="410" ry="620" fill="none" stroke="#7dcfff" stroke-opacity=".12" stroke-width="2"/>
+<ellipse cx="540" cy="960" rx="330" ry="520" fill="none" stroke="#e7c767" stroke-opacity=".10" stroke-width="2"/>
+<path d="M190 650 C360 760 370 1160 540 960 C710 760 720 1160 890 1270" fill="none" stroke="url(#electric)" stroke-width="5" opacity=".68"/>
+<path d="M205 1270 C355 1130 405 775 540 960 C675 1145 725 790 875 650" fill="none" stroke="#d7b95e" stroke-opacity=".34" stroke-width="2"/>
+<g transform="translate(310 610)" filter="url(#glow)">
+  <circle r="118" fill="#05152a" stroke="#57dfff" stroke-width="3"/>
+  <circle r="96" fill="none" stroke="#ffffff" stroke-opacity=".12"/>
+  <text x="0" y="34" text-anchor="middle" font-size="126" font-family="Georgia,serif" fill="#8eeaff">♅</text>
+</g>
+<g transform="translate(770 1310)" filter="url(#glow)">
+  <circle r="118" fill="#110d26" stroke="#aa79ff" stroke-width="3"/>
+  <circle r="96" fill="none" stroke="#ffffff" stroke-opacity=".12"/>
+  <text x="0" y="34" text-anchor="middle" font-size="126" font-family="Georgia,serif" fill="#d2b8ff">♇</text>
+</g>
+<g transform="translate(540 960)" filter="url(#glow)">
+  <circle r="172" fill="url(#core)" opacity=".72"/>
+  <circle r="88" fill="#061426" stroke="url(#gold)" stroke-width="4"/>
+  <path d="M0-55 L55 0 L0 55 L-55 0 Z" fill="none" stroke="url(#gold)" stroke-width="3"/>
+  <circle r="13" fill="#fff4b9"/>
+</g>
+<g font-family="Inter,Arial,sans-serif" text-anchor="middle">
+  <text x="540" y="210" fill="#e9c967" font-size="30" font-weight="800" letter-spacing="8">ASTROVIP · PUNCTE MIJLOCII</text>
+  <text x="540" y="310" fill="#ffffff" font-size="76" font-family="Georgia,serif" font-weight="700">URANUS / PLUTO</text>
+  <text x="540" y="370" fill="#93dfff" font-size="25" font-weight="700" letter-spacing="5">RUPTURĂ · TRANSFORMARE · REGENERARE</text>
+  <text x="310" y="780" fill="#90e9ff" font-size="28" font-weight="800" letter-spacing="4">URANUS</text>
+  <text x="770" y="1490" fill="#d3b8ff" font-size="28" font-weight="800" letter-spacing="4">PLUTO</text>
+  <text x="540" y="1105" fill="#f5dda0" font-size="22" font-weight="800" letter-spacing="5">PUNCTUL MIJLOCIU</text>
+  <text x="540" y="1740" fill="#afc7d8" font-size="23" font-weight="600" letter-spacing="3">PUTEREA DE A SCHIMBA STRUCTURA DIN RĂDĂCINĂ</text>
+</g>
+<rect x="28" y="28" width="1024" height="1864" rx="44" fill="none" stroke="url(#gold)" stroke-opacity=".34" stroke-width="2"/>
+</svg>
