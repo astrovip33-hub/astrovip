@@ -1,7 +1,11 @@
 (()=>{
   'use strict';
   const section=document.getElementById('astrovip-puncte-mijlocii');
-  if(!section||section.dataset.midpointReady==='1') return;
+  if(!section) return;
+  section.style.setProperty('display','block','important');
+  section.style.setProperty('visibility','visible','important');
+  section.style.setProperty('opacity','1','important');
+  if(section.dataset.midpointReady==='1') return;
   const viewport=section.querySelector('.av-midpoint-viewport');
   const track=section.querySelector('.av-midpoint-track');
   const prev=section.querySelector('[data-midpoint-prev]');
