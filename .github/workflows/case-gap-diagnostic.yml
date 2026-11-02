@@ -1,19 +1,21 @@
-name: Case slider gap diagnostic
+name: Case slider live midpoint comparison
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["Deploy AstroVip to Cloudflare Worker"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: case-slider-gap-diagnostic
+  group: case-slider-live-midpoint-comparison
   cancel-in-progress: true
 
 jobs:
-  mobile-geometry:
+  compare-mobile:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Install browser driver
@@ -23,7 +25,7 @@ jobs:
           command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
           npm install --no-save --ignore-scripts puppeteer-core@24.26.1
 
-      - name: Inspect live 390px case slider geometry
+      - name: Compare live Case Studies with Midpoints at 390px and 360px
         shell: bash
         run: |
           set -euo pipefail
@@ -32,50 +34,78 @@ jobs:
           const fs=require('fs');
           (async()=>{
             const executablePath=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'].find(p=>fs.existsSync(p));
+            if(!executablePath) throw new Error('Chrome/Chromium executable not found');
             const browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
-            const page=await browser.newPage();
-            await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
-            await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipGapDiagnostic/1.0');
-            await page.goto(`https://astrovip.ro/?case-gap-diagnostic=${Date.now()}`,{waitUntil:'networkidle2',timeout:90000});
-            await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
-            await page.evaluate(()=>document.getElementById('av-consent-reject')?.click());
-            await new Promise(r=>setTimeout(r,4000));
-            const data=await page.evaluate(()=>{
-              const s=document.getElementById('studii-de-caz-home');
-              const wrap=s?.querySelector(':scope > .wrap');
-              const frame=s?.querySelector('.av-case-showcase-frame');
-              const track=s?.querySelector('.av-case-showcase-grid');
-              const nav=s?.querySelector('.av-case-mobile-nav-v7');
-              const ctaLink=frame?.querySelector('a[href="/studii-de-caz/"]');
-              const cta=ctaLink?.parentElement;
-              const rect=el=>{if(!el)return null;const r=el.getBoundingClientRect(),c=getComputedStyle(el);return{tag:el.tagName,cls:el.className||'',top:+r.top.toFixed(1),bottom:+r.bottom.toFixed(1),height:+r.height.toFixed(1),display:c.display,position:c.position,marginTop:c.marginTop,marginBottom:c.marginBottom,paddingTop:c.paddingTop,paddingBottom:c.paddingBottom,minHeight:c.minHeight,maxHeight:c.maxHeight,heightCss:c.height,overflow:c.overflow,gridTemplateRows:c.gridTemplateRows}};
-              return {
-                gapFix:s?.dataset.caseGapFix||'',
-                section:rect(s),wrap:rect(wrap),frame:rect(frame),track:rect(track),cta:rect(cta),nav:rect(nav),
-                directFrameChildren:frame?[...frame.children].map(rect):[],
-                directSectionChildren:s?[...s.children].map(rect):[],
-                trackToCta:track&&cta?+(cta.getBoundingClientRect().top-track.getBoundingClientRect().bottom).toFixed(1):null,
-                ctaToNav:cta&&nav?+(nav.getBoundingClientRect().top-cta.getBoundingClientRect().bottom).toFixed(1):null,
-                markerPresent:!!document.getElementById('av-case-gap-fix-20261102'),
-                scriptPresent:!!document.getElementById('av-case-gap-fix-script-20261102')
-              };
-            });
-            console.log('CASE GAP GEOMETRY',JSON.stringify(data,null,2));
-            const section=await page.$('#studii-de-caz-home');
-            await section.screenshot({path:'/tmp/case-gap-diagnostic.png'});
+            const errors=[];
+            for(const width of [390,360]){
+              const page=await browser.newPage();
+              await page.setViewport({width,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+              await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipLiveCompare/1.0');
+              await page.goto(`https://astrovip.ro/?case-live-compare=${width}-${Date.now()}`,{waitUntil:'networkidle2',timeout:90000});
+              await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
+              await page.waitForSelector('#astrovip-puncte-mijlocii',{visible:true,timeout:30000});
+              await page.waitForSelector('#av-case-midpoint-measured-production-v1',{timeout:30000});
+              await page.evaluate(()=>document.getElementById('av-consent-reject')?.click());
+              await page.waitForFunction(()=>{
+                const s=document.getElementById('studii-de-caz-home');
+                if(s?.dataset.caseMidpointSync!=='1') return false;
+                const c=s.querySelector('.av-case-showcase-card')?.getBoundingClientRect();
+                const v=s.querySelector('.av-case-showcase-visual')?.getBoundingClientRect();
+                const p=s.querySelector('.av-case-showcase-copy')?.getBoundingClientRect();
+                const m=document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-slide')?.getBoundingClientRect();
+                const a=document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-art')?.getBoundingClientRect();
+                const q=document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-copy')?.getBoundingClientRect();
+                return c&&v&&p&&m&&a&&q&&Math.abs(c.width-m.width)<2&&Math.abs(c.height-m.height)<2&&Math.abs(v.width-a.width)<2&&Math.abs(p.width-q.width)<2;
+              },{timeout:20000});
+              const data=await page.evaluate(()=>{
+                const s=document.getElementById('studii-de-caz-home');
+                const t=s?.querySelector('.av-case-showcase-grid');
+                const c=t?.querySelector('.av-case-showcase-card');
+                const v=c?.querySelector('.av-case-showcase-visual');
+                const p=c?.querySelector('.av-case-showcase-copy');
+                const mt=document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-track');
+                const m=mt?.querySelector('.av-midpoint-slide');
+                const a=m?.querySelector('.av-midpoint-art');
+                const q=m?.querySelector('.av-midpoint-copy');
+                const rect=e=>e?.getBoundingClientRect();
+                const tr=rect(t),cr=rect(c),vr=rect(v),pr=rect(p),mtr=rect(mt),mr=rect(m),ar=rect(a),qr=rect(q);
+                const tcss=t?getComputedStyle(t):null;
+                return {
+                  sync:s?.dataset.caseMidpointSync||'',
+                  marker:!!document.getElementById('av-case-midpoint-measured-production-v1'),
+                  caseTrack:{w:tr?.width||0,h:tr?.height||0,gap:tcss?.gap||'',pl:tcss?.paddingLeft||'',pr:tcss?.paddingRight||''},
+                  caseCard:{w:cr?.width||0,h:cr?.height||0},
+                  caseVisual:{w:vr?.width||0,h:vr?.height||0},
+                  caseCopy:{w:pr?.width||0,h:pr?.height||0},
+                  midTrack:{w:mtr?.width||0,h:mtr?.height||0},
+                  midCard:{w:mr?.width||0,h:mr?.height||0},
+                  midVisual:{w:ar?.width||0,h:ar?.height||0},
+                  midCopy:{w:qr?.width||0,h:qr?.height||0}
+                };
+              });
+              console.log('LIVE COMPARE',width,JSON.stringify(data));
+              const tol=2;
+              if(data.sync!=='1'||!data.marker) errors.push(width+': production sync marker missing');
+              if(Math.abs(data.caseCard.w-data.midCard.w)>tol) errors.push(width+': card width '+data.caseCard.w+' vs '+data.midCard.w);
+              if(Math.abs(data.caseCard.h-data.midCard.h)>tol) errors.push(width+': card height '+data.caseCard.h+' vs '+data.midCard.h);
+              if(Math.abs(data.caseVisual.w-data.midVisual.w)>tol) errors.push(width+': visual width '+data.caseVisual.w+' vs '+data.midVisual.w);
+              if(Math.abs(data.caseCopy.w-data.midCopy.w)>tol) errors.push(width+': copy width '+data.caseCopy.w+' vs '+data.midCopy.w);
+              if(data.caseTrack.gap!=='0px') errors.push(width+': gap='+data.caseTrack.gap);
+              if(data.caseTrack.pl!=='0px'||data.caseTrack.pr!=='0px') errors.push(width+': padding='+data.caseTrack.pl+'/'+data.caseTrack.pr);
+              await page.screenshot({path:`/tmp/case-live-compare-${width}.png`,fullPage:true});
+              await page.close();
+            }
             await browser.close();
-            if(!data.markerPresent||!data.scriptPresent) throw new Error('Production gap-fix wrapper is not present in rendered homepage');
-            if(data.trackToCta===null||data.trackToCta>45) throw new Error(`Track-to-CTA gap too large: ${data.trackToCta}px`);
-            if(data.track?.height>235) throw new Error(`Track too tall: ${data.track?.height}px`);
-            if(data.section?.height>620) throw new Error(`Case section still too tall: ${data.section?.height}px`);
+            if(errors.length){console.error('LIVE DIMENSION MISMATCH:',errors.join(' | '));process.exit(1)}
+            console.log('LIVE MATCH OK: Case Studies match Midpoints pixel-for-pixel at 390px and 360px.');
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
 
-      - name: Upload diagnostic screenshot
+      - name: Upload live comparison screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: case-gap-diagnostic
-          path: /tmp/case-gap-diagnostic.png
+          name: case-vs-midpoint-live
+          path: /tmp/case-live-compare-*.png
           if-no-files-found: warn
-          retention-days: 3
+          retention-days: 7
