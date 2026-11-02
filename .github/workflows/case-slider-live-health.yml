@@ -26,16 +26,20 @@ jobs:
           for ATTEMPT in $(seq 1 30); do
             PAGE_URL="https://astrovip.ro/?case-slider-health=${GITHUB_SHA}&attempt=${ATTEMPT}"
             ASSET_URL="https://astrovip.ro/assets/home-case-studies-premium-20261014.js?health=${GITHUB_SHA}&attempt=${ATTEMPT}"
+            CSS_URL="https://astrovip.ro/assets/case-studies-mobile-lux-v3-20261014.css?health=${GITHUB_SHA}&attempt=${ATTEMPT}"
             HTML=$(curl -fsSL --retry 2 --retry-delay 2 "$PAGE_URL" || true)
             ASSET=$(curl -fsSL --retry 2 --retry-delay 2 "$ASSET_URL" || true)
+            CSS=$(curl -fsSL --retry 2 --retry-delay 2 "$CSS_URL" || true)
             if grep -q 'data-av-slider-shell="v8"' <<< "$HTML" && \
                grep -q 'av-case-slider-v8-inline' <<< "$HTML" && \
-               grep -Fq "if (section.querySelector('.av-case-showcase-grid')) return;" <<< "$ASSET"; then
-              echo "V8 HTML and mobile-preservation fix are live on attempt ${ATTEMPT}."
+               grep -Fq "if (section.querySelector('.av-case-showcase-grid')) return;" <<< "$ASSET" && \
+               grep -Fq 'flex:0 0 100%!important' <<< "$CSS" && \
+               ! grep -Fq 'flex:0 0 88%!important' <<< "$CSS"; then
+              echo "Full-width midpoint geometry is live on attempt ${ATTEMPT}."
               OK=1
               break
             fi
-            echo "Waiting for V8 + preservation asset (${ATTEMPT}/30)."
+            echo "Waiting for full-width midpoint geometry (${ATTEMPT}/30)."
             sleep 5
           done
           test "$OK" = "1"
@@ -47,7 +51,7 @@ jobs:
           command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
           npm install --no-save --ignore-scripts puppeteer-core@24.26.1
 
-      - name: Verify live mobile slider interaction
+      - name: Verify live mobile slider matches midpoint footprint
         shell: bash
         run: |
           set -euo pipefail
@@ -60,27 +64,39 @@ jobs:
             const browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
             const page=await browser.newPage();
             await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
-            await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipSliderHealth/1.0');
+            await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipSliderHealth/2.0');
             page.on('console',msg=>console.log('BROWSER CONSOLE',msg.type(),msg.text()));
             page.on('pageerror',err=>console.log('BROWSER PAGEERROR',err.message));
             await page.goto(`https://astrovip.ro/?case-slider-browser=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:90000});
             await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
-            await new Promise(r=>setTimeout(r,2000));
-            // Dismiss optional tracking before clicking the navigation; the consent
-            // dialog can cover the slider controls at a phone viewport.
+            await new Promise(r=>setTimeout(r,2200));
             await page.evaluate(()=>document.getElementById('av-consent-reject')?.click());
             await page.waitForFunction(()=>document.getElementById('av-consent')?.hidden!==false,{timeout:10000});
+            await page.evaluate(()=>document.querySelector('#studii-de-caz-home')?.scrollIntoView({block:'center'}));
+            await new Promise(r=>setTimeout(r,350));
 
             const read=()=>page.evaluate(() => {
               const s=document.querySelector('#studii-de-caz-home');
+              const wrap=s?.querySelector(':scope > .wrap');
+              const frame=s?.querySelector('.av-case-showcase-frame');
               const t=s?.querySelector('.av-case-showcase-grid');
               const cards=t?[...t.querySelectorAll('.av-case-showcase-card')]:[];
               const nav=s?.querySelector('.av-case-mobile-nav-v7');
-              const tr=t?.getBoundingClientRect(), cr=cards[0]?.getBoundingClientRect(), nr=nav?.getBoundingClientRect();
+              const tr=t?.getBoundingClientRect(), cr=cards[0]?.getBoundingClientRect(), wr=wrap?.getBoundingClientRect(), fr=frame?.getBoundingClientRect(), nr=nav?.getBoundingClientRect();
+              const css=t?getComputedStyle(t):null;
+              const cardCss=cards[0]?getComputedStyle(cards[0]):null;
               return {
                 marker:s?.dataset.avSliderShell||'', initialized:s?.dataset.avSliderV8||'',
+                viewport:innerWidth,
                 sectionHeight:s?Math.round(s.getBoundingClientRect().height):0,
-                trackDisplay:t?getComputedStyle(t).display:'missing', overflowX:t?getComputedStyle(t).overflowX:'missing',
+                wrapWidth:wr?Math.round(wr.width):0,
+                frameWidth:fr?Math.round(fr.width):0,
+                trackWidth:tr?Math.round(tr.width):0,
+                trackHeight:tr?Math.round(tr.height):0,
+                cardWidth:cr?Math.round(cr.width):0,
+                cardHeight:cr?Math.round(cr.height):0,
+                trackDisplay:css?.display||'missing', overflowX:css?.overflowX||'missing', gap:css?.gap||'missing', paddingLeft:css?.paddingLeft||'missing', paddingRight:css?.paddingRight||'missing',
+                flexBasis:cardCss?.flexBasis||'missing', maxWidth:cardCss?.maxWidth||'missing',
                 clientWidth:t?.clientWidth||0, scrollWidth:t?.scrollWidth||0, scrollLeft:Math.round(t?.scrollLeft||0),
                 cards:cards.length, cardRatio:tr&&cr?+(cr.width/tr.width).toFixed(3):0,
                 navDisplay:nav?getComputedStyle(nav).display:'missing', navHeight:nr?Math.round(nr.height):0,
@@ -95,12 +111,14 @@ jobs:
             const errors=[];
             if(before.marker!=='v8') errors.push(`marker=${before.marker}`);
             if(before.initialized!=='1') errors.push(`initialized=${before.initialized}`);
-            if(before.sectionHeight<300) errors.push(`sectionHeight=${before.sectionHeight}`);
             if(before.trackDisplay!=='flex') errors.push(`display=${before.trackDisplay}`);
             if(!['auto','scroll'].includes(before.overflowX)) errors.push(`overflowX=${before.overflowX}`);
-            if(before.scrollWidth<=before.clientWidth+80) errors.push(`scroll=${before.clientWidth}/${before.scrollWidth}`);
             if(before.cards<3) errors.push(`cards=${before.cards}`);
-            if(before.cardRatio<0.70||before.cardRatio>0.92) errors.push(`cardRatio=${before.cardRatio}`);
+            if(before.cardRatio<0.985||before.cardRatio>1.015) errors.push(`cardRatio=${before.cardRatio}`);
+            if(Math.abs(before.cardWidth-before.trackWidth)>3) errors.push(`width=${before.cardWidth}/${before.trackWidth}`);
+            if(before.cardHeight!==215||before.trackHeight!==215) errors.push(`height=${before.cardHeight}/${before.trackHeight}`);
+            if(before.gap!=='0px') errors.push(`gap=${before.gap}`);
+            if(before.paddingLeft!=='0px'||before.paddingRight!=='0px') errors.push(`padding=${before.paddingLeft}/${before.paddingRight}`);
             if(before.navDisplay==='none'||before.navDisplay==='missing'||before.navHeight<30) errors.push(`nav=${before.navDisplay}/${before.navHeight}`);
             if(before.dots!==before.cards) errors.push(`dots=${before.dots}/${before.cards}`);
             if(before.activeDots!==1) errors.push(`activeDots=${before.activeDots}`);
@@ -121,7 +139,8 @@ jobs:
             const after=await read();
             console.log('SLIDER AFTER NEXT',JSON.stringify(after));
             if(before.initialized==='1'){
-              if(after.scrollLeft<=before.scrollLeft+30) errors.push(`NEXT movement=${before.scrollLeft}->${after.scrollLeft}`);
+              const moved=after.scrollLeft-before.scrollLeft;
+              if(Math.abs(moved-before.clientWidth)>5) errors.push(`NEXT movement=${moved}, expected=${before.clientWidth}`);
               if(after.count!==`2 / ${before.cards}`) errors.push(`NEXT count=${after.count}`);
               const activeIndex=await page.evaluate(()=>[...document.querySelectorAll('#studii-de-caz-home .av-case-dot-v7')].findIndex(x=>x.classList.contains('is-active')));
               if(after.activeDots!==1||activeIndex!==1) errors.push(`NEXT active=${after.activeDots}/${activeIndex}`);
@@ -129,7 +148,7 @@ jobs:
             await section.screenshot({path:'/tmp/case-slider-mobile-after-next.png'});
             await browser.close();
             if(errors.length){console.error('LIVE MOBILE SLIDER FAILED:',errors.join(' | '));process.exit(1);}
-            console.log(`LIVE MOBILE SLIDER OK: ${before.cards} cards; ratio=${before.cardRatio}; horizontal=${before.clientWidth}->${before.scrollWidth}; NEXT=${before.scrollLeft}->${after.scrollLeft}; count=${after.count}`);
+            console.log(`LIVE MOBILE SLIDER OK: ${before.cards} cards; ratio=${before.cardRatio}; card=${before.cardWidth}x${before.cardHeight}; track=${before.trackWidth}x${before.trackHeight}; NEXT=${before.scrollLeft}->${after.scrollLeft}; count=${after.count}`);
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
 
