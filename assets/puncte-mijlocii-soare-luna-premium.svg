@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img" aria-labelledby="title desc">
+  <title id="title">Soare Lună — Punct Mijlociu AstroVip</title>
+  <desc id="desc">Compoziție premium cu Soarele, Luna și punctul mijlociu central, pe fundal cosmic bleumarin și auriu.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#020713"/>
+      <stop offset="0.45" stop-color="#06162b"/>
+      <stop offset="1" stop-color="#02050b"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="48%" r="55%">
+      <stop offset="0" stop-color="#2875a6" stop-opacity=".22"/>
+      <stop offset=".52" stop-color="#12365b" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#020713" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sun" cx="38%" cy="34%" r="68%">
+      <stop offset="0" stop-color="#fff4b0"/>
+      <stop offset=".3" stop-color="#ffd76a"/>
+      <stop offset=".68" stop-color="#e29b28"/>
+      <stop offset="1" stop-color="#7b3f0c"/>
+    </radialGradient>
+    <radialGradient id="moon" cx="34%" cy="28%" r="72%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".38" stop-color="#dceaff"/>
+      <stop offset=".73" stop-color="#8da6c1"/>
+      <stop offset="1" stop-color="#40556d"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8b6222"/>
+      <stop offset=".24" stop-color="#f7e6a1"/>
+      <stop offset=".55" stop-color="#d7aa4b"/>
+      <stop offset=".82" stop-color="#fff0b5"/>
+      <stop offset="1" stop-color="#8b6222"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9a946" stop-opacity=".15"/>
+      <stop offset=".5" stop-color="#fff2b7" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#7ac8ef" stop-opacity=".15"/>
+    </linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="14" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+    <pattern id="stars" width="120" height="120" patternUnits="userSpaceOnUse">
+      <circle cx="18" cy="24" r="1.2" fill="#fff" opacity=".45"/>
+      <circle cx="91" cy="39" r="1.6" fill="#d9efff" opacity=".35"/>
+      <circle cx="58" cy="93" r="1" fill="#f4d782" opacity=".42"/>
+      <circle cx="112" cy="109" r=".8" fill="#fff" opacity=".28"/>
+    </pattern>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <rect width="1080" height="1920" fill="url(#stars)" opacity=".9"/>
+  <ellipse cx="540" cy="930" rx="520" ry="710" fill="url(#halo)"/>
+  <circle cx="540" cy="930" r="420" fill="none" stroke="#6db6df" stroke-opacity=".12" stroke-width="2"/>
+  <circle cx="540" cy="930" r="340" fill="none" stroke="#f1d37f" stroke-opacity=".14" stroke-width="2" stroke-dasharray="5 18"/>
+  <circle cx="540" cy="930" r="250" fill="none" stroke="#9edaff" stroke-opacity=".1" stroke-width="1.5"/>
+
+  <g opacity=".55">
+    <path d="M170 390H910" stroke="url(#gold)" stroke-width="1"/>
+    <path d="M245 424H835" stroke="#8fcbe9" stroke-opacity=".26" stroke-width="1"/>
+  </g>
+
+  <text x="540" y="315" fill="#f7e8b1" font-size="30" font-weight="700" letter-spacing="12" text-anchor="middle" font-family="Inter,Arial,sans-serif">ASTROVIP</text>
+  <text x="540" y="375" fill="#ffffff" font-size="62" font-weight="700" text-anchor="middle" font-family="Georgia,serif">Puncte Mijlocii</text>
+  <text x="540" y="438" fill="#9bc9e7" font-size="25" font-weight="600" letter-spacing="6" text-anchor="middle" font-family="Inter,Arial,sans-serif">SOARE / LUNĂ</text>
+
+  <g transform="translate(250 930)">
+    <circle r="185" fill="#e9a82f" opacity=".16" filter="url(#soft)"/>
+    <circle r="128" fill="url(#sun)" filter="url(#glow)"/>
+    <circle r="95" fill="none" stroke="#fff2ac" stroke-opacity=".24" stroke-width="2"/>
+    <g stroke="#f4c451" stroke-width="5" stroke-linecap="round" opacity=".75">
+      <path d="M0-174V-213"/><path d="M0 174V213"/><path d="M-174 0H-213"/><path d="M174 0H213"/>
+      <path d="M-123-123l-27-27"/><path d="M123 123l27 27"/><path d="M123-123l27-27"/><path d="M-123 123l-27 27"/>
+    </g>
+  </g>
+
+  <g transform="translate(830 930)">
+    <circle r="178" fill="#8acdf2" opacity=".13" filter="url(#soft)"/>
+    <circle r="128" fill="url(#moon)" filter="url(#glow)"/>
+    <path d="M876 824c-74 18-120 91-101 163 15 58 66 99 124 101-29 16-63 24-99 19-98-14-166-105-152-203 13-91 94-156 185-153 22 1 43 5 62 13-7 2-13 4-19 6Z" transform="translate(-830 -930)" fill="#06162b" opacity=".82"/>
+  </g>
+
+  <path d="M378 930H702" stroke="url(#line)" stroke-width="3"/>
+  <g transform="translate(540 930)" filter="url(#glow)">
+    <circle r="42" fill="#fff4c2" opacity=".18"/>
+    <path d="M0-38 38 0 0 38-38 0Z" fill="url(#gold)"/>
+    <circle r="9" fill="#fff9df"/>
+  </g>
+
+  <text x="250" y="1188" fill="#f4cf73" font-size="31" font-weight="800" letter-spacing="5" text-anchor="middle" font-family="Inter,Arial,sans-serif">SOARE</text>
+  <text x="540" y="1188" fill="#fff0b2" font-size="25" font-weight="800" letter-spacing="4" text-anchor="middle" font-family="Inter,Arial,sans-serif">PUNCT MIJLOCIU</text>
+  <text x="830" y="1188" fill="#b9ddf2" font-size="31" font-weight="800" letter-spacing="5" text-anchor="middle" font-family="Inter,Arial,sans-serif">LUNĂ</text>
+
+  <path d="M230 1325H850" stroke="url(#gold)" stroke-opacity=".55"/>
+  <text x="540" y="1412" fill="#ffffff" font-size="45" font-weight="700" text-anchor="middle" font-family="Georgia,serif">Centrul dintre voință și nevoie</text>
+  <text x="540" y="1470" fill="#a9c5d9" font-size="24" font-weight="500" text-anchor="middle" font-family="Inter,Arial,sans-serif">identitate · răspuns emoțional · integrare</text>
+
+  <g transform="translate(540 1635)">
+    <circle r="76" fill="none" stroke="#e2bd65" stroke-opacity=".4"/>
+    <circle r="57" fill="none" stroke="#6bb6df" stroke-opacity=".25" stroke-dasharray="3 12"/>
+    <text x="0" y="12" fill="#f8e6a9" font-size="46" text-anchor="middle" font-family="Georgia,serif">☉ / ☽</text>
+  </g>
+  <text x="540" y="1790" fill="#7896ab" font-size="19" font-weight="600" letter-spacing="4" text-anchor="middle" font-family="Inter,Arial,sans-serif">ASTROVIP.RO · SERIA PUNCTE MIJLOCII</text>
+</svg>
