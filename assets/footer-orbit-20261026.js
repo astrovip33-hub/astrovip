@@ -139,7 +139,7 @@
         <div class="av-midpoint-shell">
           <div class="av-midpoint-head">
             <div><p class="av-midpoint-kicker">SERIA ASTROVIP · PUNCTE MIJLOCII</p><h2 id="av-midpoint-title">Puncte Mijlocii</h2></div>
-            <span class="av-midpoint-count">01 · SOARE/LUNĂ</span>
+            <span class="av-midpoint-count">02 · ANALIZE</span>
           </div>
           <div class="av-midpoint-viewport" aria-label="Slider Puncte Mijlocii">
             <div class="av-midpoint-track">
@@ -152,6 +152,17 @@
                   <p class="av-midpoint-planets">MERCUR · VENUS · MARTE · JUPITER · SATURN · URANUS · NEPTUN · PLUTO</p>
                   <span class="av-midpoint-cta">Deschide analiza completă <span aria-hidden="true">↗</span></span>
                   <p class="av-midpoint-note">Soarele și Luna nu sunt relistate ca planete de contact.</p>
+                </div>
+              </a>
+              <a class="av-midpoint-slide" href="/puncte-mijlocii/uranus-pluto/" aria-label="Deschide analiza punctului mijlociu Uranus Pluto">
+                <div class="av-midpoint-art"><img src="/assets/puncte-mijlocii-uranus-pluto-premium.svg" alt="Uranus, Pluto și punctul lor mijlociu" width="1080" height="1920" loading="lazy" decoding="async"></div>
+                <div class="av-midpoint-copy">
+                  <p class="av-midpoint-eyebrow">PUNCT MIJLOCIU · 02</p>
+                  <h3>URANUS / PLUTO <span>ruptură, putere și regenerare</span></h3>
+                  <p class="av-midpoint-desc">O sinteză între eliberarea uraniană și transformarea plutoniană: schimbare radicală, restructurare și capacitatea de a reconstrui din profunzime.</p>
+                  <p class="av-midpoint-planets">SOARE · LUNĂ · MERCUR · VENUS · MARTE · JUPITER · SATURN · NEPTUN</p>
+                  <span class="av-midpoint-cta">Deschide analiza completă <span aria-hidden="true">↗</span></span>
+                  <p class="av-midpoint-note">Uranus și Pluto nu sunt relistate ca planete de contact.</p>
                 </div>
               </a>
             </div>
