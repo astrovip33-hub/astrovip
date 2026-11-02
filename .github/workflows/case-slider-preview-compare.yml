@@ -1,0 +1,92 @@
+name: Preview case slider vs midpoint
+
+on:
+  push:
+    branches:
+      - preview/case-slider-midpoint-exact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install browser driver
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
+          npm install --no-save --ignore-scripts puppeteer-core@24.26.1
+
+      - name: Compare case-study and midpoint footprints
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const puppeteer = require('puppeteer-core');
+          const fs = require('fs');
+          const URL = 'https://astrovip-preview-ux-compact.astrovip33.workers.dev/';
+          (async () => {
+            const executablePath=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'].find(p=>fs.existsSync(p));
+            if(!executablePath) throw new Error('Chrome/Chromium executable not found');
+            const browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
+            const errors=[];
+            for(const width of [390,360]){
+              const page=await browser.newPage();
+              await page.setViewport({width,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+              await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipPreviewCompare/1.0');
+              await page.goto(URL+'?compare='+width+'-'+Date.now(),{waitUntil:'domcontentloaded',timeout:90000});
+              await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
+              await page.waitForSelector('#astrovip-puncte-mijlocii',{visible:true,timeout:30000});
+              await new Promise(r=>setTimeout(r,2200));
+              await page.evaluate(()=>document.getElementById('av-consent-reject')?.click());
+              const data=await page.evaluate(()=>{
+                const cs=document.querySelector('#studii-de-caz-home');
+                const ct=cs?.querySelector('.av-case-showcase-grid');
+                const cc=ct?.querySelector('.av-case-showcase-card');
+                const cv=cc?.querySelector('.av-case-showcase-visual');
+                const cp=cc?.querySelector('.av-case-showcase-copy');
+                const ms=document.querySelector('#astrovip-puncte-mijlocii');
+                const mt=ms?.querySelector('.av-midpoint-track');
+                const mc=mt?.querySelector('.av-midpoint-slide');
+                const mv=mc?.querySelector('.av-midpoint-art');
+                const mp=mc?.querySelector('.av-midpoint-copy');
+                const rect=e=>e?.getBoundingClientRect();
+                const ccss=cc?getComputedStyle(cc):null;
+                const tcss=ct?getComputedStyle(ct):null;
+                const cr=rect(cc),tr=rect(ct),cvr=rect(cv),cpr=rect(cp),mr=rect(mc),mtr=rect(mt),mvr=rect(mv),mpr=rect(mp);
+                return {
+                  caseTrack:{w:tr?.width||0,h:tr?.height||0,gap:tcss?.gap||'',pl:tcss?.paddingLeft||'',pr:tcss?.paddingRight||''},
+                  caseCard:{w:cr?.width||0,h:cr?.height||0,flex:ccss?.flexBasis||'',min:ccss?.minWidth||'',max:ccss?.maxWidth||''},
+                  caseVisual:{w:cvr?.width||0,h:cvr?.height||0},caseCopy:{w:cpr?.width||0,h:cpr?.height||0},
+                  midTrack:{w:mtr?.width||0,h:mtr?.height||0},midCard:{w:mr?.width||0,h:mr?.height||0},
+                  midVisual:{w:mvr?.width||0,h:mvr?.height||0},midCopy:{w:mpr?.width||0,h:mpr?.height||0}
+                };
+              });
+              console.log('COMPARE',width,JSON.stringify(data));
+              const tol=2;
+              if(Math.abs(data.caseCard.w-data.midCard.w)>tol) errors.push(width+': card width '+data.caseCard.w+' vs '+data.midCard.w);
+              if(Math.abs(data.caseCard.h-data.midCard.h)>tol) errors.push(width+': card height '+data.caseCard.h+' vs '+data.midCard.h);
+              if(data.caseTrack.gap!=='0px') errors.push(width+': gap='+data.caseTrack.gap);
+              if(data.caseTrack.pl!=='0px'||data.caseTrack.pr!=='0px') errors.push(width+': padding='+data.caseTrack.pl+'/'+data.caseTrack.pr);
+              if(Math.abs(data.caseVisual.w-data.midVisual.w)>tol) errors.push(width+': visual width '+data.caseVisual.w+' vs '+data.midVisual.w);
+              if(Math.abs(data.caseCopy.w-data.midCopy.w)>tol) errors.push(width+': copy width '+data.caseCopy.w+' vs '+data.midCopy.w);
+              await page.screenshot({path:'/tmp/compare-'+width+'.png',fullPage:true});
+              await page.close();
+            }
+            await browser.close();
+            if(errors.length){console.error('PREVIEW DIMENSION MISMATCH:',errors.join(' | '));process.exit(1);}
+            console.log('PREVIEW MATCH OK: case-study cards match midpoint footprint at 390 and 360.');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+
+      - name: Upload comparison screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case-vs-midpoint-preview
+          path: /tmp/compare-*.png
+          if-no-files-found: warn
+          retention-days: 7
