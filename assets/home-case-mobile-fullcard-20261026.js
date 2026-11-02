@@ -61,6 +61,8 @@
         if (copy) group.setAttribute('aria-hidden', 'true');
         cards.forEach(card => {
           const clone = card.cloneNode(true);
+          // Source track percentages must not become widths inside the duplicated ticker.
+          ['flex','width','min-width','max-width'].forEach(property => clone.style.removeProperty(property));
           clone.querySelectorAll('img').forEach(img => {
             img.loading = 'eager';
             img.setAttribute('fetchpriority', 'low');
@@ -89,6 +91,8 @@
     const syncMode = () => {
       cancelAnimationFrame(raf); raf = 0; lastTime = 0;
       section.dataset.avMobileTicker = active() ? '1' : '0';
+      // Inline geometry must respect the active continuous ticker, including motion preference changes.
+      source.style.setProperty('display', active() ? 'none' : 'flex', 'important');
       if (active()) { measure(); raf = requestAnimationFrame(tick); }
     };
     const pause = () => { resumeAt = performance.now() + 5000; };

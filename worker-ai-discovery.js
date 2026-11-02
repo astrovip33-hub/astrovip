@@ -63,6 +63,16 @@ export default {
           element.append(LLMS_DISCOVERY_LINK + CANONICAL_NAP_STYLE + (isHome ? HOME_AUTHORITY_STYLE + HOME_ABOUT_HARD_KILL : ''), { html: true });
         }
       })
+      .on('script[src^="/assets/site-editor-runtime.js"]', {
+        element(element) {
+          if (isHome) element.setAttribute('src', '/assets/site-editor-runtime.js?v=20261102-single-mobile-slider-v2');
+        }
+      })
+      .on('link[href^="/assets/case-studies-mobile-lux-v3-20261014.css"]', {
+        element(element) {
+          if (isHome) element.setAttribute('href', '/assets/case-studies-mobile-lux-v3-20261014.css?v=20261102-original-height-v2');
+        }
+      })
       .on('#menu a[href="#contact"]', removeMenuItem)
       .on('#menu a[href="/#contact"]', removeMenuItem)
       .on('#menu a[href="/"]', removeMenuItem)

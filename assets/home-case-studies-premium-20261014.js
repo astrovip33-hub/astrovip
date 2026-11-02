@@ -4,351 +4,129 @@
   const install = () => {
     const section = document.getElementById('studii-de-caz-home');
     if (!section) return;
-
-    if (!document.getElementById('av-case-midpoint-geometry-20261102-v2')) {
-      const style = document.createElement('style');
-      style.id = 'av-case-midpoint-geometry-20261102-v2';
-      style.textContent = `
-        /* 2026-11-02: case studies now use the exact midpoint-slider footprint. */
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame{
-          width:min(760px,100%)!important;
-          margin-left:auto!important;
-          margin-right:auto!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{
-          display:flex!important;
-          gap:0!important;
-          padding:0!important;
-          overflow-x:auto!important;
-          overflow-y:hidden!important;
-          scroll-snap-type:x mandatory!important;
-          scrollbar-width:none!important;
-          border-radius:18px!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid::-webkit-scrollbar{display:none!important}
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{
-          display:grid!important;
-          grid-template-columns:190px minmax(0,1fr)!important;
-          grid-template-rows:300px!important;
-          align-items:stretch!important;
-          flex:0 0 100%!important;
-          width:100%!important;
-          min-width:100%!important;
-          height:300px!important;
-          min-height:300px!important;
-          max-height:300px!important;
-          scroll-snap-align:start!important;
-          border-radius:18px!important;
-          overflow:hidden!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual,
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual,
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual{
-          grid-column:1!important;
-          grid-row:1!important;
-          flex:0 0 190px!important;
-          width:190px!important;
-          height:300px!important;
-          min-height:300px!important;
-          max-height:300px!important;
-          margin:0!important;
-          aspect-ratio:auto!important;
-          overflow:hidden!important;
-          background:#030a13!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual>a,
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual img,
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual>a,
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual img,
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual>a,
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual img{
-          display:block!important;
-          width:100%!important;
-          height:300px!important;
-          min-height:300px!important;
-          max-height:300px!important;
-          aspect-ratio:auto!important;
-          object-fit:cover!important;
-          object-position:center 48%!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy{
-          grid-column:2!important;
-          grid-row:1!important;
-          display:flex!important;
-          flex-direction:column!important;
-          justify-content:center!important;
-          min-width:0!important;
-          height:300px!important;
-          box-sizing:border-box!important;
-          padding:22px 24px!important;
-          overflow:hidden!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy h3{
-          margin:0!important;
-          font-size:clamp(27px,4.5vw,42px)!important;
-          line-height:.98!important;
-          letter-spacing:-.03em!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-eyebrow{
-          margin:0 0 7px!important;
-          font-size:10px!important;
-          line-height:1.2!important;
-          letter-spacing:.15em!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-meta{
-          margin:7px 0 0!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-lead{
-          display:-webkit-box!important;
-          -webkit-box-orient:vertical!important;
-          -webkit-line-clamp:3!important;
-          overflow:hidden!important;
-          margin:11px 0 13px!important;
-          font-size:13px!important;
-          line-height:1.5!important;
-        }
-        html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-cta{
-          width:max-content!important;
-          min-height:38px!important;
-          margin-top:0!important;
-          padding:8px 13px!important;
-          border-radius:999px!important;
-          font-size:11px!important;
-          line-height:1!important;
-        }
-
-        @media(max-width:820px){
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{height:auto!important;min-height:0!important;max-height:none!important}
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home>.wrap{height:auto!important;min-height:0!important;max-height:none!important}
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame{
-            display:block!important;
-            width:min(100%,430px)!important;
-            height:auto!important;
-            min-height:0!important;
-            max-height:none!important;
-            overflow:visible!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{
-            gap:0!important;
-            height:230px!important;
-            min-height:230px!important;
-            max-height:230px!important;
-            padding:0!important;
-            border-radius:18px!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{
-            grid-template-columns:36% 64%!important;
-            grid-template-rows:230px!important;
-            flex:0 0 100%!important;
-            width:100%!important;
-            min-width:100%!important;
-            height:230px!important;
-            min-height:230px!important;
-            max-height:230px!important;
-            border-radius:18px!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual{
-            grid-column:1!important;
-            grid-row:1!important;
-            flex:none!important;
-            width:100%!important;
-            height:230px!important;
-            min-height:230px!important;
-            max-height:230px!important;
-            margin:0!important;
-            aspect-ratio:auto!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual>a,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual img,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual>a,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual img,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual>a,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual img{
-            height:230px!important;
-            min-height:230px!important;
-            max-height:230px!important;
-            aspect-ratio:auto!important;
-            object-fit:cover!important;
-            object-position:center 47%!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy{
-            height:230px!important;
-            padding:13px 12px 13px 13px!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-eyebrow{
-            margin:0 0 5px!important;
-            font-size:8px!important;
-            line-height:1.15!important;
-            letter-spacing:.08em!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy h3{
-            font-size:clamp(22px,7vw,29px)!important;
-            line-height:.98!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-meta{
-            margin:5px 0!important;
-            font-size:8.5px!important;
-            line-height:1.2!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-lead{
-            -webkit-line-clamp:3!important;
-            margin:7px 0 9px!important;
-            font-size:11px!important;
-            line-height:1.42!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-cta{
-            min-height:34px!important;
-            padding:7px 10px!important;
-            font-size:9px!important;
-          }
-        }
-
-        @media(max-width:390px){
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{
-            height:215px!important;
-            min-height:215px!important;
-            max-height:215px!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{
-            grid-template-columns:37% 63%!important;
-            grid-template-rows:215px!important;
-            height:215px!important;
-            min-height:215px!important;
-            max-height:215px!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual>a,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual img,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual>a,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual img,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual>a,
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual img{
-            height:215px!important;
-            min-height:215px!important;
-            max-height:215px!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy{
-            height:215px!important;
-            padding:12px 10px!important;
-          }
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy h3{font-size:clamp(20px,6.5vw,26px)!important}
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-lead{font-size:10.5px!important}
-        }
-
-        @media(max-width:360px){
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{grid-template-columns:38% 62%!important}
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy h3{font-size:21px!important}
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-lead{line-height:1.42!important}
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-cta{padding-left:9px!important;padding-right:9px!important}
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    const forceMidpointGeometry = () => {
-      if (window.innerWidth > 820) return;
-      const compactHeight = window.innerWidth <= 390 ? 215 : 230;
-      const wrap = section.querySelector(':scope > .wrap');
-      const frame = section.querySelector('.av-case-showcase-frame');
-      const track = section.querySelector('.av-case-showcase-grid');
-      if (!frame || !track) return;
-
-      [section, wrap, frame].filter(Boolean).forEach((node) => {
-        node.style.setProperty('height', 'auto', 'important');
-        node.style.setProperty('min-height', '0', 'important');
-        node.style.setProperty('max-height', 'none', 'important');
-      });
-      frame.style.setProperty('display', 'block', 'important');
-      frame.style.setProperty('width', 'min(100%, 430px)', 'important');
-      frame.style.setProperty('margin-left', 'auto', 'important');
-      frame.style.setProperty('margin-right', 'auto', 'important');
-      frame.style.setProperty('overflow', 'visible', 'important');
-      track.style.setProperty('display', 'flex', 'important');
-      track.style.setProperty('gap', '0', 'important');
-      track.style.setProperty('padding', '0', 'important');
-      track.style.setProperty('height', `${compactHeight}px`, 'important');
-      track.style.setProperty('min-height', `${compactHeight}px`, 'important');
-      track.style.setProperty('max-height', `${compactHeight}px`, 'important');
-      track.style.setProperty('align-items', 'stretch', 'important');
-      track.style.setProperty('overflow-x', 'auto', 'important');
-      track.style.setProperty('overflow-y', 'hidden', 'important');
-      track.style.setProperty('scroll-snap-type', 'x mandatory', 'important');
-
-      const cards = [...track.querySelectorAll('.av-case-showcase-card')];
-      cards.forEach((card) => {
-        card.style.setProperty('flex', '0 0 100%', 'important');
-        card.style.setProperty('width', '100%', 'important');
-        card.style.setProperty('min-width', '100%', 'important');
-      });
-
-      const allStudies = frame.querySelector(':scope > div[style*="text-align:center"]');
-      if (allStudies) allStudies.style.setProperty('margin-top', '12px', 'important');
-    };
-
-    forceMidpointGeometry();
-    requestAnimationFrame(forceMidpointGeometry);
-    [80, 250, 700, 1400].forEach((delay) => setTimeout(forceMidpointGeometry, delay));
-    if (!window.__avCaseMidpointResizeBound) {
-      window.__avCaseMidpointResizeBound = true;
-      window.addEventListener('resize', forceMidpointGeometry, {passive:true});
-    }
-
-    if (!window.__avCaseMidpointControlFix) {
-      window.__avCaseMidpointControlFix = true;
-      document.addEventListener('click', (event) => {
-        const control = event.target.closest('#studii-de-caz-home [data-case-next], #studii-de-caz-home [data-case-prev], #studii-de-caz-home .av-case-dot-v7');
-        if (!control) return;
-
-        const liveSection = document.getElementById('studii-de-caz-home');
-        const track = liveSection?.querySelector('.av-case-showcase-grid');
-        const cards = track ? [...track.querySelectorAll('.av-case-showcase-card')] : [];
-        if (!track || cards.length < 2) return;
-
-        event.preventDefault();
-        event.stopImmediatePropagation();
-
-        const count = liveSection.querySelector('[data-case-count]');
-        const currentFromCount = Math.max(0, (parseInt(count?.textContent || '1', 10) || 1) - 1);
-        const dots = [...liveSection.querySelectorAll('.av-case-dot-v7')];
-        let index = currentFromCount;
-        if (control.matches('[data-case-next]')) index += 1;
-        else if (control.matches('[data-case-prev]')) index -= 1;
-        else index = dots.indexOf(control);
-        index = Math.max(0, Math.min(cards.length - 1, index));
-
-        const step = Math.max(1, track.clientWidth);
-        const targetLeft = Math.max(0, index * step);
-
-        track.style.setProperty('scroll-behavior', 'auto', 'important');
-        const lockPosition = () => {
-          track.scrollTo({left: targetLeft, behavior: 'auto'});
-          track.scrollLeft = targetLeft;
-        };
-        lockPosition();
-
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('is-active', i === index);
-          if (i === index) dot.setAttribute('aria-current', 'true');
-          else dot.removeAttribute('aria-current');
-        });
-        if (count) count.textContent = `${index + 1} / ${cards.length}`;
-        const prev = liveSection.querySelector('[data-case-prev]');
-        const next = liveSection.querySelector('[data-case-next]');
-        if (prev) prev.disabled = index === 0;
-        if (next) next.disabled = index === cards.length - 1;
-
-        requestAnimationFrame(lockPosition);
-        setTimeout(lockPosition, 80);
-        setTimeout(lockPosition, 240);
-      }, true);
-    }
+if (section.dataset.avCaseLux === '1') return;
 
     // The shared responsive slider owns its track on every viewport.
+    // Keep its navigation and the complete case list after DOMContentLoaded.
     if (section.querySelector('.av-case-showcase-grid')) return;
+
+    section.dataset.avCaseLux = '1';
+    section.classList.add('av-case-home-lux');
+
+    section.innerHTML = `
+      <div class="wrap av-case-lux-wrap">
+        <div class="av-case-lux-frame">
+          <header class="av-case-lux-head">
+            <div>
+              <p class="av-case-lux-kicker">EXEMPLE REALE · TIMING ASTROLOGIC</p>
+              <h2 id="av-case-showcase-title">STUDII DE CAZ</h2>
+              <p class="av-case-lux-intro">Studii de caz relevante din diverse domenii ale vieții, analizate retrospectiv prin repere astrologice concrete.</p>
+            </div>
+            <a class="av-case-lux-all" href="/studii-de-caz/">VEZI TOATE <span aria-hidden="true">→</span></a>
+          </header>
+
+          <div class="av-case-lux-grid">
+            <a class="av-case-lux-card" href="/studii-de-caz/intalnire-dragoste-arce-solare-2001/" aria-label="Vezi studiul de caz Întâlnire sentimentală">
+              <figure class="av-case-lux-visual">
+                <img width="1672" height="941" srcset="/images/studii-de-caz/fundal-dragoste-premium-20261016-720.webp 720w, /images/studii-de-caz/fundal-dragoste-premium-20261016.webp 1672w" sizes="(max-width: 820px) 90vw, 560px" src="/images/studii-de-caz/fundal-dragoste-premium-20261016.webp" loading="lazy" decoding="async" alt="Ilustrație de atmosferă: seară romantică în București, în albastru și auriu.">
+                <span class="av-case-lux-index">01</span>
+              </figure>
+              <div class="av-case-lux-copy">
+                <span class="av-case-lux-tag">DRAGOSTE</span>
+                <h3>Întâlnire sentimentală</h3>
+                <p>Cum a arătat astrologia momentului potrivit.</p>
+                <span class="av-case-lux-link">VEZI STUDIUL <b aria-hidden="true">→</b></span>
+              </div>
+            </a>
+
+            <a class="av-case-lux-card" href="/studii-de-caz/relocare-geografica-spania-2003/" aria-label="Vezi studiul de caz Relocare geografică">
+              <figure class="av-case-lux-visual">
+                <img width="1672" height="941" srcset="/images/studii-de-caz/fundal-relocare-premium-20261016-720.webp 720w, /images/studii-de-caz/fundal-relocare-premium-20261016.webp 1672w" sizes="(max-width: 820px) 90vw, 560px" src="/images/studii-de-caz/fundal-relocare-premium-20261016.webp" loading="lazy" decoding="async" alt="Ilustrație de atmosferă: oraș spaniol la malul Mediteranei, la apus.">
+                <span class="av-case-lux-index">02</span>
+              </figure>
+              <div class="av-case-lux-copy">
+                <span class="av-case-lux-tag">RELOCARE</span>
+                <h3>Relocare geografică</h3>
+                <p>Locația care schimbă cadrul și direcția vieții.</p>
+                <span class="av-case-lux-link">VEZI STUDIUL <b aria-hidden="true">→</b></span>
+              </div>
+            </a>
+
+            <a class="av-case-lux-card" href="/studii-de-caz/castig-loto-roma-2020/" aria-label="Vezi studiul de caz Câștig la LOTO">
+              <figure class="av-case-lux-visual">
+                <img width="1672" height="941" srcset="/images/studii-de-caz/fundal-loto-premium-20261016-720.webp 720w, /images/studii-de-caz/fundal-loto-premium-20261016.webp 1672w" sizes="(max-width: 820px) 90vw, 560px" src="/images/studii-de-caz/fundal-loto-premium-20261016.webp" loading="lazy" decoding="async" alt="Ilustrație de atmosferă: Roma la apus și simboluri discrete ale loteriei.">
+                <span class="av-case-lux-index">03</span>
+              </figure>
+              <div class="av-case-lux-copy">
+                <span class="av-case-lux-tag">LOTO</span>
+                <h3>Câștig la LOTO</h3>
+                <p>Analiză retrospectivă a timingului unui eveniment real.</p>
+                <span class="av-case-lux-link">VEZI STUDIUL <b aria-hidden="true">→</b></span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>`;
+if (document.getElementById('av-case-lux-style-20261014')) return;
+    const style = document.createElement('style');
+    style.id = 'av-case-lux-style-20261014';
+    style.textContent = `
+      #studii-de-caz-home.av-case-home-lux{position:relative!important;padding:28px 0 34px!important;background:radial-gradient(circle at 12% 15%,rgba(57,255,20,.06),transparent 25%),radial-gradient(circle at 88% 80%,rgba(231,189,97,.08),transparent 26%),#020302!important;border-top:1px solid rgba(227,189,97,.16)!important;border-bottom:1px solid rgba(57,255,20,.14)!important;overflow:hidden!important}
+      #studii-de-caz-home .av-case-lux-wrap{position:relative;z-index:1}
+      #studii-de-caz-home .av-case-lux-frame{position:relative;padding:22px;border:1px solid rgba(57,255,20,.72);border-radius:24px;background:linear-gradient(145deg,rgba(8,18,10,.98),rgba(2,4,2,.99));box-shadow:0 24px 62px rgba(0,0,0,.46),0 0 0 1px rgba(227,189,97,.15),0 0 30px rgba(57,255,20,.06)}
+      #studii-de-caz-home .av-case-lux-frame:before{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,#f2d67c,transparent);opacity:.8}
+      #studii-de-caz-home .av-case-lux-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin-bottom:18px}
+      #studii-de-caz-home .av-case-lux-kicker{margin:0 0 6px;color:#7dffad;font-size:11px;font-weight:950;letter-spacing:.19em;text-transform:uppercase}
+      #studii-de-caz-home .av-case-lux-head h2{margin:0;color:#fff3bd;font-family:Georgia,'Times New Roman',serif;font-size:clamp(34px,4.4vw,54px);line-height:.96;letter-spacing:-.025em;text-shadow:0 0 20px rgba(227,189,97,.10)}
+      #studii-de-caz-home .av-case-lux-intro{margin:9px 0 0;max-width:720px;color:#cfd6cf;font-size:14px;line-height:1.55}
+      #studii-de-caz-home .av-case-lux-all{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:42px;padding:9px 15px;border:1px solid rgba(242,214,124,.72);border-radius:999px;color:#ffe79a!important;background:linear-gradient(180deg,rgba(255,232,154,.08),rgba(255,255,255,.01));font-size:11px;font-weight:950;letter-spacing:.08em;text-decoration:none;white-space:nowrap;box-shadow:0 0 16px rgba(227,189,97,.08)}
+      #studii-de-caz-home .av-case-lux-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+      #studii-de-caz-home .av-case-lux-card{position:relative;display:block;min-width:0;overflow:hidden;border:1px solid rgba(57,255,20,.72);border-radius:17px;background:linear-gradient(180deg,#09110a,#030503);color:#fff!important;text-decoration:none;box-shadow:0 12px 30px rgba(0,0,0,.34),0 0 14px rgba(57,255,20,.07);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+      #studii-de-caz-home .av-case-lux-card:hover{transform:translateY(-3px);border-color:#39ff14;box-shadow:0 18px 38px rgba(0,0,0,.42),0 0 20px rgba(57,255,20,.13)}
+      #studii-de-caz-home .av-case-lux-visual{position:relative;margin:0;aspect-ratio:16/9;overflow:hidden;background:#070907}
+      #studii-de-caz-home .av-case-lux-visual:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.58));pointer-events:none}
+      #studii-de-caz-home .av-case-lux-visual img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .35s ease}
+      #studii-de-caz-home .av-case-lux-card:hover .av-case-lux-visual img{transform:scale(1.025)}
+      #studii-de-caz-home .av-case-lux-index{position:absolute;z-index:2;top:10px;right:10px;display:grid;place-items:center;width:32px;height:32px;border:1px solid rgba(255,224,122,.82);border-radius:50%;background:rgba(0,0,0,.72);color:#ffe79a;font:800 12px/1 Georgia,serif}
+      #studii-de-caz-home .av-case-lux-copy{padding:13px 14px 14px}
+      #studii-de-caz-home .av-case-lux-tag{display:inline-block;margin-bottom:7px;color:#7dffad;font-size:9px;font-weight:950;letter-spacing:.16em}
+      #studii-de-caz-home .av-case-lux-copy h3{margin:0;color:#fff5d0;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:1.05;font-weight:700;letter-spacing:-.015em}
+      #studii-de-caz-home .av-case-lux-copy p{margin:8px 0 12px;color:#d2d7d1;font-size:12px;line-height:1.42}
+      #studii-de-caz-home .av-case-lux-link{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:1px solid rgba(227,189,97,.19);color:#ffe79a;font-size:9px;font-weight:950;letter-spacing:.12em}
+      #studii-de-caz-home .av-case-lux-link b{display:grid;place-items:center;width:25px;height:25px;border:1px solid rgba(255,224,122,.58);border-radius:50%;font-size:14px}
+      @media(max-width:820px){
+        #studii-de-caz-home.av-case-home-lux{padding:14px 0 18px!important}
+        #studii-de-caz-home .av-case-lux-wrap{width:calc(100% - 16px)!important;max-width:620px!important}
+        #studii-de-caz-home .av-case-lux-frame{padding:10px 9px 11px;border-radius:16px;box-shadow:0 14px 34px rgba(0,0,0,.42),0 0 14px rgba(57,255,20,.07)}
+        #studii-de-caz-home .av-case-lux-frame:before{left:14px;right:14px}
+        #studii-de-caz-home .av-case-lux-head{grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin-bottom:9px}
+        #studii-de-caz-home .av-case-lux-kicker{display:none}
+        #studii-de-caz-home .av-case-lux-head h2{font-size:clamp(24px,7vw,30px);line-height:1}
+        #studii-de-caz-home .av-case-lux-intro{margin:4px 0 0;font-size:9px;line-height:1.32;max-width:31ch}
+        #studii-de-caz-home .av-case-lux-all{min-height:31px;padding:6px 9px;gap:5px;font-size:8px;letter-spacing:.04em}
+        #studii-de-caz-home .av-case-lux-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+        #studii-de-caz-home .av-case-lux-card{border-radius:10px;box-shadow:0 7px 16px rgba(0,0,0,.34),0 0 8px rgba(57,255,20,.07)}
+        #studii-de-caz-home .av-case-lux-visual{aspect-ratio:1.48/1}
+        #studii-de-caz-home .av-case-lux-index{top:5px;right:5px;width:21px;height:21px;font-size:8px}
+        #studii-de-caz-home .av-case-lux-copy{padding:7px 6px 7px}
+        #studii-de-caz-home .av-case-lux-tag{margin-bottom:4px;font-size:6.5px;letter-spacing:.08em}
+        #studii-de-caz-home .av-case-lux-copy h3{font-size:clamp(11px,3.1vw,14px);line-height:1.03}
+        #studii-de-caz-home .av-case-lux-copy p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-height:2.45em;margin:5px 0 6px;font-size:8.5px;line-height:1.22}
+        #studii-de-caz-home .av-case-lux-link{padding-top:5px;font-size:6.5px;letter-spacing:.04em}
+        #studii-de-caz-home .av-case-lux-link b{width:18px;height:18px;font-size:10px}
+      }
+      @media(max-width:360px){
+        #studii-de-caz-home .av-case-lux-wrap{width:calc(100% - 10px)!important}
+        #studii-de-caz-home .av-case-lux-frame{padding-left:6px;padding-right:6px}
+        #studii-de-caz-home .av-case-lux-grid{gap:4px}
+        #studii-de-caz-home .av-case-lux-copy{padding-left:5px;padding-right:5px}
+        #studii-de-caz-home .av-case-lux-copy h3{font-size:10.5px}
+        #studii-de-caz-home .av-case-lux-copy p{font-size:7.8px}
+        #studii-de-caz-home .av-case-lux-link{font-size:6px}
+      }
+      @media(prefers-reduced-motion:reduce){#studii-de-caz-home .av-case-lux-card,#studii-de-caz-home .av-case-lux-visual img{transition:none!important}}
+    `;
+    document.head.appendChild(style);
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install, {once:true});
