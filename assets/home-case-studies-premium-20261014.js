@@ -20,7 +20,10 @@
           html.av-ultra-home-production.av-cardless-home body:not(.guide-page) #studii-de-caz-home .av-case-showcase-cta{min-height:36px!important;padding:8px 12px!important;font-size:10px!important}
         }
         @media(max-width:820px){
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{gap:10px!important;padding:4px 8% 8px!important}
+          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home{height:auto!important;min-height:0!important;max-height:none!important}
+          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home>.wrap{height:auto!important;min-height:0!important;max-height:none!important}
+          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame{display:block!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
+          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{display:flex!important;gap:10px!important;height:230px!important;min-height:230px!important;max-height:230px!important;padding:4px 8% 8px!important;overflow-x:auto!important;overflow-y:hidden!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{display:grid!important;grid-template-columns:37% minmax(0,1fr)!important;grid-template-rows:230px!important;align-items:stretch!important;flex:0 0 88%!important;width:88%!important;min-width:88%!important;height:230px!important;min-height:230px!important;max-height:230px!important;border-radius:16px!important;overflow:hidden!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual{grid-column:1!important;grid-row:1!important;flex:none!important;width:100%!important;height:230px!important;min-height:230px!important;max-height:230px!important;margin:0!important;aspect-ratio:auto!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy{grid-column:2!important;grid-row:1!important;min-width:0!important;height:230px!important;box-sizing:border-box!important;padding:12px 10px 11px!important;overflow:hidden!important}
@@ -31,6 +34,7 @@
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-cta{min-height:31px!important;margin-top:auto!important;padding:6px 8px!important;border-radius:999px!important;font-size:8px!important;line-height:1.1!important;letter-spacing:.025em!important}
         }
         @media(max-width:390px){
+          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{height:215px!important;min-height:215px!important;max-height:215px!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{grid-template-columns:37% minmax(0,1fr)!important;grid-template-rows:215px!important;height:215px!important;min-height:215px!important;max-height:215px!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual{height:215px!important;min-height:215px!important;max-height:215px!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy{height:215px!important;padding:11px 9px 10px!important}
@@ -38,6 +42,7 @@
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-lead{-webkit-line-clamp:3!important;font-size:9px!important}
         }
         @media(max-width:360px){
+          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{height:210px!important;min-height:210px!important;max-height:210px!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{grid-template-columns:38% minmax(0,1fr)!important;grid-template-rows:210px!important;height:210px!important;min-height:210px!important;max-height:210px!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual{height:210px!important;min-height:210px!important;max-height:210px!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy{height:210px!important;padding:10px 8px 9px!important}
