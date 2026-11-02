@@ -1,0 +1,43 @@
+name: Cache bust compact midpoint slider
+
+on:
+  push:
+    paths:
+      - '.github/workflows/cache-bust-midpoint-compact.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Refresh midpoint slider asset version
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          old='/assets/footer-orbit-20261026.js?v=20261102-midpoints3'
+          new='/assets/footer-orbit-20261026.js?v=20261102-midpoints-compact1'
+          if old not in s and new not in s:
+              raise SystemExit('footer-orbit version marker not found')
+          if old in s:
+              s=s.replace(old,new,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit cache bust
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'astrovip33-hub'
+          git config user.email 'astrovip33@gmail.com'
+          git add index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Refresh compact midpoint slider cache'
+          git push
