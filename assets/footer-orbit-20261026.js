@@ -157,7 +157,7 @@
             </div>
           </div>
         </div>`;
-      footer.insertBefore(midpoint, social);
+      footer.parentNode.insertBefore(midpoint, footer);
     }
   }
 
