@@ -278,7 +278,7 @@ const CASE_GAP_FIX = `<style id="av-case-gap-fix-20261102c">
         const img=visual.querySelector('img');
         if(img){
           const src=img.currentSrc||img.src||img.getAttribute('src')||'';
-          if(src)visual.style.setProperty('background-image',`url("${src.replace(/"/g,'%22')}")`,'important');
+          if(src)visual.style.setProperty('background-image','url("'+src.replace(/"/g,'%22')+'")','important');
           imp(visual,'background-size','cover');
           imp(visual,'background-position','center');
           imp(img,'display','block');
