@@ -73,15 +73,20 @@
         else index = dots.indexOf(control);
         index = Math.max(0, Math.min(cards.length - 1, index));
 
-        const firstRect = cards[0].getBoundingClientRect();
-        const secondRect = cards[1].getBoundingClientRect();
-        const step = Math.max(1, Math.abs(secondRect.left - firstRect.left));
-        const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
-        const targetLeft = pad + index * step;
+        const trackStyle = getComputedStyle(track);
+        const pad = parseFloat(trackStyle.paddingLeft) || 0;
+        const gap = parseFloat(trackStyle.columnGap || trackStyle.gap) || 10;
+        const step = Math.max(1, cards[0].offsetWidth + gap);
+        const targetLeft = Math.max(0, pad + index * step);
 
         track.style.setProperty('scroll-snap-type', 'none', 'important');
-        track.scrollTo({left: targetLeft, behavior: 'auto'});
-        track.scrollLeft = targetLeft;
+        track.style.setProperty('scroll-behavior', 'auto', 'important');
+
+        const lockPosition = () => {
+          track.scrollTo({left: targetLeft, behavior: 'auto'});
+          track.scrollLeft = targetLeft;
+        };
+        lockPosition();
 
         dots.forEach((dot, i) => {
           dot.classList.toggle('is-active', i === index);
@@ -94,11 +99,10 @@
         if (prev) prev.disabled = index === 0;
         if (next) next.disabled = index === cards.length - 1;
 
-        requestAnimationFrame(() => { track.scrollLeft = targetLeft; });
-        setTimeout(() => {
-          track.scrollLeft = targetLeft;
-          track.style.setProperty('scroll-snap-type', 'x mandatory', 'important');
-        }, 160);
+        requestAnimationFrame(lockPosition);
+        setTimeout(lockPosition, 80);
+        setTimeout(lockPosition, 240);
+        setTimeout(lockPosition, 700);
       }, true);
     }
 
