@@ -16,10 +16,11 @@ const CASE_GAP_FIX = `<style id="av-case-gap-fix-20261102">
     padding:14px 0 10px!important;
   }
   #studii-de-caz-home .av-case-showcase-grid{
+    display:flex!important;
     height:230px!important;
     min-height:230px!important;
     max-height:230px!important;
-    margin-bottom:0!important;
+    margin:0!important;
   }
   #studii-de-caz-home .av-case-showcase-frame > div:has(> a[href="/studii-de-caz/"]){
     margin-top:12px!important;
@@ -59,10 +60,11 @@ const CASE_GAP_FIX = `<style id="av-case-gap-fix-20261102">
     imp(frame,'display','block');
     imp(frame,'grid-template-rows','none');
     imp(frame,'overflow','hidden');
+    imp(track,'display','flex');
     imp(track,'height',h+'px');
     imp(track,'min-height',h+'px');
     imp(track,'max-height',h+'px');
-    imp(track,'margin-bottom','0');
+    imp(track,'margin','0');
     const cta=frame.querySelector('a[href="/studii-de-caz/"]')?.parentElement;
     if(cta){imp(cta,'margin-top','12px');imp(cta,'margin-bottom','0')}
     s.dataset.caseGapFix='1';
@@ -70,10 +72,11 @@ const CASE_GAP_FIX = `<style id="av-case-gap-fix-20261102">
   const boot=()=>{
     apply();
     requestAnimationFrame(apply);
-    [80,250,700,1400,2200].forEach(ms=>setTimeout(apply,ms));
+    [0,80,250,700,1400,2200,3500].forEach(ms=>setTimeout(apply,ms));
     new MutationObserver(()=>requestAnimationFrame(apply)).observe(document.documentElement,{childList:true,subtree:true});
   };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+  boot();
+  addEventListener('load',apply,{once:true});
   addEventListener('resize',apply,{passive:true});
 })();</script>`;
 
@@ -86,7 +89,7 @@ export default {
       return response;
     }
     return new HTMLRewriter()
-      .on('head', {
+      .on('body', {
         element(element) {
           element.append(CASE_GAP_FIX, {html:true});
         }
