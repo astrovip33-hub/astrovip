@@ -54,3 +54,31 @@
 }
 @media(max-width:360px){#av-services-slider .sv-card{flex-basis:270px;width:270px;min-height:435px!important}#av-services-slider h2{font-size:25px}}
 @media(prefers-reduced-motion:reduce){#av-services-slider .sv-visual img{transition:none!important}}
+
+/* Preview fix: keep the real booking label readable on narrow screens. */
+body:not(.guide-page) .top .av-header-booking{overflow:visible!important}
+body:not(.guide-page) .top .av-header-booking>span:last-child{
+  position:relative!important;
+  z-index:4!important;
+  display:inline-block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  color:#171108!important;
+  -webkit-text-fill-color:#171108!important;
+  text-shadow:none!important;
+  mix-blend-mode:normal!important;
+  white-space:nowrap!important;
+}
+body:not(.guide-page) .top .av-header-booking__spark{position:relative!important;z-index:4!important}
+body:not(.guide-page) .top .av-header-booking::before,
+body:not(.guide-page) .top .av-header-booking::after{z-index:1!important}
+@media(max-width:365px){
+  body:not(.guide-page) .top .av-header-booking>span:last-child{font-size:9.8px!important}
+  body:not(.guide-page) .top .av-header-booking>span:last-child::after{content:none!important;display:none!important}
+}
+
+/* Explicit contrast for the booking card itself. */
+body:not(.guide-page) #programari .av-checkout-head,
+body:not(.guide-page) #programari .av-checkout-head p{color:#d8dfda!important;opacity:1!important;visibility:visible!important}
+body:not(.guide-page) #programari .av-checkout-kicker{color:#e4c46d!important;-webkit-text-fill-color:#e4c46d!important}
+body:not(.guide-page) #programari #av-checkout-title{color:#f6f2e8!important;-webkit-text-fill-color:#f6f2e8!important;opacity:1!important;visibility:visible!important;text-shadow:none!important}
