@@ -1,0 +1,51 @@
+name: Preview case slider DOM diagnostic
+
+on:
+  push:
+    branches:
+      - preview/case-slider-midpoint-exact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dom-mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install browser driver
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
+          npm install --no-save --ignore-scripts puppeteer-core@24.26.1
+
+      - name: Inspect first card at 360
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const puppeteer=require('puppeteer-core');
+          const fs=require('fs');
+          (async()=>{
+            const executablePath=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'].find(p=>fs.existsSync(p));
+            const browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
+            const page=await browser.newPage();
+            await page.setViewport({width:360,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+            await page.goto('https://astrovip-preview-ux-compact.astrovip33.workers.dev/?dom='+Date.now(),{waitUntil:'domcontentloaded',timeout:90000});
+            await page.waitForSelector('#astrovip-puncte-mijlocii',{visible:true,timeout:30000});
+            await new Promise(r=>setTimeout(r,2500));
+            const data=await page.evaluate(()=>{
+              const card=document.querySelector('#studii-de-caz-home .av-case-showcase-card');
+              const visual=card?.querySelector('.av-case-showcase-visual');
+              const copy=card?.querySelector('.av-case-showcase-copy');
+              const mid=document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-slide');
+              const art=mid?.querySelector('.av-midpoint-art');
+              const mp=mid?.querySelector('.av-midpoint-copy');
+              const pick=(el)=>{if(!el)return null;const c=getComputedStyle(el),r=el.getBoundingClientRect();return{tag:el.tagName,cls:el.className,parent:el.parentElement?.className||'',w:r.width,h:r.height,display:c.display,position:c.position,width:c.width,maxWidth:c.maxWidth,minWidth:c.minWidth,gridColumn:c.gridColumn,gridColumnStart:c.gridColumnStart,gridColumnEnd:c.gridColumnEnd,gridRow:c.gridRow,gridTemplateColumns:c.gridTemplateColumns,justifySelf:c.justifySelf,alignSelf:c.alignSelf,transform:c.transform,overflow:c.overflow,padding:c.padding};};
+              return{card:pick(card),visual:pick(visual),copy:pick(copy),mid:pick(mid),art:pick(art),midCopy:pick(mp),html:card?.outerHTML.slice(0,5000)||''};
+            });
+            console.log(JSON.stringify(data,null,2));
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
