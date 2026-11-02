@@ -1,0 +1,81 @@
+name: Case slider gap diagnostic
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: case-slider-gap-diagnostic
+  cancel-in-progress: true
+
+jobs:
+  mobile-geometry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install browser driver
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
+          npm install --no-save --ignore-scripts puppeteer-core@24.26.1
+
+      - name: Inspect live 390px case slider geometry
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const puppeteer=require('puppeteer-core');
+          const fs=require('fs');
+          (async()=>{
+            const executablePath=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'].find(p=>fs.existsSync(p));
+            const browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
+            const page=await browser.newPage();
+            await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+            await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipGapDiagnostic/1.0');
+            await page.goto(`https://astrovip.ro/?case-gap-diagnostic=${Date.now()}`,{waitUntil:'networkidle2',timeout:90000});
+            await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
+            await page.evaluate(()=>document.getElementById('av-consent-reject')?.click());
+            await new Promise(r=>setTimeout(r,4000));
+            const data=await page.evaluate(()=>{
+              const s=document.getElementById('studii-de-caz-home');
+              const wrap=s?.querySelector(':scope > .wrap');
+              const frame=s?.querySelector('.av-case-showcase-frame');
+              const track=s?.querySelector('.av-case-showcase-grid');
+              const nav=s?.querySelector('.av-case-mobile-nav-v7');
+              const ctaLink=frame?.querySelector('a[href="/studii-de-caz/"]');
+              const cta=ctaLink?.parentElement;
+              const rect=el=>{if(!el)return null;const r=el.getBoundingClientRect(),c=getComputedStyle(el);return{tag:el.tagName,cls:el.className||'',top:+r.top.toFixed(1),bottom:+r.bottom.toFixed(1),height:+r.height.toFixed(1),display:c.display,position:c.position,marginTop:c.marginTop,marginBottom:c.marginBottom,paddingTop:c.paddingTop,paddingBottom:c.paddingBottom,minHeight:c.minHeight,maxHeight:c.maxHeight,heightCss:c.height,overflow:c.overflow,gridTemplateRows:c.gridTemplateRows}};
+              return {
+                gapFix:s?.dataset.caseGapFix||'',
+                section:rect(s),wrap:rect(wrap),frame:rect(frame),track:rect(track),cta:rect(cta),nav:rect(nav),
+                directFrameChildren:frame?[...frame.children].map(rect):[],
+                directSectionChildren:s?[...s.children].map(rect):[],
+                trackToCta:track&&cta?+(cta.getBoundingClientRect().top-track.getBoundingClientRect().bottom).toFixed(1):null,
+                ctaToNav:cta&&nav?+(nav.getBoundingClientRect().top-cta.getBoundingClientRect().bottom).toFixed(1):null,
+                markerPresent:!!document.getElementById('av-case-gap-fix-20261102'),
+                scriptPresent:!!document.getElementById('av-case-gap-fix-script-20261102')
+              };
+            });
+            console.log('CASE GAP GEOMETRY',JSON.stringify(data,null,2));
+            const section=await page.$('#studii-de-caz-home');
+            await section.screenshot({path:'/tmp/case-gap-diagnostic.png'});
+            await browser.close();
+            if(!data.markerPresent||!data.scriptPresent) throw new Error('Production gap-fix wrapper is not present in rendered homepage');
+            if(data.trackToCta===null||data.trackToCta>45) throw new Error(`Track-to-CTA gap too large: ${data.trackToCta}px`);
+            if(data.track?.height>235) throw new Error(`Track too tall: ${data.track?.height}px`);
+            if(data.section?.height>620) throw new Error(`Case section still too tall: ${data.section?.height}px`);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+
+      - name: Upload diagnostic screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case-gap-diagnostic
+          path: /tmp/case-gap-diagnostic.png
+          if-no-files-found: warn
+          retention-days: 3
