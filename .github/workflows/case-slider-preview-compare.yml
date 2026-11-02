@@ -36,12 +36,21 @@ jobs:
             for(const width of [390,360]){
               const page=await browser.newPage();
               await page.setViewport({width,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
-              await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipPreviewCompare/1.0');
+              await page.setUserAgent('Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36 AstroVipPreviewCompare/2.0');
               await page.goto(URL+'?compare='+width+'-'+Date.now(),{waitUntil:'domcontentloaded',timeout:90000});
               await page.waitForSelector('#studii-de-caz-home',{visible:true,timeout:30000});
               await page.waitForSelector('#astrovip-puncte-mijlocii',{visible:true,timeout:30000});
-              await new Promise(r=>setTimeout(r,2200));
+              await page.waitForSelector('#av-case-midpoint-measured-preview-v2',{timeout:30000});
               await page.evaluate(()=>document.getElementById('av-consent-reject')?.click());
+              await page.waitForFunction(()=>{
+                const c=document.querySelector('#studii-de-caz-home .av-case-showcase-card')?.getBoundingClientRect();
+                const v=document.querySelector('#studii-de-caz-home .av-case-showcase-visual')?.getBoundingClientRect();
+                const p=document.querySelector('#studii-de-caz-home .av-case-showcase-copy')?.getBoundingClientRect();
+                const m=document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-slide')?.getBoundingClientRect();
+                const a=document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-art')?.getBoundingClientRect();
+                const q=document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-copy')?.getBoundingClientRect();
+                return c&&v&&p&&m&&a&&q&&Math.abs(c.width-m.width)<2&&Math.abs(c.height-m.height)<2&&Math.abs(v.width-a.width)<2&&Math.abs(p.width-q.width)<2;
+              },{timeout:15000});
               const data=await page.evaluate(()=>{
                 const cs=document.querySelector('#studii-de-caz-home');
                 const ct=cs?.querySelector('.av-case-showcase-grid');
