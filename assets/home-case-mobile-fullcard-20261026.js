@@ -61,6 +61,8 @@
         if (copy) group.setAttribute('aria-hidden', 'true');
         cards.forEach(card => {
           const clone = card.cloneNode(true);
+          // Source track percentages must not become widths inside the duplicated ticker.
+          ['flex','width','min-width','max-width'].forEach(property => clone.style.removeProperty(property));
           clone.querySelectorAll('img').forEach(img => {
             img.loading = 'eager';
             img.setAttribute('fetchpriority', 'low');

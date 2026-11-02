@@ -65,7 +65,12 @@ export default {
       })
       .on('script[src^="/assets/site-editor-runtime.js"]', {
         element(element) {
-          if (isHome) element.setAttribute('src', '/assets/site-editor-runtime.js?v=20261102-single-mobile-slider');
+          if (isHome) element.setAttribute('src', '/assets/site-editor-runtime.js?v=20261102-single-mobile-slider-v2');
+        }
+      })
+      .on('link[href^="/assets/case-studies-mobile-lux-v3-20261014.css"]', {
+        element(element) {
+          if (isHome) element.setAttribute('href', '/assets/case-studies-mobile-lux-v3-20261014.css?v=20261102-original-height-v2');
         }
       })
       .on('#menu a[href="#contact"]', removeMenuItem)
