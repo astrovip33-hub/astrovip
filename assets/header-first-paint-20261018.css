@@ -59,3 +59,241 @@ html body:not(.guide-page) header.top .av-premium-title{
   html.av-ultra-home-production:not(.av-mobile-approved) body:not(.guide-page) header.top .nav-actions{flex:0 0 70px!important;margin:0!important}
   html.av-ultra-home-production:not(.av-mobile-approved) body:not(.guide-page) header.top #hamb{width:54px!important;height:54px!important;color:#39ff14!important}
 }
+
+/* ========================================================================== */
+/* ASTROVIP HOMEPAGE POLISH PREVIEW · 2026-11-02 · PREVIEW BRANCH ONLY       */
+/* Goal: preserve current identity/functionality, reduce density, add rhythm. */
+/* ========================================================================== */
+
+:root{
+  --avp-bg:#030605;
+  --avp-panel:#07100c;
+  --avp-panel-2:#0a1210;
+  --avp-gold:#e4c46d;
+  --avp-gold-soft:#c8a95b;
+  --avp-green:#49c96a;
+  --avp-text:#f4f2eb;
+  --avp-muted:#b5beb7;
+  --avp-line:rgba(228,196,109,.18);
+  --avp-radius:24px;
+  --avp-shadow:0 20px 55px rgba(0,0,0,.28);
+}
+
+html{scroll-behavior:smooth}
+body:not(.guide-page){background:var(--avp-bg)!important;color:var(--avp-text)!important}
+body:not(.guide-page) main{overflow:clip}
+body:not(.guide-page) main h1,
+body:not(.guide-page) main h2,
+body:not(.guide-page) main h3{letter-spacing:-.018em;text-wrap:balance}
+body:not(.guide-page) main p{line-height:1.65}
+
+/* Remove the duplicated full offer catalogue; the richer 12-service slider stays. */
+body:not(.guide-page) .av-offers#oferte{display:none!important}
+
+/* Generic section rhythm — noticeably more breathing room without making it sparse. */
+body:not(.guide-page) .av-horoscop-entry,
+body:not(.guide-page) .av-pro-interests,
+body:not(.guide-page) #av-services-slider,
+body:not(.guide-page) #studii-de-caz-home,
+body:not(.guide-page) #programari,
+body:not(.guide-page) #astrovip-footer{position:relative}
+
+/* Daily signature: less boxy, more editorial. */
+body:not(.guide-page) .av-horoscop-entry{
+  padding:64px 24px!important;
+  background:linear-gradient(180deg,#050907 0%,#06100c 100%)!important;
+  border-top:1px solid rgba(228,196,109,.10)!important;
+  border-bottom:1px solid rgba(228,196,109,.10)!important;
+}
+body:not(.guide-page) .av-horoscop-entry__in{
+  max-width:1120px!important;
+  padding:34px 38px!important;
+  border:1px solid var(--avp-line)!important;
+  border-radius:var(--avp-radius)!important;
+  background:linear-gradient(135deg,rgba(9,20,15,.92),rgba(6,12,10,.96))!important;
+  box-shadow:var(--avp-shadow)!important;
+}
+body:not(.guide-page) .av-horoscop-entry h2{
+  color:var(--avp-gold)!important;
+  font-size:clamp(30px,4vw,44px)!important;
+  line-height:1.08!important;
+}
+body:not(.guide-page) .av-horoscop-entry__meta{color:#98aaa0!important;margin-top:12px!important}
+body:not(.guide-page) .av-horoscop-entry a{
+  min-height:48px!important;
+  padding:14px 21px!important;
+  border-radius:999px!important;
+  background:linear-gradient(180deg,#ecd57f,#cba546)!important;
+  box-shadow:0 8px 26px rgba(202,165,70,.16)!important;
+}
+
+/* Interests: keep existing imagery, give it gallery-like spacing. */
+body:not(.guide-page) .av-pro-interests{
+  padding:88px 24px 96px!important;
+  background:linear-gradient(180deg,#050a08 0%,#030605 100%)!important;
+}
+body:not(.guide-page) .av-pro-wrap{max-width:1180px!important;margin:0 auto!important}
+body:not(.guide-page) .av-pro-heading{max-width:760px!important;margin:0 auto 42px!important;text-align:center!important}
+body:not(.guide-page) .av-pro-heading h2{
+  margin:8px 0 12px!important;
+  color:var(--avp-text)!important;
+  font:700 clamp(34px,5vw,52px)/1.05 Georgia,"Times New Roman",serif!important;
+}
+body:not(.guide-page) .av-pro-heading>p:last-child{color:var(--avp-muted)!important;font-size:17px!important}
+body:not(.guide-page) .av-pro-kicker{
+  color:var(--avp-gold)!important;
+  font-size:12px!important;
+  letter-spacing:.16em!important;
+  text-transform:uppercase!important;
+}
+body:not(.guide-page) .av-pro-interest-grid{gap:22px!important}
+body:not(.guide-page) .av-pro-interest{
+  border:1px solid rgba(228,196,109,.16)!important;
+  border-radius:22px!important;
+  background:rgba(8,15,12,.82)!important;
+  box-shadow:0 14px 40px rgba(0,0,0,.20)!important;
+  overflow:hidden!important;
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease!important;
+}
+body:not(.guide-page) .av-pro-interest:hover{
+  transform:translateY(-3px)!important;
+  border-color:rgba(228,196,109,.34)!important;
+  box-shadow:0 20px 48px rgba(0,0,0,.30)!important;
+}
+body:not(.guide-page) .av-pro-interest img{filter:saturate(.88) contrast(1.02)!important}
+body:not(.guide-page) .av-pro-interest>div{padding:22px 22px 24px!important}
+body:not(.guide-page) .av-pro-interest h3{font-size:22px!important;margin-bottom:8px!important}
+body:not(.guide-page) .av-pro-interest p{color:var(--avp-muted)!important;font-size:14px!important;margin-bottom:16px!important}
+body:not(.guide-page) .av-pro-interest span{color:var(--avp-gold)!important;font-weight:800!important}
+
+/* Services: keep the current slider, simplify surfaces and increase whitespace. */
+body:not(.guide-page) #av-services-slider{
+  padding:92px max(22px,calc((100vw - 1220px)/2)) 96px!important;
+  background:radial-gradient(800px 420px at 50% 0,rgba(228,196,109,.055),transparent 70%),#030605!important;
+  border-top:1px solid rgba(228,196,109,.10)!important;
+  border-bottom:1px solid rgba(228,196,109,.10)!important;
+}
+body:not(.guide-page) #av-services-slider .sv-head{max-width:760px!important;margin:0 auto 42px!important;text-align:center!important}
+body:not(.guide-page) #av-services-slider .sv-kicker{color:var(--avp-gold)!important;letter-spacing:.16em!important;font-size:12px!important}
+body:not(.guide-page) #av-services-slider #sv-title{
+  margin:10px 0 12px!important;
+  font:700 clamp(36px,5vw,54px)/1.05 Georgia,"Times New Roman",serif!important;
+  color:var(--avp-text)!important;
+}
+body:not(.guide-page) #av-services-slider .sv-intro{color:var(--avp-muted)!important;font-size:17px!important;line-height:1.65!important}
+body:not(.guide-page) #av-services-slider .sv-track{gap:22px!important;padding:8px 2px 26px!important;scroll-padding-inline:2px!important}
+body:not(.guide-page) #av-services-slider .sv-card{
+  border-radius:24px!important;
+  border:1px solid rgba(228,196,109,.16)!important;
+  background:linear-gradient(180deg,rgba(10,17,14,.96),rgba(5,10,8,.98))!important;
+  box-shadow:0 18px 48px rgba(0,0,0,.24)!important;
+  overflow:hidden!important;
+}
+body:not(.guide-page) #av-services-slider .sv-body{padding:26px 26px 28px!important}
+body:not(.guide-page) #av-services-slider .sv-body h3{font-size:22px!important;line-height:1.18!important;margin-bottom:12px!important}
+body:not(.guide-page) #av-services-slider .sv-desc{color:var(--avp-muted)!important;line-height:1.6!important}
+body:not(.guide-page) #av-services-slider .sv-price{color:var(--avp-gold)!important;margin:22px 0 8px!important}
+body:not(.guide-page) #av-services-slider .sv-cta{
+  min-height:48px!important;
+  border-radius:999px!important;
+  border-color:rgba(228,196,109,.42)!important;
+  color:#f2df9b!important;
+}
+body:not(.guide-page) #av-services-slider .sv-bottom{margin-top:20px!important;padding-top:18px!important;border-top:1px solid rgba(228,196,109,.10)!important}
+body:not(.guide-page) #av-services-slider .sv-note{max-width:900px!important;margin:22px auto 0!important;color:#8f9b94!important;text-align:center!important;line-height:1.6!important}
+
+/* Case studies: preserve SEO/content, visually turn the block into an editorial showcase. */
+body:not(.guide-page) #studii-de-caz-home{
+  padding:96px 24px 104px!important;
+  background:linear-gradient(180deg,#030605 0%,#050a08 100%)!important;
+}
+body:not(.guide-page) #studii-de-caz-home .wrap{max-width:1180px!important}
+body:not(.guide-page) #studii-de-caz-home .av-case-showcase-frame{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body:not(.guide-page) #studii-de-caz-home .av-case-showcase-head{max-width:780px!important;margin:0 auto 40px!important;text-align:center!important}
+body:not(.guide-page) #studii-de-caz-home .av-case-showcase-kicker{color:var(--avp-gold)!important;letter-spacing:.16em!important}
+body:not(.guide-page) #studii-de-caz-home h2{
+  font:700 clamp(36px,5vw,54px)/1.05 Georgia,"Times New Roman",serif!important;
+  margin:10px 0 14px!important;
+}
+
+/* Booking: premium but calm; focus the eye on the form. */
+body:not(.guide-page) #programari{
+  padding:100px 24px 108px!important;
+  background:radial-gradient(700px 360px at 50% 0,rgba(73,201,106,.045),transparent 72%),#030605!important;
+}
+body:not(.guide-page) #programari .wrap{max-width:1080px!important}
+body:not(.guide-page) #programari .av-checkout-shell{
+  padding:44px!important;
+  border:1px solid rgba(228,196,109,.18)!important;
+  border-radius:28px!important;
+  background:linear-gradient(180deg,rgba(8,15,12,.97),rgba(4,8,7,.98))!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.30)!important;
+}
+body:not(.guide-page) #programari .av-checkout-head{max-width:760px!important;margin:0 auto 34px!important;text-align:center!important}
+body:not(.guide-page) #programari .av-checkout-kicker{color:var(--avp-gold)!important;letter-spacing:.14em!important}
+body:not(.guide-page) #programari h2{
+  margin:10px 0 14px!important;
+  font:700 clamp(36px,5vw,52px)/1.06 Georgia,"Times New Roman",serif!important;
+}
+body:not(.guide-page) #programari .av-checkout-head>p:last-child{color:var(--avp-muted)!important;font-size:16px!important;line-height:1.7!important}
+body:not(.guide-page) #programari .av-checkout-steps{margin:0 0 30px!important;gap:10px!important}
+
+/* Footer: preserve all content but reduce visual noise. */
+body:not(.guide-page) #astrovip-footer{
+  border-top:1px solid rgba(228,196,109,.14)!important;
+  background:#020403!important;
+}
+body:not(.guide-page) #astrovip-footer .avf-shell{max-width:1180px!important;padding-top:64px!important;padding-bottom:46px!important}
+body:not(.guide-page) #astrovip-footer .avf-main{gap:36px!important}
+body:not(.guide-page) #astrovip-footer .avf-social{margin-top:38px!important;padding-top:28px!important;border-top:1px solid rgba(228,196,109,.10)!important}
+
+/* Mobile: tighter type scale, but MORE spacing between concepts. */
+@media(max-width:820px){
+  body:not(.guide-page) main h1{line-height:1.04!important;letter-spacing:-.028em!important}
+  body:not(.guide-page) main h2{line-height:1.10!important}
+  body:not(.guide-page) .av-horoscop-entry{width:auto!important;margin:0!important;padding:46px 14px!important}
+  body:not(.guide-page) .av-horoscop-entry__in{padding:26px 22px!important;border-radius:20px!important;gap:18px!important}
+  body:not(.guide-page) .av-horoscop-entry h2{font-size:30px!important}
+  body:not(.guide-page) .av-horoscop-entry a{width:100%!important;justify-content:center!important}
+
+  body:not(.guide-page) .av-pro-interests{padding:62px 14px 70px!important}
+  body:not(.guide-page) .av-pro-heading{margin-bottom:30px!important;text-align:left!important}
+  body:not(.guide-page) .av-pro-heading h2{font-size:34px!important}
+  body:not(.guide-page) .av-pro-heading>p:last-child{font-size:15px!important}
+  body:not(.guide-page) .av-pro-interest-grid{grid-template-columns:1fr!important;gap:18px!important}
+  body:not(.guide-page) .av-pro-interest{border-radius:20px!important}
+  body:not(.guide-page) .av-pro-interest>div{padding:20px!important}
+
+  body:not(.guide-page) #av-services-slider{padding:68px 14px 74px!important}
+  body:not(.guide-page) #av-services-slider .sv-head{text-align:left!important;margin-bottom:30px!important}
+  body:not(.guide-page) #av-services-slider #sv-title{font-size:35px!important}
+  body:not(.guide-page) #av-services-slider .sv-intro{font-size:15px!important}
+  body:not(.guide-page) #av-services-slider .sv-track{gap:16px!important;padding-bottom:22px!important}
+  body:not(.guide-page) #av-services-slider .sv-card{border-radius:20px!important}
+  body:not(.guide-page) #av-services-slider .sv-body{padding:22px!important}
+  body:not(.guide-page) #av-services-slider .sv-note{text-align:left!important;font-size:12px!important}
+
+  body:not(.guide-page) #studii-de-caz-home{padding:70px 14px 78px!important}
+  body:not(.guide-page) #studii-de-caz-home .av-case-showcase-head{text-align:left!important;margin-bottom:30px!important}
+  body:not(.guide-page) #studii-de-caz-home h2{font-size:35px!important}
+
+  body:not(.guide-page) #programari{padding:72px 14px 82px!important}
+  body:not(.guide-page) #programari .av-checkout-shell{padding:28px 18px!important;border-radius:22px!important}
+  body:not(.guide-page) #programari .av-checkout-head{text-align:left!important;margin-bottom:26px!important}
+  body:not(.guide-page) #programari h2{font-size:34px!important}
+  body:not(.guide-page) #programari .av-checkout-head>p:last-child{font-size:14px!important}
+  body:not(.guide-page) #programari .av-checkout-steps{overflow-x:auto!important;scrollbar-width:none!important;padding-bottom:4px!important}
+
+  body:not(.guide-page) #astrovip-footer .avf-shell{padding:48px 16px 96px!important}
+  body:not(.guide-page) #astrovip-footer .avf-main{gap:28px!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body:not(.guide-page) .av-pro-interest{transition:none!important}
+}
