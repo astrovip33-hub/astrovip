@@ -36,7 +36,7 @@ const FINAL_CASE_SLIDER_POLISH = `<style id="av-case-slider-final-20261102">
       imp(title,'line-height',innerWidth<=360?'1.04':'1.05');
       imp(title,'overflow','hidden');
     });
-    section.dataset.caseSliderFinal='2';
+    section.dataset.caseSliderFinal='3';
   };
   const boot=()=>{
     apply();
@@ -64,9 +64,11 @@ const CASE_MIDPOINT_SYNC_PRODUCTION = `<style id="av-case-midpoint-measured-prod
   const imp=(el,p,v)=>{if(el)el.style.setProperty(p,v,'important')};
   let raf=0;
   let resizeObserver=null;
+  let styleObserver=null;
+  let applying=false;
   const sync=()=>{
     raf=0;
-    if(innerWidth>820)return;
+    if(applying||innerWidth>820)return;
     const s=document.getElementById('studii-de-caz-home');
     const wrap=s?.querySelector(':scope > .wrap');
     const frame=s?.querySelector('.av-case-showcase-frame');
@@ -79,6 +81,7 @@ const CASE_MIDPOINT_SYNC_PRODUCTION = `<style id="av-case-midpoint-measured-prod
     const mr=mid.getBoundingClientRect(),ar=art.getBoundingClientRect(),pr=copy.getBoundingClientRect();
     if(mr.width<100||mr.height<100||ar.width<40||pr.width<80)return;
     const w=mr.width,h=mr.height,innerH=Math.max(ar.height,pr.height),artW=ar.width,copyW=pr.width;
+    applying=true;
     [s,wrap,frame].filter(Boolean).forEach(el=>{imp(el,'height','auto');imp(el,'min-height','0');imp(el,'max-height','none')});
     imp(frame,'width',w+'px');imp(frame,'max-width',w+'px');imp(frame,'position','relative');imp(frame,'left','50%');imp(frame,'transform','translateX(-50%)');imp(frame,'margin-left','0');imp(frame,'margin-right','0');imp(frame,'padding','0');imp(frame,'border','0');
     imp(track,'width',w+'px');imp(track,'min-width',w+'px');imp(track,'max-width',w+'px');imp(track,'height',h+'px');imp(track,'min-height',h+'px');imp(track,'max-height',h+'px');imp(track,'gap','0px');imp(track,'padding','0px');imp(track,'margin','0');imp(track,'scroll-padding-inline','0px');imp(track,'align-items','stretch');
@@ -95,11 +98,16 @@ const CASE_MIDPOINT_SYNC_PRODUCTION = `<style id="av-case-midpoint-measured-prod
       resizeObserver=new ResizeObserver(queue);
       [mid,art,copy,track,cards[0]].filter(Boolean).forEach(el=>resizeObserver.observe(el));
     }
+    if(!styleObserver){
+      styleObserver=new MutationObserver(()=>{if(!applying)queue()});
+      styleObserver.observe(s,{subtree:true,attributes:true,attributeFilter:['style']});
+    }
+    setTimeout(()=>{applying=false},0);
   };
-  const queue=()=>{if(raf)return;raf=requestAnimationFrame(sync)};
+  const queue=()=>{if(applying||raf)return;raf=requestAnimationFrame(sync)};
   const boot=()=>{
     sync();
-    [50,120,280,650,1200,1800,2400,3000,3700,4500,5600].forEach(d=>setTimeout(sync,d));
+    [50,90,120,260,280,650,720,1200,1270,1420,1800,2220,2400,3000,3520,3700,4500,5600,6200].forEach(d=>setTimeout(sync,d));
     new MutationObserver(queue).observe(document.documentElement,{childList:true,subtree:true});
     window.addEventListener('resize',queue,{passive:true});
   };
