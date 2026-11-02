@@ -55,6 +55,41 @@
       document.head.appendChild(style);
     }
 
+    const forceCompactGeometry = () => {
+      if (window.innerWidth > 820) return;
+      const compactHeight = window.innerWidth <= 360 ? 210 : (window.innerWidth <= 390 ? 215 : 230);
+      const wrap = section.querySelector(':scope > .wrap');
+      const frame = section.querySelector('.av-case-showcase-frame');
+      const track = section.querySelector('.av-case-showcase-grid');
+      if (!frame || !track) return;
+
+      [section, wrap, frame].filter(Boolean).forEach((node) => {
+        node.style.setProperty('height', 'auto', 'important');
+        node.style.setProperty('min-height', '0', 'important');
+        node.style.setProperty('max-height', 'none', 'important');
+      });
+      frame.style.setProperty('display', 'block', 'important');
+      frame.style.setProperty('overflow', 'visible', 'important');
+      track.style.setProperty('display', 'flex', 'important');
+      track.style.setProperty('height', `${compactHeight}px`, 'important');
+      track.style.setProperty('min-height', `${compactHeight}px`, 'important');
+      track.style.setProperty('max-height', `${compactHeight}px`, 'important');
+      track.style.setProperty('align-items', 'stretch', 'important');
+      track.style.setProperty('overflow-x', 'auto', 'important');
+      track.style.setProperty('overflow-y', 'hidden', 'important');
+
+      const allStudies = frame.querySelector(':scope > div[style*="text-align:center"]');
+      if (allStudies) allStudies.style.setProperty('margin-top', '12px', 'important');
+    };
+
+    forceCompactGeometry();
+    requestAnimationFrame(forceCompactGeometry);
+    [80, 250, 700, 1400].forEach((delay) => setTimeout(forceCompactGeometry, delay));
+    if (!window.__avCaseCompactResizeBound) {
+      window.__avCaseCompactResizeBound = true;
+      window.addEventListener('resize', forceCompactGeometry, {passive:true});
+    }
+
     if (!window.__avCaseCompactControlFix) {
       window.__avCaseCompactControlFix = true;
       document.addEventListener('click', (event) => {
