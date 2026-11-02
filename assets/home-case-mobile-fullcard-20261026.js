@@ -89,6 +89,8 @@
     const syncMode = () => {
       cancelAnimationFrame(raf); raf = 0; lastTime = 0;
       section.dataset.avMobileTicker = active() ? '1' : '0';
+      // Inline geometry must respect the active continuous ticker, including motion preference changes.
+      source.style.setProperty('display', active() ? 'none' : 'flex', 'important');
       if (active()) { measure(); raf = requestAnimationFrame(tick); }
     };
     const pause = () => { resumeAt = performance.now() + 5000; };

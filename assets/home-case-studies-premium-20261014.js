@@ -267,7 +267,7 @@
       frame.style.setProperty('margin-left', 'auto', 'important');
       frame.style.setProperty('margin-right', 'auto', 'important');
       frame.style.setProperty('overflow', 'visible', 'important');
-      track.style.setProperty('display', 'flex', 'important');
+      track.style.setProperty('display', section.dataset.avMobileTicker === '1' ? 'none' : 'flex', 'important');
       track.style.setProperty('gap', '0', 'important');
       track.style.setProperty('padding', '0', 'important');
       track.style.setProperty('height', `${compactHeight}px`, 'important');
