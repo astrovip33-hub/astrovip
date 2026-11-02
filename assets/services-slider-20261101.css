@@ -48,7 +48,7 @@
 #av-services-slider .sv-price{font-size:28px}
 #av-services-slider .sv-price small{font-size:10.5px}
 #av-services-slider .sv-detail{font-size:10px;line-height:1.4}
-#av-services-slider .sv-cta{font-size:9.5px;min-height:46px;border-radius:12px;padding:9px 8px}
+#av-services-slider .sv-cta{font-size:11.5px;min-height:48px;border-radius:12px;padding:10px 10px}
 #av-services-slider .sv-bottom{align-items:flex-start;flex-direction:column;gap:10px}
 #av-services-slider .sv-note{width:calc(100% - 28px);margin-top:14px;font-size:10px}
 }
@@ -82,3 +82,29 @@ body:not(.guide-page) #programari .av-checkout-head,
 body:not(.guide-page) #programari .av-checkout-head p{color:#d8dfda!important;opacity:1!important;visibility:visible!important}
 body:not(.guide-page) #programari .av-checkout-kicker{color:#e4c46d!important;-webkit-text-fill-color:#e4c46d!important}
 body:not(.guide-page) #programari #av-checkout-title{color:#f6f2e8!important;-webkit-text-fill-color:#f6f2e8!important;opacity:1!important;visibility:visible!important;text-shadow:none!important}
+
+/* Preview fix: service CTA must stay high-contrast over the light premium gradient. */
+#av-services-slider .sv-cta,
+#av-services-slider .sv-cta:link,
+#av-services-slider .sv-cta:visited,
+#av-services-slider .sv-cta:hover,
+#av-services-slider .sv-cta:active{
+  position:relative!important;
+  z-index:2!important;
+  color:#07131f!important;
+  -webkit-text-fill-color:#07131f!important;
+  opacity:1!important;
+  visibility:visible!important;
+  text-shadow:none!important;
+  mix-blend-mode:normal!important;
+  font-weight:950!important;
+  letter-spacing:.025em!important;
+}
+#av-services-slider .sv-cta span,
+#av-services-slider .sv-cta *{
+  color:#07131f!important;
+  -webkit-text-fill-color:#07131f!important;
+  opacity:1!important;
+  text-shadow:none!important;
+  mix-blend-mode:normal!important;
+}
