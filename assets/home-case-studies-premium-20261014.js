@@ -21,7 +21,7 @@
         }
         @media(max-width:820px){
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-grid{gap:10px!important;padding:4px 8% 8px!important}
-          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{display:grid!important;grid-template-columns:37% minmax(0,1fr)!important;grid-template-rows:230px!important;align-items:stretch!important;flex:0 0 82%!important;width:82%!important;min-width:82%!important;height:230px!important;min-height:230px!important;max-height:230px!important;border-radius:16px!important;overflow:hidden!important}
+          html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-card{display:grid!important;grid-template-columns:37% minmax(0,1fr)!important;grid-template-rows:230px!important;align-items:stretch!important;flex:0 0 88%!important;width:88%!important;min-width:88%!important;height:230px!important;min-height:230px!important;max-height:230px!important;border-radius:16px!important;overflow:hidden!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-visual{grid-column:1!important;grid-row:1!important;flex:none!important;width:100%!important;height:230px!important;min-height:230px!important;max-height:230px!important;margin:0!important;aspect-ratio:auto!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-copy{grid-column:2!important;grid-row:1!important;min-width:0!important;height:230px!important;box-sizing:border-box!important;padding:12px 10px 11px!important;overflow:hidden!important}
           html.av-ultra-home-production body:not(.guide-page) #studii-de-caz-home .av-case-showcase-eyebrow{margin:0 0 5px!important;font-size:8px!important;line-height:1.15!important;letter-spacing:.08em!important}
@@ -48,6 +48,58 @@
         }
       `;
       document.head.appendChild(style);
+    }
+
+    if (!window.__avCaseCompactControlFix) {
+      window.__avCaseCompactControlFix = true;
+      document.addEventListener('click', (event) => {
+        const control = event.target.closest('#studii-de-caz-home [data-case-next], #studii-de-caz-home [data-case-prev], #studii-de-caz-home .av-case-dot-v7');
+        if (!control) return;
+
+        const liveSection = document.getElementById('studii-de-caz-home');
+        const track = liveSection?.querySelector('.av-case-showcase-grid');
+        const cards = track ? [...track.querySelectorAll('.av-case-showcase-card')] : [];
+        if (!track || cards.length < 2) return;
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const count = liveSection.querySelector('[data-case-count]');
+        const currentFromCount = Math.max(0, (parseInt(count?.textContent || '1', 10) || 1) - 1);
+        const dots = [...liveSection.querySelectorAll('.av-case-dot-v7')];
+        let index = currentFromCount;
+        if (control.matches('[data-case-next]')) index += 1;
+        else if (control.matches('[data-case-prev]')) index -= 1;
+        else index = dots.indexOf(control);
+        index = Math.max(0, Math.min(cards.length - 1, index));
+
+        const firstRect = cards[0].getBoundingClientRect();
+        const secondRect = cards[1].getBoundingClientRect();
+        const step = Math.max(1, Math.abs(secondRect.left - firstRect.left));
+        const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+        const targetLeft = pad + index * step;
+
+        track.style.setProperty('scroll-snap-type', 'none', 'important');
+        track.scrollTo({left: targetLeft, behavior: 'auto'});
+        track.scrollLeft = targetLeft;
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('is-active', i === index);
+          if (i === index) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
+        if (count) count.textContent = `${index + 1} / ${cards.length}`;
+        const prev = liveSection.querySelector('[data-case-prev]');
+        const next = liveSection.querySelector('[data-case-next]');
+        if (prev) prev.disabled = index === 0;
+        if (next) next.disabled = index === cards.length - 1;
+
+        requestAnimationFrame(() => { track.scrollLeft = targetLeft; });
+        setTimeout(() => {
+          track.scrollLeft = targetLeft;
+          track.style.setProperty('scroll-snap-type', 'x mandatory', 'important');
+        }, 160);
+      }, true);
     }
 
     // The shared responsive slider owns its track on every viewport.
