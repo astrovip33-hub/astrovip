@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "astrovip",
-  "main": "worker-case-gap-fix.js",
+  "main": "worker-case-slider-final.js",
   "compatibility_date": "2026-09-15",
   "workers_dev": true,
   "routes": [
