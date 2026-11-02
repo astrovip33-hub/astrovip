@@ -63,6 +63,11 @@ export default {
           element.append(LLMS_DISCOVERY_LINK + CANONICAL_NAP_STYLE + (isHome ? HOME_AUTHORITY_STYLE + HOME_ABOUT_HARD_KILL : ''), { html: true });
         }
       })
+      .on('script[src^="/assets/site-editor-runtime.js"]', {
+        element(element) {
+          if (isHome) element.setAttribute('src', '/assets/site-editor-runtime.js?v=20261102-single-mobile-slider');
+        }
+      })
       .on('#menu a[href="#contact"]', removeMenuItem)
       .on('#menu a[href="/#contact"]', removeMenuItem)
       .on('#menu a[href="/"]', removeMenuItem)
