@@ -22,6 +22,16 @@ const CASE_GAP_FIX = `<style id="av-case-gap-fix-20261102">
     max-height:230px!important;
     margin:0!important;
   }
+  #studii-de-caz-home .av-case-mobile-ticker{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
   #studii-de-caz-home .av-case-showcase-frame > div:has(> a[href="/studii-de-caz/"]){
     margin-top:12px!important;
     margin-bottom:0!important;
@@ -65,6 +75,17 @@ const CASE_GAP_FIX = `<style id="av-case-gap-fix-20261102">
     imp(track,'min-height',h+'px');
     imp(track,'max-height',h+'px');
     imp(track,'margin','0');
+    const ticker=frame.querySelector('.av-case-mobile-ticker');
+    if(ticker){
+      imp(ticker,'display','none');
+      imp(ticker,'visibility','hidden');
+      imp(ticker,'height','0');
+      imp(ticker,'min-height','0');
+      imp(ticker,'max-height','0');
+      imp(ticker,'margin','0');
+      imp(ticker,'padding','0');
+      imp(ticker,'overflow','hidden');
+    }
     const cta=frame.querySelector('a[href="/studii-de-caz/"]')?.parentElement;
     if(cta){imp(cta,'margin-top','12px');imp(cta,'margin-bottom','0')}
     s.dataset.caseGapFix='1';
