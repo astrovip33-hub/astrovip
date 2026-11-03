@@ -27,3 +27,5 @@ http-redirect-worker.js
 command-center-routing.js
 
 horoscop-renderer.js
+legal-withdrawal-api.js
+legal-footer-runtime.js

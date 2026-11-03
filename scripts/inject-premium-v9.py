@@ -1,7 +1,7 @@
 from pathlib import Path
 
 ROOT = Path('.')
-SKIP_PARTS = {'node_modules', '.git', 'command-center'}
+SKIP_PARTS = {'node_modules', '.git', 'command-center', '_legal-preview'}
 HEAD_BLOCK = '''\n<!-- ASTROVIP_PREMIUM_V9 -->\n<link rel="manifest" href="/manifest.webmanifest">\n<link rel="stylesheet" href="/assets/astrovip-design-system-v9.css">\n<meta name="mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n'''
 SCRIPT_BLOCK = '''\n<script type="module" src="/assets/premium-v9/main.js"></script>\n<!-- /ASTROVIP_PREMIUM_V9 -->\n'''
 HOMEPAGE_PRELOADS = '''\n<!-- ASTROVIP_HERO_PRELOAD -->\n<link rel="preload" as="image" href="/assets/astrovip-hero-premium-mobile-20261001.webp?v=20261008-ux1" type="image/webp" media="(max-width:760px)" fetchpriority="high">\n<link rel="preload" as="image" href="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261008-ux1" type="image/avif" media="(min-width:761px)" fetchpriority="high">\n<!-- /ASTROVIP_HERO_PRELOAD -->\n'''
@@ -14,6 +14,10 @@ for path in ROOT.rglob('*.html'):
         continue
     text = path.read_text(encoding='utf-8', errors='ignore')
     scanned += 1
+    # The legal documents own a deliberately small, printable design and form.
+    # Do not load the generic calculator/runtime bundle on these routes.
+    if 'class="av-legal-page"' in text:
+        continue
     if 'ASTROVIP_PREMIUM_V9' in text or '/assets/premium-v9/main.js' in text:
         continue
     lower = text.lower()
