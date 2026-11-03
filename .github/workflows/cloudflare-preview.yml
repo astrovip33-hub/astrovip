@@ -24,6 +24,9 @@ jobs:
       - name: Checkout preview branch
         uses: actions/checkout@v4
 
+      - name: Generate full Ascendent-Soare-Luna collection
+        run: python3 scripts/triplu-profil/publish_all_1728.py
+
       - name: Install dependencies
         run: npm install --ignore-scripts
 
