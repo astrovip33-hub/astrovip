@@ -1,0 +1,32 @@
+{
+  "pages": 13,
+  "profiles": 12,
+  "min_article_words": 647,
+  "max_article_words": 686,
+  "local_references_verified": 336,
+  "canonical_h1_breadcrumbs": "passed",
+  "duplicate_ids": "none",
+  "indexing": "13 pages indexable; dedicated sitemap registered in both indexes",
+  "authorship": "specialist review explicitly pending; no false author or reviewer schema",
+  "browser_qa": {
+    "selector_available": "passed",
+    "selector_unavailable": "passed, visible status and no navigation",
+    "faq_expansion": "passed",
+    "mobile_iframes": [
+      360,
+      390
+    ],
+    "horizontal_overflow": false,
+    "homepage_single_card": "passed",
+    "desktop_card": "visually checked",
+    "core_web_vitals": "not measured on live deployment",
+    "homepage_mobile_card_widths": [
+      345,
+      375
+    ]
+  },
+  "publication_authorized": true,
+  "build": "npm run build:swiss passed",
+  "asset_audit_after_build": "10653 HTML files; zero missing assets",
+  "seo_graph": "zero orphans, zero unreachable"
+}

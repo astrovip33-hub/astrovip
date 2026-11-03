@@ -1,0 +1,92 @@
+{
+  "status": "publication authorized; 12 profiles and hub indexable",
+  "profiles": [
+    {
+      "slug": "ascendent-berbec-soare-pesti-luna-taur",
+      "title": "Ascendent în Berbec · Soare în Pești · Lună în Taur",
+      "asc": "berbec",
+      "sun": "pesti",
+      "moon": "taur"
+    },
+    {
+      "slug": "ascendent-taur-soare-leu-luna-scorpion",
+      "title": "Ascendent în Taur · Soare în Leu · Lună în Scorpion",
+      "asc": "taur",
+      "sun": "leu",
+      "moon": "scorpion"
+    },
+    {
+      "slug": "ascendent-gemeni-soare-capricorn-luna-rac",
+      "title": "Ascendent în Gemeni · Soare în Capricorn · Lună în Rac",
+      "asc": "gemeni",
+      "sun": "capricorn",
+      "moon": "rac"
+    },
+    {
+      "slug": "ascendent-rac-soare-berbec-luna-balanta",
+      "title": "Ascendent în Rac · Soare în Berbec · Lună în Balanță",
+      "asc": "rac",
+      "sun": "berbec",
+      "moon": "balanta"
+    },
+    {
+      "slug": "ascendent-leu-soare-fecioara-luna-sagetator",
+      "title": "Ascendent în Leu · Soare în Fecioară · Lună în Săgetător",
+      "asc": "leu",
+      "sun": "fecioara",
+      "moon": "sagetator"
+    },
+    {
+      "slug": "ascendent-fecioara-soare-varsator-luna-taur",
+      "title": "Ascendent în Fecioară · Soare în Vărsător · Lună în Taur",
+      "asc": "fecioara",
+      "sun": "varsator",
+      "moon": "taur"
+    },
+    {
+      "slug": "ascendent-balanta-soare-scorpion-luna-gemeni",
+      "title": "Ascendent în Balanță · Soare în Scorpion · Lună în Gemeni",
+      "asc": "balanta",
+      "sun": "scorpion",
+      "moon": "gemeni"
+    },
+    {
+      "slug": "ascendent-scorpion-soare-gemeni-luna-capricorn",
+      "title": "Ascendent în Scorpion · Soare în Gemeni · Lună în Capricorn",
+      "asc": "scorpion",
+      "sun": "gemeni",
+      "moon": "capricorn"
+    },
+    {
+      "slug": "ascendent-sagetator-soare-rac-luna-varsator",
+      "title": "Ascendent în Săgetător · Soare în Rac · Lună în Vărsător",
+      "asc": "sagetator",
+      "sun": "rac",
+      "moon": "varsator"
+    },
+    {
+      "slug": "ascendent-capricorn-soare-balanta-luna-berbec",
+      "title": "Ascendent în Capricorn · Soare în Balanță · Lună în Berbec",
+      "asc": "capricorn",
+      "sun": "balanta",
+      "moon": "berbec"
+    },
+    {
+      "slug": "ascendent-varsator-soare-taur-luna-fecioara",
+      "title": "Ascendent în Vărsător · Soare în Taur · Lună în Fecioară",
+      "asc": "varsator",
+      "sun": "taur",
+      "moon": "fecioara"
+    },
+    {
+      "slug": "ascendent-pesti-soare-sagetator-luna-leu",
+      "title": "Ascendent în Pești · Soare în Săgetător · Lună în Leu",
+      "asc": "pesti",
+      "sun": "sagetator",
+      "moon": "leu"
+    }
+  ],
+  "shared_artwork": true,
+  "sitemap": "sitemap-ascendent-soare-luna.xml",
+  "specialist_reviewer_claimed": false
+}
