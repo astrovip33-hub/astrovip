@@ -1,0 +1,50 @@
+/* AstroVip Google review trust panel, accessible & fast — no third-party runtime. */
+#av-home-reviews { position:relative; width:100%; margin:clamp(28px,4vw,56px) auto; padding:0 clamp(14px,3vw,25px); content-visibility: auto; contain-intrinsic-size: auto 540px; color:#f8f7fb; }
+#av-home-reviews *,#av-home-reviews *::before,#av-home-reviews *::after { box-sizing:border-box; }
+#av-home-reviews .avgr-shell { width:min(1160px,100%); margin:auto; padding:clamp(21px,3.4vw,40px); background:radial-gradient(ellipse at 88% 2%,rgba(84,151,215,.21),transparent 46%),linear-gradient(135deg,#0b2447,#163d69 54%,#184a76); border:1px solid rgba(238,202,132,.68); border-radius:23px; box-shadow:0 20px 54px rgba(4,18,40,.27),inset 0 1px 0 rgba(255,255,255,.12); isolation:isolate; }
+#av-home-reviews .avgr-head { display:grid;grid-template-columns:minmax(0,1.7fr) minmax(230px,.75fr); gap:25px; align-items:center; margin:0 0 24px; }
+#av-home-reviews .avgr-eyebrow { color:#f0ce91; letter-spacing:.17em; font:700 11px/1.5 system-ui,sans-serif; }
+#av-home-reviews .avgr-star-mini { color:#ffdf9c;font-size:16px;vertical-align:middle;margin-right:6px; }
+#av-home-reviews h2 { margin:11px 0 11px;color:#fff9ed; font:600 clamp(27px,3vw,40px)/1.18 Georgia,"Times New Roman",serif; letter-spacing:-.025em; }
+#av-home-reviews h2 em { color:#f2ce8d; font-weight:500; font-style:italic; }
+#av-home-reviews .avgr-intro>p { margin:0;max-width:62ch;color:#dce8f6;font:400 15px/1.7 system-ui,sans-serif; }
+#av-home-reviews .avgr-score { padding:18px 20px; min-width:0; border:1px solid rgba(234,204,155,.45);border-radius:15px;background:linear-gradient(150deg,rgba(2,18,38,.56),rgba(10,36,63,.48));box-shadow:inset 0 1px 0 rgba(255,255,255,.08); }
+#av-home-reviews .avgr-google { display:flex; align-items:center; gap:9px;color:#e9f0fb;letter-spacing:.11em;font:700 10px/1.4 system-ui,sans-serif; }
+#av-home-reviews .avgr-g {display:grid;place-items:center;width:28px;height:28px;flex:0 0 28px;border-radius:7px;background:linear-gradient(145deg,#fff,#ecf2ff);color:#4285f4;font:800 21px/1 system-ui,sans-serif;letter-spacing:-.09em;}
+#av-home-reviews .avgr-score-main { display:flex; align-items:baseline; gap:12px;flex-wrap:wrap;margin:11px 0 7px; }
+#av-home-reviews .avgr-score-main strong { color:#fffaf0; font:600 clamp(39px,4.1vw,52px)/1 Georgia,"Times New Roman",serif;letter-spacing:-.04em; }
+#av-home-reviews .avgr-score-main strong span { font:500 19px/1 system-ui,sans-serif; color:#c8d5e7; letter-spacing:0; }
+#av-home-reviews .avgr-stars {color:#f3cc86;letter-spacing:.13em;font-size:17px;line-height:1.4;white-space:nowrap;}
+#av-home-reviews .avgr-score>p {margin:0;color:#dbe6f5;font:400 11px/1.6 system-ui,sans-serif;}
+#av-home-reviews .avgr-list {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;min-width:0;}
+#av-home-reviews .avgr-card {min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:20px 18px;border:1px solid rgba(226,204,165,.31);border-radius:13px;background:linear-gradient(145deg,rgba(12,33,62,.72),rgba(10,30,54,.57));box-shadow:inset 0 1px 0 rgba(255,255,255,.05);}
+#av-home-reviews .avgr-card blockquote { margin:0; padding:0;border:0; color:#f4f7fd;}
+#av-home-reviews .avgr-card blockquote p {margin:0;font:400 14px/1.64 system-ui,sans-serif;}
+#av-home-reviews .avgr-card-foot {display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:10px;border-top:1px solid rgba(225,204,165,.19);}
+#av-home-reviews .avgr-author {color:#f6dcad;font:700 12px/1.4 system-ui,sans-serif;}
+#av-home-reviews .avgr-card-foot a {color:#c7e9ff;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;font:500 11px/1.4 system-ui,sans-serif;}
+#av-home-reviews .avgr-actions {display:flex;align-items:center;justify-content:flex-start;gap:10px;flex-wrap:wrap;margin:22px 0 0;}
+#av-home-reviews .avgr-actions a {display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:47px;padding:12px 19px;border-radius:9px;text-decoration:none;font:800 11px/1.4 system-ui,sans-serif;letter-spacing:.06em;text-align:center;}
+#av-home-reviews .avgr-primary {color:#132846!important;border:1px solid #ffe1ad;background:linear-gradient(120deg,#fff0c7,#e9c47e 70%,#d3a55d);box-shadow:0 6px 16px rgba(0,0,0,.15);}
+#av-home-reviews .avgr-secondary {color:#f9f3e9!important;background:rgba(10,28,52,.34);border:1px solid rgba(245,217,169,.57);}
+#av-home-reviews .avgr-disclosure {margin:15px 0 0;color:#bfcfe4;font:400 11px/1.55 system-ui,sans-serif;}
+#av-home-reviews a:hover {filter:brightness(1.1);}
+#av-home-reviews a:focus-visible,#av-home-reviews .avgr-list:focus-visible{outline:3px solid #abe7ff;outline-offset:4px;}
+@media(max-width:850px) {
+ #av-home-reviews .avgr-head {grid-template-columns:1fr;gap:17px;}
+ #av-home-reviews .avgr-score {width:min(370px,100%);}
+ #av-home-reviews .avgr-list {grid-template-columns:1fr;gap:10px;}
+ #av-home-reviews .avgr-card {padding:16px 17px;}
+}
+@media(max-width:480px){
+ #av-home-reviews {padding:0 14px;margin:27px 0;}
+ #av-home-reviews .avgr-shell{padding:22px 16px;border-radius:18px;}
+ #av-home-reviews h2 {font-size:29px;}
+ #av-home-reviews .avgr-intro>p {font-size:14px;}
+ #av-home-reviews .avgr-list {display:flex;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;gap:10px;padding:2px 1px 10px;}
+ #av-home-reviews .avgr-card{flex:0 0 min(90%,310px);scroll-snap-align:start;min-height:215px;}
+ #av-home-reviews .avgr-score-main strong {font-size:44px;}
+ #av-home-reviews .avgr-actions {display:grid;grid-template-columns:1fr;}
+ #av-home-reviews .avgr-actions a {width:100%;font-size:10px;}
+}
+@media(prefers-reduced-motion:reduce){#av-home-reviews .avgr-list {scroll-behavior:auto;}}
