@@ -91,8 +91,27 @@
     const syncMode = () => {
       cancelAnimationFrame(raf); raf = 0; lastTime = 0;
       section.dataset.avMobileTicker = active() ? '1' : '0';
-      // Inline geometry must respect the active continuous ticker, including motion preference changes.
-      source.style.setProperty('display', active() ? 'none' : 'flex', 'important');
+      // The mobile ticker and desktop marquee replace the legacy source grid.
+      // Do not force display:flex on desktop: that resurrects the 16 oversized duplicate cards.
+      const desktopSlider = !mobile.matches && !reduced.matches &&
+        Boolean(section.querySelector('.av-case-desktop-marquee-v9'));
+      const sourceHidden = active() || desktopSlider;
+      source.style.setProperty('display', sourceHidden ? 'none' : 'flex', 'important');
+      source.inert = sourceHidden;
+      if (sourceHidden) source.setAttribute('aria-hidden', 'true');
+      else source.removeAttribute('aria-hidden');
+      const oldNav = section.querySelector('.av-case-slider-nav');
+      if (oldNav) {
+        if (desktopSlider) {
+          oldNav.style.setProperty('display', 'none', 'important');
+          oldNav.inert = true;
+          oldNav.setAttribute('aria-hidden', 'true');
+        } else {
+          oldNav.style.removeProperty('display');
+          oldNav.inert = false;
+          oldNav.removeAttribute('aria-hidden');
+        }
+      }
       if (active()) { measure(); raf = requestAnimationFrame(tick); }
     };
     const pause = () => { resumeAt = performance.now() + 5000; };
@@ -114,8 +133,20 @@
     }, { passive: true });
     new MutationObserver(rebuild).observe(source, { childList: true, subtree: true, attributes: true,
       attributeFilter: ['src', 'srcset', 'sizes', 'alt', 'width', 'height'] });
-    section.addEventListener('astrovip:cases-expanded', rebuild);
+    section.addEventListener('astrovip:cases-expanded', () => { rebuild(); syncMode(); });
     new ResizeObserver(measure).observe(viewport);
+    // Other homepage modules can insert the desktop marquee after this script initializes.
+    // Reconcile once it appears and whenever a later script tries to re-open the old grid.
+    new MutationObserver(() => {
+      if (!mobile.matches) syncMode();
+    }).observe(section.querySelector('.av-case-showcase-frame') || section, { childList: true });
+    new MutationObserver(() => {
+      if (mobile.matches || reduced.matches || !section.querySelector('.av-case-desktop-marquee-v9')) return;
+      if (source.style.getPropertyValue('display') !== 'none' ||
+          source.style.getPropertyPriority('display') !== 'important') {
+        source.style.setProperty('display', 'none', 'important');
+      }
+    }).observe(source, { attributes: true, attributeFilter: ['style'] });
     mobile.addEventListener('change', syncMode);
     reduced.addEventListener('change', syncMode);
     rebuild(); syncMode();
