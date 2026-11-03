@@ -221,6 +221,9 @@
   color: #c6d6e9;
   font: 400 11px/1.5 system-ui, sans-serif;
 }
+@media (min-width: 781px) {
+  #av-three-profile-entry .av3-visual > img { object-fit: contain; }
+}
 @media (max-width: 780px) {
   #av-three-profile-entry .av3-link { grid-template-columns: 1fr; }
   #av-three-profile-entry .av3-visual { min-height: unset; aspect-ratio: 16 / 8.3; }
