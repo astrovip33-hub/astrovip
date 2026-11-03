@@ -1,0 +1,55 @@
+name: AstroVip — publicare progresivă (maxim 20 pe zi)
+
+on:
+  schedule:
+    # 12:20 UTC = 14:20 EET / 15:20 EEST in Bucharest.
+    - cron: '20 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: astrovip-triple-profiles-daily-publish
+  cancel-in-progress: false
+
+jobs:
+  publish-approved:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout latest editorial approvals
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Validate approvals and promote no more than 20 in Bucharest day
+        run: python3 scripts/triplu-profil/advance_indexing.py --limit 20
+
+      - name: Validate persisted release state
+        run: |
+          python3 - <<'PY'
+          import sys
+          sys.path.insert(0,'scripts/triplu-profil')
+          from review_gate import load_promotions
+          print('Approved for indexability:',len(load_promotions()))
+          PY
+
+      - name: Commit and trigger Cloudflare production only when state changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- scripts/triplu-profil/indexed-state.json; then
+            echo "Nothing QA-approved to promote today. Unreviewed pages remain noindex." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/triplu-profil/indexed-state.json
+          git commit -m "seo(asl): promote up to 20 quality-approved profiles"
+          git pull --rebase origin main
+          python3 scripts/triplu-profil/advance_indexing.py --limit 20 --dry-run
+          git push origin HEAD:main
+          echo "Release state committed. Cloudflare production deployment triggered by push to main." >> "$GITHUB_STEP_SUMMARY"
+          echo "A release is not a confirmed Google indexation. Check live deployment and GSC URL Inspection." >> "$GITHUB_STEP_SUMMARY"
