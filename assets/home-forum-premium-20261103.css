@@ -14,3 +14,12 @@
 #forum-astrovip-home .av-work-community-preview p{margin:0;color:rgba(230,243,255,.72);font-size:.82rem;line-height:1.5}
 @media(max-width:900px){#forum-astrovip-home .av-work-community-shell{grid-template-columns:1fr;gap:2rem}}
 @media(max-width:620px){#forum-astrovip-home.av-work-community{padding:4rem 0}#forum-astrovip-home .av-work-community-shell{width:min(100% - 28px,1180px)}#forum-astrovip-home h2{font-size:clamp(2.25rem,12vw,3.35rem)}#forum-astrovip-home .av-work-forum-button{width:100%}}
+
+/* Homepage: one Forum CTA per viewport. Keep the Work premium panel on
+   desktop; retain the footer entry on mobile where the premium panel
+   is intentionally hidden by the ultra-mobile homepage layout. */
+@media (min-width: 821px) {
+  html body:not(.guide-page) #astrovip-footer.avf-footer .avf-forum {
+    display: none !important;
+  }
+}
