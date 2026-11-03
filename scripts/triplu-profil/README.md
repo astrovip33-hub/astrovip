@@ -19,3 +19,8 @@ Revizuire de specialitate a textelor, apoi atribuirea reală a autorului/revizor
 Selectorul alege combinații cunoscute. Calculul din datele de naștere trimite la calculatorul existent `/harta-mea/`; nu este un nou calculator implementat aici și nu există încă transfer automat al rezultatului în selector.
 
 Numai după autorizare: activați indexarea paginilor aprobate, integrați URL-urile în sitemapul live și verificați răspunsurile HTTP, canonicalele și performanța pe deploymentul real. Acest preview nu confirmă scoruri PageSpeed, poziții Google sau citare în sisteme AI.
+
+
+## Seria 02 (3 noiembrie 2026)
+
+Sunt 24 de interpretări indexabile, 12 în seria 01 și 12 în seria 02, plus un singur hub și un singur card de intrare în homepage. Datele editoriale noi se găsesc în `serie-02.json`; selectorul și sitemapul includ numai profilurile publicate. Pentru a evita regresiile, **nu rulați `build-serie.py --publish` fără adaptarea lui pentru ambele serii**: scriptul inițial generează numai seria 01 și poate rescrie hubul/selectorul/sitemapul. Textele sunt educaționale, nu confirmă aspecte exacte din simplul fapt că planetele/axele sunt în același semn. Imaginile WebP comune sunt refolosite pentru performanță. Nu se declară o revizuire de specialitate neconfirmată.
