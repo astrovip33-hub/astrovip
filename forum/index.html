@@ -7,7 +7,7 @@
 <title>Forum Astrologie | Comunitatea AstroVip</title>
 <meta name="description" content="Forum de astrologie AstroVip: discuții despre hărți natale, previziuni, sinastrie, relocare, Local Space și numerologie, într-o comunitate moderată."><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <link rel="canonical" href="https://astrovip.ro/forum/">
-<link rel="preconnect" href="https://hhzsecdtqacyroxiywpm.supabase.co" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/forum/forum.css?v=20261103-publish1">
+<link rel="preconnect" href="https://hhzsecdtqacyroxiywpm.supabase.co" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/forum/forum.css?v=20261103-publish1"><link rel="stylesheet" href="/forum/forum-work.css?v=20261103-work1">
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script defer src="/forum/config.js?v=20261103-publish1"></script>
 <script defer src="/forum/forum.js?v=20261103-publish1"></script>
@@ -16,32 +16,35 @@
 <meta name="twitter:title" content="Forum Astrologie | Comunitatea AstroVip">
 <meta name="twitter:description" content="Forum de astrologie AstroVip: discuții despre hărți natale, previziuni, sinastrie, relocare, Local Space și numerologie, într-o comunitate moderată.">
 </head>
-<body>
-<header class="topbar">
-  <div class="wrap nav">
-    <a class="brand" href="/">ASTROVIP</a>
-    <nav class="navlinks" aria-label="Navigare forum"><a href="/">Site principal</a><a href="#categorii">Categorii</a><a href="#discutii">Discuții</a></nav>
-    <button class="icon-btn" id="notificationBtn" type="button" title="Notificări" hidden>🔔<span id="notificationBadge" class="badge" hidden>0</span></button>
-    <button class="btn ghost" id="authBtn" type="button">Autentificare</button>
-  </div>
+<body class="forum-page forum-work-redesign">
+<header class="site-header solid work-forum-header" data-header>
+  <a class="brand" href="/" aria-label="AstroVip, pagina principală"><img src="/assets/astrovip-monogram.png" alt="" width="56" height="56"><span>ASTRO<strong>VIP</strong></span></a>
+  <nav class="main-nav" aria-label="Meniu principal"><a href="/">Acasă</a><a href="/#servicii">Servicii</a><a href="/#despre">Despre</a><a class="active" href="/forum/">Forum</a></nav>
+  <div class="work-forum-account"><button class="icon-btn" id="notificationBtn" type="button" title="Notificări" hidden>Notificări <span id="notificationBadge" class="badge" hidden>0</span></button><button class="button button-outline" id="authBtn" type="button">Autentificare</button></div>
 </header>
 <main>
-<section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">Comunitatea AstroVip</span><h1>Forum de astrologie</h1><p>Întrebări, experiențe și discuții aprofundate despre astrologie natală, timing, sinastrie, relocare și numerologie.</p><div class="hero-actions"><button class="btn primary" id="newTopicTop" type="button">+ Subiect nou</button><a class="btn ghost" href="#discutii">Vezi discuțiile</a></div></div><aside class="status-card" aria-live="polite"><span class="status-dot" id="statusDot"></span><div><strong id="statusTitle">Se verifică forumul…</strong><small id="statusText">Inițializare</small></div></aside></div></section>
-<section class="wrap stats" aria-label="Statistici forum"><div><strong id="statCategories">6</strong><span>Categorii</span></div><div><strong id="statTopics">—</strong><span>Subiecte</span></div><div><strong id="statReplies">—</strong><span>Răspunsuri</span></div><div><strong id="statMembers">—</strong><span>Membri</span></div></section>
-<div class="wrap notice" id="demoNotice" hidden><strong>Conexiune temporar indisponibilă</strong><span>Reîncarcă pagina pentru sincronizarea datelor.</span></div>
-<section class="wrap forum-layout" id="categorii">
-  <aside class="sidebar">
-    <div class="panel"><div class="panel-head"><h2>Categorii</h2></div><div id="categoryList" class="category-list"></div></div>
-    <div class="panel member-panel"><div class="panel-head"><h2>Contul meu</h2></div><div id="memberCard" class="member-card"><p>Autentifică-te pentru profil, notificări și publicare.</p></div></div>
-    <div class="panel rules"><div class="panel-head"><h2>Reguli esențiale</h2></div><p>Respect reciproc, fără spam și fără date personale publicate fără acord. Astrologia oferă orientare simbolică și nu înlocuiește consultanța medicală, juridică sau financiară.</p></div>
-  </aside>
-  <section class="content" id="discutii"><div class="panel"><div class="panel-head toolbar"><div><span class="kicker">Forum AstroVip</span><h2 id="topicHeading">Discuții recente</h2></div><button class="btn primary compact" id="newTopicBtn" type="button">+ Subiect nou</button></div><div class="filters"><input id="searchInput" type="search" placeholder="Caută un subiect…" aria-label="Caută în forum"><select id="sortSelect" aria-label="Sortează discuțiile"><option value="recent">Cele mai recente</option><option value="replies">Cele mai discutate</option></select></div><div id="topicList" class="topic-list"></div><div class="pagination" id="pagination"><button class="btn ghost compact" id="prevPage" type="button">‹ Anterior</button><span id="pageInfo">Pagina 1</span><button class="btn ghost compact" id="nextPage" type="button">Următor ›</button></div></div></section>
-</section>
-<section class="wrap" style="padding:8px 0 72px">
-  <div class="panel" style="margin-bottom:16px"><div class="panel-head"><h2>Ce discutăm în comunitatea AstroVip</h2></div><div style="padding:0 20px 20px;line-height:1.7"><p>Forumul este organizat pentru întrebări și schimb de experiență despre <a href="/harta-natala/"><strong>harta natală</strong></a>, <a href="/tranzite-astrologice/"><strong>tranzite astrologice</strong></a>, sinastrie, carieră, relocare, Local Space și numerologie. Un subiect bun include context suficient pentru ca ceilalți membri să înțeleagă întrebarea, fără publicarea inutilă a datelor personale.</p><p>Pentru calcule, folosește <a href="/instrumente-astrologie/"><strong>AstroVip Tools</strong></a> și adaugă în discuție doar rezultatele relevante. Astfel, conversația rămâne concentrată pe interpretare și metodă, nu pe repetarea calculelor de bază.</p></div></div>
-  <div class="panel" style="margin-bottom:16px"><div class="panel-head"><h2>Cum formulezi o întrebare astrologică utilă</h2></div><div style="padding:0 20px 20px;line-height:1.7"><p>Precizează tehnica pe care o folosești, aspectul sau casa pe care vrei să o discuți și, dacă este relevant, intervalul de timp. Evită formulările care cer certitudini absolute. În astrologia predictivă, un indicator izolat trebuie verificat în contextul hărții și, de regulă, prin mai multe tehnici.</p><p>Dacă ora nașterii este incertă, menționează acest lucru. Ascendentul, MC și casele depind de precizia orei, iar concluziile pot fi diferite dacă ora este aproximativă.</p></div></div>
-  <div class="panel"><div class="panel-head"><h2>Reguli pentru o comunitate utilă</h2></div><div style="padding:0 20px 20px;line-height:1.7"><p>Păstrează discuțiile respectuoase, evită spamul și nu publica date personale ale altor persoane fără acord. Conținutul forumului este comunitar și poate include opinii diferite; el nu reprezintă automat metodologia editorială AstroVip.</p><p>Astrologia și numerologia sunt folosite aici ca instrumente simbolice de reflecție și nu înlocuiesc diagnosticul medical, psihoterapia sau consultanța juridică ori financiară.</p></div></div>
-</section>
+  <section class="forum-hero"><div class="shell">
+    <p class="eyebrow"><span></span> Comunitatea AstroVip</p>
+    <h1>Întrebări, experiențe și <em>perspective.</em></h1>
+    <p>Un spațiu civilizat pentru discuții despre astrologie, numerologie, timing și relocare.</p>
+    <div class="forum-actions"><button class="button button-gold" id="newTopicTop" type="button">Deschide un subiect</button><label class="forum-search"><span>⌕</span><input id="searchInput" type="search" placeholder="Caută în forum" aria-label="Caută în forum"></label></div>
+    <div class="work-forum-status" aria-live="polite"><span class="status-dot" id="statusDot"></span><strong id="statusTitle">Se verifică forumul…</strong><small id="statusText">Inițializare</small></div>
+  </div></section>
+  <div class="shell notice" id="demoNotice" hidden><strong>Conexiune temporar indisponibilă</strong><span>Reîncarcă pagina pentru sincronizarea datelor.</span></div>
+  <section class="forum-layout shell" id="categorii">
+    <aside class="forum-sidebar">
+      <h2>Categorii</h2>
+      <div id="categoryList" class="work-category-list"></div>
+      <div class="work-forum-metrics" aria-label="Statistici forum"><div><strong id="statCategories">6</strong><span>Categorii</span></div><div><strong id="statTopics">—</strong><span>Subiecte</span></div><div><strong id="statReplies">—</strong><span>Răspunsuri</span></div><div><strong id="statMembers">—</strong><span>Membri</span></div></div>
+      <div class="forum-note"><strong>Contul meu</strong><div id="memberCard" class="member-card"><p>Autentifică-te pentru profil, notificări și publicare.</p></div></div>
+      <div class="forum-note"><strong>Regula de aur</strong><p>Argumentăm ideile, respectăm oamenii și protejăm datele personale.</p></div>
+    </aside>
+    <section class="topic-list work-topic-list" id="discutii" aria-live="polite">
+      <div class="topic-toolbar"><div><p>Discuții recente</p><h2 id="topicHeading">Discuții recente</h2></div><div class="work-topic-tools"><select id="sortSelect" aria-label="Ordonează"><option value="recent">Cele mai recente</option><option value="replies">Cele mai discutate</option></select><button class="button button-gold compact" id="newTopicBtn" type="button">Subiect nou</button></div></div>
+      <div id="topicList" class="work-topics"></div>
+      <div class="pagination" id="pagination"><button class="button button-outline compact" id="prevPage" type="button">Anterior</button><span id="pageInfo">Pagina 1</span><button class="button button-outline compact" id="nextPage" type="button">Următor</button></div>
+    </section>
+  </section>
 </main>
 
 <div class="modal" id="authModal" aria-hidden="true"><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="authTitle"><button class="close" data-close="authModal" aria-label="Închide">×</button><span class="kicker">Cont AstroVip</span><h2 id="authTitle">Autentificare</h2><div class="tabs"><button class="tab active" data-auth-mode="login" type="button">Intră în cont</button><button class="tab" data-auth-mode="signup" type="button">Cont nou</button></div><form id="authForm"><input id="displayName" type="text" maxlength="80" placeholder="Nume afișat" autocomplete="nickname" hidden><input id="email" type="email" placeholder="Email" autocomplete="email" required><input id="password" type="password" placeholder="Parolă (minim 6 caractere)" autocomplete="current-password" minlength="6" required><button class="btn primary full" type="submit">Continuă</button><p class="form-msg" id="authMsg"></p></form></div></div>
