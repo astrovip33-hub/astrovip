@@ -26,12 +26,12 @@
   let loopWidth=0;
   if(mobile&&intro) intro.textContent='45 de analize dedicate perechilor planetare. Glisează sau folosește săgețile pentru a vedea fiecare card complet.';
   const speed=()=>30;
-  const recalc=()=>{loopWidth=track.scrollWidth/2;if(mobile)viewport.scrollLeft=0;};
+  const recalc=()=>{loopWidth=originals[originals.length-1].nextElementSibling.offsetLeft-originals[0].offsetLeft;};
   const paused=()=>manualPause||interactionPause||pageHidden;
   const normalize=()=>{if(!loopWidth)return;if(viewport.scrollLeft>=loopWidth)viewport.scrollLeft-=loopWidth;if(viewport.scrollLeft<0)viewport.scrollLeft+=loopWidth;};
   const cardStep=()=>{const card=track.querySelector('.av-midpoint-card');if(!card)return 226;const gap=parseFloat(getComputedStyle(track).gap||0);return card.getBoundingClientRect().width+gap;};
   const setPauseUi=()=>{if(!pause)return;pause.textContent=manualPause?'▶':'Ⅱ';pause.setAttribute('aria-pressed',String(manualPause));pause.setAttribute('aria-label',manualPause?'Pornește sliderul':'Pauză slider');};
-  const nudge=delta=>{viewport.scrollBy({left:delta,behavior:mobile?'smooth':'auto'});interactionPause=true;clearTimeout(nudge.timer);nudge.timer=setTimeout(()=>{interactionPause=false;},900);};
+  const nudge=delta=>{if(delta<0&&viewport.scrollLeft<1)viewport.scrollLeft=loopWidth;viewport.scrollBy({left:delta,behavior:prefersReduced?'auto':'smooth'});interactionPause=true;clearTimeout(nudge.timer);nudge.timer=setTimeout(()=>{interactionPause=false;},900);};
   const animate=now=>{const dt=Math.min((now-last)/1000,.05);last=now;if(!paused()&&loopWidth){viewport.scrollLeft+=speed()*dt;normalize();}requestAnimationFrame(animate);};
   prev?.addEventListener('click',()=>nudge(-cardStep()));
   next?.addEventListener('click',()=>nudge(cardStep()));
@@ -42,7 +42,7 @@
   viewport.addEventListener('focusout',()=>{interactionPause=false;});
   viewport.addEventListener('touchstart',()=>{interactionPause=true;},{passive:true});
   viewport.addEventListener('touchend',()=>{setTimeout(()=>{interactionPause=false;},700);},{passive:true});
-  viewport.addEventListener('scroll',()=>{if(!mobile)normalize();},{passive:true});
+  viewport.addEventListener('scrollend',normalize,{passive:true});
   document.addEventListener('visibilitychange',()=>{pageHidden=document.hidden;last=performance.now();});
   window.addEventListener('resize',()=>{clearTimeout(recalc.timer);recalc.timer=setTimeout(recalc,120);});
   window.addEventListener('load',recalc,{once:true});
