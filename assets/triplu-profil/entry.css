@@ -251,3 +251,9 @@
   #av-three-profile-entry .av3-link:hover { transform: none; }
   #av-three-profile-entry .av3-link:hover .av3-visual > img { transform: none; }
 }
+
+/* Keep the AstroVip signature plaque clear of the initial A on narrow mobile viewports. */
+@media (max-width: 360px) {
+  #av-three-profile-entry .av3-visual-kicker {font-size: 8px; letter-spacing: .08em; gap: 7px; padding: 6px 9px;}
+  #av-three-profile-entry .av3-spark {font-size: 13px;}
+}
