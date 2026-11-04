@@ -1073,10 +1073,11 @@ html body:not(.guide-page) #av-mobile-approved-home .avm-hero-copy .avm-kicker{
 </style>
 <!-- homepage-cache-bust:20261101-home-cine-harta-cachebust-1 -->
 <style id="interventie-2016-image-full">html body #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual{height:auto!important;max-height:none!important;flex:0 0 auto!important;aspect-ratio:941/1672!important}html body #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual>a,html body #studii-de-caz-home #studiu-interventie-2016 .av-case-showcase-visual img{height:auto!important;max-height:none!important;object-fit:contain!important;aspect-ratio:941/1672!important}</style><style id="clasa-1-1984-image-full">html body #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual{height:auto!important;max-height:none!important;flex:0 0 auto!important;aspect-ratio:941/1672!important}html body #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual>a,html body #studii-de-caz-home #studiu-clasa-1-1984 .av-case-showcase-visual img{height:auto!important;max-height:none!important;object-fit:contain!important;aspect-ratio:941/1672!important}</style><link rel="stylesheet" href="/assets/services-slider-20261101.css?v=compact50"><link rel="stylesheet" href="/assets/midpoint-slider-premium-20261102.css?v=fit-bidirectional-20261103"><link rel="stylesheet" href="/assets/home-forum-premium-20261103.css?v=single-forum-desktop-20261103">
-<script defer src="/assets/midpoint-slider-premium-20261102.js?v=fit-bidirectional-20261103"></script>
+
 <script defer src="/assets/home-case-desktop-marquee-20261026.js?v=restore-slider-20261103"></script>
 <link rel="stylesheet" href="/assets/triplu-profil/entry.css?v=20261104-nooverlap2">
 <link rel="stylesheet" href="/assets/home-google-reviews-premium.css?v=20261103-1">
+<style>#astrovip-puncte-mijlocii .av-midpoint-art img{object-fit:fill!important}</style>
 </head>
 <body class="av-ux-refresh av-motion-live"><div id="av-consent" class="av-consent" role="dialog" aria-modal="true" aria-labelledby="av-consent-title"><div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div></div><a class="skip-link" href="#top">Sari la conținut</a>
 <header class="top" id="av-site-header">
@@ -1517,6 +1518,60 @@ html body:not(.guide-page) #av-mobile-approved-home .avm-hero-copy .avm-kicker{
     </div>
   </div>
 </section>
+<script>(()=>{
+'use strict';
+const section=document.getElementById('astrovip-puncte-mijlocii');
+if(!section||section.dataset.midpointReady==='1')return;
+const viewport=section.querySelector('.av-midpoint-viewport');
+const track=section.querySelector('.av-midpoint-track');
+const cards=[...section.querySelectorAll('.av-midpoint-card')];
+if(!viewport||!track||cards.length<2)return;
+section.dataset.midpointReady='1';
+
+const prev=section.querySelector('[data-midpoint-prev]');
+const next=section.querySelector('[data-midpoint-next]');
+const pause=section.querySelector('[data-midpoint-pause]');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+let manualPause=reduced.matches, interacting=false, direction=1, timer;
+const intro=section.querySelector('.av-midpoint-intro');
+if(intro)intro.textContent=cards.length+' de analize dedicate perechilor planetare. Imagini complete, fără text tăiat. Cardurile avansează automat. Poți și să glisezi pentru a explora.';
+viewport.tabIndex=0;
+viewport.setAttribute('role','region');
+viewport.setAttribute('aria-roledescription','carusel');
+const max=()=>Math.max(0,viewport.scrollWidth-viewport.clientWidth);
+const step=()=>cards[1].offsetLeft-cards[0].offsetLeft;
+const go=sign=>{
+direction=sign;
+const end=max(), current=viewport.scrollLeft;
+const target=sign<0?(current<=2?end:Math.max(0,current-step())):(current>=end-2?0:Math.min(end,current+step()));
+viewport.scrollTo({left:target,behavior:reduced.matches?'instant':'smooth'});
+};
+prev?.addEventListener('click',()=>go(-1));
+next?.addEventListener('click',()=>go(1));
+viewport.addEventListener('keydown',e=>{
+if(e.target!==viewport)return;
+if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();go(e.key==='ArrowLeft'?-1:1);}
+});
+const ui=()=>{if(pause){pause.textContent=manualPause?'▶':'Ⅱ';pause.setAttribute('aria-pressed',String(manualPause));pause.setAttribute('aria-label',manualPause?'Pornește sliderul':'Pauză slider');}};
+pause?.addEventListener('click',()=>{manualPause=!manualPause;ui();});
+const hold=()=>{clearTimeout(timer);interacting=true;};
+const release=()=>{clearTimeout(timer);timer=setTimeout(()=>interacting=false,900);};
+viewport.addEventListener('pointerenter',hold);
+viewport.addEventListener('pointerleave',release);
+viewport.addEventListener('focusin',hold);
+viewport.addEventListener('focusout',release);
+viewport.addEventListener('touchstart',hold,{passive:true});
+viewport.addEventListener('touchend',release,{passive:true});
+viewport.addEventListener('touchcancel',release,{passive:true});
+setInterval(()=>{
+if(manualPause||interacting||document.hidden)return;
+if(viewport.scrollLeft>=max()-2)direction=-1;
+if(viewport.scrollLeft<=2)direction=1;
+go(direction);
+},2200);
+ui();
+})();
+</script>
 <section class="av-work-community" id="forum-astrovip-home" aria-labelledby="forum-home-title">
   <div class="av-work-community-shell">
     <div class="av-work-community-copy">
