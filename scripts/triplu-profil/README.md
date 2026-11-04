@@ -24,3 +24,8 @@ Numai după autorizare: activați indexarea paginilor aprobate, integrați URL-u
 ## Seria 02 (3 noiembrie 2026)
 
 Sunt 24 de interpretări indexabile, 12 în seria 01 și 12 în seria 02, plus un singur hub și un singur card de intrare în homepage. Datele editoriale noi se găsesc în `serie-02.json`; selectorul și sitemapul includ numai profilurile publicate. Pentru a evita regresiile, **nu rulați `build-serie.py --publish` fără adaptarea lui pentru ambele serii**: scriptul inițial generează numai seria 01 și poate rescrie hubul/selectorul/sitemapul. Textele sunt educaționale, nu confirmă aspecte exacte din simplul fapt că planetele/axele sunt în același semn. Imaginile WebP comune sunt refolosite pentru performanță. Nu se declară o revizuire de specialitate neconfirmată.
+
+
+## Colecție completă 1728, publicare automată
+
+Generatorul publish_all_1728.py păstrează cele 24 de profile editoriale, publică 1704 interpretări modulare noindex și 12 huburi indexabile de câte 144 variante. Selectorul funcționează pentru toate cele 1728 combinații. Sitemapul include 37 pagini indexabile din colecție. Nu rulați build-serie.py după publicarea completă fără actualizarea lui: poate suprascrie selectorul și sitemapul.

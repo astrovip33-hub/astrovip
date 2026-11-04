@@ -1,5 +1,5 @@
 {
-  "status": "publication authorized; 24 original profiles and one hub indexable",
+  "status": "1728 public profiles; 24 curated plus 0 independently QA-approved profiles indexable; 1704 remain noindex; 12 indexed Ascendant hubs",
   "profiles": [
     {
       "slug": "ascendent-berbec-soare-pesti-luna-taur",
@@ -177,5 +177,12 @@
   "series": [
     "01",
     "02"
-  ]
+  ],
+  "public_profiles": 1728,
+  "curated_indexable_profiles": 24,
+  "approved_indexable_profiles": 0,
+  "automated_noindex_profiles": 1704,
+  "indexable_ascendant_hubs": 12,
+  "collection_pages": 1741,
+  "sitemap_urls": 37
 }
