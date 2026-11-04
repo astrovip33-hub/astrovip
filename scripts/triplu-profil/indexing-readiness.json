@@ -1,0 +1,11 @@
+{
+  "total_profiles": 1728,
+  "indexable_profiles": 24,
+  "noindex_profiles": 1704,
+  "approved_review_documents": 0,
+  "sitemap_urls": 37,
+  "indexable_profiles_missing_sitemap": [],
+  "technical_issues": [],
+  "ready_to_submit_all": false,
+  "blocking_reason": "1704 generated profiles remain noindex pending substantive editorial review"
+}
