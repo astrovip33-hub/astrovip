@@ -24,8 +24,13 @@ with tempfile.TemporaryDirectory(prefix="astrovip-asl-") as tempdir:
         if slug in curated:
             continue
         dest=ROOT/BASE/slug/"index.html"
-        if dest.exists():
-            raise ValueError("Unexpected existing profile "+str(dest))
+        if dest.exists() and slug not in promotions:
+            existing=dest.read_text(encoding="utf-8")
+            if ('name="robots" content="noindex,follow"' not in existing
+                or existing.count("<h1>") != 1
+                or f'rel="canonical" href="{SITE}/{BASE}/{slug}/"' not in existing):
+                raise ValueError("Invalid existing automated profile "+str(dest))
+            continue
         src=(tmp/BASE/slug/"index.html").read_text(encoding="utf-8")
         src=src.replace('<p class="draft">PREVIEW EDITORIAL · Colecție în pregătire</p>','<p class="reading">Profil orientativ generat automat, nerevizuit individual</p>')
         src=src.replace('<nav aria-label="Navigare principală">','<nav aria-label="Navigare principală"><a href="/ascendent-soare-luna/">Toate combinațiile</a>',1)
@@ -43,7 +48,12 @@ with tempfile.TemporaryDirectory(prefix="astrovip-asl-") as tempdir:
         name,key=sign[:2]
         dest=ROOT/BASE/("ascendent-"+key)/"index.html"
         if dest.exists():
-            raise ValueError("Hub exists "+str(dest))
+            existing=dest.read_text(encoding="utf-8")
+            if ('name="robots" content="index,follow' not in existing
+                or existing.count("<h1>") != 1
+                or f'rel="canonical" href="{SITE}/{BASE}/ascendent-{key}/"' not in existing):
+                raise ValueError("Invalid existing Ascendant hub "+str(dest))
+            continue
         src=(tmp/BASE/("ascendent-"+key)/"index.html").read_text(encoding="utf-8")
         title="Ascendent "+name+": 144 combinații Soare–Lună | AstroVip"
         desc=("Explorează cele 144 de combinații Soare și Lună cu Ascendent în "+name+
@@ -63,11 +73,11 @@ with tempfile.TemporaryDirectory(prefix="astrovip-asl-") as tempdir:
 
 hubfile=ROOT/BASE/"index.html"
 hub=hubfile.read_text(encoding="utf-8")
-assert 'id="av-asl-full-collection"' not in hub
 tiles="".join('<a href="/'+BASE+'/ascendent-'+s[1]+'/">Ascendent în '+s[0]+'<span class="note">144 de combinații</span></a>' for s in m.SIGNS)
 full='<section id="av-asl-full-collection"><h2>Explorează toate cele 1.728 de combinații</h2><p>Alege cele trei semne din selector sau pornește de la Ascendentul tău. Cele 24 de interpretări editoriale sunt păstrate, iar celelalte 1.704 profiluri sunt accesibile ca lecturi orientative compuse automat, fără indexare până la revizie.</p><div class="links">'+tiles+'</div><p class="note">Pentru un Ascendent exact este necesară ora nașterii.</p></section>'
 assert '<section id="profiluri">' in hub
-hub=hub.replace('<section id="profiluri">',full+'<section id="profiluri">',1)
+if 'id="av-asl-full-collection"' not in hub:
+    hub=hub.replace('<section id="profiluri">',full+'<section id="profiluri">',1)
 hub=hub.replace('<h2>24 de interpretări disponibile</h2>','<h2>24 de interpretări editoriale</h2>')
 hub=hub.replace('Selectorul verifică disponibilitatea interpretării. Sunt disponibile 24 de profiluri, în două serii editoriale.','Selectorul deschide toate cele 1.728 de combinații. Cele 24 de interpretări de mai jos au conținut editorial distinct.')
 hub=hub.replace('Alege cele trei semne dacă le cunoști deja. Pentru profilurile finalizate, butonul deschide direct pagina combinației. Pentru celelalte, vei primi un mesaj că interpretarea este în pregătire.','Alege cele trei semne dacă le cunoști deja. Selectorul deschide direct orice combinație.')
@@ -85,8 +95,6 @@ for url in urls:
 ET.ElementTree(x).write(ROOT/"sitemap-ascendent-soare-luna.xml",encoding="utf-8",xml_declaration=True)
 manifest.update({"status":f"1728 public profiles; 24 curated plus {len(promotions)} independently QA-approved profiles indexable; {1704-len(promotions)} remain noindex; 12 indexed Ascendant hubs","public_profiles":1728,"curated_indexable_profiles":24,"approved_indexable_profiles":len(promotions),"automated_noindex_profiles":1704-len(promotions),"indexable_ascendant_hubs":12,"collection_pages":1741,"sitemap_urls":len(urls)})
 manifest_path.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-with (HERE/"README.md").open("a",encoding="utf-8") as f:
-    f.write("\n\n## Colecție completă 1728, publicare automată\n\nGeneratorul publish_all_1728.py păstrează cele 24 de profile editoriale, publică 1704 interpretări modulare noindex și 12 huburi indexabile de câte 144 variante. Selectorul funcționează pentru toate cele 1728 combinații. Sitemapul include 37 pagini indexabile din colecție. Nu rulați build-serie.py după publicarea completă fără actualizarea lui: poate suprascrie selectorul și sitemapul.\n")
 paths=list((ROOT/BASE).glob("ascendent-*-soare-*-luna-*/index.html"))
 assert len(paths)==1728,len(paths)
 assert len([p for p in (ROOT/BASE).glob("ascendent-*/index.html") if p.parent.name in {"ascendent-"+s for s in signs}])==12
