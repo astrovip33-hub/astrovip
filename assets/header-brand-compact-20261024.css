@@ -198,13 +198,10 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
     transform: none !important;
     width: 54px !important;
     height: 50px !important;
-    border: 1px solid rgba(240, 199, 101, .78) !important;
-    border-radius: 15px !important;
-    background: linear-gradient(145deg, rgba(7, 25, 51, .95), rgba(2, 9, 22, .96)) !important;
-    box-shadow:
-      0 0 0 1px rgba(46, 153, 239, .16),
-      0 0 13px rgba(31, 151, 255, .35),
-      inset 0 0 14px rgba(16, 88, 158, .22) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb-glow {
@@ -222,8 +219,9 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
   }
 
   html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-hamb[aria-expanded="true"] {
-    border-color: rgba(255, 220, 128, .92) !important;
-    box-shadow: 0 0 16px rgba(34, 157, 255, .48), inset 0 0 16px rgba(18, 76, 139, .26) !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 }
 
