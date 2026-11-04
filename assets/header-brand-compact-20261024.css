@@ -272,7 +272,7 @@ html body:not(.guide-page) #av-site-header.top .brand.av-brand-premium > .av-hea
     background: url("/assets/astrovip-header-a-cutout-20261104.webp") center / contain no-repeat !important;
     pointer-events: none !important;
   }
-  html.av-mobile-approved body:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-logo > .av-header-lockup {
+  html.av-mobile-approved body.av-ux-refresh:not(.guide-page) #av-site-header #av-mobile-approved-header .avm-logo > .av-header-lockup {
     position: absolute !important;
     z-index: 2 !important;
     top: 50% !important;
