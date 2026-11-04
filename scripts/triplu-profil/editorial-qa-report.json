@@ -1,0 +1,73 @@
+{
+  "pages": 1728,
+  "mean_paragraph_words": 631.0,
+  "minimum_paragraph_words": 482,
+  "maximum_paragraph_words": 690,
+  "distinct_paragraphs": 7462,
+  "repeated_paragraphs": 442,
+  "repeated_paragraph_instances": 12060,
+  "top_repeated_paragraphs": [
+    [
+      1728,
+      32,
+      "lectură simbolică generală a celor trei poziții. interpretarea individuală se nuanțează prin grade, case, aspe"
+    ],
+    [
+      1704,
+      54,
+      "aceste trei poziții oferă repere simbolice generale, nu o analiză personalizată a hărții. aspectele exacte nu "
+    ],
+    [
+      1704,
+      27,
+      "acest text a fost compus automat pe baza unor explicații astrologice generale; nu este prezentat ca fiind revi"
+    ],
+    [
+      1704,
+      21,
+      "această pagină oferă repere generale. pentru o analiză individuală sunt necesare data, ora corectă și locul na"
+    ],
+    [
+      24,
+      42,
+      "lectura urmărește trei roluri distincte: ascendentul pentru abordare și prezență, soarele pentru identitate și"
+    ],
+    [
+      24,
+      19,
+      "pentru context, citește ghidul ascendentului și ghidul hărții natale. ora incertă trebuie clarificată înaintea"
+    ],
+    [
+      24,
+      19,
+      "fiecare pagină combină ascendentul, soarele și luna. colecția cuprinde 1.728 de combinații posibile și este ex"
+    ],
+    [
+      12,
+      61,
+      "soarele în vărsător poate orienta alegerile conștiente, în timp ce luna în rac descrie un limbaj al confortulu"
+    ],
+    [
+      12,
+      61,
+      "soarele în vărsător poate orienta alegerile conștiente, în timp ce luna în pești descrie un limbaj al confortu"
+    ],
+    [
+      12,
+      61,
+      "soarele în scorpion poate orienta alegerile conștiente, în timp ce luna în vărsător descrie un limbaj al confo"
+    ],
+    [
+      12,
+      61,
+      "soarele în scorpion poate orienta alegerile conștiente, în timp ce luna în balanță descrie un limbaj al confor"
+    ],
+    [
+      12,
+      61,
+      "soarele în rac poate orienta alegerile conștiente, în timp ce luna în gemeni descrie un limbaj al confortului "
+    ]
+  ],
+  "editorial_approved_new_profiles": 0,
+  "decision": "Do not remove noindex without substantive profile-specific review"
+}
