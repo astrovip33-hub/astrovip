@@ -1339,10 +1339,7 @@ html body:not(.guide-page) #av-mobile-approved-home .avm-hero-copy .avm-kicker{
     </header>
 
     <div class="av-case-showcase-grid">
-<article id="studiu-vocatie-invatator-nou" class="av-case-showcase-card" aria-labelledby="studiu-vocatie-invatator-nou-title">
-  <figure class="av-case-showcase-visual"><a href="/studii-de-caz/vocatie-invatator-17-mai-1972/" aria-label="Vocație profesională – Învățător: studiu de caz"><img width="1024" height="1792" src="/images/studii-de-caz/file_00000000606082108ddec13796fa0743.png" loading="lazy" decoding="async" alt="Vocația Învățător – ilustrație premium AstroVip cu profesor, elevi și simboluri astrologice"></a></figure>
-  <div class="av-case-showcase-copy"><p class="av-case-showcase-eyebrow">Studiu de caz · Vocație</p><h3 id="studiu-vocatie-invatator-nou-title">Vocație profesională – Învățător</h3><p class="av-case-showcase-meta">17 mai 1972 · București · Educație</p><p class="av-case-showcase-lead">MC în Balanță, Venus și Luna în Rac, Soarele în Casa 5 și Uranus aproape de MC: indicatori astrologici ai vocației pedagogice.</p><a class="cta av-case-showcase-cta" href="/studii-de-caz/vocatie-invatator-17-mai-1972/">VEZI STUDIUL COMPLET →</a></div>
-</article>
+
 
 <article id="studiu-de-caz-dragoste-2001" class="av-case-showcase-card" aria-labelledby="studiu-dragoste-titlu">
         <figure class="av-case-showcase-visual"><a href="/studii-de-caz/intalnire-dragoste-arce-solare-2001/" aria-label="Întâlnire sentimentală, Arce Solare, 2001" title="Întâlnire sentimentală, Arce Solare, 2001"><img width="1672" height="941" srcset="/images/studii-de-caz/fundal-dragoste-premium-20261016-720.webp 720w, /images/studii-de-caz/fundal-dragoste-premium-20261016.webp 1672w" sizes="(max-width: 820px) 90vw, 560px" src="/images/studii-de-caz/fundal-dragoste-premium-20261016.webp" loading="lazy" decoding="async" alt="Ilustrație de atmosferă: seară romantică în București, în albastru și auriu." fetchpriority="low"><span class="seo-sr-only">Intalnire Dragoste Arce Solare 2001</span></a></figure>
@@ -2079,32 +2076,17 @@ if(launcher){
 
 <script type="module" src="/assets/premium-v9/main.js"></script>
 <!-- /ASTROVIP_PREMIUM_V9 -->
-<script defer src="/assets/services-slider-20261101.js"></script><script id="av-teacher-vocation-image-fix-20261105">
-(() => {
-  'use strict';
-  const target='/studii-de-caz/vocatie-invatator-17-mai-1972/';
-  const image='/images/studii-de-caz/file_00000000606082108ddec13796fa0743.png';
-  const section=document.getElementById('studii-de-caz-home');
-  if(!section)return;
-  const update=()=>{
-    const grid=section.querySelector('.av-case-showcase-grid');
-    if(!grid)return;
-    const cards=[...grid.querySelectorAll(':scope > .av-case-showcase-card')].filter(card=>card.querySelector('a[href="'+target+'"]'));
-    if(!cards.length)return;
-    const preferred=cards.find(card=>card.id==='studiu-vocatie-invatator-nou')||cards[0];
-    const img=preferred.querySelector('.av-case-showcase-visual img');
-    if(img){
-      if(img.getAttribute('src')!==image)img.setAttribute('src',image);
-      img.removeAttribute('srcset');
-      img.removeAttribute('sizes');
-      img.alt='Vocația Învățător — ilustrația AstroVip aprobată';
-      img.style.objectFit='contain';
-      img.style.objectPosition='center';
-    }
-    cards.forEach(card=>{if(card!==preferred)card.remove()});
-  };
-  update();
-  new MutationObserver(update).observe(section,{subtree:true,childList:true});
+<script defer src="/assets/services-slider-20261101.js"></script>
+<script id="av-vocatie-image-replace-20261105">
+(()=>{
+ const url='/studii-de-caz/vocatie-invatator-17-mai-1972/';
+ const img='/images/studii-de-caz/file_00000000606082108ddec13796fa0743.png';
+ const apply=()=>{
+  document.querySelectorAll('#studii-de-caz-home a[href*="vocatie-invatator-17-mai-1972"] img').forEach(el=>{
+   el.removeAttribute('srcset');el.removeAttribute('sizes');el.src=img;
+  });
+ };
+ apply();document.addEventListener('DOMContentLoaded',apply,{once:true});
 })();
 </script>
 </body>
