@@ -2079,6 +2079,34 @@ if(launcher){
 
 <script type="module" src="/assets/premium-v9/main.js"></script>
 <!-- /ASTROVIP_PREMIUM_V9 -->
-<script defer src="/assets/services-slider-20261101.js"></script></body>
+<script defer src="/assets/services-slider-20261101.js"></script><script id="av-teacher-vocation-image-fix-20261105">
+(() => {
+  'use strict';
+  const target='/studii-de-caz/vocatie-invatator-17-mai-1972/';
+  const image='/images/studii-de-caz/file_00000000606082108ddec13796fa0743.png';
+  const section=document.getElementById('studii-de-caz-home');
+  if(!section)return;
+  const update=()=>{
+    const grid=section.querySelector('.av-case-showcase-grid');
+    if(!grid)return;
+    const cards=[...grid.querySelectorAll(':scope > .av-case-showcase-card')].filter(card=>card.querySelector('a[href="'+target+'"]'));
+    if(!cards.length)return;
+    const preferred=cards.find(card=>card.id==='studiu-vocatie-invatator-nou')||cards[0];
+    const img=preferred.querySelector('.av-case-showcase-visual img');
+    if(img){
+      if(img.getAttribute('src')!==image)img.setAttribute('src',image);
+      img.removeAttribute('srcset');
+      img.removeAttribute('sizes');
+      img.alt='Vocația Învățător — ilustrația AstroVip aprobată';
+      img.style.objectFit='contain';
+      img.style.objectPosition='center';
+    }
+    cards.forEach(card=>{if(card!==preferred)card.remove()});
+  };
+  update();
+  new MutationObserver(update).observe(section,{subtree:true,childList:true});
+})();
+</script>
+</body>
 </html>
 
