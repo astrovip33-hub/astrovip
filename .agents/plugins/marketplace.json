@@ -1,0 +1,20 @@
+{
+  "name": "astrovip-project",
+  "interface": {
+    "displayName": "AstroVip Project Plugins"
+  },
+  "plugins": [
+    {
+      "name": "astrovip-seo-autopilot",
+      "source": {
+        "source": "local",
+        "path": "../../plugins/astrovip-seo-autopilot"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
