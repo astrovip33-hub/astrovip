@@ -10,6 +10,20 @@ AUTHOR_ID = "https://astrovip.ro/despre-astrovip/#catalin-smaranda"
 AUTHOR_URL = "https://astrovip.ro/despre-astrovip/"
 ORG_ID = "https://astrovip.ro/#organization"
 ORG_URL = "https://astrovip.ro/"
+ORG_SOCIAL_LINKS = [
+    "https://www.google.com/maps?cid=15612666586801751925",
+    "https://www.instagram.com/astrovip333/",
+    "https://www.threads.net/@astrovip333",
+    "https://www.pinterest.com/astrovip33/",
+    "https://www.tiktok.com/@astrovip338",
+    "https://www.facebook.com/profile.php?id=61563353587395&locale=ro_RO",
+    "https://www.youtube.com/@catalinsmaranda",
+]
+PERSON_SOCIAL_LINKS = [
+    "https://ro.linkedin.com/in/catalin-smaranda-825b5929b",
+    "https://www.youtube.com/@catalinsmaranda",
+]
+
 
 SCRIPT_RE = re.compile(
     r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)([\s\S]*?)(</script>)',
@@ -62,7 +76,7 @@ def ensure_logo(org: dict) -> bool:
     if not org.get("url"):
         org["url"] = ORG_URL
         changed = True
-    logo = org.get("logo")
+    if org.get("sameAs") != ORG_SOCIAL_LINKS:\n        org["sameAs"] = ORG_SOCIAL_LINKS.copy()\n        changed = True\n    logo = org.get("logo")
     if not logo:
         org["logo"] = {"@type":"ImageObject","url":FALLBACK_IMAGE}
         changed = True
@@ -91,7 +105,7 @@ def ensure_author(person: dict, image_url: str) -> bool:
         if not person.get(key):
             person[key] = value
             changed = True
-    if not person.get("worksFor"):
+    if person.get("sameAs") != PERSON_SOCIAL_LINKS:\n        person["sameAs"] = PERSON_SOCIAL_LINKS.copy()\n        changed = True\n    if not person.get("worksFor"):
         person["worksFor"] = {"@type":"Organization","@id":ORG_ID,"name":"AstroVip","url":ORG_URL}
         changed = True
     return changed
