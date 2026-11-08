@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Force fresh midpoint asset and keep slider before footer
+      - name: Make midpoint slider autoplay right to left
         shell: bash
         run: |
           set -euo pipefail
@@ -25,30 +25,132 @@ jobs:
           from pathlib import Path
           import re
 
+          js_path = Path('assets/footer-orbit-20261026.js')
+          j = js_path.read_text(encoding='utf-8')
+          marker = 'ASTROVIP MIDPOINT RTL AUTOPLAY 2026-11-02'
+          block = r'''
+
+/* ASTROVIP MIDPOINT RTL AUTOPLAY 2026-11-02 */
+(() => {
+  'use strict';
+
+  const initMidpointRtlAutoplay = () => {
+    const track = document.querySelector('#astrovip-puncte-mijlocii .av-midpoint-track');
+    if (!track || track.dataset.rtlAutoplay === '1') return false;
+
+    const originals = Array.from(track.querySelectorAll('.av-midpoint-slide'));
+    if (originals.length < 2) return false;
+
+    track.dataset.rtlAutoplay = '1';
+    track.style.scrollBehavior = 'smooth';
+    track.style.touchAction = 'pan-x pan-y';
+    track.setAttribute('aria-live', 'off');
+
+    const firstClone = originals[0].cloneNode(true);
+    firstClone.setAttribute('aria-hidden', 'true');
+    firstClone.tabIndex = -1;
+    firstClone.dataset.midpointClone = '1';
+    track.appendChild(firstClone);
+
+    let index = 0;
+    let timer = null;
+    let resetTimer = null;
+    let interacting = false;
+    const delay = 3900;
+
+    const slideWidth = () => track.clientWidth || track.getBoundingClientRect().width || 1;
+
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+    };
+
+    const start = () => {
+      stop();
+      if (!document.hidden && !interacting) timer = setInterval(goNext, delay);
+    };
+
+    const goNext = () => {
+      if (interacting || document.hidden) return;
+      index += 1;
+      track.scrollTo({ left: index * slideWidth(), behavior: 'smooth' });
+      if (index >= originals.length) {
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
+          track.style.scrollBehavior = 'auto';
+          track.scrollLeft = 0;
+          index = 0;
+          requestAnimationFrame(() => { track.style.scrollBehavior = 'smooth'; });
+        }, 700);
+      }
+    };
+
+    const syncIndex = () => {
+      const width = slideWidth();
+      if (width > 0 && index < originals.length) {
+        index = Math.max(0, Math.min(originals.length - 1, Math.round(track.scrollLeft / width)));
+      }
+    };
+
+    const beginInteraction = () => {
+      interacting = true;
+      stop();
+    };
+
+    const endInteraction = () => {
+      syncIndex();
+      interacting = false;
+      start();
+    };
+
+    track.addEventListener('pointerdown', beginInteraction, { passive: true });
+    track.addEventListener('pointerup', endInteraction, { passive: true });
+    track.addEventListener('pointercancel', endInteraction, { passive: true });
+    track.addEventListener('touchstart', beginInteraction, { passive: true });
+    track.addEventListener('touchend', endInteraction, { passive: true });
+    track.addEventListener('mouseenter', stop, { passive: true });
+    track.addEventListener('mouseleave', start, { passive: true });
+    track.addEventListener('focusin', stop);
+    track.addEventListener('focusout', start);
+
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+    window.addEventListener('resize', () => {
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft = index * slideWidth();
+      requestAnimationFrame(() => { track.style.scrollBehavior = 'smooth'; });
+    }, { passive: true });
+
+    start();
+    return true;
+  };
+
+  if (!initMidpointRtlAutoplay()) {
+    const observer = new MutationObserver(() => {
+      if (initMidpointRtlAutoplay()) observer.disconnect();
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    setTimeout(() => observer.disconnect(), 12000);
+  }
+})();
+'''
+          if marker not in j:
+              j += block
+              js_path.write_text(j, encoding='utf-8')
+
           home = Path('index.html')
           s = home.read_text(encoding='utf-8')
           s, n = re.subn(
               r'/assets/footer-orbit-20261026\.js\?v=[^"\']+',
-              '/assets/footer-orbit-20261026.js?v=20261102-midpoints3',
+              '/assets/footer-orbit-20261026.js?v=20261102-midpoint-rtl2',
               s,
               count=1,
           )
           if n != 1:
               raise SystemExit('Could not update footer-orbit asset version in index.html')
           home.write_text(s, encoding='utf-8')
-
-          js = Path('assets/footer-orbit-20261026.js')
-          j = js.read_text(encoding='utf-8')
-          old = 'footer.insertBefore(midpoint, social);'
-          new = 'footer.parentNode.insertBefore(midpoint, footer);'
-          if old in j:
-              j = j.replace(old, new, 1)
-          elif new not in j:
-              raise SystemExit('Midpoint insertion marker not found')
-          js.write_text(j, encoding='utf-8')
           PY
 
-      - name: Commit visibility repair
+      - name: Commit midpoint autoplay repair
         shell: bash
         run: |
           set -euo pipefail
@@ -59,5 +161,5 @@ jobs:
             echo 'No changes required'
             exit 0
           fi
-          git commit -m 'Refresh midpoint slider asset cache'
+          git commit -m 'Make midpoint slider move right to left'
           git push
