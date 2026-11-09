@@ -2111,6 +2111,20 @@ if(launcher){
  apply();document.addEventListener('DOMContentLoaded',apply,{once:true});
 })();
 </script>
+<script id="av-case-after-hero-mobile-20261109">
+(function(){
+  function positionCaseSlider(){
+    if(!window.matchMedia('(max-width:820px)').matches)return;
+    const hero=document.querySelector('main#top > section.av-pro-hero');
+    const cases=document.getElementById('studii-de-caz-home');
+    if(hero&&cases&&hero.nextElementSibling!==cases)hero.insertAdjacentElement('afterend',cases);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',positionCaseSlider,{once:true});
+  else positionCaseSlider();
+  window.addEventListener('pageshow',positionCaseSlider);
+  window.addEventListener('load',positionCaseSlider);
+})();
+</script>
 </body>
 </html>
 
