@@ -1,6 +1,11 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, access } from 'node:fs/promises';
 
 const profilePath = 'despre-astrovip/index.html';
+const profileExists = await access(profilePath).then(() => true).catch(() => false);
+if (!profileExists) {
+  console.log('Profile page deferred: skipping optional datetime fix.');
+  process.exit(0);
+}
 const html = await readFile(profilePath, 'utf8');
 
 const replacements = [

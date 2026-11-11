@@ -17,7 +17,14 @@
 <link rel="icon" href="/assets/favicon-clear.svg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"AstroVip","item":"https://astrovip.ro/"},{"@type":"ListItem","position":2,"name":"Studii de caz","item":"https://astrovip.ro/studii-de-caz/"},{"@type":"ListItem","position":3,"name":"Întâlnire sentimentală – 2001","item":"https://astrovip.ro/studii-de-caz/intalnire-dragoste-arce-solare-2001/"}]}</script>
 <!-- ASTROVIP_PREMIUM_V9 -->
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="stylesheet" href="/assets/astrovip-design-system-v9.css">
+<link rel="stylesheet" href="/assets/astrovip-design-system-v11-legacy-compat.css">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- ASTROVIP_PREMIUM_V11 -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/assets/astrovip-design-system-v11.css">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -94,6 +101,9 @@ document.getElementById('open-chart').addEventListener('click',(event)=>{
 });
 document.getElementById('close-chart').addEventListener('click',()=>chartDialog.close());
 </script>
-<script type="module" src="/assets/premium-v9/main.js"></script>
+<script type="module" src="/assets/premium-v11/main.js"></script>
 <!-- /ASTROVIP_PREMIUM_V9 -->
+
+<script type="module" src="/assets/premium-v11/main.js"></script>
+<!-- /ASTROVIP_PREMIUM_V11 -->
 </body></html>

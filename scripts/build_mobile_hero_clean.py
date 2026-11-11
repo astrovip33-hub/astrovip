@@ -5,6 +5,11 @@ import random
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
+# The current Hero is maintained in index.html; legacy V6 assets/styles are retired.
+if 'id="astrovip-hero"' in (ROOT / "index.html").read_text(encoding="utf-8"):
+    print("Current responsive Hero detected; skipping retired V6 injection.")
+    raise SystemExit(0)
+
 src = ROOT / "assets" / "astrovip-hero-signature-mobile-clean-20261001.webp"
 
 # Original mobile Hero is 941×1220. The baked-in labels occupy the dark band

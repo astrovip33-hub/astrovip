@@ -20,7 +20,14 @@
 .num-method{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}.num-method article{padding:18px;border:1px solid rgba(216,245,0,.24);border-radius:16px;background:rgba(255,255,255,.025)}.num-method b{display:block;margin-bottom:7px;color:#efff72}.num-result{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.num-result article{padding:22px;border:1px solid rgba(216,245,0,.28);border-radius:18px;background:linear-gradient(180deg,#101610,#070907)}.num-result small{display:block;color:#a8b9ae;text-transform:uppercase;letter-spacing:.08em;font-weight:800}.num-result strong{display:block;font-size:42px;line-height:1;margin:9px 0;color:#efff72}.num-result span{display:block;line-height:1.55}.num-explain{margin-top:18px;padding:18px;border-left:4px solid #d8f500;background:rgba(216,245,0,.05);border-radius:12px}.num-disclaimer{font-size:13px;color:#a8b9ae}.calc-form input[type=text]{text-transform:none}@media(max-width:760px){.num-method,.num-result{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Calculator Numerologie AstroVip","url":"https://astrovip.ro/calculator-numerologie/","applicationCategory":"LifestyleApplication","operatingSystem":"Web","inLanguage":"ro-RO","offers":{"@type":"Offer","price":"0","priceCurrency":"RON"},"description":"Calculator gratuit de numerologie pentru Calea Vieții, vibrația numelui și Anul Personal."},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Cum se calculează Calea Vieții?","acceptedAnswer":{"@type":"Answer","text":"Calculatorul însumează cifrele datei de naștere și reduce rezultatul la o cifră, păstrând numerele maestru 11, 22 și 33."}},{"@type":"Question","name":"Cum se calculează vibrația numelui?","acceptedAnswer":{"@type":"Answer","text":"Pagina folosește sistemul pitagoreic clasic, în care literele A–Z sunt asociate ciclic valorilor 1–9."}},{"@type":"Question","name":"Calculatorul este gratuit?","acceptedAnswer":{"@type":"Answer","text":"Da. Calculul se execută direct în browser și nu necesită plată."}}]}]}</script>
-<link rel="stylesheet" href="/assets/numerology-lead-cta-20261020.css?v=1"></head>
+<link rel="stylesheet" href="/assets/numerology-lead-cta-20261020.css?v=1">
+<!-- ASTROVIP_PREMIUM_V11 -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/assets/astrovip-design-system-v11.css">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
 <body>
 <header class="calc-top"><div class="calc-wrap calc-nav"><a class="calc-brand" href="/">ASTROVIP</a><nav class="calc-menu"><a href="/harta-mea/">Hartă natală</a><a href="/calculator-ascendent/">Ascendent</a><a class="active" href="/calculator-numerologie/">Numerologie</a><a href="/sinastrie-calculator/">Sinastrie</a></nav></div></header>
 <main>
@@ -106,5 +113,8 @@ $('numForm').addEventListener('submit',e=>{e.preventDefault();try{calculate()}ca
 $('demo').addEventListener('click',()=>{$('birthDate').value='1990-07-14';$('fullName').value='Maria Popescu';calculate()});
 })();
 </script>
+
+<script type="module" src="/assets/premium-v11/main.js"></script>
+<!-- /ASTROVIP_PREMIUM_V11 -->
 </body>
 </html>

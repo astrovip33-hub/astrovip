@@ -114,6 +114,8 @@ def main():
             if target.netloc not in ("astrovip.ro", "www.astrovip.ro"):
                 continue
             destination = BASE + unquote(target.path).lstrip("/")
+            if destination.endswith("/index.html"):
+                destination = destination[:-10]
             if not destination.endswith("/") and "." not in destination.rsplit("/", 1)[-1]:
                 destination += "/"
             if source != destination:

@@ -15,6 +15,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Personalități | Bază de date astrologică AstroVip">
 <meta name="twitter:description" content="Bază de date AstroVip cu personalități românești și internaționale, date de naștere, zodie, domeniu și hărți natale fără oră.">
+
+<!-- ASTROVIP_PREMIUM_V11 -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/assets/astrovip-design-system-v11.css">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
 <header class="top"><div class="wrap nav"><a class="brand" href="/">AstroVip</a><nav class="navlinks"><a class="pill" href="/harta-mea/">Harta Mea</a><a class="pill" href="/astrocartografie/">Astrocartografie</a><a class="btn" href="/#contact">Consultație</a></nav></div></header>
@@ -38,4 +45,7 @@ function render(){const q=search.value.trim().toLocaleLowerCase("ro");const arr=
 function openProfile(name){const p=people.find(x=>x.name===name);if(!p)return;document.getElementById("modalName").textContent=p.name;document.getElementById("modalOrigin").textContent=p.origin;document.getElementById("modalDate").textContent=fmt(p.date);document.getElementById("modalSign").textContent=p.sign;document.getElementById("modalCategory").textContent=p.category;document.getElementById("sourceLink").href=sourceUrl(p);document.getElementById("chartLink").href=chartUrl(p);dialog.showModal()}
 [search,origin,category,sign].forEach(el=>el.addEventListener(el===search?"input":"change",render));document.getElementById("closeDialog").onclick=()=>dialog.close();dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});render();
 </script>
+
+<script type="module" src="/assets/premium-v11/main.js"></script>
+<!-- /ASTROVIP_PREMIUM_V11 -->
 </body></html>

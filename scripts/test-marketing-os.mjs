@@ -153,7 +153,7 @@ function marketingApp(connected=true,visual=false){
   }
   const location={origin:'https://astrovip.ro',hash:'#cockpit',assign(){},protocol:'https:',hostname:visual?'astrovip-preview-ux-compact.astrovip33.workers.dev':'astrovip.ro',search:visual?'?preview=1':''};
   const ctx=vm.createContext({TOOLS,toolTarget,toolUrl,URL,MODULES,number,connectionState,opportunities,priorities,operatorIntent,Sources:AppSources,SESSION_KEY,Date,URLSearchParams,isVisualPreview,renderRoom,workflowNavigation,parseSnapshot,document:{getElementById:node,querySelectorAll:()=>[],addEventListener:(type,callback)=>events.set('document:'+type,callback),createElement:()=>node('frame-'+nodes.size)},location,sessionStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},addEventListener:(type,callback)=>events.set(type,callback)});
-  const js=fs.readFileSync(new URL('../command-center/v11/app.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
+  const js=fs.readFileSync(new URL('../command-center/v11/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,'');
   vm.runInContext(js,ctx);
   return {node,calls,location,events,eval:code=>vm.runInContext(code,ctx),login:async()=>{node('token').value='session-test';await events.get('login-form:submit')({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));}};
 }
@@ -228,7 +228,7 @@ test('the production premium build cannot reinject the retired V9 command panel'
     const original='<!doctype html><html><head><title>V11</title></head><body><main>One V11 shell</main></body></html>';
     fs.writeFileSync(path.join(dir,'command-center/index.html'),original);
     fs.writeFileSync(path.join(dir,'index.html'),'<!doctype html><html><head></head><body><main></main></body></html>');
-    const result=spawnSync('python3',[new URL('./inject-premium-v9.py',import.meta.url).pathname],{cwd:dir,encoding:'utf8'});
+    const result=spawnSync(process.platform==='win32'?'python':'python3',[path.resolve('scripts/inject-premium-v9.py')],{cwd:dir,encoding:'utf8'});
     assert.equal(result.status,0,result.stderr);
     assert.equal(fs.readFileSync(path.join(dir,'command-center/index.html'),'utf8'),original);
   }finally{fs.rmSync(dir,{recursive:true,force:true});}

@@ -41,6 +41,57 @@ const PLANETARY_MOVEMENTS_STRIP=`<section class="av-home-planet-strip av-home-pl
 const CASE_NAV_V8=`<nav class="av-case-mobile-nav-v7" aria-label="Navigare studii de caz" data-av-case-nav="v8"><button type="button" class="av-case-arrow-v7" data-case-prev aria-label="Studiul anterior">‹</button><div class="av-case-dots-v7" data-case-dots aria-label="Alege studiul"></div><span class="av-case-count-v7" data-case-count aria-live="polite">1 / …</span><button type="button" class="av-case-arrow-v7" data-case-next aria-label="Studiul următor">›</button></nav>`;
 const CASE_SLIDER_V8_JS=`(()=>{'use strict';const init=()=>{const s=document.getElementById('studii-de-caz-home');if(!s||s.dataset.avSliderV8==='1')return;const t=s.querySelector('.av-case-showcase-grid'),nav=s.querySelector('.av-case-mobile-nav-v7');if(!t||!nav)return;const prev=nav.querySelector('[data-case-prev]'),next=nav.querySelector('[data-case-next]'),dotsWrap=nav.querySelector('[data-case-dots]'),count=nav.querySelector('[data-case-count]');if(!prev||!next||!dotsWrap||!count)return;s.dataset.avSliderV8='1';let cards=[],dots=[],current=0,raf=0;const update=i=>{current=Math.max(0,Math.min(cards.length-1,i));dots.forEach((d,n)=>{const active=n===current;d.classList.toggle('is-active',active);d.setAttribute('aria-current',String(active))});count.textContent=(cards.length?current+1:0)+' / '+cards.length;prev.disabled=current===0;next.disabled=current>=cards.length-1};const go=(i,smooth=true)=>{const target=Math.max(0,Math.min(cards.length-1,i)),card=cards[target];if(!card)return;update(target);t.scrollTo({left:Math.max(0,card.getBoundingClientRect().left-t.getBoundingClientRect().left+t.scrollLeft-(t.clientWidth-card.clientWidth)/2),behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'})};const refresh=()=>{cards=[...t.querySelectorAll('.av-case-showcase-card')];dotsWrap.replaceChildren();dots=cards.map((card,i)=>{const b=document.createElement('button');b.type='button';b.className='av-case-dot-v7';b.setAttribute('aria-label','Studiul '+(i+1)+' din '+cards.length);b.addEventListener('click',()=>go(i));dotsWrap.appendChild(b);return b});update(current)};prev.addEventListener('click',()=>go(current-1));next.addEventListener('click',()=>go(current+1));const sync=()=>{raf=0;if(t.scrollLeft<=1){update(0);return}if(t.scrollLeft>=t.scrollWidth-t.clientWidth-2){update(cards.length-1);return}const center=t.scrollLeft+t.clientWidth/2;let best=0,dist=Infinity;cards.forEach((card,i)=>{const x=Math.abs(card.getBoundingClientRect().left-t.getBoundingClientRect().left+t.scrollLeft+card.clientWidth/2-center);if(x<dist){dist=x;best=i}});if(best!==current)update(best)};t.addEventListener('scroll',()=>{if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(sync)},{passive:true});window.addEventListener('resize',()=>go(current,false),{passive:true});new MutationObserver(refresh).observe(t,{childList:true});s.addEventListener('astrovip:cases-expanded',refresh);refresh();requestAnimationFrame(()=>go(0,false))};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();`;
 
+const CERTIFICATION_CARD_L7X=`<link rel="stylesheet" href="/assets/certificare-card-20261026.css?v=20261026-worker1"><style>#av-cert-l7x{display:block!important;visibility:visible!important;opacity:1!important}</style><section id="av-cert-l7x" class="av-cert-l7x" data-av-cert-source="worker-final-v1" aria-labelledby="av-cert-l7x-title" style="display:block!important;visibility:visible!important;opacity:1!important">
+  <div class="avc-card">
+    <div class="avc-orbits" aria-hidden="true"></div>
+    <div class="avc-copy">
+      <div class="avc-brand"><span class="avc-brand-star" aria-hidden="true">✦</span><span>ASTROVIP</span></div>
+      <div class="avc-eyebrow">EXPERTIZĂ <span>•</span> CUNOAȘTERE <span>•</span> EVOLUȚIE</div>
+      <h2 class="avc-heading" id="av-cert-l7x-title">CERTIFICAT <strong>DE ASTROLOG</strong></h2>
+      <p class="avc-subtitle">Recunoaștere profesională</p>
+      <div class="avc-rule" aria-hidden="true"></div>
+      <div class="avc-facts">
+        <div class="avc-fact"><span class="avc-icon" aria-hidden="true">✦</span><div><strong>Experiență 33+ ani</strong><small>Practica și încrederea a mii de oameni</small></div></div>
+        <div class="avc-fact"><span class="avc-icon" aria-hidden="true">Ψ</span><div><strong>Licențiat în Psihologie</strong><small>Fundație științifică și abordare umană</small></div></div>
+        <div class="avc-fact"><span class="avc-icon" aria-hidden="true">✺</span><div><strong>Astrologie &amp; Numerologie Premium</strong><small>Analize profunde pentru o viață în echilibru</small></div></div>
+      </div>
+      <a class="avc-cta" href="/studii-de-caz/diploma-astrologie-2014/" aria-label="Vezi certificarea de astrolog">VEZI CERTIFICAREA <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="avc-visual" aria-hidden="true">
+      <div class="avc-halo"></div><div class="avc-sphere"></div>
+      <div class="avc-certificate"><div class="avc-paper"><div class="avc-cert-star">✦</div><small>ASTROVIP</small><b>CERTIFICAT<br>DE ASTROLOG</b><em>RECUNOAȘTERE PROFESIONALĂ</em><div class="avc-moons">☾ ◐ ● ◑ ☽</div><div class="avc-sun"></div></div></div>
+    </div>
+  </div>
+</section>`;
+
+const PFA_FOOTER_CARD=`<section id="av-pfa-footer-card" class="av-pfa-footer-card" aria-label="Date furnizor AstroVip" style="display:block!important;visibility:visible!important;opacity:1!important">
+  <style>
+    #av-pfa-footer-card{box-sizing:border-box!important;width:min(94%,860px)!important;margin:28px auto 18px!important;padding:1px!important;border-radius:22px!important;background:linear-gradient(135deg,#071a36 0%,#123f77 38%,#d7b85a 64%,#071a36 100%)!important;box-shadow:0 18px 48px rgba(0,0,0,.38),0 0 28px rgba(22,77,139,.24)!important;clear:both!important}
+    #av-pfa-footer-card *{box-sizing:border-box!important}
+    #av-pfa-footer-card .avpfa-in{display:grid!important;gap:12px!important;padding:22px 24px!important;border-radius:21px!important;background:linear-gradient(145deg,rgba(3,9,18,.98),rgba(5,18,35,.98) 62%,rgba(4,10,20,.99))!important;text-align:center!important}
+    #av-pfa-footer-card .avpfa-kicker{color:#77b7ff!important;font:800 10px/1.2 Inter,system-ui,sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase!important}
+    #av-pfa-footer-card .avpfa-name{margin:0!important;color:#fff4cf!important;font:800 clamp(18px,2.6vw,28px)/1.18 Georgia,serif!important;letter-spacing:.02em!important}
+    #av-pfa-footer-card .avpfa-role{color:#d9eaff!important;font:700 13px/1.35 Inter,system-ui,sans-serif!important}
+    #av-pfa-footer-card .avpfa-rule{width:86px!important;height:1px!important;margin:1px auto 3px!important;background:linear-gradient(90deg,transparent,#d8b85d,transparent)!important}
+    #av-pfa-footer-card .avpfa-bank{display:grid!important;gap:5px!important;padding:14px 16px!important;border:1px solid rgba(82,152,230,.42)!important;border-radius:14px!important;background:rgba(7,29,56,.56)!important}
+    #av-pfa-footer-card .avpfa-label{color:#9fc9ff!important;font:800 10px/1.25 Inter,system-ui,sans-serif!important;letter-spacing:.10em!important;text-transform:uppercase!important}
+    #av-pfa-footer-card .avpfa-holder{color:#eef6ff!important;font:700 12px/1.35 Inter,system-ui,sans-serif!important}
+    #av-pfa-footer-card .avpfa-iban{overflow-wrap:anywhere!important;color:#f6d979!important;font:900 clamp(14px,2.1vw,18px)/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;letter-spacing:.035em!important}
+    @media(max-width:640px){#av-pfa-footer-card{width:calc(100% - 24px)!important;margin:20px 12px 14px!important;border-radius:18px!important}#av-pfa-footer-card .avpfa-in{padding:18px 14px!important;border-radius:17px!important;gap:10px!important}#av-pfa-footer-card .avpfa-name{font-size:20px!important}#av-pfa-footer-card .avpfa-iban{font-size:13px!important;letter-spacing:.015em!important}}
+  </style>
+  <div class="avpfa-in">
+    <div class="avpfa-kicker">DATE FURNIZOR · ASTROVIP</div>
+    <h2 class="avpfa-name">Smaranda Cristian Catalin PFA</h2>
+    <div class="avpfa-role">Astrolog Autorizat</div>
+    <div class="avpfa-rule" aria-hidden="true"></div>
+    <div class="avpfa-bank">
+      <span class="avpfa-label">Cont bancar</span>
+      <span class="avpfa-holder">Smaranda Cristian Catalin</span>
+      <strong class="avpfa-iban">RO08BTRLRONCRT0CS6331801</strong>
+    </div>
+  </div>
+</section>`;
+
 const HOMEPAGE_CRITICAL=`<meta name="astrovip-home-render" content="20261020-entity-geo2"><link rel="stylesheet" href="/assets/header-first-paint-20261018.css?v=20261020-entity-geo2"><link rel="stylesheet" href="/assets/ux-refresh-20261008.css?v=20261008-header1"><link rel="stylesheet" href="/assets/home-planetary-strip-live.css?v=20261025-7"><style id="astrovip-cardless-premium-home-20261010">${cardlessStyles}</style><style id="astrovip-ultra-critical-v9-20261012">
 html body:not(.guide-page) #intrebare-gratuita,html body:not(.guide-page) #servicii,html body:not(.guide-page) #recenzii-google,html body:not(.guide-page) #oferte,html body:not(.guide-page) #programari,html body:not(.guide-page) #intrebari-frecvente,html body:not(.guide-page) #contact,html body:not(.guide-page) .trust-refs,html body:not(.guide-page) .av-directory,html body:not(.guide-page) .av-v9-tools{display:none!important}
 html body:not(.guide-page) footer .av-footer-card--services{display:none!important}
@@ -179,7 +230,7 @@ export default {
       let desktopHeroSeen=false;
 
       const rewritten=new HTMLRewriter()
-        .on('html',{element(el){el.setAttribute('class',`${el.getAttribute('class')||''} av-ultra-home-production av-cardless-home av-premium-v9`)}})
+        .on('html',{element(el){el.setAttribute('class',`${el.getAttribute('class')||''} av-ultra-home-production av-cardless-home av-premium-v11`)}})
         .on('#av-mobile-approved-home',{element(el){
           if(mobileHomeSeen){el.remove();return;}
           mobileHomeSeen=true;
@@ -194,10 +245,14 @@ export default {
 
         }})
         .on('section.av-horoscop-teaser',{element(el){el.after(PLANETARY_HOURS_TEASER+PLANETARY_MOVEMENTS_STRIP,{html:true})}})
+        .on('#av-cert-l7x',{element(el){el.remove()}})
         .on('#studii-de-caz-home',{element(el){
           el.setAttribute('data-av-slider-shell','v8');
           el.append(CASE_NAV_V8,{html:true});
+          el.after(CERTIFICATION_CARD_L7X,{html:true});
         }})
+        .on('#av-pfa-footer-card',{element(el){el.remove()}})
+        .on('footer',{element(el){el.append(PFA_FOOTER_CARD,{html:true});}})
         .on('#astrovip-footer .avf-shell',{element(el){el.append(PAYMENT_CTA,{html:true})}})
         .on('head',{element(el){el.append(HOMEPAGE_CRITICAL+BRAND_HEADING_STYLE+PAYMENT_FOOTER_STYLE,{html:true})}})
         .on('body',{element(el){el.append('<script src="/assets/page-overrides-runtime.js?v=20261019-ssr3" defer></script><script src="/assets/vendor/astronomy-engine-2.1.19.min.js"></script><script src="/assets/home-planetary-strip-live.js?v=20261025-7"></script>'+PLANETARY_HOURS_SCRIPT,{html:true})}})
