@@ -76,7 +76,10 @@ def ensure_logo(org: dict) -> bool:
     if not org.get("url"):
         org["url"] = ORG_URL
         changed = True
-    if org.get("sameAs") != ORG_SOCIAL_LINKS:\n        org["sameAs"] = ORG_SOCIAL_LINKS.copy()\n        changed = True\n    logo = org.get("logo")
+    if org.get("sameAs") != ORG_SOCIAL_LINKS:
+        org["sameAs"] = ORG_SOCIAL_LINKS.copy()
+        changed = True
+    logo = org.get("logo")
     if not logo:
         org["logo"] = {"@type":"ImageObject","url":FALLBACK_IMAGE}
         changed = True
@@ -105,7 +108,10 @@ def ensure_author(person: dict, image_url: str) -> bool:
         if not person.get(key):
             person[key] = value
             changed = True
-    if person.get("sameAs") != PERSON_SOCIAL_LINKS:\n        person["sameAs"] = PERSON_SOCIAL_LINKS.copy()\n        changed = True\n    if not person.get("worksFor"):
+    if person.get("sameAs") != PERSON_SOCIAL_LINKS:
+        person["sameAs"] = PERSON_SOCIAL_LINKS.copy()
+        changed = True
+    if not person.get("worksFor"):
         person["worksFor"] = {"@type":"Organization","@id":ORG_ID,"name":"AstroVip","url":ORG_URL}
         changed = True
     return changed

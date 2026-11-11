@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -18,9 +19,9 @@ class EnrichmentTests(unittest.TestCase):
                             json.dumps(data) + '</script></head><body>' +
                             '<article class="guide-content"><h1>Ghid</h1>' +
                             '<p>Conținut editorial.</p></article></body></html>', encoding='utf-8')
-            subprocess.run(['python3', str(SCRIPT)], cwd=directory, check=True, capture_output=True)
+            subprocess.run([sys.executable, str(SCRIPT)], cwd=directory, check=True, capture_output=True)
             first = page.read_text(encoding='utf-8')
-            subprocess.run(['python3', str(SCRIPT)], cwd=directory, check=True, capture_output=True)
+            subprocess.run([sys.executable, str(SCRIPT)], cwd=directory, check=True, capture_output=True)
             self.assertEqual(first, page.read_text(encoding='utf-8'), 'Enrichment must be idempotent')
             data = json.loads(re.search(r'application/ld\+json">(.*?)</script>', first).group(1))
             return data, first
@@ -48,12 +49,12 @@ class EnrichmentTests(unittest.TestCase):
             page = Path(directory) / 'index.html'
             text = '<html><head></head><body><p>25 de recenzii · verificat la 4 octombrie 2026</p><b>CELE 25 DE RECENZII</b></body></html>'
             page.write_text(text, encoding='utf-8')
-            subprocess.run(['python3', str(SCRIPT)], cwd=directory, check=True, capture_output=True)
+            subprocess.run([sys.executable, str(SCRIPT)], cwd=directory, check=True, capture_output=True)
             first = page.read_text(encoding='utf-8')
             self.assertIn('25 de recenzii · verificat la 4 octombrie 2026', first)
             self.assertIn('CELE 25 DE RECENZII', first)
             self.assertNotIn('33', first)
-            subprocess.run(['python3', str(SCRIPT)], cwd=directory, check=True, capture_output=True)
+            subprocess.run([sys.executable, str(SCRIPT)], cwd=directory, check=True, capture_output=True)
             self.assertEqual(first, page.read_text(encoding='utf-8'))
 
 

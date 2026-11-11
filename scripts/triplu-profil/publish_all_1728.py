@@ -27,7 +27,7 @@ with tempfile.TemporaryDirectory(prefix="astrovip-asl-") as tempdir:
         if dest.exists() and slug not in promotions:
             existing=dest.read_text(encoding="utf-8")
             if ('name="robots" content="noindex,follow"' not in existing
-                or existing.count("<h1>") != 1
+                or len(re.findall(r"<h1(?:\s[^>]*)?>", existing, re.I)) != 1
                 or f'rel="canonical" href="{SITE}/{BASE}/{slug}/"' not in existing):
                 raise ValueError("Invalid existing automated profile "+str(dest))
             continue
@@ -50,7 +50,7 @@ with tempfile.TemporaryDirectory(prefix="astrovip-asl-") as tempdir:
         if dest.exists():
             existing=dest.read_text(encoding="utf-8")
             if ('name="robots" content="index,follow' not in existing
-                or existing.count("<h1>") != 1
+                or len(re.findall(r"<h1(?:\s[^>]*)?>", existing, re.I)) != 1
                 or f'rel="canonical" href="{SITE}/{BASE}/ascendent-{key}/"' not in existing):
                 raise ValueError("Invalid existing Ascendant hub "+str(dest))
             continue
