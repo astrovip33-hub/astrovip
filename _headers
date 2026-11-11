@@ -30,7 +30,7 @@
   Cache-Control: no-store, max-age=0
 
 /assets/vendor/swisseph.wasm
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Cache-Control: no-store, max-age=0
   Content-Type: application/wasm
 
 /favicon.ico

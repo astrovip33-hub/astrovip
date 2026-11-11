@@ -37,6 +37,12 @@ export default {
     }
 
     const response = await app.fetch(request, env, ctx);
+    if (requestUrl.pathname === '/assets/vendor/swisseph.wasm' && response.ok) {
+      const headers = new Headers(response.headers);
+      headers.set('cache-control', 'no-store, max-age=0');
+      headers.set('content-type', 'application/wasm');
+      return new Response(request.method === 'HEAD' ? null : response.body, {status: response.status, headers});
+    }
     const contentType = response.headers.get('content-type') || '';
 
     if (
