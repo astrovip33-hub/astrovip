@@ -1005,8 +1005,6 @@ html body:not(.guide-page) header.top .av-lang-switch>a{width:38px!important;hei
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <!-- ASTROVIP_HERO_PRELOAD -->
-<link rel="preload" as="image" href="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261008-ux1" type="image/avif" media="(max-width:760px)" fetchpriority="high">
-<link rel="preload" as="image" href="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261008-ux1" type="image/avif" media="(min-width:761px)" fetchpriority="high">
 <!-- /ASTROVIP_HERO_PRELOAD -->
 <style id="astrovip-desktop-hide-hero-trust-ribbon-20261006">
 @media (min-width:821px){
@@ -1124,6 +1122,9 @@ html body #av-site-header #av-mobile-approved-header .avm-hamb{position:absolute
 }
 </style>
 
+<style id="av-hero-without-portrait-20261111">
+html body main#top > .av-pro-hero .av-pro-hero-grid{grid-template-columns:minmax(0,1fr)!important}
+</style>
 </head>
 <body class="av-ux-refresh av-motion-live"><div id="av-consent" class="av-consent" role="dialog" aria-modal="true" aria-labelledby="av-consent-title"><div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div></div><a class="skip-link" href="#top">Sari la conținut</a>
 <header class="top" id="av-site-header">
@@ -1192,11 +1193,7 @@ html body #av-site-header #av-mobile-approved-header .avm-hamb{position:absolute
   <p class="av-pro-expert"><strong>Cătălin Smaranda</strong><br><a href="/astrolog/" style="color:inherit;text-decoration:none">Astrolog certificat</a> · Licențiat în Psihologie · 33+ ani experiență</p>
   <div class="av-pro-actions"><a class="av-pro-primary" href="#programari">Programează consultația</a><a class="av-pro-secondary" href="#servicii">Descoperă serviciile</a></div>
   <p class="av-pro-price">Consultație Premium · <strong>500 lei / 60 min</strong></p>
-  </div><figure class="av-pro-visual"><picture>
-  <source media="(max-width:760px)" srcset="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261008-ux1" type="image/avif" width="1280" height="720">
-  <source media="(min-width:761px)" srcset="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261008-ux1" type="image/avif" width="1280" height="720">
-  <img src="/assets/astrovip-hero-desktop-final-20261002.avif?v=20261008-ux1" width="1280" height="720" fetchpriority="high" loading="eager" decoding="async" alt="Cătălin Smaranda — AstroVip, astrologie premium">
-  </picture><figcaption>Analiză personală · Confidențialitate · Online sau în București</figcaption></figure></div>
+  </div></div>
   <div class="av-premium-trust-ribbon" aria-label="Repere de încredere AstroVip">
     <div class="av-premium-trust-ribbon__cap" aria-hidden="true">ASTROVIP PREMIUM</div>
     <div class="av-premium-trust-ribbon__segments">
