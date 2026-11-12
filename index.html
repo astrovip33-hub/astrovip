@@ -1444,6 +1444,22 @@ html body:not(.guide-page) #av-site-header .av-header-row{position:relative!impo
 @media(max-width:600px){#av-services-slider .sv-card{flex-basis:224px!important;width:224px!important;min-height:272px!important}#av-services-slider .sv-visual{height:65px!important;min-height:65px!important}#av-services-slider .sv-body{padding:11px 12px 12px!important;gap:8px!important}#av-services-slider .sv-body h3{font-size:16px!important}#av-services-slider .sv-price{font-size:24px!important}}
 </style>
 <script id="av-service-cards-expandable-20261112">(()=>{function compact(){document.querySelectorAll('#av-services-slider .sv-card').forEach(card=>{if(card.querySelector('.sv-more'))return;const body=card.querySelector('.sv-body'),desc=body?.querySelector('.sv-desc'),detail=body?.querySelector('.sv-detail');if(!body||!desc)return;const more=document.createElement('details');more.className='sv-more';const summary=document.createElement('summary');summary.textContent='Cite?te descrierea complet?';more.append(summary);more.append(desc);if(detail)more.append(detail);body.insertBefore(more,body.querySelector('.sv-cta'));});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',compact,{once:true});else compact();})();</script>
+<style id="av-service-cards-alignment-20261112">
+/* Consistent geometry, baseline and price alignment across all 14 cards. */
+#av-services-slider .sv-track{align-items:flex-start!important;gap:12px!important}
+#av-services-slider .sv-card{flex:0 0 224px!important;width:224px!important;height:auto!important;min-height:290px!important;border-radius:19px!important;overflow:hidden!important}
+#av-services-slider .sv-visual{height:68px!important;min-height:68px!important}
+#av-services-slider .sv-body{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:76px 36px minmax(28px,auto) 40px!important;align-content:start!important;gap:8px!important;padding:12px!important;min-height:220px!important;flex:1!important}
+#av-services-slider .sv-body h3{grid-row:1!important;align-self:start!important;order:unset!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:4!important;overflow:hidden!important;font:700 16px/1.2 Georgia,serif!important;min-height:0!important;margin:0!important;color:#f5d68c!important}
+#av-services-slider .sv-body>.sv-price{grid-row:2!important;order:unset!important;align-self:center!important;justify-self:start!important;display:flex!important;align-items:baseline!important;gap:5px!important;margin:0!important;padding:0!important;font:800 25px/1 Inter,system-ui,sans-serif!important;font-variant-numeric:tabular-nums lining-nums!important;letter-spacing:-.02em!important;white-space:nowrap!important}
+#av-services-slider .sv-price small{font:700 11px/1 Inter,system-ui,sans-serif!important;letter-spacing:0!important}
+#av-services-slider .sv-more{grid-row:3!important;order:unset!important;min-width:0!important;margin:0!important;align-self:start!important}
+#av-services-slider .sv-more summary{min-height:28px!important;padding:5px 0!important;line-height:1.35!important;font-size:10.5px!important}
+#av-services-slider .sv-body>.sv-cta{grid-row:4!important;order:unset!important;align-self:end!important;min-height:40px!important;height:40px!important;margin:0!important;padding:6px 8px!important;font-size:10px!important;line-height:1.2!important}
+#av-services-slider .sv-more[open]{align-self:start!important}
+#av-services-slider .sv-more[open] .sv-desc,#av-services-slider .sv-more[open] .sv-detail{overflow:visible!important;display:block!important}
+@media(max-width:600px){#av-services-slider .sv-card{flex-basis:224px!important;width:224px!important;min-height:290px!important}#av-services-slider .sv-body{grid-template-rows:76px 36px minmax(28px,auto) 40px!important;padding:12px!important;gap:8px!important}#av-services-slider .sv-body h3{font-size:16px!important}#av-services-slider .sv-body>.sv-price{font-size:25px!important}}
+</style>
 </body>
 </html>
 
