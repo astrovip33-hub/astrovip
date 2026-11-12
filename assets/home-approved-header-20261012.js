@@ -66,5 +66,5 @@
     header.dataset.avMobileHeaderBound='1';
     document.documentElement.classList.add('av-mobile-approved');
   };
-  const install=()=>{repairPayment();installCheckoutPayLabel();installMobileApproved();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
+  const install=()=>{repairPayment();installCheckoutPayLabel();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
 })();
