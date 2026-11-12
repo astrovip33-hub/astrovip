@@ -1486,6 +1486,18 @@ html body:not(.guide-page) #av-site-header .av-header-row{position:relative!impo
 #av-services-slider .sv-body:has(.sv-more[open]){grid-template-rows:76px 29px auto 38px!important}
 @media(max-width:600px){#av-services-slider .sv-card{width:244px!important;flex-basis:244px!important}#av-services-slider .sv-visual{height:104px!important;min-height:104px!important}#av-services-slider .sv-body{grid-template-rows:76px 29px 26px 38px!important;gap:4px!important;padding:10px 12px 12px!important}#av-services-slider .sv-body:has(.sv-more[open]){grid-template-rows:76px 29px auto 38px!important}}
 </style>
+<style id="av-service-cards-tight-final-20261112">
+/* Remove the oversized blank title-to-price row without cutting titles. */
+#av-services-slider .sv-card{flex:0 0 244px!important;width:244px!important;min-height:0!important;height:auto!important}
+#av-services-slider .sv-visual{height:94px!important;min-height:94px!important}
+#av-services-slider .sv-body{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:60px 29px 26px 38px!important;gap:4px!important;align-content:start!important;padding:10px 12px 12px!important;min-height:0!important}
+#av-services-slider .sv-body h3{grid-row:1!important;font:700 15px/1.2 Georgia,serif!important;display:block!important;overflow:visible!important;-webkit-line-clamp:unset!important;align-self:start!important}
+#av-services-slider .sv-body>.sv-price{grid-row:2!important;margin:0!important;align-self:center!important}
+#av-services-slider .sv-more{grid-row:3!important;margin:0!important}
+#av-services-slider .sv-body>.sv-cta{grid-row:4!important;align-self:end!important}
+#av-services-slider .sv-body:has(.sv-more[open]){grid-template-rows:60px 29px auto 38px!important}
+@media(max-width:600px){#av-services-slider .sv-visual{height:94px!important;min-height:94px!important}#av-services-slider .sv-body{grid-template-rows:60px 29px 26px 38px!important;gap:4px!important;padding:10px 12px 12px!important}#av-services-slider .sv-body:has(.sv-more[open]){grid-template-rows:60px 29px auto 38px!important}}
+</style>
 </body>
 </html>
 
