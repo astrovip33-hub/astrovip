@@ -1460,6 +1460,19 @@ html body:not(.guide-page) #av-site-header .av-header-row{position:relative!impo
 #av-services-slider .sv-more[open] .sv-desc,#av-services-slider .sv-more[open] .sv-detail{overflow:visible!important;display:block!important}
 @media(max-width:600px){#av-services-slider .sv-card{flex-basis:224px!important;width:224px!important;min-height:290px!important}#av-services-slider .sv-body{grid-template-rows:76px 36px minmax(28px,auto) 40px!important;padding:12px!important;gap:8px!important}#av-services-slider .sv-body h3{font-size:16px!important}#av-services-slider .sv-body>.sv-price{font-size:25px!important}}
 </style>
+<style id="av-service-cards-no-empty-space-20261112">
+/* Remove vertical dead space, preserving identical compact card geometry. */
+#av-services-slider .sv-card{min-height:0!important;height:auto!important}
+#av-services-slider .sv-visual{height:56px!important;min-height:56px!important}
+#av-services-slider .sv-body{grid-template-rows:76px 29px 26px 36px!important;gap:3px!important;padding:8px 11px 10px!important;min-height:0!important;align-content:start!important}
+#av-services-slider .sv-body h3{font-size:15px!important;line-height:1.2!important}
+#av-services-slider .sv-body>.sv-price{font-size:23px!important;align-self:center!important}
+#av-services-slider .sv-more summary{min-height:26px!important;padding:3px 0!important;font-size:10px!important}
+#av-services-slider .sv-body>.sv-cta{height:36px!important;min-height:36px!important;padding:6px!important;font-size:9.5px!important}
+#av-services-slider .sv-body:has(.sv-more[open]){grid-template-rows:76px 29px auto 36px!important}#av-services-slider .sv-more[open]{grid-row:3!important}
+#av-services-slider .sv-more[open]~.sv-cta{grid-row:4!important}
+@media(max-width:600px){#av-services-slider .sv-card{min-height:0!important;height:auto!important}#av-services-slider .sv-visual{height:56px!important;min-height:56px!important}#av-services-slider .sv-body{grid-template-rows:76px 29px 26px 36px!important;gap:3px!important;padding:8px 11px 10px!important}#av-services-slider .sv-body h3{font-size:15px!important}#av-services-slider .sv-body>.sv-price{font-size:23px!important}}
+</style>
 </body>
 </html>
 
