@@ -719,6 +719,14 @@ html body:not(.guide-page) .hero.av-hero-v2 .av-hero-v2-sidecopy:not(.right){
 .av-upsell-premium{display:block;margin:10px 0 0;padding:9px 11px;border-top:1px solid rgba(242,215,131,.20);color:#f2d783!important;font-size:12px;font-weight:850;line-height:1.4;text-decoration:none;text-align:center}
 .av-upsell-premium:hover,.av-upsell-premium:focus-visible{color:#fff3bd!important;text-decoration:underline;text-underline-offset:3px}
 </style>
+<style id="av-home-order-v11-20261112">
+/* V11 homepage preview: visual rhythm, no functional elements removed */
+#top > section{scroll-margin-top:84px}
+#top > section:not(#astrovip-hero){margin-block:0!important}
+#top > section:not(#astrovip-hero) + section:not(#astrovip-hero){border-top:1px solid rgba(210,178,91,.13)}
+#top .av-pro-wrap,#top .av-offers .wrap,#top .avgr-shell,#top .av-work-community-shell{max-width:1120px;margin-inline:auto}
+@media(max-width:820px){#top > section:not(#astrovip-hero){padding-block:clamp(14px,3.8vw,28px)}#top .av-pro-wrap,#top .av-offers .wrap,#top .avgr-shell{width:min(100% - 28px,1120px)}#top h2{overflow-wrap:break-word}#av-services-slider{overflow:hidden}}
+</style>
 </head>
 <body class="av-ux-refresh av-motion-live"><div id="av-consent" class="av-consent" role="dialog" aria-modal="true" aria-labelledby="av-consent-title"><div class="av-consent__inner"><h2 class="av-consent__title" id="av-consent-title">Confidențialitate și cookie-uri</h2><p class="av-consent__text">Folosim stocarea strict necesară pentru funcționarea site-ului. Cu acordul tău, putem permite măsurarea audienței și servicii Google de publicitate/personalizare. Poți refuza opționalele fără să pierzi accesul la site. <a href="/politica-cookie/">Detalii</a>.</p><div class="av-consent__prefs" id="av-consent-prefs" hidden><label class="av-consent__row"><span><strong>Necesare</strong><small>Securitate și funcționare de bază. Mereu active.</small></span><input class="av-consent__switch" type="checkbox" checked disabled aria-label="Cookie-uri necesare active"></label><label class="av-consent__row"><span><strong>Analiză</strong><small>Măsurarea traficului și performanței.</small></span><input class="av-consent__switch" id="av-consent-analytics" type="checkbox"></label><label class="av-consent__row"><span><strong>Publicitate și personalizare</strong><small>Google Ads, date pentru reclame și personalizare, dacă vor fi activate.</small></span><input class="av-consent__switch" id="av-consent-ads" type="checkbox"></label><button type="button" id="av-consent-save">Salvează selecția</button></div><div class="av-consent__actions"><button class="av-consent__reject" type="button" id="av-consent-reject">Respinge opționale</button><button type="button" id="av-consent-custom">Personalizează</button><button class="av-consent__accept" type="button" id="av-consent-accept">Acceptă toate</button></div></div></div><a class="skip-link" href="#top">Sari la conținut</a>
 <header class="top" id="av-site-header">
@@ -1328,6 +1336,7 @@ if(launcher){
   window.addEventListener('load',positionCaseSlider);
 })();
 </script>
+<script id="av-home-order-script-v11-20261112">(()=>{function arrange(){const main=document.querySelector('main#top');if(!main)return;const ids=['astrovip-hero','servicii','oferte','av-horoscop-entry','av-three-profile-entry','cine-analizeaza-harta','av-cert-l7x','av-home-reviews','av-services-slider','forum-astrovip-home','intrebare-gratuita','programari','intrebari-frecvente','av-v9-tools','contact'];const sections=[...main.children].filter(n=>n.tagName==='SECTION');const get=id=>sections.find(n=>n.id===id||n.classList.contains(id));const found=ids.map(get).filter(Boolean);if(found.length<10)return;let anchor=sections[0];for(const section of found){if(section===anchor){anchor=section;continue;}anchor.after(section);anchor=section;}main.dataset.avHomeOrder='v11-clean';}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',arrange,{once:true});else arrange()})();</script>
 </body>
 </html>
 
