@@ -125,14 +125,19 @@
   };
 
   const start = () => {
-    applyGoldGradient();
+    // Preserve menu interaction immediately; defer expensive computed-style scans
+    // until the initial mobile render has completed.
     installContactMenuGroup();
-
-    // Dynamic homepage cards settle shortly after DOMContentLoaded; rescan only twice.
-    setTimeout(applyGoldGradient, 700);
-    setTimeout(applyGoldGradient, 1800);
-
-    // If the mobile menu itself is injected late, watch only for it and stop immediately.
+    const scheduleGradient = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(applyGoldGradient, {timeout: 4500});
+      } else {
+        setTimeout(applyGoldGradient, 2500);
+      }
+    };
+    scheduleGradient();
+    // Recheck late-rendered cards once, outside the critical loading window.
+    setTimeout(scheduleGradient, 6000);
     if (!document.getElementById('menu')) {
       const observer = new MutationObserver(() => {
         if (installContactMenuGroup()) observer.disconnect();
