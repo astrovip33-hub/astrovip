@@ -202,7 +202,10 @@ if '.av-horoscop-teaser{display:none!important}' in final:
     raise SystemExit("Remaining horoscope teaser is still hidden on mobile")
 if 'data-av-upsell="premium-500"' not in final:
     raise SystemExit("Premium upsell was not added to offer cards")
-if re.search(r'<article\b[^>]*class="[^"]*\bsv-card\b[^"]*"[^>]*>[\s\S]*?data-av-upsell="premium-500"[\s\S]*?</article>', final, re.I):
+# Inspect each compact card independently; a cross-card regex can falsely
+# match an upsell in a later .av-offer after the compact slider closes.
+compact_cards = re.findall(r'<article\b[^>]*class="[^"]*\bsv-card\b[^"]*"[^>]*>[\s\S]*?</article>', final, re.I)
+if any('data-av-upsell="premium-500"' in card for card in compact_cards):
     raise SystemExit("Premium upsell leaked into the compact services slider")
 
 # Entity schema assertions.
