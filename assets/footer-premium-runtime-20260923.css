@@ -43,3 +43,137 @@
   display:block!important;
   visibility:visible!important;
 }
+
+/* Preview 2026-10-26 — premium language cards.
+   Reuses the visual grammar of the social cards: compact glass panels,
+   per-language accent, luminous focus, and icon + label alignment. */
+#astrovip-footer .av-footer-tools{
+  align-items:stretch!important;
+}
+#astrovip-footer #av-footer-languages{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  flex:1 1 100%!important;
+  width:100%!important;
+  max-width:none!important;
+  gap:6px!important;
+  margin:0!important;
+  padding:10px!important;
+  border:1px solid rgba(237,211,142,.23)!important;
+  border-radius:14px!important;
+  background:
+    radial-gradient(circle at 8% 8%,rgba(237,211,142,.07),transparent 34%),
+    radial-gradient(circle at 92% 86%,rgba(57,255,20,.035),transparent 30%),
+    linear-gradient(145deg,rgba(12,20,14,.92),rgba(3,7,5,.96))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 10px 28px rgba(0,0,0,.18)!important;
+  overflow:hidden!important;
+}
+#astrovip-footer #av-footer-languages::before{
+  content:"TRADUCERI · LIMBI"!important;
+  display:block!important;
+  grid-column:1/-1!important;
+  margin:0 0 2px!important;
+  padding:0 2px 6px!important;
+  border-bottom:1px solid rgba(237,211,142,.12)!important;
+  color:#d6c183!important;
+  font:850 9px/1.1 Inter,system-ui,sans-serif!important;
+  letter-spacing:.16em!important;
+  text-transform:uppercase!important;
+}
+#astrovip-footer #av-footer-languages>a{
+  --lang:#d8b969;
+  --lang-rgb:216,185,105;
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:30px minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:start!important;
+  gap:7px!important;
+  flex:none!important;
+  width:100%!important;
+  height:42px!important;
+  min-width:0!important;
+  min-height:42px!important;
+  margin:0!important;
+  padding:5px 7px!important;
+  border:1px solid rgba(var(--lang-rgb),.34)!important;
+  border-radius:10px!important;
+  background:
+    radial-gradient(circle at 12% 20%,rgba(var(--lang-rgb),.12),transparent 44%),
+    linear-gradient(180deg,rgba(255,255,255,.026),rgba(0,0,0,.11))!important;
+  color:#f4f7f1!important;
+  text-decoration:none!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease,background .16s ease!important;
+  overflow:hidden!important;
+}
+#astrovip-footer #av-footer-languages>a:nth-child(1){--lang:#f4d35e;--lang-rgb:244,211,94}
+#astrovip-footer #av-footer-languages>a:nth-child(2){--lang:#5c93ff;--lang-rgb:92,147,255}
+#astrovip-footer #av-footer-languages>a:nth-child(3){--lang:#ffca4b;--lang-rgb:255,202,75}
+#astrovip-footer #av-footer-languages>a:nth-child(4){--lang:#62d487;--lang-rgb:98,212,135}
+#astrovip-footer #av-footer-languages>a:nth-child(5){--lang:#ff5b62;--lang-rgb:255,91,98}
+#astrovip-footer #av-footer-languages>a:nth-child(6){--lang:#41cf86;--lang-rgb:65,207,134}
+#astrovip-footer #av-footer-languages>a:nth-child(7){--lang:#76a5ff;--lang-rgb:118,165,255}
+#astrovip-footer #av-footer-languages>a:hover,
+#astrovip-footer #av-footer-languages>a:focus-visible{
+  transform:translateY(-1px)!important;
+  border-color:rgba(var(--lang-rgb),.78)!important;
+  background:
+    radial-gradient(circle at 12% 20%,rgba(var(--lang-rgb),.20),transparent 46%),
+    linear-gradient(180deg,rgba(255,255,255,.045),rgba(0,0,0,.08))!important;
+  box-shadow:0 5px 16px rgba(0,0,0,.22),0 0 13px rgba(var(--lang-rgb),.12),inset 0 1px 0 rgba(255,255,255,.055)!important;
+  outline:none!important;
+}
+#astrovip-footer #av-footer-languages>a[aria-current="page"]{
+  border-color:rgba(var(--lang-rgb),.86)!important;
+  box-shadow:0 0 0 1px rgba(var(--lang-rgb),.15),0 0 14px rgba(var(--lang-rgb),.10),inset 0 1px 0 rgba(255,255,255,.06)!important;
+}
+#astrovip-footer #av-footer-languages img{
+  display:block!important;
+  width:28px!important;
+  height:22px!important;
+  min-width:28px!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid rgba(var(--lang-rgb),.58)!important;
+  border-radius:6px!important;
+  object-fit:cover!important;
+  box-shadow:0 0 9px rgba(var(--lang-rgb),.10)!important;
+}
+#astrovip-footer #av-footer-languages a>span{
+  position:static!important;
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  clip:auto!important;
+  clip-path:none!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  color:#f1f4ef!important;
+  font:760 10px/1.1 Inter,system-ui,sans-serif!important;
+  letter-spacing:.01em!important;
+  text-overflow:ellipsis!important;
+  text-align:left!important;
+}
+@media(max-width:560px){
+  #astrovip-footer #av-footer-languages{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  #astrovip-footer #av-footer-languages>a{
+    height:43px!important;
+    min-height:43px!important;
+    grid-template-columns:30px minmax(0,1fr)!important;
+    padding:5px 8px!important;
+  }
+  #astrovip-footer #av-footer-languages a>span{font-size:10.5px!important}
+}
+@media(max-width:360px){
+  #astrovip-footer #av-footer-languages{padding:8px!important;gap:5px!important}
+  #astrovip-footer #av-footer-languages>a{gap:6px!important;padding-inline:6px!important}
+  #astrovip-footer #av-footer-languages a>span{font-size:9.5px!important}
+}
