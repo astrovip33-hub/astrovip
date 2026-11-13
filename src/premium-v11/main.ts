@@ -94,7 +94,26 @@ function boot() {
   instrumentClicks();
 
   // Keep the first paint/LCP path free of Supabase, experiments, AI and visual engines.
-  runAfterLoad(bootDeferredEnhancements, 1800);
+  // On the public homepage, expensive Supabase/experiments/concierge imports
+  // must not compete with the hero paint or the first scroll. Initialize once
+  // after a generous delay, or sooner if the visitor interacts.
+  if (location.pathname === '/') {
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      void bootDeferredEnhancements();
+    };
+    const afterLoad = () => {
+      window.setTimeout(start, 12000);
+      window.addEventListener('pointerdown', start, { once: true, passive: true });
+      window.addEventListener('keydown', start, { once: true });
+    };
+    if (document.readyState === 'complete') afterLoad();
+    else window.addEventListener('load', afterLoad, { once: true });
+  } else {
+    runAfterLoad(bootDeferredEnhancements, 1800);
+  }
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
