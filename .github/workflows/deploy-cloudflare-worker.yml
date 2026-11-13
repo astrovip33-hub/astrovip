@@ -405,8 +405,12 @@ jobs:
             exit 47
           fi
 
-          if [ "$IDENTITY_COUNT" != "1" ]; then
-            echo "::error::Live homepage does not contain exactly one premium professional identity card."
+          # The professional identity card was removed in the current design.
+          # Compare the deployed page with the checked-in source instead of
+          # enforcing a stale design requirement from October.
+          EXPECTED_IDENTITY_COUNT=$( { grep -o 'av-identity-image-card' index.html || true; } | wc -l | tr -d ' ')
+          if [ "$IDENTITY_COUNT" != "$EXPECTED_IDENTITY_COUNT" ]; then
+            echo "::error::Live identity-card count ($IDENTITY_COUNT) differs from source ($EXPECTED_IDENTITY_COUNT)."
             exit 24
           fi
 
