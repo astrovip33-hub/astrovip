@@ -55,16 +55,41 @@
     return false;
   };
 
+  // Process a bounded number of nodes per idle slice to avoid long main-thread tasks.
+  let gradientScanActive = false;
+  let gradientRescanRequested = false;
+  const scheduleIdle = callback => {
+    if ('requestIdleCallback' in window) window.requestIdleCallback(callback, {timeout: 4500});
+    else setTimeout(callback, 32);
+  };
   const applyGoldGradient = () => {
-    ROOT_SELECTORS.forEach(selector => {
-      document.querySelectorAll(selector).forEach(root => {
-        root.querySelectorAll('*').forEach(el => {
-          if (!(el instanceof HTMLElement) || el.classList.contains('av-all-yellow-card-gradient')) return;
-          if (!hasCardContext(el, root)) return;
+    if (gradientScanActive) { gradientRescanRequested = true; return; }
+    gradientScanActive = true;
+    const roots = ROOT_SELECTORS.flatMap(selector => [...document.querySelectorAll(selector)]);
+    let rootIndex = 0;
+    let nodes = null;
+    let nodeIndex = 0;
+    const step = () => {
+      let processed = 0;
+      while (rootIndex < roots.length && processed < 65) {
+        const root = roots[rootIndex];
+        if (!nodes) { nodes = root.querySelectorAll('*'); nodeIndex = 0; }
+        while (nodeIndex < nodes.length && processed < 65) {
+          const el = nodes[nodeIndex++];
+          processed++;
+          if (!(el instanceof HTMLElement) || el.classList.contains('av-all-yellow-card-gradient')) continue;
+          if (!hasCardContext(el, root)) continue;
           if (isYellowSurface(getComputedStyle(el))) el.classList.add('av-all-yellow-card-gradient');
-        });
-      });
-    });
+        }
+        if (nodeIndex >= nodes.length) { rootIndex++; nodes = null; }
+      }
+      if (rootIndex < roots.length) scheduleIdle(step);
+      else {
+        gradientScanActive = false;
+        if (gradientRescanRequested) { gradientRescanRequested = false; scheduleIdle(applyGoldGradient); }
+      }
+    };
+    scheduleIdle(step);
   };
 
   const installContactMenuGroup = () => {
