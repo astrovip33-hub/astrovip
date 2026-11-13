@@ -13,9 +13,12 @@ root.addEventListener('mouseenter',pause);root.addEventListener('mouseleave',res
 root.addEventListener('focusin',pause);root.addEventListener('focusout',()=>{if(!root.contains(document.activeElement))resume()});
 root.addEventListener('pointerdown',()=>{manualUntil=performance.now()+4500},{passive:true});
 root.querySelectorAll('[data-sv-prev],[data-sv-next]').forEach(btn=>btn.addEventListener('click',()=>{manualUntil=performance.now()+4500}));
-function cycleWidth(){return originals[0]?.offsetLeft+originals.length*(originals[0]?.getBoundingClientRect().width||244)+(originals.length-1)*(parseFloat(getComputedStyle(track).columnGap)||12)-originals[0]?.offsetLeft+(parseFloat(getComputedStyle(track).columnGap)||12)}
+let span=0;
+function measure(){span=track.children[originals.length].offsetLeft-originals[0].offsetLeft}
+measure();
+window.addEventListener('resize',measure,{passive:true});
 function tick(now){if(!last)last=now;const dt=Math.min(80,now-last);last=now;
-if(!paused&&!reduced.matches&&!document.hidden&&now>manualUntil){const span=track.children[originals.length].offsetLeft-originals[0].offsetLeft;if(span>0){let next=track.scrollLeft+speed*dt/1000;if(next>=span)next-=span;track.scrollLeft=next}}
+if(!paused&&!reduced.matches&&!document.hidden&&now>manualUntil){if(span>0){let next=track.scrollLeft+speed*dt/1000;if(next>=span)next-=span;track.scrollLeft=next}}
 frame=requestAnimationFrame(tick)}
 frame=requestAnimationFrame(tick);
 })();
