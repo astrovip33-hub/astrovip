@@ -65,7 +65,7 @@
   const applyGoldGradient = () => {
     if (gradientScanActive) { gradientRescanRequested = true; return; }
     gradientScanActive = true;
-    const roots = ROOT_SELECTORS.flatMap(selector => [...document.querySelectorAll(selector)]);
+    const roots = ROOT_SELECTORS.flatMap(selector => [...document.querySelectorAll(selector)]).filter((root, i, all) => !all.some((other, j) => i !== j && other.contains(root)));
     let rootIndex = 0;
     let nodes = null;
     let nodeIndex = 0;
@@ -161,8 +161,16 @@
       }
     };
     scheduleGradient();
-    // Recheck late-rendered cards once, outside the critical loading window.
-    setTimeout(scheduleGradient, 6000);
+    // Recheck only if late DOM insertions occurred, not unconditionally.
+    let lateCardsAdded = false;
+    const lateObserver = new MutationObserver(records => {
+      if (records.some(record => record.addedNodes.length)) lateCardsAdded = true;
+    });
+    lateObserver.observe(document.body, {childList: true, subtree: true});
+    setTimeout(() => {
+      lateObserver.disconnect();
+      if (lateCardsAdded) scheduleGradient();
+    }, 6000);
     if (!document.getElementById('menu')) {
       const observer = new MutationObserver(() => {
         if (installContactMenuGroup()) observer.disconnect();
