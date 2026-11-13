@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const root=document.getElementById('av-services-slider');if(!root)return;
 const track=root.querySelector('.sv-track');if(!track||track.dataset.autoplayReady)return;
-const originals=[...track.querySelectorAll(':scope > .sv-card')];if(originals.length!==14)return;
+const originals=[...track.querySelectorAll(':scope > .sv-card')];if(originals.length<2)return;
 track.dataset.autoplayReady='true';
 // Reviews: 21 cards at 225px + 10px gap over 95s = ~52px per second.
 const speed=21*(225+10)/95;
