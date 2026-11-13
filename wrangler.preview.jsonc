@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "astrovip-preview-ux-compact",
+  "name": "astrovip-preview-noir-2100",
   "main": "worker-ai-discovery.js",
   "compatibility_date": "2026-09-15",
   "workers_dev": true,
