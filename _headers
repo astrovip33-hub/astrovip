@@ -24,13 +24,13 @@
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 /assets/natal-calculator-swiss.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /assets/vendor/astrovip-swiss-koch.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /assets/vendor/swisseph.wasm
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=86400, must-revalidate
   Content-Type: application/wasm
 
 /favicon.ico
