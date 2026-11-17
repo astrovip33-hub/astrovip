@@ -1,0 +1,1 @@
+ASTROVIP ESSENTIAL 2100 — PREVIEW ONLY. Standalone Cloudflare worker, independent from live astrovip.ro. Minimalist black obsidian/champagne gold art direction. Six sections; one review module, one study slider, one forum CTA. Live tools open existing AstroVip pages. URL and all responses noindex. Do not merge this PR to main without user approval.
