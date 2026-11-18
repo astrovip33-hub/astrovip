@@ -1,7 +1,7 @@
 # AstroVip — AI search, assistants, search engines and social previews
 # Goal: maximize discovery, citation and user-requested retrieval.
 # Separate training-only crawlers remain opted out where a dedicated control exists.
-Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
+Content-Signal: search=yes,ai-input=yes,ai-train=no
 
 # OpenAI — ChatGPT Search / user-requested retrieval / ad landing validation
 User-agent: OAI-SearchBot
